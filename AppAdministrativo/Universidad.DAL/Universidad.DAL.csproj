@@ -42,10 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
-      <HintPath>..\..\..\..\..\..\j053\Sistema Prueba de docentes\EvaluacionDocentes\DAL\bin\Debug\EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\ReportesUniversidad\SolucionReportesUniversidad\DAL\bin\Debug\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\..\..\..\..\j053\Sistema Prueba de docentes\EvaluacionDocentes\DAL\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\ReportesUniversidad\SolucionReportesUniversidad\DAL\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

@@ -36,63 +36,63 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CrystalDecisions.CrystalReports.Engine">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommLayer">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.CommLayer.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.CommLayer.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommonControls">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.Controllers">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.Prompting">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportSource">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.ReportSource.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportSource.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.Shared">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.Shared.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.Shared.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.Web">
-      <HintPath>..\SistemaUni\bin\CrystalDecisions.Web.dll</HintPath>
+      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="DataSet\Alumno.cs">
       <DependentUpon>Alumno.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSet\Alumno.Designer.cs">
       <AutoGen>True</AutoGen>
