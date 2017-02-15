@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4C838B8D-62D6-4BBD-AB16-D6E710505013}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BLL</RootNamespace>
+    <AssemblyName>BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\DAL\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\DAL\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Utilities">
+      <HintPath>..\SistemaUni\bin\Utilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BllAlumnoDetalle.cs" />
+    <Compile Include="BLLAlumnoGrupoCuota.cs" />
+    <Compile Include="BLLAlumnoInscritoDetalle.cs" />
+    <Compile Include="BLLAlumnoInscritoDocumento.cs" />
+    <Compile Include="BLLAntecedente.cs" />
+    <Compile Include="BLLBeca.cs" />
+    <Compile Include="BLLCargo.cs" />
+    <Compile Include="BLLGrupoIdioma.cs" />
+    <Compile Include="BLLReferencia.cs" />
+    <Compile Include="BLLReinscripcion.cs" />
+    <Compile Include="BLLReporte.cs" />
+    <Compile Include="BLLSaldoAFavor.cs" />
+    <Compile Include="BLLUsuario.cs" />
+    <Compile Include="BLLExamenMedico.cs" />
+    <Compile Include="ListaAlumnnosInscritos.cs" />
+    <Compile Include="Anticipado.cs" />
+    <Compile Include="BLLAdeudoBitacora.cs" />
+    <Compile Include="BLLAlumnoBeca.cs" />
+    <Compile Include="BLLAlumnoPassword.cs" />
+    <Compile Include="BLLAlumno.cs" />
+    <Compile Include="BLLAlumnoDescuento.cs" />
+    <Compile Include="BLLAlumnoDescuentoDocumento.cs" />
+    <Compile Include="BLLAlumnoInscrito.cs" />
+    <Compile Include="BLLAlumnoPermitido.cs" />
+    <Compile Include="BLLAreaAcademica.cs" />
+    <Compile Include="BLLAsignatura.cs" />
+    <Compile Include="BLLCuentaMail.cs" />
+    <Compile Include="BLLCuota.cs" />
+    <Compile Include="BLLDescuentos.cs" />
+    <Compile Include="BLLDia.cs" />
+    <Compile Include="BLLDocente.cs" />
+    <Compile Include="BLLEmpresa.cs" />
+    <Compile Include="BLLEntidadFederativa.cs" />
+    <Compile Include="BLLEstadoCivil.cs" />
+    <Compile Include="BLLEstadoCuenta.cs" />
+    <Compile Include="BLLGenero.cs" />
+    <Compile Include="BLLGrupo.cs" />
+    <Compile Include="BLLGrupoComprobante.cs" />
+    <Compile Include="BLLLenguas.cs" />
+    <Compile Include="BLLMedioDifusion.cs" />
+    <Compile Include="BLLMes.cs" />
+    <Compile Include="BLLMunicipio.cs" />
+    <Compile Include="BLLOfertaEducativa.cs" />
+    <Compile Include="BLLOfertaEducativaTipo.cs" />
+    <Compile Include="BLLPago.cs" />
+    <Compile Include="BLLPagoConcepto.cs" />
+    <Compile Include="BLLPagoPlan.cs" />
+    <Compile Include="BLLPais.cs" />
+    <Compile Include="BLLParentesco.cs" />
+    <Compile Include="BLLPerfil.cs" />
+    <Compile Include="BLLPeriodo.cs" />
+    <Compile Include="BLLSucursal.cs" />
+    <Compile Include="BLLTurno.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recargo.cs" />
+    <Compile Include="Tools\ProcesosMasivos.cs" />
+    <Compile Include="Tools\Universidad.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{6e8bb890-a042-4588-b3f7-22186a130cba}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{85f92d5d-7ea4-464b-b5c9-ee1da2ba5a45}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Herramientas\Herramientas.csproj">
+      <Project>{cce5aae9-efed-4ce1-8628-429e6a838bf4}</Project>
+      <Name>Herramientas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

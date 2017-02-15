@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <div>
+        <button id="btnMe">Click ME!</button>
+        <label >Estado civil</label>
+        <select id="slcEstadoCivil">
+            <option value="-1">--Seleccionar--</option>
+        </select>
+
+        <button id="btnMe">Click ME!</button><button id="btnMe">Click ME!</button><button id="btnMe">Click ME!</button><button id="btnMe">Click ME!</button>
+    </div>
+    
+    <script src="Style/assets/global/plugins/jquery.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      
+    </script>
+    <script>
+        $('#btnMe').click(function () {
+            var lsDatos = new Array();
+            lsDatos.push({ 'AlumnoId': "7760" });//0
+            lsDatos.push({ 'DescuentoIns': "50" });//1
+            lsDatos.push({ 'JustificacionIns':""});//2
+            //lsDatos.push({''});
+            lsDatos.push({ 'DescuentoBec': "60"});//3
+            lsDatos.push({ 'JustificacionBec': "" });//4
+            //lsDatos.push({''});
+            lsDatos.push({ 'Observacion': "" });//5
+            lsDatos.push({ 'SistemaPago': "16"});//6
+            lsDatos.push({ 'DescuentoExamen': "50"}); //Descuento Examen 7
+            lsDatos.push({ 'JustificacionExam':""}); //Comentario Examen 8
+            lsDatos.push({ 'Credencial':"0"});//9
+            lsDatos.push({ 'JustificacionCred':""});//10
+            lsDatos.push({ 'Usuario': "100000" });//11
+            $.ajax({
+                type: "POST",
+                url: "../WebServices/WS/Descuentos.asmx/GuardarDescuentos",
+                data: "{lstDatos:'" + JSON.stringify(lsDatos) + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+                datatype: JSON,
+                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                success: function (data) {
+                }
+            });
+        });
+    </script>
+</body>
+</html>

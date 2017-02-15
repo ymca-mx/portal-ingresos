@@ -1,0 +1,14 @@
+﻿.LogoIndex {
+  content: url(../../login/imagenes/logo/100.png);
+  background-size:50px 65px;
+  width: 50px;
+  height: 65px;
+  background: url(../img/social/youtube.png) no-repeat;
+}
+
+.LogoLogin {
+  content: url(../../login/imagenes/logo/100.png);
+  width: 100px;
+  height: 131px;
+  border:0px;
+}

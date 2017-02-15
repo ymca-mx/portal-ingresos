@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    
+    <title>Portal Administrativo - Universidad YMCA</title>   
+   
+     <link href="Style/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" />
+
+    <link href="Style/assets/global/plugins/select2/select2.css" rel="stylesheet" />
+    <!-- Tema Login-->
+    <link href="Style/assets/admin/pages/css/login-soft.css" rel="stylesheet" />
+    <link href="Style/assets/global/css/components.css" rel="stylesheet" />
+    <link href="Style/assets/global/css/plugins.css" rel="stylesheet" />
+    <link href="Style/assets/admin/layout/css/layout.css" rel="stylesheet" />
+    <link href="Style/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" />
+    <link href="Style/assets/admin/layout/css/custom.css" rel="stylesheet" />
+    <link href="Style/engato/index/css/componentes.css" rel="stylesheet" />
+</head>
+<body class="login">
+    <div class="logo">
+        <img src="Style/engato/login/imagenes/logo/500.png" width="100" height="131" />
+    </div>
+    <div class="menu-toggler sidebar-toggler">
+    </div>
+    <div class="content">
+        <!-- BEGIN LOGIN FORM -->
+        <form class="login-form" id="form_login" action="javascript:;">
+            <h3 class="form-title">Ingresa a tu cuenta</h3>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span>
+                    Ingresa tu numero de usuario y password.
+                </span>
+            </div>
+            <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">Usuario</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Usuario" name="username" id="username" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" id="password" />
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn blue pull-right" id="btnLoginU">
+                    Ingresar <i class="m-icon-swapright m-icon-white"></i>
+                </button>
+            </div>
+
+            <div class="forget-password">
+                <h4>No puedes acceder a tu cuenta ?</h4>
+                <p>
+                    haz click <a href="javascript:;" id="forget-password">
+                        aquí
+                    </a>
+                    para recuperar tu password.
+                </p>
+            </div>
+
+        </form>
+        <!-- END LOGIN FORM -->
+        <!-- BEGIN FORGOT PASSWORD FORM -->
+        <form class="forget-form" action="index.html" method="post" id="form_password">
+            <h3>Olvidaste tu password ?</h3>
+            <p>
+               Ingresa tu email para recuperarlo.
+            </p>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fa fa-envelope"></i>
+                    <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email"  id="email" />
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="back-btn" class="btn">
+                    <i class="m-icon-swapleft"></i> Regresar
+                </button>
+                <button type="button" class="btn blue pull-right" id="btnLogin">
+                    Aceptar <i class="m-icon-swapright m-icon-white"></i>
+                </button>
+            </div>
+        </form>
+
+         <div id="div-recovery">
+              
+        </div>
+        <!-- END FORGOT PASSWORD FORM -->
+        <!-- BEGIN REGISTRATION FORM -->
+        <!-- END REGISTRATION FORM -->
+    </div>
+    <div class="copyright">
+        2015 &copy; Universidad YMCA - Portal Administrativo.
+    </div>
+
+  <script src="Style/assets/global/plugins/jquery-2.1.4.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery-migrate.min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery.blockui.min.js"></script>
+    <script src="Style/assets/global/plugins/uniform/jquery.uniform.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery.cokie.min.js"></script>
+
+    <script src="Style/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery-validation/js/localization/messages_es.js"></script>
+    <script src="Style/assets/global/plugins/backstretch/jquery.backstretch.min.js"></script>
+
+    <script src="Style/assets/global/plugins/select2/select2.min.js"></script>
+
+    <!-- Scripts personalizados -->
+    <script src="Script/login/animacion.js"></script>
+    <script src="Script/login/valida.js"></script>
+
+    <script>
+    jQuery(document).ready(function () {
+        Login.init(); 
+    });
+    </script>
+</body>

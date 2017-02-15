@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Recuperación de cuenta</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="../Style/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../Style/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" />
+    <link href="../Style/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Style/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" />
+
+    <link href="../Style/assets/global/plugins/select2/select2.css" rel="stylesheet" />
+    <link href="../Style/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" />
+
+    
+    <link href="../Style/assets/global/css/components.css" rel="stylesheet" />
+    <link href="../Style/assets/global/css/plugins.css" rel="stylesheet" />
+    <link href="../Style/assets/admin/layout/css/layout.css" rel="stylesheet" />
+
+    <link href="../Style/assets/admin/layout/css/custom.css" rel="stylesheet" />
+
+    <!--Pendiente-->
+
+    <link href="../Style/assets/admin/layout3/css/themes/default.css" rel="stylesheet" />
+    <link href="../Style/engato/index/css/componentes.css" rel="stylesheet" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
+<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
+<body>
+    <!-- BEGIN HEADER -->
+    <div class="page-header">
+        <!-- BEGIN HEADER TOP -->
+        <div class="page-header-top">
+            <div class="container">
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <img class="LogoLogin"/>
+                </div>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <!-- La imagen esta ../Images -->
+               
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+        </div>
+        <!-- END HEADER TOP -->
+        <!-- BEGIN HEADER MENU -->
+      
+        <!-- END HEADER MENU -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN PAGE CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN PAGE HEAD -->
+        <div class="page-head">
+            <div class="container">
+                <!-- BEGIN PAGE TITLE -->
+                <div class="page-title">
+                    <h4>Recuperación de la cuenta</h4>
+                </div>
+                <!-- END PAGE TITLE -->
+                <!-- BEGIN PAGE TOOLBAR -->
+                
+                <!-- END PAGE TOOLBAR -->
+            </div>
+        </div>
+        <!-- END PAGE HEAD -->
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content" style="border: 0px solid blue">
+            <div class="container" id="divDinamico" style="height:500px">
+                <!-- BEGIN PAGE BREADCRUMB -->
+                <!-- END PAGE BREADCRUMB -->
+                <!-- BEGIN PAGE CONTENT INNER -->
+                <!-- END PAGE CONTENT INNER -->
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <form class="recovery-form" action="javascript:;" id="form_recovery" >
+                            <div class="form-group">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label visible-ie8 visible-ie9">Nuevo password</label>
+                                <div class="input-icon right">
+                                    <i class="fa fa-lock"></i>
+                                    <input class="form-control placeholder-no-fix" type="password" placeholder="Nuevo password" name="txtpassword" id="txtpassword" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label visible-ie8 visible-ie9">Confirma nuevo password</label>
+                                
+                                    <div class="input-icon right">
+                                        <i class="fa fa-lock"></i>
+                                        <input class="form-control placeholder-no-fix" type="password" placeholder="Confirma nuevo password" name="txtpasswordconfirm" id="txtpasswordconfirm"/>
+                                    </div>
+
+                            </div>
+                            <div class="form-actions">
+									<div class="row">
+										<div class="col-md-9">
+											<button type="submit" class="btn green">Recuperar</button>
+											<button type="button" class="btn default">Cancelar</button>
+										</div>
+									</div>
+								</div>
+                        </form>
+                        <div id="div-result">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+    <!-- BEGIN PRE-FOOTER -->
+    <div class="page-prefooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+                    <h2>Acerca de</h2>
+                    <p>
+                        Grupo YMCA
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs12 footer-block">
+                    <h2>Suscríbete</h2>
+                    <div class="subscribe-form">
+                        <form action="javascript:;">
+                            <div class="input-group">
+                                <input type="text" placeholder="mail@email.com" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button class="btn" type="submit">Submit</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+                    <h2>Siguenos</h2>
+                    <ul class="social-icons">
+                        <li>
+                            <a href="javascript:;" data-original-title="facebook" class="facebook"></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" data-original-title="youtube" class="youtube"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+                    <h2>Contacto</h2>
+                    <address class="margin-bottom-40">
+                        Telefono: 55 45 87 62<br />
+                        Email: <a href="mailto:sistemas@ymcacdmex.org.mx">sistemas@ymcacdmex.org.mx</a>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PRE-FOOTER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="container">
+            2015 &copy; YMCA. Todos los derechos reservados.
+        </div>
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]>
+    <script src="assets/global/plugins/respond.min.js"></script>
+    <script src="assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="../Style/assets/global/plugins/jquery-2.1.4.min.js"></script>
+    <script src="../Style/assets/global/plugins/jquery-migrate.min.js"></script>
+    <script src="../Style/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <!-- Mustra los divs ocultos al pasar el mouse -->
+    <!--<link href="../Style/Metronic/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" />-->
+    <!-- Agranda el txtBusqueda cuando obtiene el focus -->
+    <script src="../Style/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="../Style/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../Style/assets/global/plugins/uniform/jquery.uniform.min.js"></script>
+
+    <script src="../Style/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script src="../Style/assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+    <script src="../Style/assets/global/plugins/jquery-validation/js/localization/messages_es.js"></script>
+   
+    
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <!--
+    <script src="../Style/Metronic/scripts/metronic.js"></script>
+    <script src="../Style/Metronic/scripts/layout.js"></script>
+    <script src="../Style/Metronic/scripts/demo.js"></script>
+    <script src="../Style/Metronic/scripts/index3.js"></script>
+        -->
+   
+    <script src="../Style/assets/global/scripts/metronic.js"></script> 
+    <script src="../Style/assets/admin/pages/scripts/index3.js"></script>
+    <script src="../Style/assets/admin/layout3/scripts/layout.js"></script>
+    <script src="../Script/account/recovery.js"></script>
+    <script src="../Script/account/validacionRecovery.js"></script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core componets
+        validacionRecovery.init();
+        
+        //validacionRecovery.init();
+    });
+    </script>
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

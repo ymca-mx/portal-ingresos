@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{120FC082-11CC-407A-9DEB-D9B987AA3C89}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Universidad.DTO</RootNamespace>
+    <AssemblyName>Universidad.DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adeudo\DTOAdeudo.cs" />
+    <Compile Include="Adeudo\DTOFinanciamiento.cs" />
+    <Compile Include="Alumno\DTOAlumno.cs" />
+    <Compile Include="Alumno\DTOAlumnoBusqueda.cs" />
+    <Compile Include="Alumno\DTOAlumnoDatosGenerales.cs" />
+    <Compile Include="Alumno\DTOAlumnoImagen.cs" />
+    <Compile Include="Alumno\DTOAlumnoOfertaEducativa.cs" />
+    <Compile Include="Alumno\DTOAlumnoReinscripcion.cs" />
+    <Compile Include="Alumno\DTODatos.cs" />
+    <Compile Include="Alumno\DTOReinscripcion.cs" />
+    <Compile Include="Configuracion\DTOConfiguracion.cs" />
+    <Compile Include="Adeudo\DTOPagare.cs" />
+    <Compile Include="Menu\DTOMenu.cs" />
+    <Compile Include="Menu\DTOSubMenu.cs" />
+    <Compile Include="Menu\DTOTipoUsuarioSubMenu.cs" />
+    <Compile Include="Pagare\Impresion\DTOBanco.cs" />
+    <Compile Include="Pagare\Impresion\DTOPagare.cs" />
+    <Compile Include="Pagare\Visor\DTOPagare.cs" />
+    <Compile Include="Perfil\TipoAcceso.cs" />
+    <Compile Include="OfertaEucativa\DTOOfertaEducativa.cs" />
+    <Compile Include="Pagare\Impresion\DTOAcreedor.cs" />
+    <Compile Include="Pagare\Impresion\DTODeudor.cs" />
+    <Compile Include="Pagare\Impresion\DTODocumento.cs" />
+    <Compile Include="Pago\DTOPagoInformes.cs" />
+    <Compile Include="Pago\DTOPagoConcepto.cs" />
+    <Compile Include="Poliza\Cabecero\DTOCabeceroAlmacen.cs" />
+    <Compile Include="Poliza\Cabecero\DTOCabeceroLayout.cs" />
+    <Compile Include="Poliza\Detalle\DTODetalleAlmacen.cs" />
+    <Compile Include="Poliza\Detalle\DTODetalleLayout.cs" />
+    <Compile Include="Poliza\Detalle\DTORegistroPoliza.cs" />
+    <Compile Include="Poliza\Layout\DTOPropiedad.cs" />
+    <Compile Include="Poliza\Tipo\TipoPoliza.cs" />
+    <Compile Include="Recibo\Impresion\DTORecibo.cs" />
+    <Compile Include="Recibo\Visor\Recibo.cs" />
+    <Compile Include="Referencia\DTOPosicion.cs" />
+    <Compile Include="Referencia\DTOReferencia.cs" />
+    <Compile Include="Referencia\DTOReferenciaLayout.cs" />
+    <Compile Include="Referencia\DTOReferenciaLayout2.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOCorteCaja.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaConcepto.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaTotal.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOFirmas.cs" />
+    <Compile Include="Usuario\CorteDeCaja\DTOCajero.cs" />
+    <Compile Include="Usuario\DTOLogin.cs" />
+    <Compile Include="Pago\DTOPago.cs" />
+    <Compile Include="Pago\DTOPagoDescuento.cs" />
+    <Compile Include="Pago\DTOPagoMetodo.cs" />
+    <Compile Include="Recibo\Impresion\DTOReciboDatos.cs" />
+    <Compile Include="Recibo\Impresion\DTOReciboConcepto.cs" />
+    <Compile Include="Recibo\Impresion\DTOReciboSucursal.cs" />
+    <Compile Include="Usuario\DTOUsuarioImagen.cs" />
+    <Compile Include="Usuario\DTOUsuarioTipo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Varios\DTOAnio.cs" />
+    <Compile Include="Varios\DTOEmailEnvio.cs" />
+    <Compile Include="Varios\DTOPeriodo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

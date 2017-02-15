@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{82F22780-86E0-433B-95B2-56B42B34F8A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universidad.BLL", "..\..\appAdministrativo\Universidad.BLL\Universidad.BLL.csproj", "{105F1438-F8B7-4282-8E30-919671C77F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universidad.DAL", "..\..\appAdministrativo\Universidad.DAL\Universidad.DAL.csproj", "{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universidad.DTO", "..\..\appAdministrativo\Universidad.DTO\Universidad.DTO.csproj", "{120FC082-11CC-407A-9DEB-D9B987AA3C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\..\appAdministrativo\Utilities\Utilities.csproj", "{4A1EEF23-9B4B-49C4-8A98-30EA53D34CF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82F22780-86E0-433B-95B2-56B42B34F8A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F22780-86E0-433B-95B2-56B42B34F8A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F22780-86E0-433B-95B2-56B42B34F8A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F22780-86E0-433B-95B2-56B42B34F8A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{105F1438-F8B7-4282-8E30-919671C77F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105F1438-F8B7-4282-8E30-919671C77F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105F1438-F8B7-4282-8E30-919671C77F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105F1438-F8B7-4282-8E30-919671C77F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{120FC082-11CC-407A-9DEB-D9B987AA3C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{120FC082-11CC-407A-9DEB-D9B987AA3C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{120FC082-11CC-407A-9DEB-D9B987AA3C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{120FC082-11CC-407A-9DEB-D9B987AA3C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A1EEF23-9B4B-49C4-8A98-30EA53D34CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1EEF23-9B4B-49C4-8A98-30EA53D34CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1EEF23-9B4B-49C4-8A98-30EA53D34CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1EEF23-9B4B-49C4-8A98-30EA53D34CF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://j053-pruebas.visualstudio.com/defaultcollection
+		SccProjectUniqueName0 = ..\\..\\appAdministrativo\\Utilities\\Utilities.csproj
+		SccProjectName0 = ../../appAdministrativo/Utilities
+		SccLocalPath0 = ..\\..\\appAdministrativo\\Utilities
+		SccProjectUniqueName1 = ..\\..\\appAdministrativo\\Universidad.DTO\\Universidad.DTO.csproj
+		SccProjectName1 = ../../appAdministrativo/Universidad.DTO
+		SccLocalPath1 = ..\\..\\appAdministrativo\\Universidad.DTO
+		SccProjectUniqueName2 = ..\\..\\appAdministrativo\\Universidad.DAL\\Universidad.DAL.csproj
+		SccProjectName2 = ../../appAdministrativo/Universidad.DAL
+		SccLocalPath2 = ..\\..\\appAdministrativo\\Universidad.DAL
+		SccProjectUniqueName3 = ..\\..\\appAdministrativo\\Universidad.BLL\\Universidad.BLL.csproj
+		SccProjectName3 = ../../appAdministrativo/Universidad.BLL
+		SccLocalPath3 = ..\\..\\appAdministrativo\\Universidad.BLL
+		SccProjectUniqueName4 = UI\\UI.csproj
+		SccProjectName4 = UI
+		SccLocalPath4 = UI
+		SccLocalPath5 = .
+	EndGlobalSection
+EndGlobal

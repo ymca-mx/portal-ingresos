@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="09b6f033720243b6a8dd7b1879c01b1a" Name="Diagram1" ZoomLevel="91">
+        <EntityTypeShape EntityType="UniversidadModel.Adeudo" Width="1.5" PointX="16.25" PointY="143.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AdeudoBiblioteca" Width="1.5" PointX="21.25" PointY="146.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AdeudoChocolates" Width="1.5" PointX="24.25" PointY="147.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Alumno" Width="1.5" PointX="8" PointY="148.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAccesoBitacora" Width="1.5" PointX="10.25" PointY="264.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAntecedente" Width="1.5" PointX="22.25" PointY="155.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAntecedenteBitacora" Width="1.5" PointX="13.25" PointY="172.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoBitacora" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuento" Width="1.5" PointX="19.25" PointY="156" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoBitacora" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoDocumento" Width="1.5" PointX="21.5" PointY="175.125" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoPendiente" Width="1.5" PointX="30.5" PointY="162.125" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalle" Width="1.5" PointX="22.25" PointY="161.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalleAlumno" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalleBitacora" Width="1.5" PointX="10.25" PointY="270.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoExamenMedico" Width="1.5" PointX="27.5" PointY="163.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoGrupoCuota" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoImagen" Width="1.5" PointX="10.25" PointY="231.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoImagenDetalle" Width="1.5" PointX="12.5" PointY="231.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscrito" Width="1.5" PointX="19.25" PointY="182.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBeca" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBecaDeportiva" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBecaDocumento" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBitacora" Width="1.5" PointX="19.25" PointY="176.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDetalle" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDetalleBitacora" Width="1.5" PointX="8.75" PointY="12.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDocumento" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPassword" Width="1.5" PointX="10.25" PointY="276.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPasswordRecovery" Width="1.5" PointX="19.25" PointY="162.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPermitido" Width="1.5" PointX="16.25" PointY="160.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoReferenciaBitacora" Width="1.5" PointX="21.75" PointY="150.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoReingresoBitacora" Width="1.5" PointX="24.25" PointY="150.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoRevision" Width="1.5" PointX="13.25" PointY="158.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldo" Width="1.5" PointX="10.25" PointY="267.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldoDetalle" Width="1.5" PointX="13.5" PointY="214.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldoGasto" Width="1.5" PointX="12.5" PointY="271.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnosEmpresa" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AntecedenteTipo" Width="1.5" PointX="1.5" PointY="142.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AreaAcademica" Width="1.5" PointX="3" PointY="137.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Asignatura" Width="1.5" PointX="5.25" PointY="149.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Asociacion" Width="1.5" PointX="3.75" PointY="3.125" />
+        <EntityTypeShape EntityType="UniversidadModel.AsociacionDetalle" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="UniversidadModel.BecaDeportiva" Width="1.5" PointX="21.25" PointY="142.875" />
+        <EntityTypeShape EntityType="UniversidadModel.BitacoraReinscripcionAdeudo" Width="1.5" PointX="10.25" PointY="189.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Caja" Width="1.5" PointX="6.5" PointY="165.25" />
+        <EntityTypeShape EntityType="UniversidadModel.CajaConfiguracion" Width="1.5" PointX="11" PointY="160.25" />
+        <EntityTypeShape EntityType="UniversidadModel.CalificacionesAntecedente" Width="1.5" PointX="10.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UniversidadModel.CuentaMail" Width="1.5" PointX="12.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Cuota" Width="1.5" PointX="8.25" PointY="143" />
+        <EntityTypeShape EntityType="UniversidadModel.CuotaIncremento" Width="1.5" PointX="25.25" PointY="163.25" />
+        <EntityTypeShape EntityType="UniversidadModel.DatosFiscales" Width="1.5" PointX="21.5" PointY="177.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Defectos" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Descuento" Width="1.5" PointX="8.25" PointY="138" />
+        <EntityTypeShape EntityType="UniversidadModel.DescuentoTipo" Width="1.5" PointX="6" PointY="135.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Dia" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Docente" Width="1.5" PointX="13.25" PointY="137.5" />
+        <EntityTypeShape EntityType="UniversidadModel.DocenteDetalle" Width="1.5" PointX="15.5" PointY="135.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Empresa" Width="1.5" PointX="13.25" PointY="178.125" />
+        <EntityTypeShape EntityType="UniversidadModel.EmpresaDetalle" Width="1.5" PointX="15.5" PointY="173.125" />
+        <EntityTypeShape EntityType="UniversidadModel.EntidadFederativa" Width="1.5" PointX="3" PointY="124.625" />
+        <EntityTypeShape EntityType="UniversidadModel.EstadoCivil" Width="1.5" PointX="3" PointY="129.25" />
+        <EntityTypeShape EntityType="UniversidadModel.Estatus" Width="1.5" PointX="0.75" PointY="149.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Financiamiento" Width="1.5" PointX="10.5" PointY="142.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Genero" Width="1.5" PointX="3" PointY="168.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Grupo" Width="1.5" PointX="16.5" PointY="164.375" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumno" Width="1.5" PointX="14.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoBitacora" Width="1.5" PointX="14.75" PointY="7.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoConfiguracion" Width="1.5" PointX="16.25" PointY="179" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoConfiguracionBitacora" Width="1.5" PointX="13.25" PointY="183" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoBitacora" Width="1.5" PointX="14.75" PointY="10.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoComprobante" Width="1.5" PointX="27.75" PointY="167.375" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoComprobanteDocumento" Width="1.5" PointX="30" PointY="168" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoDetalle" Width="1.5" PointX="26.75" PointY="151.25" />
+        <EntityTypeShape EntityType="UniversidadModel.IdiomaGrupo" Width="1.5" PointX="14" PointY="168.625" />
+        <EntityTypeShape EntityType="UniversidadModel.IdiomaGrupoAlumno" Width="1.5" PointX="16.25" PointY="156.375" />
+        <EntityTypeShape EntityType="UniversidadModel.IngresosPermiso" Width="1.5" PointX="23" PointY="135.875" />
+        <EntityTypeShape EntityType="UniversidadModel.LenguasRelacion" Width="1.5" PointX="10.5" PointY="138.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Matricula" Width="1.5" PointX="16.25" PointY="147.875" />
+        <EntityTypeShape EntityType="UniversidadModel.MedioDifusion" Width="1.5" PointX="3" PointY="135.25" />
+        <EntityTypeShape EntityType="UniversidadModel.Menu" Width="1.5" PointX="6.5" PointY="126.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Mes" Width="1.5" PointX="14" PointY="132.25" />
+        <EntityTypeShape EntityType="UniversidadModel.Municipio" Width="1.5" PointX="3" PointY="132" />
+        <EntityTypeShape EntityType="UniversidadModel.NivelAcademico" Width="1.5" PointX="3" PointY="216.875" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativa" Width="1.5" PointX="3" PointY="146.375" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaAntecedente" Width="1.5" PointX="16.25" PointY="185.5" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaPlan" Width="1.5" PointX="5.25" PointY="220.25" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaRequerimiento" Width="1.5" PointX="5.25" PointY="181.5" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaTipo" Width="1.5" PointX="0.75" PointY="145.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Pagare" Width="1.5" PointX="24.25" PointY="143" />
+        <EntityTypeShape EntityType="UniversidadModel.PagareDocumento" Width="1.5" PointX="26.5" PointY="146.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Pago" Width="1.5" PointX="18.5" PointY="141.25" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoBitacora" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacion" Width="1.5" PointX="20.75" PointY="169.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionDetalle" Width="1.5" PointX="28" PointY="159.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionSolicitud" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConcepto" Width="1.5" PointX="8.25" PointY="158.875" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConceptoCarrera" Width="1.5" PointX="16.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConceptoMaestro" Width="1.5" PointX="3" PointY="154.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDescripcion" Width="1.5" PointX="20.75" PointY="188.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDescuento" Width="1.5" PointX="26.75" PointY="139.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDetalle" Width="1.5" PointX="31.75" PointY="150.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoMetodo" Width="1.5" PointX="29.5" PointY="142.5" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoPagare" Width="1.5" PointX="26.5" PointY="143.25" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoParcial" Width="1.5" PointX="29.5" PointY="149.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoParcialBitacora" Width="1.5" PointX="13.25" PointY="188.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoPlan" Width="1.5" PointX="3" PointY="219.5" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoRecargo" Width="1.5" PointX="20.75" PointY="136.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoTipo" Width="1.5" PointX="27.25" PointY="136.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Pais" Width="1.5" PointX="3" PointY="158.5" />
+        <EntityTypeShape EntityType="UniversidadModel.Parentesco" Width="1.5" PointX="14" PointY="144.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Periodo" Width="1.5" PointX="6" PointY="129.875" />
+        <EntityTypeShape EntityType="UniversidadModel.PeriodoAnticipado" Width="1.5" PointX="8.25" PointY="130.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PersonaAutorizada" Width="1.5" PointX="16.25" PointY="139.25" />
+        <EntityTypeShape EntityType="UniversidadModel.PersonaAutorizadaBitacora" Width="1.5" PointX="16.75" PointY="7.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaAjuste" Width="1.5" PointX="23.75" PointY="139.25" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaCabeceroLayout" Width="1.5" PointX="3" PointY="15.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaConfiguracion" Width="1.5" PointX="6" PointY="8.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaConsecutivo" Width="1.5" PointX="16.25" PointY="72" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaCuadre" Width="1.5" PointX="6" PointY="12.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaDetalleLayout" Width="1.5" PointX="3" PointY="29.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaMovimiento" Width="1.5" PointX="16.75" PointY="12.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaNumeracion" Width="1.5" PointX="6" PointY="16.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaSubtipo" Width="1.5" PointX="3.75" PointY="7" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaTipo" Width="1.5" PointX="0.75" PointY="12.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Prospecto" Width="1.5" PointX="3" PointY="162.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoBitacora" Width="1.5" PointX="16.75" PointY="15.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoDetalle" Width="1.5" PointX="5.25" PointY="137.5" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoDetalleBitacora" Width="1.5" PointX="10.75" PointY="17.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoSeguimiento" Width="1.5" PointX="21.25" PointY="139.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Recibo" Width="1.5" PointX="19.25" PointY="150.125" />
+        <EntityTypeShape EntityType="UniversidadModel.ReciboArchivo" Width="1.5" PointX="30.5" PointY="155.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReciboDetalle" Width="1.5" PointX="30.5" PointY="158.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Reclasificacion" Width="1.5" PointX="31.75" PointY="180.25" />
+        <EntityTypeShape EntityType="UniversidadModel.ReclasificacionTipo" Width="1.5" PointX="3" PointY="213.875" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoArchivoBitacora" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoBitacora" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoCabecero" Width="1.5" PointX="20.75" PointY="171.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoCabeceroBitacora" Width="1.5" PointX="27.75" PointY="155.125" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoDetalle" Width="1.5" PointX="23" PointY="169.625" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoDetalleBitacora" Width="1.5" PointX="33" PointY="153.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoLayout" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaEspecial" Width="1.5" PointX="2.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaGeneradaBitacora" Width="1.5" PointX="28.75" PointY="145.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaProcesada" Width="1.5" PointX="11.25" PointY="163.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaTipo" Width="1.5" PointX="9" PointY="169.125" />
+        <EntityTypeShape EntityType="UniversidadModel.SistemaConfiguracion" Width="1.5" PointX="13.25" PointY="147.125" />
+        <EntityTypeShape EntityType="UniversidadModel.SubMenu" Width="1.5" PointX="8.75" PointY="126.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Subperiodo" Width="1.5" PointX="16.25" PointY="132.25" />
+        <EntityTypeShape EntityType="UniversidadModel.Sucursal" Width="1.5" PointX="0.75" PointY="157.25" />
+        <EntityTypeShape EntityType="UniversidadModel.SucursalAnuncio" Width="1.5" PointX="3" PointY="171.5" />
+        <EntityTypeShape EntityType="UniversidadModel.SucursalCaja" Width="1.5" PointX="8.75" PointY="164.875" />
+        <EntityTypeShape EntityType="UniversidadModel.SucursalDetalle" Width="1.5" PointX="5.25" PointY="159.875" />
+        <EntityTypeShape EntityType="UniversidadModel.TempAdeudo" Width="1.5" PointX="18.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoDocumento" Width="1.5" PointX="18.75" PointY="7.75" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoMovimientoCRUD" Width="1.5" PointX="18.75" PointY="10.75" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoUsuarioSubmenu" Width="1.5" PointX="11" PointY="135.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Turno" Width="1.5" PointX="3" PointY="165.5" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadValidacion" Width="1.5" PointX="5.25" PointY="153.5" />
+        <EntityTypeShape EntityType="UniversidadModel.Usuario" Width="1.5" PointX="11" PointY="147.375" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioBitacora" Width="1.5" PointX="13.25" PointY="150.125" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioDetalle" Width="1.5" PointX="14.25" PointY="164.5" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioImagen" Width="1.5" PointX="13.25" PointY="152.875" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioImagenDetalle" Width="1.5" PointX="15.5" PointY="152.625" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioIngresosBitacora" Width="1.5" PointX="13.25" PointY="155.5" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioOrigen" Width="1.5" PointX="18.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioPasswordRecovery" Width="1.5" PointX="25.25" PointY="159.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioPermiso" Width="1.5" PointX="25.25" PointY="155.625" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioTipo" Width="1.5" PointX="8.75" PointY="135.125" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioTipoPagoConcepto" Width="1.5" PointX="25.25" PointY="168.125" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoBeca" Width="1.5" PointX="18.75" PointY="16.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBitacoraBKSalome" Width="1.5" PointX="16.75" PointY="19.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoMatricula" Width="1.5" PointX="18.75" PointY="19.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPermitido20162" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.BecaSEPBitacora" Width="1.5" PointX="13.25" PointY="140.75" />
+        <EntityTypeShape EntityType="UniversidadModel.COLEGIATURA" Width="1.5" PointX="20.75" PointY="3.75" />
+        <EntityTypeShape EntityType="UniversidadModel.IdiomasInscrito" Width="1.5" PointX="4.75" PointY="20.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDescuentoBitacora" Width="1.5" PointX="20.75" PointY="8.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" Width="1.5" PointX="20.75" PointY="11.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReporteEstadoCuentaPagosConcepto" Width="1.5" PointX="20.75" PointY="14.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Saldos" Width="1.5" PointX="20.75" PointY="17.75" />
+        <EntityTypeShape EntityType="UniversidadModel.tmpReferencias" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadAdeudo" Width="1.5" PointX="12.75" PointY="21.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadNewAdeudo" Width="1.5" PointX="22.75" PointY="0.75" />
+        <AssociationConnector Association="UniversidadModel.FK_Adeudo_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Adeudo_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudoBiblioteca_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudoBiblioteca_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudoChocolates_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudoChocolates_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudosBitacora_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Alumno_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_Alumno_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalleBitacora_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoImagen_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscritoBitacora_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoPassword_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoPasswordRecovery_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoPermitido_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoRevision_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoSaldo_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_BecaDeportiva_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_BitacoraAlumno_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_BitacoraReinscripcionAdeudo_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Financiamiento_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoCuota_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoIdiomaAlumno_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Matricula_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Pagare_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Pago_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoReingresoBitacora_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_PersonaAutorizada_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_Recibo_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaProcesada_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_AntecedenteTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_AreaAcademica" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_EntidadFederativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_MedioDifusion" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_Mes" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_Pais" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_PagoConcepto" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuentoDocumento_AlumnoDescuento" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuentoPendiente_AlumnoDescuento" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuentoPendiente_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuentoPendiente_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_EntidadFederativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_EntidadFederativa1" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_EstadoCivil" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_Genero" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_Municipio" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalle_Pais" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoExamenMedico_AlumnoDetalle" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoExamenMedico_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalleImagen_AlumnoImagen" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_PagoPlan" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_Turno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscrito_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscritoBitacora_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscritoBitacora_PagoPlan" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscritoBitacora_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscritoBitacora_Turno" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoInscritoBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoPasswordRecovery_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoPermitido_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudosBitacora_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudosBitacora_PagoConcepto" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoReingresoBitacora_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoReingresoBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoRevision_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoRevision_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoRevision_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoSaldoDetalle_AlumnoSaldo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoSaldoGasto_AlumnoSaldo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoSaldoDetalle_ReferenciaProcesada" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaTipo_AntecedenteTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_AreaAcademica" />
+        <AssociationConnector Association="UniversidadModel.FK_Asignatura_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_Asignatura_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AsociacionDetalle_Asociacion" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConfiguracion_Asociacion" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConsecutivo_Asociacion" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaCuadre_Asociacion" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaParametros_Asociacion" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoArchivoBitacora_Asociacion" />
+        <AssociationConnector Association="UniversidadModel.FK_BecaDeportiva_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_BecaDeportiva_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_SucursalCaja_Caja" />
+        <AssociationConnector Association="UniversidadModel.FK_Configuracion_SucursalCaja" />
+        <AssociationConnector Association="UniversidadModel.FK_Cuota_ConceptoPago" />
+        <AssociationConnector Association="UniversidadModel.FK_Cuota_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_Cuota_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_Financiamiento_Cuota" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoDetalle_Cuota1" />
+        <AssociationConnector Association="UniversidadModel.FK_LenguasRelacion_Cuota" />
+        <AssociationConnector Association="UniversidadModel.FK_Pago_Cuota" />
+        <AssociationConnector Association="UniversidadModel.FK_CuotaIncremento_OfertaEducativaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_CuotaIncremento_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_CuotaIncremento_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_DatosFiscales_Empresa" />
+        <AssociationConnector Association="UniversidadModel.FK_DatosFiscales_Municipio" />
+        <AssociationConnector Association="UniversidadModel.FK_DatosFiscales_Pais" />
+        <AssociationConnector Association="UniversidadModel.FK_Descuento_ConceptoPago" />
+        <AssociationConnector Association="UniversidadModel.FK_Descuento_DescuentoTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_Descuento_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoDescuento_Descuento" />
+        <AssociationConnector Association="UniversidadModel.FK_Docente_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_DocenteDetalle_Docente" />
+        <AssociationConnector Association="UniversidadModel.FK_DocenteDetalle_EstadoCivil" />
+        <AssociationConnector Association="UniversidadModel.FK_DocenteDetalle_Genero" />
+        <AssociationConnector Association="UniversidadModel.FK_Empresa_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_EmpresaDetalle_Empresa" />
+        <AssociationConnector Association="UniversidadModel.FK_Grupo_Empresa" />
+        <AssociationConnector Association="UniversidadModel.FK_EmpresaDetalle_Municipio" />
+        <AssociationConnector Association="UniversidadModel.FK_EmpresaDetalle_Pais" />
+        <AssociationConnector Association="UniversidadModel.FK_Municipio_EntidadFederativa" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_EntidadFederativa" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_EntidadFederativa1" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_EntidadFederativa2" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_EstadoCivil" />
+        <AssociationConnector Association="UniversidadModel.FK_Financiamiento_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoCuota_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_NivelAcademico_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativa_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_Pagare_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_Pago_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoConcepto_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoConceptoMaestro_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoParcial_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoPlan_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaAjuste_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_Recibo_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_ReclasificacionTipo_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaProcesada_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_UniversidadValidacion_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_Usuario_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioPasswordRecovery_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Genero" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioDetalle_Genero" />
+        <AssociationConnector Association="UniversidadModel.FK_Grupo_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoConfiguracion_Grupo" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoComprobante_Grupo" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoDetalle_Grupo" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoCuota_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoCuota_PagoPlan" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoCuota_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoConfiguracionBitacora_PagoPlan" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoAlumnoConfiguracionBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoComprobante_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoComprobanteDocumento_GrupoComprobante" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoIdiomaAlumno_GrupoIdioma" />
+        <AssociationConnector Association="UniversidadModel.FK_GrupoIdiomaAlumno_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioPermiso_IngresosPermiso" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoMatricula_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoMatricula_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoMatricula_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_MedioDifusion" />
+        <AssociationConnector Association="UniversidadModel.FK_SubMenu_Menu" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConsecutivo_Mes" />
+        <AssociationConnector Association="UniversidadModel.FK_Subperiodo_Mes" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Municipio" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaRequerimiento_NivelAcademico" />
+        <AssociationConnector Association="UniversidadModel.FK_ConceptoPago_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativa_OfertaEducativaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativa_Sucursal" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaRequerimiento_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_Pago_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_Recibo_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_UniversidadValidacion_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_PagoPlan" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Turno" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaPlan_OfertaEducativaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaPlan_PagoPlan" />
+        <AssociationConnector Association="UniversidadModel.FK_PeriodoAnticipado_OfertaEducativaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_OfertaEducativaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_Pagare_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_PagareDocumento_Pagare" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoPagare_Pagare" />
+        <AssociationConnector Association="UniversidadModel.FK_Pago_Periodo1" />
+        <AssociationConnector Association="UniversidadModel.FK_Pago_Subperiodo" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoCancelacion_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoDescripcion_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoDescuento_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoPagare_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoPagoRecargo_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoPagoRecargo_Pago1" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoParcial_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaAjuste_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoCabecero_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoCabeceroBitacora_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaGeneradaBitacora_Pago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoCancelacionDetalle_PagoCancelacion" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoCancelacionDetalle_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioTipoPagoConcepto_PagoConcepto" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoDetalle_PagoMetodo" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoDetalle_PagoParcial" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoParcial_PagoTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoParcial_Recibo" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoParcial_ReferenciaProcesada" />
+        <AssociationConnector Association="UniversidadModel.FK_Reclasificacion_PagoParcial" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoParcialBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Pais" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Pais1" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Pais2" />
+        <AssociationConnector Association="UniversidadModel.FK_SucursalDetalle_Pais" />
+        <AssociationConnector Association="UniversidadModel.FK_PersonaAutorizada_Parentesco" />
+        <AssociationConnector Association="UniversidadModel.FK_PeriodoAnticipado_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConsecutivo_PolizaSubtipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaConsecutivo_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaCuadre_PolizaSubtipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaCuadre_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaDetalleLayout_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaNumeracion_PolizaSubtipo" />
+        <AssociationConnector Association="UniversidadModel.FK_PolizaNumeracion_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoArchivoBitacora_PolizaSubtipo" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoArchivoBitacora_PolizaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Prospecto" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoSeguimiento_Prospecto" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Sucursal" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Turno" />
+        <AssociationConnector Association="UniversidadModel.FK_ProspectoSeguimiento_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_Recibo_SucursalCaja" />
+        <AssociationConnector Association="UniversidadModel.FK_Recibo_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ReciboArchivo_Recibo" />
+        <AssociationConnector Association="UniversidadModel.FK_ReciboDetalle_Recibo" />
+        <AssociationConnector Association="UniversidadModel.FK_ReciboArchivo_SucursalCaja" />
+        <AssociationConnector Association="UniversidadModel.FK_ReciboDetalle_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_Reclasificacion_ReclasificacionTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_Reclasificacion_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoDetalle_ReferenciadoCabecero1" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoCabeceroBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoDetalleBitacora_ReferenciadoCabecero1" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoDetalle_ReferenciaProcesada" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciadoDetalleBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaGeneradaBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaProcesada_ReferenciaTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_SistemaConfiguracion_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_TipoUsuarioSubmenu_SubMenu" />
+        <AssociationConnector Association="UniversidadModel.FK_Anuncio_Sucursal" />
+        <AssociationConnector Association="UniversidadModel.FK_SucursalCaja_Sucursal" />
+        <AssociationConnector Association="UniversidadModel.FK_SucursalDetalle_Sucursal" />
+        <AssociationConnector Association="UniversidadModel.FK_TipoUsuarioSubmenu_UsuarioTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_BecaSEPBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_Usuario_UsuarioTipo" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioDetalle_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioImagen_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioIngresosBitacora_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioPasswordRecovery_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioPermiso_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioPermiso_Usuario1" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioTipoPagoConcepto_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioDetalleImagen_UsuarioImagen" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioTipoPagoConcepto_UsuarioTipo" />
+        <AssociationConnector Association="UniversidadModel.UsuarioSucursalCaja" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
