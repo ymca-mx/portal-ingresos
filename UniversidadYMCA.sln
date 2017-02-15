@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppAdministrativo", "AppAdministrativo", "{D13665BD-0BEC-4A99-8B85-AC894F401F25}"
 EndProject
@@ -41,6 +41,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universidad.DAL", "AppAdministrativo\Universidad.DAL\Universidad.DAL.csproj", "{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "AppAlumno\WebApp\UI\UI.csproj", "{82F22780-86E0-433B-95B2-56B42B34F8A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D24F24CC-4F3D-4FC1-A1A7-F2C1476704FC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,67 +130,5 @@ Global
 		{120FC082-11CC-407A-9DEB-D9B987AA3C89} = {D13665BD-0BEC-4A99-8B85-AC894F401F25}
 		{F0A21E11-6CA6-41BF-956E-345D85A6A3B2} = {D13665BD-0BEC-4A99-8B85-AC894F401F25}
 		{82F22780-86E0-433B-95B2-56B42B34F8A0} = {0EEE36EA-5296-4859-A0A7-C4F64A88CA46}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://j053-pruebas.visualstudio.com/defaultcollection
-		SccProjectUniqueName0 = AppAdministrativo\\Universidad.BLL\\Universidad.BLL.csproj
-		SccProjectTopLevelParentUniqueName0 = UniversidadYMCA.sln
-		SccProjectName0 = AppAdministrativo/Universidad.BLL
-		SccLocalPath0 = AppAdministrativo\\Universidad.BLL
-		SccProjectUniqueName1 = AppAdministrativo\\Utilities\\Utilities.csproj
-		SccProjectTopLevelParentUniqueName1 = UniversidadYMCA.sln
-		SccProjectName1 = AppAdministrativo/Utilities
-		SccLocalPath1 = AppAdministrativo\\Utilities
-		SccProjectUniqueName2 = AppAdministrativo\\Universidad.DTO\\Universidad.DTO.csproj
-		SccProjectTopLevelParentUniqueName2 = UniversidadYMCA.sln
-		SccProjectName2 = AppAdministrativo/Universidad.DTO
-		SccLocalPath2 = AppAdministrativo\\Universidad.DTO
-		SccProjectUniqueName3 = AppAdministrativo\\Universidad.DAL\\Universidad.DAL.csproj
-		SccProjectTopLevelParentUniqueName3 = UniversidadYMCA.sln
-		SccProjectName3 = AppAdministrativo/Universidad.DAL
-		SccLocalPath3 = AppAdministrativo\\Universidad.DAL
-		SccProjectUniqueName4 = AppAlumno\\WebApp\\UI\\UI.csproj
-		SccProjectTopLevelParentUniqueName4 = UniversidadYMCA.sln
-		SccProjectName4 = AppAlumno/WebApp/UI
-		SccLocalPath4 = AppAlumno\\WebApp\\UI
-		SccProjectUniqueName5 = AppAdministrativo\\WebApp\\UI\\UI.csproj
-		SccProjectTopLevelParentUniqueName5 = UniversidadYMCA.sln
-		SccProjectName5 = AppAdministrativo/WebApp/UI
-		SccLocalPath5 = AppAdministrativo\\WebApp\\UI
-		SccProjectUniqueName6 = Inscritos\\Pruebas\\Pruebas.csproj
-		SccProjectTopLevelParentUniqueName6 = UniversidadYMCA.sln
-		SccProjectName6 = Inscritos/Pruebas
-		SccLocalPath6 = Inscritos\\Pruebas
-		SccProjectUniqueName7 = Inscritos\\WebServices\\WebServices.csproj
-		SccProjectTopLevelParentUniqueName7 = UniversidadYMCA.sln
-		SccProjectName7 = Inscritos/WebServices
-		SccLocalPath7 = Inscritos\\WebServices
-		SccProjectUniqueName8 = Inscritos\\Reportes\\Reportes.csproj
-		SccProjectTopLevelParentUniqueName8 = UniversidadYMCA.sln
-		SccProjectName8 = Inscritos/Reportes
-		SccLocalPath8 = Inscritos\\Reportes
-		SccProjectUniqueName9 = Inscritos\\Herramientas\\Herramientas.csproj
-		SccProjectTopLevelParentUniqueName9 = UniversidadYMCA.sln
-		SccProjectName9 = Inscritos/Herramientas
-		SccLocalPath9 = Inscritos\\Herramientas
-		SccProjectUniqueName10 = Inscritos\\DTO\\DTO.csproj
-		SccProjectTopLevelParentUniqueName10 = UniversidadYMCA.sln
-		SccProjectName10 = Inscritos/DTO
-		SccLocalPath10 = Inscritos\\DTO
-		SccProjectUniqueName11 = Inscritos\\BLL\\BLL.csproj
-		SccProjectTopLevelParentUniqueName11 = UniversidadYMCA.sln
-		SccProjectName11 = Inscritos/BLL
-		SccLocalPath11 = Inscritos\\BLL
-		SccProjectUniqueName12 = Inscritos\\DAL\\DAL.csproj
-		SccProjectTopLevelParentUniqueName12 = UniversidadYMCA.sln
-		SccProjectName12 = Inscritos/DAL
-		SccLocalPath12 = Inscritos\\DAL
-		SccProjectUniqueName13 = Inscritos\\SistemaUni\\SistemaUni.csproj
-		SccProjectTopLevelParentUniqueName13 = UniversidadYMCA.sln
-		SccProjectName13 = Inscritos/SistemaUni
-		SccLocalPath13 = Inscritos\\SistemaUni
-		SccLocalPath14 = .
 	EndGlobalSection
 EndGlobal
