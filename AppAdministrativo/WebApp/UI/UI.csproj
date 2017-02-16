@@ -88,7 +88,9 @@
     <Content Include="JS\Archivos.js" />
     <Content Include="JS\AreaAcademica.js" />
     <Content Include="JS\Becas\AlumnoBecaComite.js" />
-    <Content Include="JS\Becas\AlumnoBecaDeportiva.js" />
+    <Content Include="JS\Becas\AlumnoBecaDeportiva.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="JS\Becas\AlumnosBeca.js" />
     <Content Include="JS\BuscarReferencia2.js" />
     <Content Include="JS\BuscarReferencia2B.js" />
@@ -127,6 +129,7 @@
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
     <Content Include="JS\Pagos\EstadodeCuenta.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
+    <Content Include="JS\Pagos\ReferenciasTramites.js" />
     <Content Include="JS\Pais.js" />
     <Content Include="JS\Parentesco.js" />
     <Content Include="JS\Perfiles.js" />

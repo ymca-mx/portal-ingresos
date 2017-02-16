@@ -259,7 +259,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -271,7 +271,13 @@
                         "search": "Buscar Empresa "
                     },
                     "order": [[2, "desc"]]
+                    , "fnDrawCallback": function (oSettings) {
+                        //oSettings.aiDisplay.length;
+                        cambiarNumero(this[0].id);
+                    }
                 });
+                
+
                 Paises();
                 
             },
@@ -281,6 +287,21 @@
                 });
             }
         });
+    }
+
+    function cambiarNumero(tutabla) {
+        //Cambiar texto
+        var Descrip = $('#' + tutabla);
+
+        Descrip = Descrip[0].parentElement.parentElement.childNodes[2].childNodes[0];
+        Descrip = Descrip.childNodes[0];
+        var Texto = Descrip.innerHTML;
+        Texto = Texto.split(" ");
+        Texto = Texto[5];
+
+        Texto = "Numero total de registros: " + Texto;
+        Descrip.innerHTML = Texto;
+        //
     }
 
     function Estados() {
@@ -494,7 +515,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": false,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -506,6 +527,10 @@
                         "search": "Buscar Empresa "
                     },
                     "order": [[2, "desc"]]
+                     , "fnDrawCallback": function (oSettings) {
+                         //oSettings.aiDisplay.length;
+                         cambiarNumero(this[0].id);
+                     }
                 });
 
                 $('#PopGrupo').modal('hide');
@@ -546,7 +571,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -571,6 +596,10 @@
                             //row.childNodes[4].style.disabled = 'true';
                         }
                     }
+                     , "fnDrawCallback": function (oSettings) {
+                         //oSettings.aiDisplay.length;
+                         cambiarNumero(this[0].id);
+                     }
                 });
                 // if (Respuesta.d.length < 1) { $('#tblAlumnosN tbody').remove(); }
             },
@@ -1219,7 +1248,7 @@
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
                         "ordering": true,
-                        "info": false,
+                        "info": true,
                         "async": true,
                         "bSort": false,
                         "bDestroy": true,
@@ -1232,6 +1261,10 @@
                             "search": "Buscar Alumno "
                         },
                         "aaSorting": []
+                         , "fnDrawCallback": function (oSettings) {
+                             //oSettings.aiDisplay.length;
+                             cambiarNumero(this[0].id);
+                         }
                     });
                     CargarEmpresasLigero();
                 }
@@ -1668,7 +1701,7 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bSort": false,
                     "bDestroy": true,
@@ -1681,6 +1714,10 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                         "search": "Buscar Alumno "
                     },
                     "aaSorting": []
+                     , "fnDrawCallback": function (oSettings) {
+                         //oSettings.aiDisplay.length;
+                         cambiarNumero(this[0].id);
+                     }
                 });
 
                 $('#Load').modal('hide');
