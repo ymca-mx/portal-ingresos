@@ -29,7 +29,7 @@ namespace BLL
                         lstConceptos = (from a in db.PagoConcepto
                                         join b in db.AlumnoInscrito on a.OfertaEducativaId equals b.OfertaEducativaId
                                         join c in db.Cuota on new { a.PagoConceptoId, a.OfertaEducativaId } equals new { c.PagoConceptoId, c.OfertaEducativaId }
-                                        where (a.EsVariable == false && a.EsVisible == true) && a.EsCobrable == true && a.OfertaEducativaId == OfertaEducativaId
+                                        where (a.EsVariable == false && a.EsVisible == true)  && a.OfertaEducativaId == OfertaEducativaId
                                         && b.AlumnoId == AlumnoId && c.PeriodoId == objPeriodo.PeriodoId && c.Anio == objPeriodo.Anio && c.OfertaEducativaId==OfertaEducativaId
 
                                         orderby a.Descripcion ascending

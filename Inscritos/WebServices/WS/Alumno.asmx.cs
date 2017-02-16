@@ -248,6 +248,7 @@ namespace WebServices.WS
         {
             return BLLAlumno.BuscarAlumnoTexto(Filtro);
         }
+
         [WebMethod]
         public doblesobj ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
         {
@@ -269,6 +270,29 @@ namespace WebServices.WS
                 return objr;
             }
         }
+
+        [WebMethod]
+        public doblesobj ConsultaPagosTramites(string AlumnoId)
+        {
+            doblesobj objr = new doblesobj();
+
+            try
+            {
+                List<DTOPagoDetallado> lstRes = BLLPago.ConsultaPagosTramites(int.Parse(AlumnoId));
+                bool rest;
+                int cout = lstRes.Where(l => l.OtroDescuento.Length > 0).ToList().Count;
+                rest = cout > 0 ? true : false;
+                objr.item1 = lstRes;
+                objr.item2 = rest;
+
+                return objr;
+            }
+            catch
+            {
+                return objr;
+            }
+        }
+
         public class doblesobj
         {
             public List<DTOPagoDetallado> item1 { get; set; }

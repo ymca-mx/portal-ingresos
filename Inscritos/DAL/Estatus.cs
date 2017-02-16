@@ -30,7 +30,6 @@ namespace DAL
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
             this.Pagare = new HashSet<Pagare>();
             this.Pago = new HashSet<Pago>();
-            this.PagoConcepto = new HashSet<PagoConcepto>();
             this.PagoConceptoMaestro = new HashSet<PagoConceptoMaestro>();
             this.PagoParcial = new HashSet<PagoParcial>();
             this.PagoPlan = new HashSet<PagoPlan>();
@@ -41,6 +40,7 @@ namespace DAL
             this.UniversidadValidacion = new HashSet<UniversidadValidacion>();
             this.Usuario = new HashSet<Usuario>();
             this.UsuarioPasswordRecovery = new HashSet<UsuarioPasswordRecovery>();
+            this.PagoConcepto = new HashSet<PagoConcepto>();
         }
     
         public int EstatusId { get; set; }
@@ -73,8 +73,6 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pago> Pago { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoConceptoMaestro> PagoConceptoMaestro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoParcial> PagoParcial { get; set; }
@@ -94,5 +92,7 @@ namespace DAL
         public virtual ICollection<Usuario> Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioPasswordRecovery> UsuarioPasswordRecovery { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
     }
 }

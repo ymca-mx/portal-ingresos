@@ -122,7 +122,6 @@ namespace DAL
         public virtual DbSet<PagoCancelacion> PagoCancelacion { get; set; }
         public virtual DbSet<PagoCancelacionDetalle> PagoCancelacionDetalle { get; set; }
         public virtual DbSet<PagoCancelacionSolicitud> PagoCancelacionSolicitud { get; set; }
-        public virtual DbSet<PagoConcepto> PagoConcepto { get; set; }
         public virtual DbSet<PagoConceptoCarrera> PagoConceptoCarrera { get; set; }
         public virtual DbSet<PagoConceptoMaestro> PagoConceptoMaestro { get; set; }
         public virtual DbSet<PagoDescripcion> PagoDescripcion { get; set; }
@@ -210,6 +209,7 @@ namespace DAL
         public virtual DbSet<tmpReferencias> tmpReferencias { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
         public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
+        public virtual DbSet<PagoConcepto> PagoConcepto { get; set; }
     
         public virtual ObjectResult<string> spGeneraReferencia(Nullable<int> pagoId)
         {

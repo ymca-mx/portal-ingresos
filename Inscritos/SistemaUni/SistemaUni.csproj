@@ -273,6 +273,7 @@
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
+    <Content Include="JS\Pagos\ReferenciasTramites.js" />
     <Content Include="JS\Perfiles.js" />
     <Content Include="JS\PreAltaDocentes.js" />
     <Content Include="JS\ProgresLoad\LoadPage.css" />
@@ -349,6 +350,7 @@
     <Content Include="Pago\Pagos.html" />
     <Content Include="Pago\Pagos2Buscar.html" />
     <Content Include="Pago\Pagos2.html" />
+    <Content Include="Pago\ReferenciasTramites.html" />
     <Content Include="PreAltaDocentes.html" />
     <Content Include="Prueba.html" />
     <Content Include="PruebaCombos.html" />

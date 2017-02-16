@@ -100,7 +100,6 @@
         <EntityTypeShape EntityType="UniversidadModel.PagoCancelacion" Width="1.5" PointX="20.75" PointY="169.125" />
         <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionDetalle" Width="1.5" PointX="28" PointY="159.75" />
         <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionSolicitud" Width="1.5" PointX="16.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoConcepto" Width="1.5" PointX="8.25" PointY="158.875" />
         <EntityTypeShape EntityType="UniversidadModel.PagoConceptoCarrera" Width="1.5" PointX="16.75" PointY="4.75" />
         <EntityTypeShape EntityType="UniversidadModel.PagoConceptoMaestro" Width="1.5" PointX="3" PointY="154.625" />
         <EntityTypeShape EntityType="UniversidadModel.PagoDescripcion" Width="1.5" PointX="20.75" PointY="188.125" />
@@ -232,7 +231,6 @@
         <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_OfertaEducativa" />
-        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_PagoConcepto" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Periodo" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuentoDocumento_AlumnoDescuento" />
@@ -262,7 +260,6 @@
         <AssociationConnector Association="UniversidadModel.FK_AlumnoPasswordRecovery_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoPermitido_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_AdeudosBitacora_Pago" />
-        <AssociationConnector Association="UniversidadModel.FK_AdeudosBitacora_PagoConcepto" />
         <AssociationConnector Association="UniversidadModel.FK_PagoReingresoBitacora_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_PagoReingresoBitacora_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoRevision_OfertaEducativa" />
@@ -285,7 +282,6 @@
         <AssociationConnector Association="UniversidadModel.FK_BecaDeportiva_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_SucursalCaja_Caja" />
         <AssociationConnector Association="UniversidadModel.FK_Configuracion_SucursalCaja" />
-        <AssociationConnector Association="UniversidadModel.FK_Cuota_ConceptoPago" />
         <AssociationConnector Association="UniversidadModel.FK_Cuota_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_Cuota_Periodo" />
         <AssociationConnector Association="UniversidadModel.FK_Financiamiento_Cuota" />
@@ -298,7 +294,6 @@
         <AssociationConnector Association="UniversidadModel.FK_DatosFiscales_Empresa" />
         <AssociationConnector Association="UniversidadModel.FK_DatosFiscales_Municipio" />
         <AssociationConnector Association="UniversidadModel.FK_DatosFiscales_Pais" />
-        <AssociationConnector Association="UniversidadModel.FK_Descuento_ConceptoPago" />
         <AssociationConnector Association="UniversidadModel.FK_Descuento_DescuentoTipo" />
         <AssociationConnector Association="UniversidadModel.FK_Descuento_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_PagoDescuento_Descuento" />
@@ -323,7 +318,6 @@
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_Pagare_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_Pago_Estatus" />
-        <AssociationConnector Association="UniversidadModel.FK_PagoConcepto_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_PagoConceptoMaestro_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_PagoParcial_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_PagoPlan_Estatus" />
@@ -359,7 +353,6 @@
         <AssociationConnector Association="UniversidadModel.FK_Subperiodo_Mes" />
         <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_Municipio" />
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaRequerimiento_NivelAcademico" />
-        <AssociationConnector Association="UniversidadModel.FK_ConceptoPago_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativa_OfertaEducativaTipo" />
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativa_Sucursal" />
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_OfertaEducativa" />
@@ -394,7 +387,6 @@
         <AssociationConnector Association="UniversidadModel.FK_ReferenciaGeneradaBitacora_Pago" />
         <AssociationConnector Association="UniversidadModel.FK_PagoCancelacionDetalle_PagoCancelacion" />
         <AssociationConnector Association="UniversidadModel.FK_PagoCancelacionDetalle_Usuario" />
-        <AssociationConnector Association="UniversidadModel.FK_UsuarioTipoPagoConcepto_PagoConcepto" />
         <AssociationConnector Association="UniversidadModel.FK_PagoDetalle_PagoMetodo" />
         <AssociationConnector Association="UniversidadModel.FK_PagoDetalle_PagoParcial" />
         <AssociationConnector Association="UniversidadModel.FK_PagoParcial_PagoTipo" />
@@ -459,6 +451,14 @@
         <AssociationConnector Association="UniversidadModel.FK_UsuarioDetalleImagen_UsuarioImagen" />
         <AssociationConnector Association="UniversidadModel.FK_UsuarioTipoPagoConcepto_UsuarioTipo" />
         <AssociationConnector Association="UniversidadModel.UsuarioSucursalCaja" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConcepto" Width="1.5" PointX="8.25" PointY="158.75" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoDescuento_PagoConcepto" />
+        <AssociationConnector Association="UniversidadModel.FK_AdeudosBitacora_PagoConcepto" />
+        <AssociationConnector Association="UniversidadModel.FK_Cuota_ConceptoPago" />
+        <AssociationConnector Association="UniversidadModel.FK_Descuento_ConceptoPago" />
+        <AssociationConnector Association="UniversidadModel.FK_PagoConcepto_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_ConceptoPago_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_UsuarioTipoPagoConcepto_PagoConcepto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

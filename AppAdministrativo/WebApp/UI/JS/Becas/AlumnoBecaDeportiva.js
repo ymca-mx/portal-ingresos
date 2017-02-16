@@ -160,6 +160,9 @@ $(document).ready(function () {
             if (da.OfertaEducativaId.toString() === Oferta.toString()) {
                 desc.push(da);
             }
+            else {
+                tblBecas.fnClearTable();
+            }
         });
         //console.log(desc);
         if (desc.length > 0) { CargarDescuentos(desc); }

@@ -2862,6 +2862,256 @@ namespace BLL
             }
         }
 
+         public static List<DTOPagoDetallado> ConsultaPagosTramites(int AlumnoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    int ofertaid = 0;
+                    List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId 
+                        && P.EstatusId != 2 && P.EstatusId != 3 && (P.Anio != 2016 || P.PeriodoId != 1) && P.Cuota1.PagoConcepto.EsTramite == true ).AsNoTracking().ToList();
+                    lstPagos = lstPagos.OrderBy(P => P.OfertaEducativaId).ToList();
+                    lstPagos = lstPagos.Where(p => p.EstatusId != 2).ToList();
+
+                    List<Pago> lstAdeudos = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.Anio == 2016 && P.PeriodoId == 1
+                        && (P.EstatusId == 1  || P.EstatusId == 13)).AsNoTracking().ToList();
+                    List<DTOPagoDetallado> lstPagosD = new List<DTOPagoDetallado>();
+                    List<DTOPagoDetallado> lstPagosAdeudos = new List<DTOPagoDetallado>();
+                    lstAdeudos.ForEach(delegate (Pago objPago)
+                    {
+                        decimal total = 0;
+                        total = objPago.Promesa - (objPago.Promesa - objPago.Restante);
+
+                        DTOPagoDetallado objADeudo = new DTOPagoDetallado();
+                        objADeudo.Concepto = "Adeudo, periodos anteriores";
+                        objADeudo.ReferenciaId = int.Parse(objPago.ReferenciaId).ToString();
+                        objADeudo.Cargo_Descuento = objPago.Promesa.ToString("C", Cultura);
+                        objADeudo.CargoFechaLimite = "";
+                        objADeudo.DescuentoXAnticipado = "";
+                        objADeudo.CargoMonto = objPago.Promesa.ToString("C", Cultura);
+                        objADeudo.BecaAcademica_Pcj = "";
+                        objADeudo.BecaOpcional_Monto = "";
+                        objADeudo.Total_a_PagarS = total.ToString("C", Cultura);
+                        objADeudo.SaldoPagado = total.ToString("C", Cultura);
+                        objADeudo.Pagoid = objPago.PagoId;
+                        objADeudo.TotalMDescuentoMBecas = objPago.Promesa.ToString("C", Cultura);
+                        objADeudo.Adeudo = true;
+                        objADeudo.BecaSEP = null;
+                        objADeudo.SaldoAdeudo = total;
+                        objADeudo.OfertaEducativaId = objPago.OfertaEducativaId;
+                        objADeudo.EsSep = 2;
+                        objADeudo.OtroDescuento = "";
+
+                        lstPagosAdeudos.Add(objADeudo);
+                        lstPagosD.Add(objADeudo);
+                    });
+                    if (lstPagos.Count == 0)
+                    {
+                        decimal Total = 0;
+                        lstPagosD.ForEach(delegate (DTOPagoDetallado objPago)
+                        {
+                            Total += objPago.SaldoAdeudo;
+                        });
+                        lstPagosD[0].TotalPagado = Total.ToString("C", Cultura);
+                        return lstPagosD;
+                    }
+                    #region Ciclo de Pagos
+                    lstPagos.ForEach(objPago=>
+                    {
+                        try
+                        {
+                            if (ofertaid == 0)
+                            {
+                                ofertaid = objPago.OfertaEducativaId;
+                                lstPagosD.Add(new DTOPagoDetallado
+                                {
+                                    BecaAcademica_Monto = "",
+                                    BecaAcademica_Pcj = "",
+                                    Cargo_Descuento = "",
+                                    CargoFechaLimite = "",
+                                    CargoMonto = "",
+                                    Concepto = objPago.OfertaEducativa.Descripcion,
+                                    OfertaEducativaId = objPago.OfertaEducativaId,
+                                    DescripcionOferta = "",
+                                    ReferenciaId = "",
+                                    SaldoPagado = "",
+                                    Total_a_PagarS = "",
+                                    TotalMDescuentoMBecas = "",
+                                    EsSep = 2,
+                                    OtroDescuento=""
+                                });
+                            }
+                            else if (ofertaid != objPago.OfertaEducativaId)
+                            {
+                                ofertaid = objPago.OfertaEducativaId;
+                                lstPagosD.Add(new DTOPagoDetallado
+                                {
+                                    BecaAcademica_Monto = "",
+                                    BecaAcademica_Pcj = "",
+                                    Cargo_Descuento = "",
+                                    CargoFechaLimite = "",
+                                    CargoMonto = "",
+                                    Concepto = objPago.OfertaEducativa.Descripcion,
+                                    OfertaEducativaId = objPago.OfertaEducativaId,
+                                    DescripcionOferta = "",
+                                    ReferenciaId = "",
+                                    SaldoPagado = "",
+                                    Total_a_PagarS = "",
+                                    TotalMDescuentoMBecas = "",
+                                    EsSep = 2,
+                                    OtroDescuento=""
+                                });
+                            }
+                            DTOPagoDetallado objPagoAdd = new DTOPagoDetallado();
+                            List<PagoDescuento> listAnticipados = objPago.PagoDescuento.Where(PD => PD.Descuento.Descripcion == "Pago Anticipado").ToList();
+
+                            List<AlumnoDescuento> lstAlDescuentos =
+                                db.AlumnoDescuento.Where(A => A.AlumnoId == AlumnoId  &&
+                                   (A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Beca Académica"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                    A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Beca SEP"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                        A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en inscripción"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                        A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en colegiatura"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                        A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en examen diagnóstico"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                        A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en credencial nuevo ingreso"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                        A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en credencial nuevo ingreso, idiomas"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId)
+                                    && A.OfertaEducativaId == objPago.OfertaEducativaId && A.PagoConceptoId == objPago.Cuota1.PagoConceptoId && A.EstatusId == 2).AsNoTracking().ToList();
+                            //BecaDeportiva
+                            List<AlumnoDescuento> lstAlDescuentos3 = db.AlumnoDescuento.Where(A => A.AlumnoId == AlumnoId
+                                                                                                    && A.OfertaEducativaId == objPago.OfertaEducativaId
+                                                                                                    && A.PagoConceptoId == objPago.Cuota1.PagoConceptoId
+                                                                                                    && A.EstatusId == 2
+                                                                                                    && A.EsDeportiva == true)
+                                                                                                    .AsNoTracking().ToList();
+
+                            decimal Descuento = objPago.PagoDescuento != null ?
+                               listAnticipados.Count > 0 ?
+                               listAnticipados.FirstOrDefault().Monto : 0 : 0;
+
+                            decimal Beca = lstAlDescuentos.Count > 0 ?
+                                objPago.PagoDescuento.Count > 0 ? (from a in objPago.PagoDescuento
+                                                                   where lstAlDescuentos.Where(s => s.DescuentoId == a.DescuentoId).ToList().Count > 0
+                                                                   select a).FirstOrDefault().Monto : 0 : 0;
+
+                            decimal Beca3 = lstAlDescuentos3.Count > 0 ?
+                                                objPago.PagoDescuento.Count > 0 ?
+                                                    objPago.PagoDescuento.Where(P => P.DescuentoId == lstAlDescuentos3.FirstOrDefault().DescuentoId).FirstOrDefault().Monto
+                                                    : 0
+                                                : 0;
+                            int DescuentoSepID = db.Descuento.Where(D => D.Descripcion == "Beca SEP"
+                                          && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).ToList().Count > 0 ?
+                            db.Descuento.Where(D => D.Descripcion == "Beca SEP"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId : 0;
+
+                            int DescuentoAcdID = db.Descuento.Where(D => D.Descripcion == "Beca Académica"
+                                          && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).ToList().Count > 0 ?
+                            db.Descuento.Where(D => D.Descripcion == "Beca Académica"
+                                        && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId : 0;
+
+                            int Comite = lstAlDescuentos.Where(d => d.EsComite == true).ToList().Count > 0 ? 3 : 0;
+
+                            decimal Monto = 0;
+                            Monto = objPago.Cuota == 0 ? objPago.Promesa : objPago.Cuota;
+
+                            decimal total = 0;
+                            total = ((Monto - Descuento - Beca - Beca3) - (objPago.Promesa - objPago.Restante));
+                            total = total < 0 ? 0 : total;
+
+
+                            objPagoAdd.Pagoid = objPago.PagoId;
+                            //Concepto
+                            objPagoAdd.Concepto = objPago.Cuota1.PagoConceptoId == 800 ? objPago.Cuota1.PagoConcepto.Descripcion + ", " +
+                                objPago.Subperiodo.Mes.Descripcion + " " + (objPago.PeriodoId == 1 ? (objPago.Anio - 1).ToString() :
+                                objPago.Anio.ToString()) : objPago.Cuota1.PagoConcepto.Descripcion + " " + (
+                                objPago.PagoRecargo1.Count > 0 ?
+                                objPago.PagoRecargo1.Where(P => P.PagoIdRecargo == objPago.PagoId).FirstOrDefault().Pago.Cuota1.PagoConcepto.Descripcion +
+                                 (objPago.PagoRecargo1.Where(P => P.PagoIdRecargo == objPago.PagoId).FirstOrDefault().Pago.Cuota1.PagoConceptoId == 800 ?
+                                 ", " + objPago.PagoRecargo1.Where(P => P.PagoIdRecargo == objPago.PagoId).FirstOrDefault().Pago.Subperiodo.Mes.Descripcion + " " +
+                                 (objPago.PagoRecargo1.Where(P => P.PagoIdRecargo == objPago.PagoId).FirstOrDefault().Pago.PeriodoId == 1 ?
+                                 (objPago.PagoRecargo1.Where(P => P.PagoIdRecargo == objPago.PagoId).FirstOrDefault().Pago.Anio - 1).ToString() :
+                                 objPago.PagoRecargo1.Where(P => P.PagoIdRecargo == objPago.PagoId).FirstOrDefault().Pago.Anio.ToString()) : "") : "");
+
+
+                            objPagoAdd.ReferenciaId = int.Parse(objPago.ReferenciaId).ToString();
+                            objPagoAdd.CargoMonto = objPago.Cuota == 0 ? objPago.Promesa.ToString("C", Cultura) : objPago.Cuota.ToString("C", Cultura);
+                            objPagoAdd.CargoFechaLimite = objPago.Cuota1.PagoConceptoId == 800 || objPago.Cuota1.PagoConceptoId == 802 ? Utilities.Fecha.Prorroga(objPago.Anio,
+                                db.Subperiodo.Where(s => s.PeriodoId == objPago.PeriodoId && s.SubperiodoId == objPago.SubperiodoId)
+                                .FirstOrDefault().MesId, true, 5).ToString("dd/MM/yyyy", Cultura) :
+                                objPago.FechaGeneracion.AddDays(5).ToString("dd/MM/yyyy", Cultura);//; objPago.FechaGeneracion.ToString("dd/MM/yyyy", Cultura);
+
+                            objPagoAdd.DescuentoXAnticipado = Descuento > 0 ? Descuento.ToString("C", Cultura) : " ";
+
+                            objPagoAdd.Cargo_Descuento = objPago.Cuota == 0 ? (objPago.Promesa - (Descuento > 0 ? Descuento : 0)).ToString("C", Cultura) :
+                                (objPago.Cuota - (Descuento > 0 ? Descuento : 0)).ToString("C", Cultura);
+
+                            objPagoAdd.BecaAcademica_Pcj = lstAlDescuentos.Count > 0 ? lstAlDescuentos.FirstOrDefault().Monto.ToString() + "%" : " ";
+
+                            objPagoAdd.BecaAcademica_Monto = lstAlDescuentos.Count > 0 ?
+                                Beca.ToString("C", Cultura) : " ";
+                            decimal PromoCasa = objPago.PagoDescuento.Where(O => O.Descuento.Descripcion == "Promoción en Casa").ToList().Sum(O => O.Monto);
+                            objPagoAdd.OtroDescuento = PromoCasa > 0 ? PromoCasa.ToString("C", Cultura) : "";
+
+                            objPagoAdd.BecaOpcional_Pcj = lstAlDescuentos3.Count > 0 ? lstAlDescuentos3.FirstOrDefault().Monto.ToString() + "%" : " ";
+                            objPagoAdd.BecaOpcional_Monto = lstAlDescuentos3.Count > 0 ? Beca3.ToString("C", Cultura) : " ";
+                            objPagoAdd.TotalMDescuentoMBecas = (Monto - Descuento - Beca - Beca3 - PromoCasa).ToString("C", Cultura);
+                            objPagoAdd.SaldoPagado = total.ToString("C", Cultura);
+                            objPagoAdd.OfertaEducativaId = objPago.OfertaEducativaId;
+                            objPagoAdd.DescripcionOferta = objPago.OfertaEducativa.Descripcion;
+                            
+                            
+                            lstPagosD.Add(objPagoAdd);
+                            lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar += total;
+                            ///////////////////Corregir
+                            if (objPago.Cuota1.PagoConceptoId == 800 || objPago.Cuota1.PagoConceptoId == 802)
+                            {
+                                objPagoAdd.EsSep =
+                                                Comite == 3
+                                                ? Comite
+                                                : lstAlDescuentos.Where(d => d.EsSEP).ToList().Count > 0 ? 1
+                                                : 2;
+                                lstPagosD[0].EsSep = objPagoAdd.EsSep;
+                                lstPagosD[0].BecaSEP = lstPagosD[0].BecaSEP == null ? lstAlDescuentos3.Count > 0 ? "Beca Deportiva" : null : lstPagosD[0].BecaSEP;
+                                
+                            }
+                            /////////////////////////
+                        }
+                        catch
+                        {
+                            
+                        }
+                    });
+                    #endregion
+                    int ofert = lstPagosD[0].OfertaEducativaId;
+
+                    lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar += lstAdeudos.Count > 0 ? lstPagosAdeudos.Sum(P => P.SaldoAdeudo) : 0;
+                    lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_PagarS = lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar.ToString("C", Cultura);
+                    lstPagosD[0].TotalPagado = lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_PagarS;
+                    lstPagosD[0].esEmpresa = db.AlumnoInscrito.Where(a => 
+                                                a.AlumnoId == AlumnoId &&
+                                                a.EsEmpresa == true).ToList().Count > 0 ? true : false;
+                    if (lstPagosD[0].esEmpresa)
+                    {
+                        var alConf = db.GrupoAlumnoConfiguracion.Where(k =>
+                                     k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList();
+                        lstPagosD[0].esEspecial = alConf.Count > 0 ? true : false;
+                    }
+                    //lstPagosD[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
+                    return lstPagosD;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static List<DTOPagos> ConsultarReferenciasConceptos2(int AlumnoId, int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
