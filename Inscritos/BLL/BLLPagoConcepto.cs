@@ -20,37 +20,9 @@ namespace BLL
                     AlumnoInscrito objAlumno = db.AlumnoInscrito.Where(P => P.AlumnoId == AlumnoId && P.OfertaEducativaId == OfertaEducativaId).AsNoTracking().FirstOrDefault();
                     List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.EstatusId == 1).ToList();
                     Pago objPagoRe = lstPagos.Where(LP => LP.Anio == 2016 && LP.PeriodoId == 1).FirstOrDefault();
-                    //Boolean Escobrable = objPagoRe != null ? true : false; Permitir Pago de todos los concepotos a un que tenga adeudo.
-                    Boolean Escobrable = objPagoRe != null ? false : false;
                     //int cuenta = db.Pago.Where(P => P.Anio == 2016 && P.PeriodoId == 1).Count();
                     DTOPeriodo objPeriodo = BLLPeriodo.TraerPeriodoEntreFechas(DateTime.Now);
-                    if (Escobrable == true)
-                    {
-                        lstConceptos = (from a in db.PagoConcepto
-                                        join b in db.AlumnoInscrito on a.OfertaEducativaId equals b.OfertaEducativaId
-                                        join c in db.Cuota on new { a.PagoConceptoId, a.OfertaEducativaId } equals new { c.PagoConceptoId, c.OfertaEducativaId }
-                                        where (a.EsVariable == false && a.EsVisible == true) && a.EsCobrable == true && a.OfertaEducativaId == OfertaEducativaId
-                                        && b.AlumnoId == AlumnoId && c.PeriodoId == objPeriodo.PeriodoId && c.Anio == objPeriodo.Anio && c.OfertaEducativaId==OfertaEducativaId
-
-                                        orderby a.Descripcion ascending
-                                        select new DTOCuota
-                                        {
-                                            DTOPagoConcepto = new DTOPagoConcepto
-                                            {
-                                                PagoConceptoId = a.PagoConceptoId,
-                                                Descripcion = a.Descripcion,
-                                            },
-                                            Anio = c.Anio,
-                                            CuotaId = c.CuotaId,
-                                            EsEmpresa = c.EsEmpresa,
-                                            Monto = c.Monto,
-                                            OfertaEducativaId = c.OfertaEducativaId,
-                                            PagoConceptoId = c.PagoConceptoId,
-                                            PeriodoId = c.PeriodoId
-                                        }).ToList();
-                    }
-                    else
-                    { 
+                  
                         lstConceptos = (from a in db.PagoConcepto
                                         join b in db.AlumnoInscrito on a.OfertaEducativaId equals b.OfertaEducativaId
                                         join c in db.Cuota on new { a.PagoConceptoId, a.OfertaEducativaId } equals new { c.PagoConceptoId, c.OfertaEducativaId }
@@ -72,7 +44,7 @@ namespace BLL
                                             PagoConceptoId = c.PagoConceptoId,
                                             PeriodoId = c.PeriodoId
                                         }).ToList();
-                    }
+                    
                     int band = 0, i = 0;
                    List<int >IndicesQ= new List<int>();
                     lstConceptos.ForEach(a =>
@@ -132,8 +104,6 @@ namespace BLL
                     AlumnoInscrito objAlumno = db.AlumnoInscrito.Where(P => P.AlumnoId == AlumnoId && P.OfertaEducativaId == OfertaEducativaId).AsNoTracking().FirstOrDefault();
                     //List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.EstatusId == 1).ToList();
                     //Pago objPagoRe = lstPagos.Where(LP => LP.Anio == 2016 && LP.PeriodoId == 1).FirstOrDefault();
-                    //Boolean Escobrable = objPagoRe != null ? true : false; Permitir Pago de todos los concepotos a un que tenga adeudo.
-                    //Boolean Escobrable = objPagoRe != null ? false : false; asas
                     //int cuenta = db.Pago.Where(P => P.Anio == 2016 && P.PeriodoId == 1).Count();
                     DTOPeriodo objPeriodo = BLLPeriodo.TraerPeriodoEntreFechas(DateTime.Now);
                     var Conceptosid =

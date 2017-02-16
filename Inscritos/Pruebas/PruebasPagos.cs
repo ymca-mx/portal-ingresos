@@ -15,7 +15,7 @@ namespace Pruebas
         public void TraerPagos()
         {
             var objRest =
-            BLLPago.ReferenciasPago(6627, 2017, 2);
+            BLLPago.ReferenciasPago(8185, 2017, 2);
         }
 
         [TestMethod]
