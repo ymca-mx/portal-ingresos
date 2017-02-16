@@ -293,7 +293,8 @@
         //Cambiar texto
         var Descrip = $('#' + tutabla);
 
-        Descrip = Descrip[0].parentElement.parentElement.childNodes[2].childNodes[0].childNodes[0];
+        Descrip = Descrip[0].parentElement.parentElement.childNodes[2].childNodes[0];
+        Descrip = Descrip.childNodes[0];
         var Texto = Descrip.innerHTML;
         Texto = Texto.split(" ");
         Texto = Texto[5];
@@ -514,7 +515,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": false,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -570,7 +571,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -1247,7 +1248,7 @@
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
                         "ordering": true,
-                        "info": false,
+                        "info": true,
                         "async": true,
                         "bSort": false,
                         "bDestroy": true,
@@ -1700,7 +1701,7 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bSort": false,
                     "bDestroy": true,
