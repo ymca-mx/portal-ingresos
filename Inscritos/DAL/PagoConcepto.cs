@@ -28,7 +28,7 @@ namespace DAL
         public int OfertaEducativaId { get; set; }
         public string Descripcion { get; set; }
         public string CuentaContable { get; set; }
-        public bool EsCobrable { get; set; }
+        public bool EsTramite { get; set; }
         public bool EsVisible { get; set; }
         public bool EsVariable { get; set; }
         public bool EsMultireferencia { get; set; }

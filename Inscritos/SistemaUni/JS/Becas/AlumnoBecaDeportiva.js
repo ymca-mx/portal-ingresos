@@ -161,7 +161,7 @@ $(document).ready(function () {
                 desc.push(da);
             }
             else {
-                tblBecas.clear().draw();
+                tblBecas.fnClearTable();
             }
         });
         //console.log(desc);

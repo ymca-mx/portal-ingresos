@@ -35,10 +35,10 @@ namespace DAL
         public virtual Alumno Alumno { get; set; }
         public virtual Estatus Estatus { get; set; }
         public virtual OfertaEducativa OfertaEducativa { get; set; }
-        public virtual PagoConcepto PagoConcepto { get; set; }
         public virtual Periodo Periodo { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual AlumnoDescuentoDocumento AlumnoDescuentoDocumento { get; set; }
         public virtual AlumnoDescuentoPendiente AlumnoDescuentoPendiente { get; set; }
+        public virtual PagoConcepto PagoConcepto { get; set; }
     }
 }

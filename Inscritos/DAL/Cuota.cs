@@ -30,7 +30,6 @@ namespace DAL
         public decimal Monto { get; set; }
         public bool EsEmpresa { get; set; }
     
-        public virtual PagoConcepto PagoConcepto { get; set; }
         public virtual OfertaEducativa OfertaEducativa { get; set; }
         public virtual Periodo Periodo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -40,5 +39,6 @@ namespace DAL
         public virtual LenguasRelacion LenguasRelacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pago> Pago { get; set; }
+        public virtual PagoConcepto PagoConcepto { get; set; }
     }
 }
