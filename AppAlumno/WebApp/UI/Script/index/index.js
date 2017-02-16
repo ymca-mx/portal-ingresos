@@ -26,6 +26,8 @@
                  if (Datos.extensionImagen == ".png")
                      $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                  //RevisaAnticipado();
+
+                 $('#popDatos').load('../inscritos/Alumno/AlumnoActualizaDatos.html');
              }
          },
          error: function (Resultado) {

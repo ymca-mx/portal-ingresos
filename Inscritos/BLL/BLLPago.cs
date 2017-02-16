@@ -2870,42 +2870,13 @@ namespace BLL
                 {
                     int ofertaid = 0;
                     List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId 
-                        && P.EstatusId != 2 && P.EstatusId != 3 && (P.Anio != 2016 || P.PeriodoId != 1) && P.Cuota1.PagoConcepto.EsTramite == true ).AsNoTracking().ToList();
+                        && P.EstatusId != 2 && P.EstatusId != 3  && (P.Anio != 2016 || P.PeriodoId != 1) && P.Cuota1.PagoConcepto.EsTramite == true ).AsNoTracking().ToList();
                     lstPagos = lstPagos.OrderBy(P => P.OfertaEducativaId).ToList();
                     lstPagos = lstPagos.Where(p => p.EstatusId != 2).ToList();
 
-                    List<Pago> lstAdeudos = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.Anio == 2016 && P.PeriodoId == 1
-                        && (P.EstatusId == 1  || P.EstatusId == 13)).AsNoTracking().ToList();
+                   
                     List<DTOPagoDetallado> lstPagosD = new List<DTOPagoDetallado>();
                     List<DTOPagoDetallado> lstPagosAdeudos = new List<DTOPagoDetallado>();
-                    lstAdeudos.ForEach(delegate (Pago objPago)
-                    {
-                        decimal total = 0;
-                        total = objPago.Promesa - (objPago.Promesa - objPago.Restante);
-
-                        DTOPagoDetallado objADeudo = new DTOPagoDetallado();
-                        objADeudo.Concepto = "Adeudo, periodos anteriores";
-                        objADeudo.ReferenciaId = int.Parse(objPago.ReferenciaId).ToString();
-                        objADeudo.Cargo_Descuento = objPago.Promesa.ToString("C", Cultura);
-                        objADeudo.CargoFechaLimite = "";
-                        objADeudo.DescuentoXAnticipado = "";
-                        objADeudo.CargoMonto = objPago.Promesa.ToString("C", Cultura);
-                        objADeudo.BecaAcademica_Pcj = "";
-                        objADeudo.BecaOpcional_Monto = "";
-                        objADeudo.Total_a_PagarS = total.ToString("C", Cultura);
-                        objADeudo.SaldoPagado = total.ToString("C", Cultura);
-                        objADeudo.Pagoid = objPago.PagoId;
-                        objADeudo.TotalMDescuentoMBecas = objPago.Promesa.ToString("C", Cultura);
-                        objADeudo.Adeudo = true;
-                        objADeudo.BecaSEP = null;
-                        objADeudo.SaldoAdeudo = total;
-                        objADeudo.OfertaEducativaId = objPago.OfertaEducativaId;
-                        objADeudo.EsSep = 2;
-                        objADeudo.OtroDescuento = "";
-
-                        lstPagosAdeudos.Add(objADeudo);
-                        lstPagosD.Add(objADeudo);
-                    });
                     if (lstPagos.Count == 0)
                     {
                         decimal Total = 0;
@@ -3064,10 +3035,11 @@ namespace BLL
                             objPagoAdd.SaldoPagado = total.ToString("C", Cultura);
                             objPagoAdd.OfertaEducativaId = objPago.OfertaEducativaId;
                             objPagoAdd.DescripcionOferta = objPago.OfertaEducativa.Descripcion;
-                            
-                            
+                            objPagoAdd.Periodo = db.Periodo.Where(a => a.Anio == objPago.Anio && a.PeriodoId == objPago.PeriodoId).FirstOrDefault().Descripcion;
+                            objPagoAdd.Pagado = (objPago.Promesa - objPago.Restante).ToString("C", Cultura);
+
                             lstPagosD.Add(objPagoAdd);
-                            lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar += total;
+                            lstPagosD[0].Total_a_Pagar += total;
                             ///////////////////Corregir
                             if (objPago.Cuota1.PagoConceptoId == 800 || objPago.Cuota1.PagoConceptoId == 802)
                             {
@@ -3090,9 +3062,9 @@ namespace BLL
                     #endregion
                     int ofert = lstPagosD[0].OfertaEducativaId;
 
-                    lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar += lstAdeudos.Count > 0 ? lstPagosAdeudos.Sum(P => P.SaldoAdeudo) : 0;
-                    lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_PagarS = lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar.ToString("C", Cultura);
-                    lstPagosD[0].TotalPagado = lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_PagarS;
+                    lstPagosD[ 0].Total_a_Pagar +=  0;
+                    lstPagosD[ 0].Total_a_PagarS = lstPagosD[ 0].Total_a_Pagar.ToString("C", Cultura);
+                    lstPagosD[0].TotalPagado = lstPagosD[ 0].Total_a_PagarS;
                     lstPagosD[0].esEmpresa = db.AlumnoInscrito.Where(a => 
                                                 a.AlumnoId == AlumnoId &&
                                                 a.EsEmpresa == true).ToList().Count > 0 ? true : false;
@@ -3305,6 +3277,7 @@ namespace BLL
                     {
                         i.objNormal.Estatus = i.Promesa == decimal.Parse(i.Restante)
                                             ? "Pendiente" : (i.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado");
+                        
                     });
 
                     return lstPagos;

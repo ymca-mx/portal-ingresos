@@ -3,11 +3,11 @@
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
-        //$('#PopDatosAlumno').modal('show');
-        //LimpiarCampos();
-        //AlumnoNum = $.cookie('userAdmin');
-        //$('#Load').modal('show');
-        //EsNumero(AlumnoNum);
+        $('#PopDatosAlumno').modal('show');
+        LimpiarCampos();
+        AlumnoNum = $.cookie('userAdmin');
+        $('#Load').modal('show');
+        EsNumero(AlumnoNum);
 
     function LimpiarCampos() {
         $("#submit_form").trigger('reset');
@@ -19,14 +19,14 @@
         $('#submit_form  i').removeClass('fa-check');
     }
 
-    $('#btnBuscarAlumno').click(function () {
-        $('#PopDatosAlumno').modal('show');
-        LimpiarCampos();
-        var usuario = $.cookie('userAdmin');
-        $('#Load').modal('show');
-        AlumnoNum = $('#txtAlumno').val();
-            EsNumero(AlumnoNum);
-    });
+    //$('#btnBuscarAlumno').click(function () {
+    //    $('#PopDatosAlumno').modal('show');
+    //    LimpiarCampos();
+    //    var usuario = $.cookie('userAdmin');
+    //    $('#Load').modal('show');
+    //    AlumnoNum = $('#txtAlumno').val();
+    //        EsNumero(AlumnoNum);
+    //});
 
 
     function EsNumero(Alumno) {

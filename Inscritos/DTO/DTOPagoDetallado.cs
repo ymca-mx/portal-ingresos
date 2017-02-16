@@ -32,6 +32,8 @@ namespace DTO
         public string TotalPagado { get; set; }
         public bool esEmpresa { get; set; }
         public bool esEspecial { get; set; }
-        public string OtroDescuento { get; set; } 
+        public string OtroDescuento { get; set; }
+        public string Periodo { get; set; }
+        public string Pagado { get; set; }
     }
 }
