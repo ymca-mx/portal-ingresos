@@ -258,7 +258,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
