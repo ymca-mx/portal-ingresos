@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    tblAlumnosCom1
     var Seleccionados = "";
     var MItable;
     var Alumnos, DatosEmpresas, AlumnoId, TipoMovimiento,ModificarGrupo,TM;
@@ -1183,6 +1184,31 @@
                                 "mRender": function (data, f, d) {
                                     var link;
                                     if (d.AlumnoCuota != null) {
+                                            link = "$ " + d.AlumnoCuota.CuotaInscripcion;
+                                    }
+                                    else { link = "No" }
+
+                                    return link;
+                                }
+                            },
+                             {
+                                 "mDataProp": "AlumnoCuota",
+                                 "mRender": function (data, f, d) {
+                                     var link;
+                                     if (d.AlumnoCuota != null) {
+                                         link = "$ " + d.AlumnoCuota.CuotaColegiatura;
+                                     }
+                                     else { link = "No" }
+
+                                     return link;
+                                 }
+                             },
+
+                            {
+                                "mDataProp": "AlumnoCuota",
+                                "mRender": function (data, f, d) {
+                                    var link;
+                                    if (d.AlumnoCuota != null) {
                                         if (d.AlumnoCuota.GrupoId == 0) {
                                             link = "<a href='' class='btn blue' onclick='return false;'>" + "Agregar Grupo" + " </a> ";
                                         }
@@ -1618,6 +1644,22 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                         { "mDataProp": "AlumnoId" },
                         { "mDataProp": "Nombre" },
                         { "mDataProp": "OfertaEducativaS" },
+                        {
+                            "mDataProp": "AlumnoCuota",
+                            "mRender": function (data, f, d) {
+                                var link;
+                                link = "$ " + d.AlumnoCuota.CuotaInscripcion;
+                                return link;
+                            }
+                        },
+                        {
+                            "mDataProp": "AlumnoCuota",
+                            "mRender": function (data, f, d) {
+                                var link;
+                                link = "$ " + d.AlumnoCuota.CuotaColegiatura;
+                                return link;
+                            }
+                        },
                         {
                             "mDataProp": "AlumnoCuota",
                             "mRender": function (data, f, d) {
