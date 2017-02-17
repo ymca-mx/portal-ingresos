@@ -96,7 +96,7 @@ namespace WebServices.WS
                 string Porcentaje, string UsuarioId, string EsComite, string EsSEP, string EsEmpresa)
         {
             string Respuesta =
-            BLL.BLLBeca.ConsultarComite(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(Anio), int.Parse(PeriodoId));
+            BLL.BLLBeca.VerificarInscripcionActual(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(Anio), int.Parse(PeriodoId));
 
             if (Respuesta == "Procede")
             {

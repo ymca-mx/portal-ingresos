@@ -458,7 +458,7 @@
                 
                 var lblEmpresa = $('#divInscrito3');
                 lblEmpresa = $(lblEmpresa)[0].children[0].children[0].innerText;
-                lblEmpresa = data.d.EsEmpresa == true ? "Grupo Empresarial" : data.d.esEspecial == true ? "Alumno Especial" : "";
+                lblEmpresa = data.d.EsEmpresa == true ? data.d.EsEspecial == true ? "Alumno Especial" : "Grupo Empresarial" :  "";
                 //lblEmpresa = lblEmpresa + " " + data.d.Grupo;
                 var objEmr = $('#divInscrito3');
                 $(objEmr)[0].children[0].children[0].innerText = lblEmpresa;
@@ -478,6 +478,10 @@
                     if (data.d.Inscrito == true) {
                         $("#btnGenerarCargos").attr("disabled", "disabled");
                     }
+                    if (data.d.EsEspecial) {
+                        $("#btnGenerarCargos").removeAttr("disabled");
+                        $("#txtBecaMonto").removeAttr("disabled");
+                    }
                 }
                     /////////// Alumno en Gruopo Especial
                     /////////// No tiene Pagos Generados
@@ -493,6 +497,10 @@
                     if (data.d.Inscrito == true) {
                         var lab = $('#lblPagos');
                         lab[0].innerText = "Reinscrito, sin Cargos Generados";                        
+                    }
+                    if (data.d.EsEspecial) {
+                        $("#btnGenerarCargos").removeAttr("disabled");
+                        $("#txtBecaMonto").removeAttr("disabled");
                     }
                 }
                     /////////// Alumno Normal

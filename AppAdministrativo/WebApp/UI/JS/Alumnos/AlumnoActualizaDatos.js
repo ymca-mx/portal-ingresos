@@ -3,6 +3,7 @@
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
+    AlumnoNum = $.cookie('user');
     Verificar();
 
 
@@ -12,14 +13,13 @@
             $.ajax({
                 type: "POST",
                 url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoDatos",
-                data: "{AlumnoId:'" + Alumno + "'}",
+                data: "{AlumnoId:'" + AlumnoNum + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (data) {
                     if (data.d) {
                         $('#PopDatosAlumno').modal('show');
                         LimpiarCampos();
-                        AlumnoNum = $.cookie('userAdmin');
                         $('#Load').modal('show');
                         EsNumero(AlumnoNum);
                     }

@@ -26,15 +26,32 @@
                  if (Datos.extensionImagen == ".png")
                      $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                  //RevisaAnticipado();
-
-                 $('#popDatos').load('../inscritos/Alumno/AlumnoActualizaDatos.html');
+                 Verificar();
              }
          },
          error: function (Resultado) {
              alert('Se presento un error en la validación de las credenciales');
          }
      });
+     function Verificar() {
+         var AlumnoNum = $.cookie('user');
+         $.ajax({
+             type: "POST",
+             url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoDatos",
+             data: "{AlumnoId:'" + AlumnoNum + "'}",
+             contentType: "application/json; charset=utf-8",
+             dataType: 'json',
+             success: function (data) {
+                 if (data.d) {
+                     $('#popDatos').load('../inscritos/Alumno/AlumnoActualizaDatos.html');
+                 }
+             }
+         });
+     }
 
+     $('#PopDatosAlumno').on('hidden.bs.modal', function () {
+         location.reload();
+     });
      function RevisaAnticipado()
      {
          $.ajax({

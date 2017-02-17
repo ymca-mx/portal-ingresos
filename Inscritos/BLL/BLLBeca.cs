@@ -171,7 +171,7 @@ namespace BLL
         }
 
 
-        public static string ConsultarComite(int AlumnoId, int OfertaEducativaId, int Anio, int PeriodoId)
+        public static string VerificarInscripcionActual(int AlumnoId, int OfertaEducativaId, int Anio, int PeriodoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {

@@ -1386,6 +1386,7 @@ namespace BLL
                         //Empresa
                         if (objcom.Where(s => s.EsEmpresa == true).ToList().Count > 0)
                         {
+                            
                             objRegresa = new AlumnoPagos
                             {
                                 AlumnoId = lstPagos.Where(o => o.Cuota1.PagoConceptoId == 15
@@ -1404,15 +1405,15 @@ namespace BLL
                                 PeriodoId = " " + objPeriodoActual.PeriodoId,
                                 Anio = " " + objPeriodoActual.Anio,
                                 Inscrito = true,
-                                Academica = listDesc.FirstOrDefault().Monto > 0 ?
+                                Academica = listDesc.Count>0  ? listDesc.FirstOrDefault().Monto > 0 ?
                                             listDesc.FirstOrDefault().EsSEP == false && listDesc.FirstOrDefault().EsComite == false ?
-                                            true : false : false,
-                                Comite = listDesc.FirstOrDefault().Monto > 0 ?
+                                            true : false : false : false,
+                                Comite = listDesc.Count > 0 ? listDesc.FirstOrDefault().Monto > 0 ?
                                            listDesc.FirstOrDefault().EsComite == true ? true
-                                           : false : false,
-                                SEP = listDesc.FirstOrDefault().Monto > 0 ?
+                                           : false : false: false,
+                                SEP = listDesc.Count > 0 ? listDesc.FirstOrDefault().Monto > 0 ?
                                            listDesc.FirstOrDefault().EsSEP == true ? true
-                                           : false : false,
+                                           : false : false : false,
                                 lstPagos = (from a in lstPagos
                                             select new PagosAlumnos
                                             {
@@ -1427,13 +1428,11 @@ namespace BLL
                                                             .ToList().Count,
                                 EsEmpresa=true,
                                 EsEspecial=(bool) objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault().EsEspecial,
-                                Grupo = db.AlumnoGrupoCuota.Where(
-                                            k => k.AlumnoId == AlumnoId
-                                                && k.OfertaEducativaId == OfertaEducativaId).ToList().Count > 0 ?
-                                        db.Grupo.Where(gl => gl.GrupoId == db.AlumnoGrupoCuota.Where(
-                                            k1 => k1.AlumnoId == AlumnoId
-                                                && k1.OfertaEducativaId == OfertaEducativaId).FirstOrDefault().GrupoId).FirstOrDefault().Descripcion : ""
-                            };
+                                Grupo = objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion != null ?
+                                 objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion.Where(k => k.OfertaEducativaId == OfertaEducativaId).ToList().Count > 0 ?
+                                                objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion.Where(k => k.OfertaEducativaId == OfertaEducativaId).ToList().First().Grupo?.Descripcion ?? ""
+                                                : "" : ""
+                        };
                         }
                         //No es EMpresa
                         else

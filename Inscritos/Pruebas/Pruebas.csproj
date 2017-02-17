@@ -65,6 +65,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Alumno.cs" />
     <Compile Include="PruebasBecas.cs" />
     <Compile Include="PruebasEmpresa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

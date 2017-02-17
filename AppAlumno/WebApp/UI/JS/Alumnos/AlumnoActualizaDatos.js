@@ -4,28 +4,16 @@
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
     AlumnoNum = $.cookie('user');
-    Verificar();
+    Load();
 
 
     
-        function Verificar()
-        {
-            $.ajax({
-                type: "POST",
-                url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoDatos",
-                data: "{AlumnoId:'" + AlumnoNum + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
-                    if (data.d) {
-                        $('#PopDatosAlumno').modal('show');
-                        LimpiarCampos();
-                        $('#Load').modal('show');
-                        EsNumero(AlumnoNum);
-                    }
-                }
-            });
-        }
+    function Load() {
+        $('#PopDatosAlumno').modal('show');
+        LimpiarCampos();
+        $('#Load').modal('show');
+        EsNumero(AlumnoNum);
+    }
 
 
     function LimpiarCampos() {
