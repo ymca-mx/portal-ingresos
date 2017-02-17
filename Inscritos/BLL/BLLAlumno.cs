@@ -1357,7 +1357,7 @@ namespace BLL
                     {
                         Descripcion = ""
                     };
-
+                     
                     List<AlumnoInscrito> objcom = objAlumnoDB.AlumnoInscrito.Where(ds => ds.Anio == objPeriodoActual.Anio
                          && ds.PeriodoId == objPeriodoActual.PeriodoId && ds.OfertaEducativaId == OfertaEducativaId).ToList();
                     List<Pago> lstPagos = db.Pago.Where(i => i.AlumnoId == AlumnoId
@@ -1425,6 +1425,8 @@ namespace BLL
                                                           || I.Cuota1.PagoConceptoId == 320).ToList().Count,
                                 Asesorias = lstPagos.Where(I => I.Cuota1.PagoConceptoId == 15)
                                                             .ToList().Count,
+                                EsEmpresa=true,
+                                EsEspecial=(bool) objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault().EsEspecial,
                                 Grupo = db.AlumnoGrupoCuota.Where(
                                             k => k.AlumnoId == AlumnoId
                                                 && k.OfertaEducativaId == OfertaEducativaId).ToList().Count > 0 ?
@@ -1522,6 +1524,8 @@ namespace BLL
                                     Academica = false,
                                     Comite = false,
                                     SEP = false,
+                                    EsEmpresa=true,
+                                    EsEspecial = (bool)objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault().EsEspecial,
                                     lstPagos = (from a in lstPagos
                                                 select new PagosAlumnos
                                                 {
@@ -1633,6 +1637,8 @@ namespace BLL
                                     Academica = false,
                                     Comite = false,
                                     SEP = false,
+                                    EsEmpresa=true,
+                                    EsEspecial = (bool)objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault().EsEspecial,
                                     lstPagos = (from a in lstPagos2
                                                 select new PagosAlumnos
                                                 {

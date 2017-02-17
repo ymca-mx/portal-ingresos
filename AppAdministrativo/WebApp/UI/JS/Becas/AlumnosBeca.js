@@ -458,7 +458,7 @@
                 
                 var lblEmpresa = $('#divInscrito3');
                 lblEmpresa = $(lblEmpresa)[0].children[0].children[0].innerText;
-                lblEmpresa = "Alumno en Grupo Especial";
+                lblEmpresa = data.d.EsEmpresa == true ? "Grupo Empresarial" : data.d.esEspecial == true ? "Alumno Especial" : "";
                 //lblEmpresa = lblEmpresa + " " + data.d.Grupo;
                 var objEmr = $('#divInscrito3');
                 $(objEmr)[0].children[0].children[0].innerText = lblEmpresa;
