@@ -3,11 +3,30 @@
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
-        $('#PopDatosAlumno').modal('show');
-        LimpiarCampos();
-        AlumnoNum = $.cookie('userAdmin');
-        $('#Load').modal('show');
-        EsNumero(AlumnoNum);
+    AlumnoNum = $.cookie('user');
+    Verificar();
+
+
+    
+        function Verificar()
+        {
+            $.ajax({
+                type: "POST",
+                url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoDatos",
+                data: "{AlumnoId:'" + AlumnoNum + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.d) {
+                        $('#PopDatosAlumno').modal('show');
+                        LimpiarCampos();
+                        $('#Load').modal('show');
+                        EsNumero(AlumnoNum);
+                    }
+                }
+            });
+        }
+
 
     function LimpiarCampos() {
         $("#submit_form").trigger('reset');
@@ -117,11 +136,12 @@
                 if (data.d) {
                     $('#Load').modal('hide');
                     alertify.alert("Datos del Alumno Modificados");
-
+                    $('#PopDatosAlumno').modal('hide');
                 } else {
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
                     alertify.alert("Error, Revisar datos capturados.");
+                    $('#PopDatosAlumno').modal('hide');
                 }
             }
         });

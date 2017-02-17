@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    tblAlumnosCom1
     var Seleccionados = "";
     var MItable;
     var Alumnos, DatosEmpresas, AlumnoId, TipoMovimiento,ModificarGrupo,TM;
@@ -270,7 +271,13 @@
                         "search": "Buscar Empresa "
                     },
                     "order": [[2, "desc"]]
+                    , "fnDrawCallback": function (oSettings) {
+                        //oSettings.aiDisplay.length;
+                        cambiarNumero(this[0].id);
+                    }
                 });
+                
+
                 Paises();
                 
             },
@@ -280,6 +287,21 @@
                 });
             }
         });
+    }
+
+    function cambiarNumero(tutabla) {
+        //Cambiar texto
+        var Descrip = $('#' + tutabla);
+
+        Descrip = Descrip[0].parentElement.parentElement.childNodes[2].childNodes[0];
+        Descrip = Descrip.childNodes[0];
+        var Texto = Descrip.innerHTML;
+        Texto = Texto.split(" ");
+        Texto = Texto[5];
+
+        Texto = "Numero total de registros: " + Texto;
+        Descrip.innerHTML = Texto;
+        //
     }
 
     function Estados() {
@@ -493,7 +515,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": false,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -505,6 +527,10 @@
                         "search": "Buscar Empresa "
                     },
                     "order": [[2, "desc"]]
+                     , "fnDrawCallback": function (oSettings) {
+                         //oSettings.aiDisplay.length;
+                         cambiarNumero(this[0].id);
+                     }
                 });
 
                 $('#PopGrupo').modal('hide');
@@ -545,7 +571,7 @@
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bDestroy": true,
                     "language": {
@@ -570,6 +596,10 @@
                             //row.childNodes[4].style.disabled = 'true';
                         }
                     }
+                     , "fnDrawCallback": function (oSettings) {
+                         //oSettings.aiDisplay.length;
+                         cambiarNumero(this[0].id);
+                     }
                 });
                 // if (Respuesta.d.length < 1) { $('#tblAlumnosN tbody').remove(); }
             },
@@ -1163,6 +1193,31 @@
                                 "mRender": function (data, f, d) {
                                     var link;
                                     if (d.AlumnoCuota != null) {
+                                            link = "$ " + d.AlumnoCuota.CuotaInscripcion;
+                                    }
+                                    else { link = "No" }
+
+                                    return link;
+                                }
+                            },
+                             {
+                                 "mDataProp": "AlumnoCuota",
+                                 "mRender": function (data, f, d) {
+                                     var link;
+                                     if (d.AlumnoCuota != null) {
+                                         link = "$ " + d.AlumnoCuota.CuotaColegiatura;
+                                     }
+                                     else { link = "No" }
+
+                                     return link;
+                                 }
+                             },
+
+                            {
+                                "mDataProp": "AlumnoCuota",
+                                "mRender": function (data, f, d) {
+                                    var link;
+                                    if (d.AlumnoCuota != null) {
                                         if (d.AlumnoCuota.GrupoId == 0) {
                                             link = "<a href='' class='btn blue' onclick='return false;'>" + "Agregar Grupo" + " </a> ";
                                         }
@@ -1193,7 +1248,7 @@
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
                         "ordering": true,
-                        "info": false,
+                        "info": true,
                         "async": true,
                         "bSort": false,
                         "bDestroy": true,
@@ -1206,6 +1261,10 @@
                             "search": "Buscar Alumno "
                         },
                         "aaSorting": []
+                         , "fnDrawCallback": function (oSettings) {
+                             //oSettings.aiDisplay.length;
+                             cambiarNumero(this[0].id);
+                         }
                     });
                     CargarEmpresasLigero();
                 }
@@ -1602,6 +1661,22 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                             "mDataProp": "AlumnoCuota",
                             "mRender": function (data, f, d) {
                                 var link;
+                                link = "$ " + d.AlumnoCuota.CuotaInscripcion;
+                                return link;
+                            }
+                        },
+                        {
+                            "mDataProp": "AlumnoCuota",
+                            "mRender": function (data, f, d) {
+                                var link;
+                                link = "$ " + d.AlumnoCuota.CuotaColegiatura;
+                                return link;
+                            }
+                        },
+                        {
+                            "mDataProp": "AlumnoCuota",
+                            "mRender": function (data, f, d) {
+                                var link;
 
                                 if (d.AlumnoCuota.EstatusId == 2) {
                                     link = "<a href='' class='btn red' onclick='return false;' disabled>" + "Modificar Grupo" + " </a> ";
@@ -1626,7 +1701,7 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                     "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
-                    "info": false,
+                    "info": true,
                     "async": true,
                     "bSort": false,
                     "bDestroy": true,
@@ -1639,6 +1714,10 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                         "search": "Buscar Alumno "
                     },
                     "aaSorting": []
+                     , "fnDrawCallback": function (oSettings) {
+                         //oSettings.aiDisplay.length;
+                         cambiarNumero(this[0].id);
+                     }
                 });
 
                 $('#Load').modal('hide');

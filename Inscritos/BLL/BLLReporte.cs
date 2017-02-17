@@ -574,173 +574,81 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 var pagosid = new int[] { 802, 304, 320, 800, 15 };
-                var pagocolegiatura = new int[] { 800};
+                var pagocolegiatura = new int[] { 800 };
                 var pagomateria = new int[] { 304, 320 };
                 var estatus = new int[] { 1, 4, 14 };
-
                 //Alumnos que estan inscritos y  tienen referencias
 
                 var AlumnosInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
 
-          
-
 
                 var referencias = (from a in db.Pago
                                    join c in db.Cuota on a.CuotaId equals c.CuotaId
-                                   where a.Anio == anio && a.PeriodoId == periodo && pagosid.Contains(c.PagoConceptoId)
-                                   group a by new { c.PagoConceptoId, a.AlumnoId, a.OfertaEducativaId, a.EstatusId } into grp
+                                   where a.Anio == anio && a.PeriodoId == periodo && pagosid.Contains(c.PagoConceptoId) && estatus.Contains(a.EstatusId)
+                                   orderby a.AlumnoId
+                                   group a by new { c.PagoConceptoId, a.AlumnoId, a.OfertaEducativaId } into grp
                                    select new DTOReporteAlumnoReferencia1
                                    {
                                        alumnoId = grp.Key.AlumnoId,
                                        ofertaId = grp.Key.OfertaEducativaId,
                                        pagoConcepto = grp.Key.PagoConceptoId,
-                                       estatusId = grp.Key.EstatusId,
                                        suma = grp.Count()
                                    }).ToList();
 
+
+                // var alumno = referencias.Where(a => a.alumnoId == 7697).ToList();
+
                 List<DTOReporteAlumnoReferencia> union = new List<DTOReporteAlumnoReferencia>();
 
-                var alumno = 0;
-                var ofertaid = 0;
-                var Inscripcion = 0;
-                var Colegiatura = 0;
-                var Materia = 0;
-                var Asesoria = 0;
-                var Aux = 0;
-                var tipo= 0;
-
-
-                 //db.TipoDocumento.AsNoTracking().Count(n=> n.Descripcion == "sdd");
-
-               
-
-                referencias.ForEach(n =>
-                        {
-                            if (((alumno == n.alumnoId && ofertaid != n.ofertaId) || (alumno != n.alumnoId)) && Aux != 0)
-                            {
-
-
-                                tipo = AlumnosInscrito.Where(f => f.AlumnoId == alumno && f.OfertaEducativaId == ofertaid).ToList().Count > 0 ? 1 : 2;
-                                var cal = db.CalificacionesAntecedente.Where(a => a.AlumnoId == alumno
-                                                                                                 && a.Anio == anio
-                                                                                                 && a.PeriodoId == periodo).FirstOrDefault();
-                                union.Add(new DTOReporteAlumnoReferencia
-                                       {
-                                           alumnoId = alumno,
-                                           especialidadId = ofertaid,
-                                           inscripcion = Inscripcion > 0 ? "" + Inscripcion + "" : "0",
-                                           colegiatura = Colegiatura > 0 ? "" + Colegiatura + "" : "0",
-                                           materiaSuelta = Materia > 0 ? "" + Materia + "" : "0",
-                                           asesoriaEspecial = Asesoria > 0 ? "" + Asesoria + "" : "0",
-                                           tipo = tipo,
-                                           noMaterias =  cal!= null ? cal.NoMaterias !=null ? (int) cal.NoMaterias :0 : 0,
-                                           calificacionMaterias = cal != null ? cal.CalificacionMaterias != null ? cal.CalificacionMaterias  : "" : "",
-                                           noBaja = cal != null ? cal.NoBajas != null ? (int)cal.NoBajas: 0 : 0,
-                                           bajaMaterias =cal!= null ?  cal.BajaMaterias!= null  ?cal.BajaMaterias:"": "",     
-                                       });
-
-                                Inscripcion = 0;
-                                Colegiatura = 0;
-                                Materia = 0;
-                                Asesoria = 0;
-                                Aux = 0;
-                            }
-
-                            if ((alumno == n.alumnoId && ofertaid == n.ofertaId) || Aux == 0)
-                            {
-
-                                if (n.pagoConcepto == 802 && estatus.Contains(n.estatusId))
-                                {
-                                    Inscripcion += n.suma;
-                                }
-
-                                if (pagocolegiatura.Contains(n.pagoConcepto) && estatus.Contains(n.estatusId))
-                                {
-                                    Colegiatura += n.suma;
-                                }
-
-                                if (pagomateria.Contains(n.pagoConcepto) && estatus.Contains(n.estatusId))
-                                {
-                                    Materia += n.suma;
-                                }
-
-                                if (n.pagoConcepto == 15 && estatus.Contains(n.estatusId))
-                                {
-                                    Asesoria += n.suma;
-                                }
-                                Aux = 1;
-                            }
-
-                            alumno = n.alumnoId;
-                            ofertaid = n.ofertaId;
-                            tipo = n.tipo;
-
-                        }
-                        );
-
-                tipo = AlumnosInscrito.Where(f => f.AlumnoId == alumno && f.OfertaEducativaId == ofertaid).ToList().Count > 0 ? 1 : 2;
-                var cal1 = db.CalificacionesAntecedente.Where(a => a.AlumnoId == alumno
-                                                                                                && a.Anio == anio
-                                                                                                && a.PeriodoId == periodo).FirstOrDefault();
-                union.Add(new DTOReporteAlumnoReferencia
+                union.AddRange(referencias.GroupBy(a => new { a.alumnoId, a.ofertaId }).Select(a => new DTOReporteAlumnoReferencia
                 {
-                    alumnoId = alumno,
-                    especialidadId = ofertaid,
-                    inscripcion = Inscripcion > 0 ? "" + Inscripcion + "" : "0",
-                    colegiatura = Colegiatura > 0 ? "" + Colegiatura + "" : "0",
-                    materiaSuelta = Materia > 0 ? "" + Materia + "" : "0",
-                    asesoriaEspecial = Asesoria > 0 ? "" + Asesoria + "" : "0",
-                    tipo = tipo,
-                    noMaterias = cal1 != null ? cal1.NoMaterias != null ? (int)cal1.NoMaterias : 0 : 0,
-                    calificacionMaterias = cal1 != null ? cal1.CalificacionMaterias != null ? cal1.CalificacionMaterias : "" : "",
-                    noBaja = cal1 != null ? cal1.NoBajas != null ? (int)cal1.NoBajas : 0 : 0,
-                    bajaMaterias = cal1 != null ? cal1.BajaMaterias != null ? cal1.BajaMaterias : "" : "",      
-                });
+                    alumnoId = a.Key.alumnoId,
+                    especialidadId = a.Key.ofertaId
+                }));
 
+                var calificacionesantecedente = db.CalificacionesAntecedente.Where(v => v.Anio == anio
+                                                                                          && v.PeriodoId == periodo).ToList();
+                ///ins
+                union = union.Select(a => new DTOReporteAlumnoReferencia
+                {
+                    alumnoId = a.alumnoId,
+                    especialidadId = a.especialidadId,
+                    inscripcion = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 802).FirstOrDefault()?.suma ?? "0",
+                    colegiatura = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 800).FirstOrDefault()?.suma ?? "0",
+                    materiaSuelta = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && pagomateria.Contains(b.pagoConcepto)).FirstOrDefault()?.suma ?? "0",
+                    asesoriaEspecial = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 15).FirstOrDefault()?.suma ?? "0",
+                    tipo = AlumnosInscrito.Where(f => f.AlumnoId == a.alumnoId && f.OfertaEducativaId == a.especialidadId).ToList().Count > 0 ? 1 : 2,
+                    noMaterias = calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoMaterias ?? 0,
+                    calificacionMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.CalificacionMaterias ?? "",
+                    noBaja = calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoBajas ?? 0,
+                    bajaMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.BajaMaterias ?? ""
+                }
+                ).ToList();
 
-
-                
 
                 //Alumnos que estan inscritos y no tienen referencias
-                var parte2 = AlumnosInscrito.Where(a => a.Anio == anio && a.PeriodoId == periodo && !(db.Pago.AsNoTracking().Where(v => v.OfertaEducativaId == a.OfertaEducativaId && v.Anio == anio && v.PeriodoId == periodo && v.OfertaEducativa.OfertaEducativaTipoId != 4)
-                                                                                                             .Select(x => x.AlumnoId)
-                                                                                                             .ToList())
-                                                                                                             .Contains(a.AlumnoId))
-                                               .Select(d => new DTOReporteAlumnoReferencia
-                                               {
-                                                   alumnoId = d.AlumnoId,
-                                                   especialidadId = d.OfertaEducativaId,
-                                                   inscripcion = "0",
-                                                   colegiatura = "0",
-                                                   materiaSuelta = "0",
-                                                   asesoriaEspecial = "0",
-                                                   tipo = 1,
-                                                   noMaterias = db.CalificacionesAntecedente.AsNoTracking().Where(a => a.AlumnoId == alumno
-                                                                                                 && a.Anio == anio
-                                                                                                 && a.PeriodoId == periodo).Count() > 0 ? (int)db.CalificacionesAntecedente.Where(a => a.AlumnoId == alumno
-                                                                                                && a.Anio == anio
-                                                                                                && a.PeriodoId == periodo).FirstOrDefault().NoMaterias : 0,
-                                                   calificacionMaterias = db.CalificacionesAntecedente.AsNoTracking().Where(a => a.AlumnoId == alumno
-                                                                                                          && a.Anio == anio
-                                                                                                          && a.PeriodoId == periodo).Count() > 0 ? db.CalificacionesAntecedente.Where(a => a.AlumnoId == alumno
-                                                                                                         && a.Anio == anio
-                                                                                                         && a.PeriodoId == periodo).FirstOrDefault().CalificacionMaterias : "",
-                                                   noBaja = db.CalificacionesAntecedente.AsNoTracking().Where(a => a.AlumnoId == alumno
-                                                                                                          && a.Anio == anio
-                                                                                                          && a.PeriodoId == periodo).Count() > 0 ? (int)db.CalificacionesAntecedente.Where(a => a.AlumnoId == alumno
-                                                                                                         && a.Anio == anio
-                                                                                                         && a.PeriodoId == periodo).FirstOrDefault().NoBajas : 0,
-                                                   bajaMaterias = db.CalificacionesAntecedente.AsNoTracking().Where(a => a.AlumnoId == alumno
-                                                                                                          && a.Anio == anio
-                                                                                                          && a.PeriodoId == periodo).Count() > 0 ? db.CalificacionesAntecedente.Where(a => a.AlumnoId == alumno
-                                                                                                         && a.Anio == anio
-                                                                                                         && a.PeriodoId == periodo).FirstOrDefault().BajaMaterias : ""         
-                                               }
-                                               ).ToList();
+                var parte2 = AlumnosInscrito.Where(a => a.Anio == anio && a.PeriodoId == periodo && union.Where(f => f.alumnoId == a.AlumnoId && f.especialidadId == a.OfertaEducativaId).ToList().Count == 0)
+                                             .Select(d => new DTOReporteAlumnoReferencia
+                                             {
+                                                 alumnoId = d.AlumnoId,
+                                                 especialidadId = d.OfertaEducativaId,
+                                                 inscripcion = "0",
+                                                 colegiatura = "0",
+                                                 materiaSuelta = "0",
+                                                 asesoriaEspecial = "0",
+                                                 tipo = 1,
+                                                 noMaterias = calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoMaterias ?? 0,
+                                                 calificacionMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.CalificacionMaterias ?? "",
+                                                 noBaja = calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoBajas ?? 0,
+                                                 bajaMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.BajaMaterias ?? ""
+                                             }
+                                             ).ToList();
+
+            
 
                 union.AddRange(parte2);
 
-                
+
 
                 //union
 
@@ -763,7 +671,7 @@ namespace BLL
                              tipo = a.tipo
                          }).Distinct().ToList();
 
-                return union;
+                return  union;
 
 
             }//using

@@ -65,14 +65,16 @@
                         "aoColumns": [
                             { "mDataProp": "Concepto" },
                             { "mDataProp": "ReferenciaId" },
+                            { "mDataProp": "Periodo" },
                             { "mDataProp": "CargoFechaLimite" },
                             { "mDataProp": "TotalMDescuentoMBecas" },
                             { "mDataProp": "OtroDescuento" },
+                            { "mDataProp": "Pagado" },
                             { "mDataProp": "SaldoPagado" }
                         ],
                         "columnDefs": [
                           {
-                              "targets": [4],
+                              "targets": [5],
                               "visible": dk,
                               "searchable": false
                           },
@@ -98,12 +100,14 @@
                         },
                         "createdRow": function (row, data, dataIndex) {
                             row.childNodes[0].style.textAlign = 'left';
-                            row.childNodes[1].style.textAlign = 'center';
+                            row.childNodes[1].style.textAlign = 'left';
                             row.childNodes[2].style.textAlign = 'center';
-                            row.childNodes[3].style.textAlign = 'right';
+                            row.childNodes[3].style.textAlign = 'center';
                             row.childNodes[4].style.textAlign = 'right';
+                            row.childNodes[5].style.textAlign = 'right';
+                            row.childNodes[6].style.textAlign = 'right';
                             if (dk) {
-                                row.childNodes[4].style.textAlign = 'right';
+                                row.childNodes[7].style.textAlign = 'right';
                             }
                             if (data.Pagoid == 0) {
                                 row.childNodes[0].style.fontWeight = 'bold';
@@ -123,9 +127,13 @@
                          '<th></th>' +
                          '<th></th>' +
                          '<th></th>' +
+                         '<th></th>' +
+                         '<th></th>' +
                          '<th style="text-align:right">' + data[0].TotalPagado + '</th></tr>';
                     } else {
                         tr = '<tr>' +
+                            '<th></th>' +
+                            '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
