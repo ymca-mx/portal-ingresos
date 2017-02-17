@@ -110,6 +110,8 @@
                         row.childNodes[6].style.textAlign = 'left';
                         row.childNodes[8].style.textAlign = 'left';
                         row.childNodes[10].style.textAlign = 'left';
+                    }, "fnDrawCallback": function (oSettings) {
+                        ExportarExcel();
                     }
 
                 });//$('#dtbecas').DataTable
@@ -120,6 +122,14 @@
 
     }//function CargarReporteBecas()
 
+
+    function ExportarExcel()
+    {
+        $("#dtReferencias").tableExport.remove();
+        $("#dtReferencias").tableExport({
+            formats: ["xlsx"],
+        });
+    }
 });
 
 

@@ -76,7 +76,6 @@ $(document).ready(function () {
         var alumno = $('#txtAlumno').val();
         if (alumno.length > 0 && alumno > 0) {
             $('#Load').modal('show');
-            $('#slcOfertas').empty();
             $('#txtBecaMonto').val(0);
             if (tblBecas !== null) {
                 tblBecas.fnClearTable();
@@ -141,6 +140,8 @@ $(document).ready(function () {
 
         $(AlumnoObject.PeriodosAlumno).each(function (s, d) {
 
+
+            $("#slcPeriodo").empty();
             var option = $(document.createElement('option'));
             option.text(d.Descripcion);
             option.attr("data-Anio", this.Anio);
