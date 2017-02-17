@@ -64,7 +64,7 @@
                              "mDataProp": "calificacionMaterias",
                              "mRender": function (data, f, d) {
                                  var link;
-                                 if (data != null ) { link =  data.replace("|","\n"); }
+                                 if (data != null) { link = data.split("|").join("<br>----------------------------<br>"); }
                                  else { link = ""; }
                                  return link;
                              }
@@ -74,7 +74,7 @@
                             "mDataProp": "bajaMaterias",
                             "mRender": function (data, f, d) {
                                 var link;
-                                if (data != null) { link = data.replace("|", "\n"); }
+                                if (data != null) { link = data.split("|").join("<br>----------------------------<br>"); }
                                 else { link = ""; }
                                 return link;
                             }
@@ -110,6 +110,8 @@
                         row.childNodes[6].style.textAlign = 'left';
                         row.childNodes[8].style.textAlign = 'left';
                         row.childNodes[10].style.textAlign = 'left';
+                    }, "fnDrawCallback": function (oSettings) {
+                        ExportarExcel();
                     }
 
                 });//$('#dtbecas').DataTable
@@ -120,6 +122,14 @@
 
     }//function CargarReporteBecas()
 
+
+    function ExportarExcel()
+    {
+        $("#dtReferencias").tableExport.remove();
+        $("#dtReferencias").tableExport({
+            formats: ["xlsx"],
+        });
+    }
 });
 
 

@@ -112,7 +112,33 @@ namespace Pruebas
                                              }
                                              ).ToList();
 
-                
+                union.AddRange(parte2);
+
+
+
+                //union
+
+                union = (from a in union
+                         join b in db.Alumno on a.alumnoId equals b.AlumnoId
+                         join c in db.OfertaEducativa on a.especialidadId equals c.OfertaEducativaId
+                         select new DTOReporteAlumnoReferencia
+                         {
+                             alumnoId = a.alumnoId,
+                             nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                             especialidad = c.Descripcion,
+                             inscripcion = a.inscripcion == "" ? "0" : a.inscripcion,
+                             colegiatura = a.colegiatura == "" ? "0" : a.colegiatura,
+                             materiaSuelta = a.materiaSuelta == "" ? "0" : a.materiaSuelta,
+                             asesoriaEspecial = a.asesoriaEspecial == "" ? "0" : a.asesoriaEspecial,
+                             noMaterias = a.noMaterias,
+                             calificacionMaterias = a.calificacionMaterias,
+                             noBaja = a.noBaja,
+                             bajaMaterias = a.bajaMaterias,
+                             tipo = a.noMaterias > 0 && a.noBaja > 0 && a.noBaja < a.noMaterias ? 1
+                             : a.noMaterias == 0 && a.noBaja > 0 ? 2
+                             : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) > 0 && a.noMaterias == 0 && a.noBaja == 0 ? 3
+                             : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) == 0 && a.noMaterias > 0 || a.noBaja > 0 ? 4 : 0,
+                         }).Distinct().ToList();
 
             }
 

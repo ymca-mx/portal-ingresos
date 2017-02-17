@@ -260,11 +260,11 @@ namespace BLL
                                                                                        FechaAplicacion = p.FechaAplicacion,
                                                                                        FechaAplicacionS = (((DateTime) p.FechaAplicacion).Day.ToString().Length > 1 ? ((DateTime) p.FechaAplicacion).Day.ToString() : "0" + ((DateTime) p.FechaAplicacion).Day.ToString()) + "/" +
                                                                                        (((DateTime) p.FechaAplicacion).Month.ToString().Length > 1 ?((DateTime) p.FechaAplicacion).Month.ToString() : "0" + ((DateTime) p.FechaAplicacion).Month.ToString()) + "/" + (((DateTime) p.FechaAplicacion).Year.ToString()),
-                                                                                       DocComiteRutaId =  db.AlumnoInscritoDocumento.Where(doc =>
+                                                                                       DocComiteRutaId = p.EsDeportiva == true ? db.AlumnoInscritoDocumento.Where(doc =>
                                                                                                                                                   doc.AlumnoId == AlumnoId
                                                                                                                                                   && doc.Anio == p.Anio
                                                                                                                                                   && doc.PeriodoId == p.PeriodoId
-                                                                                                                                                  && doc.TipoDocumento == 3).FirstOrDefault().AlumnoInscritoDocumentoId.ToString()
+                                                                                                                                                  && doc.TipoDocumento == 3).OrderByDescending(q=> q.AlumnoInscritoDocumentoId).FirstOrDefault().AlumnoInscritoDocumentoId.ToString(): ""
                                                                                        }
                                                                                        ).ToList();
 
