@@ -64,7 +64,7 @@
                              "mDataProp": "calificacionMaterias",
                              "mRender": function (data, f, d) {
                                  var link;
-                                 if (data != null ) { link =  data.replace("|","\n"); }
+                                 if (data != null) { link = data.split("|").join("<br>----------------------------<br>"); }
                                  else { link = ""; }
                                  return link;
                              }
@@ -74,7 +74,7 @@
                             "mDataProp": "bajaMaterias",
                             "mRender": function (data, f, d) {
                                 var link;
-                                if (data != null) { link = data.replace("|", "\n"); }
+                                if (data != null) { link = data.split("|").join("<br>----------------------------<br>"); }
                                 else { link = ""; }
                                 return link;
                             }

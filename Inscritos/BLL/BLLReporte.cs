@@ -613,11 +613,10 @@ namespace BLL
                 {
                     alumnoId = a.alumnoId,
                     especialidadId = a.especialidadId,
-                    inscripcion = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 802).FirstOrDefault()?.suma ?? "0",
-                    colegiatura = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 800).FirstOrDefault()?.suma ?? "0",
-                    materiaSuelta = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && pagomateria.Contains(b.pagoConcepto)).FirstOrDefault()?.suma ?? "0",
-                    asesoriaEspecial = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 15).FirstOrDefault()?.suma ?? "0",
-                    tipo = AlumnosInscrito.Where(f => f.AlumnoId == a.alumnoId && f.OfertaEducativaId == a.especialidadId).ToList().Count > 0 ? 1 : 2,
+                    inscripcion = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 802).FirstOrDefault()?.suma ,
+                    colegiatura = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 800).FirstOrDefault()?.suma ,
+                    materiaSuelta = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && pagomateria.Contains(b.pagoConcepto)).FirstOrDefault()?.suma,
+                    asesoriaEspecial = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 15).FirstOrDefault()?.suma ,
                     noMaterias = calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoMaterias ?? 0,
                     calificacionMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.CalificacionMaterias ?? "",
                     noBaja = calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoBajas ?? 0,
@@ -636,7 +635,6 @@ namespace BLL
                                                  colegiatura = "0",
                                                  materiaSuelta = "0",
                                                  asesoriaEspecial = "0",
-                                                 tipo = 1,
                                                  noMaterias = calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoMaterias ?? 0,
                                                  calificacionMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.CalificacionMaterias ?? "",
                                                  noBaja = calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoBajas ?? 0,
@@ -660,15 +658,18 @@ namespace BLL
                              alumnoId = a.alumnoId,
                              nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
                              especialidad = c.Descripcion,
-                             inscripcion = a.inscripcion,
-                             colegiatura = a.colegiatura,
-                             materiaSuelta = a.materiaSuelta,
-                             asesoriaEspecial = a.asesoriaEspecial,
+                             inscripcion = a.inscripcion == "" ? "0" : a.inscripcion,
+                             colegiatura = a.colegiatura == "" ? "0" : a.colegiatura,
+                             materiaSuelta = a.materiaSuelta == "" ? "0" : a.materiaSuelta,
+                             asesoriaEspecial = a.asesoriaEspecial == "" ? "0" : a.asesoriaEspecial,
                              noMaterias = a.noMaterias,
                              calificacionMaterias = a.calificacionMaterias,
                              noBaja = a.noBaja,
                              bajaMaterias = a.bajaMaterias,
-                             tipo = a.tipo
+                             tipo = a.noMaterias > 0 && a.noBaja > 0 && a.noBaja < a.noMaterias ? 1
+                             : a.noMaterias == 0 && a.noBaja > 0 ? 2
+                             : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) > 0 && a.noMaterias == 0 && a.noBaja == 0 ? 3 
+                             : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) == 0 && a.noMaterias > 0 || a.noBaja > 0 ? 4 : 0,
                          }).Distinct().ToList();
 
                 return  union;
