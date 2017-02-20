@@ -27,7 +27,8 @@ namespace WebServices.WS
         }
         [WebMethod]
         public DTOAlumnoBecaDeportiva ObtenerAlumnoDeportiva(string AlumnoId)
-        {
+        { 
+
             return BLLBeca.ObtenerAlumnoDeportiva(int.Parse(AlumnoId));
         }
 

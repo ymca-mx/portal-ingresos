@@ -89,7 +89,7 @@ $(document).ready(function () {
     function BuscarAlumno(AlumnoId) {
         var nombre = $('#hCarga');
         nombre[0].innerText = "Cargando";
-
+        $("#btnGenerarCargos").attr("disabled", "disabled");
         $("#slcOfertas").empty();
         var optionP = $(document.createElement('option'));
         optionP.text('--Seleccionar--');
@@ -165,6 +165,21 @@ $(document).ready(function () {
                 tblBecas.fnClearTable();
             }
         });
+
+        $(AlumnoObject.OfertasAlumnos).each(function () {
+            var da = this;
+            if (da.OfertaEducativaId.toString() === Oferta.toString()) {
+
+                if (da.Mensaje == "No tiene")
+                {
+                    alertify.alert('El Alumno debe estar inscrito para poder aplicar una beca deportiva gracias');
+                    $("#btnGenerarCargos").attr("disabled", "disabled");
+                }
+
+            }
+        });
+
+
         //console.log(desc);
         if (desc.length > 0) { CargarDescuentos(desc); }
     });

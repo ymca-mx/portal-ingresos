@@ -98,6 +98,7 @@ namespace DTO
         public int OfertaEducativaId { get; set; }
         public string Descripcion { get; set; }
         public int OfertaEducativaTipoId { get; set; }
+        public string Mensaje { get; set; }
     }
     public class DTOAlumnoBecaComite
     {
