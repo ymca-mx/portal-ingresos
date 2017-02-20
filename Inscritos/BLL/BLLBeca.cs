@@ -196,6 +196,12 @@ namespace BLL
             {
                 try
                 {
+                    PeridoBeca Actual = db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(1).Select(d => new PeridoBeca
+                    {
+                        Anio = d.Anio,
+                        PeriodoId = d.PeriodoId,
+                        Descripcion = d.Descripcion
+                    }).FirstOrDefault();
 
                     DTOAlumnoBecaDeportiva objDep = db.Alumno.Where(a => a.AlumnoId == AlumnoId).Select(a => new DTOAlumnoBecaDeportiva
                     {
@@ -221,16 +227,11 @@ namespace BLL
                     objDep.OfertasAlumnos.ForEach(s2 =>
                     {
                         s2.Descripcion = db.OfertaEducativa.Where(o => o.OfertaEducativaId == s2.OfertaEducativaId).FirstOrDefault().Descripcion;
-                                
+                        s2.Mensaje = VerificarInscripcionActual(AlumnoId,s2.OfertaEducativaId, Actual.Anio, Actual.PeriodoId);
                     });
 
 
-                    PeridoBeca Actual = db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(1).Select(d => new PeridoBeca
-                    {
-                        Anio = d.Anio,
-                        PeriodoId = d.PeriodoId,
-                        Descripcion = d.Descripcion
-                    }).FirstOrDefault();
+               
 
                     objDep.PeriodosAlumno.Add(db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(2).Select(d => new PeridoBeca
                                                {
@@ -264,12 +265,13 @@ namespace BLL
                                                                                                                                                   doc.AlumnoId == AlumnoId
                                                                                                                                                   && doc.Anio == p.Anio
                                                                                                                                                   && doc.PeriodoId == p.PeriodoId
-                                                                                                                                                  && doc.TipoDocumento == 3).OrderByDescending(q=> q.AlumnoInscritoDocumentoId).FirstOrDefault().AlumnoInscritoDocumentoId.ToString(): ""
-                                                                                       }
+                                                                                                                                                  && doc.TipoDocumento == 3).OrderByDescending(q=> q.AlumnoInscritoDocumentoId).FirstOrDefault().AlumnoInscritoDocumentoId.ToString(): "",
+
+                                                                                   }
                                                                                        ).ToList();
 
-                            
 
+                    
 
                             decimal MontoDeportiva = 0;
                             objDesc.ForEach(n => 

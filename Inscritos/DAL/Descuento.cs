@@ -31,10 +31,10 @@ namespace DAL
         public System.DateTime FechaFinal { get; set; }
         public string CuentaContable { get; set; }
     
+        public virtual PagoConcepto PagoConcepto { get; set; }
         public virtual DescuentoTipo DescuentoTipo { get; set; }
         public virtual OfertaEducativa OfertaEducativa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoDescuento> PagoDescuento { get; set; }
-        public virtual PagoConcepto PagoConcepto { get; set; }
     }
 }
