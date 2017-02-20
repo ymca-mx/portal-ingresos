@@ -21,13 +21,15 @@ namespace BLL
                 if (Sucursal == true)
                 {
                     return (from a in db.OfertaEducativa
-                            where a.OfertaEducativaTipoId == TipoOferta && a.SucursalId == Plantel
+                            where a.OfertaEducativaTipoId == TipoOferta 
+                                    && a.SucursalId == Plantel && a.EstatusId==1
                             select a).ToList().ConvertAll(new Converter<OfertaEducativa, DTOOfertaEducativa>(Convertidor.ToDTOOfertaEducativa));
                 }
                 else
                 {
                     return (from a in db.OfertaEducativa
                             where a.OfertaEducativaTipoId == TipoOferta
+                                    && a.EstatusId==1
                             select a).ToList().ConvertAll(new Converter<OfertaEducativa, DTOOfertaEducativa>(Convertidor.ToDTOOfertaEducativa));
                 }
             }
