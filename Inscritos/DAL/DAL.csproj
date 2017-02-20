@@ -565,6 +565,9 @@
     <Compile Include="SucursalDetalle.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tabla2.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="TempAdeudo.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
@@ -575,9 +578,6 @@
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoUsuarioSubmenu.cs">
-      <DependentUpon>Modelo2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tmpReferencias.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="Turno.cs">

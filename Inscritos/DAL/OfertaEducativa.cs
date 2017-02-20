@@ -30,13 +30,13 @@ namespace DAL
             this.GrupoAlumnoConfiguracion = new HashSet<GrupoAlumnoConfiguracion>();
             this.IdiomaGrupoAlumno = new HashSet<IdiomaGrupoAlumno>();
             this.Matricula = new HashSet<Matricula>();
+            this.PagoConcepto = new HashSet<PagoConcepto>();
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
             this.OfertaEducativaRequerimiento = new HashSet<OfertaEducativaRequerimiento>();
             this.Pago = new HashSet<Pago>();
             this.ProspectoDetalle = new HashSet<ProspectoDetalle>();
             this.Recibo = new HashSet<Recibo>();
             this.UniversidadValidacion = new HashSet<UniversidadValidacion>();
-            this.PagoConcepto = new HashSet<PagoConcepto>();
         }
     
         public int OfertaEducativaId { get; set; }
@@ -46,6 +46,7 @@ namespace DAL
         public Nullable<System.DateTime> FechaRvoe { get; set; }
         public int SucursalId { get; set; }
         public bool RequiereDeportivo { get; set; }
+        public string ClaveContable { get; set; }
         public int EstatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -75,6 +76,8 @@ namespace DAL
         public virtual ICollection<IdiomaGrupoAlumno> IdiomaGrupoAlumno { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matricula> Matricula { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
         public virtual OfertaEducativaTipo OfertaEducativaTipo { get; set; }
         public virtual Sucursal Sucursal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -89,7 +92,5 @@ namespace DAL
         public virtual ICollection<Recibo> Recibo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UniversidadValidacion> UniversidadValidacion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
     }
 }

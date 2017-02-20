@@ -21,8 +21,8 @@ namespace DAL
         public System.TimeSpan HoraAsignacion { get; set; }
         public int UsuarioIdAsignacion { get; set; }
     
+        public virtual PagoConcepto PagoConcepto { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual UsuarioTipo UsuarioTipo { get; set; }
-        public virtual PagoConcepto PagoConcepto { get; set; }
     }
 }
