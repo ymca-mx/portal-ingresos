@@ -15,14 +15,17 @@ namespace Pruebas
         [TestMethod]
         public void AlumnoDatos()
         {
+            
             //BLL.BLLAlumno.ObtenerAlumno(8174);
-            BLL.BLLPago.ConsultarAdeudo(8176);
+            //BLL.BLLPago.ConsultarAdeudo(8176);
+            //BLL.BLLAlumno.ObtenerAlumnoCompleto(5945);
         }
         [TestMethod]
         public void BuscarAlumno()
         {
             var objRes =
-            BLL.BLLAlumno.BuscarAlumno(803, 44);
+            BLL.BLLAlumno.BuscarAlumno(1183, 13);
+            Console.WriteLine(objRes.Nombre);
         }
 
         [TestMethod]

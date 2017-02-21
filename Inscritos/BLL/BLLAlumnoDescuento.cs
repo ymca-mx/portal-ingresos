@@ -1154,7 +1154,7 @@ namespace BLL
             string ComCredencial, Boolean Material, int UsuarioId, int Anio, int PeriodoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
-            {
+            { 
                 try
                 {
                     DTOAlumnoInscrito objOferta = BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId, Idioma, Anio, PeriodoId);
