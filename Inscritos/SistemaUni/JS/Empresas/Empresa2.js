@@ -2,7 +2,7 @@
     tblAlumnosCom1
     var Seleccionados = "";
     var MItable;
-    var Alumnos, DatosEmpresas, AlumnoId, TipoMovimiento,ModificarGrupo,TM;
+    var Alumnos, DatosEmpresas, AlumnoId, TipoMovimiento,ModificarGrupo,TM, sucursalid;
     var AlumnosEmpresa;
     var MiGrupo;
     var Fila;
@@ -399,19 +399,7 @@
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
-                var datos = data.d;
                 OFertas = data.d;
-                $(datos).each(function () {
-                    if (this.OfertaEducativaTipoId != 4) {
-                        var option = $(document.createElement('option'));
-                        option.text(this.Descripcion);
-                        option.val(this.OfertaEducativaTipoId);
-
-                        $("#slcOferta").append(option);
-                    }
-                });
-                //$("#slcSexo").html(data); // show the string that was returned, this will be the data inside the xml wrapper
-                $("#slcOferta").change();
             }
         });
     }
@@ -1497,6 +1485,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $("#slcPeriodo").val(rowadd.AlumnoCuota.PeriodoIdGrupo + ' ' + rowadd.AlumnoCuota.AnioGrupo);
         $("#slcPeriodo").prop('disabled', false);
     }
+    sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
@@ -1509,6 +1498,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         
     GrupoI = rowadd.AlumnoCuota.GrupoId;
     OfertaI = rowadd.OfertaEducativaId;
+  
     //console.log(rowadd);
     $('#PopAlumnoConfiguracion').modal('show');
 });
@@ -1552,12 +1542,23 @@ function CargarOfertasL(OFertaEducativaId) {
         $(OFertas).each(function () {
             if (tipo == String(this.OfertaEducativaTipoId)) {
                 $(this.Ofertas).each(function () {
-                    var option = $(document.createElement('option'));
 
-                    option.text(this.descripcion);
-                    option.val(this.ofertaEducativaId);
+                    if(sucursalid == 3)
+                    {
+                        var option = $(document.createElement('option'));
+                        option.text(this.descripcion);
+                        option.val(this.ofertaEducativaId);
 
-                    $("#slcOfertaEducativa").append(option);
+                        $("#slcOfertaEducativa").append(option);
+                    } else if (sucursalid == this.SucuralGrupo)
+                    {
+                        var option = $(document.createElement('option'));
+                        option.text(this.descripcion);
+                        option.val(this.ofertaEducativaId);
+
+                        $("#slcOfertaEducativa").append(option);
+                    }
+                   
                 });
             }
         });
@@ -1837,6 +1838,7 @@ $('#tblAlumnosCom1').on('click', 'button', function () {
         $("#slcPeriodo").val(rowadd.AlumnoCuota.PeriodoIdGrupo + ' ' + rowadd.AlumnoCuota.AnioGrupo);
         $("#slcPeriodo").prop('disabled', false);
     }
+    sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
@@ -1849,6 +1851,7 @@ $('#tblAlumnosCom1').on('click', 'button', function () {
 
     GrupoI = rowadd.AlumnoCuota.GrupoId;
     OfertaI = rowadd.OfertaEducativaId;
+
     //console.log(rowadd);
     $('#PopAlumnoConfiguracion').modal('show');
 });

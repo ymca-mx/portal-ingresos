@@ -75,6 +75,8 @@ $(document).ready(function () {
     $('#btnBuscarAlumno').click(function () {
         var alumno = $('#txtAlumno').val();
         if (alumno.length > 0 && alumno > 0) {
+
+            $('#FileDeportiva a').click();
             $('#Load').modal('show');
             $('#txtBecaMonto').val(0);
             if (tblBecas !== null) {
@@ -316,6 +318,7 @@ $(document).ready(function () {
                     }
                     AlumnoObject = null;
                     alertify.alert('Beca Aplicada');
+                    $('#FileDeportiva a').click();
                     BuscarAlumno(Alumnoid);
                 } else {
                     alertify.alert('Error al cargar datos');
