@@ -9,11 +9,48 @@
 
 
     function Load() {
-        $('#PopDatosAlumno').modal('show');
+        $('#PopEncuesta').modal('show');
        // LimpiarCampos();
        // $('#Load').modal('show');
        // EsNumero(AlumnoNum);
     }
+
+    function ratingEnable() {
+        $('#example-css').barrating({
+            theme: 'css-stars',
+            showSelectedRating: false,
+            hoverState: true,
+
+            onSelect: function (value, text) {
+
+                $("#rating1").text(text);
+            }
+        });
+    }
+
+    function ratingDisable() {
+        $('select').barrating('destroy');
+    }
+
+    $('.rating-enable').click(function (event) {
+        event.preventDefault();
+
+        ratingEnable();
+
+        $(this).addClass('deactivated');
+        $('.rating-disable').removeClass('deactivated');
+    });
+
+    $('.rating-disable').click(function (event) {
+        event.preventDefault();
+
+        ratingDisable();
+
+        $(this).addClass('deactivated');
+        $('.rating-enable').removeClass('deactivated');
+    });
+
+    ratingEnable();
 
 
     function LimpiarCampos() {
@@ -26,16 +63,7 @@
         $('#submit_form  i').removeClass('fa-check');
     }
 
-    //$('#btnBuscarAlumno').click(function () {
-    //    $('#PopDatosAlumno').modal('show');
-    //    LimpiarCampos();
-    //    var usuario = $.cookie('userAdmin');
-    //    $('#Load').modal('show');
-    //    AlumnoNum = $('#txtAlumno').val();
-    //        EsNumero(AlumnoNum);
-    //});
-
-
+  
     function EsNumero(Alumno) {
         $.ajax({
             type: "POST",

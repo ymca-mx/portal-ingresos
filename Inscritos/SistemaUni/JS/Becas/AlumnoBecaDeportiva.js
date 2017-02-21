@@ -2,7 +2,7 @@
 $(document).ready(function () {
     var AlumnoObject;
     var tblBecas = null;
-    var Alumnoid;
+    var Alumnoid, porcentajebeca;
 
     $('#btnGenerarCargos').click(function () {
         var txtMonto = $('#txtBecaMonto').val();
@@ -11,6 +11,11 @@ $(document).ready(function () {
         if (Perid === -1) {
             alertify.alert('Periodo Invalido');
             return true;
+        }
+        beca = porcentajebeca +parseInt(txtMonto);
+        if (beca > 100) {
+            alertify.alert('El porcentaje de la Beca no puede exceder el 100%');
+            return false;
         }
         if (txtMonto > 0) {
 
@@ -228,6 +233,12 @@ $(document).ready(function () {
                 row.childNodes[2].style.textAlign = 'center';
                 row.childNodes[3].style.textAlign = 'center';
                 row.childNodes[4].style.textAlign = 'center';
+
+                if(data.AnioPeriodoId  = AlumnoObject.PeriodosAlumno[0].Anio +" - "+ AlumnoObject.PeriodosAlumno[0].PeriodoId && data.BecaDeportiva == "No")
+                {
+                    porcentajebeca = data.Monto;
+                }
+
                 $('#txtBecaMonto').val(data.MontoDep);
                 if (data.DocComiteRutaId != null && data.DocComiteRutaId > 0) {
                     var newLinkS = $(document.createElement("a"));

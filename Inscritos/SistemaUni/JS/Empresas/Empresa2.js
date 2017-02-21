@@ -702,31 +702,8 @@
     });
 
     $("#slcOferta").change(function () {
-        $("#slcOfertaEducativa").empty();
-        var optionP = $(document.createElement('option'));
-        optionP.text('--Seleccionar--');
-        optionP.val('-1');
-        $("#slcOfertaEducativa").append(optionP);
-        var tipo = $("#slcOferta");
-        tipo = tipo[0].value;
-
-        if (OFertas.length > 0) {
-            $(OFertas).each(function () {
-                if (tipo == String(this.OfertaEducativaTipoId)) {
-                    $(this.Ofertas).each(function () {
-                        var option = $(document.createElement('option'));
-
-                        option.text(this.descripcion);
-                        option.val(this.ofertaEducativaId);
-
-                        $("#slcOfertaEducativa").append(option);
-                    });
-                }
-            });
-        } else {
-            $("#slcOfertaEducativa").append(optionP);
-        }
-        //PlanPago();
+      
+        CargarOfertasL(-1);
     });
 
     $('#slcPlantel').change(function () {
@@ -1539,9 +1516,10 @@ function CargarOfertasL(OFertaEducativaId) {
     tipo = tipo[0].value;
 
     if (OFertas.length > 0) {
-        $(OFertas).each(function () {
+
+        $(OFertas).each(function (i, d) {
             if (tipo == String(this.OfertaEducativaTipoId)) {
-                $(this.Ofertas).each(function () {
+                $(d.Ofertas).each(function (i1, d1) {
 
                     if(sucursalid == 3)
                     {
@@ -1550,7 +1528,7 @@ function CargarOfertasL(OFertaEducativaId) {
                         option.val(this.ofertaEducativaId);
 
                         $("#slcOfertaEducativa").append(option);
-                    } else if (sucursalid == this.SucuralGrupo)
+                    } else if (sucursalid == this.sucursalid ) 
                     {
                         var option = $(document.createElement('option'));
                         option.text(this.descripcion);
@@ -1839,15 +1817,48 @@ $('#tblAlumnosCom1').on('click', 'button', function () {
         $("#slcPeriodo").prop('disabled', false);
     }
     sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
+    $("#slcOferta").empty();
+    var optionP = $(document.createElement('option'));
+    optionP.text('--Seleccionar--');
+    optionP.val('-1');
+    $("#slcOferta").append(optionP);
+
+    $(OFertas).each(function (i, d) {
+        $(d.Ofertas).each(function (i1, d1) {
+
+            if (sucursalid ==3)
+            {
+                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId!=4)
+                {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.val(d.OfertaEducativaTipoId);
+                    $("#slcOferta").append(option);
+                }
+
+            } else if (this.sucursalid == sucursalid) {
+
+                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.val(d.OfertaEducativaTipoId);
+                    $("#slcOferta").append(option);
+                }
+
+                //CargarOfertasL(rowadd.OfertaEducativaId);
+            }
+        });
+    });
+
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
-                $("#slcOferta").val(d.OfertaEducativaTipoId);
+                $("#slcOferta").val(rowadd.OfertaEducativaTipoId);
                 CargarOfertasL(rowadd.OfertaEducativaId);
             }
         });
     });
-   
+  
 
     GrupoI = rowadd.AlumnoCuota.GrupoId;
     OfertaI = rowadd.OfertaEducativaId;

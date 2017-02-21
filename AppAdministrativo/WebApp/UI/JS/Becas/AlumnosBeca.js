@@ -620,7 +620,7 @@
     $('.has-switch').on('click', function (e) {
         var val = this;
         val = val.lastChild.lastChild;
-        if (val.value == "on") {
+        if (val.checked == true){
             $("#txtBecaMonto").removeAttr("disabled");
             $("#btnGenerarCargos").removeAttr("disabled");
             $('#btnGenerarCargos').text("Actualizar");
