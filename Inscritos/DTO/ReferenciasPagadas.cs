@@ -8,6 +8,8 @@ namespace DTO
 {
     public class ReferenciasPagadas
     {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
         public string Caja { get; set; }
         public DateTime FechaPagoD { get; set; }
         public string FechaPago { get; set; }

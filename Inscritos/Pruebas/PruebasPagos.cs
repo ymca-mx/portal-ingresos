@@ -35,6 +35,41 @@ namespace Pruebas
             }
         }
 
+
+        [TestMethod]
+        public void PuebaReferencias()
+        {
+        
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                var referenciaid = "424135";
+                var 
+                referencia = (
+              from a in db.ReferenciaProcesada
+              join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+              where a.ReferenciaTipoId == 1
+                 && a.EstatusId == 1
+                 && b.EstatusId == 4
+                 && a.ReferenciaId.Contains(referenciaid)
+              select new ReferenciasPagadas
+              {
+                  AlumnoId = a.AlumnoId,
+                  ReferenciaId = a.ReferenciaId,
+                  FechaPagoD = a.FechaPago,
+                  MontoPagado = b.Pago.ToString(),
+                  MontoReferencia = a.Importe.ToString(),
+                  Saldo = a.Restante.ToString()
+              }
+
+              ).ToList();
+            }
+
+               
+        }
+
+
+
+
         [TestMethod]
         public void pagos()
         {

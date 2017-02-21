@@ -266,7 +266,8 @@ namespace BLL
                                                                          && k.Grupo.FechaInicio <= p.FechaFinal).FirstOrDefault().Anio,
                                                   PeriodoIdGrupo = db.Periodo.Where(p => p.FechaInicial <= k.Grupo.FechaInicio
                                                  && k.Grupo.FechaInicio <= p.FechaFinal).FirstOrDefault().PeriodoId,
-                                                  DescipcionPeriodo = db.Periodo.Where(a => a.Anio == k.Anio && a.PeriodoId == k.PeriodoId).FirstOrDefault().Descripcion
+                                                  DescipcionPeriodo = db.Periodo.Where(a => a.Anio == k.Anio && a.PeriodoId == k.PeriodoId).FirstOrDefault().Descripcion,
+                                                  SucuralGrupo =k.Grupo.SucursalId
 
                                               }).FirstOrDefault()
                                       }

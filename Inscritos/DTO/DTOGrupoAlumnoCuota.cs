@@ -37,7 +37,7 @@ namespace DTO
         public int PeriodoIdGrupo { get; set; }
         public String DescipcionPeriodo { get; set; }
         public int NoPagos { get; set; }
-
+        public int? SucuralGrupo { get; set; }
     }
     public class DTOGrupoAlumnoCuotaString
     {

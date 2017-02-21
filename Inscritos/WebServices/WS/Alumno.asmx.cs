@@ -336,6 +336,11 @@ namespace WebServices.WS
             return BLLAlumno.VerificaAlumnoDatos(int.Parse(AlumnoId));
         }
         //datos personales  generados por el alumnos
+        [WebMethod]
+        public List<ReferenciasPagadas> ReferenciasConsulta(string Dato, string TipoBusqueda)
+        {
+            return BLLAlumno.ReferenciasConsulta( Dato,int.Parse(TipoBusqueda));
+        }
 
         [WebMethod]
         public bool UpdateAlumno(string AlumnoId, string UsuarioId,

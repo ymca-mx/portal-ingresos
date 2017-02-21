@@ -861,7 +861,137 @@ namespace BLL
              }
                 
         }
-        
+
+        public static List<ReferenciasPagadas> ReferenciasConsulta(string Dato, int TipoBusqueda)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+
+                    List< ReferenciasPagadas>  referencia= new List <ReferenciasPagadas>();
+                    if (TipoBusqueda == 1)
+                    {
+                        var alumnoid = int.Parse(Dato);
+
+                         referencia = (
+                            from a in db.ReferenciaProcesada
+                            join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                            where a.ReferenciaTipoId == 1
+                               && a.EstatusId == 1
+                               && b.EstatusId == 4
+                               && a.AlumnoId == alumnoid
+                            select new ReferenciasPagadas
+                            {
+                                AlumnoId = a.AlumnoId,
+                                ReferenciaId = a.ReferenciaId,
+                                FechaPagoD = a.FechaPago,
+                                MontoPagado = b.Pago.ToString(),
+                                MontoReferencia = a.Importe.ToString(),
+                                Saldo = a.Restante.ToString()
+                            }
+
+                            ).ToList();
+
+                    }
+                    else if (TipoBusqueda == 2)
+                    {
+                        var referenciaid = Dato;
+
+                        referencia = (
+                      from a in db.ReferenciaProcesada
+                      join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                      where a.ReferenciaTipoId == 1
+                         && a.EstatusId == 1
+                         && b.EstatusId == 4
+                         && a.ReferenciaId.Contains(referenciaid)
+                      select new ReferenciasPagadas
+                      {
+                          AlumnoId = a.AlumnoId,
+                          ReferenciaId = a.ReferenciaId,
+                          FechaPagoD = a.FechaPago,
+                          MontoPagado = b.Pago.ToString(),
+                          MontoReferencia = a.Importe.ToString(),
+                          Saldo = a.Restante.ToString()
+                      }
+
+                      ).ToList();
+
+                    }
+                    else if (TipoBusqueda == 3)
+                    {
+                        decimal importe = decimal.Parse(Dato);
+
+                        referencia = (
+                           from a in db.ReferenciaProcesada
+                           join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                           where a.ReferenciaTipoId == 1
+                              && a.EstatusId == 1
+                              && b.EstatusId == 4
+                              && b.Pago == importe
+                           select new ReferenciasPagadas
+                           {
+                               AlumnoId = a.AlumnoId,
+                               ReferenciaId = a.ReferenciaId,
+                               FechaPagoD = a.FechaPago,
+                               MontoPagado = b.Pago.ToString(),
+                               MontoReferencia = a.Importe.ToString(),
+                               Saldo = a.Restante.ToString()
+                           }
+
+                           ).ToList();
+                    }
+                    else if (TipoBusqueda == 4)
+                    {
+                        DateTime fechapago =DateTime.Parse(Dato);
+
+                        referencia = (
+                           from a in db.ReferenciaProcesada
+                           join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                           where a.ReferenciaTipoId == 1
+                              && a.EstatusId == 1
+                              && b.EstatusId == 4
+                              && a.FechaPago== fechapago
+                           select new ReferenciasPagadas
+                           {
+                               AlumnoId = a.AlumnoId,
+                               ReferenciaId = a.ReferenciaId,
+                               FechaPagoD = a.FechaPago,
+                               MontoPagado = b.Pago.ToString(),
+                               MontoReferencia = a.Importe.ToString(),
+                               Saldo = a.Restante.ToString()
+                           }
+
+                           ).ToList();
+                    }
+
+                    referencia = (from a in referencia
+                                  join b in db.Alumno on a.AlumnoId equals b.AlumnoId
+                                  select new ReferenciasPagadas
+                                  {
+                                      AlumnoId = a.AlumnoId,
+                                      Nombre = b.Nombre + " " + b.Paterno + " " + b.Materno,
+                                      ReferenciaId = a.ReferenciaId,
+                                      FechaPago = a.FechaPagoD.ToString("dd/MM/yyyy",Cultura),
+                                      MontoPagado = a.MontoPagado,
+                                      MontoReferencia = a.MontoReferencia,
+                                      Saldo = a.Saldo
+                                  }
+                                 ).ToList();
+                        
+                    return referencia;
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+            }
+        }
+
+
+
+
         public static List<DTOAlumno> ListarAlumnos(string Nombre, string Paterno, string Materno)
         {
             using (UniversidadEntities db = new UniversidadEntities())

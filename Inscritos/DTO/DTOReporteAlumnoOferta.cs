@@ -35,6 +35,7 @@ namespace DTO
     {
         public int ofertaEducativaId { get; set; }
         public string descripcion { get; set; }
+        public int  sucursalid { get; set; }
     }
 
 

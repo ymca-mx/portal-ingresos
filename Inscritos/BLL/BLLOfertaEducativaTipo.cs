@@ -64,10 +64,12 @@ namespace BLL
                         {
                             Descripcion = k.Descripcion,
                             OfertaEducativaTipoId = k.OfertaEducativaTipoId,
-                            Ofertas = k.OfertaEducativa.Select(of => new DTOOfertaEducativa1
+                            Ofertas = k.OfertaEducativa.Where(x=> x.EstatusId== 1).Select(of => new DTOOfertaEducativa1
                             {
                                 descripcion = of.Descripcion,
-                                ofertaEducativaId = of.OfertaEducativaId
+                                ofertaEducativaId = of.OfertaEducativaId,
+                                sucursalid= of.SucursalId
+                                
                             }).ToList()
                         }).ToList();
             }
