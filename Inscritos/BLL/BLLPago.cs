@@ -508,7 +508,7 @@ namespace BLL
                             FechaLimite = (Utilities.Fecha.Prorroga(objP.FechaPago.Value.Year, objP.FechaPago.Value.Month, true, 5).ToString("dd/MM/yyyy", Cultura)),
                             Monto = objP.Promesa.ToString("C", Cultura),
                             Restante = decimal.Parse(objP.Pagado).ToString("C", Cultura),
-                            Estatus = objP.Promesa == decimal.Parse(objP.Restante) ? "Pendiente" : (objP.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
+                            Estatus = objP.Promesa == decimal.Parse(objP.Restante) ? (objP.Promesa == 0 ? "Pagado" : "Pendiente") : (objP.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
                         };
                         if (objP.Anio == 2016 && objP.PeriodoId == 1)
                         {
