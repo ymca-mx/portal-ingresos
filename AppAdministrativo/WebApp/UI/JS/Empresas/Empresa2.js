@@ -1853,7 +1853,7 @@ $('#tblAlumnosCom1').on('click', 'button', function () {
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
-                $("#slcOferta").val(rowadd.OfertaEducativaTipoId);
+                $("#slcOferta").val(d.OfertaEducativaTipoId);
                 CargarOfertasL(rowadd.OfertaEducativaId);
             }
         });

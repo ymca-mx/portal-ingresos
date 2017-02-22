@@ -349,6 +349,8 @@
                         .addClass('br-active');
 
                     showSelectedRating($a.attr('data-rating-text'));
+                    $("#rating1").text($a.attr('data-rating-text'));
+
                 });
             };
 

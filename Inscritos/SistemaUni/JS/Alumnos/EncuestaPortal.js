@@ -19,12 +19,11 @@
         $('#example-css').barrating({
             theme: 'css-stars',
             showSelectedRating: false,
-            hoverState: true,
 
-            onSelect: function (value, text) {
+            //onSelect: function (value, text) {
 
-                $("#rating1").text(text);
-            }
+            //    $("#rating1").text(text);
+            //}
         });
     }
 
