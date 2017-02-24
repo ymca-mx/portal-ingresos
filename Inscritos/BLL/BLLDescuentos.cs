@@ -389,46 +389,52 @@ namespace BLL
                                                                 && a.OfertaEducativaId == O.OfertaEducativaId).FirstOrDefault() :
                                                                 new DTOAlumnoInscrito
                                                                 {
-                                                                    EsEmpresa = false
+                                                                    EsEmpresa = false,
+                                                                    AlumnoId = -1
                                                                 };
-                        bool esBeca = db.Descuento.Where(i => i.DescuentoId == a.DescuentoId)
-                                        .ToList()
-                                            .Where(D => D.Descripcion == "Beca Académica" || D.Descripcion == "Beca SEP").ToList().Count > 0
-                                            ?
-                                            true : false;
-                        lstAlumnoDescuento.Add(
-                            new DTOAlumnoDescuento
-                            {
+
+                        if (objAlInscrito.AlumnoId != -1)
+                        {
+
+                            bool esBeca = db.Descuento.Where(i => i.DescuentoId == a.DescuentoId)
+                                            .ToList()
+                                                .Where(D => D.Descripcion == "Beca Académica" || D.Descripcion == "Beca SEP").ToList().Count > 0
+                                                ?
+                                                true : false;
+                            lstAlumnoDescuento.Add(
+                                new DTOAlumnoDescuento
+                                {
                                 //AlumnoDescuentoId = a.AlumnoDescuentoId,
                                 AlumnoId = a.AlumnoId,
-                                Anio = a.Anio,
-                                ConceptoId = a.PagoConceptoId,
-                                DescuentoId = a.DescuentoId,
-                                SMonto = !esBeca || a.EsDeportiva || objAlInscrito.EsEmpresa ? ""
-                                            : ("" + a.Monto) + "%",
-                                OtrosDescuentos = objAlInscrito.EsEmpresa ? "" + a.Monto : "",
-                                BecaDeportiva = a.EsDeportiva ? ("" + a.Monto) + "%" : "",
-                                PeriodoId = a.PeriodoId,
-                                AnioPeriodoId = ("" + a.Anio + " " + a.PeriodoId),
-                                BecaSEP = (a.EsSEP ? "Si" : ""),
-                                DescripcionPeriodo = db.Periodo.Where(p1 => p1.Anio == a.Anio && p1.PeriodoId == a.PeriodoId).FirstOrDefault().Descripcion,
-                                Usuario = db.Usuario.Where(u => u.UsuarioId == a.UsuarioId).ToList().
-                                          Select(a1 => new DTOUsuario
-                                          {
-                                              UsuarioId = a1.UsuarioId,
-                                              Nombre = a1.Nombre
-                                          }).FirstOrDefault(),
-                                BecaComite = (a.EsComite ? "Si" : ""),
-                                esEmpresa = objAlInscrito.EsEmpresa,
-                                FechaAplicacionS = a.FechaAplicacion.Value.ToString("dd/MM/yyyy", Cultura),
-                                DocComiteRutaId =""+ lstDocumentosAlumno.Where(o=>a.Anio==o.Anio
-                                                      && a.PeriodoId==o.PeriodoId
-                                                      && o.TipoDocumentoId==2).FirstOrDefault()?.AlumnoInscritoDocumentoId ?? "-1",
+                                    Anio = a.Anio,
+                                    ConceptoId = a.PagoConceptoId,
+                                    DescuentoId = a.DescuentoId,
+                                    SMonto = !esBeca || a.EsDeportiva || objAlInscrito.EsEmpresa ? ""
+                                                : ("" + a.Monto) + "%",
+                                    OtrosDescuentos = objAlInscrito.EsEmpresa ? "" + a.Monto : "",
+                                    BecaDeportiva = a.EsDeportiva ? ("" + a.Monto) + "%" : "",
+                                    PeriodoId = a.PeriodoId,
+                                    AnioPeriodoId = ("" + a.Anio + " " + a.PeriodoId),
+                                    BecaSEP = (a.EsSEP ? "Si" : ""),
+                                    DescripcionPeriodo = db.Periodo.Where(p1 => p1.Anio == a.Anio && p1.PeriodoId == a.PeriodoId).FirstOrDefault().Descripcion,
+                                    Usuario = db.Usuario.Where(u => u.UsuarioId == a.UsuarioId).ToList().
+                                              Select(a1 => new DTOUsuario
+                                              {
+                                                  UsuarioId = a1.UsuarioId,
+                                                  Nombre = a1.Nombre
+                                              }).FirstOrDefault(),
+                                    BecaComite = (a.EsComite ? "Si" : ""),
+                                    esEmpresa = objAlInscrito.EsEmpresa,
+                                    FechaAplicacionS = a.FechaAplicacion.Value.ToString("dd/MM/yyyy", Cultura),
+                                    DocComiteRutaId = "" + lstDocumentosAlumno.Where(o => a.Anio == o.Anio
+                                                        && a.PeriodoId == o.PeriodoId
+                                                        && o.TipoDocumentoId == 2).FirstOrDefault()?.AlumnoInscritoDocumentoId ?? "-1",
 
-                                DocAcademicaId = "" + lstDocumentosAlumno.Where(o => a.Anio == o.Anio
-                                                       && a.PeriodoId == o.PeriodoId
-                                                       && o.TipoDocumentoId == 1).FirstOrDefault()?.AlumnoInscritoDocumentoId ?? "-1"
-                            });
+                                    DocAcademicaId = "" + lstDocumentosAlumno.Where(o => a.Anio == o.Anio
+                                                           && a.PeriodoId == o.PeriodoId
+                                                           && o.TipoDocumentoId == 1).FirstOrDefault()?.AlumnoInscritoDocumentoId ?? "-1"
+                                });
+                        }
                     });
 
                     lstAlumnoDescuento = lstAlumnoDescuento.OrderBy(a => a.Anio).ThenBy(s => s.PeriodoId).ToList();

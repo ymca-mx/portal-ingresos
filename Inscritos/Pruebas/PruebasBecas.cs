@@ -24,7 +24,7 @@ namespace Pruebas
         public void BuscarAlumno()
         {
             var objRes =
-            BLL.BLLAlumno.BuscarAlumno(1183, 13);
+            BLL.BLLAlumno.BuscarAlumno(8195, 2);
             Console.WriteLine(objRes.Nombre);
         }
 
@@ -97,21 +97,16 @@ namespace Pruebas
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7725,
+                alumnoId = 8195,
                 anio = 2017,
-                periodoId = 2,
-                ofertaEducativaId = 30,
-                porcentajeBeca = 53.37m, //70.15
-                porcentajeInscripcion = 100m,
-                esSEP = false,
+                periodoId = 1,
+                ofertaEducativaId = 2,
+                porcentajeBeca = 60.45m, 
+                esSEP = true,
                 esComite = false,
                 esEmpresa = true,
-                usuarioId = 7878, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
-                genera = true
-
-            //    //Colegiatura = decimal
-            //    //Inscripcion = decimal
+                usuarioId = 100000, 
+                fecha = "", 
             };
 
             BLL.BLLAlumno.AplicaBeca_Excepcion(Alumno, false);
