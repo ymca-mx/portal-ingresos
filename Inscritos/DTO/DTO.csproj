@@ -107,6 +107,7 @@
     <Compile Include="DTOParentesco.cs" />
     <Compile Include="DTOPeriodo.cs" />
     <Compile Include="DTOPersonaAutorizada.cs" />
+    <Compile Include="DTOPreguntas.cs" />
     <Compile Include="DTOProspectoDetalle.cs" />
     <Compile Include="DTORecibo.cs" />
     <Compile Include="DTOReferencia.cs" />

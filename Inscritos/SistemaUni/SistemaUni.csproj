@@ -573,9 +573,9 @@
     <Content Include="Style\assets\global\plugins\jquery-easypiechart\Readme.md" />
     <Content Include="Style\assets\global\plugins\jquery-idle-timeout\README.markdown" />
     <Content Include="Style\assets\global\plugins\jquery-inputmask\README.md" />
-    <Content Include="Style\assets\global\plugins\jquery-knob\knob.jquery.json" />
-    <Content Include="Style\assets\global\plugins\jquery-knob\LICENSE" />
-    <Content Include="Style\assets\global\plugins\jquery-knob\README.md" />
+    <Content Include="Style\assets\global\plugins\jquery-minicolors\jquery-knob\knob.jquery.json" />
+    <Content Include="Style\assets\global\plugins\jquery-minicolors\jquery-knob\LICENSE" />
+    <Content Include="Style\assets\global\plugins\jquery-minicolors\jquery-knob\README.md" />
     <Content Include="Style\assets\global\plugins\jquery-minicolors\.gitignore" />
     <Content Include="Style\assets\global\plugins\jquery-minicolors\bower.json" />
     <Content Include="Style\assets\global\plugins\jquery-minicolors\component.json" />
@@ -595,7 +595,7 @@
     <Content Include="Style\assets\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Style\assets\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
     <Content Include="Style\assets\global\plugins\jquery-tags-input\README.md" />
-    <Content Include="Style\assets\global\plugins\jquery-ui-touch-punch\README.md" />
+    <Content Include="Style\assets\global\plugins\jquery-validation\js\jquery-ui-touch-punch\README.md" />
     <Content Include="Style\assets\global\plugins\jquery-validation\README.md" />
     <Content Include="Style\assets\global\plugins\jquery.min.map" />
     <Content Include="Style\assets\global\plugins\jqvmap\.gitignore" />
@@ -4345,7 +4345,7 @@
     <Content Include="Style\assets\global\plugins\jquery-inputmask\inputmask\jquery.inputmask.regex.extensions.js" />
     <Content Include="Style\assets\global\plugins\jquery-inputmask\jquery.inputmask.bundle.js" />
     <Content Include="Style\assets\global\plugins\jquery-inputmask\jquery.inputmask.bundle.min.js" />
-    <Content Include="Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
+    <Content Include="Style\assets\global\plugins\jquery-minicolors\jquery-knob\js\jquery.knob.js" />
     <Content Include="Style\assets\global\plugins\jquery-migrate.min.js" />
     <Content Include="Style\assets\global\plugins\jquery-minicolors\index.html" />
     <Content Include="Style\assets\global\plugins\jquery-minicolors\jquery.minicolors.css" />
@@ -4369,7 +4369,7 @@
     <Content Include="Style\assets\global\plugins\jquery-tags-input\jquery.tagsinput.css" />
     <Content Include="Style\assets\global\plugins\jquery-tags-input\jquery.tagsinput.js" />
     <Content Include="Style\assets\global\plugins\jquery-tags-input\jquery.tagsinput.min.js" />
-    <Content Include="Style\assets\global\plugins\jquery-ui-touch-punch\jquery.ui.touch-punch.min.js" />
+    <Content Include="Style\assets\global\plugins\jquery-validation\js\jquery-ui-touch-punch\jquery.ui.touch-punch.min.js" />
     <Content Include="Style\assets\global\plugins\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Style\assets\global\plugins\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Style\assets\global\plugins\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />

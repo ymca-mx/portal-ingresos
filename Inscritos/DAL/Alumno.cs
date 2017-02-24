@@ -40,6 +40,7 @@ namespace DAL
             this.PersonaAutorizada = new HashSet<PersonaAutorizada>();
             this.Recibo = new HashSet<Recibo>();
             this.ReferenciaProcesada = new HashSet<ReferenciaProcesada>();
+            this.Respuesta = new HashSet<Respuesta>();
         }
     
         public int AlumnoId { get; set; }
@@ -108,5 +109,7 @@ namespace DAL
         public virtual ICollection<Recibo> Recibo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciaProcesada> ReferenciaProcesada { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Respuesta> Respuesta { get; set; }
     }
 }

@@ -151,6 +151,10 @@ namespace DAL
         public virtual DbSet<PolizaNumeracion> PolizaNumeracion { get; set; }
         public virtual DbSet<PolizaSubtipo> PolizaSubtipo { get; set; }
         public virtual DbSet<PolizaTipo> PolizaTipo { get; set; }
+        public virtual DbSet<Pregunta> Pregunta { get; set; }
+        public virtual DbSet<PreguntaTipo> PreguntaTipo { get; set; }
+        public virtual DbSet<PreguntaTipoValores> PreguntaTipoValores { get; set; }
+        public virtual DbSet<PreguntaValor> PreguntaValor { get; set; }
         public virtual DbSet<Prospecto> Prospecto { get; set; }
         public virtual DbSet<ProspectoBitacora> ProspectoBitacora { get; set; }
         public virtual DbSet<ProspectoDetalle> ProspectoDetalle { get; set; }
@@ -172,6 +176,7 @@ namespace DAL
         public virtual DbSet<ReferenciaGeneradaBitacora> ReferenciaGeneradaBitacora { get; set; }
         public virtual DbSet<ReferenciaProcesada> ReferenciaProcesada { get; set; }
         public virtual DbSet<ReferenciaTipo> ReferenciaTipo { get; set; }
+        public virtual DbSet<Respuesta> Respuesta { get; set; }
         public virtual DbSet<SistemaConfiguracion> SistemaConfiguracion { get; set; }
         public virtual DbSet<SubMenu> SubMenu { get; set; }
         public virtual DbSet<Subperiodo> Subperiodo { get; set; }
@@ -179,7 +184,6 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
-        public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
         public virtual DbSet<TipoUsuarioSubmenu> TipoUsuarioSubmenu { get; set; }

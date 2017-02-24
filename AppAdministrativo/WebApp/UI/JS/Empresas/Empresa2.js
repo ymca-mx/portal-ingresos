@@ -1381,7 +1381,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
     var rowadd = tblAlumnosCompletos.fnGetData($(this).closest('tr'));
     AlumnoConfig.AlumnoId = rowadd.AlumnoId;
     AlumnoConfig.GrupoId = rowadd.GrupoId;
-    if ( rowadd.AlumnoCuota.EstatusId != 8) {
+    if (rowadd.AlumnoCuota.EstatusId != 8) {
         $("#slcSistemaPago").prop('disabled', true);
         $("#slcOferta").prop('disabled', true);
         $("#slcOfertaEducativa").prop('disabled', true);
@@ -1391,7 +1391,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $("#txtCuotaColegiatura").prop('disabled', true);
         $('#txtNPagos').val(rowadd.AlumnoCuota.NoPagos);
         $("#txtNPagos").prop('disabled', true);
-           
+
         var chk = $('#chkCongelada');
         $(chk).prop('disabled', true);
         if (rowadd.AlumnoCuota.CuotaCongelada) {
@@ -1410,16 +1410,15 @@ $('#tblAlumnosCom').on('click', 'button', function () {
             $(chk1[0].parentElement).addClass('checked');
         }
 
-        
         var chkCre = $('#chkCredenciales');
         $(chkCre).prop('disabled', true);
         $(chkCre[0].parentElement).addClass('checked');
+
 
         var opc = $('#slcPeriodo').find('option[value="1"]').val();
         if (opc == '1') {
             $("#slcPeriodo option[value='1']").remove();
         }
-
         var optionP = $(document.createElement('option'));
         optionP.text(rowadd.AlumnoCuota.DescipcionPeriodo);
         optionP.val('1');
@@ -1427,7 +1426,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $("#slcPeriodo").val('1');
 
         $("#slcPeriodo").prop('disabled', true);
-            
+
         $("#btnAlumnoConfig").prop('disabled', true);
     } else {
         $("#slcSistemaPago").prop('disabled', false);
@@ -1438,6 +1437,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $("#btnAlumnoConfig").prop('disabled', false);
         $('#txtNPagos').val('');
         $("#txtNPagos").prop('disabled', false);
+
         var chk = $('#chkCongelada');
         $(chk).prop('disabled', false);
         $(chk[0].parentElement).removeClass('checked');
@@ -1449,13 +1449,13 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         var chk1 = $('#chkEspecial');
         $(chk1).prop('disabled', false);
         $(chk1[0].parentElement).removeClass('checked');
-        var opc = $('#slcPeriodo').find('option[value="1"]').val();
 
         var chkCre = $('#chkCredenciales');
         $(chkCre).prop('disabled', false);
         $(chkCre[0].parentElement).removeClass('checked');
 
 
+        var opc = $('#slcPeriodo').find('option[value="1"]').val();
         if (opc == '1') {
             $("#slcPeriodo option[value='1']").remove();
         }
@@ -1463,6 +1463,37 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $("#slcPeriodo").prop('disabled', false);
     }
     sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
+    $("#slcOferta").empty();
+    var optionP = $(document.createElement('option'));
+    optionP.text('--Seleccionar--');
+    optionP.val('-1');
+    $("#slcOferta").append(optionP);
+
+    $(OFertas).each(function (i, d) {
+        $(d.Ofertas).each(function (i1, d1) {
+
+            if (sucursalid == 3) {
+                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.val(d.OfertaEducativaTipoId);
+                    $("#slcOferta").append(option);
+                }
+
+            } else if (this.sucursalid == sucursalid) {
+
+                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.val(d.OfertaEducativaTipoId);
+                    $("#slcOferta").append(option);
+                }
+
+                //CargarOfertasL(rowadd.OfertaEducativaId);
+            }
+        });
+    });
+
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
@@ -1472,12 +1503,15 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         });
     });
 
-        
+
     GrupoI = rowadd.AlumnoCuota.GrupoId;
     OfertaI = rowadd.OfertaEducativaId;
-  
+
     //console.log(rowadd);
     $('#PopAlumnoConfiguracion').modal('show');
+
+     
+  
 });
 
 $('#btnAlumnos1').on('click', function () {

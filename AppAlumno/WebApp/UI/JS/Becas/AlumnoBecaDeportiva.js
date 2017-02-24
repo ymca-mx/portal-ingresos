@@ -2,7 +2,7 @@
 $(document).ready(function () {
     var AlumnoObject;
     var tblBecas = null;
-    var Alumnoid;
+    var Alumnoid, porcentajebeca;
 
     $('#btnGenerarCargos').click(function () {
         var txtMonto = $('#txtBecaMonto').val();
@@ -11,6 +11,11 @@ $(document).ready(function () {
         if (Perid === -1) {
             alertify.alert('Periodo Invalido');
             return true;
+        }
+        beca = porcentajebeca +parseInt(txtMonto);
+        if (beca > 100) {
+            alertify.alert('El porcentaje de la Beca no puede exceder el 100%');
+            return false;
         }
         if (txtMonto > 0) {
 
@@ -75,8 +80,9 @@ $(document).ready(function () {
     $('#btnBuscarAlumno').click(function () {
         var alumno = $('#txtAlumno').val();
         if (alumno.length > 0 && alumno > 0) {
+
+            $('#FileDeportiva a').click();
             $('#Load').modal('show');
-            $('#slcOfertas').empty();
             $('#txtBecaMonto').val(0);
             if (tblBecas !== null) {
                 tblBecas.fnClearTable();
@@ -90,7 +96,7 @@ $(document).ready(function () {
     function BuscarAlumno(AlumnoId) {
         var nombre = $('#hCarga');
         nombre[0].innerText = "Cargando";
-
+        $("#btnGenerarCargos").attr("disabled", "disabled");
         $("#slcOfertas").empty();
         var optionP = $(document.createElement('option'));
         optionP.text('--Seleccionar--');
@@ -141,6 +147,8 @@ $(document).ready(function () {
 
         $(AlumnoObject.PeriodosAlumno).each(function (s, d) {
 
+
+            $("#slcPeriodo").empty();
             var option = $(document.createElement('option'));
             option.text(d.Descripcion);
             option.attr("data-Anio", this.Anio);
@@ -164,6 +172,21 @@ $(document).ready(function () {
                 tblBecas.fnClearTable();
             }
         });
+
+        $(AlumnoObject.OfertasAlumnos).each(function () {
+            var da = this;
+            if (da.OfertaEducativaId.toString() === Oferta.toString()) {
+
+                if (da.Mensaje == "No tiene")
+                {
+                    alertify.alert('El Alumno debe estar inscrito para poder aplicar una beca deportiva gracias');
+                    $("#btnGenerarCargos").attr("disabled", "disabled");
+                }
+
+            }
+        });
+
+
         //console.log(desc);
         if (desc.length > 0) { CargarDescuentos(desc); }
     });
@@ -210,6 +233,12 @@ $(document).ready(function () {
                 row.childNodes[2].style.textAlign = 'center';
                 row.childNodes[3].style.textAlign = 'center';
                 row.childNodes[4].style.textAlign = 'center';
+
+                if(data.AnioPeriodoId  = AlumnoObject.PeriodosAlumno[0].Anio +" - "+ AlumnoObject.PeriodosAlumno[0].PeriodoId && data.BecaDeportiva == "No")
+                {
+                    porcentajebeca = data.Monto;
+                }
+
                 $('#txtBecaMonto').val(data.MontoDep);
                 if (data.DocComiteRutaId != null && data.DocComiteRutaId > 0) {
                     var newLinkS = $(document.createElement("a"));
@@ -300,6 +329,7 @@ $(document).ready(function () {
                     }
                     AlumnoObject = null;
                     alertify.alert('Beca Aplicada');
+                    $('#FileDeportiva a').click();
                     BuscarAlumno(Alumnoid);
                 } else {
                     alertify.alert('Error al cargar datos');

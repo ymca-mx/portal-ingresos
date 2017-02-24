@@ -868,6 +868,69 @@ namespace BLL
                 
         }
 
+        public static List<DTOPreguntas> PreguntasPortal()
+        {
+            using (UniversidadEntities db=new UniversidadEntities ())
+            {
+                var fechaActual = DateTime.Now;
+                var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
+                                                                     && fechaActual <= p.FechaFinal).FirstOrDefault();
+
+                var preguntas = db.Pregunta.Where(a => a.Anio == Periodo.Anio && a.PeriodoId == Periodo.PeriodoId)
+                                           .Select(b => new DTOPreguntas
+                                           {
+                                               PreguntaId = b.PreguntaId,
+                                               Descripcion = b.Descripcion,
+                                               PreguntaTipoId = (int)b.PreguntaTipoId,
+                                               SupPregunta = b.SubPregunta,
+                                               Opciones = db.PreguntaTipoValores.Where(c=> c.PreguntaTipoId == b.PreguntaTipoId)
+                                                                                . Select(d=> new DTOOpciones
+                                                                                {
+                                                                                    PreguntaTipoValoresId = d.PreguntaTipoValoresId,
+                                                                                    PreguntaTipoId= (int) d.PreguntaTipoId,
+                                                                                    Descripcion = d.Descripcion
+                                                                                }).ToList()
+                                           }).ToList();
+
+                return preguntas;
+            }
+        }
+
+        public static bool GuardarRespuestas(DTORespuestas RespuesasEncuesta)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                //try
+                //{
+                    var respuestas = RespuesasEncuesta.Respuestas;
+
+                    respuestas.ForEach(n=> 
+                    {
+                        db.Respuesta.Add(new Respuesta
+                        {
+                            AlumnoId = n.AlumnoId,
+                            PreguntaId = n.Pregunta,
+                            FechaGeneracion = DateTime.Now,
+                            HoraGeneracion = DateTime.Now.TimeOfDay,
+                            PreguntaTipoValoresId =  n.Respuesta,
+                            Comentario = n.Comentario
+                        });
+                    }
+                        );
+                    db.SaveChanges();
+                    return true;
+                //}
+                //catch (Exception)
+                //{
+
+                   // return false;
+                //}
+                
+            }
+        }
+
+
+
         public static List<ReferenciasPagadas> ReferenciasConsulta(string Dato, int TipoBusqueda)
         {
             using (UniversidadEntities db = new UniversidadEntities())

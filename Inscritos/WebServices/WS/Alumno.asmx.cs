@@ -335,6 +335,22 @@ namespace WebServices.WS
 
             return BLLAlumno.VerificaAlumnoDatos(int.Parse(AlumnoId));
         }
+        //encuesta
+        [WebMethod]
+        public List<DTOPreguntas> PreguntasPortal()
+        {
+
+            return BLLAlumno.PreguntasPortal();
+        }
+        [WebMethod]
+        public bool GuardarRespuestas(DTORespuestas RespuesasEncuesta)
+        {
+
+            return BLLAlumno.GuardarRespuestas( RespuesasEncuesta);
+        }
+
+        //encuesta
+
         //datos personales  generados por el alumnos
         [WebMethod]
         public List<ReferenciasPagadas> ReferenciasConsulta(string Dato, string TipoBusqueda)
