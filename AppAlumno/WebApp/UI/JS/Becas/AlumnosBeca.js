@@ -1,22 +1,73 @@
-﻿$(document).ready(function () {
+﻿$(function Init() {
     var AlumnoId;
-    var tblAlumnosPActual;
-    var tblPagos;
-    var tblBecas;
+    var tblAlumnosPActual, tblPagos, tblBecas;
     var Estado = "";
     var UsurioTipo = 0;
     var NuevoIngreso = 0;
-    var TieneSEP= false;
-    var TieneComite = false;
+    var TieneSEP = false, TieneComite = false, EsEspecial = false;
     var objAlumno = undefined;
     GetUsuario();
     CargarPeriodo();
-    //$('#label-switch').bootstrapSwitch('setOnLabel', 'I');
-    //$('#label-switch').bootstrapSwitch('setOffLabel', 'O');
+    
     $("#chkSEP").bootstrapSwitch();
-    $('#dvTabla').hide(); 
+    $('#chkSEP').change(function (event) {
+        var val = this;
+        if (val.checked == true) {
+            (function () {
+                $("#txtBecaMonto").removeAttr("disabled");
+                $("#btnGenerarCargos").removeAttr("disabled");
+                $('#btnGenerarCargos').text("Actualizar");
+
+                var lstDescuentos = [];
+
+                $(tblBecas).DataTable()
+                    .column(2)
+                    .data()
+                    .each(function (value, index) {
+                        if (value.length > 0) {
+                            lstDescuentos.push({
+                                Indice: index,
+                                Valor: value,
+                                TipoB: "Academica - SEP"
+                            });
+                        }
+                    });
+                $(tblBecas).DataTable()
+                    .column(4)
+                    .data()
+                    .each(function (value, index) {
+                        if (value.length > 0) {
+                            lstDescuentos.push({
+                                Indice: index,
+                                Valor: value,
+                                TipoB: "Otros"
+                            });
+                        }
+                    });
+                var indice = -1, monto = 0;
+
+                $(lstDescuentos).each(function () {
+                    if (this.Indice != indice) {
+                        if (this.Indice > indice) {
+                            indice = this.Indice;
+                            monto = this.Valor;
+                        }
+                    }
+                });
+                $("#txtBecaMonto").val(monto);
+            })();
+
+        } else {
+            $("#txtBecaMonto").attr("disabled", "disabled");
+            $("#txtBecaMonto").val("0");
+            $("#btnGenerarCargos").attr("disabled", "disabled");
+        }
+    });
+
+    $('#dvTabla').hide();
     $('#dvCargos').show();
     $('#divComite2').hide();
+
     $("#btnGenerarCargos").attr("disabled", "disabled");
     function GetUsuario() {
         var usuario = $.cookie('userAdmin');
@@ -51,103 +102,6 @@
         });
     }
 
-    function Cargar() {
-        $('#Load').modal('show');
-        $.ajax({ 
-            url: '../WebServices/WS/Beca.asmx/ListaAlumnosActuales',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: '{}',
-            dataType: 'json',
-            success: function (data) {
-                tblAlumnosPActual = $('#tbAlumnos').dataTable({
-                    "aaData": data.d,
-                    "aoColumns": [
-                        { "mDataProp": "AlumnoId" },
-                        {
-                            "mDataProp": "Nombre",
-                            "mRender": function (data) {
-                                return "<a href=''onclick='return false;'>" + data + " </a> ";
-                            }
-                        },
-                         { "mDataProp": "OfertaEducativa" },
-                        { "mDataProp": "FechaReinscripcionS" },
-                        { "mDataProp": "BecaAcademica" },
-                        { "mDataProp": "BecaSep" },
-                        { "mDataProp": "Usuario" },
-                    ],
-                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
-                    "searching": true,
-                    "ordering": true,
-                    "info": false,
-                    "async": true,
-                    "bDestroy": true,
-                    "bAutoWidth": false,
-                    "language": {
-                        "lengthMenu": "_MENU_  Registros",
-                        "paginate": {
-                            "previous": "<",
-                            "next": ">"
-                        },
-                        "search": "Buscar Alumno "
-                    },
-                    "order": [[0, "desc"]]
-                });
-                var fil = $('#tbAlumnos_filter label input');
-                fil.removeClass('input-small').addClass('input-large');
-                $('#Load').modal('hide');
-            }
-        });
-    }
-
-    function Cargar2() {
-        $.ajax({
-            url: '../WebServices/WS/Beca.asmx/ListaAlumnosActuales',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: '{}',
-            dataType: 'json',
-            success: function (data) {
-                tblAlumnosPActual = $('#tbAlumnos').dataTable({
-                    "aaData": data.d,
-                    "aoColumns": [
-                        { "mDataProp": "AlumnoId" },
-                        {
-                            "mDataProp": "Nombre",
-                            "mRender": function (data) {
-                                return "<a href=''onclick='return false;'>" + data + " </a> ";
-                            }
-                        },
-                         { "mDataProp": "OfertaEducativa" },
-                        { "mDataProp": "FechaReinscripcionS" },
-                        { "mDataProp": "BecaAcademica" },
-                        { "mDataProp": "BecaSep" },
-                        { "mDataProp": "Usuario" },
-                    ],
-                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
-                    "searching": true,
-                    "ordering": true,
-                    "info": false,
-                    "async": true,
-                    "bDestroy": true,
-                    "bAutoWidth": false,
-                    "language": {
-                        "lengthMenu": "_MENU_  Registros",
-                        "paginate": {
-                            "previous": "<",
-                            "next": ">"
-                        },
-                        "search": "Buscar Alumno "
-                    },
-                    "order": [[0, "desc"]]
-                });
-                var fil = $('#tbAlumnos_filter label input');
-                fil.removeClass('input-small').addClass('input-large');
-                $('#Load').modal('hide');
-            }
-        });
-    }
-
     $('#btnCargosBeca').click(function () {
         $('#dvTabla').hide();
         $('#dvCargos').show();
@@ -175,7 +129,7 @@
             data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + OfertaEducativa + '"}',
             dataType: 'json',
             success: function (data) {
-                if (data.d.length>0) {
+                if (data.d.length > 0) {
                     if (tblBecas != null) {
                         $('#txtBecaMonto').val("0");
                         tblBecas.fnClearTable();
@@ -185,11 +139,12 @@
                     if (objUltimo != undefined && objUltimo.AnioPeriodoId == $('#lblPeriodoBeca').text()) {
                         objAlumno = objUltimo;
                     }
-                    var monto = data.d[data.d.length - 1].SMonto;
+                    var monto = EsEspecial ? data.d[data.d.length - 1].OtrosDescuentos : data.d[data.d.length - 1].SMonto;
                     if (monto[monto.length - 1] == '%') {
                         var smonto = monto.substring(0, monto.length - 1);
                         $('#txtBecaMonto').val(smonto);
                     }
+                    $('#txtBecaMonto').val(monto);
                     $('#txtBecaMonto').keyup();
                     $("#txtBecaMonto").focus();
 
@@ -272,7 +227,7 @@
             success: function (data) {
                 if (data != null) {
                     $('#Load').modal('hide');
-                    window.open(data.d, "ArchivoPDF");                    
+                    window.open(data.d, "ArchivoPDF");
                 } else {
                     $('#Load').modal('hide');
                 }
@@ -281,7 +236,7 @@
     }
     function AbrirArchivo(DocumentoId) {
         var url = "/../WebServices/WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
-        var archiv = window;        
+        var archiv = window;
         archiv.open("../Inscritos/Archivos/Archivo.html", "PDF");
         archiv.Ruta = url;
     }
@@ -289,7 +244,7 @@
         var a = this;
         a = $(a).data("file");
         AbrirArchivo(a);
-      
+
     });
     function Limpiar() {
         if ($('#txtAlumno').val().length == 0) { return false; }
@@ -316,7 +271,7 @@
                 SEPReadOnly();
             }
         }
-       
+
         $('#divComite1').hide();
         //$('#chkSEP').removeAttr("checked");
         $('#divComite2').hide();
@@ -454,11 +409,12 @@
                     $('#Load').modal('hide');
                     return false;
                 }
-                 
-                
+
+
                 var lblEmpresa = $('#divInscrito3');
                 lblEmpresa = $(lblEmpresa)[0].children[0].children[0].innerText;
-                lblEmpresa = data.d.EsEmpresa == true ? data.d.EsEspecial == true ? "Alumno Especial" : "Grupo Empresarial" :  "";
+                lblEmpresa = data.d.EsEmpresa == true ? data.d.EsEspecial == true ? "Alumno Especial" : "Grupo Empresarial" : "";
+                EsEspecial = data.d.EsEspecial;
                 //lblEmpresa = lblEmpresa + " " + data.d.Grupo;
                 var objEmr = $('#divInscrito3');
                 $(objEmr)[0].children[0].children[0].innerText = lblEmpresa;
@@ -477,6 +433,7 @@
                     $("#txtBecaMonto").attr("disabled", "disabled");
                     if (data.d.Inscrito == true) {
                         $("#btnGenerarCargos").attr("disabled", "disabled");
+                        $('#btnGenerarCargos').text("Actualizar");
                     }
                     if (data.d.EsEspecial) {
                         $("#btnGenerarCargos").removeAttr("disabled");
@@ -496,7 +453,7 @@
                     //$('#btnGenerarCargos').text("Actualizar");
                     if (data.d.Inscrito == true) {
                         var lab = $('#lblPagos');
-                        lab[0].innerText = "Reinscrito, sin Cargos Generados";                        
+                        lab[0].innerText = "Reinscrito, sin Cargos Generados";
                     }
                     if (data.d.EsEspecial) {
                         $("#btnGenerarCargos").removeAttr("disabled");
@@ -517,8 +474,8 @@
                     }
                 }
                 else if (data.d.AlumnoId == "-4") {
-                    alertify.alert("El alumno no inicio su proceso de reinscripción");                    
-                    
+                    alertify.alert("El alumno no inicio su proceso de reinscripción");
+
                 }
                 else if (data.d.AlumnoId == "-5") {
                     $('#divInscrito').show();
@@ -539,33 +496,57 @@
                     var lab = $('#lblInscito');
                     lab[0].innerText = "Inscrito";
                     /////////// Ya tiene Beca-SEP
-                    //if (data.d.lstPagos[0].BecaSEPD > 0) {
-                        //$('#tblBeca').hide();
-                        //$("#btnGenerarCargos").attr("disabled", "disabled");
-                    //}
+                    if (data.d.lstPagos[0].BecaSEPD > 0) {
+                        var chk1 = $('#chkSEP');
+                        chk1[0] = true;
+                        TieneSEP = true;
+                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
+                    }
                 }
                 if (data.d.NuevoIngreso) {
                     NuevoIngreso = 1000;
                     $('#divInscrito').show();
                     var labelIns = $('#lblInscito');
                     labelIns[0].innerText = "Alumno Inscrito - Nuevo Ingreso";
-                    SEPReadOnly();
+                    //SEPReadOnly();
+                    if ((!data.d.EsEspecial && data.d.EsEmpresa) && data.d.SEP) {
+                        $("#txtBecaMonto").removeAttr("disabled");
+                        $("#txtBecaMonto").val("");
 
-                    ComiteReadOnly();
-                    $("#txtBecaMonto").attr("disabled", "disabled");
-                    $("#txtBecaMonto").val("");
-                    $("#btnGenerarCargos").attr("disabled", "disabled");
-                    $('#divComite2').hide();
-                }
-                else {
-                    if (data.d.SEP) {
+                        $("#btnGenerarCargos").removeAttr("disabled");
+                        $('#btnGenerarCargos').text("Actualizar");
+                        $('#divComite2').hide();
+
                         var chk1 = $('#chkSEP');
                         chk1[0] = true;
                         TieneSEP = true;
                         $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
+                    }
+                    else if ((!data.d.EsEspecial && data.d.EsEmpresa) && !data.d.SEP) {
+                        $("#txtBecaMonto").attr("disabled", "disabled");
+                        $("#txtBecaMonto").val("");
 
-                        if (UsurioTipo == 3) { SEPReadOnly(); }
-                        if (UsurioTipo == 12) { $('#divComite2').show(); }
+                        $("#btnGenerarCargos").attr("disabled", "disabled");
+                        $('#btnGenerarCargos').text("Actualizar");
+
+                        $('#divComite2').hide();
+
+                        var chk1 = $('#chkSEP');
+                        chk1[0] = false;
+                        TieneSEP = false;
+                        $('input[name="chkSEP"]').bootstrapSwitch('setState', false);
+                    } else if(data.d.SEP) {
+                        $("#txtBecaMonto").removeAttr("disabled");
+                        $("#txtBecaMonto").val("");
+
+                        $("#btnGenerarCargos").removeAttr("disabled");
+                        $('#btnGenerarCargos').text("Actualizar");
+                        $('#divComite2').hide();
+
+                        var chk1 = $('#chkSEP');
+                        chk1[0] = true;
+                        TieneSEP = true;
+                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
                     }
                 }
 
@@ -585,7 +566,7 @@
                 if (tblPagos != null) {
                     tblPagos.fnClearTable();
                 }
-                
+
                 CargarDescuentos();
                 $("#txtBecaMonto").focus();
                 $('#txtBecaMonto').keyup();
@@ -609,14 +590,14 @@
         } else if (val > 100) {
             $('#txtBecaMonto').val(100);
         }
-        
+
         if (NuevoIngreso == 0) {
 
             if (val == 0) {
                 $('#divComite2').hide();
 
-                
-              
+
+
                 if ($('input[name="chkSEP"]').bootstrapSwitch('isReadOnly')) {
                     if (!TieneSEP) { $('input[name="chkSEP"]').bootstrapSwitch('setState', false); }
                     SEPReadOnly();
@@ -624,7 +605,7 @@
             } else if (val > 0) {
                 if (UsurioTipo != 3) { $('#divComite2').show(); }
                 UsurioTipo = UsurioTipo;
-              
+
                 if ($('input[name="chkSEP"]').bootstrapSwitch('isReadOnly') && UsurioTipo != 3) {
                     SEPReadOnlyOff();
                 }
@@ -658,7 +639,7 @@
         //});
     });
 
-    function Guardar(Monto, OfertaEducativaId, SEP, Anio, Periodo, Comite,esEmpresa, Materias, Asesorias) {
+    function Guardar(Monto, OfertaEducativaId, SEP, Anio, Periodo, Comite, esEmpresa, Materias, Asesorias) {
         SEP = SEP == true ? "true" : "false";
         var usuario = $.cookie('userAdmin');
         $.ajax({
@@ -686,7 +667,7 @@
         var file = $('#FileCarta');
         var tex = $('#txtCartaArchivo').html();
         if (this.files.length > 0) {
-            $('#txtCartaArchivo').text(RecortarNombre(this.files[0].name)); 
+            $('#txtCartaArchivo').text(RecortarNombre(this.files[0].name));
             file.addClass('fileinput-exists').removeClass('fileinput-new');
             $('#FileCarta span span').text('Cambiar');
         }

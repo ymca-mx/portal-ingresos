@@ -315,7 +315,8 @@ namespace BLL
                                                 && k.Grupo.FechaInicio <= p.FechaFinal).FirstOrDefault().PeriodoId:0,
                                                 Anio= k.Anio,
                                                 PeriodoId = k.PeriodoId,
-                                                DescipcionPeriodo = db.Periodo.Where(a => a.Anio == k.Anio && a.PeriodoId == k.PeriodoId).FirstOrDefault().Descripcion 
+                                                DescipcionPeriodo = db.Periodo.Where(a => a.Anio == k.Anio && a.PeriodoId == k.PeriodoId).FirstOrDefault().Descripcion,
+                                                SucuralGrupo = k.Grupo.SucursalId
                                              }).FirstOrDefault()
                                      }).AsNoTracking()
                                      .OrderByDescending(K => K.AlumnoId)

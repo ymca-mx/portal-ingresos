@@ -471,6 +471,18 @@
     <Compile Include="PolizaTipo.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pregunta.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreguntaTipo.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreguntaTipoValores.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreguntaValor.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prospecto.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
@@ -541,6 +553,9 @@
     <Compile Include="ReporteEstadoCuentaPagosConcepto.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="Respuesta.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Saldos.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
@@ -566,9 +581,6 @@
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="Tabla2.cs">
-      <DependentUpon>Modelo2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TempAdeudo.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoDocumento.cs">

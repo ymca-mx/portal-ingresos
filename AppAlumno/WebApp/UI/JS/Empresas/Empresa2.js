@@ -2,7 +2,7 @@
     tblAlumnosCom1
     var Seleccionados = "";
     var MItable;
-    var Alumnos, DatosEmpresas, AlumnoId, TipoMovimiento,ModificarGrupo,TM;
+    var Alumnos, DatosEmpresas, AlumnoId, TipoMovimiento,ModificarGrupo,TM, sucursalid;
     var AlumnosEmpresa;
     var MiGrupo;
     var Fila;
@@ -399,19 +399,7 @@
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
-                var datos = data.d;
                 OFertas = data.d;
-                $(datos).each(function () {
-                    if (this.OfertaEducativaTipoId != 4) {
-                        var option = $(document.createElement('option'));
-                        option.text(this.Descripcion);
-                        option.val(this.OfertaEducativaTipoId);
-
-                        $("#slcOferta").append(option);
-                    }
-                });
-                //$("#slcSexo").html(data); // show the string that was returned, this will be the data inside the xml wrapper
-                $("#slcOferta").change();
             }
         });
     }
@@ -714,31 +702,8 @@
     });
 
     $("#slcOferta").change(function () {
-        $("#slcOfertaEducativa").empty();
-        var optionP = $(document.createElement('option'));
-        optionP.text('--Seleccionar--');
-        optionP.val('-1');
-        $("#slcOfertaEducativa").append(optionP);
-        var tipo = $("#slcOferta");
-        tipo = tipo[0].value;
-
-        if (OFertas.length > 0) {
-            $(OFertas).each(function () {
-                if (tipo == String(this.OfertaEducativaTipoId)) {
-                    $(this.Ofertas).each(function () {
-                        var option = $(document.createElement('option'));
-
-                        option.text(this.descripcion);
-                        option.val(this.ofertaEducativaId);
-
-                        $("#slcOfertaEducativa").append(option);
-                    });
-                }
-            });
-        } else {
-            $("#slcOfertaEducativa").append(optionP);
-        }
-        //PlanPago();
+      
+        CargarOfertasL(-1);
     });
 
     $('#slcPlantel').change(function () {
@@ -1497,6 +1462,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $("#slcPeriodo").val(rowadd.AlumnoCuota.PeriodoIdGrupo + ' ' + rowadd.AlumnoCuota.AnioGrupo);
         $("#slcPeriodo").prop('disabled', false);
     }
+    sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
@@ -1509,6 +1475,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         
     GrupoI = rowadd.AlumnoCuota.GrupoId;
     OfertaI = rowadd.OfertaEducativaId;
+  
     //console.log(rowadd);
     $('#PopAlumnoConfiguracion').modal('show');
 });
@@ -1549,15 +1516,27 @@ function CargarOfertasL(OFertaEducativaId) {
     tipo = tipo[0].value;
 
     if (OFertas.length > 0) {
-        $(OFertas).each(function () {
+
+        $(OFertas).each(function (i, d) {
             if (tipo == String(this.OfertaEducativaTipoId)) {
-                $(this.Ofertas).each(function () {
-                    var option = $(document.createElement('option'));
+                $(d.Ofertas).each(function (i1, d1) {
 
-                    option.text(this.descripcion);
-                    option.val(this.ofertaEducativaId);
+                    if(sucursalid == 3)
+                    {
+                        var option = $(document.createElement('option'));
+                        option.text(this.descripcion);
+                        option.val(this.ofertaEducativaId);
 
-                    $("#slcOfertaEducativa").append(option);
+                        $("#slcOfertaEducativa").append(option);
+                    } else if (sucursalid == this.sucursalid ) 
+                    {
+                        var option = $(document.createElement('option'));
+                        option.text(this.descripcion);
+                        option.val(this.ofertaEducativaId);
+
+                        $("#slcOfertaEducativa").append(option);
+                    }
+                   
                 });
             }
         });
@@ -1837,6 +1816,40 @@ $('#tblAlumnosCom1').on('click', 'button', function () {
         $("#slcPeriodo").val(rowadd.AlumnoCuota.PeriodoIdGrupo + ' ' + rowadd.AlumnoCuota.AnioGrupo);
         $("#slcPeriodo").prop('disabled', false);
     }
+    sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
+    $("#slcOferta").empty();
+    var optionP = $(document.createElement('option'));
+    optionP.text('--Seleccionar--');
+    optionP.val('-1');
+    $("#slcOferta").append(optionP);
+
+    $(OFertas).each(function (i, d) {
+        $(d.Ofertas).each(function (i1, d1) {
+
+            if (sucursalid ==3)
+            {
+                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId!=4)
+                {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.val(d.OfertaEducativaTipoId);
+                    $("#slcOferta").append(option);
+                }
+
+            } else if (this.sucursalid == sucursalid) {
+
+                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.val(d.OfertaEducativaTipoId);
+                    $("#slcOferta").append(option);
+                }
+
+                //CargarOfertasL(rowadd.OfertaEducativaId);
+            }
+        });
+    });
+
     $(OFertas).each(function (i, d) {
         $(d.Ofertas).each(function (i1, d1) {
             if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
@@ -1845,10 +1858,11 @@ $('#tblAlumnosCom1').on('click', 'button', function () {
             }
         });
     });
-   
+  
 
     GrupoI = rowadd.AlumnoCuota.GrupoId;
     OfertaI = rowadd.OfertaEducativaId;
+
     //console.log(rowadd);
     $('#PopAlumnoConfiguracion').modal('show');
 });

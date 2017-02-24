@@ -12,11 +12,12 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class TempAdeudo
+    public partial class PreguntaTipoValores
     {
-        public int AlumnoId { get; set; }
-        public decimal Adeudo { get; set; }
-        public int Tipo { get; set; }
-        public int OfertaEducativaId { get; set; }
+        public int PreguntaTipoValoresId { get; set; }
+        public Nullable<int> PreguntaTipoId { get; set; }
+        public string Descripcion { get; set; }
+    
+        public virtual PreguntaTipo PreguntaTipo { get; set; }
     }
 }
