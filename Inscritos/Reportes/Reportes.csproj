@@ -106,7 +106,6 @@
   <ItemGroup>
     <Compile Include="DataSet\Alumno.cs">
       <DependentUpon>Alumno.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSet\Alumno.Designer.cs">
       <AutoGen>True</AutoGen>

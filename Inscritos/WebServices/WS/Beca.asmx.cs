@@ -156,20 +156,27 @@ namespace WebServices.WS
             string Anio, string PeriodoId, string Usuario, string EsComite, string EsEmpresa, string Materias,
             string Asesorias)
         {
-            DTO.Alumno.Beca.DTOAlumnoBeca objBeca = new DTO.Alumno.Beca.DTOAlumnoBeca
+            DTO.Alumno.Beca.DTOAlumnoBeca objBeca;
+            try
             {
-                alumnoId = int.Parse(AlumnoId),
-                anio = int.Parse(Anio),
-                esSEP = bool.Parse(SEP),
-                ofertaEducativaId = int.Parse(OfertaEducativaId),
-                periodoId = int.Parse(PeriodoId),
-                porcentajeBeca = decimal.Parse(Monto),
-                usuarioId = int.Parse(Usuario),
-                esComite = bool.Parse(EsComite),
-                esEmpresa = bool.Parse(EsEmpresa),
-                fecha =""
-            };
+                var obbjetos = bool.Parse(EsEmpresa) ? BLLGrupo.TraerInscripcion(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(Anio), int.Parse(PeriodoId), int.Parse(Usuario), decimal.Parse(Monto)) : null;
 
+                objBeca = new DTO.Alumno.Beca.DTOAlumnoBeca
+                {
+                    alumnoId = int.Parse(AlumnoId),
+                    anio = int.Parse(Anio),
+                    esSEP = bool.Parse(SEP),
+                    ofertaEducativaId = int.Parse(OfertaEducativaId),
+                    periodoId = int.Parse(PeriodoId),
+                    porcentajeBeca = bool.Parse(EsEmpresa) ? obbjetos?.Where(l => l.DTOPagoConcepto.PagoConceptoId == 800)?.FirstOrDefault()?.Monto ?? 0 : decimal.Parse(Monto),
+                    porcentajeInscripcion = obbjetos?.Where(l => l.DTOPagoConcepto.PagoConceptoId == 802)?.FirstOrDefault()?.Monto ?? 0,
+                    usuarioId = int.Parse(Usuario),
+                    esComite = bool.Parse(EsComite),
+                    esEmpresa = bool.Parse(EsEmpresa),
+                    fecha = ""
+                };
+            }
+            catch { return "fallo"; }
             try
             {
                 BLL.BLLAlumno.AplicaBeca(objBeca, false);

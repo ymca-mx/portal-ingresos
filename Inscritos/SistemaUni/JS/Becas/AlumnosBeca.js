@@ -4,7 +4,7 @@
     var Estado = "";
     var UsurioTipo = 0;
     var NuevoIngreso = 0;
-    var TieneSEP = false, TieneComite = false, EsEspecial = false;
+    var TieneSEP = false, TieneComite = false, EsEspecial = false, esEmpresa;
     var objAlumno = undefined;
     GetUsuario();
     CargarPeriodo();
@@ -14,9 +14,12 @@
         var val = this;
         if (val.checked == true) {
             (function () {
-                $("#txtBecaMonto").removeAttr("disabled");
+                if (!esEmpresa || EsEspecial) {
+                    $("#txtBecaMonto").removeAttr("disabled");
+                }
                 $("#btnGenerarCargos").removeAttr("disabled");
-                $('#btnGenerarCargos').text("Actualizar");
+                if (NuevoIngreso == 0)
+                    $('#btnGenerarCargos').text("Actualizar");
 
                 var lstDescuentos = [];
 
@@ -58,9 +61,12 @@
             })();
 
         } else {
-            $("#txtBecaMonto").attr("disabled", "disabled");
-            $("#txtBecaMonto").val("0");
-            $("#btnGenerarCargos").attr("disabled", "disabled");
+            if (esEmpresa  && !EsEspecial) {
+                $("#txtBecaMonto").attr("disabled", "disabled");
+                $("#txtBecaMonto").val("0");
+            }            
+            if(NuevoIngreso==0)
+                $("#btnGenerarCargos").attr("disabled", "disabled");
         }
     });
 
@@ -144,7 +150,7 @@
                         var smonto = monto.substring(0, monto.length - 1);
                         $('#txtBecaMonto').val(smonto);
                     }
-                    $('#txtBecaMonto').val(monto);
+                    $('#txtBecaMonto').val(monto.substring(0, monto.length - 1));
                     $('#txtBecaMonto').keyup();
                     $("#txtBecaMonto").focus();
 
@@ -209,6 +215,11 @@
                             }
                         }
                     });
+                    if (TieneSEP) {
+                        var chk1 = $('#chkSEP');
+                        chk1[0] = true;
+                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
+                    }
                     $('#Load').modal('hide');
                 } else {
                     $('#Load').modal('hide');
@@ -415,6 +426,7 @@
                 lblEmpresa = $(lblEmpresa)[0].children[0].children[0].innerText;
                 lblEmpresa = data.d.EsEmpresa == true ? data.d.EsEspecial == true ? "Alumno Especial" : "Grupo Empresarial" : "";
                 EsEspecial = data.d.EsEspecial;
+                esEmpresa = data.d.EsEmpresa;
                 //lblEmpresa = lblEmpresa + " " + data.d.Grupo;
                 var objEmr = $('#divInscrito3');
                 $(objEmr)[0].children[0].children[0].innerText = lblEmpresa;
@@ -475,7 +487,7 @@
                 }
                 else if (data.d.AlumnoId == "-4") {
                     alertify.alert("El alumno no inicio su proceso de reinscripción");
-
+                    NuevoIngreso = -4;
                 }
                 else if (data.d.AlumnoId == "-5") {
                     $('#divInscrito').show();
@@ -497,10 +509,7 @@
                     lab[0].innerText = "Inscrito";
                     /////////// Ya tiene Beca-SEP
                     if (data.d.lstPagos[0].BecaSEPD > 0) {
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = true;
                         TieneSEP = true;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
                     }
                 }
                 if (data.d.NuevoIngreso) {
@@ -517,10 +526,7 @@
                         $('#btnGenerarCargos').text("Actualizar");
                         $('#divComite2').hide();
 
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = true;
                         TieneSEP = true;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
                     }
                     else if ((!data.d.EsEspecial && data.d.EsEmpresa) && !data.d.SEP) {
                         $("#txtBecaMonto").attr("disabled", "disabled");
@@ -531,10 +537,7 @@
 
                         $('#divComite2').hide();
 
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = false;
                         TieneSEP = false;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', false);
                     } else if(data.d.SEP) {
                         $("#txtBecaMonto").removeAttr("disabled");
                         $("#txtBecaMonto").val("");
@@ -543,11 +546,10 @@
                         $('#btnGenerarCargos').text("Actualizar");
                         $('#divComite2').hide();
 
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = true;
+                        
                         TieneSEP = true;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
                     }
+                    $('#btnGenerarCargos').text("Actualizar");
                 }
 
                 if (!data.d.Revision && data.d.PeriodoD != "2017 1") {
@@ -614,12 +616,9 @@
     });
     $('#btnGenerarCargos').click(function () {
         var Monto = $('#txtBecaMonto').val();
-        if (Monto.length == 0) {
-            alertify.alert("No se ha insertado nada en Beca");
-            return false;
-        }
         //alertify.confirm("<p>¿Esta seguro que desea continuan?<br><br><hr>", function (e) {
-        //    if (e) {                
+        //    if (e) {            
+        Monto = Monto.length == 0 ? 0 : Monto;
         var nombre = $('#hCarga');
         nombre[0].innerText = "Guardando";
         $('#Load').modal('show');
@@ -630,7 +629,7 @@
 
         var Anio = $('#txtPeriodo').data("anio");
         var Periodo = $('#txtPeriodo').data("periodoid");
-        var Empresa = objAlumno != undefined ? objAlumno.esEmpresa : false;
+        var Empresa = esEmpresa;
         var Comite = objAlumno != undefined ? objAlumno.BecaComite == "Si" ? true : false : false;
         var Materias = $('#txtMateria').val();
         var Asesorias = $('#txtAsesoria').val();

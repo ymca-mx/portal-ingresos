@@ -19,7 +19,10 @@
             data: '{AlumnoId:"' + AlumnoId + '"}',
             dataType: 'json',
             success: function (data) {
-                if (data.d == null) { return null; }
+                if (data.d == null) {
+                    $('#Load').modal('hide');
+                    return null;
+                }
                 $('#lblAlumno').text(data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno);
                 $(data.d.lstAlumnoInscrito).each(function () {
                     var option = $(document.createElement('option'));
