@@ -129,4 +129,25 @@ namespace DTO
         public int suma { get; set; }
         public int tipo {get; set; }
     }
+
+    public class DTOReporteVoBo
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public string OfertaEducativa { get; set; }
+        public int OfertaEducativaid { get; set; }
+        public DateTime ?FechaInscrito1 { get; set; }
+        public string FechaInscrito { get; set; }
+        public string HoraInscrito { get; set; }
+        public string UsuarioInscribio { get; set; }
+        public DateTime ?FechaVoBo1 { get; set; }
+        public string FechaVoBo { get; set; }
+        public string HoraVoBo { get; set; }
+        public bool ?InscripcionCompleta { get; set; }
+        public int ?Asesorias { get; set; }
+        public int ?Materias { get; set; }
+        
+        public string UsuarioVoBo { get; set; }
+
+    }
 }

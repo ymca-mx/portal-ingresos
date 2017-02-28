@@ -26,14 +26,14 @@
                  if (Datos.extensionImagen == ".png")
                      $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                  //RevisaAnticipado();
-                 Verificar();
+                 VerificarDatos();
              }
          },
          error: function (Resultado) {
              alert('Se presento un error en la validación de las credenciales');
          }
      });
-     function Verificar() {
+     function VerificarDatos() {
          var AlumnoNum = $.cookie('user');
          $.ajax({
              type: "POST",
@@ -44,10 +44,32 @@
              success: function (data) {
                  if (data.d) {
                      $('#popDatos').load('../inscritos/Alumno/AlumnoActualizaDatos.html');
+                 } else
+                 {
+                     VerificarEncuesta();
+                 }
+
+             }
+         });
+     }
+
+     function VerificarEncuesta() {
+         var AlumnoNum = $.cookie('user');
+         $.ajax({
+             type: "POST",
+             url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoEncuesta",
+             data: "{AlumnoId:'" + AlumnoNum + "'}",
+             contentType: "application/json; charset=utf-8",
+             dataType: 'json',
+             success: function (data) {
+                 if (data.d) {
+                     $('#popDatos').load('../inscritos/Alumno/EncuestaPortal.html');
                  }
              }
          });
      }
+
+
 
      $('#PopDatosAlumno').on('hidden.bs.modal', function () {
          location.reload();

@@ -6,12 +6,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+using DTO;
 
 namespace Pruebas
 {
+    
+
     [TestClass]
     public class PruebasBecas
     {
+        static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
+
         [TestMethod]
         public void AlumnoDatos()
         {
@@ -97,17 +103,17 @@ namespace Pruebas
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 6558,
+                alumnoId = 12,
                 anio = 2017,
-                periodoId = 1,
-                ofertaEducativaId = 30,
-                porcentajeBeca = 55.06m, //70.15
+                periodoId = 2,
+                ofertaEducativaId = 11,
+                porcentajeBeca = 62.69m, //70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
-                usuarioId = 8272, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "12/10/2016", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                usuarioId = 6070, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2017-01-23", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
 
             //    //Colegiatura = decimal
@@ -1794,7 +1800,49 @@ namespace Pruebas
             }
         }
 
-      
+        [TestMethod]
+        public void AlumnoVoBo()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                int anio = 2017;
+                int periodoid = 2;
+
+                var todos = db.Alumno.Where(a => a.AlumnoRevision.Where(ar =>  ar.Anio == anio
+                                                                        && ar.PeriodoId == periodoid
+                                                                        && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
+
+                                              || a.AlumnoInscrito.Where(ai =>   ai.Anio== anio
+                                                                        &&    ai.PeriodoId == periodoid
+                                                                        &&    ai.OfertaEducativa.OfertaEducativaTipoId != 4
+                                                                        &&    db.AlumnoInscritoBitacora.Where(aib=> aib.AlumnoId==ai.AlumnoId
+                                                                                                              &&    aib.OfertaEducativaId == ai.OfertaEducativaId
+                                                                                                              &&  (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count()> 0
+                                                                        ).Count() > 0).ToList();
+
+                var todos1 = todos.Select(td => new DTOReporteVoBo
+                {
+                    AlumnoId = td.AlumnoId,
+                    Nombre = td.Paterno + " " + td.Materno + " " + td.Nombre,
+                    OfertaEducativaid = td.AlumnoInscrito.FirstOrDefault()?.OfertaEducativaId ?? td.AlumnoRevision.FirstOrDefault().OfertaEducativaId,
+                    OfertaEducativa = td.AlumnoInscrito.FirstOrDefault()?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.FirstOrDefault().OfertaEducativa.Descripcion,
+                    FechaInscrito = td.AlumnoInscrito.FirstOrDefault()?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura),
+                    HoraInscrito = td.AlumnoInscrito.FirstOrDefault()?.HoraInscripcion.ToString(),
+                    UsuarioInscribio = td.AlumnoInscrito.FirstOrDefault()?.Usuario.Paterno + " " + td.AlumnoInscrito.FirstOrDefault()?.Usuario.Materno + " " + td.AlumnoInscrito.FirstOrDefault()?.Usuario.Nombre,
+                    FechaVoBo = td.AlumnoRevision.FirstOrDefault()?.FechaRevision.ToString("dd/MM/yyyy", Cultura),
+                    HoraVoBo = td.AlumnoRevision.FirstOrDefault()?.HoraRevision.ToString(),
+                    InscripcionCompleta = td.AlumnoRevision.FirstOrDefault()?.InscripcionCompleta,
+                    Asesorias = td.AlumnoRevision.FirstOrDefault()?.AsesoriaEspecial,
+                    Materias = td .AlumnoRevision.FirstOrDefault()?.AdelantoMateria,
+                    UsuarioVoBo = td.AlumnoRevision.FirstOrDefault()?.Usuario.Paterno + " " + td.AlumnoRevision.FirstOrDefault()?.Usuario.Materno + "" + td.AlumnoRevision.FirstOrDefault()?.Usuario.Nombre
+                }
+).ToList();
+
+
+
+
+            }
+        }
 
     }
 }
