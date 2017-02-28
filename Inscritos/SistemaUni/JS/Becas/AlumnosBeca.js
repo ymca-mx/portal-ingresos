@@ -2,9 +2,8 @@
     var AlumnoId;
     var tblAlumnosPActual, tblPagos, tblBecas;
     var Estado = "";
-    var UsurioTipo = 0;
-    var NuevoIngreso = 0;
-    var TieneSEP = false, TieneComite = false, EsEspecial = false, esEmpresa;
+    var UsurioTipo = 0,NuevoIngreso = 0;
+    var TieneSEP = false, TieneComite = false, EsEspecial = false, esEmpresa, EsCompleto = true;
     var objAlumno = undefined;
     GetUsuario();
     CargarPeriodo();
@@ -146,11 +145,13 @@
                         objAlumno = objUltimo;
                     }
                     var monto = EsEspecial ? data.d[data.d.length - 1].OtrosDescuentos : data.d[data.d.length - 1].SMonto;
+                    var smonto = 0;
                     if (monto[monto.length - 1] == '%') {
-                        var smonto = monto.substring(0, monto.length - 1);
+                        smonto = monto.substring(0, monto.length - 1);
                         $('#txtBecaMonto').val(smonto);
+                    } else {
+                        $('#txtBecaMonto').val(monto);
                     }
-                    $('#txtBecaMonto').val(monto.substring(0, monto.length - 1));
                     $('#txtBecaMonto').keyup();
                     $("#txtBecaMonto").focus();
 
@@ -427,6 +428,7 @@
                 lblEmpresa = data.d.EsEmpresa == true ? data.d.EsEspecial == true ? "Alumno Especial" : "Grupo Empresarial" : "";
                 EsEspecial = data.d.EsEspecial;
                 esEmpresa = data.d.EsEmpresa;
+                EsCompleto = data.d.Completa;
                 //lblEmpresa = lblEmpresa + " " + data.d.Grupo;
                 var objEmr = $('#divInscrito3');
                 $(objEmr)[0].children[0].children[0].innerText = lblEmpresa;
@@ -444,12 +446,21 @@
                     $('#divComite').hide();
                     $("#txtBecaMonto").attr("disabled", "disabled");
                     if (data.d.Inscrito == true) {
+                        $('#divInscrito').show();
+                        var labelIns = $('#lblInscito');
+                        labelIns[0].innerText += " Alumno Inscrito";
+                        
                         $("#btnGenerarCargos").attr("disabled", "disabled");
                         $('#btnGenerarCargos').text("Actualizar");
                     }
                     if (data.d.EsEspecial) {
                         $("#btnGenerarCargos").removeAttr("disabled");
                         $("#txtBecaMonto").removeAttr("disabled");
+                    }
+                    if (data.d.lstPagos.length > 0) {
+                        if (data.d.lstPagos[0].BecaSEPD > 0) {
+                            TieneSEP = true;
+                        }
                     }
                 }
                     /////////// Alumno en Gruopo Especial
@@ -466,6 +477,9 @@
                     if (data.d.Inscrito == true) {
                         var lab = $('#lblPagos');
                         lab[0].innerText = "Reinscrito, sin Cargos Generados";
+                        $('#divInscrito').show();
+                        var labelIns = $('#lblInscito');
+                        labelIns[0].innerText += " Alumno Inscrito";
                     }
                     if (data.d.EsEspecial) {
                         $("#btnGenerarCargos").removeAttr("disabled");
@@ -494,11 +508,22 @@
                     var lab1 = $('#lblInscito');
                     lab1[0].innerText = "Sin Inscribir";
                     $('#btnGenerarCargos').text("Inscribir");
-                    if (data.d.Inscrito == true) {
+                   
+                    if (data.d.Inscrito) {
                         $('#btnGenerarCargos').text("Actualizar");
-                        var lab = $('#lblInscito');
-                        lab[0].innerText = "Inscrito (Materia suelta | Asesoria)";
+                        lab1[0].innerText = "Alumno Inscrito";
+                        //if (EsCompleto) { $("#btnGenerarCargos").removeAttr("disabled"); } <<<<<<<<<------------ Codigo pendiente por Confirmar con Alejandra
+                        //else { $("#btnGenerarCargos").attr("disabled", "disabled"); }
                     }
+                    if (esEmpresa) {
+                        $('#divInscrito3').show();
+                        $("#txtBecaMonto").attr("disabled", "disabled");
+                        if (data.d.EsEspecial) {
+                            $("#btnGenerarCargos").removeAttr("disabled");
+                            $("#txtBecaMonto").removeAttr("disabled");
+                        }
+                    }
+
                 }
                 /////////// Alumno Inscrito
                 /////////// No tiene ninguna condicion negativa
@@ -508,8 +533,10 @@
                     var lab = $('#lblInscito');
                     lab[0].innerText = "Inscrito";
                     /////////// Ya tiene Beca-SEP
-                    if (data.d.lstPagos[0].BecaSEPD > 0) {
-                        TieneSEP = true;
+                    if (data.d.lstPagos.length > 0) {
+                        if (data.d.lstPagos[0].BecaSEPD > 0) {
+                            TieneSEP = true;
+                        }
                     }
                 }
                 if (data.d.NuevoIngreso) {

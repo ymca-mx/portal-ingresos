@@ -2,9 +2,8 @@
     var AlumnoId;
     var tblAlumnosPActual, tblPagos, tblBecas;
     var Estado = "";
-    var UsurioTipo = 0;
-    var NuevoIngreso = 0;
-    var TieneSEP = false, TieneComite = false, EsEspecial = false;
+    var UsurioTipo = 0,NuevoIngreso = 0;
+    var TieneSEP = false, TieneComite = false, EsEspecial = false, esEmpresa, EsCompleto = true;
     var objAlumno = undefined;
     GetUsuario();
     CargarPeriodo();
@@ -14,9 +13,12 @@
         var val = this;
         if (val.checked == true) {
             (function () {
-                $("#txtBecaMonto").removeAttr("disabled");
+                if (!esEmpresa || EsEspecial) {
+                    $("#txtBecaMonto").removeAttr("disabled");
+                }
                 $("#btnGenerarCargos").removeAttr("disabled");
-                $('#btnGenerarCargos').text("Actualizar");
+                if (NuevoIngreso == 0)
+                    $('#btnGenerarCargos').text("Actualizar");
 
                 var lstDescuentos = [];
 
@@ -58,9 +60,12 @@
             })();
 
         } else {
-            $("#txtBecaMonto").attr("disabled", "disabled");
-            $("#txtBecaMonto").val("0");
-            $("#btnGenerarCargos").attr("disabled", "disabled");
+            if (esEmpresa  && !EsEspecial) {
+                $("#txtBecaMonto").attr("disabled", "disabled");
+                $("#txtBecaMonto").val("0");
+            }            
+            if(NuevoIngreso==0)
+                $("#btnGenerarCargos").attr("disabled", "disabled");
         }
     });
 
@@ -140,11 +145,13 @@
                         objAlumno = objUltimo;
                     }
                     var monto = EsEspecial ? data.d[data.d.length - 1].OtrosDescuentos : data.d[data.d.length - 1].SMonto;
+                    var smonto = 0;
                     if (monto[monto.length - 1] == '%') {
-                        var smonto = monto.substring(0, monto.length - 1);
+                        smonto = monto.substring(0, monto.length - 1);
                         $('#txtBecaMonto').val(smonto);
+                    } else {
+                        $('#txtBecaMonto').val(monto);
                     }
-                    $('#txtBecaMonto').val(monto);
                     $('#txtBecaMonto').keyup();
                     $("#txtBecaMonto").focus();
 
@@ -209,6 +216,11 @@
                             }
                         }
                     });
+                    if (TieneSEP) {
+                        var chk1 = $('#chkSEP');
+                        chk1[0] = true;
+                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
+                    }
                     $('#Load').modal('hide');
                 } else {
                     $('#Load').modal('hide');
@@ -415,6 +427,8 @@
                 lblEmpresa = $(lblEmpresa)[0].children[0].children[0].innerText;
                 lblEmpresa = data.d.EsEmpresa == true ? data.d.EsEspecial == true ? "Alumno Especial" : "Grupo Empresarial" : "";
                 EsEspecial = data.d.EsEspecial;
+                esEmpresa = data.d.EsEmpresa;
+                EsCompleto = data.d.Completa;
                 //lblEmpresa = lblEmpresa + " " + data.d.Grupo;
                 var objEmr = $('#divInscrito3');
                 $(objEmr)[0].children[0].children[0].innerText = lblEmpresa;
@@ -432,12 +446,21 @@
                     $('#divComite').hide();
                     $("#txtBecaMonto").attr("disabled", "disabled");
                     if (data.d.Inscrito == true) {
+                        $('#divInscrito').show();
+                        var labelIns = $('#lblInscito');
+                        labelIns[0].innerText += " Alumno Inscrito";
+                        
                         $("#btnGenerarCargos").attr("disabled", "disabled");
                         $('#btnGenerarCargos').text("Actualizar");
                     }
                     if (data.d.EsEspecial) {
                         $("#btnGenerarCargos").removeAttr("disabled");
                         $("#txtBecaMonto").removeAttr("disabled");
+                    }
+                    if (data.d.lstPagos.length > 0) {
+                        if (data.d.lstPagos[0].BecaSEPD > 0) {
+                            TieneSEP = true;
+                        }
                     }
                 }
                     /////////// Alumno en Gruopo Especial
@@ -454,6 +477,9 @@
                     if (data.d.Inscrito == true) {
                         var lab = $('#lblPagos');
                         lab[0].innerText = "Reinscrito, sin Cargos Generados";
+                        $('#divInscrito').show();
+                        var labelIns = $('#lblInscito');
+                        labelIns[0].innerText += " Alumno Inscrito";
                     }
                     if (data.d.EsEspecial) {
                         $("#btnGenerarCargos").removeAttr("disabled");
@@ -475,18 +501,29 @@
                 }
                 else if (data.d.AlumnoId == "-4") {
                     alertify.alert("El alumno no inicio su proceso de reinscripción");
-
+                    NuevoIngreso = -4;
                 }
                 else if (data.d.AlumnoId == "-5") {
                     $('#divInscrito').show();
                     var lab1 = $('#lblInscito');
                     lab1[0].innerText = "Sin Inscribir";
                     $('#btnGenerarCargos').text("Inscribir");
-                    if (data.d.Inscrito == true) {
+                   
+                    if (data.d.Inscrito) {
                         $('#btnGenerarCargos').text("Actualizar");
-                        var lab = $('#lblInscito');
-                        lab[0].innerText = "Inscrito (Materia suelta | Asesoria)";
+                        lab1[0].innerText = "Alumno Inscrito";
+                        //if (EsCompleto) { $("#btnGenerarCargos").removeAttr("disabled"); } <<<<<<<<<------------ Codigo pendiente por Confirmar con Alejandra
+                        //else { $("#btnGenerarCargos").attr("disabled", "disabled"); }
                     }
+                    if (esEmpresa) {
+                        $('#divInscrito3').show();
+                        $("#txtBecaMonto").attr("disabled", "disabled");
+                        if (data.d.EsEspecial) {
+                            $("#btnGenerarCargos").removeAttr("disabled");
+                            $("#txtBecaMonto").removeAttr("disabled");
+                        }
+                    }
+
                 }
                 /////////// Alumno Inscrito
                 /////////// No tiene ninguna condicion negativa
@@ -496,11 +533,10 @@
                     var lab = $('#lblInscito');
                     lab[0].innerText = "Inscrito";
                     /////////// Ya tiene Beca-SEP
-                    if (data.d.lstPagos[0].BecaSEPD > 0) {
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = true;
-                        TieneSEP = true;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
+                    if (data.d.lstPagos.length > 0) {
+                        if (data.d.lstPagos[0].BecaSEPD > 0) {
+                            TieneSEP = true;
+                        }
                     }
                 }
                 if (data.d.NuevoIngreso) {
@@ -517,10 +553,7 @@
                         $('#btnGenerarCargos').text("Actualizar");
                         $('#divComite2').hide();
 
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = true;
                         TieneSEP = true;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
                     }
                     else if ((!data.d.EsEspecial && data.d.EsEmpresa) && !data.d.SEP) {
                         $("#txtBecaMonto").attr("disabled", "disabled");
@@ -531,10 +564,7 @@
 
                         $('#divComite2').hide();
 
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = false;
                         TieneSEP = false;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', false);
                     } else if(data.d.SEP) {
                         $("#txtBecaMonto").removeAttr("disabled");
                         $("#txtBecaMonto").val("");
@@ -543,11 +573,10 @@
                         $('#btnGenerarCargos').text("Actualizar");
                         $('#divComite2').hide();
 
-                        var chk1 = $('#chkSEP');
-                        chk1[0] = true;
+                        
                         TieneSEP = true;
-                        $('input[name="chkSEP"]').bootstrapSwitch('setState', true);
                     }
+                    $('#btnGenerarCargos').text("Actualizar");
                 }
 
                 if (!data.d.Revision && data.d.PeriodoD != "2017 1") {
@@ -614,12 +643,9 @@
     });
     $('#btnGenerarCargos').click(function () {
         var Monto = $('#txtBecaMonto').val();
-        if (Monto.length == 0) {
-            alertify.alert("No se ha insertado nada en Beca");
-            return false;
-        }
         //alertify.confirm("<p>¿Esta seguro que desea continuan?<br><br><hr>", function (e) {
-        //    if (e) {                
+        //    if (e) {            
+        Monto = Monto.length == 0 ? 0 : Monto;
         var nombre = $('#hCarga');
         nombre[0].innerText = "Guardando";
         $('#Load').modal('show');
@@ -630,7 +656,7 @@
 
         var Anio = $('#txtPeriodo').data("anio");
         var Periodo = $('#txtPeriodo').data("periodoid");
-        var Empresa = objAlumno != undefined ? objAlumno.esEmpresa : false;
+        var Empresa = esEmpresa;
         var Comite = objAlumno != undefined ? objAlumno.BecaComite == "Si" ? true : false : false;
         var Materias = $('#txtMateria').val();
         var Asesorias = $('#txtAsesoria').val();

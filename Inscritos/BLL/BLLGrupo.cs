@@ -819,8 +819,8 @@ namespace BLL
                         ColegMo = 100 - Math.Round(ColegMo, 2);
 
 
-                        if (ColegMo != BecaColegiatura)
-                        {
+                        if (ColegMo != BecaColegiatura && BecaColegiatura>0)
+                        { 
 
                             db.GrupoAlumnoConfiguracionBitacora
                                 .Add(
@@ -903,7 +903,7 @@ namespace BLL
                         var ColegMo = (configAl1.CuotaColegiatura * 100) / cuotadb2.Monto;
                         ColegMo = 100 - Math.Round(ColegMo, 2);
 
-                        if(ColegMo !=  BecaColegiatura)
+                        if(ColegMo !=  BecaColegiatura && BecaColegiatura > 0)
                         {
 
                             db.GrupoAlumnoConfiguracionBitacora

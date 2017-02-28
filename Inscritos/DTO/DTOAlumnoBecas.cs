@@ -41,6 +41,7 @@ namespace DTO
         public string Grupo { get; set; }
         public bool EsEmpresa { get; set; }
         public bool EsEspecial { get; set; }
+        public bool Completa { get; set; }
     }
     public class PagosAlumnos
     {
