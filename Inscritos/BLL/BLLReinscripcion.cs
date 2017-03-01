@@ -25,15 +25,19 @@ namespace BLL
                     objMAS.Cuotas = new List<dtoCuotaReinc>();
                     objMAS.EstatusAl = new List<dtoEstatusMA>();
                     //periodo
+                    //DateTime fhoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    DateTime fhoy = new DateTime(2017, 4, 16);
+                    var fprev = fhoy.AddDays(15);
                     objMAS.lstPeriodos.AddRange((from a in db.Periodo
-                                            where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal
-                                            select new DTOPeriodo
-                                            {
-                                                Descripcion = a.Descripcion,
-                                                Anio = a.Anio,
-                                                PeriodoId = a.PeriodoId,
-                                            }).ToList());
-                    
+                                                 where fhoy >= a.FechaInicial && fhoy <= a.FechaFinal
+                                                      || (fprev >= a.FechaInicial && fprev <= a.FechaFinal)
+                                                 select new DTOPeriodo
+                                                 {
+                                                     Descripcion = a.Descripcion,
+                                                     Anio = a.Anio,
+                                                     PeriodoId = a.PeriodoId,
+                                                 }).ToList());
+
                     objMAS.lstPeriodos
                             .ForEach(l => {
                                 l.Descripcion = db.Periodo.Where(k => k.Anio == l.Anio && k.PeriodoId == l.PeriodoId).FirstOrDefault().Descripcion;

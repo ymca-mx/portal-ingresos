@@ -93,9 +93,9 @@
 
                     $('#slcEstadoCivil').val(data.d.DTOAlumnoDetalle.EstadoCivilId);
                     $('#slcSexo').val(data.d.DTOAlumnoDetalle.GeneroId);
-                    $('#slcEstado').val(data.d.DTOAlumnoDetalle.EntidadFederativaId);
-                    CargarEstados($('#slcMunicipio'), data.d.DTOAlumnoDetalle.MunicipioId);
-
+                    //$('#slcEstado').val(data.d.DTOAlumnoDetalle.EntidadFederativaId);
+                    //CargarEstados1($('#slcMunicipio'), data.d.DTOAlumnoDetalle.MunicipioId);
+                    CargarEstados1(data.d.DTOAlumnoDetalle.EntidadFederativaId, data.d.DTOAlumnoDetalle.MunicipioId);
 
                     if (data.d.DTOPersonaAutorizada.length > 0) {
                         $('#txtPAutorizada').val(data.d.DTOPersonaAutorizada[0].Nombre);
@@ -864,6 +864,51 @@
 
             }
         });
+    }
+    function CargarEstados1(EstadoId, MunicipioId) {
+        $('#slcEstado').empty();
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+            success: function (data) {
+                var datos = data.d;
+                $(datos).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.Descripcion);
+                    option.val(this.EntidadFederativaId);
+
+                    $("#slcEstado").append(option);
+                });
+
+                $('#slcEstado').val(EstadoId);
+                $("#slcMunicipio").empty();
+
+                $.ajax({
+                    type: "POST",
+                    url: "../WebServices/WS/General.asmx/ConsultarMunicipios",
+                    data: "{EntidadFederativaId:'" + EstadoId + "'}",
+                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                    success: function (data) {
+                        var datos = data.d;
+                        $(datos).each(function () {
+                            var option = $(document.createElement('option'));
+
+                            option.text(this.Descripcion);
+                            option.val(this.EntidadFederativaId);
+
+                            $("#slcMunicipio").append(option);
+                        });
+                        $("#slcMunicipio").val(MunicipioId);
+
+                    }
+                });
+            }
+        });
+
     }
 
     $('#slcNacionalidad').change(function () {
