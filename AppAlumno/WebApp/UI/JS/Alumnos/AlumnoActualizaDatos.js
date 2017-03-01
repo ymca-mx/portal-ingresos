@@ -113,14 +113,18 @@
             success: function (data) {
                 if (data.d) {
                     $('#Load').modal('hide');
-                    alertify.alert("Datos del Alumno Modificados");
                     $('#PopDatosAlumno').modal('hide');
-                    VerificarEncuesta();
+                    alertify.alert("Datos del Alumno Modificados",function(){
+                        VerificarEncuesta();
+                    });
                 } else {
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
-                    alertify.alert("Error, Revisar datos capturados.");
-                    $('#PopDatosAlumno').modal('hide');
+                    alertify.alert("Error, Revisar datos capturados.", function ()
+                    {
+                        $('#PopDatosAlumno').modal('hide');
+                        $('#popDatos').empty();
+                    });
                 }
             }
         });
@@ -137,6 +141,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d) {
+                    $('#popDatos').empty();
                     $('#popDatos').load('../inscritos/Alumno/EncuestaPortal.html');
                 }
             }

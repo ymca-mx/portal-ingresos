@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace DTO
 {
     public class DTOReporteAlumnoOferta
@@ -135,19 +135,26 @@ namespace DTO
         public int AlumnoId { get; set; }
         public string Nombre { get; set; }
         public string OfertaEducativa { get; set; }
+        public string Inscrito { get; set; }
         public int OfertaEducativaid { get; set; }
-        public DateTime ?FechaInscrito1 { get; set; }
         public string FechaInscrito { get; set; }
         public string HoraInscrito { get; set; }
         public string UsuarioInscribio { get; set; }
-        public DateTime ?FechaVoBo1 { get; set; }
         public string FechaVoBo { get; set; }
         public string HoraVoBo { get; set; }
-        public bool ?InscripcionCompleta { get; set; }
-        public int ?Asesorias { get; set; }
-        public int ?Materias { get; set; }
-        
+        public string InscripcionCompleta { get; set; }
+        public string Asesorias { get; set; }
+        public string Materias { get; set; }
         public string UsuarioVoBo { get; set; }
 
+    }
+
+    public class DTOAlumnosVoBo
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public AlumnoInscrito AlumnoInscrito { get; set; }
+        public  AlumnoInscritoBitacora AlumnoInscritoBitacora  { get; set; }
+        public AlumnoRevision AlumnoRevision { get; set; }
     }
 }

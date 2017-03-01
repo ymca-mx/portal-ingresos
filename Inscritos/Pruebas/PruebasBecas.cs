@@ -1808,36 +1808,55 @@ namespace Pruebas
                 int anio = 2017;
                 int periodoid = 2;
 
-                var todos = db.Alumno.Where(a => a.AlumnoRevision.Where(ar =>  ar.Anio == anio
+                var todos = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
                                                                         && ar.PeriodoId == periodoid
                                                                         && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
 
-                                              || a.AlumnoInscrito.Where(ai =>   ai.Anio== anio
-                                                                        &&    ai.PeriodoId == periodoid
-                                                                        &&    ai.OfertaEducativa.OfertaEducativaTipoId != 4
-                                                                        &&    db.AlumnoInscritoBitacora.Where(aib=> aib.AlumnoId==ai.AlumnoId
-                                                                                                              &&    aib.OfertaEducativaId == ai.OfertaEducativaId
-                                                                                                              &&  (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count()> 0
-                                                                        ).Count() > 0).ToList();
+                                              || a.AlumnoInscrito.Where(ai => ai.Anio == anio
+                                                                        && ai.PeriodoId == periodoid
+                                                                        && ai.OfertaEducativa.OfertaEducativaTipoId != 4
+                                                                        && db.AlumnoInscritoBitacora.Where(aib => aib.AlumnoId == ai.AlumnoId
+                                                                                                           && aib.OfertaEducativaId == ai.OfertaEducativaId
+                                                                                                           && (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count() > 0
+                                                                        ).Count() > 0)
+                                     .Select(b => new DTOAlumnosVoBo
+                                     {
+                                       AlumnoId = b.AlumnoId,
+                                       Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                       AlumnoInscrito = b.AlumnoInscrito.Where(c=> c.Anio == anio && c.PeriodoId==periodoid && c.OfertaEducativa.OfertaEducativaTipoId!=4).FirstOrDefault(),
+                                       AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                                         AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault()
+                                     }).ToList();
+
+
+                var r = todos.Where(a => a.AlumnoId == 7758).Select(b => new DTOReporteVoBo
+                {
+                    FechaInscrito = b.AlumnoInscritoBitacora.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? b.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura),
+                    HoraInscrito = b.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? b.AlumnoInscrito?.HoraInscripcion.ToString(),
+                    UsuarioInscribio = b.AlumnoInscritoBitacora != null ? b.AlumnoInscritoBitacora.Usuario.Paterno + " " + b.AlumnoInscritoBitacora.Usuario.Materno + " " + b.AlumnoInscritoBitacora.Usuario.Nombre
+                    : b.AlumnoInscrito != null ? b.AlumnoInscrito.Usuario.Paterno + " " + b.AlumnoInscrito.Usuario.Materno + " " + b.AlumnoInscrito.Usuario.Nombre : "",
+                }).ToList();
+
+
 
                 var todos1 = todos.Select(td => new DTOReporteVoBo
                 {
                     AlumnoId = td.AlumnoId,
-                    Nombre = td.Paterno + " " + td.Materno + " " + td.Nombre,
-                    OfertaEducativaid = td.AlumnoInscrito.FirstOrDefault()?.OfertaEducativaId ?? td.AlumnoRevision.FirstOrDefault().OfertaEducativaId,
-                    OfertaEducativa = td.AlumnoInscrito.FirstOrDefault()?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.FirstOrDefault().OfertaEducativa.Descripcion,
-                    FechaInscrito = td.AlumnoInscrito.FirstOrDefault()?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura),
-                    HoraInscrito = td.AlumnoInscrito.FirstOrDefault()?.HoraInscripcion.ToString(),
-                    UsuarioInscribio = td.AlumnoInscrito.FirstOrDefault()?.Usuario.Paterno + " " + td.AlumnoInscrito.FirstOrDefault()?.Usuario.Materno + " " + td.AlumnoInscrito.FirstOrDefault()?.Usuario.Nombre,
-                    FechaVoBo = td.AlumnoRevision.FirstOrDefault()?.FechaRevision.ToString("dd/MM/yyyy", Cultura),
-                    HoraVoBo = td.AlumnoRevision.FirstOrDefault()?.HoraRevision.ToString(),
-                    InscripcionCompleta = td.AlumnoRevision.FirstOrDefault()?.InscripcionCompleta,
-                    Asesorias = td.AlumnoRevision.FirstOrDefault()?.AsesoriaEspecial,
-                    Materias = td .AlumnoRevision.FirstOrDefault()?.AdelantoMateria,
-                    UsuarioVoBo = td.AlumnoRevision.FirstOrDefault()?.Usuario.Paterno + " " + td.AlumnoRevision.FirstOrDefault()?.Usuario.Materno + "" + td.AlumnoRevision.FirstOrDefault()?.Usuario.Nombre
-                }
-).ToList();
-
+                    Nombre = td.Nombre,
+                    OfertaEducativaid = td.AlumnoInscrito?.OfertaEducativaId ?? td.AlumnoRevision.OfertaEducativaId,
+                    OfertaEducativa = td.AlumnoInscrito?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.OfertaEducativa.Descripcion,
+                    Inscrito = td.AlumnoInscrito != null ? "Si" : "No",
+                    FechaInscrito = td.AlumnoInscritoBitacora?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? td.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura),
+                    HoraInscrito = td.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? td.AlumnoInscrito?.HoraInscripcion.ToString(),
+                    UsuarioInscribio = td.AlumnoInscritoBitacora != null ? td.AlumnoInscritoBitacora.Usuario.Paterno + " " + td.AlumnoInscritoBitacora.Usuario.Materno + " " + td.AlumnoInscritoBitacora.Usuario.Nombre
+                          : td.AlumnoInscrito != null ? td.AlumnoInscrito.Usuario.Paterno + " " + td.AlumnoInscrito.Usuario.Materno + " " + td.AlumnoInscrito.Usuario.Nombre : "",
+                    FechaVoBo = td.AlumnoRevision?.FechaRevision.ToString("dd/MM/yyyy", Cultura),
+                    HoraVoBo = td.AlumnoRevision?.HoraRevision.ToString(),
+                    InscripcionCompleta = td.AlumnoRevision?.InscripcionCompleta == true ? "Si" : "No",
+                    Asesorias = td.AlumnoRevision?.AsesoriaEspecial.ToString(),
+                    Materias = td.AlumnoRevision?.AdelantoMateria.ToString(),
+                    UsuarioVoBo = td.AlumnoRevision != null ? td.AlumnoRevision.Usuario.Paterno + " " + td.AlumnoRevision.Usuario.Materno + "" + td.AlumnoRevision.Usuario.Nombre : ""
+                }).ToList();
 
 
 

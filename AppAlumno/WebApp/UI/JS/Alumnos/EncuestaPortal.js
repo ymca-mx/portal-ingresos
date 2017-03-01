@@ -353,13 +353,20 @@
             success: function (data) {
                 if (data.d) {
                     $('#Load').modal('hide');
-                    alertify.alert("Encuesta Guardada");
-                    $('#PopEncuesta').modal('hide');
+                    alertify.alert("Encuesta Guardada", function ()
+                    {
+                        $('#PopEncuesta').modal('hide');
+                        $('#popDatos').empty();
+                    });
+                  
                 } else {
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
-                    alertify.alert("Error");
-                     $('#PopEncuesta').modal('hide');
+                    alertify.alert("Error", function ()
+                    {
+                        $('#PopEncuesta').modal('hide');
+                        $('#popDatos').empty();
+                    });
                 }
             }
         });
