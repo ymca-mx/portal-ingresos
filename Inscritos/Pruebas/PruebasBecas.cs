@@ -13,31 +13,7 @@ namespace Pruebas
     [TestClass]
     public class PruebasBecas
     {
-        [TestMethod]
-        public void PEriodos()
-        {
-            using (UniversidadEntities db = new UniversidadEntities())
-            {
-                
-                var fprev = DateTime.Now.AddDays(15);
-                //var periodo = (from a in db.Periodo
-                //               where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal 
-                //                    || (fprev >= a.FechaInicial && fprev<=a.FechaFinal)
-                //               select new DTOPeriodo
-                //               {
-                //                   Descripcion = a.Descripcion,
-                //                   Anio = a.Anio,
-                //                   PeriodoId = a.PeriodoId,
-                //               }).ToList();
-                var periodo = db.Periodo
-                                 .Where(P =>
-                                   DateTime.Now >= P.FechaInicial && DateTime.Now <= P.FechaFinal).FirstOrDefault();
-                //periodo.ForEach(l =>
-                //{
-                //    Console.WriteLine(l.Descripcion);
-                //});
-            }
-        }
+
         [TestMethod]
         public void AlumnoDatos()
         {
@@ -52,6 +28,32 @@ namespace Pruebas
             var objRes =
             BLL.BLLAlumno.BuscarAlumno(8196, 2);
             Console.WriteLine(objRes.Nombre);
+        }
+
+        [TestMethod]
+        public void PEriodos()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                DateTime fhoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                var fprev = fhoy.AddDays(15);
+                var periodo = (from a in db.Periodo
+                               where fhoy >= a.FechaInicial && fhoy <= a.FechaFinal
+                                    || (fprev >= a.FechaInicial && fprev <= a.FechaFinal)
+                               select new DTOPeriodo
+                               {
+                                   Descripcion = a.Descripcion,
+                                   Anio = a.Anio,
+                                   PeriodoId = a.PeriodoId,
+                               }).ToList();
+                //var periodo = db.Periodo
+                //                 .Where(P =>
+                //                   fhoy >= P.FechaInicial && fhoy <= P.FechaFinal).FirstOrDefault();
+                periodo.ForEach(l =>
+                {
+                    Console.WriteLine(l.Descripcion);
+                });
+            }
         }
 
         [TestMethod]
@@ -123,17 +125,17 @@ namespace Pruebas
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 6558,
+                alumnoId = 7646,
                 anio = 2017,
-                periodoId = 1,
-                ofertaEducativaId = 30,
-                porcentajeBeca = 55.06m, //70.15
-                porcentajeInscripcion = 100m,
+                periodoId = 2,
+                ofertaEducativaId = 5,
+                porcentajeBeca = 64.33m, //70.15
+                porcentajeInscripcion = 0m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
-                usuarioId = 8272, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "12/10/2016", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                usuarioId = 6070, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "12/01/2017", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
 
             //    //Colegiatura = decimal
