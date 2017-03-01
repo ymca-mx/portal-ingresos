@@ -680,7 +680,7 @@ namespace BLL
 
         }//CargaReporteIneg
 
-        public static List<DTOReporteVoBo> ReporteVoBo(int anio, int periodoid)
+        public static DTOVoBo ReporteVoBo(int anio, int periodoid, int usuarioid)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -713,20 +713,28 @@ namespace BLL
                         Nombre = td.Nombre,
                         OfertaEducativaid = td.AlumnoInscrito?.OfertaEducativaId ?? td.AlumnoRevision.OfertaEducativaId,
                         OfertaEducativa = td.AlumnoInscrito?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.OfertaEducativa.Descripcion,
-                        Inscrito = td.AlumnoInscrito != null ? "Si": "No",
-                        FechaInscrito = td.AlumnoInscritoBitacora?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? td.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura)??"-",
-                        HoraInscrito = td.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? td.AlumnoInscrito?.HoraInscripcion.ToString()??"-",
+                        Inscrito = td.AlumnoInscrito != null ? "Si" : "No",
+                        FechaInscrito = td.AlumnoInscritoBitacora?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? td.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? "-",
+                        HoraInscrito = td.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? td.AlumnoInscrito?.HoraInscripcion.ToString() ?? "-",
                         UsuarioInscribio = td.AlumnoInscritoBitacora != null ? td.AlumnoInscritoBitacora.Usuario.Paterno + " " + td.AlumnoInscritoBitacora.Usuario.Materno + " " + td.AlumnoInscritoBitacora.Usuario.Nombre
                            : td.AlumnoInscrito != null ? td.AlumnoInscrito.Usuario.Paterno + " " + td.AlumnoInscrito.Usuario.Materno + " " + td.AlumnoInscrito.Usuario.Nombre : "-",
-                        FechaVoBo = td.AlumnoRevision?.FechaRevision.ToString("dd/MM/yyyy", Cultura)??"-",
+                        FechaVoBo = td.AlumnoRevision?.FechaRevision.ToString("dd/MM/yyyy", Cultura) ?? "-",
                         HoraVoBo = td.AlumnoRevision?.HoraRevision.ToString() ?? "-",
-                        InscripcionCompleta = td.AlumnoRevision?.InscripcionCompleta == true ? "Si": td.AlumnoRevision?.InscripcionCompleta == false ?"No": "-",
-                        Asesorias = td.AlumnoRevision.AsesoriaEspecial.ToString()??"0",
-                        Materias = td.AlumnoRevision.AdelantoMateria.ToString()??"0",
-                        UsuarioVoBo = td.AlumnoRevision != null ? td.AlumnoRevision.Usuario.Paterno + " " + td.AlumnoRevision.Usuario.Materno + " " + td.AlumnoRevision.Usuario.Nombre : "-"
+                        InscripcionCompleta = td.AlumnoRevision?.InscripcionCompleta == true ? "Si" : td.AlumnoRevision?.InscripcionCompleta == false ? "No" : "-",
+                        Asesorias = td.AlumnoRevision?.AsesoriaEspecial.ToString() ?? "-",
+                        Materias = td.AlumnoRevision?.AdelantoMateria.ToString() ?? "-",
+                        UsuarioVoBo = td.AlumnoRevision != null ? td.AlumnoRevision.Usuario.Paterno + " " + td.AlumnoRevision.Usuario.Materno + " " + td.AlumnoRevision.Usuario.Nombre : "-",
                     }).ToList();
 
-                    return todos1;
+                    bool sw = false;  
+                    int usuariotipo = db.Usuario.Where(a => a.UsuarioId == usuarioid).FirstOrDefault().UsuarioTipoId;
+                    if (usuariotipo == 12 || usuariotipo == 10)
+                    {
+                        sw = true;
+                    }
+
+                    var VoVo = new DTOVoBo { lstVoBo = todos1, Sw = sw } ;
+                    return VoVo;
                 }
                 catch (Exception)
                 {

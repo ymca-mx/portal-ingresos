@@ -11,7 +11,7 @@
     });
 
     $("#slcOferta").change(function () {
-        if ($("#slcOferta option:selected").html() != "--Todas--") {
+        if ($("#slcOferta").val() != -1) {
             oferta = $("#slcOferta option:selected").html();
         } else
         {
@@ -21,8 +21,16 @@
     });
 
     $("#slcVisto").change(function () {
-        if ($("#slcVisto option:selected").html() != "--Todas--") {
-            vobo = $("#slcVisto option:selected").html();
+        if ($("#slcVisto").val() != -1) {
+            if ($("#slcVisto").val() == 0)
+            {
+                vobo = "/";
+            } else
+            {
+                vobo = "-";
+            }
+
+           
         } else {
             vobo = "";
         }
@@ -37,8 +45,8 @@
     }
 
     function filtroEstatus() {
-        tblVoBo.columns(1)
-                .search(oferta)
+        tblVoBo.columns(4)
+                .search(vobo)
                 .draw();
     }
 
@@ -92,67 +100,73 @@
             dataType: "json",
 
             success: function (data) {
-                tblVoBo = $("#dtVoBo").DataTable({
-                    "aaData": data.d,
-                    "aoColumns": [
-                         {
-                             "mDataProp": "AlumnoId",
-                             "mRender": function (data, f, d) {
-                                 var link;
-                                 link = d.AlumnoId + " | " + d.Nombre;
+                if(data.d != null )
+               
+                    var Mostra = data.d.Sw;
 
-                                 return link;
-                             }
-                         },
-                        { "mDataProp": "OfertaEducativa" },
-                         { "mDataProp": "Inscrito" },
-                        { "mDataProp": "FechaInscrito" },
-                        { "mDataProp": "FechaVoBo" },
-                        { "mDataProp": "InscripcionCompleta" },
-                        { "mDataProp": "Asesorias" },
-                        { "mDataProp": "Materias" },
-                        { "mDataProp": "UsuarioVoBo" }
+                    tblVoBo = $("#dtVoBo").DataTable({
+                        "aaData": data.d.lstVoBo,
+                        "aoColumns": [
+                             {
+                                 "mDataProp": "AlumnoId",
+                                 "mRender": function (data, f, d) {
+                                     var link;
+                                     link = d.lstVoBo.AlumnoId + " | " + d.lstVoBo.Nombre;
 
-                    ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
-                    "searching": true,
-                    "ordering": true,
-                    "async": true,
-                    "bDestroy": true,
-                    "bPaginate": true,
-                    "bLengthChange": true,
-                    "bFilter": true,
-                    "bInfo": false,
-                    "bAutoWidth": false,
-                    "asStripClasses": null,
-                    "colReorder": true,
-                    "language": {
-                        "lengthMenu": "_MENU_ Registro",
-                        "paginate": {
-                            "previos": "<",
-                            "next": ">"
+                                     return link;
+                                 }
+                             },
+                            { "mDataProp": "OfertaEducativa" },
+                             { "mDataProp": "Inscrito" },
+                            { "mDataProp": "FechaInscrito" },
+                            { "mDataProp": "FechaVoBo" },
+                            { "mDataProp": "InscripcionCompleta" },
+                            { "mDataProp": "Asesorias" },
+                            { "mDataProp": "Materias" },
+                            { "mDataProp": "UsuarioVoBo" }
+
+                        ],
+                        "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                        "searching": true,
+                        "ordering": true,
+                        "async": true,
+                        "bDestroy": true,
+                        "bPaginate": true,
+                        "bLengthChange": true,
+                        "bFilter": true,
+                        "bInfo": false,
+                        "bAutoWidth": false,
+                        "asStripClasses": null,
+                        "colReorder": true,
+                        "language": {
+                            "lengthMenu": "_MENU_ Registro",
+                            "paginate": {
+                                "previos": "<",
+                                "next": ">"
+                            },
+                            "search": "Buscar Alumno ",
                         },
-                        "search": "Buscar Alumno ",
-                    },
-                    "order": [[1, "desc"]],
-                    "createdRow": function (row, data, dataIndex) {
-                        row.childNodes[2].style.textAlign = 'center';
-                        row.childNodes[3].style.textAlign = 'center';
-                        row.childNodes[4].style.textAlign = 'center';
-                        row.childNodes[5].style.textAlign = 'center';
-                        row.childNodes[6].style.textAlign = 'center';
-                        row.childNodes[7].style.textAlign = 'center';
-                    }
-                    , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
-                        registros = oSettings.aiDisplay.length;
-                        $('#lbRegistros').text(registros);
-                    }
-                });//$('#dtbecas').DataTable
-                //filtros();
+                        "order": [[1, "desc"]],
+                        "createdRow": function (row, data, dataIndex) {
+                            row.childNodes[2].style.textAlign = 'center';
+                            row.childNodes[3].style.textAlign = 'center';
+                            row.childNodes[4].style.textAlign = 'center';
+                            row.childNodes[5].style.textAlign = 'center';
+                            row.childNodes[6].style.textAlign = 'center';
+                            row.childNodes[7].style.textAlign = 'center';
+                        }
+                        , "fnDrawCallback": function (oSettings) {
+                            filtosdatatable();
+                            registros = oSettings.aiDisplay.length;
+                            $('#lbRegistros').text(registros);
+                        }
+                    });//$('#dtbecas').DataTable
+                    //filtros();
 
 
-                $('#Load').modal('hide');
+                    $('#Load').modal('hide');
+                }
+
             },//success
         });// end $.ajax
 

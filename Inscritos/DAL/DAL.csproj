@@ -583,6 +583,9 @@
     <Compile Include="Tabla2.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="TempAdeudo.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="TipoDocumento.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>

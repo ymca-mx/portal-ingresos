@@ -2463,6 +2463,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Tabla2' no tiene definida ni
           <Property Name="HoraOperacion" Type="time" Precision="0" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TempAdeudo">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="Adeudo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
             <PropertyRef Name="TipoDocumento" />
@@ -2541,6 +2550,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Asesorias" Type="int" Nullable="false" />
           <Property Name="ExamenMedico" Type="int" Nullable="false" />
           <Property Name="Adeudo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Nocturno" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -6199,6 +6209,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="Self.SucursalAnuncio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalCaja" EntityType="Self.SucursalCaja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalDetalle" EntityType="Self.SucursalDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempAdeudo" EntityType="Self.TempAdeudo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="Self.TipoMovimientoCRUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="Self.TipoUsuarioSubmenu" Schema="dbo" store:Type="Tables" />
@@ -7665,6 +7676,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="UniversidadModel.SucursalAnuncio" />
           <EntitySet Name="SucursalCaja" EntityType="UniversidadModel.SucursalCaja" />
           <EntitySet Name="SucursalDetalle" EntityType="UniversidadModel.SucursalDetalle" />
+          <EntitySet Name="TempAdeudo" EntityType="UniversidadModel.TempAdeudo" />
           <EntitySet Name="TipoDocumento" EntityType="UniversidadModel.TipoDocumento" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="UniversidadModel.TipoMovimientoCRUD" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="UniversidadModel.TipoUsuarioSubmenu" />
@@ -11387,6 +11399,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="Pais" Relationship="UniversidadModel.FK_SucursalDetalle_Pais" FromRole="SucursalDetalle" ToRole="Pais" />
           <NavigationProperty Name="Sucursal" Relationship="UniversidadModel.FK_SucursalDetalle_Sucursal" FromRole="SucursalDetalle" ToRole="Sucursal" />
         </EntityType>
+        <EntityType Name="TempAdeudo">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
+          <Property Name="Adeudo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
             <PropertyRef Name="TipoDocumento1" />
@@ -11447,6 +11468,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Asesorias" Type="Int32" Nullable="false" />
           <Property Name="ExamenMedico" Type="Int32" Nullable="false" />
           <Property Name="Adeudo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Nocturno" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_UniversidadValidacion_Estatus" FromRole="UniversidadValidacion" ToRole="Estatus" />
           <NavigationProperty Name="OfertaEducativa" Relationship="UniversidadModel.FK_UniversidadValidacion_OfertaEducativa" FromRole="UniversidadValidacion" ToRole="OfertaEducativa" />
         </EntityType>
@@ -17407,6 +17429,16 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TempAdeudo">
+            <EntityTypeMapping TypeName="UniversidadModel.TempAdeudo">
+              <MappingFragment StoreEntitySet="TempAdeudo">
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Adeudo" ColumnName="Adeudo" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TipoDocumento">
             <EntityTypeMapping TypeName="UniversidadModel.TipoDocumento">
               <MappingFragment StoreEntitySet="TipoDocumento">
@@ -17443,6 +17475,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySetMapping Name="UniversidadValidacion">
             <EntityTypeMapping TypeName="UniversidadModel.UniversidadValidacion">
               <MappingFragment StoreEntitySet="UniversidadValidacion">
+                <ScalarProperty Name="Nocturno" ColumnName="Nocturno" />
                 <ScalarProperty Name="Adeudo" ColumnName="Adeudo" />
                 <ScalarProperty Name="ExamenMedico" ColumnName="ExamenMedico" />
                 <ScalarProperty Name="Asesorias" ColumnName="Asesorias" />

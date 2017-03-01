@@ -146,7 +146,7 @@ namespace DTO
         public string Asesorias { get; set; }
         public string Materias { get; set; }
         public string UsuarioVoBo { get; set; }
-
+       
     }
 
     public class DTOAlumnosVoBo
@@ -156,5 +156,11 @@ namespace DTO
         public AlumnoInscrito AlumnoInscrito { get; set; }
         public  AlumnoInscritoBitacora AlumnoInscritoBitacora  { get; set; }
         public AlumnoRevision AlumnoRevision { get; set; }
+    }
+
+    public class DTOVoBo
+    {
+        public List<DTOReporteVoBo> lstVoBo { get; set; }
+        public bool Sw { get; set; }
     }
 }
