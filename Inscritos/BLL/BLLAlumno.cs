@@ -1665,6 +1665,9 @@ namespace BLL
                                 NuevoIngreso = (objAlumnoDB.Anio == objPeriodoActual.Anio && objAlumnoDB.PeriodoId == objPeriodoActual.PeriodoId) ? true : false,
                                 Asesorias = lstPagos.Where(I => I.Cuota1.PagoConceptoId == 15)
                                                             .ToList().Count,
+                                Completa = lstPagos.Where(p =>
+                                                      p.Cuota1.PagoConceptoId == 802
+                                                      && p.Cuota1.PagoConceptoId == 800).ToList().Count == 5 ? true : false,
                                 EsEmpresa = true,
                                 
                                 EsEspecial = objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
@@ -1721,6 +1724,9 @@ namespace BLL
                                 NuevoIngreso = (objAlumnoDB.Anio == objPeriodoActual.Anio && objAlumnoDB.PeriodoId == objPeriodoActual.PeriodoId) ? true : false,
                                 Asesorias = lstPagos.Where(I => I.Cuota1.PagoConceptoId == 15)
                                                             .ToList().Count,
+                                Completa = lstPagos.Where(p =>
+                                                      p.Cuota1.PagoConceptoId == 802
+                                                      && p.Cuota1.PagoConceptoId == 800).ToList().Count == 5 ? true : false,
                                 EsEspecial = objcom.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
                                 Grupo = (objcom.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
@@ -1979,6 +1985,10 @@ namespace BLL
                                 NuevoIngreso = (objAlumnoDB.Anio == objPeriodoActual.Anio && objAlumnoDB.PeriodoId == objPeriodoActual.PeriodoId) ? true : false,
                                 Asesorias = lstPagos.Where(I => I.Cuota1.PagoConceptoId == 15)
                                                            .ToList().Count,
+                                Completa = lstPagos.Where(p =>
+                                                      p.Cuota1.PagoConceptoId == 802
+                                                      && p.Cuota1.PagoConceptoId == 800).ToList().Count == 5 ? true : false,
+                                EsEmpresa = objAlumnoNI.FirstOrDefault()?.EsEmpresa ?? false,
                                 EsEspecial = objAlumnoNI.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
                                 Grupo = (objAlumnoNI.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
