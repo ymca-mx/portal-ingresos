@@ -62,9 +62,9 @@ namespace WebServices.WS
             return BLLReporte.CargaReporteAlumnoReferencia(anio, periodo);
         }
         [WebMethod]
-        public List<DTOReporteVoBo> ReporteVoBo(int anio, int periodoid)
+        public DTOVoBo ReporteVoBo(int anio, int periodoid, int usuarioid)
         {
-            return BLLReporte.ReporteVoBo(anio, periodoid);
+            return BLLReporte.ReporteVoBo(anio, periodoid,usuarioid);
         }
 
     }

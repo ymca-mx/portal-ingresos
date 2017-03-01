@@ -35,6 +35,7 @@ namespace DAL
         public int Asesorias { get; set; }
         public int ExamenMedico { get; set; }
         public decimal Adeudo { get; set; }
+        public bool Nocturno { get; set; }
     
         public virtual Estatus Estatus { get; set; }
         public virtual OfertaEducativa OfertaEducativa { get; set; }
