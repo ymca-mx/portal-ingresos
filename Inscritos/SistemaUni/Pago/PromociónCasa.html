@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Reporte Visto Bueno Academico</title>
+    <title>Promoción en casa</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -14,8 +14,6 @@
     <link href="Style/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="Style/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="Style/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="Style/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
-    <link href="Style/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
     <link href="Style/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
     <link href="Content/bootstrap-switch/bootstrap3/bootstrap-switch.css" rel="stylesheet" />
     <link href="Content/bootstrap-switch/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
@@ -40,141 +38,116 @@
     <div class="page-content">
         <!-- BEGIN PAGE HEAD -->
         <div class="container" id="divContenido">
+
             <div class="row">
                 <div class="col-md-12">
-                    <div class="portlet light" id="dvCargos">
+                    <div class="portlet light">
                         <div class="portlet-title">
-                            <div class="caption">
-                                <h1 class="caption-subject font-blue bold uppercase">
-                                    Reporte Visto Bueno Academico
-                                </h1>
+                            <div class="col-md-12">
+                                <div class="col-md-1">
+                                    <img src="Imagenes/UYMCA-100px.png" width="70" />
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="caption title">PROMOCIÓN EN CASA</h4>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
 
-                                <form class="recovery-form" id="form_recovery">
-                                    <hr />
-
-                                    <div class="col-md-4">
-                                        <div class="form-group" id="divSlc">
-                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                            <label class="control-label">Cuatrimestre</label>
-
-                                            <div class="input-icon right">
-                                                <!--<i class="fa fa-lock"></i>-->
-                                                <select class="form-control" name="slcCuatrimestre" id="slcCuatrimestre"></select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group" id="divSlc1">
-                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                            <label class="control-label">Oferta Educativa</label>
-
-                                            <div class="input-icon right">
-                                                <!--<i class="fa fa-lock"></i>-->
-                                                <select class="form-control" name="slcOferta" id="slcOferta">
-                                                    <option selected value="-1">--Todas--</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group" id="divSlc2">
-                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                            <label class="control-label">Estatus</label>
-
-                                            <div class="input-icon right">
-                                                <!--<i class="fa fa-lock"></i>-->
-                                                <select class="form-control" name="slcVisto" id="slcVisto">
-                                                    <option selected value="-1">--Todas--</option>
-                                                    <option  value="0">Con VoBo</option>
-                                                    <option  value="1">Sin VoBo</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div> &nbsp;</div>
-                                        <label class="control-label"># de Registros :  </label>
-                                        <label class="control-label" id="lbRegistros" name="lbRegistros"> </label>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Clave del Alumno</label>
+                                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                                        <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
                                     </div>
 
                                     <div class="col-md-12">
+                                        <div> &nbsp;</div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Alumno</label>&nbsp;&nbsp;
+                                            <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label"> Oferta Educativa</label>
+                                            <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
+                                        </div>
+                                    </div>
 
-                                        <div class="portlet-body" id="divVoBo">
-                                            <table id="dtVoBo" class="table table-striped table-bordered table-advance table-hover ">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <hr />
+                                                <table id="dtAlumno" class="table table-striped table-bordered table-advance table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:center">
+                                                                Clave | Nombre Alumno
+                                                            </th>
+                                                            <th style="text-align:center">
+                                                                Oferta Educativa
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </div>
+
+                            </div>
+
+                        <!--Popup de Agregar prospecto-->
+                        <div class="modal fade" tabindex="-1" data-width="850" data-height="150" id="PopAlumnoProspecto">
+                            <div class="modal-dialog modal-dialog" style="width:800px">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                                    <h3 class="modal-title">Asignación de Alumno Prospecto</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 ">
+                                        <div class="col-md-12"><span class="caption-subject font-green-sharp bold uppercase">Agregar alumno Prospecto</span></div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">Clave del Alumno</label>
+                                            <input type="text" id="txtClave1" class="form-control-static font-md" tabindex="1" />
+                                            <a class="btn blue" id="btnBuscar1" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <table id="dtAlumno1" class="table table-striped table-bordered table-advance table-hover ">
                                                 <thead>
                                                     <tr>
                                                         <th style="text-align:center">
-                                                            &nbsp; Alumno Id | Nombre
+                                                            Clave | Nombre Alumno
                                                         </th>
                                                         <th style="text-align:center">
-                                                            &nbsp; Oferta Educativa
+                                                            Oferta Educativa
                                                         </th>
-                                                        <th style="text-align:center">
-                                                            &nbsp;Inscrito
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                             &nbsp;Fecha <br /> Inscripción 
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                            &nbsp; Fecha <br /> VoBo
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                            &nbsp; Inscripción  <br /> Completa
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                            &nbsp; Asesoría  <br /> Especial
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                            &nbsp; Adelanto <br /> Materia
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                            &nbsp; Coordinador
-                                                        </th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td></td>
                                                         <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-
-
                                     </div>
-                                </form>
-                                <div id="div-result">
 
                                 </div>
-
-
+                                <div class="modal-footer">
+                                    <button id="btnAlumnoGrupoG" class="btn btn-primary">Guardar</button>
+                                </div>
                             </div>
-
-
-
                         </div>
 
 
-
-                    </div>
-                    <div class="row">
-                        <!--<a href="#Monto" data-toggle="modal" id="btnPopup"></a>-->
                         <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
                             <div class="modal-dialog modal-sm" style="height: 90px;">
                                 <!--<div class="modal-content" style="width:auto">-->
@@ -189,18 +162,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div id="divContainer">
-
-            </div>
-            <div id="displayPDF">
-
-            </div>
         </div>
-
     </div>
     <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
     <script src="Scripts/jquery-1.9.1.js"></script>
@@ -221,38 +186,21 @@
     <script type="text/javascript" src="Style/assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" src="Style/assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
     <script type="text/javascript" src="Style/assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
-
-
-    <script src="Style/Complementos/js-xlsx-master/xlsx.core.js"></script>
-    <script src="Style/Complementos/Blob.js-master/Blob.js"></script>
-    <script src="Style/Complementos/FileSaver.js-master/FileSaver.js"></script>
-    <script src="Style/Complementos/tableexport.js"></script>
-
-    <!--<script src="Style/Complementos/jquery.table2excel.js"></script>-->
-    <!--<script src="Style/Complementos/buttons.html5.min.js"></script>-->
-
-
     <script src="Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     <script src="Style/assets/admin/pages/scripts/table-advanced.js"></script>
-
-    <script src="Style/assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
-    <script src="Style/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="Style/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script src="Style/assets/global/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"></script>
-
     <script src="Style/assets/global/scripts/metronic.js"></script>
     <script src="Style/assets/admin/layout3/scripts/layout.js"></script>
     <script src="Style/assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
     <script src="Style/assets/admin/layout3/scripts/demo.js"></script>
     <script src="JS/alertify.js"></script>
-    <script src="JS/Reportes/ReporteVistoBueno.js"></script>
+    <script src="JS/Pagos/PromocionCasa.js"></script>
     <script>
         jQuery(document).ready(function () {
             // initiate layout and plugins
             Metronic.init(); // init metronic core components
             Layout.init(); // init current layout
             Demo.init(); // init demo features
-
+            Periodo.init();
         });
     </script>
 </body>

@@ -287,7 +287,7 @@ namespace BLL
             {
 
 
-                DTOAlumnoLigero alumno = new DTOAlumnoLigero();
+                DTOAlumnoLigero1 alumno = new DTOAlumnoLigero1();
 
                 var estatus = new int[] { 2 };
 
@@ -295,7 +295,7 @@ namespace BLL
                 {
                     alumno = db.Alumno
                                .Where(a => a.AlumnoId == alumnoint)
-                               .Select(b => new DTOAlumnoLigero
+                               .Select(b => new DTOAlumnoLigero1
                                {
                                    AlumnoId = b.AlumnoId,
                                    Nombre = b.Nombre + " " + b.Paterno + " " + b.Materno
@@ -323,8 +323,8 @@ namespace BLL
                                             Pagado = "$ " + db.PagoParcial.Where(q => q.PagoId == b.PagoId).Select(w => w.Pago).Sum(),
                                             Estatus = b.Estatus.Descripcion == "Activo" ? "Pendiente" : b.Estatus.Descripcion,
                                             EnProcesoSolicitud = db.PagoCancelacionSolicitud.Count(f => f.PagoId == b.PagoId) > 0
-                                                               && db.PagoCancelacionSolicitud.Where(c => c.PagoId == b.PagoId).FirstOrDefault().EstatusId == 3 ? 1
-                                                               : db.PagoCancelacionSolicitud.Count(f => f.PagoId == b.PagoId) > 0 && db.PagoCancelacionSolicitud.Where(c => c.PagoId == b.PagoId).FirstOrDefault().EstatusId != 3 ? 2 : 1
+                                                               && db.PagoCancelacionSolicitud.Where(c => c.PagoId == b.PagoId).OrderByDescending(f=> f.FechaSolicitud).FirstOrDefault().EstatusId == 1 ? 2
+                                                               : db.PagoCancelacionSolicitud.Count(f => f.PagoId == b.PagoId) > 0 && db.PagoCancelacionSolicitud.Where(c => c.PagoId == b.PagoId).OrderByDescending(f1 => f1.FechaSolicitud).FirstOrDefault().EstatusId != 3 ? 2 : 1
                                         }).ToList();
 
                     List<DTOAlumnoReferencias> referencias2 = new List<DTOAlumnoReferencias>();
@@ -423,7 +423,7 @@ namespace BLL
 
                     alumno = db.Alumno
                                .Where(a => a.AlumnoId == alumnoid)
-                               .Select(b => new DTOAlumnoLigero
+                               .Select(b => new DTOAlumnoLigero1
                                {
                                    AlumnoId = b.AlumnoId,
                                    Nombre = b.Nombre + " " + b.Paterno + " " + b.Materno
@@ -450,6 +450,7 @@ namespace BLL
             {
                 try
                 {
+
                     DTOAlumno objAlumno = (from a in db.Alumno
                                            where a.AlumnoId == AlumnoId
                                            select new DTOAlumno
@@ -513,6 +514,37 @@ namespace BLL
                 }
             }
         }
+
+        public static DTOAlumno ConsultarAlumnoPromocionCasa(int AlumnoId)
+        {
+            try
+            {
+                using (UniversidadEntities db = new UniversidadEntities ())
+                {
+                    var fechaactual = DateTime.Now;
+                    var periodoActual = db.Periodo.Where(p => p.FechaInicial <= fechaactual && p.FechaFinal >= fechaactual).FirstOrDefault();
+                    var alumno = db.Alumno.Where(a => a.AlumnoId == a.AlumnoId)
+                                          .Select(s => new DTOAlumnoPromocionCasa
+                                          {
+                                              AlumnoId = s.AlumnoId,
+                                              NombreC = s.Nombre + " " + s.Paterno + " " + s.Materno,
+                                              OfertaEducativa = s.AlumnoInscrito.Where(w => w.Anio == periodoActual.Anio && w.PeriodoId == periodoActual.PeriodoId)
+                                                                                .Select(oe => new DTOOfertaEducativa1
+                                                                                {
+                                                                                    ofertaEducativaId = oe.OfertaEducativaId,
+                                                                                    descripcion = oe.OfertaEducativa.Descripcion
+                                                                                }).ToList()
+                                          }); 
+                    return alumno;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
         public static DTOAlumno ObtenerAlumno1(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

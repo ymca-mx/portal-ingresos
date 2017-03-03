@@ -52,7 +52,7 @@
                         },
                         "search": "Buscar Referencia ",
                     },
-                    "order": [[2, "desc"]],
+                    "order": [[0, "desc"]],
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'center';
@@ -234,34 +234,5 @@
             });
 
     });
-
-    //$('#btnGuardar').click(function () {
-    //    var usuario = $.cookie('userAdmin');
-    //    var Texto = $('#txtComentario').val();
-    //    Texto = $.trim(Texto);
-    //    if (Texto.length > 5) {
-    //        $('#PopComentario').modal('hide');
-    //        $('#txtBar').text("Guardando");
-    //        $('#divBar').modal('show');
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "../WebServices/WS/General.asmx/PagoCancelacionSolicitud",
-    //            data: "{PagoId:'" + PagoId + "',Comentario:'" + $('#txtComentario').val() +
-    //                    "',UsuarioId:'" + usuario + "'}",
-    //            contentType: "application/json; charset=utf-8",
-    //            success: function (data) {
-    //                if (data.d == "Solicitud Enviada") {
-    //                    alertify.alert("Solicitud Enviada.");
-    //                    //$('#btnBuscar').click();
-    //                }
-    //                $('#PopComentario').modal('hide');
-    //                $('#divBar').modal('hide');
-    //            }
-    //        });
-    //    }
-    //    else {
-    //        alertify.alert("Inserte un comentario.");
-    //    }
-    //});
 
 });

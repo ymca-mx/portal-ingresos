@@ -1,12 +1,13 @@
 ﻿$(document).ready(function () {
-    var tblVoBo, anio, periodo, oferta,vobo, registros;
+    var tblVoBo, anio, periodo, oferta,vobo, registros, usuarioid;
     //inicializar
     CargarCuatrimestre();
 
     $("#slcCuatrimestre").change(function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
-        CargarVistoBueno(anio, periodo);      
+        usuarioid = $.cookie('userAdmin');
+        CargarVistoBueno(anio, periodo, usuarioid);
 
     });
 
@@ -90,18 +91,18 @@
 
     }//CargarCatrimestre
 
-    function CargarVistoBueno(anio, periodo) {
+    function CargarVistoBueno(anio, periodo, usuarioid) {
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
             url: "../WebServices/WS/Reporte.asmx/ReporteVoBo",
-            data: "{anio:" + anio + ",periodoid:" + periodo + "}",
+            data: "{anio:" + anio + ",periodoid:" + periodo + ", usuarioid:"+ usuarioid +"}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
                 if(data.d != null )
-               
+               {
                     var Mostra = data.d.Sw;
 
                     tblVoBo = $("#dtVoBo").DataTable({
@@ -111,7 +112,7 @@
                                  "mDataProp": "AlumnoId",
                                  "mRender": function (data, f, d) {
                                      var link;
-                                     link = d.lstVoBo.AlumnoId + " | " + d.lstVoBo.Nombre;
+                                     link = d.AlumnoId + " | " + d.Nombre;
 
                                      return link;
                                  }
@@ -125,6 +126,13 @@
                             { "mDataProp": "Materias" },
                             { "mDataProp": "UsuarioVoBo" }
 
+                        ],
+                        "columnDefs": [
+                          {
+                              "targets": [3],
+                              "visible": Mostra,
+                              "searchable": false
+                          },
                         ],
                         "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
                         "searching": true,
@@ -165,7 +173,7 @@
 
 
                     $('#Load').modal('hide');
-                }
+                }//if(data.d != null )
 
             },//success
         });// end $.ajax
