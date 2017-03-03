@@ -132,6 +132,11 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 var datos = data.d;
+                if (datos.EsEmpresa) {
+                    $('#Load').modal('hide');
+                    alertify.alert('El Alumno es de empresa, no se puede generar Becas-Comite a ellos.');
+                    return false;
+                }
                 AlumnoObject = datos;
                 Alumnoid = AlumnoObject.AlumnoId;
                 $('#lblNombre').text(datos.Nombre);
