@@ -38,6 +38,31 @@ namespace DTO
         public List<DTOAlumnoAntecendente> Antecendentes { get; set; }
     }
 
+    public class DTOAlumnoPromocionCasa
+    {
+        public int AlumnoId { get; set; }
+        public string NombreC { get; set; }
+        public List<DTOOfertaEducativa1> OfertaEducativa { get; set; }
+        public int OfertaEducativaIdActual { get; set; }
+        public string OfertaEducativaActual { get; set; }
+        public int AlumnoIdProspecto { get; set; }
+        public string NombreCProspecto { get; set; }
+        public int OfertaEducativaIdProspecto { get; set; }
+        public string OfertaEducativaProspecto { get; set; }
+    }
+
+    public class DTOAlumnoPromocionCasaProspecto
+    {
+        public int AlumnoId { get; set; }
+        public string NombreC { get; set; }
+        public int OfertaEducativaId { get; set; }
+        public string OfertaEducativa { get; set; }
+        public bool TieneAdeudos { get; set; }
+    }
+
+
+
+
     public class DTOAlumnoReferencias
     {
         public string Concepto { get; set; }
@@ -55,7 +80,7 @@ namespace DTO
     }
     public class DTOAlumnoReferencias1
     {
-        public DTOAlumnoLigero AlumnoDatos { get; set; }
+        public DTOAlumnoLigero1 AlumnoDatos { get; set; }
         public List<DTOAlumnoReferencias> AlumnoReferencias { get; set; }
     }
 
@@ -85,6 +110,13 @@ namespace DTO
         }
         public string Usuario { get; set; }
     }
+    public class DTOAlumnoLigero1
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+    }
+
+
     public class DTOAlumnoPermitido1
     {
         public int AlumnoId { get; set; }

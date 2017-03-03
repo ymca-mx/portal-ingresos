@@ -50,6 +50,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.d === 'Guardado') {
                     var obj = JSON.parse(JSON.stringify(eval('(' + Cadena + ')')));
+                    $("#txtAlumno").val("");
                     GuardarDocumentos(obj.AlumnoId, obj.OfertaEducativaId, obj.Anio, obj.PeriodoId, false, obj.UsuarioId);
                 } else {
                     alertify.alert('Error al cargar datos');
@@ -234,7 +235,7 @@ $(document).ready(function () {
                 row.childNodes[3].style.textAlign = 'center';
                 row.childNodes[4].style.textAlign = 'center';
 
-                if(data.AnioPeriodoId  == AlumnoObject.PeriodosAlumno[0].Anio +" - "+ AlumnoObject.PeriodosAlumno[0].PeriodoId && data.BecaDeportiva == "No")
+                if(data.AnioPeriodoId  = AlumnoObject.PeriodosAlumno[0].Anio +" - "+ AlumnoObject.PeriodosAlumno[0].PeriodoId && data.BecaDeportiva == "No")
                 {
                     porcentajebeca = data.Monto;
                 }

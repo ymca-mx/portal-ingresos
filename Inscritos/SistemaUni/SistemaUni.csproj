@@ -274,6 +274,7 @@
     <Content Include="JS\MedioDifusion.js" />
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
+    <Content Include="JS\Pagos\PromocionCasa.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasConsulta.js" />
     <Content Include="JS\Pagos\ReferenciasTramites.js" />
@@ -288,6 +289,7 @@
     <Content Include="JS\Referencias\GenerarReferenciasB.js" />
     <Content Include="JS\Referencias\GenerarReferenciasIdiomas.js" />
     <Content Include="JS\Referencias\SolicitudCancelacionReferencias.js" />
+    <Content Include="JS\Referencias\VoBoCancelacionReferencias.js" />
     <Content Include="JS\Reinscripcion.js" />
     <Content Include="JS\Reinscripcion\MateriasAsesorias.js" />
     <Content Include="JS\RelacionarMateria.js" />
@@ -348,6 +350,7 @@
     <Content Include="JS\themes\alertify.default.css" />
     <Content Include="Alumnos.html" />
     <Content Include="JS\IncritosIngles.js" />
+    <Content Include="Pago\PromociónCasa.html" />
     <Content Include="Pago\ReferenciasConsulta.html" />
     <Content Include="Pago\EstadodeCuenta.html" />
     <Content Include="Pago\EstadodeCuenta2Buscar.html" />
@@ -372,6 +375,7 @@
     <Content Include="Referencias\GenerarCargosIngles.html" />
     <Content Include="Referencias\GenerarReferenciasB.html" />
     <Content Include="Referencias\SolicitudCancelacionReferencias.html" />
+    <Content Include="Referencias\VoBoCancelacionReferencias.html" />
     <Content Include="ReInscripcion.html" />
     <Content Include="Reinscripcion\MateriasAsesorias.html" />
     <Content Include="RelacionarMateria.html" />
