@@ -104,6 +104,7 @@ namespace DTO
     {
         public int AlumnoId { get; set; }
         public string Nombre { get; set; }
+        public bool EsEmpresa { get; set; }
         public List<PeridoBeca> PeriodosAlumno { get; set; }
         public List<DTOAlumnoOfertas> OfertasAlumnos { get; set; }
         public List<DTOAlumnoDescuento> lstDescuentos { get; set; }

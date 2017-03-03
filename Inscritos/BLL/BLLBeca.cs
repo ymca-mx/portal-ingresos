@@ -26,6 +26,7 @@ namespace BLL
                         AlumnoId = a.AlumnoId,
                         Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
                     }).FirstOrDefault();
+                    objCom.EsEmpresa = db.AlumnoInscrito.Where(l => l.AlumnoId == AlumnoId && l.EsEmpresa).ToList().Count > 0 ? true : false;
 
                     objCom.lstDescuentos = new List<DTOAlumnoDescuento>();
                     objCom.PeriodosAlumno = new List<PeridoBeca>();

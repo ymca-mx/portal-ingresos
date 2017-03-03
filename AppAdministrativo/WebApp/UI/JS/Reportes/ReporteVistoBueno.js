@@ -101,15 +101,17 @@
 
             success: function (data) {
                 if(data.d != null )
-                {
+               
+                    var Mostra = data.d.Sw;
+
                     tblVoBo = $("#dtVoBo").DataTable({
-                        "aaData": data.d,
+                        "aaData": data.d.lstVoBo,
                         "aoColumns": [
                              {
                                  "mDataProp": "AlumnoId",
                                  "mRender": function (data, f, d) {
                                      var link;
-                                     link = d.AlumnoId + " | " + d.Nombre;
+                                     link = d.lstVoBo.AlumnoId + " | " + d.lstVoBo.Nombre;
 
                                      return link;
                                  }

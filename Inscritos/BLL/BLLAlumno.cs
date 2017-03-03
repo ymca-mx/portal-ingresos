@@ -454,11 +454,6 @@ namespace BLL
                                            where a.AlumnoId == AlumnoId
                                            select new DTOAlumno
                                            {
-                                               Grupo = new DTOGrupo
-                                               {
-                                                   Descripcion = a.GrupoAlumnoConfiguracion.Where(o => o.AlumnoId == a.AlumnoId && o.EstatusId == 1).ToList().Count > 0 ?
-                                                                a.GrupoAlumnoConfiguracion.Where(o => o.AlumnoId == a.AlumnoId && o.EstatusId == 1).FirstOrDefault().Grupo.Descripcion : ""
-                                               },
                                                AlumnoId = a.AlumnoId,
                                                Nombre = a.Nombre,
                                                Paterno = a.Paterno,
@@ -487,14 +482,19 @@ namespace BLL
                                                }
 
                                            }).AsNoTracking().FirstOrDefault();
+                    objAlumno.Grupo = new DTOGrupo
+                    {
+                        Descripcion = db.GrupoAlumnoConfiguracion
+                                           .Where(k=> k.AlumnoId==AlumnoId).ToList()?.LastOrDefault()?.Grupo?.Descripcion ?? ""
+                    };
                     //objAlumno.AlumnoInscrito.OfertaEducativa.Descripcion = objAlumno.AlumnoInscrito != null ? objAlumno.AlumnoInscrito.OfertaEducativa.Descripcion : "";
                     objAlumno.AlumnoInscrito = objAlumno.AlumnoInscrito == null ? new DTOAlumnoInscrito { OfertaEducativa = new DTOOfertaEducativa { Descripcion = "" } } : objAlumno.AlumnoInscrito;
                     objAlumno.AlumnoInscrito.EsEmpresa = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId).ToList().Count > 0 ?
                         db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId).ToList().Where(a => a.EsEmpresa == true).ToList().Count > 0 ?
                         true : false : false;
 
-                    objAlumno.AlumnoInscrito.EsEspecial = db.GrupoAlumnoConfiguracion.Where(k => k.AlumnoId == AlumnoId).ToList().Count > 0 ?
-                                    db.GrupoAlumnoConfiguracion.Where(k => k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList().Count > 0 ? true : false : false;
+                    objAlumno.AlumnoInscrito.EsEspecial =
+                                    db.GrupoAlumnoConfiguracion.Where(k => k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList().Count > 0 ? true : false;
 
                     objAlumno.lstAlumnoInscrito = db.AlumnoInscrito.Where(A => A.AlumnoId == AlumnoId).ToList().ConvertAll(new Converter<AlumnoInscrito, DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
                     var lstAlumno = objAlumno.lstAlumnoInscrito.GroupBy(v => v.OfertaEducativaId).Select(A => A.ToList()).ToList();

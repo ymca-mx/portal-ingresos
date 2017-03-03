@@ -2617,8 +2617,15 @@ namespace BLL
                 try
                 {
                     int ofertaid = 0;
-                    List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.Anio == Anio && P.PeriodoId == PeriodoId
-                        && P.EstatusId != 2 && P.EstatusId != 3 && (P.Cuota1.PagoConceptoId != 1007 && P.Cuota1.PagoConceptoId != 1001) && (P.Anio != 2016 || P.PeriodoId != 1)).AsNoTracking().ToList();
+                    List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId
+                                                        && P.Anio == Anio
+                                                        && P.PeriodoId == PeriodoId
+                                                        && P.EstatusId != 2
+                                                        && P.EstatusId != 3
+                                                        && (P.Cuota1.PagoConceptoId != 1007 && P.Cuota1.PagoConceptoId != 1001)
+                                                        && (P.Anio != 2016 || P.PeriodoId != 1 || (P.EstatusId == 14 || P.EstatusId == 4)))
+                                            .AsNoTracking().ToList();
+
                     lstPagos = lstPagos.OrderBy(P => P.OfertaEducativaId).ToList();
                     lstPagos = lstPagos.Where(p => p.EstatusId != 2).ToList();
 
