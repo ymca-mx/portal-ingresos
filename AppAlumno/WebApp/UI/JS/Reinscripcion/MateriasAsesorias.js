@@ -92,7 +92,8 @@
             $("#slcPeriodos").append(option1);
             if ($("#slcOfertas").val() != "-1") { $("#slcPeriodos").val(objAlumnoC.lstPeriodos[0].PeriodoId + " " + objAlumnoC.lstPeriodos[0].Anio); }
         }
-        $("#slcPeriodos").change();
+        $("#slcPeriodos").change();        
+        $(window).scrollTop($('#slcPeriodos').offset().top);
         $('#Load').modal('hide');
         
     }
@@ -310,8 +311,8 @@
                                 "next": ">"
                             },
                             "search": "Buscar Alumno "
-                        },
-                        "order": [[2, "desc"]]
+                        },                      
+                        "order": [[2, "desc"]]                        
                     });
                 }
                 $('#Load').modal('hide');
@@ -320,10 +321,16 @@
         });
     }
 
-    function TablaReferencias(Oferta,Anio,Periodo) {
+    function TablaReferencias(Oferta, Anio, Periodo) {
+        $('#txtNoMateria').val("");
+        $("#divNoMateria").hide();
+        $('#txtNoAsesoria').val("");
+        $("#divNoAsesoria").hide();
+
+        var NoAsesorias = 0, NoMaterias = 0;
 
         var listPa = [];
-        $(objAlumnoC.Referencias).each(function(){
+        $(objAlumnoC.Referencias).each(function () {
             if (this.Anio.toString() == Anio.toString()
                && this.PeriodoId.toString() == Periodo.toString()
                && this.OfertaEducativaId.toString() == Oferta.toString()) {
@@ -352,8 +359,28 @@
                 },
                 "search": "Buscar Alumno ",
             },
-            "order": [[2, "desc"]]
+            "order": [[2, "desc"]],
+            "createdRow": function (row, data, dataIndex) {
+                var concepto = data.Concepto.toLowerCase();
+                if (concepto.includes("adelanto")) {
+                    NoMaterias += 1;
+                } else if (concepto.includes("asesoria")) {
+                    NoAsesorias += 1;
+                }
+                if (dataIndex % 2 == 0) {
+                    $(row).addClass('bg-blue');
+                }
+                else { $(row).addClass('bg-green'); }
+            },
         });
+        if (NoMaterias > 0) {
+            $('#txtNoMateria').val("El alumno tiene: " + NoMaterias + " Materia(s)");
+            $("#divNoMateria").show();
+        }
+        if (NoAsesorias > 0) {
+            $('#txtNoAsesoria').val("El alumno tiene: " + NoAsesorias + " Asesoria(s)");
+            $("#divNoAsesoria").show();
+        }
     }
 
     $('#tblAlumnos').on('click', 'a', function () {

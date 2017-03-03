@@ -234,7 +234,7 @@ $(document).ready(function () {
                 row.childNodes[3].style.textAlign = 'center';
                 row.childNodes[4].style.textAlign = 'center';
 
-                if(data.AnioPeriodoId  = AlumnoObject.PeriodosAlumno[0].Anio +" - "+ AlumnoObject.PeriodosAlumno[0].PeriodoId && data.BecaDeportiva == "No")
+                if(data.AnioPeriodoId  == AlumnoObject.PeriodosAlumno[0].Anio +" - "+ AlumnoObject.PeriodosAlumno[0].PeriodoId && data.BecaDeportiva == "No")
                 {
                     porcentajebeca = data.Monto;
                 }

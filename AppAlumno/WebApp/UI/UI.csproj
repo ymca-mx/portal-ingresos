@@ -98,6 +98,7 @@
     <Content Include="JS\Alumnos\AlumnoDatos.js" />
     <Content Include="JS\Alumnos\AlumnoMail.js" />
     <Content Include="JS\Alumnos\AlumnoPermitido.js" />
+    <Content Include="JS\Alumnos\EncuestaPortal.js" />
     <Content Include="JS\Alumnos\ExamenMedico.js" />
     <Content Include="JS\Archivos.js" />
     <Content Include="JS\AreaAcademica.js" />
@@ -143,6 +144,7 @@
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
     <Content Include="JS\Pagos\EstadodeCuenta.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
+    <Content Include="JS\Pagos\ReferenciasConsulta.js" />
     <Content Include="JS\Pagos\ReferenciasTramites.js" />
     <Content Include="JS\Pais.js" />
     <Content Include="JS\Parentesco.js" />
@@ -166,6 +168,7 @@
     <Content Include="JS\Reportes\ReporteAcademico.js" />
     <Content Include="JS\Reportes\ReporteAlumnoOferta.js" />
     <Content Include="JS\Reportes\ReporteAlumnoReferencias.js" />
+    <Content Include="JS\Reportes\ReporteVistoBueno.js" />
     <Content Include="JS\src\core\annotation.js" />
     <Content Include="JS\src\core\arithmetic_decoder.js" />
     <Content Include="JS\src\core\bidi.js" />

@@ -1,79 +1,55 @@
 ﻿$(document).ready(function () {
-    var tblVoBo, anio, periodo;
+    var tblVoBo, anio, periodo, oferta,vobo, registros;
     //inicializar
     CargarCuatrimestre();
 
     $("#slcCuatrimestre").change(function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
-               // CargarVistoBueno(anio, periodo);      
+        CargarVistoBueno(anio, periodo);      
 
     });
 
     $("#slcOferta").change(function () {
-        filtros();
+        if ($("#slcOferta").val() != -1) {
+            oferta = $("#slcOferta option:selected").html();
+        } else
+        {
+            oferta = "";
+        }
+        filtroOferta();
     });
 
-    function filtros() {
+    $("#slcVisto").change(function () {
+        if ($("#slcVisto").val() != -1) {
+            if ($("#slcVisto").val() == 0)
+            {
+                vobo = "/";
+            } else
+            {
+                vobo = "-";
+            }
 
-        cuatri[reporte] = $("#slcCuatrimestre").val();
-        oferta1 = $("#slcOferta option:selected").html();
-        oferta[reporte] = $("#slcOferta").val();
-        fecha1[reporte] = $("#from").val();
-        fecha2[reporte] = $("#to").val();
-
-        switch (reporte) {
-            case 0:
-                if (oferta1 != "--Todas--") {
-                    tblBecas.columns(2)
-                                .search(oferta1)
-                                .draw();
-                } else {
-                    tblBecas.columns(2)
-                           .search("")
-                   .draw();
-                }
-                tblBecas.draw();
-                break;
-            case 1:
-                if (oferta1 != "--Todas--") {
-                    tblBecas1.columns(2)
-                                .search(oferta1)
-                                .draw();
-                } else {
-                    tblBecas1.columns(2)
-                           .search("")
-                   .draw();
-                }
-                tblBecas1.draw();
-                break;
-            case 2:
-                if (oferta1 != "--Todas--") {
-                    tblBecas2.columns(2)
-                                .search(oferta1)
-                                .draw();
-                } else {
-                    tblBecas2.columns(2)
-                           .search("")
-                   .draw();
-                }
-                break;
-            case 3:
-                if (oferta1 != "--Todas--") {
-                    tblBecas3.columns(3)
-                                .search(oferta1)
-                                .draw();
-                } else {
-                    tblBecas3.columns(3)
-                           .search("")
-                   .draw();
-                }
-                break;
+           
+        } else {
+            vobo = "";
         }
+        filtroEstatus();
+    });
 
-        //$("#lbBecas").text(registros[reporte]);
 
+    function filtroOferta() {
+        tblVoBo.columns(1)
+                .search(oferta)
+                .draw();
     }
+
+    function filtroEstatus() {
+        tblVoBo.columns(4)
+                .search(vobo)
+                .draw();
+    }
+
 
     function CargarCuatrimestre() {
         $.ajax({
@@ -112,226 +88,98 @@
             }//success
         });// $.ajax
 
-
-        // obtener fecha actual
-        hoy = new Date();
-        var dd = hoy.getDate();
-        var mm = hoy.getMonth() + 1; //hoy es 0!
-        var yyyy = hoy.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-        hoy = dd + '/' + mm + '/' + yyyy;
-
-
     }//CargarCatrimestre
 
     function CargarVistoBueno(anio, periodo) {
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteBecaCuatrimestre",
-            data: "{anio:" + anio + ",periodo:" + periodo + "}",
+            url: "../WebServices/WS/Reporte.asmx/ReporteVoBo",
+            data: "{anio:" + anio + ",periodoid:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
-                tblBecas = $("#dtbecas").DataTable({
-                    "aaData": data.d,
-                    "aoColumns": [
-                        { "mDataProp": "alumnoId", "sWidth": "7%" },
-                        { "mDataProp": "nombreAlumno", "sWidth": "20%" },
-                        { "mDataProp": "especialidad", "sWidth": "10%" },
-                        { "mDataProp": "becaDescuento", "sWidth": "10%" },
-                        { "mDataProp": "porcentajeDescuento", "sWidth": "10%" },
-                        { "mDataProp": "comentario", "sWidth": "10%" },
-                        { "mDataProp": "fechaGeneracion", "sWidth": "10%" },
-                        { "mDataProp": "horaGeneracion", "sWidth": "10%" },
-                        { "mDataProp": "usuarioAplico", "sWidth": "13%" },
+                if(data.d != null )
+               
+                    var Mostra = data.d.Sw;
 
-                    ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
-                    "searching": true,
-                    "ordering": true,
-                    "async": true,
-                    "bDestroy": true,
-                    "bPaginate": true,
-                    "bLengthChange": true,
-                    "bFilter": true,
-                    "bInfo": false,
-                    "bAutoWidth": false,
-                    "asStripClasses": null,
-                    "colReorder": true,
-                    "language": {
-                        "lengthMenu": "_MENU_ Registro",
-                        "paginate": {
-                            "previos": "<",
-                            "next": ">"
+                    tblVoBo = $("#dtVoBo").DataTable({
+                        "aaData": data.d.lstVoBo,
+                        "aoColumns": [
+                             {
+                                 "mDataProp": "AlumnoId",
+                                 "mRender": function (data, f, d) {
+                                     var link;
+                                     link = d.lstVoBo.AlumnoId + " | " + d.lstVoBo.Nombre;
+
+                                     return link;
+                                 }
+                             },
+                            { "mDataProp": "OfertaEducativa" },
+                             { "mDataProp": "Inscrito" },
+                            { "mDataProp": "FechaInscrito" },
+                            { "mDataProp": "FechaVoBo" },
+                            { "mDataProp": "InscripcionCompleta" },
+                            { "mDataProp": "Asesorias" },
+                            { "mDataProp": "Materias" },
+                            { "mDataProp": "UsuarioVoBo" }
+
+                        ],
+                        "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                        "searching": true,
+                        "ordering": true,
+                        "async": true,
+                        "bDestroy": true,
+                        "bPaginate": true,
+                        "bLengthChange": true,
+                        "bFilter": true,
+                        "bInfo": false,
+                        "bAutoWidth": false,
+                        "asStripClasses": null,
+                        "colReorder": true,
+                        "language": {
+                            "lengthMenu": "_MENU_ Registro",
+                            "paginate": {
+                                "previos": "<",
+                                "next": ">"
+                            },
+                            "search": "Buscar Alumno ",
                         },
-                        "search": "Buscar Alumno ",
-                    },
-                    "order": [[1, "desc"]],
-                    "createdRow": function (row, data, dataIndex) {
-                        row.childNodes[4].style.textAlign = 'right';
-                        row.childNodes[6].style.textAlign = 'center';
-                        row.childNodes[7].style.textAlign = 'center';
-                    }
-                    , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
-                        registros[reporte] = oSettings.aiDisplay.length;
-                        $('#lbBecas').text(registros[reporte]);
-                    }
-                });//$('#dtbecas').DataTable
-                filtros();
+                        "order": [[1, "desc"]],
+                        "createdRow": function (row, data, dataIndex) {
+                            row.childNodes[2].style.textAlign = 'center';
+                            row.childNodes[3].style.textAlign = 'center';
+                            row.childNodes[4].style.textAlign = 'center';
+                            row.childNodes[5].style.textAlign = 'center';
+                            row.childNodes[6].style.textAlign = 'center';
+                            row.childNodes[7].style.textAlign = 'center';
+                        }
+                        , "fnDrawCallback": function (oSettings) {
+                            filtosdatatable();
+                            registros = oSettings.aiDisplay.length;
+                            $('#lbRegistros').text(registros);
+                        }
+                    });//$('#dtbecas').DataTable
+                    //filtros();
 
 
-                $('#Load').modal('hide');
+                    $('#Load').modal('hide');
+                }
+
             },//success
         });// end $.ajax
 
 
     }//function CargarReporteBecas()
 
-    function CargarAlumnosBecaSep(anio, periodo) {
-        $('#Load').modal('show');
-        $.ajax({
-            type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteBecaSep",
-            data: "{anio:" + anio + ",periodo:" + periodo + "}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-            success: function (data) {
-                tblBecas2 = $("#dtbecas3").DataTable({
-                    "aaData": data.d,
-                    "aoColumns": [
-                        { "mDataProp": "alumnoId", "sWidth": "10%" },
-                        { "mDataProp": "nombreAlumno", "sWidth": "20%" },
-                        { "mDataProp": "especialidad", "sWidth": "15%" },
-                        { "mDataProp": "porcentajeDescuento", "sWidth": "10%" },
-                        { "mDataProp": "comentario", "sWidth": "10%" },
-                        { "mDataProp": "fechaGeneracion", "sWidth": "10%" },
-                        { "mDataProp": "horaGeneracion", "sWidth": "10%" },
-                        { "mDataProp": "usuarioAplico", "sWidth": "15%" },
-
-                    ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
-                    "searching": true,
-                    "ordering": true,
-                    "async": true,
-                    "bDestroy": true,
-                    "bPaginate": true,
-                    "bLengthChange": true,
-                    "bFilter": true,
-                    "bInfo": false,
-                    "bAutoWidth": false,
-                    "asStripClasses": null,
-                    "colReorder": true,
-                    "language": {
-                        "lengthMenu": "_MENU_ Registro",
-                        "paginate": {
-                            "previos": "<",
-                            "next": ">"
-                        },
-                        "search": "Buscar Alumno ",
-                    },
-                    "order": [[1, "desc"]],
-                    "createdRow": function (row, data, dataIndex) {
-                        row.childNodes[3].style.textAlign = 'right';
-                        row.childNodes[5].style.textAlign = 'center';
-                        row.childNodes[6].style.textAlign = 'center';
-                    }
-                    , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
-                        registros[reporte] = oSettings.aiDisplay.length;
-                        $('#lbBecas').text(registros[reporte]);
-                    }
-                });//$('#dtbecas').DataTable
-                filtros();
-                $('#Load').modal('hide');
-            }//success
-
-        });//$.ajax
-
-
-    }//function CargarAlumnosBecaSep()
-
-    function CargarBecasInegi(anio, periodo) {
-        $('#Load').modal('show');
-        $.ajax({
-            type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteIneg",
-            data: "{anio:" + anio + ",periodo:" + periodo + "}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-            success: function (data) {
-                tblBecas3 = $("#dtbecas4").DataTable({
-                    "aaData": data.d,
-                    "aoColumns": [
-                        { "mDataProp": "alumnoId", "sWidth": "10%" },
-                        { "mDataProp": "nombreAlumno", "sWidth": "20%" },
-                        { "mDataProp": "ciclo", "sWidth": "10%" },
-                        { "mDataProp": "especialidad", "sWidth": "15%" },
-                        { "mDataProp": "sexo", "sWidth": "10%" },
-                        { "mDataProp": "edad", "sWidth": "10%" },
-                        { "mDataProp": "fechaNacimiento", "sWidth": "10%" },
-                        { "mDataProp": "lugarNacimiento", "sWidth": "15%" },
-
-                    ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
-                    "searching": true,
-                    "ordering": true,
-                    "async": true,
-                    "bDestroy": true,
-                    "bPaginate": true,
-                    "bLengthChange": true,
-                    "bFilter": true,
-                    "bInfo": false,
-                    "bAutoWidth": false,
-                    "asStripClasses": null,
-                    "colReorder": true,
-                    "language": {
-                        "lengthMenu": "_MENU_ Registro",
-                        "paginate": {
-                            "previos": "<",
-                            "next": ">"
-                        },
-                        "search": "Buscar Alumno ",
-                    },
-                    "order": [[1, "desc"]],
-                    "createdRow": function (row, data, dataIndex) {
-                        row.childNodes[2].style.textAlign = 'right';
-                        row.childNodes[5].style.textAlign = 'right';
-                        row.childNodes[6].style.textAlign = 'center';
-
-                    }
-                    , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
-                        registros[reporte] = oSettings.aiDisplay.length;
-                        $('#lbBecas').text(registros[reporte]);
-                    }
-                });//$('#dtbecas').DataTable
-                filtros();
-                $('#Load').modal('hide');
-            }//success
-
-        });//$.ajax
-
-
-    }//function CargarBecasInegi()
 
     function filtosdatatable() {
 
-                $("#dtbecas").tableExport.remove();
-                $("#dtbecas").tableExport({
-                    formats: ["xlsx"],
-                });
-            
-          
+        $("#dtVoBo").tableExport.remove();
+        $("#dtVoBo").tableExport({
+            formats: ["xlsx"],
+        });
     }
 
 
