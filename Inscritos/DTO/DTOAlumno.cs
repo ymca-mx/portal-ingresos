@@ -49,19 +49,8 @@ namespace DTO
         public string NombreCProspecto { get; set; }
         public int OfertaEducativaIdProspecto { get; set; }
         public string OfertaEducativaProspecto { get; set; }
+        public bool AlumnoProspecto { get; set; }
     }
-
-    public class DTOAlumnoPromocionCasaProspecto
-    {
-        public int AlumnoId { get; set; }
-        public string NombreC { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public string OfertaEducativa { get; set; }
-        public bool TieneAdeudos { get; set; }
-    }
-
-
-
 
     public class DTOAlumnoReferencias
     {

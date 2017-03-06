@@ -515,7 +515,7 @@ namespace BLL
             }
         }
 
-        public static DTOAlumno ConsultarAlumnoPromocionCasa(int AlumnoId)
+        public static DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa(int AlumnoId, int TA)
         {
             try
             {
@@ -523,7 +523,9 @@ namespace BLL
                 {
                     var fechaactual = DateTime.Now;
                     var periodoActual = db.Periodo.Where(p => p.FechaInicial <= fechaactual && p.FechaFinal >= fechaactual).FirstOrDefault();
-                    var alumno = db.Alumno.Where(a => a.AlumnoId == a.AlumnoId)
+                    if (TA == 1)
+                    {
+                        var alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
                                           .Select(s => new DTOAlumnoPromocionCasa
                                           {
                                               AlumnoId = s.AlumnoId,
@@ -533,9 +535,40 @@ namespace BLL
                                                                                 {
                                                                                     ofertaEducativaId = oe.OfertaEducativaId,
                                                                                     descripcion = oe.OfertaEducativa.Descripcion
-                                                                                }).ToList()
-                                          }); 
-                    return alumno;
+                                                                                }).ToList(),
+                                              AlumnoProspecto = false
+
+                                          }).FirstOrDefault();
+                        return alumno;
+                    }
+                    else
+                    {
+                        var pagoconcepto = new int[] { 802,800 };
+
+                        var periodoAnterior = db.Periodo.Where(p => p.FechaFinal < periodoActual.FechaInicial).OrderByDescending(d=> d.FechaFinal).FirstOrDefault();
+                        var adeudos = db.Pago.Where(p => p.Anio == periodoAnterior.Anio
+                                                    && p.PeriodoId == periodoAnterior.PeriodoId
+                                                    && pagoconcepto.Contains(p.Cuota1.PagoConceptoId)
+                                                    && p.EstatusId != 4
+                                                    && p.AlumnoId == AlumnoId
+                                                    ).Count();
+
+                        var alumno2 = db.AlumnoInscrito.Where(q => q.AlumnoId == AlumnoId
+                                                              &&   q.Anio == periodoActual.Anio
+                                                              &&   q.PeriodoId == periodoActual.PeriodoId
+                                                              &&   q.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                                       .Select(z => new DTOAlumnoPromocionCasa
+                                                       {
+                                                           AlumnoIdProspecto = z.AlumnoId,
+                                                           NombreCProspecto = z.Alumno.Nombre + " " +z.Alumno.Paterno + " " + z.Alumno.Materno, 
+                                                           OfertaEducativaIdProspecto = z.OfertaEducativaId,
+                                                           OfertaEducativaProspecto = z.OfertaEducativa.Descripcion,
+                                                           AlumnoProspecto = adeudos == 0 ? true : false
+                                                       }).FirstOrDefault();
+                        return alumno2;
+                        
+                    }
+                    
                 }
             }
             catch (Exception)
