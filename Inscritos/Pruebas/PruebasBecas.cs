@@ -1795,36 +1795,92 @@ namespace Pruebas
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
-               
-                var v = false;
-                if (db.AlumnoDetalleAlumno.Where(w=> w.AlumnoId == 8173).Count()>0)
-                {
 
-                    var fechaActual = DateTime.Now;
-                    var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
-                                                                         && fechaActual <= p.FechaFinal).FirstOrDefault();
-                    DateTime fechaActualizo = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == 8173).FirstOrDefault().Fecha;
+                var fechaactual = DateTime.Now;
+                var periodos = db.Periodo.Where(p => p.FechaFinal >= fechaactual).Take(2)
+                                         .Select(s => new DTOPeriodoPromocionCasa
+                                         {
+                                             Descripcion = s.Descripcion,
+                                             Anio = s.Anio,
+                                             PeriodoId = s.PeriodoId,
+                                             Meses = db.Subperiodo.Where(sp => sp.PeriodoId == s.PeriodoId)
+                                                                  .Select(d => new DTOMes
+                                                                  {
+                                                                      Descripcion = d.Mes.Descripcion,
+                                                                      MesId = d.MesId
+                                                                  }).ToList()
+                                         }).ToList();
 
-                    if ((Periodo.FechaInicial <= fechaActualizo && fechaActualizo <= Periodo.FechaFinal))
-                    {
-                        v = false;
-                    }
-                    else
-                    {
-                        v = true;
-                    }
-                    
-                }else
-                {
-                    v = true;
-                }
-
-               
-                Console.WriteLine(v);
             }
         }
 
-      [TestMethod]
+
+
+        [TestMethod]
+        public void PuebasPromocionCasa()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                var AlumnoId = 5669;
+                var Anio = 2017;
+                var PeriodoId = 2;
+                var OfertaEducativaId = 29;
+                var Estatusid = new int[] { 4, 14 };
+
+                // ver si tiene promocion en casa 
+                var promocion  =  db.PromocionCasa.Where(a => a.AlumnoId == AlumnoId
+                                       && a.Anio == Anio
+                                       && a.PeriodoId == PeriodoId
+                                       && a.OfertaEducativaId == OfertaEducativaId)?.FirstOrDefault()??null;
+
+                if (promocion != null)
+                {
+
+                    //ver si hay referecias generadas de es subperido
+                    var pago = db.Pago.Where(p => p.AlumnoId == AlumnoId
+                                                  && p.OfertaEducativaId == OfertaEducativaId
+                                                  && p.Anio == Anio
+                                                  && p.PeriodoId == PeriodoId
+                                                  && p.SubperiodoId == promocion.SubPeriodoId
+                                                  && p.Cuota1.PagoConceptoId == 800)?.FirstOrDefault()??null;
+
+
+                    if (pago != null )
+                    {
+                        
+                        //obtener descuentoId de Promocion en casa
+                        var descuentoid = db.Descuento.Where(d => d.PagoConceptoId == 800
+                                                             && d.OfertaEducativaId == OfertaEducativaId
+                                                             && d.Descripcion.Contains("Promoción en Casa")).FirstOrDefault().DescuentoId;
+
+                        /* generar pagodescuento */
+                        db.PagoDescuento.Add(new PagoDescuento
+                        {
+                            PagoId = pago.PagoId,
+                            DescuentoId = descuentoid,
+                            Monto = (decimal)promocion.Monto
+                        });
+                        
+                        if (Estatusid.Contains(pago.EstatusId))
+                        {
+                            
+                        }
+                        else if(pago.EstatusId == 1 )
+                        {
+                            
+                        }
+
+
+
+                    }//if (pagoid != null )
+                }// if (subperiodo > 0 )
+
+
+
+            }
+        }
+
+        [TestMethod]
       public void AlumnosVariados()
         {
             using(UniversidadEntities db= new UniversidadEntities())

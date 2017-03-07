@@ -514,7 +514,7 @@ namespace BLL
                 }
             }
         }
-
+        //promocion en casa
         public static DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa(int AlumnoId, int TA)
         {
             try
@@ -543,13 +543,14 @@ namespace BLL
                     }
                     else
                     {
+                        var Estatusid = new int[] { 4, 14 };
                         var pagoconcepto = new int[] { 802,800 };
 
                         var periodoAnterior = db.Periodo.Where(p => p.FechaFinal < periodoActual.FechaInicial).OrderByDescending(d=> d.FechaFinal).FirstOrDefault();
                         var adeudos = db.Pago.Where(p => p.Anio == periodoAnterior.Anio
                                                     && p.PeriodoId == periodoAnterior.PeriodoId
                                                     && pagoconcepto.Contains(p.Cuota1.PagoConceptoId)
-                                                    && p.EstatusId != 4
+                                                    && !Estatusid.Contains(p.EstatusId)
                                                     && p.AlumnoId == AlumnoId
                                                     ).Count();
 
@@ -578,6 +579,84 @@ namespace BLL
             }
         }
 
+        public static List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    var fechaactual = DateTime.Now;
+                    var periodos = db.Periodo.Where(p => p.FechaFinal >= fechaactual).Take(2)
+                                             .Select(s => new DTOPeriodoPromocionCasa
+                                             {
+                                                 Descripcion = s.Descripcion,
+                                                 Anio = s.Anio,
+                                                 PeriodoId = s.PeriodoId,
+                                                 Meses = db.Subperiodo.Where(sp => sp.PeriodoId == s.PeriodoId)
+                                                                      .Select(d => new DTOMes
+                                                                      {
+                                                                          Descripcion = d.Mes.Descripcion,
+                                                                          MesId = d.SubperiodoId
+                                                                      }).ToList()
+                                             }).ToList();
+                    return periodos;
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+            }
+        }
+
+
+        public static bool AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    db.PromocionCasa.Add(new PromocionCasa
+                    {
+                        AlumnoId = Promocion.AlumnoId,
+                        OfertaEducativaId = Promocion.OfertaEducativaIdActual,
+                        AlumnoIdProspecto = Promocion.AlumnoIdProspecto,
+                        Anio = Promocion.Anio,
+                        PeriodoId = Promocion.PeriodoId,
+                        SubPeriodoId = Promocion.Mes,
+                        Monto = Promocion.Monto,
+                        FechaGeneracion = DateTime.Now,
+                        HoraGeneracion = DateTime.Now.TimeOfDay,
+                        EstatusId =  1
+                    });
+
+                    //ver si hay referecias generadas de es subperido
+                    var pago = db.Pago.Where(p => p.AlumnoId == Promocion.AlumnoId
+                                                  && p.OfertaEducativaId == Promocion.OfertaEducativaIdActual
+                                                  && p.Anio == Promocion.Anio
+                                                  && p.PeriodoId == Promocion.PeriodoId
+                                                  && p.SubperiodoId == Promocion.Mes
+                                                  && p.Cuota1.PagoConceptoId == 800)?.FirstOrDefault() ?? null;
+                    if (pago != null)
+                    {
+                        
+                    }
+
+
+
+
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+        //promocion en casa
         public static DTOAlumno ObtenerAlumno1(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

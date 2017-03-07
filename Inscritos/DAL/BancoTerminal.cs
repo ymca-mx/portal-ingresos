@@ -12,22 +12,21 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class PagoMetodo
+    public partial class BancoTerminal
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PagoMetodo()
+        public BancoTerminal()
         {
-            this.PagoDetalle = new HashSet<PagoDetalle>();
+            this.ReciboMSI = new HashSet<ReciboMSI>();
         }
     
-        public int PagoMetodoId { get; set; }
+        public int BancoTerminalId { get; set; }
         public string Descripcion { get; set; }
+        public bool TieneMSI { get; set; }
         public string CuentaContable { get; set; }
-        public decimal Comision { get; set; }
-        public bool EsVisible { get; set; }
-        public bool TieneTerminal { get; set; }
+        public int EstatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagoDetalle> PagoDetalle { get; set; }
+        public virtual ICollection<ReciboMSI> ReciboMSI { get; set; }
     }
 }

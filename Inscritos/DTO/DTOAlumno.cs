@@ -49,9 +49,22 @@ namespace DTO
         public string NombreCProspecto { get; set; }
         public int OfertaEducativaIdProspecto { get; set; }
         public string OfertaEducativaProspecto { get; set; }
+        public int Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public int Mes { get; set; }
+        public int Monto { get; set; }
         public bool AlumnoProspecto { get; set; }
     }
 
+    public class DTOPeriodoPromocionCasa
+    {
+        public string Descripcion { get; set; }
+        public int  Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public List<DTOMes> Meses{ get; set; }
+    }
+
+  
     public class DTOAlumnoReferencias
     {
         public string Concepto { get; set; }

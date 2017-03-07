@@ -1,16 +1,72 @@
 ﻿$(document).ready(function () {
     var AlumnoId, AlumnoId1, TA;
-    var PeriodoId;
+    var Periodos;
     var Anio;
     var tblAlumno1, tblAlumno2;
     var lstop = [], lstop1 = [];
+    TraerPeriodos();
+
+
+    function TraerPeriodos()
+    {
+        $.ajax({
+            type: "POST",
+            url: "/../WebServices/WS/Alumno.asmx/PeriodosPromocionCasa",
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+                Periodos = data.d;
+                $(Periodos).each(function (i, d)
+                {
+                    var option = $(document.createElement('option'));
+                    option.text(this.Descripcion);
+                    option.attr("data-Anio", this.Anio);
+                    option.attr("data-PeriodoId", this.PeriodoId);
+                    option.val(i);
+
+                    $("#slcPeriodo").append(option);
+                });
+                $("#slcPeriodo").val(0);
+                $("#slcPeriodo").change();
+                
+                $('#Load').modal('hide');
+            }
+        });
+
+    }
+
+    $("#slcPeriodo").change(function ()
+    {
+        $("#slcMes").empty();
+        var per = $('#slcPeriodo').val();
+
+        $(Periodos[per].Meses).each(function (i, d) {
+            var option = $(document.createElement('option'));
+            option.text(this.Descripcion);
+            option.val(this.MesId);
+
+            $("#slcMes").append(option);
+        });
+    });
 
     $('#btnBuscar').click(function () {
         TA = 1;
         AlumnoId = $('#txtClave').val();
-        if (AlumnoId.length == 0) { return false; }
+        if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
         if (tblAlumno1 != undefined) {
             tblAlumno1.fnClearTable();
+            if (tblAlumno2 != undefined) 
+            {
+                tblAlumno2.fnClearTable();
+                $("#txtClave1").val("");
+                $("#divPeriodo").attr("style", "display : none");
+            }
+
         }
         $('#Load').modal('show');
         $.ajax({
@@ -21,6 +77,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d === null) {
+                    alertify.alert("Este alumno no existe");
                     $('#Load').modal('hide');
                     return false;
                 }
@@ -164,7 +221,7 @@
                 }
             }
         });//$('#dtbecas').DataTable
-}
+    }
 
     $("#dtAlumno").on("click", "a", function ()
     {
@@ -180,6 +237,7 @@
         $("#PopAlumnoProspecto").modal('hide');
         $('#Load').modal('show');
         CargarAlumno();
+        $("#divPeriodo").attr("style", "display : block");
         $('#Load').modal('hide');
     });
 
@@ -207,7 +265,12 @@
                 lstop1.length = 0;
                 lstop1.push(data.d);
 
-                if (lstop1[0].AlumnoProspecto == true) {
+                if (lstop1[0].AlumnoProspecto == false) {
+                      alertify.alert("Este alumno presenta adeudo del periodo anterior favor de verificar sus pagos");
+                    //$('#Load').modal('hide');
+                    //return false;
+                } 
+               // else{
                     tblAlumno2 = $("#dtAlumno1").dataTable({
                         "aaData": lstop1,
                         "aoColumns": [
@@ -256,14 +319,8 @@
                             row.childNodes[2].style.textAlign = 'center';
                         }
                     });//$('#dtbecas').DataTable
-                } else
-                {
-                    alertify.alert("Este alumno presenta adeudo del periodo anterior");
-                    $('#Load').modal('hide');
-                    return false;
-                }
+                //}
                 
-
                 $('#Load').modal('hide');
             }
         });
@@ -281,5 +338,41 @@
         }
     });
 
+    $("#btnPromocion").click(function ()
+    {
+        var monto = $("#txtMonto").val();
+        if (monto.length == 0 || parseInt(monto) < 1) { return false; }
+
+        $('#Load').modal('show');
+
+        lstop[0].Anio = $('#slcPeriodo').find(':selected').data("anio");
+        lstop[0].PeriodoId = $('#slcPeriodo').find(':selected').data("periodoid");
+        lstop[0].Mes = $('#slcMes').val();
+        lstop[0].Monto = $("#txtMonto").val();
+
+        var obj = {
+            "Promocion": lstop[0]
+        };
+        obj = JSON.stringify(obj);
+
+
+        $.ajax({
+            type: "POST",
+            url: "/../WebServices/WS/Alumno.asmx/AplicarPromocionCasa",
+            data: obj,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (data.d === true) {
+                    alertify.alert("Promoción Aplicada correctamente.");
+                } else
+                {
+                    alertify.alert("Error al  aplicar promoción.");
+                }
+                $('#Load').modal('hide');
+            }
+        });
+
+    });
 
 });

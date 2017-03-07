@@ -12,11 +12,15 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class TempAdeudo
+    public partial class ReciboMSI
     {
-        public int AlumnoId { get; set; }
-        public decimal Adeudo { get; set; }
-        public int Tipo { get; set; }
-        public int OfertaEducativaId { get; set; }
+        public int ReciboId { get; set; }
+        public int SucursalCajaId { get; set; }
+        public int BancoTerminalId { get; set; }
+        public int MesId { get; set; }
+        public int MSI { get; set; }
+    
+        public virtual BancoTerminal BancoTerminal { get; set; }
+        public virtual Recibo Recibo { get; set; }
     }
 }

@@ -197,6 +197,9 @@
     <Compile Include="AsociacionDetalle.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="BancoTerminal.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="BecaDeportiva.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
@@ -483,6 +486,9 @@
     <Compile Include="PreguntaValor.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="PromocionCasa.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prospecto.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
@@ -506,6 +512,9 @@
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="ReciboDetalle.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReciboMSI.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="Reclasificacion.cs">
@@ -581,9 +590,6 @@
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="Tabla2.cs">
-      <DependentUpon>Modelo2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TempAdeudo.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoDocumento.cs">

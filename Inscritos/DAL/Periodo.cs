@@ -27,6 +27,7 @@ namespace DAL
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
             this.Pago = new HashSet<Pago>();
             this.PeriodoAnticipado = new HashSet<PeriodoAnticipado>();
+            this.PromocionCasa = new HashSet<PromocionCasa>();
         }
     
         public int Anio { get; set; }
@@ -56,5 +57,7 @@ namespace DAL
         public virtual ICollection<Pago> Pago { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PeriodoAnticipado> PeriodoAnticipado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromocionCasa> PromocionCasa { get; set; }
     }
 }

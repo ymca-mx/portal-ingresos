@@ -69,6 +69,7 @@ namespace DAL
         public virtual DbSet<Asignatura> Asignatura { get; set; }
         public virtual DbSet<Asociacion> Asociacion { get; set; }
         public virtual DbSet<AsociacionDetalle> AsociacionDetalle { get; set; }
+        public virtual DbSet<BancoTerminal> BancoTerminal { get; set; }
         public virtual DbSet<BecaDeportiva> BecaDeportiva { get; set; }
         public virtual DbSet<BitacoraReinscripcionAdeudo> BitacoraReinscripcionAdeudo { get; set; }
         public virtual DbSet<Caja> Caja { get; set; }
@@ -155,6 +156,7 @@ namespace DAL
         public virtual DbSet<PreguntaTipo> PreguntaTipo { get; set; }
         public virtual DbSet<PreguntaTipoValores> PreguntaTipoValores { get; set; }
         public virtual DbSet<PreguntaValor> PreguntaValor { get; set; }
+        public virtual DbSet<PromocionCasa> PromocionCasa { get; set; }
         public virtual DbSet<Prospecto> Prospecto { get; set; }
         public virtual DbSet<ProspectoBitacora> ProspectoBitacora { get; set; }
         public virtual DbSet<ProspectoDetalle> ProspectoDetalle { get; set; }
@@ -163,6 +165,7 @@ namespace DAL
         public virtual DbSet<Recibo> Recibo { get; set; }
         public virtual DbSet<ReciboArchivo> ReciboArchivo { get; set; }
         public virtual DbSet<ReciboDetalle> ReciboDetalle { get; set; }
+        public virtual DbSet<ReciboMSI> ReciboMSI { get; set; }
         public virtual DbSet<Reclasificacion> Reclasificacion { get; set; }
         public virtual DbSet<ReclasificacionTipo> ReclasificacionTipo { get; set; }
         public virtual DbSet<ReferenciadoArchivoBitacora> ReferenciadoArchivoBitacora { get; set; }
@@ -184,7 +187,6 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
-        public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
         public virtual DbSet<TipoUsuarioSubmenu> TipoUsuarioSubmenu { get; set; }
