@@ -24,6 +24,7 @@ namespace DAL
             this.PagoRecargo1 = new HashSet<PagoRecargo>();
             this.PagoParcial = new HashSet<PagoParcial>();
             this.PolizaAjuste = new HashSet<PolizaAjuste>();
+            this.PromocionCasa = new HashSet<PromocionCasa>();
         }
     
         public int PagoId { get; set; }
@@ -68,6 +69,8 @@ namespace DAL
         public virtual ICollection<PagoParcial> PagoParcial { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PolizaAjuste> PolizaAjuste { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromocionCasa> PromocionCasa { get; set; }
         public virtual ReferenciadoCabecero ReferenciadoCabecero { get; set; }
         public virtual ReferenciadoCabeceroBitacora ReferenciadoCabeceroBitacora { get; set; }
         public virtual ReferenciaGeneradaBitacora ReferenciaGeneradaBitacora { get; set; }

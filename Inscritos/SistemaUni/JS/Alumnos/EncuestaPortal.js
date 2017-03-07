@@ -9,10 +9,6 @@
     var raiting = '';
     var objid = [];
 
-
-
-
-
     function Load() {
         $('#PopEncuesta').modal('show');
         LimpiarCampos();

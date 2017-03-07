@@ -38,6 +38,8 @@ namespace DAL
             this.Pago = new HashSet<Pago>();
             this.AlumnoReingresoBitacora = new HashSet<AlumnoReingresoBitacora>();
             this.PersonaAutorizada = new HashSet<PersonaAutorizada>();
+            this.PromocionCasa = new HashSet<PromocionCasa>();
+            this.PromocionCasa1 = new HashSet<PromocionCasa>();
             this.Recibo = new HashSet<Recibo>();
             this.ReferenciaProcesada = new HashSet<ReferenciaProcesada>();
             this.Respuesta = new HashSet<Respuesta>();
@@ -105,6 +107,10 @@ namespace DAL
         public virtual ICollection<AlumnoReingresoBitacora> AlumnoReingresoBitacora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonaAutorizada> PersonaAutorizada { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromocionCasa> PromocionCasa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromocionCasa> PromocionCasa1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recibo> Recibo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

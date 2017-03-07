@@ -171,11 +171,25 @@ namespace WebServices.WS
         {
             return BLLAlumno.ObtenerAlumno(int.Parse(AlumnoId));
         }
+
+        //Promocion en casa
         [WebMethod]
-        public DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa(string AlumnoId)
+        public DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa(string AlumnoId, string TA)
         {
-            return BLLAlumno.ConsultarAlumnoPromocionCasa(int.Parse(AlumnoId));
+            return BLLAlumno.ConsultarAlumnoPromocionCasa(int.Parse(AlumnoId), int.Parse(TA));
         }
+        [WebMethod]
+        public List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()
+        {
+            return BLLAlumno.PeriodosPromocionCasa();
+        }
+        [WebMethod]
+        public bool AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        {
+            return BLLAlumno.AplicarPromocionCasa(Promocion);
+        }
+        //Promocion en casa
+
         [WebMethod]
         public DTOAlumno ConsultarAlumnoReinscripcion(string AlumnoId)
         {
