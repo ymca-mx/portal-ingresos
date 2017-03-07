@@ -503,42 +503,47 @@ namespace BLL
 
                             });
                             #endregion
-
-                            #region Update Alumno
-                            objAlumnoDb.MatriculaId = Herramientas.Matricula.ObtenerMatricula(new DTOAlumnoInscrito
+                            string NMatricula = Herramientas.Matricula.ObtenerMatricula(new DTOAlumnoInscrito
                             {
                                 Anio = alumno.Anio,
                                 PeriodoId = alumno.PeriodoId,
                                 TurnoId = alumno.TurnoId
 
                             },
-                                new DTOOfertaEducativa
-                                {
-                                    OfertaEducativaId = ofertaEducativa,
-                                    Rvoe = db.OfertaEducativa.Where(l => l.OfertaEducativaId == ofertaEducativa).FirstOrDefault().Rvoe,
-                                }, Alumnoid);
-                            objAlumnoDb.Anio = int.Parse(objAlumno.Anio);
-                            objAlumnoDb.PeriodoId = int.Parse(objAlumno.PeriodoId);
-                            objAlumnoDb.EstatusId = 1;
-                            objAlumnoDb.FechaRegistro = DateTime.Now;
-                            objAlumnoDb.UsuarioId = int.Parse(objAlumno.UsuarioId);
-                            #endregion
+                               new DTOOfertaEducativa
+                               {
+                                   OfertaEducativaId = ofertaEducativa,
+                                   Rvoe = db.OfertaEducativa.Where(l => l.OfertaEducativaId == ofertaEducativa).FirstOrDefault().Rvoe,
+                               }, Alumnoid);
 
-
-
-                            #region Bitacora Matricula
-                            db.Matricula.Add(new Matricula
+                            if (objAlumnoDb.MatriculaId != NMatricula)
                             {
-                                AlumnoId = objAlumnoDb.AlumnoId,
-                                Anio = objAlumnoDb.Anio,
-                                FechaAsignacion = objAlumnoDb.FechaRegistro,
-                                MatriculaId = objAlumnoDb.MatriculaId,
-                                OfertaEducativaId = ofertaEducativa,
-                                PeriodoId = objAlumnoDb.PeriodoId,
-                                UsuarioId = objAlumnoDb.UsuarioId
-                            });
-                            #endregion
+                                #region Update Alumno
 
+                                objAlumnoDb.MatriculaId = NMatricula;
+                                objAlumnoDb.Anio = int.Parse(objAlumno.Anio);
+                                objAlumnoDb.PeriodoId = int.Parse(objAlumno.PeriodoId);
+                                objAlumnoDb.EstatusId = 1;
+                                objAlumnoDb.FechaRegistro = DateTime.Now;
+                                objAlumnoDb.UsuarioId = int.Parse(objAlumno.UsuarioId);
+
+                                #endregion
+
+
+
+                                #region Bitacora Matricula
+                                db.Matricula.Add(new Matricula
+                                {
+                                    AlumnoId = objAlumnoDb.AlumnoId,
+                                    Anio = objAlumnoDb.Anio,
+                                    FechaAsignacion = objAlumnoDb.FechaRegistro,
+                                    MatriculaId = objAlumnoDb.MatriculaId,
+                                    OfertaEducativaId = ofertaEducativa,
+                                    PeriodoId = objAlumnoDb.PeriodoId,
+                                    UsuarioId = objAlumnoDb.UsuarioId
+                                });
+                                #endregion
+                            }
 
                         }
 

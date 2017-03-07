@@ -515,7 +515,7 @@ namespace BLL
             }
         }
 
-        public static DTOAlumno ConsultarAlumnoPromocionCasa(int AlumnoId)
+        public static DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa(int AlumnoId)
         {
             try
             {
@@ -534,7 +534,7 @@ namespace BLL
                                                                                     ofertaEducativaId = oe.OfertaEducativaId,
                                                                                     descripcion = oe.OfertaEducativa.Descripcion
                                                                                 }).ToList()
-                                          }); 
+                                          }).FirstOrDefault(); 
                     return alumno;
                 }
             }

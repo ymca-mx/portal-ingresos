@@ -1,5 +1,5 @@
 ﻿var Validacion = function () {
-    var Usuario;
+    var Usuario, esEmpresa;
     var b_Valid = 0;
     //$('#Load').modal('show');
     //$.cookie('userAdmin', 6883, { expires: 1 });
@@ -560,15 +560,18 @@
                         if (Alumno > 0) {
                             esEmpresa = $('#chkEsEmpresa').is(':checked');
                             if (esEmpresa === true) {
-                                alertify.alert("El numero del Alumno Inscrito es: " + Alumno);
                                 $('#Load').modal('hide');
-                                $("#btnListado").click();
+                                alertify.alert("El numero del Alumno Inscrito es: " + Alumno, function () { 
+                                    //$("#btnListado").click();
+                                    MandarEMail(Alumno);
+                                });
+                               
                             }
                             else {
                                 if ($('#slcOferta').val() == '4') {
                                     $('#tab5').hide();
                                     //    GuardarIngles(data.d);
-                                    MandarEMail(Alumno);
+                                    MandarEMail(Alumno); 
                                 } else {
                                     $('#divTablaDescuento').hide();
                                     CargarTiposPagos(data.d);
@@ -826,6 +829,15 @@
                 } else {
                     jQuery('li', $('#form_wizard_1')).removeClass("done");
                     jQuery('li', $('#form_wizard_1')).addClass("done");
+                    if (esEmpresa) {
+                        $('#Load').modal('hide');
+                        var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
+           + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
+           "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
+                        alertify.alert(extramail, function () {
+                            $("#btnListado").click();
+                        });
+                    }
                 }
             }
         });
