@@ -1111,7 +1111,7 @@ namespace Universidad.BLL
                          x.a.PeriodoId,
                          x.c.PagoConceptoId,
                          Alumno = x.a.AlumnoId,
-                         Nombre = x.b.Nombre + " " + x.b.Paterno + " M",
+                         Nombre = x.b.Nombre + " " + x.b.Paterno + " M sksks",
                          Beca = x.c.Monto
                      } into g
                      orderby g.Key.AlumnoId ascending
