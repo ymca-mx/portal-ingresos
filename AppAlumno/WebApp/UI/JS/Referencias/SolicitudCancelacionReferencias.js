@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     var url, refAlumno;
-    var tblReferencias, tblAlumnos, tblSolicitudes, clave;
+    var tblReferencias,tblReferencias2, tblAlumnos, tblSolicitudes, clave;
     var PagoId;
     var Estatus = "";
 
@@ -8,12 +8,12 @@
         $("#divCancelacion").show();
         $("#divSolicitud").hide();
     });
+
     $("#liS2").click(function () {
         $("#divSolicitud").show();
         $("#divCancelacion").hide();
         MostrarSolicitudes();
     });
-
 
     $('#btnBuscar').click(function () {
         clave = $('#txtClave').val();
@@ -154,7 +154,12 @@
                     "bSort": false,
                     "aoColumns": [
                         { "mDataProp": "solicitudId" },
-                        { "mDataProp": "pagoId" },
+                        {
+                             "mDataProp": "pagoId",
+                             "mRender": function (data) {
+                                 return "<a href=''onclick='return false;'>" + data + " </a> ";
+                             }
+                        },
                         { "mDataProp": "comentario" },
                         { "mDataProp": "fechaSolicitud" },
                         { "mDataProp": "fechaAplicacion" },
@@ -163,7 +168,7 @@
 
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
                     "searching": true,
-                    "ordering": false,
+                    "ordering": true,
                     "async": true,
                     "bDestroy": true,
                     "bPaginate": true,
@@ -180,7 +185,7 @@
                         },
                         "search": "Buscar Referencia ",
                     },
-                    "order": [[2, "desc"]],
+                    "order": [[1, "desc"]],
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'center';
@@ -196,6 +201,100 @@
             }
         });
 
+    }
+
+    $('#tblSolicitudes').on('click', 'a', function () {
+        PagoId = 0;
+        var rowadd = tblSolicitudes.fnGetData($(this).closest('tr'));
+        SolicitudId = rowadd.solicitudId;
+        PagoId = rowadd.pagoId;
+        Comentario = rowadd.comentario;
+        MostarReferencia(PagoId);
+    });
+
+    function MostarReferencia(pagoId) {
+
+        $.ajax({
+            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnoReferencias',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: '{alumnoInt:' + 0 + ',pagoid:' + pagoId + '}',
+            dataType: 'json',
+            success: function (data) {
+                var datos = data.d;
+
+                if (data.d == null || data.d.AlumnoDatos == null) {
+                    $('#divBar').modal('hide');
+                    return null;
+                }
+                $('#lblAlumno1').text(datos.AlumnoDatos.Nombre);
+
+                ReferenciasTbl2(datos);
+                $('#PopReferencias').modal('show');
+                $('#divBar').modal('hide');
+            },
+            error: function (data) {
+                alertify.alert('Error al cargar datos');
+                $('#divBar').modal('hide');
+            }
+        });
+    }
+
+    function ReferenciasTbl2(R) {
+        if (tblReferencias2 != null) {
+            tblReferencias2.fnClearTable();
+        }
+
+        tblReferencias2 = $('#tblReferencias1').dataTable({
+            "aaData": R.AlumnoReferencias,
+            "bSort": false,
+            "aoColumns": [
+                { "mDataProp": "Concepto" },
+                { "mDataProp": "ReferenciaBancaria" },
+                { "mDataProp": "FechaGeneracion" },
+                { "mDataProp": "UsuarioGenero" },
+                { "mDataProp": "Promesa" },
+                { "mDataProp": "Pagado" },
+                { "mDataProp": "Estatus" }
+
+            ],
+
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+            "searching": false,
+            "ordering": false,
+            "async": true,
+            "bDestroy": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "asStripClasses": null,
+            "language": {
+                "lengthMenu": "_MENU_  Referencias",
+                "paginate": {
+                    "previous": "<",
+                    "next": ">"
+                },
+                "search": "Buscar Referencia ",
+            },
+            "order": [[2, "desc"]],
+            "createdRow": function (row, data, dataIndex) {
+                row.childNodes[1].style.textAlign = 'center';
+                row.childNodes[2].style.textAlign = 'center';
+                row.childNodes[4].style.textAlign = 'center';
+                row.childNodes[5].style.textAlign = 'center';
+                if (dataIndex / 2 != 0) {
+                    $(row).addClass("BackColor");
+                }
+
+                if (data.ReferenciaBancaria <= 2588) {
+                    $(row).addClass("bold");
+                }
+            }
+        });
+        var fil = $('#tblReferencias_filter label input');
+        fil.removeClass('input-small').addClass('input-large');
     }
 
     function ReferenciasTbl(R) {
@@ -303,7 +402,6 @@
 
                     DatosAlumno(clave);
                     $('#PopComentario').modal('hide');
-                    $('#divBar').modal('hide');
                 }
             });
         }
@@ -311,4 +409,5 @@
             alertify.alert("Inserte un comentario.");
         }
     });
+
 });

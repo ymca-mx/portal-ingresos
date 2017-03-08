@@ -532,7 +532,7 @@
         focusInvalid: false, // do not focus the last invalid input
         rules: {
             txtnombre: {
-                //required: true,
+                required: true,
                 minlength: 3,
                 maxlength: 50,
             },
@@ -543,7 +543,7 @@
                 maxlength: 100
             },
             txtApPaterno: {
-                //required: true,
+                required: true,
                 digits: false,
                 minlength: 2,
                 maxlength: 50

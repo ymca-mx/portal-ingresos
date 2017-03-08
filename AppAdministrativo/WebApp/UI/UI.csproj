@@ -129,6 +129,7 @@
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
     <Content Include="JS\Pagos\EstadodeCuenta.js" />
+    <Content Include="JS\Pagos\PromocionCasa.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasConsulta.js" />
     <Content Include="JS\Pagos\ReferenciasTramites.js" />
@@ -148,6 +149,7 @@
     <Content Include="JS\Referencias\GenerarReferenciasIdiomas.js" />
     <Content Include="JS\Referencias\SolicitudCancelacionReferencias.js" />
     <Content Include="JS\Referencias\SolicitudesCancelacionReferencias.js" />
+    <Content Include="JS\Referencias\VoBoCancelacionReferencias.js" />
     <Content Include="JS\Reinscripcion.js" />
     <Content Include="JS\Reinscripcion\MateriasAsesorias.js" />
     <Content Include="JS\RelacionarMateria.js" />

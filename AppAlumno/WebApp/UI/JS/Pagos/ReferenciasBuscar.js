@@ -31,7 +31,7 @@
             success: function (data) {
                 var lbl = $('#lblNombre');
                 lbl[0].innerHTML = data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno;
-                lbl[0].innerHTML += (data.d.AlumnoInscrito.EsEmpresa == true ? data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial" : "") + data.d.Grupo.Descripcion;
+                lbl[0].innerHTML += (data.d.AlumnoInscrito.EsEmpresa == true ? data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial" : "" + " - " + data.d.Grupo.Descripcion);
             }
         });
     }
