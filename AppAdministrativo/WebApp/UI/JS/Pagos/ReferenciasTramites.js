@@ -121,7 +121,7 @@
 
                     var tr
                     if (dk) {
-                        tr = '<tr>' +
+                        tr = '<tr id = "tr1">' +
                          '<th></th>' +
                          '<th></th>' +
                          '<th></th>' +
@@ -131,7 +131,7 @@
                          '<th></th>' +
                          '<th style="text-align:right">' + data[0].TotalPagado + '</th></tr>';
                     } else {
-                        tr = '<tr>' +
+                        tr = '<tr id = "tr1">' +
                             '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +

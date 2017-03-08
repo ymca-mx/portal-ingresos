@@ -17,6 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PagoMetodo()
         {
+            this.BancoTerminal = new HashSet<BancoTerminal>();
             this.PagoDetalle = new HashSet<PagoDetalle>();
         }
     
@@ -27,6 +28,8 @@ namespace DAL
         public bool EsVisible { get; set; }
         public bool TieneTerminal { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BancoTerminal> BancoTerminal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoDetalle> PagoDetalle { get; set; }
     }

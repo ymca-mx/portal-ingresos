@@ -809,6 +809,7 @@ advertencia 6013: La tabla o vista 'Universidad.dbo.AlumnosLEAgregar20162' no ti
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TieneMSI" Type="bit" Nullable="false" />
           <Property Name="CuentaContable" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="PagoMetodoId" Type="int" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BecaDeportiva">
@@ -2505,6 +2506,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Tabla2' no tiene definida ni
           <Property Name="HoraOperacion" Type="time" Precision="0" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TempAdeudo">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="Adeudo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
             <PropertyRef Name="TipoDocumento" />
@@ -3608,6 +3618,30 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="AsociacionDetalle">
               <PropertyRef Name="AsociacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoTerminal_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="BancoTerminal" Type="Self.BancoTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="BancoTerminal">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoTerminal_PagoMetodo">
+          <End Role="PagoMetodo" Type="Self.PagoMetodo" Multiplicity="1" />
+          <End Role="BancoTerminal" Type="Self.BancoTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PagoMetodo">
+              <PropertyRef Name="PagoMetodoId" />
+            </Principal>
+            <Dependent Role="BancoTerminal">
+              <PropertyRef Name="PagoMetodoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6345,6 +6379,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="Self.SucursalAnuncio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalCaja" EntityType="Self.SucursalCaja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalDetalle" EntityType="Self.SucursalDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempAdeudo" EntityType="Self.TempAdeudo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="Self.TipoMovimientoCRUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="Self.TipoUsuarioSubmenu" Schema="dbo" store:Type="Tables" />
@@ -6828,6 +6863,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_AsociacionDetalle_Asociacion" Association="Self.FK_AsociacionDetalle_Asociacion">
             <End Role="Asociacion" EntitySet="Asociacion" />
             <End Role="AsociacionDetalle" EntitySet="AsociacionDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoTerminal_Estatus" Association="Self.FK_BancoTerminal_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="BancoTerminal" EntitySet="BancoTerminal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoTerminal_PagoMetodo" Association="Self.FK_BancoTerminal_PagoMetodo">
+            <End Role="PagoMetodo" EntitySet="PagoMetodo" />
+            <End Role="BancoTerminal" EntitySet="BancoTerminal" />
           </AssociationSet>
           <AssociationSet Name="FK_BecaDeportiva_Alumno" Association="Self.FK_BecaDeportiva_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
@@ -7846,6 +7889,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="UniversidadModel.SucursalAnuncio" />
           <EntitySet Name="SucursalCaja" EntityType="UniversidadModel.SucursalCaja" />
           <EntitySet Name="SucursalDetalle" EntityType="UniversidadModel.SucursalDetalle" />
+          <EntitySet Name="TempAdeudo" EntityType="UniversidadModel.TempAdeudo" />
           <EntitySet Name="TipoDocumento" EntityType="UniversidadModel.TipoDocumento" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="UniversidadModel.TipoMovimientoCRUD" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="UniversidadModel.TipoUsuarioSubmenu" />
@@ -8259,6 +8303,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_ReferenciadoArchivoBitacora_Asociacion" Association="UniversidadModel.FK_ReferenciadoArchivoBitacora_Asociacion">
             <End Role="Asociacion" EntitySet="Asociacion" />
             <End Role="ReferenciadoArchivoBitacora" EntitySet="ReferenciadoArchivoBitacora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoTerminal_Estatus" Association="UniversidadModel.FK_BancoTerminal_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="BancoTerminal" EntitySet="BancoTerminal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoTerminal_PagoMetodo" Association="UniversidadModel.FK_BancoTerminal_PagoMetodo">
+            <End Role="PagoMetodo" EntitySet="PagoMetodo" />
+            <End Role="BancoTerminal" EntitySet="BancoTerminal" />
           </AssociationSet>
           <AssociationSet Name="FK_ReciboMSI_BancoTerminal" Association="UniversidadModel.FK_ReciboMSI_BancoTerminal">
             <End Role="BancoTerminal" EntitySet="BancoTerminal" />
@@ -9822,7 +9874,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TieneMSI" Type="Boolean" Nullable="false" />
           <Property Name="CuentaContable" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="PagoMetodoId" Type="Int32" Nullable="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_BancoTerminal_Estatus" FromRole="BancoTerminal" ToRole="Estatus" />
+          <NavigationProperty Name="PagoMetodo" Relationship="UniversidadModel.FK_BancoTerminal_PagoMetodo" FromRole="BancoTerminal" ToRole="PagoMetodo" />
           <NavigationProperty Name="ReciboMSI" Relationship="UniversidadModel.FK_ReciboMSI_BancoTerminal" FromRole="BancoTerminal" ToRole="ReciboMSI" />
         </EntityType>
         <EntityType Name="BecaDeportiva">
@@ -10122,6 +10177,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="AlumnoInscrito" Relationship="UniversidadModel.FK_AlumnoInscrito_Estatus" FromRole="Estatus" ToRole="AlumnoInscrito" />
           <NavigationProperty Name="AlumnoPasswordRecovery" Relationship="UniversidadModel.FK_AlumnoPasswordRecovery_Estatus" FromRole="Estatus" ToRole="AlumnoPasswordRecovery" />
           <NavigationProperty Name="Asignatura" Relationship="UniversidadModel.FK_Asignatura_Estatus" FromRole="Estatus" ToRole="Asignatura" />
+          <NavigationProperty Name="BancoTerminal" Relationship="UniversidadModel.FK_BancoTerminal_Estatus" FromRole="Estatus" ToRole="BancoTerminal" />
           <NavigationProperty Name="Financiamiento" Relationship="UniversidadModel.FK_Financiamiento_Estatus" FromRole="Estatus" ToRole="Financiamiento" />
           <NavigationProperty Name="GrupoAlumnoConfiguracion" Relationship="UniversidadModel.FK_GrupoAlumnoCuota_Estatus" FromRole="Estatus" ToRole="GrupoAlumnoConfiguracion" />
           <NavigationProperty Name="NivelAcademico" Relationship="UniversidadModel.FK_NivelAcademico_Estatus" FromRole="Estatus" ToRole="NivelAcademico" />
@@ -10755,6 +10811,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Comision" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="EsVisible" Type="Boolean" Nullable="false" />
           <Property Name="TieneTerminal" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BancoTerminal" Relationship="UniversidadModel.FK_BancoTerminal_PagoMetodo" FromRole="PagoMetodo" ToRole="BancoTerminal" />
           <NavigationProperty Name="PagoDetalle" Relationship="UniversidadModel.FK_PagoDetalle_PagoMetodo" FromRole="PagoMetodo" ToRole="PagoDetalle" />
         </EntityType>
         <EntityType Name="PagoPagare">
@@ -11657,6 +11714,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Telefono" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pais" Relationship="UniversidadModel.FK_SucursalDetalle_Pais" FromRole="SucursalDetalle" ToRole="Pais" />
           <NavigationProperty Name="Sucursal" Relationship="UniversidadModel.FK_SucursalDetalle_Sucursal" FromRole="SucursalDetalle" ToRole="Sucursal" />
+        </EntityType>
+        <EntityType Name="TempAdeudo">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
+          <Property Name="Adeudo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
@@ -13334,6 +13400,30 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="ReferenciadoArchivoBitacora">
               <PropertyRef Name="AsociacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoTerminal_Estatus">
+          <End Type="UniversidadModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="UniversidadModel.BancoTerminal" Role="BancoTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="BancoTerminal">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoTerminal_PagoMetodo">
+          <End Type="UniversidadModel.PagoMetodo" Role="PagoMetodo" Multiplicity="1" />
+          <End Type="UniversidadModel.BancoTerminal" Role="BancoTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PagoMetodo">
+              <PropertyRef Name="PagoMetodoId" />
+            </Principal>
+            <Dependent Role="BancoTerminal">
+              <PropertyRef Name="PagoMetodoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16310,6 +16400,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <EntityTypeMapping TypeName="UniversidadModel.BancoTerminal">
               <MappingFragment StoreEntitySet="BancoTerminal">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="PagoMetodoId" ColumnName="PagoMetodoId" />
                 <ScalarProperty Name="CuentaContable" ColumnName="CuentaContable" />
                 <ScalarProperty Name="TieneMSI" ColumnName="TieneMSI" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -17818,6 +17909,16 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="NoExterior" ColumnName="NoExterior" />
                 <ScalarProperty Name="Calle" ColumnName="Calle" />
                 <ScalarProperty Name="SucursalId" ColumnName="SucursalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempAdeudo">
+            <EntityTypeMapping TypeName="UniversidadModel.TempAdeudo">
+              <MappingFragment StoreEntitySet="TempAdeudo">
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Adeudo" ColumnName="Adeudo" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

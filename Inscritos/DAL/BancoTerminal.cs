@@ -24,8 +24,11 @@ namespace DAL
         public string Descripcion { get; set; }
         public bool TieneMSI { get; set; }
         public string CuentaContable { get; set; }
+        public int PagoMetodoId { get; set; }
         public int EstatusId { get; set; }
     
+        public virtual Estatus Estatus { get; set; }
+        public virtual PagoMetodo PagoMetodo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReciboMSI> ReciboMSI { get; set; }
     }
