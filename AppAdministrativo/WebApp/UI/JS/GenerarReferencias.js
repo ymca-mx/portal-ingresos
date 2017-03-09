@@ -1,9 +1,19 @@
 ﻿$(document).ready(function () {
-   // $.cookie('user', 7493, { expires: 1 });
+    // $.cookie('user', 7493, { expires: 1 });
+    var settings = {
+        theme: "ruby col-md-12",
+        sticky: false,
+        horizontalEdge: "bottom",
+        verticalEdge: "right",
+        heading: "Alerta",
+        life: 300000,
+        icon: "cog-gear"
+    };
     var lstCuotas;
     //DatosAlumno();
     DatosAlumno();
     Alerta();
+    
     function DatosAlumno() {
         $('#Load').modal('show');
         var AlumnoId = $.cookie('user');
@@ -196,19 +206,19 @@
     }
 
     function Alerta() {
-        var settings = {
-            theme: "ruby",
-            sticky: false,
-            horizontalEdge: "bottom",
-            verticalEdge: "right",
-            heading: "Alerta",
-            life: 30000,
-
-        };
-
         $.notific8('zindex', 11500);
-        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. <hr> Para mas informacion click Aqui."), settings);
+        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas informacion click Aqui."), settings);
 
+        var not8 = $('.jquery-notific8-container').find('.jquery-notific8-heading');
+        not8 = $(not8).parent().parent();
+        //not8 = $(not8)[0];
+        $(not8).addClass('col-md-4');
+        var $bodnot8 = $(not8[0].childNodes[0]);
+        $bodnot8 = $bodnot8[0];
+        $bodnot8.style.width = "initial !important";
+
+       
+        
     }
     function formato_numero(numero, decimales, separador_decimal, separador_miles) { // v2007-08-06
         numero = parseFloat(numero);

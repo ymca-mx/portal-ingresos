@@ -350,6 +350,7 @@
     <Content Include="JS\themes\alertify.default.css" />
     <Content Include="Alumnos.html" />
     <Content Include="JS\IncritosIngles.js" />
+    <Content Include="Pago\ListaConceptos.html" />
     <Content Include="Pago\PromociónCasa.html" />
     <Content Include="Pago\ReferenciasConsulta.html" />
     <Content Include="Pago\EstadodeCuenta.html" />
