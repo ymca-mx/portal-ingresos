@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function init() {
     // $.cookie('user', 7493, { expires: 1 });
     var lstCuotas;
     var AlumnoId;

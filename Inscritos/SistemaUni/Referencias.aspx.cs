@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Reportes;
-using DTO;
-using BLL;
-using Utilities;
 using Reportes.Reportes;
 using System.IO;
 namespace SistemaUni

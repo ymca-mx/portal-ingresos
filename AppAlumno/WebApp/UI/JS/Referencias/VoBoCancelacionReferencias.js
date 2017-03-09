@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     var url;
     var tblReferencias, tblSolicitudes;
-    var PagoId,SolicitudId;
+    var PagoId, SolicitudId;
     var Estatus = "";
     MostrarSolicitudes();
 
@@ -22,11 +22,10 @@
                     "aoColumns": [
                         { "mDataProp": "solicitudId" },
                         {
-                          "mDataProp": "pagoId",
-                          "mRender": function (data) 
-                          {
-                           return "<a href=''onclick='return false;'>" + data + " </a> ";
-                          }
+                            "mDataProp": "pagoId",
+                            "mRender": function (data) {
+                                return "<a href=''onclick='return false;'>" + data + " </a> ";
+                            }
                         },
                         { "mDataProp": "comentario" },
                         { "mDataProp": "fechaSolicitud" },
@@ -52,7 +51,7 @@
                         },
                         "search": "Buscar Referencia ",
                     },
-                    "order": [[0, "desc"]],
+                    "order": [[2, "desc"]],
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'center';
@@ -124,7 +123,7 @@
                 { "mDataProp": "UsuarioGenero" },
                 { "mDataProp": "Promesa" },
                 { "mDataProp": "Pagado" },
-                { "mDataProp": "Estatus" } 
+                { "mDataProp": "Estatus" }
 
             ],
 
@@ -173,17 +172,16 @@
             url: '../WebServices/WS/General.asmx/CambiarPagoCancelacionSolicitud',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: '{SolicitudId:' + SolicitudId + ',UsuarioId:' + usuario + ',Tipo: '+ 3 +'}',
+            data: '{SolicitudId:' + SolicitudId + ',UsuarioId:' + usuario + ',Tipo: ' + 3 + '}',
             dataType: 'json',
             success: function (data) {
-                if (data.d == "Solicitud Rechazada")
-                {
+                if (data.d == "Solicitud Rechazada") {
                     MostrarSolicitudes();
                     $('#PopReferencias').modal('hide');
                     alertify.alert("Solicitud Rechazada Exitosamente.");
                     $('#divBar').modal('hide');
                 }
-                
+
             },
             error: function (data) {
                 alertify.alert('Error al cargar datos');
@@ -197,42 +195,43 @@
         var rowadd = tblReferencias.fnGetData(0);
 
         var PagoId2 = String(PagoId);
-        
-         PagoId2 = PagoId2.substring(0, PagoId2.length -1);
+
+        PagoId2 = PagoId2.substring(0, PagoId2.length - 1);
 
         Estatus = rowadd.Estatus;
         $('#divBar').modal('show');
 
-            $.ajax({
-                type: "POST",
-                url: "../WebServices/WS/General.asmx/CancelarPago",
-                data: "{PagoId:'" + PagoId2 + "',Comentario:'" + Comentario +
-                        "',UsuarioId:'" + usuario + "',Estatus:'" + Estatus + "'}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (data.d == "Guardado") {
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/General.asmx/CancelarPago",
+            data: "{PagoId:'" + PagoId2 + "',Comentario:'" + Comentario +
+                    "',UsuarioId:'" + usuario + "',Estatus:'" + Estatus + "'}",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.d == "Guardado") {
 
-                        $.ajax({
-                            url: '../WebServices/WS/General.asmx/CambiarPagoCancelacionSolicitud',
-                            type: 'POST',
-                            contentType: 'application/json; charset=utf-8',
-                            data: '{SolicitudId:' + SolicitudId + ',UsuarioId:' + usuario + ',Tipo: ' + 7 + '}',
-                            dataType: 'json',
-                            success: function (data) {
-                                MostrarSolicitudes();
-                                $('#PopReferencias').modal('hide');
-                                alertify.alert("Cargo correctamente cancelado.");
-                                $('#divBar').modal('hide');
+                    $.ajax({
+                        url: '../WebServices/WS/General.asmx/CambiarPagoCancelacionSolicitud',
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: '{SolicitudId:' + SolicitudId + ',UsuarioId:' + usuario + ',Tipo: ' + 7 + '}',
+                        dataType: 'json',
+                        success: function (data) {
+                            MostrarSolicitudes();
+                            $('#PopReferencias').modal('hide');
+                            alertify.alert("Cargo correctamente cancelado.");
+                            
 
-                            }
+                        }
 
-                        });
+                    });
 
-                        
-                    }
+
                 }
-            });
+            }
+        });
 
     });
+
 
 });

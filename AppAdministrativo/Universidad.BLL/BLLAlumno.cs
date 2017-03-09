@@ -1095,6 +1095,7 @@ namespace Universidad.BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
+                string varl = "Viernes";
                 return
                     (from x in
                          (from a in db.AlumnoInscrito
@@ -1111,7 +1112,7 @@ namespace Universidad.BLL
                          x.a.PeriodoId,
                          x.c.PagoConceptoId,
                          Alumno = x.a.AlumnoId,
-                         Nombre = x.b.Nombre + " " + x.b.Paterno + " " + x.b.Materno,
+                         Nombre = x.b.Nombre + " " + x.b.Paterno + " M sksks",
                          Beca = x.c.Monto
                      } into g
                      orderby g.Key.AlumnoId ascending

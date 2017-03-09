@@ -25,8 +25,8 @@ namespace BLL
                     objMAS.Cuotas = new List<dtoCuotaReinc>();
                     objMAS.EstatusAl = new List<dtoEstatusMA>();
                     //periodo
-                    //DateTime fhoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                    DateTime fhoy = new DateTime(2017, 4, 16);
+                    DateTime fhoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    //DateTime fhoy = new DateTime(2017, 4, 16);
                     var fprev = fhoy.AddDays(15);
                     objMAS.lstPeriodos.AddRange((from a in db.Periodo
                                                  where fhoy >= a.FechaInicial && fhoy <= a.FechaFinal

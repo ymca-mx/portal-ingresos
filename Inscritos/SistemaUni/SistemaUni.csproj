@@ -112,10 +112,10 @@
       <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
-      <HintPath>..\..\..\ReportesUniversidad\SolucionReportesUniversidad\DAL\bin\Debug\EntityFramework.dll</HintPath>
+      <HintPath>C:\Users\Enrique_Garcia\Desktop\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\..\ReportesUniversidad\SolucionReportesUniversidad\DAL\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>C:\Users\Enrique_Garcia\Desktop\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
