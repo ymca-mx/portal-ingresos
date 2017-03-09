@@ -51,8 +51,8 @@ namespace DTO
         public string OfertaEducativaProspecto { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
-        public int Mes { get; set; }
-        public int Monto { get; set; }
+        public int SubPeriodoId { get; set; }
+        public decimal Monto { get; set; }
         public bool AlumnoProspecto { get; set; }
     }
 

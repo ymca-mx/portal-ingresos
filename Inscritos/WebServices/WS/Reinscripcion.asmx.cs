@@ -98,6 +98,8 @@ namespace WebServices.WS
                     usuarioId = int.Parse(usuario),
                     observaciones = Comentario
                 });
+
+                BLLAlumno.AplicaPromocionCasa2(int.Parse(AlumnoId), int.Parse(anio),int.Parse(periodo), int.Parse(oferta));
                 return true;
             }
             catch { return false; }
