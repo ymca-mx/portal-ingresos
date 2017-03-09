@@ -233,7 +233,7 @@
         lstop[0].NombreCProspecto = lstop1[0].NombreCProspecto;
         lstop[0].OfertaEducativaIdProspecto = lstop1[0].OfertaEducativaIdProspecto;
         lstop[0].OfertaEducativaProspecto = lstop1[0].OfertaEducativaProspecto;
-        lstop[0].AlumnoProspecto = lstop1[0].AlumnoProspecto;
+        lstop[0].AlumnoProspecto = true;
         $("#PopAlumnoProspecto").modal('hide');
         $('#Load').modal('show');
         CargarAlumno();
@@ -347,7 +347,7 @@
 
         lstop[0].Anio = $('#slcPeriodo').find(':selected').data("anio");
         lstop[0].PeriodoId = $('#slcPeriodo').find(':selected').data("periodoid");
-        lstop[0].Mes = $('#slcMes').val();
+        lstop[0].SubPeriodoId = $('#slcMes').val();
         lstop[0].Monto = $("#txtMonto").val();
 
         var obj = {
@@ -363,8 +363,13 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
-                if (data.d === true) {
+                if (data.d === "Aplicada") {
                     alertify.alert("Promoción Aplicada correctamente.");
+                } else if (data.d === "Pendiente")
+                {
+                    alertify.alert("La promoción se guardó correctamente, se aplicara el descuento en cuanto se genere la referencia para el mes solicitado.");
+                } else if (data.d === "Ya tiene") {
+                    alertify.alert("Este alumno ya tiene promoción en casa para el periodo seleccionado.");
                 } else
                 {
                     alertify.alert("Error al  aplicar promoción.");

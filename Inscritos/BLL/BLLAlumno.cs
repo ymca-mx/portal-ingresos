@@ -609,13 +609,20 @@ namespace BLL
             }
         }
 
-
-        public static bool AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public static string AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
+                    if(db.PromocionCasa.Where(a => a.AlumnoId == Promocion.AlumnoId
+                                      && a.Anio == Promocion.Anio
+                                      && a.PeriodoId == Promocion.PeriodoId
+                                      && a.OfertaEducativaId == Promocion.OfertaEducativaIdActual)?.FirstOrDefault() != null)
+                    {
+                        return "Ya tiene";
+                    }
+
                     db.PromocionCasa.Add(new PromocionCasa
                     {
                         AlumnoId = Promocion.AlumnoId,
@@ -623,40 +630,364 @@ namespace BLL
                         AlumnoIdProspecto = Promocion.AlumnoIdProspecto,
                         Anio = Promocion.Anio,
                         PeriodoId = Promocion.PeriodoId,
-                        SubPeriodoId = Promocion.Mes,
+                        SubPeriodoId = Promocion.SubPeriodoId,
                         Monto = Promocion.Monto,
                         FechaGeneracion = DateTime.Now,
                         HoraGeneracion = DateTime.Now.TimeOfDay,
                         EstatusId =  1
                     });
 
-                    //ver si hay referecias generadas de es subperido
+                    //ver si hay referecias generadas de ese subperido
                     var pago = db.Pago.Where(p => p.AlumnoId == Promocion.AlumnoId
                                                   && p.OfertaEducativaId == Promocion.OfertaEducativaIdActual
                                                   && p.Anio == Promocion.Anio
                                                   && p.PeriodoId == Promocion.PeriodoId
-                                                  && p.SubperiodoId == Promocion.Mes
+                                                  && p.SubperiodoId == Promocion.SubPeriodoId
                                                   && p.Cuota1.PagoConceptoId == 800)?.FirstOrDefault() ?? null;
+
                     if (pago != null)
                     {
-                        
+                        var Estatusid = new int[] { 4, 14 };
+
+                        //obtener descuentoId de Promocion en casa
+                        var descuentoid = db.Descuento.Where(d => d.PagoConceptoId == 800
+                                                             && d.OfertaEducativaId == Promocion.OfertaEducativaIdActual
+                                                             && d.Descripcion.Contains("Promoción en Casa")).FirstOrDefault().DescuentoId;
+
+
+                        if (Estatusid.Contains(pago.EstatusId)) /// pagado
+                        {
+                            if (pago.Promesa >= Promocion.Monto)
+                            {
+
+                                pago.Promesa = pago.Promesa - Promocion.Monto;
+
+                                // generar pagodescuento 
+                                db.PagoDescuento.Add(new PagoDescuento
+                                {
+                                    PagoId = pago.PagoId,
+                                    DescuentoId = descuentoid,
+                                    Monto = Promocion.Monto
+                                });
+
+                                //obtener lista pago parcial
+                                var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
+
+                                var auxMonto = Promocion.Monto;
+                                lstPP.ForEach(n =>
+                                {
+                                    if (auxMonto > 0)
+                                    {
+                                        if (n.Pago <= auxMonto)
+                                        {
+                                            n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
+                                            n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                            auxMonto = auxMonto - n.Pago;
+                                            n.Pago = 0;
+                                            n.EstatusId = 2;
+                                        }
+                                        else
+                                        {
+                                            n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + (decimal)auxMonto;
+                                            n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                            n.Pago = n.Pago - (decimal)auxMonto;
+                                        }
+                                    }//if (promocion.Monto < 0)
+
+
+                                });
+
+
+                            }// if (pago.Promesa >= promocion.Monto)
+
+                        }
+                        else if (pago.EstatusId == 1)  // sin pagar
+                        {
+                            if (pago.Promesa >= Promocion.Monto)
+                            {
+
+                                if (pago.Restante < pago.Promesa)// los que ya tiene pagos en la referencia
+                                {
+                                    pago.Promesa = pago.Promesa - Promocion.Monto;
+
+                                    // generar pagodescuento 
+                                    db.PagoDescuento.Add(new PagoDescuento
+                                    {
+                                        PagoId = pago.PagoId,
+                                        DescuentoId = descuentoid,
+                                        Monto = Promocion.Monto
+                                    });
+
+                                    ///verificar si el restante es mayoe al descuento
+                                    if (pago.Restante >= Promocion.Monto)
+                                    {
+                                        pago.Restante = pago.Restante - Promocion.Monto;
+
+                                    } else
+                                    {
+                                        var auxMonto =   Promocion.Monto - pago.Restante ;
+                                        pago.Restante = 0;
+
+                                        //obtener lista pago parcial
+                                        var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
+
+                                        
+                                        lstPP.ForEach(n =>
+                                        {
+                                            if (auxMonto > 0)
+                                            {
+                                                if (n.Pago <= auxMonto)
+                                                {
+                                                    n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
+                                                    n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                                    auxMonto = auxMonto - n.Pago;
+                                                    n.Pago = 0;
+                                                    n.EstatusId = 2;
+                                                }
+                                                else
+                                                {
+                                                    n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + (decimal)auxMonto;
+                                                    n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                                    n.Pago = n.Pago - (decimal)auxMonto;
+                                                }
+                                            }//if (promocion.Monto < 0)
+
+
+                                        });//fin foreach
+                                        
+
+                                    }// if (pago.Restante >= promocion.Monto)
+                                    
+                                }else
+                                {
+                                    pago.Promesa = pago.Promesa - Promocion.Monto;
+                                    pago.Restante = pago.Restante - Promocion.Monto;
+                                }//  if (pago.Restante < pago.Promesa )
+
+                                if (pago.Restante == 0)
+                                {
+                                    pago.EstatusId = 4;
+                                }
+
+                            }// if (pago.Promesa >= promocion.Monto)
+
+                        }
+                        db.SaveChanges();
+
+                        var promocion = db.PromocionCasa.Where(a => a.AlumnoId == Promocion.AlumnoId
+                                    && a.Anio == Promocion.Anio
+                                    && a.PeriodoId == Promocion.PeriodoId
+                                    && a.OfertaEducativaId == Promocion.OfertaEducativaIdActual)?.FirstOrDefault() ?? null;
+
+                        promocion.FechaAplicacion = DateTime.Now;
+                        promocion.HoraAplicacion = DateTime.Now.TimeOfDay;
+                        promocion.PagoId = pago.PagoId;
+                        promocion.EstatusId = 7;
+
+                        db.SaveChanges();
+
+                        return "Aplicada";
+                    }//if (pago != null )
+                    else
+                    {
+                        db.SaveChanges();
+                        return "Pendiente";
                     }
 
-
-
-
-
-                    db.SaveChanges();
-
-                    return true;
+                    
                 }
                 catch (Exception)
                 {
-                    return false;
+                    return "Error";
                 }
             }
         }
+
+        public static void AplicaPromocionCasa2(int AlumnoId, int Anio, int PeriodoId, int OfertaEducativaId)
+        {
+            try
+            {
+                using (UniversidadEntities db = new UniversidadEntities())
+                {
+                    var Estatusid = new int[] { 4, 14 };
+
+                    // ver si tiene promocion en casa 
+                    var promocion = db.PromocionCasa.Where(a => a.AlumnoId == AlumnoId
+                                         && a.Anio == Anio
+                                         && a.PeriodoId == PeriodoId
+                                         && a.OfertaEducativaId == OfertaEducativaId
+                                         && a.EstatusId == 1)?.FirstOrDefault() ?? null;
+
+                    if (promocion != null)
+                    {
+
+                        //ver si hay referecias generadas de ese subperido
+                        var pago = db.Pago.Where(p => p.AlumnoId == promocion.AlumnoId
+                                                      && p.OfertaEducativaId == promocion.OfertaEducativaId
+                                                      && p.Anio == promocion.Anio
+                                                      && p.PeriodoId == promocion.PeriodoId
+                                                      && p.SubperiodoId == promocion.SubPeriodoId
+                                                      && p.Cuota1.PagoConceptoId == 800)?.FirstOrDefault() ?? null;
+
+                        if (pago != null)
+                        {
+                            //obtener descuentoId de Promocion en casa
+                            var descuentoid = db.Descuento.Where(d => d.PagoConceptoId == 800
+                                                                 && d.OfertaEducativaId == promocion.OfertaEducativaId
+                                                                 && d.Descripcion.Contains("Promoción en Casa")).FirstOrDefault().DescuentoId;
+
+
+                            if (Estatusid.Contains(pago.EstatusId)) /// pagado
+                            {
+                                if (pago.Promesa >= promocion.Monto)
+                                {
+
+                                    pago.Promesa = pago.Promesa - (decimal)promocion.Monto;
+
+                                    // generar pagodescuento 
+                                    db.PagoDescuento.Add(new PagoDescuento
+                                    {
+                                        PagoId = pago.PagoId,
+                                        DescuentoId = descuentoid,
+                                        Monto = (decimal)promocion.Monto
+                                    });
+
+                                    //obtener lista pago parcial
+                                    var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
+
+                                    var auxMonto = promocion.Monto;
+                                    lstPP.ForEach(n =>
+                                    {
+                                        if (auxMonto > 0)
+                                        {
+                                            if (n.Pago <= auxMonto)
+                                            {
+                                                n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
+                                                n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                                auxMonto = auxMonto - n.Pago;
+                                                n.Pago = 0;
+                                                n.EstatusId = 2;
+                                            }
+                                            else
+                                            {
+                                                n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + (decimal)auxMonto;
+                                                n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                                n.Pago = n.Pago - (decimal)auxMonto;
+                                            }
+                                        }//if (promocion.Monto < 0)
+
+
+                                    });
+
+
+                                }// if (pago.Promesa >= promocion.Monto)
+
+                            }
+                            else if (pago.EstatusId == 1)  // sin pagar
+                            {
+                                if (pago.Promesa >= promocion.Monto)
+                                {
+
+                                    if (pago.Restante < pago.Promesa)// los que ya tiene pagos en la referencia
+                                    {
+                                        pago.Promesa = pago.Promesa - (decimal)promocion.Monto;
+
+                                        // generar pagodescuento 
+                                        db.PagoDescuento.Add(new PagoDescuento
+                                        {
+                                            PagoId = pago.PagoId,
+                                            DescuentoId = descuentoid,
+                                            Monto = (decimal)promocion.Monto
+                                        });
+
+                                        ///verificar si el restante es mayoe al descuento
+                                        if (pago.Restante >= promocion.Monto)
+                                        {
+                                            pago.Restante = pago.Restante - (decimal)promocion.Monto;
+
+                                        }
+                                        else
+                                        {
+                                            var auxMonto = (decimal)promocion.Monto - pago.Restante;
+                                            pago.Restante = 0;
+
+                                            //obtener lista pago parcial
+                                            var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
+
+
+                                            lstPP.ForEach(n =>
+                                            {
+                                                if (auxMonto > 0)
+                                                {
+                                                    if (n.Pago <= auxMonto)
+                                                    {
+                                                        n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
+                                                        n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                                        auxMonto = auxMonto - n.Pago;
+                                                        n.Pago = 0;
+                                                        n.EstatusId = 2;
+                                                    }
+                                                    else
+                                                    {
+                                                        n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + auxMonto;
+                                                        n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
+                                                        n.Pago = n.Pago - auxMonto;
+                                                    }
+                                                }//if (promocion.Monto < 0)
+
+
+                                            });//fin foreach
+
+
+                                        }// if (pago.Restante >= promocion.Monto)
+
+                                    }
+                                    else
+                                    {
+                                        pago.Promesa = pago.Promesa - (decimal)promocion.Monto;
+                                        pago.Restante = pago.Restante - (decimal)promocion.Monto;
+
+                                        // generar pagodescuento 
+                                        db.PagoDescuento.Add(new PagoDescuento
+                                        {
+                                            PagoId = pago.PagoId,
+                                            DescuentoId = descuentoid,
+                                            Monto = (decimal)promocion.Monto
+                                        });
+
+                                    }//  if (pago.Restante < pago.Promesa )
+
+                                    if (pago.Restante == 0)
+                                    {
+                                        pago.EstatusId = 4;
+                                    }
+
+                                }// if (pago.Promesa >= promocion.Monto)
+
+                            }
+                            db.SaveChanges();
+
+                            promocion.FechaAplicacion = DateTime.Now;
+                            promocion.HoraAplicacion = DateTime.Now.TimeOfDay;
+                            promocion.PagoId = pago.PagoId;
+                            promocion.EstatusId = 7;
+
+                            db.SaveChanges();
+
+                        }//if (pago != null )
+
+                    }// if (promocion > 0 )
+                    
+                }// fin using
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         //promocion en casa
+
         public static DTOAlumno ObtenerAlumno1(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

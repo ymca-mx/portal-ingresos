@@ -184,7 +184,7 @@ namespace WebServices.WS
             return BLLAlumno.PeriodosPromocionCasa();
         }
         [WebMethod]
-        public bool AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public string AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             return BLLAlumno.AplicarPromocionCasa(Promocion);
         }
