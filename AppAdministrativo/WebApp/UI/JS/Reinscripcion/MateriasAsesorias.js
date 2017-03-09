@@ -205,8 +205,27 @@
         }
     });
     $('#btnGuardar').click(function () {
+        $('#Load').modal('show');
+        //Adeudos();
         Guardar();
     });
+
+    function Adeudos() {
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/Descuentos.asmx/ConsultarAdeudo",
+            data: '{AlumnoId:' + AlumnoNum + '}',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.d == "Debe") {
+                    alertify.alert('Tiene adeudos, favor de pasar a La Corordinación Administrativa para resolver su situación financiera.');
+                    $('#Load').modal('hide');
+                } else {
+                    Guardar();
+                }
+            }
+        });
+    }
 
     function Guardar() {
         var op = $("#slcPeriodos").val();
@@ -216,7 +235,6 @@
         op = op.split(" ");
         var anio = op[1];
         var periodo = op[0];
-        $('#Load').modal('show');
         var usuario = $.cookie('userAdmin');
         var nAse = $('#txtNAsesoria').val();
         var nMat = $('#txtNMateria').val();

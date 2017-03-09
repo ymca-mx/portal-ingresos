@@ -3,6 +3,7 @@
     var lstCuotas;
     //DatosAlumno();
     DatosAlumno();
+    Alerta();
     function DatosAlumno() {
         $('#Load').modal('show');
         var AlumnoId = $.cookie('user');
@@ -188,10 +189,27 @@
                 td += '</tr>'
                 $('#tblReferencias').append(td);
                 $('#Load').modal('hide');
+
+                Alerta();
             }
         });
     }
 
+    function Alerta() {
+        var settings = {
+            theme: "ruby",
+            sticky: false,
+            horizontalEdge: "bottom",
+            verticalEdge: "right",
+            heading: "Alerta",
+            life: 30000,
+
+        };
+
+        $.notific8('zindex', 11500);
+        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas informacion click Aqui."), settings);
+
+    }
     function formato_numero(numero, decimales, separador_decimal, separador_miles) { // v2007-08-06
         numero = parseFloat(numero);
         if (isNaN(numero)) {

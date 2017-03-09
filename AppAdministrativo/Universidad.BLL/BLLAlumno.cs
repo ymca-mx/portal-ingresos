@@ -1095,6 +1095,7 @@ namespace Universidad.BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
+                string varl = "Viernes";
                 return
                     (from x in
                          (from a in db.AlumnoInscrito
