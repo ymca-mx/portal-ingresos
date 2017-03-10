@@ -206,14 +206,15 @@
     });
     $('#btnGuardar').click(function () {
         $('#Load').modal('show');
-        Adeudos();
+        //Adeudos();
+        Guardar();
     });
 
     function Adeudos() {
         $.ajax({
             type: "POST",
             url: "../WebServices/WS/Descuentos.asmx/ConsultarAdeudo",
-            data: '{AlumnoId:' + AlumnoId + '}',
+            data: '{AlumnoId:' + AlumnoNum + '}',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 if (data.d == "Debe") {

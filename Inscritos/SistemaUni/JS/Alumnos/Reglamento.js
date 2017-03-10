@@ -1,0 +1,27 @@
+﻿$(function init() {
+    TraerAlumno();
+    
+    function TraerAlumno() {
+        $('#Load').modal('show');
+        var AlumnoId = $.cookie('user');
+        //var AlumnoId = '9579';
+        $.ajax({
+            url: '../WebServices/WS/Alumno.asmx/TraerSede',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: '{AlumnoId:"' + AlumnoId + '"}',
+            dataType: 'json',
+            success: function (data) {
+                OpenFile(data.d);
+            }
+        });
+    }
+    function OpenFile(Ruta) {
+        $('#filepdf')
+            .attr('src', Ruta);
+    }
+
+    $('#filepdf').load(function () {
+        $('#Load').modal('hide');
+    });
+});

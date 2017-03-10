@@ -383,6 +383,12 @@ namespace WebServices.WS
         }
 
         [WebMethod]
+        public string TraerSede(string AlumnoId)
+        {
+            return BLLSede.SedeAlumno(int.Parse(AlumnoId));
+        }
+
+        [WebMethod]
         public bool UpdateAlumno(string AlumnoId, string UsuarioId,
             string Nombre, string Paterno, string Materno, string Celular, string FNacimiento, string CURP, string Email,
             string TelCasa, string Calle, string NumeroE, string NumeroI, string CP, string Colonia, string EstadoCivil,
