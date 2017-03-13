@@ -99,6 +99,7 @@
     <Content Include="JS\Alumnos\AlumnoPermitido.js" />
     <Content Include="JS\Alumnos\EncuestaPortal.js" />
     <Content Include="JS\Alumnos\ExamenMedico.js" />
+    <Content Include="JS\Alumnos\Reglamento.js" />
     <Content Include="JS\Archivos.js" />
     <Content Include="JS\AreaAcademica.js" />
     <Content Include="JS\Becas\AlumnoBecaComite.js" />

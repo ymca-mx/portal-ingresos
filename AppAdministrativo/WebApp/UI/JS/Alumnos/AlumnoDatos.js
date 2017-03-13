@@ -848,6 +848,7 @@ $(document).ready(function () {
         });
     }
     function CargarEstados(combo, EstadoId) {
+        combo.empty();
         $.ajax({
             type: "POST",
             url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",

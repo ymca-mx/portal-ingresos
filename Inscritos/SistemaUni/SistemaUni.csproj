@@ -185,6 +185,7 @@
     <Content Include="Alumno\AlumnoPermitido.html" />
     <Content Include="Alumno\EncuestaPortal.html" />
     <Content Include="Alumno\ExamenMedico.html" />
+    <Content Include="Alumno\Reglamento.html" />
     <Content Include="Archivos\Archivo.html" />
     <Content Include="Becas\AlumnoBecaComite.html" />
     <Content Include="Becas\AlumnoBecaDeportiva.html" />
@@ -243,6 +244,7 @@
     <Content Include="JS\Alumnos\AlumnoPermitido.js" />
     <Content Include="JS\Alumnos\EncuestaPortal.js" />
     <Content Include="JS\Alumnos\ExamenMedico.js" />
+    <Content Include="JS\Alumnos\Reglamento.js" />
     <Content Include="JS\AreaAcademica.js" />
     <Content Include="JS\Becas\AlumnoBecaComite.js" />
     <Content Include="JS\Becas\AlumnoBecaDeportiva.js">
@@ -353,6 +355,7 @@
     <Content Include="JS\themes\alertify.default.css" />
     <Content Include="Alumnos.html" />
     <Content Include="JS\IncritosIngles.js" />
+    <Content Include="Pago\ListaConceptos.html" />
     <Content Include="Pago\PromociónCasa.html" />
     <Content Include="Pago\ReferenciasConsulta.html" />
     <Content Include="Pago\EstadodeCuenta.html" />
@@ -390,6 +393,8 @@
     <Content Include="Referencias.html" />
     <Content Include="packages.config" />
     <Content Include="JS\DatePickerRange\daterangepicker.scss" />
+    <Content Include="Documentos\Reglamento.pdf" />
+    <Content Include="Documentos\ReglamentoCamohmila.pdf" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\base64.js" />
     <Content Include="Scripts\base64.min.js" />

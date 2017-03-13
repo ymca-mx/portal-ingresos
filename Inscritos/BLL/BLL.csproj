@@ -65,6 +65,7 @@
     <Compile Include="BLLReinscripcion.cs" />
     <Compile Include="BLLReporte.cs" />
     <Compile Include="BLLSaldoAFavor.cs" />
+    <Compile Include="BLLSede.cs" />
     <Compile Include="BLLUsuario.cs" />
     <Compile Include="BLLExamenMedico.cs" />
     <Compile Include="ListaAlumnnosInscritos.cs" />
