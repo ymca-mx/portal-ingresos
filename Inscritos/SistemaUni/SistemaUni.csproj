@@ -179,6 +179,8 @@
     <Content Include="AlumnoDescuento.html" />
     <Content Include="Alumno\AlumnoActualizaDatos.html" />
     <Content Include="Alumno\AlumnoDatos.html" />
+    <Content Include="Alumno\AlumnoDatosConsulta.html" />
+    <Content Include="Alumno\AlumnoDatosCoordinador.html" />
     <Content Include="Alumno\AlumnoMail.html" />
     <Content Include="Alumno\AlumnoPermitido.html" />
     <Content Include="Alumno\EncuestaPortal.html" />
@@ -236,6 +238,7 @@
     <Content Include="JS\AlumnoDescuento.js" />
     <Content Include="JS\Alumnos\AlumnoActualizaDatos.js" />
     <Content Include="JS\Alumnos\AlumnoDatos.js" />
+    <Content Include="JS\Alumnos\AlumnoDatosCoordinador.js" />
     <Content Include="JS\Alumnos\AlumnoMail.js" />
     <Content Include="JS\Alumnos\AlumnoPermitido.js" />
     <Content Include="JS\Alumnos\EncuestaPortal.js" />

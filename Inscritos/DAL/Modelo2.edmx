@@ -305,6 +305,25 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoBeca' no tiene definid
           <Property Name="UsuarioId" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlumnoDetalleCoordinador">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="EstadoCivilId" Type="int" Nullable="false" />
+          <Property Name="EntidadFederativaId" Type="int" Nullable="false" />
+          <Property Name="MunicipioId" Type="int" Nullable="false" />
+          <Property Name="CP" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NoExterior" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="NoInterior" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="TelefonoCasa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="AlumnoExamenMedico">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -6234,6 +6253,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoDetalle" EntityType="Self.AlumnoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoDetalleAlumno" EntityType="Self.AlumnoDetalleAlumno" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoDetalleBitacora" EntityType="Self.AlumnoDetalleBitacora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlumnoDetalleCoordinador" EntityType="Self.AlumnoDetalleCoordinador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoExamenMedico" EntityType="Self.AlumnoExamenMedico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoGrupoCuota" EntityType="Self.AlumnoGrupoCuota" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoImagen" EntityType="Self.AlumnoImagen" Schema="dbo" store:Type="Tables" />
@@ -7744,6 +7764,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoDetalle" EntityType="UniversidadModel.AlumnoDetalle" />
           <EntitySet Name="AlumnoDetalleAlumno" EntityType="UniversidadModel.AlumnoDetalleAlumno" />
           <EntitySet Name="AlumnoDetalleBitacora" EntityType="UniversidadModel.AlumnoDetalleBitacora" />
+          <EntitySet Name="AlumnoDetalleCoordinador" EntityType="UniversidadModel.AlumnoDetalleCoordinador" />
           <EntitySet Name="AlumnoExamenMedico" EntityType="UniversidadModel.AlumnoExamenMedico" />
           <EntitySet Name="AlumnoGrupoCuota" EntityType="UniversidadModel.AlumnoGrupoCuota" />
           <EntitySet Name="AlumnoImagen" EntityType="UniversidadModel.AlumnoImagen" />
@@ -9409,6 +9430,25 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_AlumnoDetalleBitacora_Alumno" FromRole="AlumnoDetalleBitacora" ToRole="Alumno" />
+        </EntityType>
+        <EntityType Name="AlumnoDetalleCoordinador">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
+          <Property Name="EstadoCivilId" Type="Int32" Nullable="false" />
+          <Property Name="EntidadFederativaId" Type="Int32" Nullable="false" />
+          <Property Name="MunicipioId" Type="Int32" Nullable="false" />
+          <Property Name="CP" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Colonia" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Calle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NoExterior" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NoInterior" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TelefonoCasa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AlumnoExamenMedico">
           <Key>
@@ -15998,6 +16038,26 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="GeneroId" ColumnName="GeneroId" />
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
                 <ScalarProperty Name="AlumnoDetalleBitacoraId" ColumnName="AlumnoDetalleBitacoraId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlumnoDetalleCoordinador">
+            <EntityTypeMapping TypeName="UniversidadModel.AlumnoDetalleCoordinador">
+              <MappingFragment StoreEntitySet="AlumnoDetalleCoordinador">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="TelefonoCasa" ColumnName="TelefonoCasa" />
+                <ScalarProperty Name="NoInterior" ColumnName="NoInterior" />
+                <ScalarProperty Name="NoExterior" ColumnName="NoExterior" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="CP" ColumnName="CP" />
+                <ScalarProperty Name="MunicipioId" ColumnName="MunicipioId" />
+                <ScalarProperty Name="EntidadFederativaId" ColumnName="EntidadFederativaId" />
+                <ScalarProperty Name="EstadoCivilId" ColumnName="EstadoCivilId" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

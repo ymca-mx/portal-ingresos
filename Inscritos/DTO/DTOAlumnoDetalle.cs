@@ -29,5 +29,6 @@ namespace DTO
         public string Email { get; set; }
         public int ProspectoId { get; set; }
         public DTOProspectoDetalle ProspectoO { get; set; }
+        public int UsuarioId { get; set; }
     }
 }

@@ -207,7 +207,7 @@
         };
 
         $.notific8('zindex', 11500);
-        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. <hr> Para mas informacion click Aqui."), settings);
+        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas informacion click Aqui."), settings);
 
     }
     function formato_numero(numero, decimales, separador_decimal, separador_miles) { // v2007-08-06

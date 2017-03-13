@@ -60,7 +60,7 @@
                     $('#slcEstadoCivil').val(data.d.DTOAlumnoDetalle.EstadoCivilId);
                     $('#slcSexo').val(data.d.DTOAlumnoDetalle.GeneroId);
                     $('#slcEstado').val(data.d.DTOAlumnoDetalle.EntidadFederativaId);
-                    CargarEstados($('#slcMunicipio'), data.d.DTOAlumnoDetalle.MunicipioId);
+                    CargarEstados1(data.d.DTOAlumnoDetalle.EntidadFederativaId, data.d.DTOAlumnoDetalle.MunicipioId);
 
                     $('#Load').modal('hide');
                 }
@@ -75,6 +75,51 @@
         });
     }
 
+    function CargarEstados1(EstadoId, MunicipioId) {
+        $('#slcEstado').empty();
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+            success: function (data) {
+                var datos = data.d;
+                $(datos).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.Descripcion);
+                    option.val(this.EntidadFederativaId);
+
+                    $("#slcEstado").append(option);
+                });
+
+                $('#slcEstado').val(EstadoId);
+                $("#slcMunicipio").empty();
+
+                $.ajax({
+                    type: "POST",
+                    url: "../WebServices/WS/General.asmx/ConsultarMunicipios",
+                    data: "{EntidadFederativaId:'" + EstadoId + "'}",
+                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                    success: function (data) {
+                        var datos = data.d;
+                        $(datos).each(function () {
+                            var option = $(document.createElement('option'));
+
+                            option.text(this.Descripcion);
+                            option.val(this.EntidadFederativaId);
+
+                            $("#slcMunicipio").append(option);
+                        });
+                        $("#slcMunicipio").val(MunicipioId);
+
+                    }
+                });
+            }
+        });
+
+    }
 
     $('#Guardar').on('click',function () {
         if (form.valid() == false) { return false; }
@@ -149,6 +194,7 @@
     }
 
     function CargarPaises(combo, PaisId) {
+        combo.empty();
         $.ajax({
             type: "POST",
             url: "../WebServices/WS/General.asmx/ConsultarPaises",
@@ -170,6 +216,7 @@
     }
 
     function CargarEstados(combo, EstadoId) {
+        combo.empty();
         $.ajax({
             type: "POST",
             url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
@@ -262,13 +309,13 @@
         rules: {
            
             txtemail: {
-                //required: true,
+                required: true,
                 email: true,
                 minlength: 4,
                 maxlength: 100
             },
             txtCelular: {
-                //required: true,
+                required: true,
                 digits: true,
                 minlength: 10,
                 maxlength: 10

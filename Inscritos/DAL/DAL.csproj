@@ -102,6 +102,9 @@
     <Compile Include="AlumnoDetalleBitacora.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoDetalleCoordinador.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoExamenMedico.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>

@@ -1,20 +1,35 @@
 ﻿$(document).ready(function () {
-    var AlumnoNum;
+    var AlumnoNum, tblAlumnos;
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
-    AlumnoNum = $.cookie('user');
-    Load();
+    UsuarioId  = $.cookie('userAdmin');
 
-
-    
-    function Load() {
-        $('#PopDatosAlumno').modal('show');
+    $("#btnBuscarAlumno").click(function ()
+    {
         LimpiarCampos();
+        $("#divGuardar").hide();
+        $('#frmVarios').hide();
+        if (tblAlumnos != undefined) {
+            tblAlumnos.fnClearTable();
+        }
+        if ($('#txtAlumno').val().length == 0) { return false; }
+        LimpiarCampos();
+        $("#slcOfertaEducativa").empty();
+        var optionP = $(document.createElement('option'));
+        optionP.text('--Seleccionar--');
+        optionP.val('-1');
+        $("#slcOfertaEducativa").append(optionP);
         $('#Load').modal('show');
-        EsNumero(AlumnoNum);
-    }
+        AlumnoNum = $('#txtAlumno').val();
 
+        if (!isNaN(AlumnoNum)) {
+            EsNumero(AlumnoNum);
+            $('#frmTabs').show();
+        } else {
+            EsString(AlumnoNum);
+        }
+    });
 
     function LimpiarCampos() {
         $("#submit_form").trigger('reset');
@@ -27,9 +42,10 @@
     }
 
     function EsNumero(Alumno) {
+ 
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ObenerDatosAlumnoActualiza",
+            url: "/../WebServices/WS/Alumno.asmx/ObenerDatosAlumnoCordinador",
             data: "{AlumnoId:'" + Alumno + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -62,6 +78,7 @@
                     $('#slcEstado').val(data.d.DTOAlumnoDetalle.EntidadFederativaId);
                     CargarEstados1(data.d.DTOAlumnoDetalle.EntidadFederativaId, data.d.DTOAlumnoDetalle.MunicipioId);
 
+                    $("#divGuardar").show();
                     $('#Load').modal('hide');
                 }
                 else {
@@ -75,53 +92,70 @@
         });
     }
 
-    function CargarEstados1(EstadoId, MunicipioId) {
-        $('#slcEstado').empty();
+    function EsString(Alumno) {
+        $('#frmTabs').hide();
         $.ajax({
-            type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
-            data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
-            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+            url: '../WebServices/WS/Alumno.asmx/BuscarAlumnoString',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: '{Filtro:"' + Alumno + '"}',
+            dataType: 'json',
             success: function (data) {
-                var datos = data.d;
-                $(datos).each(function () {
-                    var option = $(document.createElement('option'));
+                if (data != null) {
+                    $('#frmVarios').show();
+                    tblAlumnos = $('#tblAlumnos').dataTable({
+                        "aaData": data.d,
+                        "aoColumns": [
+                            { "mDataProp": "AlumnoId" },
+                            { "mDataProp": "Nombre" },
+                            { "mDataProp": "FechaRegistro" },
+                            { "mDataProp": "AlumnoInscrito.OfertaEducativa.Descripcion" },
+                            //{ "mDataProp": "FechaSeguimiento" },
+                            {
+                                "mDataProp": function (data) {
+                                    return "<a class='btn green'>Seleccionar</a>";
+                                }
+                            }
+                        ],
+                        "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
+                        "searching": false,
+                        "ordering": false,
+                        "async": true,
+                        "bDestroy": true,
+                        "bPaginate": true,
+                        "bLengthChange": false,
+                        "bFilter": false,
+                        "bInfo": false,
+                        "pageLength": 5,
+                        "bAutoWidth": false,
+                        "asStripClasses": null,
+                        "language": {
+                            "lengthMenu": "_MENU_  Registros",
+                            "paginate": {
+                                "previous": "<",
+                                "next": ">"
+                            },
+                            "search": "Buscar Alumno "
+                        },
+                        "order": [[2, "desc"]]
+                    });
+                }
+                $('#Load').modal('hide');
 
-                    option.text(this.Descripcion);
-                    option.val(this.EntidadFederativaId);
-
-                    $("#slcEstado").append(option);
-                });
-
-                $('#slcEstado').val(EstadoId);
-                $("#slcMunicipio").empty();
-
-                $.ajax({
-                    type: "POST",
-                    url: "../WebServices/WS/General.asmx/ConsultarMunicipios",
-                    data: "{EntidadFederativaId:'" + EstadoId + "'}",
-                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                    success: function (data) {
-                        var datos = data.d;
-                        $(datos).each(function () {
-                            var option = $(document.createElement('option'));
-
-                            option.text(this.Descripcion);
-                            option.val(this.EntidadFederativaId);
-
-                            $("#slcMunicipio").append(option);
-                        });
-                        $("#slcMunicipio").val(MunicipioId);
-
-                    }
-                });
             }
         });
-
     }
 
-    $('#Guardar').on('click',function () {
+    $('#tblAlumnos').on('click', 'a', function () {
+        $('#frmVarios').hide();
+        $('#frmTabs').show();
+        $('#Load').modal('show');
+        var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
+        AlumnoNum = rowadd.AlumnoId;
+        EsNumero(AlumnoNum);
+    });
+
+    $('#Guardar').on('click', function () {
         if (form.valid() == false) { return false; }
         var nombre = $('#hCarga');
         nombre[0].innerText = "Guardando";
@@ -134,24 +168,25 @@
 
         var obj = {
             'AlumnoDatos': {
-                "AlumnoId" : AlumnoNum ,
+                "AlumnoId": AlumnoNum,
                 "Celular": $('#txtCelular').val(),
-                "Email" : $('#txtEmail').val() ,
+                "Email": $('#txtEmail').val(),
                 "TelefonoCasa": $('#txtTelefonoCasa').val(),
-                "Calle":  $('#txtCalle').val() ,
+                "Calle": $('#txtCalle').val(),
                 "NoExterior": $('#txtNumeroE').val(),
                 "NoInterior": $('#txtNumeroI').val(),
                 "Cp": $('#txtCP').val(),
                 "Colonia": $('#txtColonia').val(),
                 "EstadoCivilId": $('#slcEstadoCivil').val(),
                 "EntidadFederativaId": $('#slcEstado').val(),
-                "MunicipioId": $('#slcMunicipio').val()
+                "MunicipioId": $('#slcMunicipio').val(),
+                "UsuarioId": UsuarioId
             }
         };
         obj = JSON.stringify(obj);
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Alumno.asmx/UpdateAlumnoDatos",
+            url: "../WebServices/WS/Alumno.asmx/UpdateAlumnoDatosCoordinador",
             data: obj,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -159,14 +194,12 @@
                 if (data.d) {
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
-                    alertify.alert("Datos del Alumno Modificados",function(){
-                        VerificarEncuesta();
+                    alertify.alert("Datos del Alumno Modificados", function () {
                     });
                 } else {
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
-                    alertify.alert("Error, Revisar datos capturados.", function ()
-                    {
+                    alertify.alert("Error, Revisar datos capturados.", function () {
                         $('#PopDatosAlumno').modal('hide');
                         $('#popDatos').empty();
                     });
@@ -175,22 +208,6 @@
         });
 
 
-    }
-
-    function VerificarEncuesta() {
-        $.ajax({
-            type: "POST",
-            url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoEncuesta",
-            data: "{AlumnoId:'" + AlumnoNum + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                if (data.d) {
-                    $('#popDatos').empty();
-                    $('#popDatos').load('../inscritos/Alumno/EncuestaPortal.html');
-                }
-            }
-        });
     }
 
     function CargarPaises(combo, PaisId) {
@@ -216,6 +233,7 @@
     }
 
     function CargarEstados(combo, EstadoId) {
+
         combo.empty();
         $.ajax({
             type: "POST",
@@ -307,15 +325,15 @@
         errorClass: 'help-block help-block-error', // default input error message class
         focusInvalid: false, // do not focus the last invalid input
         rules: {
-           
+
             txtemail: {
-                required: true,
+                //required: true,
                 email: true,
                 minlength: 4,
                 maxlength: 100
             },
             txtCelular: {
-                required: true,
+                //required: true,
                 digits: true,
                 minlength: 10,
                 maxlength: 10
@@ -388,7 +406,56 @@
         }
     });
 
+    $('#txtAlumno').on('keydown', function (e) {
+        if (e.which == 13) {
+            $('#btnBuscarAlumno').click();
+        }
+    });
 
+    function CargarEstados1(EstadoId, MunicipioId) {
+        $('#slcEstado').empty();
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+            success: function (data) {
+                var datos = data.d;
+                $(datos).each(function () {
+                    var option = $(document.createElement('option'));
 
+                    option.text(this.Descripcion);
+                    option.val(this.EntidadFederativaId);
+
+                    $("#slcEstado").append(option);
+                });
+
+                $('#slcEstado').val(EstadoId);
+                $("#slcMunicipio").empty();
+
+                $.ajax({
+                    type: "POST",
+                    url: "../WebServices/WS/General.asmx/ConsultarMunicipios",
+                    data: "{EntidadFederativaId:'" + EstadoId + "'}",
+                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                    success: function (data) {
+                        var datos = data.d;
+                        $(datos).each(function () {
+                            var option = $(document.createElement('option'));
+
+                            option.text(this.Descripcion);
+                            option.val(this.EntidadFederativaId);
+
+                            $("#slcMunicipio").append(option);
+                        });
+                        $("#slcMunicipio").val(MunicipioId);
+
+                    }
+                });
+            }
+        });
+
+    }
 
 });

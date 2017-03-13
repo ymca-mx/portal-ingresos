@@ -38,6 +38,30 @@ namespace DTO
         public List<DTOAlumnoAntecendente> Antecendentes { get; set; }
     }
 
+    public class DTOAlumnoDatos
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public string Paterno { get; set; }
+        public string Materno { get; set; }
+        public int GeneroId { get; set; }
+        public System.DateTime FechaNacimiento { get; set; }
+        public string FechaNacimientoC { get; set; }
+        public string CURP { get; set; }
+        public int PaisId { get; set; }
+        public int EntidadFederativaId { get; set; }
+        public Nullable<int> EntidadNacimientoId { get; set; }
+        public List<DTOAlumnoDatos2> DatosContacto { get; set; }
+    }
+
+    public class DTOAlumnoDatos2
+    {
+        public string Dato { get; set; }
+        public string Alumno { get; set; }
+        public string  Coordinador { get; set; }
+        public string ServiciosEscolares { get; set; }
+    }
+
     public class DTOAlumnoPromocionCasa
     {
         public int AlumnoId { get; set; }

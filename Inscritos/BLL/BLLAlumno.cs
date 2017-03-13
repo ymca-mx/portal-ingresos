@@ -1247,6 +1247,93 @@ namespace BLL
             }
         }
 
+        public static DTOAlumno ObenerDatosAlumnoCordinador(int AlumnoId)
+        {
+               using(UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+
+                if (db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).Count() > 0)
+                {
+                    Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                    AlumnoDetalleCoordinador objAlB2 = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+
+                    DTOAlumno objAlumno = new DTOAlumno
+                    {
+                        AlumnoId = AlumnoId,
+                        Nombre = objAlB.Nombre,
+                        Paterno = objAlB.Paterno,
+                        Materno = objAlB.Materno,
+                        DTOAlumnoDetalle = new DTOAlumnoDetalle
+                        {
+                            EstadoCivilId = objAlB2.EstadoCivilId,
+                            Celular = objAlB2.Celular,
+                            TelefonoCasa = objAlB2.TelefonoCasa,
+                            FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
+                            FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
+                            GeneroId = objAlB.AlumnoDetalle.GeneroId,
+                            CURP = objAlB.AlumnoDetalle.CURP,
+                            Email = objAlB2.Email,
+                            Calle = objAlB2.Calle,
+                            NoExterior = objAlB2.NoExterior,
+                            NoInterior = objAlB2.NoInterior,
+                            Cp = objAlB2.CP,
+                            Colonia = objAlB2.Colonia,
+                            EntidadFederativaId = objAlB2.EntidadFederativaId,
+                            MunicipioId = objAlB2.MunicipioId,
+                            PaisId = objAlB.AlumnoDetalle.PaisId,
+                            EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId
+                        }
+                    };
+
+                    return objAlumno;
+
+                }
+                else {
+                  
+                        Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+
+
+                        DTOAlumno objAlumno = new DTOAlumno
+                        {
+                            AlumnoId = AlumnoId,
+                            Nombre = objAlB.Nombre,
+                            Paterno = objAlB.Paterno,
+                            Materno = objAlB.Materno,
+                            DTOAlumnoDetalle = new DTOAlumnoDetalle
+                            {
+                                EstadoCivilId = objAlB.AlumnoDetalle.EstadoCivilId,
+                                Celular = (objAlB.AlumnoDetalle.Celular.Trim()).Replace("-", ""),
+                                TelefonoCasa = (objAlB.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-", ""),
+                                FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
+                                FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
+                                GeneroId = objAlB.AlumnoDetalle.GeneroId,
+                                CURP = objAlB.AlumnoDetalle.CURP,
+                                Email = objAlB.AlumnoDetalle.Email.Trim(),
+                                Calle = objAlB.AlumnoDetalle.Calle.Trim(),
+                                NoExterior = objAlB.AlumnoDetalle.NoExterior,
+                                NoInterior = objAlB.AlumnoDetalle.NoInterior,
+                                Cp = objAlB.AlumnoDetalle.CP.Trim(),
+                                Colonia = objAlB.AlumnoDetalle.Colonia.Trim(),
+                                EntidadFederativaId = objAlB.AlumnoDetalle.EntidadFederativaId,
+                                MunicipioId = objAlB.AlumnoDetalle.MunicipioId,
+                                PaisId = objAlB.AlumnoDetalle.PaisId,
+                                EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId
+                            }
+                        };
+
+                        return objAlumno;
+                    }            
+                }
+                
+                    catch
+                    {
+                        return null;
+                    } 
+            }
+        }
+
         public static bool UpdateAlumnoDatos(DTOAlumnoDetalle AlumnoDatos)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -1303,6 +1390,63 @@ namespace BLL
                 
         }
 
+        public static bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    var alumnoid = AlumnoDatos.AlumnoId;
+
+                    if (db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == alumnoid).Count() > 0)
+                    {
+                        var AlumnoActualizaDatos = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == alumnoid).FirstOrDefault();
+
+                        AlumnoActualizaDatos.EstadoCivilId = AlumnoDatos.EstadoCivilId;
+                        AlumnoActualizaDatos.EntidadFederativaId = AlumnoDatos.EntidadFederativaId;
+                        AlumnoActualizaDatos.MunicipioId = AlumnoDatos.MunicipioId;
+                        AlumnoActualizaDatos.CP = AlumnoDatos.Cp;
+                        AlumnoActualizaDatos.Colonia = AlumnoDatos.Colonia;
+                        AlumnoActualizaDatos.Calle = AlumnoDatos.Calle;
+                        AlumnoActualizaDatos.NoExterior = AlumnoDatos.NoExterior;
+                        AlumnoActualizaDatos.NoInterior = AlumnoDatos.NoInterior;
+                        AlumnoActualizaDatos.TelefonoCasa = AlumnoDatos.TelefonoCasa;
+                        AlumnoActualizaDatos.Celular = AlumnoDatos.Celular;
+                        AlumnoActualizaDatos.Email = AlumnoDatos.Email;
+                        AlumnoActualizaDatos.Fecha = DateTime.Now;
+                        AlumnoActualizaDatos.UsuarioId = AlumnoDatos.UsuarioId;
+                    }
+                    else
+                    {
+                        db.AlumnoDetalleCoordinador.Add(new AlumnoDetalleCoordinador
+                        {
+                            AlumnoId = AlumnoDatos.AlumnoId,
+                            EstadoCivilId = AlumnoDatos.EstadoCivilId,
+                            EntidadFederativaId = AlumnoDatos.EntidadFederativaId,
+                            MunicipioId = AlumnoDatos.MunicipioId,
+                            CP = AlumnoDatos.Cp,
+                            Colonia = AlumnoDatos.Colonia,
+                            Calle = AlumnoDatos.Calle,
+                            NoExterior = AlumnoDatos.NoExterior,
+                            NoInterior = AlumnoDatos.NoInterior,
+                            TelefonoCasa = AlumnoDatos.TelefonoCasa,
+                            Celular = AlumnoDatos.Celular,
+                            Email = AlumnoDatos.Email,
+                            Fecha = DateTime.Now,
+                            UsuarioId = AlumnoDatos.UsuarioId
+
+                        });
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+
+                catch (Exception)
+                {
+                    return false;
+                }
+            }//using
+        }
 
         public static bool VerificaAlumnoDatos(int AlumnoId)
         {
@@ -10793,9 +10937,14 @@ namespace BLL
                                                   where (a.Nombre + " " + a.Paterno + " " + a.Materno).Contains(Cadena)
                                                   select new DTOAlumno
                                                   {
+                                                     
+
+
                                                       AlumnoId = a.AlumnoId,
                                                       Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
-                                                      FechaRegistro = a.FechaRegistro.Day + "/" + a.FechaRegistro.Month + "/" + a.FechaRegistro.Year,
+                                                      FechaRegistro = (a.FechaRegistro.Day.ToString().Length < 2 ? "0" + a.FechaRegistro.Day.ToString() : a.FechaRegistro.Day.ToString()) + "/" +
+                                                          (a.FechaRegistro.Month.ToString().Length < 2 ? "0" + a.FechaRegistro.Month.ToString() : a.FechaRegistro.Month.ToString()) + "/" +
+                                                          a.FechaRegistro.Year.ToString(),
                                                       DTOAlumnoDetalle = new DTOAlumnoDetalle
                                                       {
                                                           AlumnoId = a.AlumnoDetalle.AlumnoId,

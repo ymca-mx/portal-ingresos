@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     var Now = new Date();
     var años = Now.getFullYear() - 18;
     var mes = Now.getMonth() + 1;
@@ -143,6 +144,7 @@
             }
         });
     }
+
     function EsString(Alumno) {
         $('#tab1').hide();
         $.ajax({
@@ -196,6 +198,7 @@
             }
         });
     }
+
     $('#tblAlumnos').on('click', 'a', function () {
         $('#frmVarios').hide();
         $('#Load').modal('show');

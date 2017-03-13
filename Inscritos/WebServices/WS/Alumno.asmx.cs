@@ -341,11 +341,25 @@ namespace WebServices.WS
             return BLLAlumno.ObenerDatosAlumnoActualiza(int.Parse(AlumnoId));
         }
 
+        //datos personales  generados por el coordinador
+        [WebMethod]
+        public DTOAlumno ObenerDatosAlumnoCordinador(string AlumnoId)
+        {
+            return BLLAlumno.ObenerDatosAlumnoCordinador(int.Parse(AlumnoId));
+        }
+
         [WebMethod]
         public bool UpdateAlumnoDatos(DTOAlumnoDetalle AlumnoDatos)
         {
 
             return BLLAlumno.UpdateAlumnoDatos(AlumnoDatos);
+        }
+
+        [WebMethod]
+        public bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
+        {
+
+            return BLLAlumno.UpdateAlumnoDatosCoordinador(AlumnoDatos);
         }
 
         [WebMethod]
