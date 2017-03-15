@@ -55,7 +55,22 @@ namespace BLL
 
         public static string ActivarPago(int PagoId)
         {
-            using(UniversidadEntities db = new UniversidadEntities()) { return ""; }
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    var pago = db.Pago.Where(p => p.PagoId == PagoId).FirstOrDefault();
+
+                    pago.EstatusId = 1;
+
+                    db.PagoCancelacion.Remove(pago?.PagoCancelacion ?? null);
+                    db.PagoCancelacionDetalle.Remove(pago?.PagoCancelacion?.PagoCancelacionDetalle?.FirstOrDefault() ?? null);
+
+                    db.SaveChanges();
+                    return "Guardado";
+                }
+                catch { return "Fallo"; }
+            }
         }
 
         public static string GenerarReferenciaId(int PagoId)
