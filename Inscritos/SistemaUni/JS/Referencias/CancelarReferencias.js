@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function init() {
     var AlumnoId;
     var tblReferencias;
     var PagoId;
@@ -91,7 +91,9 @@
                 { "mDataProp": "objNormal.Estatus" },
                 {
                     "mDataProp": function (data) {
-                        return "<a class='btn green'>Cancelar</a>";
+                        var link = data.Estatus == "Cancelado" ? "<a class='btn blue' name='activar'>Activar</a>"
+                            : "<a class='btn error' name='cancelar'>Cancelar</a>";
+                        return 
                     }
                 }
                 //{ "mDataProp": "objRetrasado.Monto" },
@@ -137,14 +139,42 @@
     }
 
     $('#tblReferencias').on('click', 'a', function () {
-        $('#txtComentario').val('');
-        PagoId = 0;
-        Estatus = "";
-        var rowadd = tblReferencias.fnGetData($(this).closest('tr'));
-        PagoId = rowadd.PagoId;
-        Estatus = rowadd.objNormal.Estatus;
-        $('#PopComentario').modal('show');
+        if (this.name == "cancelar") {
+            $('#txtComentario').val('');
+            PagoId = 0;
+            Estatus = "";
+            var rowadd = tblReferencias.fnGetData($(this).closest('tr'));
+            PagoId = rowadd.PagoId;
+            Estatus = rowadd.objNormal.Estatus;
+            $('#PopComentario').modal('show');
+        } else {
+            var rowadd = tblReferencias.fnGetData($(this).closest('tr'));
+            alertify.confirm("Esta seguro que quiere activar la referencia:  " + rowadd.Referencia, function (e) {
+                if (e) {
+                    $('#divBar').modal('show');
+                    ActivarReferencia(rowadd.PagoId);
+                }
+            });
+        }
     });
+
+    function ActivarReferencia(PagoId) {
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/General.asmx/ActivarPago",
+            data: "{PagoId:'" + PagoId + "'}",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.d == "Guardado") {
+                    $('#divBar').modal('hide');
+                    alertify.alert("Referencia Activada correctamente.", function () {
+                        $('#btnBuscar').click();
+                    });
+                }
+                
+            }
+        });
+    }
 
     $('#txtClave').on('keydown', function (e) {
         if (e.which == 13) {

@@ -91,7 +91,9 @@
                 { "mDataProp": "objNormal.Estatus" },
                 {
                     "mDataProp": function (data) {
-                        return "<a class='btn green'>Cancelar</a>";
+                        var link = data.Estatus == "Cancelado" ? "<a class='btn blue'>Cancelar</a>"
+                            : "<a class='btn error'>Cancelar</a>";
+                        return 
                     }
                 }
                 //{ "mDataProp": "objRetrasado.Monto" },

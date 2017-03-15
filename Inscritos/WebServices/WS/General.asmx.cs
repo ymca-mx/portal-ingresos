@@ -18,6 +18,11 @@ namespace WebServices.WS
     [System.Web.Script.Services.ScriptService]
     public class General : System.Web.Services.WebService
     {
+        [WebMethod]
+        public string ActivarPago(string PagoId)
+        {
+           return BLLPago.ActivarPago(int.Parse(PagoId));
+        }
 
         [WebMethod]
         public List<DTOGenero> ConsultarGenero()
