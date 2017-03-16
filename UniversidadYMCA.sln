@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppAdministrativo", "AppAdministrativo", "{D13665BD-0BEC-4A99-8B85-AC894F401F25}"
 EndProject
@@ -13,6 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D24F24CC-4F3D-4FC1-A1A7-F2C1476704FC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SICI", "SICI", "{B4A41BC1-A96A-4692-91BB-51EA765CB6DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{5A47DC77-3BCB-44BE-A346-5802421B8F15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaUni", "Inscritos\SistemaUni\SistemaUni.csproj", "{32E64B22-872C-4EBA-AF2B-D6EE57F39622}"
 EndProject
@@ -41,13 +52,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universidad.DAL", "AppAdministrativo\Universidad.DAL\Universidad.DAL.csproj", "{F0A21E11-6CA6-41BF-956E-345D85A6A3B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "AppAlumno\WebApp\UI\UI.csproj", "{82F22780-86E0-433B-95B2-56B42B34F8A0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D24F24CC-4F3D-4FC1-A1A7-F2C1476704FC}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +120,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{5A47DC77-3BCB-44BE-A346-5802421B8F15} = {B4A41BC1-A96A-4692-91BB-51EA765CB6DE}
 		{32E64B22-872C-4EBA-AF2B-D6EE57F39622} = {849346FD-3D6B-41D7-A7B8-ADDCFEB1B589}
 		{6E8BB890-A042-4588-B3F7-22186A130CBA} = {849346FD-3D6B-41D7-A7B8-ADDCFEB1B589}
 		{4C838B8D-62D6-4BBD-AB16-D6E710505013} = {849346FD-3D6B-41D7-A7B8-ADDCFEB1B589}

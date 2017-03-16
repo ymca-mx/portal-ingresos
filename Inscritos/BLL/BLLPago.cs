@@ -53,6 +53,26 @@ namespace BLL
             }
         }
 
+        public static string ActivarPago(int PagoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    var pago = db.Pago.Where(p => p.PagoId == PagoId).FirstOrDefault();
+
+                    pago.EstatusId = 1;
+
+                    db.PagoCancelacion.Remove(pago?.PagoCancelacion ?? null);
+                    db.PagoCancelacionDetalle.Remove(pago?.PagoCancelacion?.PagoCancelacionDetalle?.FirstOrDefault() ?? null);
+
+                    db.SaveChanges();
+                    return "Guardado";
+                }
+                catch { return "Fallo"; }
+            }
+        }
+
         public static string GenerarReferenciaId(int PagoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -430,7 +450,7 @@ namespace BLL
                     //int idPago = 2588;
                     DateTime fNow = DateTime.Now;
                     List<Pago> listPagos = db.Pago.Where(p => p.AlumnoId == AlumnoId
-                    && p.EstatusId != 2 
+                    //&& p.EstatusId != 2 
                     && p.PagoParcial.Count <= 1 //<----Preguntarle a Enrique
                     ).OrderByDescending(f => f.FechaGeneracion).ToList();
 
@@ -508,7 +528,7 @@ namespace BLL
                             FechaLimite = (Utilities.Fecha.Prorroga(objP.FechaPago.Value.Year, objP.FechaPago.Value.Month, true, 5).ToString("dd/MM/yyyy", Cultura)),
                             Monto = objP.Promesa.ToString("C", Cultura),
                             Restante = decimal.Parse(objP.Pagado).ToString("C", Cultura),
-                            Estatus = objP.Promesa == decimal.Parse(objP.Restante) ? (objP.Promesa == 0 ? "Pagado" : "Pendiente") : (objP.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
+                            Estatus = objP.EstatusId == 2 ? "Cancelado" : objP.Promesa == decimal.Parse(objP.Restante) ? (objP.Promesa == 0 ? "Pagado" : "Pendiente") : (objP.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
                         };
                         if (objP.Anio == 2016 && objP.PeriodoId == 1)
                         {
