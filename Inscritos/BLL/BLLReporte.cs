@@ -239,8 +239,8 @@ namespace BLL
                                                                                                   && n.especialidadId == k.OfertaEducativaId
                                                                                                   && anio == k.Anio
                                                                                                   && periodo == k.PeriodoId).ToList();
-                        n.fechaInscripcion1 = list.Count > 0 ?
-                                                        list.OrderBy(k => k.FechaInscripcion).FirstOrDefault().FechaInscripcion : n.fechaInscripcion1;
+
+                        n.fechaInscripcion1 = list.OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? n.fechaInscripcion1;
 
                         temp.Add(new DTOReporteInscrito
                         {
@@ -558,9 +558,13 @@ namespace BLL
                     especialidad = a.especialidad,
                     especialidadId = a.especialidadId,
                     sexo = a.sexo,
-                    edad = (ahora.Month < a.fechaNacimiento1.Month || (ahora.Month == a.fechaNacimiento1.Month && ahora.Day < a.fechaNacimiento1.Day)) ? (ahora.Year - a.fechaNacimiento1.Year) - 1 : ahora.Year - a.fechaNacimiento1.Year,
+                    edad = (ahora.Month < a.fechaNacimiento1.Month || (ahora.Month == a.fechaNacimiento1.Month && ahora.Day < a.fechaNacimiento1.Day)) ? (ahora.Year - a.fechaNacimiento1.Year) - 1 + "-Años" : ahora.Year - a.fechaNacimiento1.Year + "-Años",
                     fechaNacimiento = a.fechaNacimiento1.ToString("dd/MM/yyyy", Cultura),
                     lugarNacimiento = a.lugarNacimiento,
+                    Cuatrimestre = db.AlumnoCuatrimestre.Where(l => l.AlumnoId == a.alumnoId
+                                                                && l.OfertaEducativaId == a.especialidadId
+                                                                && l.Anio == anio
+                                                                && l.PeriodoId == periodo).FirstOrDefault()?.Cuatrimestre.ToString()??""
                 }).OrderBy(b => b.alumnoId).ToList());
 
 

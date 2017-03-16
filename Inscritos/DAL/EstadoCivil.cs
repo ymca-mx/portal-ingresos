@@ -18,6 +18,8 @@ namespace DAL
         public EstadoCivil()
         {
             this.AlumnoDetalle = new HashSet<AlumnoDetalle>();
+            this.AlumnoDetalleAlumno = new HashSet<AlumnoDetalleAlumno>();
+            this.AlumnoDetalleCoordinador = new HashSet<AlumnoDetalleCoordinador>();
             this.DocenteDetalle = new HashSet<DocenteDetalle>();
             this.ProspectoDetalle = new HashSet<ProspectoDetalle>();
         }
@@ -27,6 +29,10 @@ namespace DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoDetalle> AlumnoDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoDetalleAlumno> AlumnoDetalleAlumno { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoDetalleCoordinador> AlumnoDetalleCoordinador { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteDetalle> DocenteDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

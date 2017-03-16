@@ -22,6 +22,7 @@ namespace DTO
         public bool EsEspecial { get; set; }
         public DTOOfertaEducativa OfertaEducativa { get; set; }
         public int EstatusId { get; set; }
+        public int Cuatrimestre { get; set; }
         
     }
     public class DTOAlumnoInscrito2

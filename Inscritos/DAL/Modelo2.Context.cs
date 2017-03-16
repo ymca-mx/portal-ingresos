@@ -35,6 +35,8 @@ namespace DAL
         public virtual DbSet<AlumnoAntecedente> AlumnoAntecedente { get; set; }
         public virtual DbSet<AlumnoAntecedenteBitacora> AlumnoAntecedenteBitacora { get; set; }
         public virtual DbSet<AlumnoBitacora> AlumnoBitacora { get; set; }
+        public virtual DbSet<AlumnoCuatrimestre> AlumnoCuatrimestre { get; set; }
+        public virtual DbSet<AlumnoCuatrimestreBitacora> AlumnoCuatrimestreBitacora { get; set; }
         public virtual DbSet<AlumnoDescuento> AlumnoDescuento { get; set; }
         public virtual DbSet<AlumnoDescuentoBitacora> AlumnoDescuentoBitacora { get; set; }
         public virtual DbSet<AlumnoDescuentoDocumento> AlumnoDescuentoDocumento { get; set; }

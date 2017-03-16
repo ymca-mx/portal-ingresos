@@ -1334,6 +1334,140 @@ namespace BLL
             }
         }
 
+        public static DTOAlumnoDatos ObenerDatosAlumnoTodos(int AlumnoId)
+        {
+            using (UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+
+                    var datos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
+                                        .Select(b => new DTOAlumnoDatos
+                                        {
+                                            AlumnoId = b.AlumnoId,
+                                            Nombre = b.Nombre,
+                                            Paterno = b.Paterno,
+                                            Materno = b.Materno,
+                                            FechaNacimiento = b.AlumnoDetalle.FechaNacimiento,
+                                            GeneroId = b.AlumnoDetalle.GeneroId,
+                                            CURP = b.AlumnoDetalle.CURP,
+                                            PaisId = b.AlumnoDetalle.PaisId,
+                                            EntidadNacimientoId = b.AlumnoDetalle.EntidadNacimientoId,
+                                        }).FirstOrDefault();
+
+                    datos.FechaNacimientoC = datos.FechaNacimiento.ToString("dd/MM/yyyy", Cultura);
+
+                    datos.DatosContacto = new List<DTOAlumnoDatos2>();
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Estado Civil",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EstadoCivil.Descripcion.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EstadoCivil.Descripcion.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EstadoCivil.Descripcion.ToString() ?? "",
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Correo Electrónico",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Email.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Email.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Email.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Teléfono Celular",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Celular.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Celular.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Celular.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Teléfono Casa",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.TelefonoCasa.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.TelefonoCasa.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.TelefonoCasa.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Calle",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Calle.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Calle.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Calle.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Número Exterior",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoExterior.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoExterior.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoExterior.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Numero Interior",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoInterior.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoInterior.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoInterior.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Código Postal",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.CP.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.CP.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.CP.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Colonia",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Colonia.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Colonia.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Colonia.ToString() ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Estado",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EntidadFederativa.Descripcion.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EntidadFederativa.Descripcion.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EntidadFederativa.Descripcion ?? ""
+                    }
+                    );
+
+                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    {
+                        Dato = "Delegación | Municipio",
+                        Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Municipio.Descripcion.ToString() ?? "",
+                        Coordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Municipio.Descripcion.ToString() ?? "",
+                        ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Municipio.Descripcion ?? ""
+                    }
+                    );
+
+                    return datos;
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+            }
+        }
+
         public static bool UpdateAlumnoDatos(DTOAlumnoDetalle AlumnoDatos)
         {
             using (UniversidadEntities db = new UniversidadEntities())

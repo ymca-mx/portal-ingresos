@@ -95,11 +95,12 @@ namespace DTO
         public string especialidad { get; set; }
         public int especialidadId { get; set; }
         public string sexo { get; set; }
-        public int edad { get; set; }
+        public string edad { get; set; }
         public System.DateTime fechaNacimiento1 { get; set; }
         public string fechaNacimiento { get; set; }
         public string lugarNacimiento { get; set; }
         public string tipoAlumno { get; set; }
+        public string Cuatrimestre { get; set; }
     }
 
     public class DTOReporteAlumnoReferencia

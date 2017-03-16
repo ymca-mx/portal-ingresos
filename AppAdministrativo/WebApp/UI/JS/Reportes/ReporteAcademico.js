@@ -83,11 +83,11 @@
     });
 
     $('.date-picker').on("hide", function () {
-        if ($("#from").val() == "")
+        if ($("#from").val()=== "")
         {
             $('.input-daterange input').datepicker("setDate", hoy);
         }
-        if ($("#to").val() == "") {
+        if ($("#to").val() === "") {
             $('.input-daterange input').datepicker("setDate", hoy);
         }
         filtros();
@@ -433,10 +433,10 @@
                 tblBecas3 = $("#dtbecas4").DataTable({
                     "aaData": data.d,
                     "aoColumns": [
-                        { "mDataProp": "alumnoId", "sWidth": "10%" },
+                        { "mDataProp": "alumnoId", "sWidth": "15%" },
                         { "mDataProp": "nombreAlumno", "sWidth": "20%" },
-                        { "mDataProp": "ciclo", "sWidth": "10%" },
-                        { "mDataProp": "especialidad", "sWidth": "15%" },
+                        { "mDataProp": "especialidad", "sWidth": "10%" },
+                        { "mDataProp": "Cuatrimestre", "sWidth": "10%" },
                         { "mDataProp": "sexo", "sWidth": "10%" },
                         { "mDataProp": "edad", "sWidth": "10%" },
                         { "mDataProp": "fechaNacimiento", "sWidth": "10%" },

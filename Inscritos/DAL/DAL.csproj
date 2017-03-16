@@ -81,6 +81,12 @@
     <Compile Include="AlumnoBitacora.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoCuatrimestre.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnoCuatrimestreBitacora.cs">
+      <DependentUpon>Modelo2.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoDescuento.cs">
       <DependentUpon>Modelo2.tt</DependentUpon>
     </Compile>

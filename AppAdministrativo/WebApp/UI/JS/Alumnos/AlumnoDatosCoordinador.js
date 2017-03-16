@@ -7,7 +7,6 @@
 
     $("#btnBuscarAlumno").click(function ()
     {
-        LimpiarCampos();
         $("#divGuardar").hide();
         $('#frmVarios').hide();
         if (tblAlumnos != undefined) {
@@ -15,11 +14,6 @@
         }
         if ($('#txtAlumno').val().length == 0) { return false; }
         LimpiarCampos();
-        $("#slcOfertaEducativa").empty();
-        var optionP = $(document.createElement('option'));
-        optionP.text('--Seleccionar--');
-        optionP.val('-1');
-        $("#slcOfertaEducativa").append(optionP);
         $('#Load').modal('show');
         AlumnoNum = $('#txtAlumno').val();
 
@@ -272,52 +266,6 @@
             CargarEstados($("#slcLugarN"), -1);
         }
         else { $("#slcLugarN").append(optionP); }
-    });
-
-    $('#slcLugarUni').change(function () {
-        $("#slcPaisUni").empty();
-        var optionP = $(document.createElement('option'));
-        optionP.text('--Seleccionar--');
-        optionP.val('-1');
-        $("#slcPaisUni").append(optionP);
-
-        var tipo = $("#slcLugarUni");
-        tipo = tipo[0].value;
-        if (tipo == 2) {
-            $('#lblLugarUni').html('Pais');
-            CargarPaises($("#slcPaisUni"), -1);
-        }
-        else if (tipo == 1) {
-            $('#lblLugarUni').html('Estado');
-            CargarEstados($("#slcPaisUni"), -1);
-        }
-        else {
-            $('#lblLugarUni').html(' ');
-            $("#slcPaisUni").append(optionP);
-        }
-    });
-
-    $('#slcNacionalidadPrep').change(function () {
-        $("#slcEstadoPais").empty();
-        var optionP = $(document.createElement('option'));
-        optionP.text('--Seleccionar--');
-        optionP.val('-1');
-        $("#slcEstadoPais").append(optionP);
-
-        var tipo = $("#slcNacionalidadPrep");
-        tipo = tipo[0].value;
-        if (tipo == 2) {
-            $('#lblPN').html('País');
-            CargarPaises($("#slcEstadoPais"), -1);
-        }
-        else if (tipo == 1) {
-            $('#lblPN').html('Estado');
-            CargarEstados($("#slcEstadoPais"), -1);
-        }
-        else {
-            $('#lblPN').html('País | Estado');
-            $("#slcEstadoPais").append(optionP);
-        }
     });
 
     form.validate({

@@ -347,6 +347,12 @@ namespace WebServices.WS
         {
             return BLLAlumno.ObenerDatosAlumnoCordinador(int.Parse(AlumnoId));
         }
+        //datos personales  generados por el coordinador, alumno, sevicios escolares
+        [WebMethod]
+        public DTOAlumnoDatos ObenerDatosAlumnoTodos(string AlumnoId)
+        {
+            return BLLAlumno.ObenerDatosAlumnoTodos(int.Parse(AlumnoId));
+        }
 
         [WebMethod]
         public bool UpdateAlumnoDatos(DTOAlumnoDetalle AlumnoDatos)

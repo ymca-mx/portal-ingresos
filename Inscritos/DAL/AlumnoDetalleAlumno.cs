@@ -27,5 +27,9 @@ namespace DAL
         public string Celular { get; set; }
         public string Email { get; set; }
         public System.DateTime Fecha { get; set; }
+    
+        public virtual EntidadFederativa EntidadFederativa { get; set; }
+        public virtual EstadoCivil EstadoCivil { get; set; }
+        public virtual Municipio Municipio { get; set; }
     }
 }

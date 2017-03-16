@@ -1244,6 +1244,7 @@ namespace WebServices.WS
             return Fallidos;
             //return Email.Enviar("sistemastest@ymcacdmex.org.mx", "Sis99TesX1", "Bienvenido", opjAl.DTOAlumnoDetalle.Email, ',', "Universidad YMCA", body, "", ',', "mail.ymcacdmex.org.mx", 587, false, true, ref refere);
         }
+
         [WebMethod]
         public string EnviarMail2(string listaID)
         {
@@ -1534,6 +1535,7 @@ namespace WebServices.WS
             return Fallidos;
             //return Email.Enviar("sistemastest@ymcacdmex.org.mx", "Sis99TesX1", "Bienvenido", opjAl.DTOAlumnoDetalle.Email, ',', "Universidad YMCA", body, "", ',', "mail.ymcacdmex.org.mx", 587, false, true, ref refere);
         }
+
         [WebMethod]
         public string EnviarMail2OtroCorreo(string listaID, string email)
         {
