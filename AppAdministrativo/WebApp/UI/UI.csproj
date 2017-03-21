@@ -389,6 +389,7 @@
     <Content Include="Style\assets\global\plugins\icheck\demo\css\montserrat-regular.eot" />
     <Content Include="Style\assets\global\plugins\icheck\demo\css\montserrat-regular.ttf" />
     <Content Include="Style\assets\global\plugins\icheck\demo\css\montserrat-regular.woff" />
+    <Content Include="Style\assets\global\plugins\icheck\demo\js\custom.js" />
     <Content Include="Style\assets\global\plugins\icheck\icheck.jquery.json" />
     <Content Include="Style\assets\global\plugins\icheck\README.md" />
     <Content Include="Style\assets\global\plugins\jcrop\crop-demo.php" />
@@ -3861,7 +3862,6 @@
     <Content Include="Style\assets\global\plugins\icheck\demo\css\montserrat-regular.svg" />
     <Content Include="Style\assets\global\plugins\icheck\demo\css\normalize.css" />
     <Content Include="Style\assets\global\plugins\icheck\demo\index.html" />
-    <Content Include="Style\assets\global\plugins\icheck\demo\js\custom.js" />
     <Content Include="Style\assets\global\plugins\icheck\demo\js\custom.min.js" />
     <Content Include="Style\assets\global\plugins\icheck\demo\js\jquery.js" />
     <Content Include="Style\assets\global\plugins\icheck\demo\js\zepto.js" />
