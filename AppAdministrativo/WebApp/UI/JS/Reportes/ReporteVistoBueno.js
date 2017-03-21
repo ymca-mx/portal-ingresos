@@ -3,6 +3,12 @@
     //inicializar
     CargarCuatrimestre();
 
+    $('#divContenido').submit(function () {
+        //do your stuff
+        return false;
+    });
+
+
     $("#slcCuatrimestre").change(function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
@@ -20,6 +26,7 @@
         }
         filtroOferta();
     });
+
 
     $("#slcVisto").change(function () {
         if ($("#slcVisto").val() != -1) {

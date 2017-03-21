@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Documento</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+    </head>
+    <body>
+        <iframe  id="iframepdf" type="application/pdf"></iframe>
+        <script src="../Scripts/jquery-1.9.1.js"></script>
+        <script src="../Scripts/base64.js"></script>
+        <script>
+            $(document).ready(function () {
+                
+                var Ruta = window.opener.Ruta;
+                crarPDF();
+                
+                function crarPDF() {
+                    $('#iframepdf').attr('src', Ruta);
+                }
+            });
+        </script>
+    </body>
+</html>

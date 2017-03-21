@@ -39,7 +39,7 @@
       <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc">
-      <HintPath>..\..\..\Inscritos\SistemaUni\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
+      <HintPath>..\WebServices\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommLayer">

@@ -79,6 +79,7 @@
                 }
                 return blob;
             }
+
             , FileSaver = function (blob, name, no_auto_bom) {
                 if (!no_auto_bom) {
                     blob = auto_bom(blob);
@@ -144,6 +145,7 @@
 
                 fs_error();
             }
+
             , FS_proto = FileSaver.prototype
             , saveAs = function (blob, name, no_auto_bom) {
                 return new FileSaver(blob, name || blob.name || "download", no_auto_bom);

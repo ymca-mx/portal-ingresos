@@ -24,6 +24,7 @@
         of = 6;
         reset();
     });
+
     $("#liBeca2").click(function () {
         $("#divBecas2").show();
         $("#divBecas1").hide();
@@ -34,6 +35,7 @@
         of = 3;
         reset();
     });
+
     $("#liBeca3").click(function () {
         $("#divBecas3").show();
         $("#divBecas1").hide();
@@ -44,6 +46,7 @@
         of = 5;
         reset();
     });
+
     $("#liBeca4").click(function () {
         $("#divBecas4").show();
         $("#divBecas1").hide();
@@ -116,7 +119,7 @@
     function filtros() {
 
         cuatri[reporte] = $("#slcCuatrimestre").val();
-        oferta1 = $("#slcOferta option:selected").html();
+        oferta1 =  $("#slcOferta option:selected").html() ;
         oferta[reporte] = $("#slcOferta").val();
         fecha1[reporte] = $("#from").val();
         fecha2[reporte] = $("#to").val();
@@ -125,7 +128,7 @@
             case 0:
                 if (oferta1 != "--Todas--") {
                     tblBecas.columns(2)
-                                .search(oferta1)
+                                .search("^" + oferta1 + "$", true, false, true)
                                 .draw();
                 } else {
                     tblBecas.columns(2)
@@ -137,7 +140,7 @@
             case 1:
                 if (oferta1 != "--Todas--") {
                     tblBecas1.columns(2)
-                                .search(oferta1)
+                                .search("^" + oferta1 + "$", true, false, true)
                                 .draw();
                 } else {
                     tblBecas1.columns(2)
@@ -149,7 +152,7 @@
             case 2:
                 if (oferta1 != "--Todas--") {
                     tblBecas2.columns(2)
-                                .search(oferta1)
+                                .search("^" + oferta1 + "$", true, false, true)
                                 .draw();
                 } else {
                     tblBecas2.columns(2)
@@ -160,7 +163,7 @@
             case 3:
                 if (oferta1 != "--Todas--") {
                     tblBecas3.columns(3)
-                                .search(oferta1)
+                                .search("^" + oferta1 + "$", true, false, true)
                                 .draw();
                 } else {
                     tblBecas3.columns(3)
@@ -264,6 +267,7 @@
                     "bAutoWidth": false,
                     "asStripClasses": null,
                     "colReorder": true,
+                    "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
                         "paginate": {
@@ -328,6 +332,7 @@
                     "bAutoWidth": false,
                     "asStripClasses": null,
                     "colReorder": true,
+                    "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
                         "paginate": {
@@ -391,6 +396,7 @@
                     "bAutoWidth": false,
                     "asStripClasses": null,
                     "colReorder": true,
+                    "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
                         "paginate": {
@@ -455,6 +461,7 @@
                     "bAutoWidth": false,
                     "asStripClasses": null,
                     "colReorder": true,
+                    "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
                         "paginate": {
@@ -463,6 +470,7 @@
                         },
                         "search": "Buscar Alumno ",
                     },
+                   
                     "order": [[1, "desc"]],
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[2].style.textAlign = 'right';
@@ -536,6 +544,12 @@
         });
     }
 
+    $('#divContenido').submit(function () {
+        //do your stuff
+
+        return false;
+    });
+
     function filtosdatatable() {
 
         switch (reporte) {
@@ -549,6 +563,7 @@
                 $("#dtbecas2").tableExport.remove();
                 $("#dtbecas2").tableExport({
                     formats: ["xlsx"],
+                    escape:'false'
                 });
                 break;
             case 2:

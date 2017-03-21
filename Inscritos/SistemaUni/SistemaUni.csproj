@@ -711,6 +711,7 @@
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\LICENSE.txt" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\test\jquery.barrating-spec.js" />
     <Content Include="Style\Complementos\tableexport.js" />
+    <Content Include="Style\Complementos\tableexport.min.js" />
     <Content Include="Style\sass\admin\layout2\layout.scss" />
     <Content Include="Style\sass\admin\layout2\layout\_content.scss" />
     <Content Include="Style\sass\admin\layout2\layout\_footer.scss" />

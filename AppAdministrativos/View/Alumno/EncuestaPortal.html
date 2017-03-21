@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Encuesta Portal </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <!--<link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" />-->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <!--<link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/clockface/css/clockface.css" />
+    <link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" />-->
+    <link href="Style/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <!--<link href="Style/assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet" />-->
+    <link href="Style/assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN /theme STYLES -->
+    <!--<link href="Style/assets/admin/pages/css/invoice.css" rel="stylesheet" type="text/css" />-->
+    <link href="Style/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <!--<link href="Style/assets/global/plugins/nouislider/jquery.nouislider.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/nouislider/jquery.nouislider.pips.min.css" rel="stylesheet" type="text/css" />-->
+    <link href="Style/assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/admin/layout3/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/admin/layout3/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="Style/assets/admin/layout3/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <link href="Style/Complementos/Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating/dist/themes/css-stars.css" rel="stylesheet" />
+    <link href="JS/themes/alertify.core.css" rel="stylesheet" />
+    <link href="JS/themes/alertify.default.css" rel="stylesheet" />
+    <link href="JS/ProgresLoad/LoadPage.css" rel="stylesheet" />
+
+
+</head>
+<body style="font-size: 10px !important">
+    <div class="page-container">
+        <!-- BEGIN PAGE HEAD -->
+        <div class="page-head">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light" id="form_wizard_1">
+
+
+                            <!--PopupEncuesta-->
+                            <div id="PopEncuesta" class="modal fade" tabindex="-1" role="dialog" data-width="950" data-backdrop="static"  data-keyboard="false">
+                                <div class="modal-dialog modal-lg">
+
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">¡Tu opinión es importante! </h3>
+                                    </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="portlet-body form" id="frmTabs">
+                                                <form action="javascript:;" class="form-horizontal" id="submit_form" method="post">
+                                                    <div class="form-wizard">
+                                                        <div class="form-body">
+
+                                                            <div class="alert alert-danger display-none">
+                                                                <button class="close" data-dismiss="alert"></button>
+                                                                Por favor revisa la información, hay algunos campos inválidos
+                                                            </div>
+                                                            <div class="alert alert-success display-none">
+                                                                <button class="close" data-dismiss="alert"></button>
+                                                                Campos validos
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-md-12 " id="DivDinamico1">
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+                                                                <div class="modal-dialog modal-sm" style="height: 90px;">
+                                                                    <!--<div class="modal-content" style="width:auto">-->
+                                                                    <div class="form-group">
+                                                                        <h3 id="hCarga">Cargando</h3>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="bar" style="width:auto" id="divBar">
+                                                                            <p id="txtBar"></p>
+                                                                        </div>
+                                                                        <!--</div>-->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+
+                                            <div id="divGuardar" class="form-group col-md-1">
+                                                <a href="javascript:;" class="btn blue button-next" id="Guardar">
+                                                    Guardar <i class="fa fa-save"></i>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                </div>
+
+                            </div>
+                            <!--Fin de popup-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Style/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="Style/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery-knob/js/jquery.knob.js"></script>
+    <!-- The basic File Upload plugin -->
+    <script src="Style/assets/global/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="Style/assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+
+    <script type="text/javascript" src="Style/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
+    <script type="text/javascript" src="Style/assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
+
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <script src="Style/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/jquery-validation/js/localization/messages_es.min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/nouislider/jquery.nouislider.all.js"></script>
+    <script src="Style/assets/admin/pages/scripts/components-knob-dials.js"></script>
+    <script src="Style/assets/global/scripts/metronic.js"></script>
+    <script src="Style/assets/admin/layout3/scripts/layout.js"></script>
+    <script src="Style/assets/admin/layout3/scripts/demo.js"></script>
+    <script src="Style/assets/admin/pages/scripts/components-pickers.js"></script>
+    <script src="Style/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+    <script src="Style/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+    <script src="Style/assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
+    <script src="Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="Style/assets/admin/pages/scripts/table-advanced.js"></script>
+    <script src="Style/Complementos/Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating/jquery.barrating.js"></script>
+    <script src="JS/alertify.js"></script>
+    <script src="JS/Alumnos/EncuestaPortal.js"></script>
+ 
+    <script>
+        jQuery(document).ready(function () {
+            // initiate layout and plugins
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            Demo.init(); // init demo features
+            ComponentsKnobDials.init();
+            ComponentsPickers.init();
+        });
+
+    </script>
+</body>
+</html>

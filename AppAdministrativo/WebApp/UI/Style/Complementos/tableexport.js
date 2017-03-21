@@ -270,8 +270,7 @@
                      fileExtension = object.fileExtension;
                     TableExport.prototype.export2file(data, mimeType, fileName, fileExtension);
                 });
-
-            return self;
+            
         };
 
 

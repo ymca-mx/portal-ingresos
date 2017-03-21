@@ -1,7 +1,192 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AB0D0617-EB19-4CA1-B344-BBFECD7A39D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DTO</RootNamespace>
+    <AssemblyName>DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adeudo\DTOAdeudo.cs" />
+    <Compile Include="Adeudo\DTOFinanciamiento.cs" />
+    <Compile Include="Adeudo\DTOPagare.cs" />
+    <Compile Include="Alumno\DTOAlumno.cs" />
+    <Compile Include="Alumno\DTOAlumnoBusqueda.cs" />
+    <Compile Include="Alumno\DTOAlumnoDatosGenerales.cs" />
+    <Compile Include="Alumno\DTOAlumnoImagen.cs" />
+    <Compile Include="Alumno\DTOAlumnoOfertaEducativa.cs" />
+    <Compile Include="Alumno\DTOAlumnoReinscripcion.cs" />
+    <Compile Include="Alumno\DTODatos.cs" />
+    <Compile Include="Alumno\DTOReinscripcion.cs" />
+    <Compile Include="Configuracion\DTOConfiguracion.cs" />
+    <Compile Include="Menu\DTOMenu.cs" />
+    <Compile Include="Menu\DTOSubMenu.cs" />
+    <Compile Include="Menu\DTOTipoUsuarioSubMenu.cs" />
+    <Compile Include="OfertaEucativa\DTOOfertaEducativa.cs" />
+    <Compile Include="Pagare\Impresion\DTOAcreedor.cs" />
+    <Compile Include="Pagare\Impresion\DTOBanco.cs" />
+    <Compile Include="Pagare\Impresion\DTODeudor.cs" />
+    <Compile Include="Pagare\Impresion\DTODocumento.cs" />
+    <Compile Include="Pagare\Impresion\DTOPagare.cs" />
+    <Compile Include="Pagare\Visor\DTOPagare.cs" />
+    <Compile Include="Pago\DTOPago.cs" />
+    <Compile Include="Pago\DTOPagoConcepto.cs" />
+    <Compile Include="Pago\DTOPagoDescuento.cs" />
+    <Compile Include="Pago\DTOPagoInformes.cs" />
+    <Compile Include="Pago\DTOPagoMetodo.cs" />
+    <Compile Include="Perfil\TipoAcceso.cs" />
+    <Compile Include="Poliza\Cabecero\DTOCabeceroAlmacen.cs" />
+    <Compile Include="Poliza\Cabecero\DTOCabeceroLayout.cs" />
+    <Compile Include="Poliza\Detalle\DTODetalleAlmacen.cs" />
+    <Compile Include="Poliza\Detalle\DTODetalleLayout.cs" />
+    <Compile Include="Poliza\Detalle\DTORegistroPoliza.cs" />
+    <Compile Include="Poliza\Layout\DTOPropiedad.cs" />
+    <Compile Include="Poliza\Tipo\TipoPoliza.cs" />
+    <Compile Include="Portal\AlumnoBeca.cs" />
+    <Compile Include="Portal\DTOAdeudoBiblioteca.cs" />
+    <Compile Include="Portal\DTOAdeudoChocolates.cs" />
+    <Compile Include="Portal\DTOAlumnInscritoDocumento.cs" />
+    <Compile Include="Portal\DTOAlumno.cs" />
+    <Compile Include="Portal\DTOAlumnoAntecendente.cs" />
+    <Compile Include="Portal\DTOAlumnoBecaDeportiva.cs" />
+    <Compile Include="Portal\DTOAlumnoBecas.cs" />
+    <Compile Include="Portal\DTOAlumnoDescuento.cs" />
+    <Compile Include="Portal\DTOAlumnoDescuentoDocumento.cs" />
+    <Compile Include="Portal\DTOAlumnoDetalle.cs" />
+    <Compile Include="Portal\DTOAlumnoGrupoCuota.cs" />
+    <Compile Include="Portal\DTOAlumnoInscrito.cs" />
+    <Compile Include="Portal\DTOAlumnoInscritoBeca.cs" />
+    <Compile Include="Portal\DTOAlumnoInscritoBecaDocumento.cs" />
+    <Compile Include="Portal\DTOAlumnoInscritoDetalle.cs" />
+    <Compile Include="Portal\DTOAlumnoInscritoDetalleBitacora.cs" />
+    <Compile Include="Portal\DTOAlumnoOfertaEducativa.cs" />
+    <Compile Include="Portal\DTOAlumnoPassword.cs" />
+    <Compile Include="Portal\DTOAlumnoPermitido.cs" />
+    <Compile Include="Portal\DTOAlumnoReferenciaBitacora.cs" />
+    <Compile Include="Portal\DTOAreaAcademica.cs" />
+    <Compile Include="Portal\DTOAsignatura.cs" />
+    <Compile Include="Portal\DTOBitacoraReinscripcionAdeudo.cs" />
+    <Compile Include="Portal\DTOCuentaMail.cs" />
+    <Compile Include="Portal\DTOCuota.cs" />
+    <Compile Include="Portal\DTODatosFicales.cs" />
+    <Compile Include="Portal\DTODescuentos.cs" />
+    <Compile Include="Portal\DTODia.cs" />
+    <Compile Include="Portal\DTODocente.cs" />
+    <Compile Include="Portal\DTODocenteDetalle.cs" />
+    <Compile Include="Portal\DTOEmpresa.cs" />
+    <Compile Include="Portal\DTOEmpresaDetalle.cs" />
+    <Compile Include="Portal\DTOEntidadFederativa.cs" />
+    <Compile Include="Portal\DTOEstadoCivil.cs" />
+    <Compile Include="Portal\DTOEstadoCuenta.cs" />
+    <Compile Include="Portal\DTOExamenMedico.cs" />
+    <Compile Include="Portal\DTOGenero.cs" />
+    <Compile Include="Portal\DTOGrupo.cs" />
+    <Compile Include="Portal\DTOGrupoAlumnoCuota.cs" />
+    <Compile Include="Portal\DTOGrupoComprobante.cs" />
+    <Compile Include="Portal\DTOGrupoComprobanteDocumento.cs" />
+    <Compile Include="Portal\DTOGrupoDetalle.cs" />
+    <Compile Include="Portal\DTOGrupoIdiomas.cs" />
+    <Compile Include="Portal\DTOLenguasRelacion.cs" />
+    <Compile Include="Portal\DTOMatricula.cs" />
+    <Compile Include="Portal\DTOMedioDifusion.cs" />
+    <Compile Include="Portal\DTOMes.cs" />
+    <Compile Include="Portal\DTOMunicipio.cs" />
+    <Compile Include="Portal\DTOOfertaEducativa.cs" />
+    <Compile Include="Portal\DTOOfertaEducativaTipo.cs" />
+    <Compile Include="Portal\DTOPAgoConcepto.cs" />
+    <Compile Include="Portal\DTOPagoConsecutivo.cs" />
+    <Compile Include="Portal\DTOPagoDescuento.cs" />
+    <Compile Include="Portal\DTOPagoDetallado.cs" />
+    <Compile Include="Portal\DTOPagoDetalle.cs" />
+    <Compile Include="Portal\DTOPagoMetodo.cs" />
+    <Compile Include="Portal\DTOPagoParcial.cs" />
+    <Compile Include="Portal\DTOPagoPlan.cs" />
+    <Compile Include="Portal\DTOPagoRecargo.cs" />
+    <Compile Include="Portal\DTOPagos.cs" />
+    <Compile Include="Portal\DTOPais.cs" />
+    <Compile Include="Portal\DTOParentesco.cs" />
+    <Compile Include="Portal\DTOPerfiles.cs" />
+    <Compile Include="Portal\DTOPeriodo.cs" />
+    <Compile Include="Portal\DTOPersonaAutorizada.cs" />
+    <Compile Include="Portal\DTOPreguntas.cs" />
+    <Compile Include="Portal\DTOProspectoDetalle.cs" />
+    <Compile Include="Portal\DTORecibo.cs" />
+    <Compile Include="Portal\DTOReferencia.cs" />
+    <Compile Include="Portal\DTOReferenciadoCabecero.cs" />
+    <Compile Include="Portal\DTOReferenciadoDetalle.cs" />
+    <Compile Include="Portal\DTOReferenciaProcesada.cs" />
+    <Compile Include="Portal\DTOReinscripcion.cs" />
+    <Compile Include="Portal\DTOReporteAlumnoOferta.cs" />
+    <Compile Include="Portal\DTOSubPeriodo.cs" />
+    <Compile Include="Portal\DTOSucursal.cs" />
+    <Compile Include="Portal\DTOSucursalDetalle.cs" />
+    <Compile Include="Portal\DTOTipoDocumento.cs" />
+    <Compile Include="Portal\DTOTurno.cs" />
+    <Compile Include="Portal\DTOUsuario.cs" />
+    <Compile Include="Portal\EstadoCuenta.cs" />
+    <Compile Include="Portal\Flujo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Portal\Referencia.cs" />
+    <Compile Include="Portal\ReferenciasPagadas.cs" />
+    <Compile Include="Recibo\Impresion\DTORecibo.cs" />
+    <Compile Include="Recibo\Impresion\DTOReciboConcepto.cs" />
+    <Compile Include="Recibo\Impresion\DTOReciboDatos.cs" />
+    <Compile Include="Recibo\Impresion\DTOReciboSucursal.cs" />
+    <Compile Include="Recibo\Visor\Recibo.cs" />
+    <Compile Include="Referencia\DTOPosicion.cs" />
+    <Compile Include="Referencia\DTOReferencia.cs" />
+    <Compile Include="Referencia\DTOReferenciaLayout.cs" />
+    <Compile Include="Referencia\DTOReferenciaLayout2.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOCorteCaja.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaConcepto.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaTotal.cs" />
+    <Compile Include="Reporte\CorteDeCaja\DTOFirmas.cs" />
+    <Compile Include="Usuario\CorteDeCaja\DTOCajero.cs" />
+    <Compile Include="Usuario\DTOLogin.cs" />
+    <Compile Include="Usuario\DTOUsuarioImagen.cs" />
+    <Compile Include="Usuario\DTOUsuarioTipo.cs" />
+    <Compile Include="Varios\DTOAnio.cs" />
+    <Compile Include="Varios\DTOEmailEnvio.cs" />
+    <Compile Include="Varios\DTOPeriodo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{a39ec83f-91c0-410e-8baa-8381577b6de8}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
