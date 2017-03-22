@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace SistemaUni {
+namespace AppAdministrativos.Views.Alumno {
     
     
     public partial class Credenciales {

@@ -11,7 +11,7 @@ using Utilities;
 using Reportes.Reportes;
 using System.IO;
 
-namespace SistemaUni
+namespace AppAdministrativos.Views.Alumno
 {
     public partial class Credenciales : System.Web.UI.Page
     {
