@@ -333,13 +333,7 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));
         }
-
-        //datos personales  generados por el alumnos
-        [WebMethod]
-        public DTOAlumno ObenerDatosAlumnoActualiza(string AlumnoId)
-        {
-            return BLLAlumnoPortal.ObenerDatosAlumnoActualiza(int.Parse(AlumnoId));
-        }
+        
 
         //datos personales  generados por el coordinador
         [WebMethod]
@@ -347,53 +341,20 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.ObenerDatosAlumnoCordinador(int.Parse(AlumnoId));
         }
-        //datos personales  generados por el coordinador, alumno, sevicios escolares
+        //datos personales  generados por el coordinador
         [WebMethod]
         public DTOAlumnoDatos ObenerDatosAlumnoTodos(string AlumnoId)
         {
             return BLLAlumnoPortal.ObenerDatosAlumnoTodos(int.Parse(AlumnoId));
         }
-
-        [WebMethod]
-        public bool UpdateAlumnoDatos(DTOAlumnoDetalle AlumnoDatos)
-        {
-
-            return BLLAlumnoPortal.UpdateAlumnoDatos(AlumnoDatos);
-        }
-
+        
         [WebMethod]
         public bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
         {
 
             return BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos);
         }
-
-        [WebMethod]
-        public bool VerificaAlumnoDatos(string AlumnoId)
-        {
-            return BLLAlumnoPortal.VerificaAlumnoDatos(int.Parse(AlumnoId));
-        }
-
-        [WebMethod]
-        public bool VerificaAlumnoEncuesta(string AlumnoId)
-        {
-            return BLLAlumnoPortal.VerificaAlumnoEncuesta(int.Parse(AlumnoId));
-        }
-        //encuesta
-        [WebMethod]
-        public List<DTOPreguntas> PreguntasPortal()
-        {
-
-            return BLLAlumnoPortal.PreguntasPortal();
-        }
-        [WebMethod]
-        public bool GuardarRespuestas(DTORespuestas RespuestasEncuesta)
-        {
-
-            return BLLAlumnoPortal.GuardarRespuestas( RespuestasEncuesta);
-        }
-
-        //encuesta
+        
 
         //datos personales  generados por el alumnos
         [WebMethod]

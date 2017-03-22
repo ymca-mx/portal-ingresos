@@ -7,14 +7,14 @@
         };
 
         $.ajax({
-            url: 'Services/Login.asmx/Valida',
+            url: 'WS/Login.asmx/Valida',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(credenciales),
             dataType: 'json',
             success: function (Resultado) {
                 Datos = Resultado.d;
-                if (Datos == null)
+                if (Datos === null)
                     alert('Favor de verificar las credenciales');
                 else {
                     $.cookie('userAdmin', credenciales['username'], { expires: 1 });
@@ -32,7 +32,7 @@
       
 
         $.ajax({
-            url: 'Services/Usuario.asmx/RecuperaPassword',
+            url: 'WS/Usuario.asmx/RecuperaPassword',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: "{'email': '" + $('#email').val() + "'}",
@@ -104,7 +104,7 @@
 
 
         $('.login-form input').keypress(function (e) {
-            if (e.which == 13) {
+            if (e.which === 13) {
                 if ($('#form_login').valid())
                     Validar();
             }
@@ -160,7 +160,7 @@
         */
 
         $('.forget-form input').keypress(function (e) {
-            if (e.which == 13) {
+            if (e.which === 13) {
                 if ($('.forget-form').valid())
                     Validar();
             }

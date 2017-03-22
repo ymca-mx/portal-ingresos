@@ -4,7 +4,7 @@
     datos = "{'usuarioId':'" + $.cookie('userAdmin') + "'}";
   
     $.ajax({
-        url: 'Services/Usuario.asmx/InsertaBitacora',
+        url: 'WS/Usuario.asmx/InsertaBitacora',
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         data: datos,

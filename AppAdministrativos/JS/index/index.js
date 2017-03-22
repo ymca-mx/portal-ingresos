@@ -9,7 +9,7 @@
     });
 
      $.ajax({
-         url: 'Services/Usuario.asmx/Datos',
+         url: 'WS/Usuario.asmx/Datos',
          type: 'POST',
          contentType: 'application/json; charset=utf-8',
          data: "{'usuarioId':'" + $.cookie('userAdmin') + "'}",

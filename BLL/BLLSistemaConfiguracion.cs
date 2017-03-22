@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Universidad.DAL;
+using DAL;
 
-namespace Universidad.BLL
+namespace  Universidad.BLL
 {
     public class BLLSistemaConfiguracion
     {

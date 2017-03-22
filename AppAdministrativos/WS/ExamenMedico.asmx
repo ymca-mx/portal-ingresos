@@ -1,1 +1,1 @@
-﻿<%@ WebService Language="C#" CodeBehind="ExamenMedico.asmx.cs" Class="WebServices.WS.ExamenMedico" %>
+﻿<%@ WebService Language="C#" CodeBehind="ExamenMedico.asmx.cs" Class="AppAdministrativos.WS.ExamenMedico" %>

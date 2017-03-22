@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL</RootNamespace>
     <AssemblyName>DAL</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -260,6 +260,7 @@
     <Compile Include="EntidadFederativa.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Enum\Enum.cs" />
     <Compile Include="EstadoCivil.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -437,6 +438,9 @@
     <Compile Include="PeriodoAnticipado.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Persistencia\AlumnoDetalleImagen.cs" />
+    <Compile Include="Persistencia\UniversidadEntities.cs" />
+    <Compile Include="Persistencia\UsuarioDetalleImagen.cs" />
     <Compile Include="PersonaAutorizada.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -565,6 +569,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="SistemaConfiguracion.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spUsuarioLogin_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="SubMenu.cs">

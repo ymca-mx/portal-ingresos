@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Universidad.DAL;
+using DAL;
 using System.Drawing;
 using System.IO;
 
@@ -225,12 +225,14 @@ namespace Universidad.BLL
         {
             password = Utilities.Seguridad.Encripta(27, password);
             using (UniversidadEntities db = new UniversidadEntities())
-            {    
+            {
+
                 return (from a in db.Usuario
                         where a.UsuarioId == usuarioId
                         && a.Password == password
                         && a.EstatusId == 1
-                        select new DTO.DTOLogin { 
+                        select new DTO.DTOLogin
+                        {
                             usuarioId = a.UsuarioId
                         }).FirstOrDefault();
             }

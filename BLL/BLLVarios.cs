@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
 namespace Universidad.BLL
 {
@@ -24,7 +25,7 @@ namespace Universidad.BLL
 
         public static List<DTO.DTOPeriodo> CargaPeriodos(int numero)
         {
-            using (Universidad.DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 return (from a in db.Periodo.AsNoTracking()
                     where a.FechaInicial > DateTime.Now | a.FechaFinal > DateTime.Now
@@ -38,7 +39,7 @@ namespace Universidad.BLL
 
         public static DTO.DTOPeriodo PeriodoActual()
         {
-            using (Universidad.DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 return (from a in db.Periodo.AsNoTracking()
                         where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal
@@ -53,7 +54,7 @@ namespace Universidad.BLL
 
         public static List<DTO.DTOOfertaEducativa> Ofertas()
         {
-            using (Universidad.DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 return (from a in db.OfertaEducativa
                         select new DTO.DTOOfertaEducativa { 
@@ -325,7 +326,7 @@ namespace Universidad.BLL
 
         public static DTO.Varios.DTOEmailEnvio CredencialesDeEnvio()
         {
-            using (Universidad.DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 return (from a in db.CuentaMail
                         where a.CuentaMailId == 1
@@ -346,12 +347,12 @@ namespace Universidad.BLL
             string token = GeneraTokenId();
             string body = GeneraBody(alumnoId, GeneraLink(token, esAlumno), esAlumno);
 
-            using (Universidad.DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
 
                 if (esAlumno)
                 {
-                    db.AlumnoPasswordRecovery.Add(new DAL.AlumnoPasswordRecovery
+                    db.AlumnoPasswordRecovery.Add(new AlumnoPasswordRecovery
                     {
                         AlumnoId = alumnoId,
                         Token = token,
@@ -378,7 +379,7 @@ namespace Universidad.BLL
 
                 else
                 {
-                    db.UsuarioPasswordRecovery.Add(new DAL.UsuarioPasswordRecovery
+                    db.UsuarioPasswordRecovery.Add(new UsuarioPasswordRecovery
                     {
                         UsuarioId = alumnoId,
                         Token = token,

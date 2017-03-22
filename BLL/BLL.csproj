@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BLL</RootNamespace>
     <AssemblyName>BLL</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -123,14 +123,6 @@
     <Compile Include="Tools\Universidad.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppAdministrativo\Universidad.DAL\Universidad.DAL.csproj">
-      <Project>{f0a21e11-6ca6-41bf-956e-345d85a6a3b2}</Project>
-      <Name>Universidad.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppAdministrativo\Utilities\Utilities.csproj">
-      <Project>{4a1eef23-9b4b-49c4-8a98-30ea53d34cf6}</Project>
-      <Name>Utilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{a39ec83f-91c0-410e-8baa-8381577b6de8}</Project>
       <Name>DAL</Name>
@@ -142,6 +134,10 @@
     <ProjectReference Include="..\Herramientas\Herramientas.csproj">
       <Project>{cb91b6c5-f64d-45c7-906d-3ad2e1c0dfa1}</Project>
       <Name>Herramientas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{bd52672d-6689-41fe-957c-6b84d18080a3}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

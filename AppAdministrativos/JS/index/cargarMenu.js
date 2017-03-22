@@ -3,7 +3,7 @@
     function Menu() {
         var Menu = "";
         $.ajax({
-            url: 'Services/Usuario.asmx/ConsultarMenu',
+            url: 'WS/Usuario.asmx/ConsultarMenu',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: "{'usuarioId':'" + $.cookie('userAdmin') + "'}",

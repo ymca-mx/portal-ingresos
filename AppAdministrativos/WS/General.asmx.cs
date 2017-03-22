@@ -150,12 +150,7 @@ namespace AppAdministrativos.WS
         {
             return BLLPagoConcepto.ListaPagoConceptos2(int.Parse(AlumnoId), int.Parse(OfertaEducativa), int.Parse(UsuarioId));
         }
-        [WebMethod]
-        public string NombreCalendario(string Alumno)
-        {
-            return BLLAlumnoInscrito.NombreCalendario(int.Parse(Alumno));
-
-        }
+       
         [WebMethod]
         public string GenerarPagoZS()
         {

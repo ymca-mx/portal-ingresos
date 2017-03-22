@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Archivos.ashx.cs" Class="WebServices.WS.Archivos" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Archivos.ashx.cs" Class="AppAdministrativos.WS.Archivos" %>

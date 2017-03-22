@@ -241,5 +241,43 @@ namespace DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spGeneraReferencia", pagoIdParameter);
         }
+    
+        public virtual ObjectResult<spUsuarioLogin_Result> spUsuarioLogin(Nullable<int> usuarioId, string password, string mac)
+        {
+            var usuarioIdParameter = usuarioId.HasValue ?
+                new ObjectParameter("usuarioId", usuarioId) :
+                new ObjectParameter("usuarioId", typeof(int));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            var macParameter = mac != null ?
+                new ObjectParameter("mac", mac) :
+                new ObjectParameter("mac", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUsuarioLogin_Result>("spUsuarioLogin", usuarioIdParameter, passwordParameter, macParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> spConceptoDescuento(Nullable<int> conceptoPagoId, Nullable<int> alumnoId, Nullable<int> periodo, Nullable<int> anio)
+        {
+            var conceptoPagoIdParameter = conceptoPagoId.HasValue ?
+                new ObjectParameter("conceptoPagoId", conceptoPagoId) :
+                new ObjectParameter("conceptoPagoId", typeof(int));
+    
+            var alumnoIdParameter = alumnoId.HasValue ?
+                new ObjectParameter("alumnoId", alumnoId) :
+                new ObjectParameter("alumnoId", typeof(int));
+    
+            var periodoParameter = periodo.HasValue ?
+                new ObjectParameter("periodo", periodo) :
+                new ObjectParameter("periodo", typeof(int));
+    
+            var anioParameter = anio.HasValue ?
+                new ObjectParameter("anio", anio) :
+                new ObjectParameter("anio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spConceptoDescuento", conceptoPagoIdParameter, alumnoIdParameter, periodoParameter, anioParameter);
+        }
     }
 }

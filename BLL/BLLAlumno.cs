@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Universidad.DAL;
+using DAL;
 using System.Drawing;
 using System.IO;
 using System.ComponentModel;

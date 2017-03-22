@@ -1,1 +1,1 @@
-﻿<%@ WebService Language="C#" CodeBehind="Reporte.asmx.cs" Class="WebServices.WS.Reporte" %>
+﻿<%@ WebService Language="C#" CodeBehind="Reporte.asmx.cs" Class="AppAdministrativos.WS.Reporte" %>

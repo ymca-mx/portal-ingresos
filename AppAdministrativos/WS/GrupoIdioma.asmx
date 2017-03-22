@@ -1,1 +1,1 @@
-﻿<%@ WebService Language="C#" CodeBehind="GrupoIdioma.asmx.cs" Class="WebServices.WS.GrupoIdioma" %>
+﻿<%@ WebService Language="C#" CodeBehind="GrupoIdioma.asmx.cs" Class="AppAdministrativos.WS.GrupoIdioma" %>

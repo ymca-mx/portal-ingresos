@@ -6171,12 +6171,31 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fnDetalleDescuentoConcepto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="alumnoDescuentoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fnImporteLetra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="numeroProcesar" Type="varchar" Mode="In" />
+          <Parameter Name="moneda" Type="varchar" Mode="In" />
+          <Parameter Name="centavo" Type="bit" Mode="In" />
+        </Function>
         <Function Name="spAlumnoInscritoCompleto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Anio" Type="int" Mode="In" />
           <Parameter Name="Periodo" Type="int" Mode="In" />
         </Function>
+        <Function Name="spConceptoDescuento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="conceptoPagoId" Type="int" Mode="In" />
+          <Parameter Name="alumnoId" Type="int" Mode="In" />
+          <Parameter Name="periodo" Type="int" Mode="In" />
+          <Parameter Name="anio" Type="int" Mode="In" />
+        </Function>
         <Function Name="spGeneraReferencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pagoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUsuarioLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuarioId" Type="int" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="mac" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="UniversidadModelStoreContainer">
           <EntitySet Name="Adeudo" EntityType="Self.Adeudo" Schema="dbo" store:Type="Tables" />
@@ -15726,7 +15745,18 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <Parameter Name="Periodo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spGeneraReferencia" ReturnType="Collection(String)">
-            <Parameter Name="pagoId" Mode="In" Type="Int32" />
+          <Parameter Name="pagoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUsuarioLogin" ReturnType="Collection(UniversidadModel.spUsuarioLogin_Result)">
+            <Parameter Name="usuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="mac" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spConceptoDescuento" ReturnType="Collection(Decimal)">
+            <Parameter Name="conceptoPagoId" Mode="In" Type="Int32" />
+            <Parameter Name="alumnoId" Mode="In" Type="Int32" />
+            <Parameter Name="periodo" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AlumnoInscritoCompleto">
@@ -15743,6 +15773,13 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <Property Type="Int32" Name="OfertaEducativaId" Nullable="false" />
           <Property Type="Int32" Name="PeriodoId" Nullable="false" />
           <Property Type="Boolean" Name="EsEmpresa" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spUsuarioLogin_Result">
+          <Property Type="Int32" Name="UsuarioId" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="152" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="SucursalCajaId" Nullable="false" />
+          <Property Type="Int32" Name="UsuarioTipoId" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -18360,6 +18397,18 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGeneraReferencia" FunctionName="UniversidadModel.Store.spGeneraReferencia" />
+          <FunctionImportMapping FunctionImportName="spUsuarioLogin" FunctionName="UniversidadModel.Store.spUsuarioLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spUsuarioLogin_Result">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SucursalCajaId" ColumnName="SucursalCajaId" />
+                <ScalarProperty Name="UsuarioTipoId" ColumnName="UsuarioTipoId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spConceptoDescuento" FunctionName="UniversidadModel.Store.spConceptoDescuento" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

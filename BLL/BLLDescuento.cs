@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Universidad.DAL;
+using DAL;
 
 namespace Universidad.BLL
 {
@@ -13,7 +13,7 @@ namespace Universidad.BLL
         {
             try
             {
-                using (DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+                using (UniversidadEntities db = new UniversidadEntities())
                 {
                     db.AlumnoDescuento.Add(new AlumnoDescuento
                     {

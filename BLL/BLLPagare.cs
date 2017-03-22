@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Universidad.DAL;
-
+using DAL;
 namespace Universidad.BLL
 {
     public class BLLPagare
@@ -43,7 +42,7 @@ namespace Universidad.BLL
                 {
                     db.Pago.Where(registro => registro.PagoId == pago.pagoId).FirstOrDefault().EstatusId = 5;
 
-                    db.Pagare.Add(new DAL.Pagare
+                    db.Pagare.Add(new Pagare
                     {
                         AlumnoId = DatosAlumno.alumnoId,
                         FechaGeneracion = DateTime.Now,
@@ -53,9 +52,9 @@ namespace Universidad.BLL
                         Observacion = DatosPagare.observacion,
                         EstatusId = 1,
                         UsuarioId = Credenciales.usuarioId,
-                        PagareDocumento = DatosPagare.documento == null ? null : new DAL.PagareDocumento { PagareDocumento1 = DatosPagare.documento },
-                        PagoPagare = new List<DAL.PagoPagare> { 
-                            new DAL.PagoPagare{
+                        PagareDocumento = DatosPagare.documento == null ? null : new PagareDocumento { PagareDocumento1 = DatosPagare.documento },
+                        PagoPagare = new List<PagoPagare> { 
+                            new PagoPagare{
                                 PagoId = pago.pagoId,
                                 ReferenciaId = (from a in db.Pago.AsNoTracking()
                                                     where a.PagoId == pago.pagoId

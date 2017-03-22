@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utilities;
+using DAL;
 
 namespace Universidad.BLL
 {
@@ -12,7 +13,7 @@ namespace Universidad.BLL
         static Utilities.ProcessResult Resultado = new Utilities.ProcessResult();
         public static DTO.DTOReferenciaLayout2 LayoutScotiabank()
         {
-            using (DAL.UniversidadEntities db = new DAL.UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 List<DTO.DTOReferenciaLayout> Layout = (from a in db.ReferenciadoLayout
                                                         where a.Banco.Equals("Scotiabank")
@@ -146,7 +147,7 @@ namespace Universidad.BLL
             //Aplicacion(Referencias);
         }
 
-        public static DAL.Importe VerificaImporte(DAL.Pago Pago, DTO.DTOReferencia Referencia)
+        public static DAL.Importe VerificaImporte(Pago Pago, DTO.DTOReferencia Referencia)
         {
             return Referencia.importe > Pago.Promesa ? DAL.Importe.Mayor : 
                 (Referencia.importe < Pago.Promesa ? DAL.Importe.Menor : DAL.Importe.Igual);

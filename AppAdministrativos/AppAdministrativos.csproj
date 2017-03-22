@@ -140,6 +140,7 @@
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="login.html" />
+    <Content Include="Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Style\engato\index\css\componentes.css" />
     <Content Include="Style\engato\index\imagenes\Guest.png" />
     <Content Include="Style\engato\login\imagenes\fondos\1.jpg" />
@@ -148,8 +149,8 @@
     <Content Include="Style\engato\login\imagenes\fondos\4.jpg" />
     <Content Include="Style\engato\login\imagenes\logo\100.png" />
     <Content Include="Style\engato\login\imagenes\logo\500.png" />
-    <Content Include="View\Account\recovery.html" />
-    <Content Include="View\packages.config" />
+    <Content Include="Views\Account\recovery.html" />
+    <Content Include="Views\packages.config" />
     <Content Include="Style\assets\global\plugins\angularjs\angular-cookies.min.js.map" />
     <Content Include="Style\assets\global\plugins\angularjs\angular-sanitize.min.js.map" />
     <Content Include="Style\assets\global\plugins\angularjs\angular-touch.min.js.map" />
@@ -602,8 +603,8 @@
     <Content Include="Style\templates\admin3\demo\typeahead_countries.json" />
     <Content Include="Style\templates\admin3\demo\typeahead_nba.json" />
     <Content Include="Style\templates\admin3\demo\typeahead_nhl.json" />
-    <Content Include="View\Adeudos\Biblioteca.html" />
-    <Content Include="View\Adeudos\Chocolates.html" />
+    <Content Include="Views\Adeudos\Biblioteca.html" />
+    <Content Include="Views\Adeudos\Chocolates.html" />
     <Content Include="WS\Alumno.asmx" />
     <Content Include="WS\Beca.asmx" />
     <Content Include="WS\Descuentos.asmx" />
@@ -619,6 +620,9 @@
     <Content Include="WS\Reporte.asmx" />
     <Content Include="WS\Sexo.asmx" />
     <Content Include="WS\Usuario.asmx" />
+    <Content Include="Style\assets\global\plugins\jquery-knob\knob.jquery.json" />
+    <Content Include="Style\assets\global\plugins\jquery-knob\LICENSE" />
+    <Content Include="Style\assets\global\plugins\jquery-knob\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -628,25 +632,21 @@
     <Content Include="WS\Archivos.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="View\Pago\ActualPagos.html" />
-    <Content Include="View\Pago\ActualPagosBuscar.html" />
-    <Content Include="View\Alumno\AlumnoDescuento.html" />
-    <Content Include="View\Alumno\Alumnos.html" />
-    <Content Include="View\Alumno\AlumnoActualizaDatos.html" />
-    <Content Include="View\Alumno\AlumnoDatos.html" />
-    <Content Include="View\Alumno\AlumnoDatosConsulta.html" />
-    <Content Include="View\Alumno\AlumnoDatosCoordinador.html" />
-    <Content Include="View\Alumno\AlumnoMail.html" />
-    <Content Include="View\Alumno\AlumnoPermitido.html" />
-    <Content Include="View\Alumno\EncuestaPortal.html" />
-    <Content Include="View\Alumno\ExamenMedico.html" />
-    <Content Include="View\Alumno\Reglamento.html" />
-    <Content Include="View\Archivos\Archivo.html" />
-    <Content Include="View\Becas\AlumnoBecaComite.html" />
-    <Content Include="View\Becas\AlumnoBecaDeportiva.html" />
-    <Content Include="View\Becas\AlumnosBeca.html" />
-    <Content Include="View\Alumno\Bienvenida.html" />
-    <Content Include="View\Alumno\Calendario.html" />
+    <Content Include="Views\Pago\ActualPagos.html" />
+    <Content Include="Views\Pago\ActualPagosBuscar.html" />
+    <Content Include="Views\Alumno\AlumnoDescuento.html" />
+    <Content Include="Views\Alumno\Alumnos.html" />
+    <Content Include="Views\Alumno\AlumnoDatos.html" />
+    <Content Include="Views\Alumno\AlumnoDatosConsulta.html" />
+    <Content Include="Views\Alumno\AlumnoDatosCoordinador.html" />
+    <Content Include="Views\Alumno\AlumnoMail.html" />
+    <Content Include="Views\Alumno\AlumnoPermitido.html" />
+    <Content Include="Views\Alumno\ExamenMedico.html" />
+    <Content Include="Views\Archivos\Archivo.html" />
+    <Content Include="Views\Becas\AlumnoBecaComite.html" />
+    <Content Include="Views\Becas\AlumnoBecaDeportiva.html" />
+    <Content Include="Views\Becas\AlumnosBeca.html" />
+    <Content Include="Views\Alumno\Bienvenida.html" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.css" />
@@ -655,11 +655,10 @@
     <Content Include="Content\bootstrap-switch\bootstrap3\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="View\Alumno\Credenciales.aspx" />
-    <Content Include="View\Empresas\Empresas.html" />
-    <Content Include="View\Empresas\Empresas2.html" />
-    <Content Include="View\GenerarReferencias.html" />
-    <Content Include="View\IdiomasGrupos\GruposIdiomas.html" />
+    <Content Include="Views\Alumno\Credenciales.aspx" />
+    <Content Include="Views\Empresas\Empresas.html" />
+    <Content Include="Views\Empresas\Empresas2.html" />
+    <Content Include="Views\IdiomasGrupos\GruposIdiomas.html" />
     <Content Include="Imagenes\Cancelar1.png" />
     <Content Include="Imagenes\img_under-construction.png" />
     <Content Include="Imagenes\Impresora.png" />
@@ -669,15 +668,12 @@
     <Content Include="Imagenes\UYMCA-500px.png" />
     <Content Include="JS\alertify.js" />
     <Content Include="JS\AlumnoDescuento.js" />
-    <Content Include="JS\Alumnos\AlumnoActualizaDatos.js" />
     <Content Include="JS\Alumnos\AlumnoDatos.js" />
     <Content Include="JS\Alumnos\AlumnoDatosConsulta.js" />
     <Content Include="JS\Alumnos\AlumnoDatosCoordinador.js" />
     <Content Include="JS\Alumnos\AlumnoMail.js" />
     <Content Include="JS\Alumnos\AlumnoPermitido.js" />
-    <Content Include="JS\Alumnos\EncuestaPortal.js" />
     <Content Include="JS\Alumnos\ExamenMedico.js" />
-    <Content Include="JS\Alumnos\Reglamento.js" />
     <Content Include="JS\Archivos.js" />
     <Content Include="JS\AreaAcademica.js" />
     <Content Include="JS\Becas\AlumnoBecaComite.js" />
@@ -690,7 +686,6 @@
     <Content Include="JS\BuscarReferencia3.js" />
     <Content Include="JS\BuscarReferencia3B.js" />
     <Content Include="JS\BuscarReferencias.js" />
-    <Content Include="JS\Calendarios.js" />
     <Content Include="JS\Chocolates.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.css" />
     <Content Include="JS\DatePickerRange\daterangepicker.js" />
@@ -720,7 +715,6 @@
     <Content Include="JS\NuevoValidacion.js" />
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
-    <Content Include="JS\Pagos\EstadodeCuenta.js" />
     <Content Include="JS\Pagos\PromocionCasa.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasConsulta.js" />
@@ -742,7 +736,6 @@
     <Content Include="JS\Referencias\SolicitudCancelacionReferencias.js" />
     <Content Include="JS\Referencias\SolicitudesCancelacionReferencias.js" />
     <Content Include="JS\Referencias\VoBoCancelacionReferencias.js" />
-    <Content Include="JS\Reinscripcion.js" />
     <Content Include="JS\Reinscripcion\MateriasAsesorias.js" />
     <Content Include="JS\RelacionarMateria.js" />
     <Content Include="JS\Reportes\ReporteAcademico.js" />
@@ -803,32 +796,28 @@
     <Content Include="JS\Tools.js" />
     <Content Include="JS\Turno.js" />
     <Content Include="JS\UpdatePanel.js" />
-    <Content Include="View\Alumno\ListadoAlumnos.html" />
-    <Content Include="View\Pago\EstadodeCuenta.html" />
-    <Content Include="View\Pago\EstadodeCuenta2.html" />
-    <Content Include="View\Pago\EstadodeCuenta2Buscar.html" />
-    <Content Include="View\Pago\ListaConceptos.html" />
-    <Content Include="View\Pago\Pagos.html" />
-    <Content Include="View\Pago\Pagos2.html" />
-    <Content Include="View\Pago\Pagos2Buscar.html" />
-    <Content Include="View\Pago\PromociónCasa.html" />
-    <Content Include="View\Pago\ReferenciasConsulta.html" />
-    <Content Include="View\Pago\ReferenciasTramites.html" />
-    <Content Include="View\Referencias\ReferenciasBuscar.html" />
-    <Content Include="View\Referencias\ReferenciasPagadasBuscar.html" />
-    <Content Include="View\Referencias\CancelarReferencias.html" />
-    <Content Include="View\Referencias\GenerarCargosIngles.html" />
-    <Content Include="View\Referencias\GenerarReferenciasB.html" />
-    <Content Include="View\Referencias\SolicitudCancelacionReferencias.html" />
-    <Content Include="View\Referencias\SolicitudesCancelacionReferencias.html" />
-    <Content Include="View\Referencias\VoBoCancelacionReferencias.html" />
-    <Content Include="View\ReInscripcion.html" />
-    <Content Include="View\Reinscripcion\MateriasAsesorias.html" />
-    <Content Include="View\Reportes\ReporteAlumnoAcademico.html" />
-    <Content Include="View\Reportes\ReporteAlumnoOferta.html" />
-    <Content Include="View\Reportes\ReporteAlumnoReferencias.html" />
-    <Content Include="View\Reportes\ReporteVistoBueno.html" />
-    <Content Include="View\Mantenimiento\R_.html" />
+    <Content Include="Views\Alumno\ListadoAlumnos.html" />
+    <Content Include="Views\Pago\EstadodeCuenta.html" />
+    <Content Include="Views\Pago\EstadodeCuenta2Buscar.html" />
+    <Content Include="Views\Pago\Pagos.html" />
+    <Content Include="Views\Pago\Pagos2Buscar.html" />
+    <Content Include="Views\Pago\PromociónCasa.html" />
+    <Content Include="Views\Pago\ReferenciasConsulta.html" />
+    <Content Include="Views\Pago\ReferenciasTramites.html" />
+    <Content Include="Views\Referencias\ReferenciasBuscar.html" />
+    <Content Include="Views\Referencias\ReferenciasPagadasBuscar.html" />
+    <Content Include="Views\Referencias\CancelarReferencias.html" />
+    <Content Include="Views\Referencias\GenerarCargosIngles.html" />
+    <Content Include="Views\Referencias\GenerarReferenciasB.html" />
+    <Content Include="Views\Referencias\SolicitudCancelacionReferencias.html" />
+    <Content Include="Views\Referencias\SolicitudesCancelacionReferencias.html" />
+    <Content Include="Views\Referencias\VoBoCancelacionReferencias.html" />
+    <Content Include="Views\Reinscripcion\MateriasAsesorias.html" />
+    <Content Include="Views\Reportes\ReporteAlumnoAcademico.html" />
+    <Content Include="Views\Reportes\ReporteAlumnoOferta.html" />
+    <Content Include="Views\Reportes\ReporteAlumnoReferencias.html" />
+    <Content Include="Views\Reportes\ReporteVistoBueno.html" />
+    <Content Include="Views\Mantenimiento\R_.html" />
     <Content Include="Scripts\base64.js" />
     <Content Include="Scripts\base64.min.js" />
     <Content Include="Scripts\bootstrap-switch.js" />
@@ -5160,11 +5149,11 @@
     <Content Include="Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="View\Alumno\Credenciales.aspx.cs">
+    <Compile Include="Views\Alumno\Credenciales.aspx.cs">
       <DependentUpon>Credenciales.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="View\Alumno\Credenciales.aspx.designer.cs">
+    <Compile Include="Views\Alumno\Credenciales.aspx.designer.cs">
       <DependentUpon>Credenciales.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
