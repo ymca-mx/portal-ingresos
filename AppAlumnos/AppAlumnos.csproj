@@ -4919,6 +4919,10 @@
       <Project>{ab0d0617-eb19-4ca1-b344-bbfecd7a39d0}</Project>
       <Name>DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{bd52672d-6689-41fe-957c-6b84d18080a3}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

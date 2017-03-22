@@ -20,7 +20,7 @@ namespace Pruebas
         public void BuscarAlumnoBeca()
         {
             var obj=
-            BLL.BLLAlumno.BuscarAlumno(8182, 3);
+            BLL.BLLAlumnoPortal.BuscarAlumno(8182, 3);
 
             Console.WriteLine(obj.AlumnoId + " " + obj.Nombre + " ");
         }

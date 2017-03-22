@@ -5229,10 +5229,6 @@
     <Folder Include="Style\engato\login\imagenes\recovery\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppAdministrativo\Utilities\Utilities.csproj">
-      <Project>{4a1eef23-9b4b-49c4-8a98-30ea53d34cf6}</Project>
-      <Name>Utilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{ebe8e3c3-dd70-49aa-8e6e-d10d4fa4ee9a}</Project>
       <Name>BLL</Name>
@@ -5248,6 +5244,10 @@
     <ProjectReference Include="..\Reportes\Reportes.csproj">
       <Project>{4bae381a-6c10-4974-abaf-94960c048b79}</Project>
       <Name>Reportes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{bd52672d-6689-41fe-957c-6b84d18080a3}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

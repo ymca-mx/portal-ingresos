@@ -102,7 +102,7 @@ namespace Pruebas
             {
                 var refere = new Utilities.ProcessResult();
                 string body = "";
-                DTOAlumno opjAl = BLLAlumno.ObtenerAlumno(AlumnoId);
+                DTOAlumno opjAl = BLLAlumnoPortal.ObtenerAlumno(AlumnoId);
                 
 
                 #region "HTML"

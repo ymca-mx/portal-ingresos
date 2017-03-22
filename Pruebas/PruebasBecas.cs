@@ -28,7 +28,7 @@ namespace Pruebas
         public void BuscarAlumno()
         {
             var objRes =
-            BLL.BLLAlumno.BuscarAlumno(8196, 2);
+            BLL.BLLAlumnoPortal.BuscarAlumno(8196, 2);
             Console.WriteLine(objRes.Nombre);
         }
 
@@ -61,7 +61,7 @@ namespace Pruebas
         [TestMethod]
         public void Alumnos()
         {
-            var obj = BLL.BLLAlumno.ListarAlumnos();
+            var obj = BLL.BLLAlumnoPortal.ListarAlumnos();
             obj.ForEach(k =>
             {
                 Console.WriteLine(k.AlumnoId + " -  " + k.Nombre + " -  " + k.Descripcion);
@@ -144,7 +144,7 @@ namespace Pruebas
             //    //Inscripcion = decimal
             };
 
-            BLL.BLLAlumno.AplicaBeca_Excepcion(Alumno, false);
+            BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(Alumno, false);
 
         }
 
@@ -1744,7 +1744,7 @@ namespace Pruebas
             {
                 try
                 {
-                    BLL.BLLAlumno.AplicaBeca(alumno, false);
+                    BLL.BLLAlumnoPortal.AplicaBeca(alumno, false);
                     Errores.Add("Alumno Correcto :  " + alumno.alumnoId);
                 }
                 catch
@@ -1771,7 +1771,7 @@ namespace Pruebas
                 genera = true
             };
 
-            BLL.BLLAlumno.AplicaBeca(Alumno, false);
+            BLL.BLLAlumnoPortal.AplicaBeca(Alumno, false);
 
         }
 
