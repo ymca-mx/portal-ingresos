@@ -26,7 +26,7 @@
         var filtro;
         filtro = $('#txtFiltro').val();
         $.ajax({
-            url: '/../WebServices/WS/Alumno.asmx/BuscarAlumnoFiltro',
+            url: 'WS/Alumno.asmx/BuscarAlumnoFiltro',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{filtro:"' + filtro + '"}',

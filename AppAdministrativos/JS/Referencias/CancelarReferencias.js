@@ -18,7 +18,7 @@
 
     //function ConsutlarAdeudos(AlumnoId) {
     //    $.ajax({
-    //        url: '../WebServices/WS/Alumno.asmx/ConsultarAdeudo',
+    //        url: 'WS/Alumno.asmx/ConsultarAdeudo',
     //        type: 'POST',
     //        contentType: 'application/json; charset=utf-8',
     //        data: '{AlumnoId:"' + AlumnoId + '"}',
@@ -38,7 +38,7 @@
         AlumnoId = Alumnoid;
         //var AlumnoId = '9579';
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnoL',
+            url: 'WS/Alumno.asmx/ConsultarAlumnoL',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '"}',
@@ -56,7 +56,7 @@
 
     function CargarPagosConceptos(Alumno) {
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarReferenciasCancelar',
+            url: 'WS/Alumno.asmx/ConsultarReferenciasCancelar',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:' + Alumno + '}',
@@ -161,7 +161,7 @@
     function ActivarReferencia(PagoId) {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ActivarPago",
+            url: "WS/General.asmx/ActivarPago",
             data: "{PagoId:'" + PagoId + "'}",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -192,7 +192,7 @@
             $('#divBar').modal('show');
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/General.asmx/CancelarPago",
+                url: "WS/General.asmx/CancelarPago",
                 data: "{PagoId:'" + PagoId + "',Comentario:'" + $('#txtComentario').val() +
                         "',UsuarioId:'" + usuario + "',Estatus:'" + Estatus + "'}",
                 contentType: "application/json; charset=utf-8",

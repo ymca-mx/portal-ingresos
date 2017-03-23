@@ -6,7 +6,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostraReporteAlumnoOferta",
+            url: "WS/Reporte.asmx/MostraReporteAlumnoOferta",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 

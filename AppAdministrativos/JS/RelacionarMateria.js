@@ -6,7 +6,7 @@
     function CargarDias() {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/Dias",
+            url: "WS/General.asmx/Dias",
             data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -26,7 +26,7 @@
     function CargarDocentes() {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Docentes.asmx/ListaDocentes",
+            url: "WS/Docentes.asmx/ListaDocentes",
             data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -48,7 +48,7 @@
         var plantel = -1
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarOfertaEducativaTipo",
+            url: "WS/General.asmx/ConsultarOfertaEducativaTipo",
             data: "{Plantel:'" + plantel + "'}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -76,7 +76,7 @@
             $('#lblOFerta').html(tipo == 1 ? 'Licenciatura' : tipo == 2 ? 'Especialidad' : tipo == 3 ? 'Maestría' : tipo == 4 ? 'Idioma' : tipo == 5 ? 'Doctorado' : ' ');
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/General.asmx/ConsultarOfertaEducativa",
+                url: "WS/General.asmx/ConsultarOfertaEducativa",
                 data: "{tipoOferta:'" + tipo + "',Plantel:'" + plantel + "'}", // the data in form-encoded format, ie as it would appear on a querystring
                 //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -105,7 +105,7 @@
         $("#slcMateria").empty();
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Materia.asmx/ListarAsignatura",
+            url: "WS/Materia.asmx/ListarAsignatura",
             data: "{OfertaEducativaId:'" + $('#slcCarrera') .val()+ "'}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml

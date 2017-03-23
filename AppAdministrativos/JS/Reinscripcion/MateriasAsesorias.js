@@ -33,7 +33,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Reinscripcion.asmx/AlumnoReinscripcion",
+            url: "WS/Reinscripcion.asmx/AlumnoReinscripcion",
             data: "{AlumnoId:'" + Alumno + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -213,7 +213,7 @@
     function Adeudos() {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Descuentos.asmx/ConsultarAdeudo",
+            url: "WS/Descuentos.asmx/ConsultarAdeudo",
             data: '{AlumnoId:' + AlumnoNum + '}',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -246,7 +246,7 @@
             + nAse + '",Completa:"' + completa + '",usuario:"' + usuario + '",Comentario:"' + comentario + '"}';
 
         $.ajax({
-            url: '../WebServices/WS/Reinscripcion.asmx/Generar',
+            url: 'WS/Reinscripcion.asmx/Generar',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: Datos,
@@ -258,7 +258,7 @@
                     //Cargar Alumno
                     $.ajax({
                         type: "POST",
-                        url: "/../WebServices/WS/Reinscripcion.asmx/AlumnoReinscripcion",
+                        url: "WS/Reinscripcion.asmx/AlumnoReinscripcion",
                         data: "{AlumnoId:'" + AlumnoNum + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
@@ -289,7 +289,7 @@
         $('#Load').modal('show');
         $('#frmAlumnos').show();
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/BuscarAlumnoString',
+            url: 'WS/Alumno.asmx/BuscarAlumnoString',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{Filtro:"' + Alumno + '"}',

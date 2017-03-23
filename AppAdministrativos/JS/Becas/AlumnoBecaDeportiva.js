@@ -44,7 +44,7 @@ $(document).ready(function () {
     function BecaDeportiva(Cadena) {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Beca.asmx/BecaDeportiva",
+            url: "WS/Beca.asmx/BecaDeportiva",
             data: Cadena,
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -106,7 +106,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Beca.asmx/ObtenerAlumnoDeportiva",
+            url: "WS/Beca.asmx/ObtenerAlumnoDeportiva",
             data: "{AlumnoId:" + AlumnoId + "}",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -283,7 +283,7 @@ $(document).ready(function () {
     });
 
     function AbrirArchivo(DocumentoId) {
-        var url = "/../WebServices/WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
+        var url = "WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
         var archiv = window;
         archiv.open("../Inscritos/Archivos/Archivo.html", "PDF");
         archiv.Ruta = url;
@@ -316,7 +316,7 @@ $(document).ready(function () {
         data.append("UsuarioId", Usuario);
 
         var request = new XMLHttpRequest();
-        request.open("POST", '../WebServices/WS/Beca.asmx/GuardarDocumentos', true);
+        request.open("POST", 'WS/Beca.asmx/GuardarDocumentos', true);
         request.send(data);
 
         request.onreadystatechange = function () {

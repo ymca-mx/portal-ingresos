@@ -9,7 +9,7 @@
         var usuario = $.cookie('userAdmin');
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/General.asmx/ConsultarPagoCancelacionSolicitud',
+            url: 'WS/General.asmx/ConsultarPagoCancelacionSolicitud',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{UsuarioId:"' + usuario + '",Tipo:"' + 2 + '"}',
@@ -82,7 +82,7 @@
     function MostarReferencia(pagoId) {
 
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnoReferencias',
+            url: 'WS/Alumno.asmx/ConsultarAlumnoReferencias',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{alumnoInt:' + 0 + ',pagoid:' + pagoId + '}',
@@ -169,7 +169,7 @@
         var usuario = $.cookie('userAdmin');
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/General.asmx/CambiarPagoCancelacionSolicitud',
+            url: 'WS/General.asmx/CambiarPagoCancelacionSolicitud',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{SolicitudId:' + SolicitudId + ',UsuarioId:' + usuario + ',Tipo: ' + 3 + '}',
@@ -203,7 +203,7 @@
 
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/CancelarPago",
+            url: "WS/General.asmx/CancelarPago",
             data: "{PagoId:'" + PagoId2 + "',Comentario:'" + Comentario +
                     "',UsuarioId:'" + usuario + "',Estatus:'" + Estatus + "'}",
             contentType: "application/json; charset=utf-8",
@@ -211,7 +211,7 @@
                 if (data.d == "Guardado") {
 
                     $.ajax({
-                        url: '../WebServices/WS/General.asmx/CambiarPagoCancelacionSolicitud',
+                        url: 'WS/General.asmx/CambiarPagoCancelacionSolicitud',
                         type: 'POST',
                         contentType: 'application/json; charset=utf-8',
                         data: '{SolicitudId:' + SolicitudId + ',UsuarioId:' + usuario + ',Tipo: ' + 7 + '}',

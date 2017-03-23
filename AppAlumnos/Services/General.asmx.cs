@@ -63,5 +63,18 @@ namespace AppAlumnos.Services
             return BLLPagoConcepto.TraerPagoConcepto(int.Parse(OfertaEducativaId), int.Parse(PagoConceptoId));
         }
 
+
+        [WebMethod]
+        public List<DTOGenero> ConsultarGenero()
+        {
+            return BLLGenero.ConsultaTodosGenero();
+        }
+
+        [WebMethod]
+        public List<DTOEstadoCivil> ConsultarEstadoCivil()
+        {
+            return BLLEstadoCivil.ConsultarEstadosCiviles();
+        }
+        
     }
 }

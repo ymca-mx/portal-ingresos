@@ -11,7 +11,7 @@
     {
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/PeriodosPromocionCasa",
+            url: "WS/Alumno.asmx/PeriodosPromocionCasa",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -71,7 +71,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultarAlumnoPromocionCasa",
+            url: "WS/Alumno.asmx/ConsultarAlumnoPromocionCasa",
             data: "{AlumnoId:'" + AlumnoId + "',TA:'" + TA + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -253,7 +253,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultarAlumnoPromocionCasa",
+            url: "WS/Alumno.asmx/ConsultarAlumnoPromocionCasa",
             data: "{AlumnoId:'" + AlumnoId1 + "', TA:'" + TA + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -358,7 +358,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/AplicarPromocionCasa",
+            url: "WS/Alumno.asmx/AplicarPromocionCasa",
             data: obj,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

@@ -57,7 +57,7 @@
     function BecaComite(Cadena) {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Beca.asmx/BecaComite",
+            url: "WS/Beca.asmx/BecaComite",
             data: Cadena,
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -127,7 +127,7 @@
 
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Beca.asmx/ObtenerAlumno",
+            url: "WS/Beca.asmx/ObtenerAlumno",
             data: "{AlumnoId:" + AlumnoId + "}",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -292,7 +292,7 @@
 
     function CrearPDF(DocumentoId) {
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/GenerarPDF',
+            url: 'WS/Beca.asmx/GenerarPDF',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{DocumentoId:"' + DocumentoId + '"}',
@@ -309,7 +309,7 @@
     }
 
     function CrearPDF2(DocumentoId) {
-        var url = "../WebServices/WS/Beca.asmx/GenerarPDF2";
+        var url = "WS/Beca.asmx/GenerarPDF2";
         url += '?' + 'DocumentoId=' + DocumentoId;
         window.open(url, "PDF");
     }
@@ -341,7 +341,7 @@
         data.append("UsuarioId", Usuario);
 
         var request = new XMLHttpRequest();
-        request.open("POST", '../WebServices/WS/Beca.asmx/GuardarDocumentos', true);
+        request.open("POST", 'WS/Beca.asmx/GuardarDocumentos', true);
         request.send(data);
 
         request.onreadystatechange = function () {

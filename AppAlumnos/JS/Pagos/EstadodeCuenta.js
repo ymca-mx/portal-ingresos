@@ -89,7 +89,7 @@
     function BuscarAlumno(idAlumno) {
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultarAlumno",
+            url: "WS/Alumno.asmx/ConsultarAlumno",
             data: "{AlumnoId:'" + idAlumno + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -116,7 +116,7 @@
         //console.log(FechaF._i);
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/EstadoDeCuenta",
+            url: "WS/Alumno.asmx/EstadoDeCuenta",
             data: "{AlumnoId:'" + Alumnoid + "',FechaI:'" + FechaI + "',FechaF:'" + FechaF + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

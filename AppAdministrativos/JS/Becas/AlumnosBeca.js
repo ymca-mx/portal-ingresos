@@ -78,7 +78,7 @@
         var usuario = $.cookie('userAdmin');
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/General.asmx/ObtenerUsuario",
+            url: "WS/General.asmx/ObtenerUsuario",
             data: "{UsuarioId:'" + usuario + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -95,7 +95,7 @@
     //Cargar();
     function CargarPeriodo() {
         $.ajax({
-            url: '../WebServices/WS/General.asmx/GetPeriodoActual',
+            url: 'WS/General.asmx/GetPeriodoActual',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{}',
@@ -128,7 +128,7 @@
     function CargarDescuentos() {
         var OfertaEducativa = $('#txtOfertaEducativa').data("ofertaid");
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/DescuentosAnteriores',
+            url: 'WS/Beca.asmx/DescuentosAnteriores',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + OfertaEducativa + '"}',
@@ -231,7 +231,7 @@
 
     function CrearPDF(DocumentoId) {
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/GenerarPDF',
+            url: 'WS/Beca.asmx/GenerarPDF',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{DocumentoId:"' + DocumentoId + '"}',
@@ -247,7 +247,7 @@
         });
     }
     function AbrirArchivo(DocumentoId) {
-        var url = "/../WebServices/WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
+        var url = "WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
         var archiv = window;
         archiv.open("../Inscritos/Archivos/Archivo.html", "PDF");
         archiv.Ruta = url;
@@ -365,7 +365,7 @@
     });
     function OFertasPeriodo() {
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/OfertasAlumno',
+            url: 'WS/Beca.asmx/OfertasAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '"}',
@@ -409,7 +409,7 @@
     function TraerOfertaAlumno(AlumnoId1, Oferta2) {
         NuevoIngreso = 0;
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/BuscarAlumno',
+            url: 'WS/Beca.asmx/BuscarAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId1 + '",OfertaEducativaId:"' + Oferta2 + '"}',
@@ -669,7 +669,7 @@
         SEP = SEP == true ? "true" : "false";
         var usuario = $.cookie('userAdmin');
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/InsertarBeca',
+            url: 'WS/Beca.asmx/InsertarBeca',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + OfertaEducativaId + '",Monto:"' + Monto + '",SEP:"' +
@@ -735,7 +735,7 @@
         data.append("UsuarioId", Usuario);
 
         var request = new XMLHttpRequest();
-        request.open("POST", '../WebServices/WS/Beca.asmx/GuardarDocumentos', true);
+        request.open("POST", 'WS/Beca.asmx/GuardarDocumentos', true);
         request.send(data);
 
         request.onreadystatechange = function () {

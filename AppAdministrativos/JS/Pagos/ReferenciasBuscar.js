@@ -24,7 +24,7 @@
     function BuscarAlumno(idAlumno) {
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultarAlumno",
+            url: "WS/Alumno.asmx/ConsultarAlumno",
             data: "{AlumnoId:'" + idAlumno +"'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -42,7 +42,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultaPagosDetalle",
+            url: "WS/Alumno.asmx/ConsultaPagosDetalle",
             data: "{AlumnoId:'" + AlumnoId + "',Anio:'" + Anio + "',PeriodoId:'" + PeriodoId + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -308,7 +308,7 @@
                         titulo.childNodes[1].childNodes[1].childNodes[3].textContent = DescripcipT1;
                         $.ajax({
                             type: "POST",
-                            url: "/../WebServices/WS/General.asmx/Ofertas_costos_Alumno",
+                            url: "WS/General.asmx/Ofertas_costos_Alumno",
                             data: "{AlumnoId:'" + AlumnoId + "',Anio:'" + Anio + "',PeriodoId:'" + PeriodoId + "'}",
                             contentType: "application/json; charset=utf-8",
                             dataType: 'json',
@@ -392,7 +392,7 @@
         $("#sclPeriodo").append(option1);
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultarPeriodosAlumno",
+            url: "WS/Alumno.asmx/ConsultarPeriodosAlumno",
             data: "{AlumnoId:'" + AlumnoId + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

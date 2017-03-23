@@ -271,7 +271,7 @@
         datosDoc += "'}";
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Docentes.asmx/GuardarDocente",
+            url: "WS/Docentes.asmx/GuardarDocente",
             data: datosDoc, // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             datatype: JSON,

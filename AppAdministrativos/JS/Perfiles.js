@@ -51,7 +51,7 @@
     function ConsultarPerfiles() {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/OperacionesPerfiles.asmx/ConsultarTodos",
+            url: "WS/OperacionesPerfiles.asmx/ConsultarTodos",
             data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -117,7 +117,7 @@
             if (e) {
                 $.ajax({
                     type: "POST",
-                    url: "../WebServices/WS/OperacionesPerfiles.asmx/EliminarPerfil",
+                    url: "WS/OperacionesPerfiles.asmx/EliminarPerfil",
                     data: "{PerfilId:'" + rowadd.PerfilId + "'}",
                     contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                     success: function (data) {
@@ -138,7 +138,7 @@
             Parametros += "Fecha:'" + $('#txtFechaAlta').val() + "'}";
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/OperacionesPerfiles.asmx/GuardarPerfil",
+                url: "WS/OperacionesPerfiles.asmx/GuardarPerfil",
                 data: Parametros,
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
@@ -162,7 +162,7 @@
         Parametros += "Fecha:'" + $('#txtFechaAltaM').val() + "'}";
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/OperacionesPerfiles.asmx/ModificarPerfil",
+            url: "WS/OperacionesPerfiles.asmx/ModificarPerfil",
             data: Parametros,
             contentType: "application/json; charset=utf-8",
             success: function (data) {

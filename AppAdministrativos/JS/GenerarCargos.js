@@ -2,7 +2,7 @@
     $('#btnBuscar').click(function () {
         var fid = $('#txtFolio').val();
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumno',
+            url: 'WS/Alumno.asmx/ConsultarAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + fid + '"}',
@@ -18,7 +18,7 @@
         var oferta;
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarPagosPlan",
+            url: "WS/General.asmx/ConsultarPagosPlan",
             data: "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'"+oferta+"'}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -42,7 +42,7 @@
         if (plantel == -1) { $("#slcOfertaEducativa").empty(); $("#slcSistemaPago").empty(); return false; }
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarOfertaEducativaTipo",
+            url: "WS/General.asmx/ConsultarOfertaEducativaTipo",
             data: "{Plantel:'" + plantel + "'}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -90,7 +90,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/General.asmx/ConsultarOfertaEducativa",
+                url: "WS/General.asmx/ConsultarOfertaEducativa",
                 data: "{tipoOferta:'" + tipo + "',Plantel:'" + plantel + "'}", // the data in form-encoded format, ie as it would appear on a querystring
                 //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -145,7 +145,7 @@
 
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/BuscarLengua",
+            url: "WS/General.asmx/BuscarLengua",
             data: "{AlumnoId:'" + fid + "',Idioma:'" + Idioma + "',Periodo:'" + Periodo + "'}",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -155,7 +155,7 @@
                         $('#divTablaDescuento').show();
                         $.ajax({
                             type: "POST",
-                            url: "../WebServices/WS/Descuentos.asmx/TraerDescuentosIdiomas",
+                            url: "WS/Descuentos.asmx/TraerDescuentosIdiomas",
                             data: "{'Idioma':" + Idioma + ",Periodo:'" + Periodo + "'}",
                             contentType: "application/json; charset=utf-8",
                             success: function (data) {
@@ -196,7 +196,7 @@
                         if ($('#slcOferta').val() == 2 || $('#slcOferta').val() == 3) {
                             $.ajax({
                                 type: "POST",
-                                url: "../WebServices/WS/Descuentos.asmx/ConsultarAdeudo",
+                                url: "WS/Descuentos.asmx/ConsultarAdeudo",
                                 data: '{AlumnoId:' + fid + '}',
                                 contentType: "application/json; charset=utf-8",
                                 success: function (data) {
@@ -223,7 +223,7 @@
     function DescuentosPeriodos(Idioma, Periodo) {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/Descuentos.asmx/TraerDescuentosPeriodo",
+            url: "WS/Descuentos.asmx/TraerDescuentosPeriodo",
             data: "{'OfertaEducativaId':" + Idioma + ",Periodo:'" + Periodo + "'}",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -302,7 +302,7 @@
         var fila = '<tr id="tr1">';
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/PeriodosCompletos",
+            url: "WS/General.asmx/PeriodosCompletos",
             data: "{Periodo:'" + Periodo + "',ofertaId:'" + $("#slcOfertaEducativa").val() + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

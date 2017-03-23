@@ -26,7 +26,7 @@
         AlumnoId = Alumno;
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/ExamenMedico.asmx/ObtenerAlumno",
+            url: "WS/ExamenMedico.asmx/ObtenerAlumno",
             data: "{AlumnoId:'" + Alumno + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -66,7 +66,7 @@
             if (e) {
                 $('#Load').modal('show');
                 $.ajax({
-                    url: '../WebServices/WS/ExamenMedico.asmx/GuardarExamen',
+                    url: 'WS/ExamenMedico.asmx/GuardarExamen',
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
                     data: objAl,
@@ -97,7 +97,7 @@
     });
     function EsString(Alumno) {
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/BuscarAlumnoString',
+            url: 'WS/Alumno.asmx/BuscarAlumnoString',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{Filtro:"' + Alumno + '"}',

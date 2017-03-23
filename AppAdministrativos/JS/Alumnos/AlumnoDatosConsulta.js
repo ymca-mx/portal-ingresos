@@ -25,7 +25,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ObenerDatosAlumnoTodos",
+            url: "WS/Alumno.asmx/ObenerDatosAlumnoTodos",
             data: "{AlumnoId:'" + Alumno + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -104,7 +104,7 @@
     function EsString(Alumno) {
         $('#frmTabs').hide();
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/BuscarAlumnoString',
+            url: 'WS/Alumno.asmx/BuscarAlumnoString',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{Filtro:"' + Alumno + '"}',
@@ -168,7 +168,7 @@
         combo.empty();
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarPaises",
+            url: "WS/General.asmx/ConsultarPaises",
             data: "{}",
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
@@ -191,7 +191,7 @@
         combo.empty();
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            url: "WS/General.asmx/ConsultarEntidadFederativa",
             data: "{}",
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
@@ -238,7 +238,7 @@
         $('#slcEstado').empty();
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            url: "WS/General.asmx/ConsultarEntidadFederativa",
             data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -258,7 +258,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "../WebServices/WS/General.asmx/ConsultarMunicipios",
+                    url: "WS/General.asmx/ConsultarMunicipios",
                     data: "{EntidadFederativaId:'" + EstadoId + "'}",
                     contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                     success: function (data) {

@@ -20,7 +20,7 @@
 
         try{
             var request = new XMLHttpRequest();
-            request.open("POST", '../WebServices/WS/Descuentos.asmx/GuardarDocumentos', true);
+            request.open("POST", 'WS/Descuentos.asmx/GuardarDocumentos', true);
             request.send(data);
         }
         catch(err){

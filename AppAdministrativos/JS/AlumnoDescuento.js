@@ -57,7 +57,7 @@
         $("#slcOferta").append(option);
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarOfertaEducativaAlumno",
+            url: "WS/General.asmx/ConsultarOfertaEducativaAlumno",
             data: "{AlumnoId:'" + alumnoid + "'}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -96,7 +96,7 @@
         AlumnoId = alumnoid;
         $('#tblHistorico tbody').remove();
         $.ajax({
-            url: '../WebServices/WS/Descuentos.asmx/ConsultarDescuentos',
+            url: 'WS/Descuentos.asmx/ConsultarDescuentos',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:' + alumnoid + ',OfertaEducativaId:' + Ofertaeducativaid + '}',
@@ -159,7 +159,7 @@
             Daos += ',DescuentoBeca:' + des + ',DescuentoSEP:' + dsep + ',OfertaEducativaId:' + $("#slcOferta").val(); +'';
             Daos += '}';
             $.ajax({
-                url: '../WebServices/WS/Descuentos.asmx/GuardarDescuento',
+                url: 'WS/Descuentos.asmx/GuardarDescuento',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: Daos, 
@@ -176,7 +176,7 @@
             Daos += ',DescuentoInsc:' + IdInsc + ',DescuentoFinan:' + IdFinan;
             Daos += '}';
             $.ajax({
-                url: '../WebServices/WS/Descuentos.asmx/GuardarDescuento2',
+                url: 'WS/Descuentos.asmx/GuardarDescuento2',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: Daos,
@@ -192,7 +192,7 @@
         Usuario = $.cookie('userAdmin');
         var Ingles = Usuario == 6070 || 6645 || 8138 ? false : true;
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnosBeca',
+            url: 'WS/Alumno.asmx/ConsultarAlumnosBeca',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{Ingles:' + Ingles + '}',

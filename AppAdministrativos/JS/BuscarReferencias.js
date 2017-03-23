@@ -14,7 +14,7 @@
     });
     function DatosAlumno() {
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumno',
+            url: 'WS/Alumno.asmx/ConsultarAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '"}',
@@ -52,7 +52,7 @@
     function Cargar() {
         //var AlumnoId = '9579';
         $.ajax({
-            url: '../WebServices/WS//Alumno.asmx/ConsultarReferencias',
+            url: 'WS//Alumno.asmx/ConsultarReferencias',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:' + AlumnoId + '}',
@@ -69,7 +69,7 @@
     }
     function CargaPagados() {
         $.ajax({
-            url: '../WebServices/WS//Alumno.asmx/ConsultarReferenciasPagadasCortas',
+            url: 'WS//Alumno.asmx/ConsultarReferenciasPagadasCortas',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:' + AlumnoId + '}',

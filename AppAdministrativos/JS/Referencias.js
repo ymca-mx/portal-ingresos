@@ -11,7 +11,7 @@
         var AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumno',
+            url: 'WS/Alumno.asmx/ConsultarAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '"}',
@@ -50,7 +50,7 @@
         var AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
-            url: '../WebServices/WS//Alumno.asmx/ConsultarReferencias',
+            url: 'WS//Alumno.asmx/ConsultarReferencias',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:' + AlumnoId + '}',

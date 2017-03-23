@@ -61,7 +61,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ReferenciasConsulta",
+            url: "WS/Alumno.asmx/ReferenciasConsulta",
             data: "{Dato:'" + buscar + "',TipoBusqueda:'"+TipoBusqueda+"'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

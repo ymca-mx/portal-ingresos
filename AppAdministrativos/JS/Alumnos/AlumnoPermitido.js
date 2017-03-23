@@ -16,7 +16,7 @@
         $('#btnLiberar').removeAttr("disabled");
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ConsultarAlumno2",
+            url: "WS/Alumno.asmx/ConsultarAlumno2",
             data: "{AlumnoId:'" + AlumnoId + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -84,7 +84,7 @@
         }
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/InsertarPermiso",
+            url: "WS/Alumno.asmx/InsertarPermiso",
             data: "{AlumnoId:'" + AlumnoId + "',UsuarioId:'" + Usuario + "',Descripcion:'" + Descripcion + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

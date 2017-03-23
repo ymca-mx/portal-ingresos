@@ -2,7 +2,7 @@
     var cargarEstadoCivil = function () {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarEstadoCivil",
+            url: "WS/General.asmx/ConsultarEstadoCivil",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             success: function (data) {

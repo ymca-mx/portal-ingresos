@@ -62,7 +62,7 @@
     function CargarCuatrimestre() {
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarCuatrimestre",
+            url: "WS/Reporte.asmx/MostrarCuatrimestre",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -102,7 +102,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/ReporteVoBo",
+            url: "WS/Reporte.asmx/ReporteVoBo",
             data: "{anio:" + anio + ",periodoid:" + periodo + ", usuarioid:"+ usuarioid +"}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

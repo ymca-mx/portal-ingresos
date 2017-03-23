@@ -13,7 +13,7 @@
         var AlumnoId = $('#txtClave').val();
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/TraerAlumnoDetalle",
+            url: "WS/Alumno.asmx/TraerAlumnoDetalle",
             data: "{AlumnoId:'" + AlumnoId + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -45,7 +45,7 @@
     function UpdateEmail(AlumnoId, Email, Usuario) {
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/UpdateMail",
+            url: "WS/Alumno.asmx/UpdateMail",
             data: "{AlumnoId:'" + AlumnoId + "',Email:'" + Email + "',UsuarId:'" + Usuario+ "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -61,7 +61,7 @@
     function EnviarMail(AlumnoId, Usuario) {
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Descuentos.asmx/EnviarMailUpdate",
+            url: "WS/Descuentos.asmx/EnviarMailUpdate",
             data: "{AlumnoId:'" + AlumnoId + "',UsuarioId:'" + Usuario +"'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',

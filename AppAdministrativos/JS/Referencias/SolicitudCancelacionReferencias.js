@@ -39,7 +39,7 @@
     function BuscarAlumno(Alumno) {
 
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/BuscarAlumnoString',
+            url: 'WS/Alumno.asmx/BuscarAlumnoString',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{Filtro:"' + Alumno + '"}',
@@ -111,7 +111,7 @@
     function DatosAlumno(Alumno) {
 
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnoReferencias',
+            url: 'WS/Alumno.asmx/ConsultarAlumnoReferencias',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{alumnoInt:' + Alumno + ',pagoid:' + 0 + '}',
@@ -142,7 +142,7 @@
         var usuario = $.cookie('userAdmin');
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/General.asmx/ConsultarPagoCancelacionSolicitud',
+            url: 'WS/General.asmx/ConsultarPagoCancelacionSolicitud',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{UsuarioId:"' + usuario + '",Tipo:"' + 1 + '"}',
@@ -215,7 +215,7 @@
     function MostarReferencia(pagoId) {
 
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnoReferencias',
+            url: 'WS/Alumno.asmx/ConsultarAlumnoReferencias',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{alumnoInt:' + 0 + ',pagoid:' + pagoId + '}',
@@ -390,7 +390,7 @@
             $('#divBar').modal('show');
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/General.asmx/PagoCancelacionSolicitud",
+                url: "WS/General.asmx/PagoCancelacionSolicitud",
                 data: "{PagoId:'" + PagoId + "',Comentario:'" + $('#txtComentario').val() +
                         "',UsuarioId:'" + usuario + "'}",
                 contentType: "application/json; charset=utf-8",

@@ -1,7 +1,7 @@
 ﻿var Listado = function () {
     var CargarListado = function () {
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/ConsultarAlumnos',
+            url: 'WS/Alumno.asmx/ConsultarAlumnos',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{}',

@@ -89,15 +89,9 @@
     <Content Include="JS\DatePickerRange\moment-with-locales.js" />
     <Content Include="JS\DatePickerRange\moment.js" />
     <Content Include="JS\DatePickerRange\moment.min.js" />
-    <Content Include="JS\General\AreaAcademica.js" />
     <Content Include="JS\General\EntidadFederativa.js" />
     <Content Include="JS\General\EstadoCivil.js" />
     <Content Include="JS\General\Genero.js" />
-    <Content Include="JS\General\MedioDifusion.js" />
-    <Content Include="JS\General\Parentesco.js" />
-    <Content Include="JS\General\Periodo.js" />
-    <Content Include="JS\General\Posgrado.js" />
-    <Content Include="JS\General\Turno.js" />
     <Content Include="JS\hdpicanvas.js" />
     <Content Include="JS\html2canvas.js" />
     <Content Include="JS\jQuery.print.js" />

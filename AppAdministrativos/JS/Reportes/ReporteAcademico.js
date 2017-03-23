@@ -180,7 +180,7 @@
     function CargarCuatrimestre() {
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarCuatrimestre",
+            url: "WS/Reporte.asmx/MostrarCuatrimestre",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -235,7 +235,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteBecaCuatrimestre",
+            url: "WS/Reporte.asmx/MostrarReporteBecaCuatrimestre",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -302,7 +302,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteInscrito",
+            url: "WS/Reporte.asmx/MostrarReporteInscrito",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -365,7 +365,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteBecaSep",
+            url: "WS/Reporte.asmx/MostrarReporteBecaSep",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -430,7 +430,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "../WebServices/WS/Reporte.asmx/MostrarReporteIneg",
+            url: "WS/Reporte.asmx/MostrarReporteIneg",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

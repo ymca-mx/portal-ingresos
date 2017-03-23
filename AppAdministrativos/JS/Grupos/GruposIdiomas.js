@@ -84,7 +84,7 @@
                     $('#divBar').modal('show');
                     $.ajax({
                         type: "POST",
-                        url: "../WebServices/WS/GrupoIdioma.asmx/EliminarGrupoIdioma",
+                        url: "WS/GrupoIdioma.asmx/EliminarGrupoIdioma",
                         data: "{grupoId:'" + GrupoId + "'}",
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
@@ -175,7 +175,7 @@
             $('#divBar').modal('show');
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/GrupoIdioma.asmx/GuardarGrupoIdioma",
+                url: "WS/GrupoIdioma.asmx/GuardarGrupoIdioma",
                 data: "{nombre:'" + nombre + "',anio:'" + anio +
                     "',periodoid:'" + periodoId + "',usuarioid:'" + usuario + "',grupoId:'" + 0 + "'}",
                 contentType: "application/json; charset=utf-8",
@@ -206,7 +206,7 @@
             $('#divBar').modal('show');
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/GrupoIdioma.asmx/GuardarGrupoIdioma",
+                url: "WS/GrupoIdioma.asmx/GuardarGrupoIdioma",
                 data: "{nombre:'" + nombre + "',anio:'" + anio +
                         "',periodoid:'" + periodoId + "',usuarioid:'" + usuario + "',grupoId:'" + GrupoId + "'}",
                 contentType: "application/json; charset=utf-8",
@@ -247,7 +247,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: "../WebServices/WS/GrupoIdioma.asmx/AsignarAlumnosIdiomas",
+                url: "WS/GrupoIdioma.asmx/AsignarAlumnosIdiomas",
                 data: "{AlumnoId:'" + AlumnoId + "',GrupoId:'" + GrupoId +
                         "',TipoCurso:'" + TipoDeCurso + "',usuarioid:'" + usuario + "',OfertaId:'" + OfertaId + "',TM:'" + TM + "'}",
                 contentType: "application/json; charset=utf-8",
@@ -283,7 +283,7 @@
 
     function CargarPagosConceptos(Alumno) {
         $.ajax({
-            url: '../WebServices/WS/GrupoIdioma.asmx/ConsultarGruposIdiomas',
+            url: 'WS/GrupoIdioma.asmx/ConsultarGruposIdiomas',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:' + Alumno + '}',
@@ -305,7 +305,7 @@
         $('#txtBar').text("Cargando");
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/GrupoIdioma.asmx/ConsultarGruposIdiomas',
+            url: 'WS/GrupoIdioma.asmx/ConsultarGruposIdiomas',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{}',
@@ -389,7 +389,7 @@
         $('#txtBar').text("Cargando");
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/GrupoIdioma.asmx/ConsultarGruposIdiomas',
+            url: 'WS/GrupoIdioma.asmx/ConsultarGruposIdiomas',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{}',
@@ -452,7 +452,7 @@
 
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/GrupoIdioma.asmx/ConsultarAlumnosIdiomas',
+            url: 'WS/GrupoIdioma.asmx/ConsultarAlumnosIdiomas',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{}',
@@ -523,7 +523,7 @@
         $('#txtBar').text("Cargando");
         $('#divBar').modal('show');
         $.ajax({
-            url: '../WebServices/WS/GrupoIdioma.asmx/ConsultarAlumnosIdiomasGrupo',
+            url: 'WS/GrupoIdioma.asmx/ConsultarAlumnosIdiomasGrupo',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: "{GrupoId:'" + GrupoId + "'}",
@@ -597,7 +597,7 @@
         var Pariodo1 = null;
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarPeriodos",
+            url: "WS/General.asmx/ConsultarPeriodos",
             data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml

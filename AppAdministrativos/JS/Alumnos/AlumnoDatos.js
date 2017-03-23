@@ -58,7 +58,7 @@ $(document).ready(function () {
     function EsNumero(Alumno) {
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/Alumno.asmx/ObenerDatosAlumno",
+            url: "WS/Alumno.asmx/ObenerDatosAlumno",
             data: "{AlumnoId:'" + Alumno + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -148,7 +148,7 @@ $(document).ready(function () {
     function EsString(Alumno) {
         $('#tab1').hide();
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/BuscarAlumnoString',
+            url: 'WS/Alumno.asmx/BuscarAlumnoString',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{Filtro:"' + Alumno + '"}',
@@ -228,7 +228,7 @@ $(document).ready(function () {
         var usuario = $.cookie('userAdmin');
         $.ajax({
             type: "POST",
-            url: "/../WebServices/WS/General.asmx/ObtenerUsuario",
+            url: "WS/General.asmx/ObtenerUsuario",
             data: "{UsuarioId:'" + usuario + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -342,7 +342,7 @@ $(document).ready(function () {
         GuardarAntecedentesTmp();
         ///////////////////////////
         $.ajax({
-            url: '../WebServices/WS/Alumno.asmx/UpdateAlumno',
+            url: 'WS/Alumno.asmx/UpdateAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: Variables,
@@ -370,7 +370,7 @@ $(document).ready(function () {
                             this.UsuarioId = this.UsuarioId.toString();
 
                             $.ajax({
-                                url: '../WebServices/WS/Alumno.asmx/GuardarAntecedentes',
+                                url: 'WS/Alumno.asmx/GuardarAntecedentes',
                                 type: 'POST',
                                 contentType: 'application/json; charset=utf-8',
                                 data: JSON.stringify(Antecendentes[i]),
@@ -419,7 +419,7 @@ $(document).ready(function () {
     });
     function CargarDescuentos(AlumnoId, OfertaEducativa) {
         $.ajax({
-            url: '../WebServices/WS/Beca.asmx/DescuentosAnteriores',
+            url: 'WS/Beca.asmx/DescuentosAnteriores',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + OfertaEducativa + '"}',
@@ -830,7 +830,7 @@ $(document).ready(function () {
     function CargarPaises(combo, PaisId) {
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarPaises",
+            url: "WS/General.asmx/ConsultarPaises",
             data: "{}", 
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
@@ -851,7 +851,7 @@ $(document).ready(function () {
         combo.empty();
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            url: "WS/General.asmx/ConsultarEntidadFederativa",
             data: "{}",
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
@@ -873,7 +873,7 @@ $(document).ready(function () {
         $('#slcEstado').empty();
         $.ajax({
             type: "POST",
-            url: "../WebServices/WS/General.asmx/ConsultarEntidadFederativa",
+            url: "WS/General.asmx/ConsultarEntidadFederativa",
             data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -893,7 +893,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     type: "POST",
-                    url: "../WebServices/WS/General.asmx/ConsultarMunicipios",
+                    url: "WS/General.asmx/ConsultarMunicipios",
                     data: "{EntidadFederativaId:'" + EstadoId + "'}",
                     contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                     success: function (data) {
