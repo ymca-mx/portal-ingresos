@@ -150,6 +150,7 @@
     <Content Include="Style\engato\login\imagenes\logo\100.png" />
     <Content Include="Style\engato\login\imagenes\logo\500.png" />
     <Content Include="Views\Account\recovery.html" />
+    <Content Include="Views\Alumno\InscripcionAlumno.html" />
     <Content Include="Views\packages.config" />
     <Content Include="Style\assets\global\plugins\angularjs\angular-cookies.min.js.map" />
     <Content Include="Style\assets\global\plugins\angularjs\angular-sanitize.min.js.map" />

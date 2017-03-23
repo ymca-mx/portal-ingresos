@@ -859,7 +859,7 @@
         request.send(data);
         $('#Load').modal('hide');
         alertify.alert("Alumno Guardado </br> " + extramail, function (Respuesta) {
-            var url = "../Inscritos/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcCarrera').val();
+            var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcCarrera').val();
             window.open(url, "Credenciales");
             $("#btnListado").click();
         });
@@ -889,7 +889,7 @@
         request.send(data);
         $('#Load').modal('hide');
         alertify.alert("Alumno Guardado </br> " + extramail, function (Respuesta) {
-            var url = "../Inscritos/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcCarrera').val();
+            var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcCarrera').val();
             window.open(url, "Credenciales");
             $("#btnListado").click();
         });
