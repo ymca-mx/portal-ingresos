@@ -705,6 +705,7 @@ namespace BLL
                         {
                             if (pago.Promesa >= Promocion.Monto)
                             {
+                               
 
                                 if (pago.Restante < pago.Promesa)// los que ya tiene pagos en la referencia
                                 {
@@ -760,6 +761,14 @@ namespace BLL
                                     
                                 }else
                                 {
+                                    // generar pagodescuento 
+                                    db.PagoDescuento.Add(new PagoDescuento
+                                    {
+                                        PagoId = pago.PagoId,
+                                        DescuentoId = descuentoid,
+                                        Monto = Promocion.Monto
+                                    });
+
                                     pago.Promesa = pago.Promesa - Promocion.Monto;
                                     pago.Restante = pago.Restante - Promocion.Monto;
                                 }//  if (pago.Restante < pago.Promesa )

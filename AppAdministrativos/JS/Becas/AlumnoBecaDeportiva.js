@@ -283,9 +283,9 @@ $(document).ready(function () {
     });
 
     function AbrirArchivo(DocumentoId) {
-        var url = "WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
+        var url = "../../WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
         var archiv = window;
-        archiv.open("../Inscritos/Archivos/Archivo.html", "PDF");
+        archiv.open("../AppAdministrativos/Views/Archivos/Archivo.html", "PDF");
         archiv.Ruta = url;
     }
 

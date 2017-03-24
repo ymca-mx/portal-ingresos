@@ -109,7 +109,7 @@
                     font: this.$.data('font') || 'Arial',
                     fontWeight: this.$.data('font-weight') || 'bold',
                     inline : false,
-                    step : 0.01,//this.$.data('step') || 1,
+                    step : this.$.data('step') || 1,
                     rotation: this.$.data('rotation'),
 
                     // Hooks
@@ -600,9 +600,8 @@
                         var kc = e.keyCode;
 
                         // numpad support
-                        if (kc >= 96 && kc <= 105 || kc == 110) {
-                            kc = kc == 110 ? 46 : (
-                            kc = e.keyCode = kc - 48);
+                        if(kc >= 96 && kc <= 105) {
+                            kc = e.keyCode = kc - 48;
                         }
 
                         kval = parseInt(String.fromCharCode(kc));
