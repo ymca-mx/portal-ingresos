@@ -162,11 +162,11 @@
                 break;
             case 3:
                 if (oferta1 != "--Todas--") {
-                    tblBecas3.columns(3)
+                    tblBecas3.columns(2)
                                 .search("^" + oferta1 + "$", true, false, true)
                                 .draw();
                 } else {
-                    tblBecas3.columns(3)
+                    tblBecas3.columns(2)
                            .search("")
                    .draw();
                 }

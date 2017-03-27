@@ -530,7 +530,7 @@ namespace BLL
                                           {
                                               AlumnoId = s.AlumnoId,
                                               NombreC = s.Nombre + " " + s.Paterno + " " + s.Materno,
-                                              OfertaEducativa = s.AlumnoInscrito.Where(w => w.Anio == periodoActual.Anio && w.PeriodoId == periodoActual.PeriodoId)
+                                              OfertaEducativa = s.AlumnoInscrito.Where(w => w.Anio == periodoActual.Anio && w.PeriodoId == periodoActual.PeriodoId && w.EstatusId == 1)
                                                                                 .Select(oe => new DTOOfertaEducativa1
                                                                                 {
                                                                                     ofertaEducativaId = oe.OfertaEducativaId,

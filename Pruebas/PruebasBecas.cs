@@ -127,12 +127,12 @@ namespace Pruebas
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7815,
+                alumnoId = 7817,
                 anio = 2017,
-                periodoId = 1,
-                ofertaEducativaId = 2,
-                porcentajeBeca = 62.88m, //70.15
-                porcentajeInscripcion = 100m,
+                periodoId = 2,
+                ofertaEducativaId = 14,
+                porcentajeBeca = 63.30m, //70.15
+                porcentajeInscripcion = 0m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
