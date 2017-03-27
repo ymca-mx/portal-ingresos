@@ -170,6 +170,10 @@
                     alertify.alert("Referencia Activada correctamente.", function () {
                         $('#btnBuscar').click();
                     });
+                } else {
+                    alertify.alert("No se pudo activar, favor de llamar al area de sistemas.", function () {
+                        $('#divBar').modal('hide');
+                    });
                 }
                 
             }
