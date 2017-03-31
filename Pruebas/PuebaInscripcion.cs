@@ -93,7 +93,7 @@ namespace Pruebas
         public void EnviarCorreo()
         {
             int AlumnoId = 8000;
-            string emailAlumno = "hbk_antonio619@hotmail.com";
+            string EmailAlumno = "hbk_antonio619@hotmail.com";
             string Fallidos = "";
             DTOCuentaMail objCuenta = BLLCuentaMail.ConsultarCuentaMail();
            
@@ -408,7 +408,7 @@ namespace Pruebas
                             "</html>";
                 #endregion
 
-                Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, emailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
+                Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
             }
             catch (Exception e)
             {

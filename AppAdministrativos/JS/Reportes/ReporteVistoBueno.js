@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var tblVoBo, anio, periodo, oferta,vobo, registros, usuarioid;
+    var tblVoBo, anio, periodo, oferta, vobo, registros, usuarioid, alumnoid, Mostra;
     //inicializar
     CargarCuatrimestre();
 
@@ -20,11 +20,16 @@
     $("#slcOferta").change(function () {
         if ($("#slcOferta").val() != -1) {
             oferta = $("#slcOferta option:selected").html();
+            tblVoBo.columns(1)
+                .search("^" + oferta + "$", true, false, true)
+                .draw();
         } else
         {
             oferta = "";
+            tblVoBo.columns(1)
+                .search(oferta)
+                .draw();
         }
-        filtroOferta();
     });
 
 
@@ -37,26 +42,18 @@
             {
                 vobo = "-";
             }
-
-           
+            
         } else {
             vobo = "";
         }
-        filtroEstatus();
-    });
 
-
-    function filtroOferta() {
-        tblVoBo.columns(1)
-                .search(oferta)
-                .draw();
-    }
-
-    function filtroEstatus() {
-        tblVoBo.columns(4)
+            tblVoBo.columns(4)
                 .search(vobo)
                 .draw();
-    }
+        
+    });
+
+    
 
 
     function CargarCuatrimestre() {
@@ -110,8 +107,13 @@
             success: function (data) {
                 if(data.d != null )
                {
-                    var Mostra = data.d.Sw;
+                     Mostra = data.d.Sw;
 
+                    var Mostra2 = true ;
+                    if (Mostra)
+                    {
+                        Mostra2 = false;
+                    }
                     tblVoBo = $("#dtVoBo").DataTable({
                         "aaData": data.d.lstVoBo,
                         "aoColumns": [
@@ -125,21 +127,39 @@
                                  }
                              },
                             { "mDataProp": "OfertaEducativa" },
-                             { "mDataProp": "Inscrito" },
+                            { "mDataProp": "Inscrito" },
                             { "mDataProp": "FechaInscrito" },
                             { "mDataProp": "FechaVoBo" },
                             { "mDataProp": "InscripcionCompleta" },
                             { "mDataProp": "Asesorias" },
                             { "mDataProp": "Materias" },
-                            { "mDataProp": "UsuarioVoBo" }
+                            { "mDataProp": "UsuarioVoBo" },
+                            {
+                                "mDataProp": "UsuarioVoBo",
+                                "mRender": function (data, f, d) {
+                                    var link
+                                    if (d.FechaVoBo == "-") {
+                                        link = "<a class='btn blue' name ='btnEnviar'>Enviar</a>";
+                                    } else { link = ""; }
+
+                                    return link;
+                                }
+                            }
+
 
                         ],
                         "columnDefs": [
-                          {
+                            {
                               "targets": [3],
                               "visible": Mostra,
                               "searchable": false
-                          },
+                            },
+                            { 
+                                "targets": [9],
+                                "visible": Mostra2,
+                                "searchable": false
+                            },
+
                         ],
                         "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
                         "searching": true,
@@ -181,13 +201,21 @@
 
                     $('#Load').modal('hide');
                 }//if(data.d != null )
-
+                $('#Load').modal('hide');
             },//success
         });// end $.ajax
 
 
     }//function CargarReporteBecas()
 
+    $("#dtVoBo").on('click', 'a', function ()
+    {
+        var rowData = tblVoBo.row($(this).closest('tr')).data();
+            alumnoid = rowData.AlumnoId;
+            $("#lblNombre").text(rowData.Nombre);
+            $("#txtMail").val(rowData.Email);
+            $("#PopEnviar").modal("show");
+    });
 
     function filtosdatatable() {
 
@@ -197,7 +225,30 @@
         });
     }
 
+    $("#btnEnviar").click(function ()
+    {
+        $('#Load').modal('show');
+        $.ajax({
+            type: 'POST',
+            url: "WS/Reporte.asmx/ReporteVoBoEmail",
+            data: "{AlumnoId:" + alumnoid + ",EmailAlumno:'" + $("#txtMail").val()+"'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
 
+            success: function (data) {
+                $('#Load').modal('hide');
+                if (data.d) {
+                    alertify.alert("Email enviado");
+
+                    $("#PopEnviar").modal("hide");
+                } else
+                {
+                    alertify.alert("Email no pudo ser enviado");
+                }
+                
+            }//success
+        });// $.ajax
+    });
 
 });
 

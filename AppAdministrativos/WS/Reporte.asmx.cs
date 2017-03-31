@@ -66,6 +66,13 @@ namespace AppAdministrativos.WS
         {
             return BLLReportePortal.ReporteVoBo(anio, periodoid,usuarioid);
         }
+        [WebMethod]
+        public bool ReporteVoBoEmail(int AlumnoId, string EmailAlumno)
+        {
+            return BLLReportePortal.ReporteVoBoEmail(AlumnoId, EmailAlumno);
+        }
+
+
 
     }
 }

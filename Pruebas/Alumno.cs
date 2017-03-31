@@ -158,5 +158,19 @@ namespace Pruebas
 
             }
         }
+
+
+        [TestMethod]
+        public void CambioCarrera()
+        {
+            int AlumnoId = 8285;
+            int OfertaAnterior = 1;
+            int ofertaNueva = 2;
+
+            using (UniversidadEntities db=new UniversidadEntities())
+            {
+               
+            }
+        }
     }
 }
