@@ -62,9 +62,10 @@ namespace BLL
                     var pago = db.Pago.Where(p => p.PagoId == PagoId).FirstOrDefault();
 
                     pago.EstatusId = 1;
+                    pago.Restante = pago.Promesa;
 
-                    db.PagoCancelacion.Remove(pago?.PagoCancelacion ?? null);
                     db.PagoCancelacionDetalle.Remove(pago?.PagoCancelacion?.PagoCancelacionDetalle?.FirstOrDefault() ?? null);
+                    db.PagoCancelacion.Remove(pago?.PagoCancelacion ?? null);                    
 
                     db.SaveChanges();
                     return "Guardado";
