@@ -23,6 +23,7 @@ namespace DAL
             this.AlumnoDetalleBitacora = new HashSet<AlumnoDetalleBitacora>();
             this.AlumnoInscrito = new HashSet<AlumnoInscrito>();
             this.AlumnoInscritoBitacora = new HashSet<AlumnoInscritoBitacora>();
+            this.AlumnoMovimiento = new HashSet<AlumnoMovimiento>();
             this.AlumnoPasswordRecovery = new HashSet<AlumnoPasswordRecovery>();
             this.AlumnoPermitido = new HashSet<AlumnoPermitido>();
             this.AlumnoRevision = new HashSet<AlumnoRevision>();
@@ -75,6 +76,8 @@ namespace DAL
         public virtual ICollection<AlumnoInscrito> AlumnoInscrito { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoInscritoBitacora> AlumnoInscritoBitacora { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoMovimiento> AlumnoMovimiento { get; set; }
         public virtual AlumnoPassword AlumnoPassword { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoPasswordRecovery> AlumnoPasswordRecovery { get; set; }
