@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -4175,6 +4176,60 @@
     <Content Include="Style\assets\global\plugins\zoom\jquery.zoom.min.js" />
     <Content Include="Style\assets\global\scripts\datatable.js" />
     <Content Include="Style\assets\global\scripts\metronic.js" />
+    <Content Include="Style\Complementos\Blob.js-master\.gitignore" />
+    <Content Include="Style\Complementos\Blob.js-master\Blob.js" />
+    <Content Include="Style\Complementos\Blob.js-master\Blob.min.js" />
+    <Content Include="Style\Complementos\FileSaver.js-master\.gitignore" />
+    <Content Include="Style\Complementos\FileSaver.js-master\demo\demo.css" />
+    <Content Include="Style\Complementos\FileSaver.js-master\demo\demo.js" />
+    <Content Include="Style\Complementos\FileSaver.js-master\demo\demo.min.js" />
+    <Content Include="Style\Complementos\FileSaver.js-master\FileSaver.js" />
+    <Content Include="Style\Complementos\FileSaver.js-master\FileSaver.min.js" />
+    <Content Include="Style\Complementos\jquery.table2excel.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\.gitignore" />
+    <Content Include="Style\Complementos\js-xlsx-master\cpexcel.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\jszip.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\ods.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\xls.core.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\xls.core.min.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\xls.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\xlsx.core.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\xlsx.core.min.js" />
+    <Content Include="Style\Complementos\js-xlsx-master\xlsx.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\.gitignore" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\jquery.barrating.min.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-1to10.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-horizontal.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-movie.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-pill.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-reversed.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-square.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bootstrap-stars.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\css-stars.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\fontawesome-stars-o.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\fontawesome-stars.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\css\examples.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\css\main.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\css\normalize.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\css\normalize.min.css" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\antenna%402x.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\antenna.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\bars%402x.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\bars.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\github%402x.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\github.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\star%402x.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\img\star.png" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\index.html" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\js\examples.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\js\vendor\html5shiv.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\js\vendor\jquery-1.11.2.min.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\gulpfile.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\jquery.barrating.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\karma.conf.js" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\LICENSE.txt" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\test\jquery.barrating-spec.js" />
+    <Content Include="Style\Complementos\tableexport.js" />
     <Content Include="Style\engato\index\css\componentes.css" />
     <Content Include="Style\engato\index\imagenes\Guest.png" />
     <Content Include="Style\engato\login\imagenes\fondos\1.jpg" />
@@ -5311,6 +5366,42 @@
     <Content Include="Style\templates\admin3\demo\typeahead_nba.json" />
     <Content Include="Style\templates\admin3\demo\typeahead_nhl.json" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <Content Include="Style\Complementos\Blob.js-master\bower.json" />
+    <Content Include="Style\Complementos\Blob.js-master\LICENSE.md" />
+    <Content Include="Style\Complementos\Blob.js-master\package.json" />
+    <Content Include="Style\Complementos\Blob.js-master\README.md" />
+    <Content Include="Style\Complementos\FileSaver.js-master\bower.json" />
+    <Content Include="Style\Complementos\FileSaver.js-master\demo\index.xhtml" />
+    <Content Include="Style\Complementos\FileSaver.js-master\LICENSE.md" />
+    <Content Include="Style\Complementos\FileSaver.js-master\package.json" />
+    <Content Include="Style\Complementos\FileSaver.js-master\README.md" />
+    <Content Include="Style\Complementos\js-xlsx-master\bower.json" />
+    <Content Include="Style\Complementos\js-xlsx-master\bump.sh" />
+    <Content Include="Style\Complementos\js-xlsx-master\package.json" />
+    <Content Include="Style\Complementos\js-xlsx-master\README.md" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\.travis.yml" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\bower.json" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\CHANGELOG.md" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\jquery.barrating.min.js.map" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\less\examples.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\less\main.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\less\mixins.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\examples\less\variables.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\package.json" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\README.md" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bars-1to10.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bars-horizontal.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bars-movie.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bars-pill.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bars-reversed.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bars-square.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\bootstrap-stars.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\css-stars.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\fontawesome-stars-o.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\fontawesome-stars.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\mixins.less" />
+    <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\variables.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
