@@ -21,7 +21,7 @@ namespace BLL
 
                 int oferta = Alumno.AlumnoInscrito?.LastOrDefault()?.OfertaEducativa?.SucursalId ?? 0;
 
-                return oferta != 2 ? "../inscritos/Documentos/Reglamento.pdf" : "../inscritos/Documentos/ReglamentoCamohmila.pdf";
+                return oferta != 2 ? "../portalAlumno/Documentos/Reglamento.pdf" : "../portalAlumno/Documentos/ReglamentoCamohmila.pdf";
             }
         }
     }
