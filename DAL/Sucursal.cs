@@ -27,7 +27,9 @@ namespace DAL
         public string DescripcionId { get; set; }
         public string Serie { get; set; }
         public bool EsSucursal { get; set; }
-        public string ClaveContable { get; set; }
+        public string ClaveIngreso { get; set; }
+        public string ClaveOtros { get; set; }
+        public string ClaveDescuentos { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfertaEducativa> OfertaEducativa { get; set; }

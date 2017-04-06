@@ -152,6 +152,15 @@
     <Compile Include="AlumnoMatricula.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoMovimiento.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnoMovimientoBaja.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnoMovimientoCarrera.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoPassword.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -198,6 +207,12 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="AsociacionDetalle.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BajaMotivo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BancoTerminal.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BecaDeportiva.cs">
@@ -517,6 +532,9 @@
     <Compile Include="ReciboDetalle.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReciboMSI.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reclasificacion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -599,6 +617,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoDocumento.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoMovimiento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoMovimientoCRUD.cs">
