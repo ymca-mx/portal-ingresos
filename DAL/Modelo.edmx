@@ -2060,6 +2060,7 @@ advertencia 6013: La tabla o vista 'Universidad_W.dbo.Posgrado_20162' no tiene d
           <Property Name="FechaAplicacion" Type="date" />
           <Property Name="HoraAplicacion" Type="time" Precision="0" />
           <Property Name="PagoId" Type="int" />
+          <Property Name="UsuarioId" Type="int" />
           <Property Name="EstatusId" Type="int" />
         </EntityType>
         <EntityType Name="Prospecto">
@@ -5519,6 +5520,18 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PromocionCasa_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="PromocionCasa" Type="Self.PromocionCasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="PromocionCasa">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProspectoDetalle_AreaAcademica">
           <End Role="AreaAcademica" Type="Self.AreaAcademica" Multiplicity="0..1" />
           <End Role="ProspectoDetalle" Type="Self.ProspectoDetalle" Multiplicity="*" />
@@ -7749,6 +7762,10 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <End Role="Periodo" EntitySet="Periodo" />
             <End Role="PromocionCasa" EntitySet="PromocionCasa" />
           </AssociationSet>
+          <AssociationSet Name="FK_PromocionCasa_Usuario" Association="Self.FK_PromocionCasa_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PromocionCasa" EntitySet="PromocionCasa" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProspectoDetalle_AreaAcademica" Association="Self.FK_ProspectoDetalle_AreaAcademica">
             <End Role="AreaAcademica" EntitySet="AreaAcademica" />
             <End Role="ProspectoDetalle" EntitySet="ProspectoDetalle" />
@@ -9327,6 +9344,10 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <AssociationSet Name="FK_PreguntaTipoValores_PreguntaTipo" Association="UniversidadModel.FK_PreguntaTipoValores_PreguntaTipo">
             <End Role="PreguntaTipo" EntitySet="PreguntaTipo" />
             <End Role="PreguntaTipoValores" EntitySet="PreguntaTipoValores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromocionCasa_Usuario" Association="UniversidadModel.FK_PromocionCasa_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PromocionCasa" EntitySet="PromocionCasa" />
           </AssociationSet>
           <AssociationSet Name="FK_ProspectoDetalle_Prospecto" Association="UniversidadModel.FK_ProspectoDetalle_Prospecto">
             <End Role="Prospecto" EntitySet="Prospecto" />
@@ -11754,6 +11775,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <Property Name="FechaAplicacion" Type="DateTime" Precision="0" />
           <Property Name="HoraAplicacion" Type="Time" Precision="0" />
           <Property Name="PagoId" Type="Int32" />
+          <Property Name="UsuarioId" Type="Int32" />
           <Property Name="EstatusId" Type="Int32" />
           <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_PromocionCasa_Alumno" FromRole="PromocionCasa" ToRole="Alumno" />
           <NavigationProperty Name="Alumno1" Relationship="UniversidadModel.FK_PromocionCasa_Alumno1" FromRole="PromocionCasa" ToRole="Alumno" />
@@ -11761,6 +11783,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <NavigationProperty Name="OfertaEducativa" Relationship="UniversidadModel.FK_PromocionCasa_OfertaEducativa" FromRole="PromocionCasa" ToRole="OfertaEducativa" />
           <NavigationProperty Name="Pago" Relationship="UniversidadModel.FK_PromocionCasa_Pago" FromRole="PromocionCasa" ToRole="Pago" />
           <NavigationProperty Name="Periodo" Relationship="UniversidadModel.FK_PromocionCasa_Periodo" FromRole="PromocionCasa" ToRole="Periodo" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_PromocionCasa_Usuario" FromRole="PromocionCasa" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Prospecto">
           <Key>
@@ -12378,6 +12401,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <NavigationProperty Name="Pagare" Relationship="UniversidadModel.FK_Pagare_Usuario" FromRole="Usuario" ToRole="Pagare" />
           <NavigationProperty Name="PagoCancelacionDetalle" Relationship="UniversidadModel.FK_PagoCancelacionDetalle_Usuario" FromRole="Usuario" ToRole="PagoCancelacionDetalle" />
           <NavigationProperty Name="PagoParcialBitacora" Relationship="UniversidadModel.FK_PagoParcialBitacora_Usuario" FromRole="Usuario" ToRole="PagoParcialBitacora" />
+          <NavigationProperty Name="PromocionCasa" Relationship="UniversidadModel.FK_PromocionCasa_Usuario" FromRole="Usuario" ToRole="PromocionCasa" />
           <NavigationProperty Name="ProspectoSeguimiento" Relationship="UniversidadModel.FK_ProspectoSeguimiento_Usuario" FromRole="Usuario" ToRole="ProspectoSeguimiento" />
           <NavigationProperty Name="Recibo" Relationship="UniversidadModel.FK_Recibo_Usuario" FromRole="Usuario" ToRole="Recibo" />
           <NavigationProperty Name="ReciboDetalle" Relationship="UniversidadModel.FK_ReciboDetalle_Usuario" FromRole="Usuario" ToRole="ReciboDetalle" />
@@ -15958,6 +15982,18 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PromocionCasa_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="UniversidadModel.PromocionCasa" Role="PromocionCasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="PromocionCasa">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProspectoDetalle_Prospecto">
           <End Type="UniversidadModel.Prospecto" Role="Prospecto" Multiplicity="1" />
           <End Type="UniversidadModel.ProspectoDetalle" Role="ProspectoDetalle" Multiplicity="0..1" />
@@ -18297,6 +18333,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <EntityTypeMapping TypeName="UniversidadModel.PromocionCasa">
               <MappingFragment StoreEntitySet="PromocionCasa">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="PagoId" ColumnName="PagoId" />
                 <ScalarProperty Name="HoraAplicacion" ColumnName="HoraAplicacion" />
                 <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />

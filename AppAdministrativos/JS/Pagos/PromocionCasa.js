@@ -349,6 +349,8 @@
         lstop[0].PeriodoId = $('#slcPeriodo').find(':selected').data("periodoid");
         lstop[0].SubPeriodoId = $('#slcMes').val();
         lstop[0].Monto = $("#txtMonto").val();
+        lstop[0].UsuarioId = $.cookie('userAdmin');
+
 
         var obj = {
             "Promocion": lstop[0]

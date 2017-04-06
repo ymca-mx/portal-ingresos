@@ -1819,184 +1819,30 @@ namespace Pruebas
         [TestMethod]
         public void PuebasPromocionCasa()
         {
-            using (UniversidadEntities db = new UniversidadEntities())
+            
+            DTOAlumnoPromocionCasa Promocion = new DTOAlumnoPromocionCasa
             {
-                var AlumnoId = 7774;
-                var Anio = 2017;
-                var PeriodoId = 3;
-                var OfertaEducativaId = 2;
-                var Estatusid = new int[] { 4, 14 };
+                AlumnoId = 8011,
+                NombreC = "MARTÍN DE JESUS LÓPEZ MARIN",
+                OfertaEducativaIdActual = 14,
+                OfertaEducativaActual = "Licenciatura en Mercadotecnia Internacional",
+                AlumnoIdProspecto = 8163,
+                NombreCProspecto = "GISELLE AZUCENA ZAVALA LOPEZ",
+                OfertaEducativaIdProspecto = 3,
+                OfertaEducativaProspecto = "Licenciatura en Derecho",
+                Anio = 2017,
+                PeriodoId = 2,
+                SubPeriodoId = 4,
+                Monto = 1500,
+                AlumnoProspecto = true,
+                UsuarioId = 8272
+            };
 
-                // ver si tiene promocion en casa 
-                var promocion  =  db.PromocionCasa.Where(a => a.AlumnoId == AlumnoId
-                                       && a.Anio == Anio
-                                       && a.PeriodoId == PeriodoId
-                                       && a.OfertaEducativaId == OfertaEducativaId
-                                       && a.EstatusId == 1)?.FirstOrDefault()??null;
-
-                if (promocion != null)
-                {
-
-                    //ver si hay referecias generadas de ese subperido
-                    var pago = db.Pago.Where(p => p.AlumnoId == promocion.AlumnoId
-                                                  && p.OfertaEducativaId == promocion.OfertaEducativaId
-                                                  && p.Anio == promocion.Anio
-                                                  && p.PeriodoId == promocion.PeriodoId
-                                                  && p.SubperiodoId == promocion.SubPeriodoId
-                                                  && p.Cuota1.PagoConceptoId == 800)?.FirstOrDefault() ?? null;
-
-                    if (pago != null)
-                    {
-                        //obtener descuentoId de Promocion en casa
-                        var descuentoid = db.Descuento.Where(d => d.PagoConceptoId == 800
-                                                             && d.OfertaEducativaId == promocion.OfertaEducativaId
-                                                             && d.Descripcion.Contains("Promoción en Casa")).FirstOrDefault().DescuentoId;
-
-
-                        if (Estatusid.Contains(pago.EstatusId)) /// pagado
-                        {
-                            if (pago.Promesa >= promocion.Monto)
-                            {
-
-                                pago.Promesa = pago.Promesa - (decimal)promocion.Monto;
-
-                                // generar pagodescuento 
-                                db.PagoDescuento.Add(new PagoDescuento
-                                {
-                                    PagoId = pago.PagoId,
-                                    DescuentoId = descuentoid,
-                                    Monto = (decimal)promocion.Monto
-                                });
-
-                                //obtener lista pago parcial
-                                var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
-
-                                var auxMonto = promocion.Monto;
-                                lstPP.ForEach(n =>
-                                {
-                                    if (auxMonto > 0)
-                                    {
-                                        if (n.Pago <= auxMonto)
-                                        {
-                                            n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
-                                            n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
-                                            auxMonto = auxMonto - n.Pago;
-                                            n.Pago = 0;
-                                            n.EstatusId = 2;
-                                        }
-                                        else
-                                        {
-                                            n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + (decimal)auxMonto;
-                                            n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
-                                            n.Pago = n.Pago - (decimal)auxMonto;
-                                        }
-                                    }//if (promocion.Monto < 0)
-
-
-                                });
-
-
-                            }// if (pago.Promesa >= promocion.Monto)
-
-                        }
-                        else if (pago.EstatusId == 1)  // sin pagar
-                        {
-                            if (pago.Promesa >= promocion.Monto)
-                            {
-
-                                if (pago.Restante < pago.Promesa)// los que ya tiene pagos en la referencia
-                                {
-                                    pago.Promesa = pago.Promesa - (decimal)promocion.Monto;
-
-                                    // generar pagodescuento 
-                                    db.PagoDescuento.Add(new PagoDescuento
-                                    {
-                                        PagoId = pago.PagoId,
-                                        DescuentoId = descuentoid,
-                                        Monto = (decimal)promocion.Monto
-                                    });
-
-                                    ///verificar si el restante es mayoe al descuento
-                                    if (pago.Restante >= promocion.Monto)
-                                    {
-                                        pago.Restante = pago.Restante - (decimal)promocion.Monto;
-
-                                    }
-                                    else
-                                    {
-                                        var auxMonto = (decimal)promocion.Monto - pago.Restante;
-                                        pago.Restante = 0;
-
-                                        //obtener lista pago parcial
-                                        var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
-
-
-                                        lstPP.ForEach(n =>
-                                        {
-                                            if (auxMonto > 0)
-                                            {
-                                                if (n.Pago <= auxMonto)
-                                                {
-                                                    n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
-                                                    n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
-                                                    auxMonto = auxMonto - n.Pago;
-                                                    n.Pago = 0;
-                                                    n.EstatusId = 2;
-                                                }
-                                                else
-                                                {
-                                                    n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + auxMonto;
-                                                    n.ReferenciaProcesada.SeGasto = n.ReferenciaProcesada.Restante > 0 ? false : true;
-                                                    n.Pago = n.Pago - auxMonto;
-                                                }
-                                            }//if (promocion.Monto < 0)
-
-
-                                        });//fin foreach
-
-
-                                    }// if (pago.Restante >= promocion.Monto)
-
-                                }
-                                else
-                                {
-                                    pago.Promesa = pago.Promesa - (decimal)promocion.Monto;
-                                    pago.Restante = pago.Restante - (decimal)promocion.Monto;
-
-                                    // generar pagodescuento 
-                                    db.PagoDescuento.Add(new PagoDescuento
-                                    {
-                                        PagoId = pago.PagoId,
-                                        DescuentoId = descuentoid,
-                                        Monto = (decimal)promocion.Monto
-                                    });
-
-                                }//  if (pago.Restante < pago.Promesa )
-
-                                if (pago.Restante == 0)
-                                {
-                                    pago.EstatusId = 4;
-                                }
-
-                            }// if (pago.Promesa >= promocion.Monto)
-
-                        }
-                        db.SaveChanges();
-                       
-                        promocion.FechaAplicacion = DateTime.Now;
-                        promocion.HoraAplicacion = DateTime.Now.TimeOfDay;
-                        promocion.PagoId = pago.PagoId;
-                        promocion.EstatusId = 7;
-
-                        db.SaveChanges();
-                        
-                    }//if (pago != null )
-
-                }// if (promocion > 0 )
+            BLL.BLLAlumnoPortal.AplicarPromocionCasa(Promocion);
 
 
 
-            }
+
         }
 
         [TestMethod]

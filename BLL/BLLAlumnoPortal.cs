@@ -633,6 +633,7 @@ namespace BLL
                         Monto = Promocion.Monto,
                         FechaGeneracion = DateTime.Now,
                         HoraGeneracion = DateTime.Now.TimeOfDay,
+                        UsuarioId = Promocion.UsuarioId,
                         EstatusId =  1
                     });
 
@@ -5413,7 +5414,8 @@ namespace BLL
             }
         }
 
-        public static void AplicaBeca(DTO.Alumno.Beca.DTOAlumnoBeca AlumnoBeca, bool aplicacionExtemporanea) {
+        public static void AplicaBeca(DTO.Alumno.Beca.DTOAlumnoBeca AlumnoBeca, bool aplicacionExtemporanea)
+        {
             List<DAL.Pago> PagosPendientes = new List<Pago>();
             List<DAL.Pago> PagosPendientes2 = new List<Pago>();
             List<Pago> Cabecero = new List<Pago>();
@@ -5889,29 +5891,7 @@ namespace BLL
                                                 });
 
 
-                                                //No modificar el recibo que se emitio en PagoDetlla
-                                                /*
-                                                var Detalles = s.PagoDetalle.ToList();
-                                                decimal saldoDetalles = saldo;
 
-                                                Detalles.ForEach(a =>
-                                                {
-                                                    if (saldoDetalles > 0)
-                                                    {
-                                                        if (saldoDetalles <= a.Importe)
-                                                        {
-                                                            a.Importe = a.Importe - saldoDetalles;
-                                                            saldoDetalles = 0;
-                                                        }
-
-                                                        else if (saldoDetalles > a.Importe)
-                                                        {
-                                                            saldoDetalles = saldoDetalles - a.Importe;
-                                                            a.Importe = 0;
-                                                        }
-                                                    }
-                                                });
-                                                */
 
                                                 s.ReferenciaProcesada.SeGasto = false;
                                                 s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
@@ -5987,6 +5967,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -6287,6 +6349,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -6588,6 +6732,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -6886,6 +7112,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -7184,6 +7492,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -7482,6 +7872,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -7890,7 +8362,7 @@ namespace BLL
                                               where (a.Cuota1.PagoConceptoId == 802 || a.Cuota1.PagoConceptoId == 800)
                                                  && Estatus.Contains(a.EstatusId)
                                                  && (a.Anio == AlumnoBeca.anio && a.PeriodoId == AlumnoBeca.periodoId)
-                                                 && a.Promesa > 0
+                                                 && a.Promesa >= 0
                                                  && a.AlumnoId == AlumnoBeca.alumnoId
                                                  && a.OfertaEducativaId == AlumnoBeca.ofertaEducativaId
                                               select a).ToList());
@@ -8034,7 +8506,7 @@ namespace BLL
                                                   where (a.Cuota1.PagoConceptoId == 800 || a.Cuota1.PagoConceptoId == 802)
                                                      && Estatus.Contains(a.EstatusId)
                                                      && (a.Anio == AlumnoBeca.anio && a.PeriodoId == AlumnoBeca.periodoId)
-                                                     && a.Promesa > 0
+                                                     && a.Promesa >= 0
                                                      && a.AlumnoId == AlumnoBeca.alumnoId
                                                      && a.OfertaEducativaId == AlumnoBeca.ofertaEducativaId
                                                   select a).ToList());
@@ -8139,7 +8611,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8163,7 +8635,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8221,7 +8693,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8234,29 +8706,7 @@ namespace BLL
                                                 });
 
 
-                                                //No modificar el recibo que se emitio en PagoDetlla
-                                                /*
-                                                var Detalles = s.PagoDetalle.ToList();
-                                                decimal saldoDetalles = saldo;
 
-                                                Detalles.ForEach(a =>
-                                                {
-                                                    if (saldoDetalles > 0)
-                                                    {
-                                                        if (saldoDetalles <= a.Importe)
-                                                        {
-                                                            a.Importe = a.Importe - saldoDetalles;
-                                                            saldoDetalles = 0;
-                                                        }
-
-                                                        else if (saldoDetalles > a.Importe)
-                                                        {
-                                                            saldoDetalles = saldoDetalles - a.Importe;
-                                                            a.Importe = 0;
-                                                        }
-                                                    }
-                                                });
-                                                */
 
                                                 s.ReferenciaProcesada.SeGasto = false;
                                                 s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
@@ -8276,7 +8726,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8332,6 +8782,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -8346,6 +8878,14 @@ namespace BLL
 
                             else if (DescuentoColegiatura == null)
                             {
+                                List<PagoDescuento> Descuentos = db.PagoDescuento.Where(s => s.PagoId == n.PagoId && DescuentosColegiatura.Contains(s.DescuentoId)).ToList();
+
+                                Descuentos.ForEach(d =>
+                                {
+                                    n.Promesa = n.Promesa + d.Monto;
+                                    n.Restante = n.Restante + d.Monto;
+                                });
+
                                 #region Calculos
 
                                 decimal diferencia = n.Promesa;
@@ -8433,7 +8973,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8457,7 +8997,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8515,7 +9055,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8568,7 +9108,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                        };
 
                                                 #endregion Reclasificacion
 
@@ -8624,9 +9164,94 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
+
+                                if (Descuentos != null)
+                                    db.PagoDescuento.RemoveRange(Descuentos);
                             }
 
                             #endregion No Existe Descuento
@@ -8652,8 +9277,7 @@ namespace BLL
                                 decimal sumaAnterior = 0;
                                 decimal montoDescuento = 0;
 
-                                //PagoDescuento Descuento = db.PagoDescuento.Where(s => s.PagoId == n.PagoId && s.DescuentoId == DescuentoInscripcion.DescuentoId).FirstOrDefault();
-                                List<PagoDescuento> Descuentos = db.PagoDescuento.Where(s => s.PagoId == n.PagoId && DescuentosColegiatura.Contains(s.DescuentoId)).ToList();
+                                List<PagoDescuento> Descuentos = db.PagoDescuento.Where(s => s.PagoId == n.PagoId && DescuentosInscripcion.Contains(s.DescuentoId)).ToList();
                                 sumaAnterior = n.Promesa + (Descuentos != null ? Descuentos.Sum(s => s.Monto) : 0);
                                 n.Promesa = n.Promesa + (Descuentos != null ? Descuentos.Sum(s => s.Monto) : 0) - ((n.Cuota) * (AlumnoBeca.porcentajeBeca / 100));
                                 montoDescuento = sumaAnterior - Math.Round(n.Promesa, 0);
@@ -8731,7 +9355,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -8755,7 +9379,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -8813,7 +9437,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -8866,7 +9490,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -8923,6 +9547,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -8937,6 +9643,14 @@ namespace BLL
 
                             else if (DescuentoInscripcion == null)
                             {
+                                List<PagoDescuento> Descuentos = db.PagoDescuento.Where(s => s.PagoId == n.PagoId && DescuentosInscripcion.Contains(s.DescuentoId)).ToList();
+
+                                Descuentos.ForEach(d =>
+                                {
+                                    n.Promesa = n.Promesa + d.Monto;
+                                    n.Restante = n.Restante + d.Monto;
+                                });
+
                                 #region Calculos
 
                                 decimal diferencia = n.Promesa;
@@ -9022,7 +9736,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9046,7 +9760,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9104,7 +9818,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9157,7 +9871,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9213,9 +9927,94 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
+
+                                if (Descuentos != null)
+                                    db.PagoDescuento.RemoveRange(Descuentos);
                             }
 
                             #endregion No Existe Descuento
@@ -9316,7 +10115,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9340,7 +10139,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9398,7 +10197,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9451,7 +10250,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9508,6 +10307,88 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
@@ -9522,6 +10403,14 @@ namespace BLL
 
                             else if (DescuentoInscripcion == null)
                             {
+                                List<PagoDescuento> Descuentos = db.PagoDescuento.Where(s => s.PagoId == n.PagoId && DescuentosInscripcion.Contains(s.DescuentoId)).ToList();
+
+                                Descuentos.ForEach(d =>
+                                {
+                                    n.Promesa = n.Promesa + d.Monto;
+                                    n.Restante = n.Restante + d.Monto;
+                                });
+
                                 #region Calculos
 
                                 decimal diferencia = n.Promesa;
@@ -9607,7 +10496,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9631,7 +10520,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9689,7 +10578,7 @@ namespace BLL
                                                     Importe = saldo,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9742,7 +10631,7 @@ namespace BLL
                                                     Importe = s.Pago,
                                                     ReclasificacionTipoId = 1
                                                 }
-                                                };
+                                                    };
 
                                                 #endregion Reclasificacion
 
@@ -9798,9 +10687,94 @@ namespace BLL
                                     #endregion Edición de Recibo
 
                                     #endregion Caja
+
+                                    #region A Favor
+
+                                    var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                                    Referenciados.ForEach(s =>
+                                    {
+                                        if (saldo > 0)
+                                        {
+                                            #region PagoParcial Bitacora
+
+                                            db.PagoParcialBitacora.Add(new PagoParcialBitacora
+                                            {
+                                                PagoParcialId = s.PagoParcialId,
+                                                PagoId = s.PagoId,
+                                                SucursalCajaId = s.SucursalCajaId,
+                                                ReciboId = s.ReciboId,
+                                                Pago = s.Pago,
+                                                FechaPago = s.FechaPago,
+                                                HoraPago = s.HoraPago,
+                                                EstatusId = s.EstatusId,
+                                                TieneMovimientos = s.TieneMovimientos,
+                                                PagoTipoId = s.PagoTipoId,
+                                                ReferenciaProcesadaId = s.ReferenciaProcesadaId,
+                                                FechaBitacora = DateTime.Now.Date,
+                                                HoraBitacora = DateTime.Now.TimeOfDay,
+                                                UsuarioId = Usuario.usuarioId
+                                            });
+
+                                            #endregion PagoParcial Bitacora
+
+                                            if (saldo <= s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = saldo,
+                                                    ReclasificacionTipoId = 1
+                                                    }
+                                                };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + saldo;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = s.PagoDetalle.FirstOrDefault().Importe - saldo;
+                                                s.Pago = s.Pago - saldo;
+                                                saldo = 0;
+                                            }
+
+                                            else if (saldo > s.Pago)
+                                            {
+                                                #region Reclasificacion
+
+                                                s.Reclasificacion = new List<Reclasificacion> {
+                                                new Reclasificacion {
+                                                    UsuarioId = Usuario.usuarioId,
+                                                    FechaReclasificacion = DateTime.Now,
+                                                    HoraReclasificacion = DateTime.Now.TimeOfDay,
+                                                    Importe = s.Pago,
+                                                    ReclasificacionTipoId = 1
+                                                }
+                                                        };
+
+                                                #endregion Reclasificacion
+
+                                                s.ReferenciaProcesada.SeGasto = false;
+                                                s.ReferenciaProcesada.Restante = s.ReferenciaProcesada.Restante + s.Pago;
+                                                s.ReferenciaProcesada.Importe = s.ReferenciaProcesada.ReferenciaTipoId == 4 ? s.ReferenciaProcesada.Restante : s.ReferenciaProcesada.Importe;
+                                                s.PagoDetalle.FirstOrDefault().Importe = 0;
+                                                saldo = saldo - s.Pago;
+                                                s.Pago = 0;
+                                                s.EstatusId = 2;
+                                            }
+                                        }
+                                    });
+
+                                    #endregion A Favor
                                 }
 
                                 #endregion Saldo a Favor
+
+                                if (Descuentos != null)
+                                    db.PagoDescuento.RemoveRange(Descuentos);
                             }
 
                             #endregion No Existe Descuento
@@ -9833,7 +10807,7 @@ namespace BLL
                         DescuentoColegiatura.Monto = AlumnoBeca.porcentajeBeca;
                         DescuentoColegiatura.DescuentoId = descuentoIdColegiatura;
                         DescuentoColegiatura.UsuarioId = Usuario.usuarioId;
-                        DescuentoColegiatura.FechaGeneracion = AlumnoBeca.fecha != null ? AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha) : DateTime.Now;
+                        DescuentoColegiatura.FechaGeneracion = AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha);
                         DescuentoColegiatura.FechaAplicacion = DateTime.Now;
                         DescuentoColegiatura.HoraGeneracion = DateTime.Now.TimeOfDay;
                         DescuentoColegiatura.EsComite = AlumnoBeca.esComite;
@@ -9868,7 +10842,7 @@ namespace BLL
                             Monto = AlumnoBeca.porcentajeBeca,
                             UsuarioId = Usuario.usuarioId,
                             Comentario = "",
-                            FechaGeneracion = AlumnoBeca.fecha != null ? AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha) : DateTime.Now,
+                            FechaGeneracion = AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha),
                             FechaAplicacion = DateTime.Now,
                             HoraGeneracion = DateTime.Now.TimeOfDay,
                             EstatusId = 2,
@@ -9917,7 +10891,7 @@ namespace BLL
                             DescuentoInscripcion.Monto = AlumnoBeca.porcentajeBeca;
                             DescuentoInscripcion.DescuentoId = descuentoIdInscripcion;
                             DescuentoInscripcion.UsuarioId = Usuario.usuarioId;
-                            DescuentoInscripcion.FechaGeneracion = AlumnoBeca.fecha != null ? AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha) : DateTime.Now;
+                            DescuentoInscripcion.FechaGeneracion = AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha);
                             DescuentoInscripcion.FechaAplicacion = DateTime.Now;
                             DescuentoInscripcion.HoraGeneracion = DateTime.Now.TimeOfDay;
                             DescuentoInscripcion.EsComite = AlumnoBeca.esComite;
@@ -9954,7 +10928,7 @@ namespace BLL
                                 Monto = AlumnoBeca.porcentajeBeca,
                                 UsuarioId = Usuario.usuarioId,
                                 Comentario = "",
-                                FechaGeneracion = AlumnoBeca.fecha != null ? AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha) : DateTime.Now,
+                                FechaGeneracion = AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha),
                                 FechaAplicacion = DateTime.Now,
                                 HoraGeneracion = DateTime.Now.TimeOfDay,
                                 EstatusId = 2,
@@ -9997,7 +10971,7 @@ namespace BLL
                             DescuentoInscripcion.Monto = AlumnoBeca.porcentajeInscripcion;
                             DescuentoInscripcion.DescuentoId = descuentoIdInscripcion;
                             DescuentoInscripcion.UsuarioId = Usuario.usuarioId;
-                            DescuentoInscripcion.FechaGeneracion = AlumnoBeca.fecha != null ? AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha) : DateTime.Now;
+                            DescuentoInscripcion.FechaGeneracion = AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha);
                             DescuentoInscripcion.FechaAplicacion = DateTime.Now;
                             DescuentoInscripcion.HoraGeneracion = DateTime.Now.TimeOfDay;
                             DescuentoInscripcion.EsComite = AlumnoBeca.esComite;
@@ -10034,7 +11008,7 @@ namespace BLL
                                 Monto = AlumnoBeca.porcentajeInscripcion,
                                 UsuarioId = Usuario.usuarioId,
                                 Comentario = "",
-                                FechaGeneracion = AlumnoBeca.fecha != null ? AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha) : DateTime.Now,
+                                FechaGeneracion = AlumnoBeca.fecha == "" ? DateTime.Now : DateTime.Parse(AlumnoBeca.fecha),
                                 FechaAplicacion = DateTime.Now,
                                 HoraGeneracion = DateTime.Now.TimeOfDay,
                                 EstatusId = 2,
@@ -10060,12 +11034,16 @@ namespace BLL
 
                     #endregion Actualizar Descuento Inscripcion
 
-                    Inscribir(AlumnoBeca, Usuario);
+                    var F = db.AlumnoInscrito.AsNoTracking().Where(n => n.AlumnoId == AlumnoBeca.alumnoId && n.OfertaEducativaId == AlumnoBeca.ofertaEducativaId && n.Anio == AlumnoBeca.anio && n.PeriodoId == AlumnoBeca.periodoId).Count();
+
+                    if (F == 0)
+                        Inscribir(AlumnoBeca, Usuario);
                 }
 
                 db.SaveChanges();
             }
         }
+
         public static void AplicaBecaDeportiva(DTO.Alumno.Beca.DTOAlumnoBecaDeportiva AlumnoBeca, bool aplicacionExtemporanea)
         {
             List<DAL.Pago> PagosPendientes = new List<Pago>();
@@ -10773,6 +11751,7 @@ namespace BLL
                 #endregion Actualizar Descuento Colegiatura
             }
         }
+
         public static void DescuentoBitacora(DAL.AlumnoDescuento Descuento)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -10801,6 +11780,7 @@ namespace BLL
                 db.SaveChanges();
             }
         }
+
         public static void Inscribir(DTO.Alumno.Beca.DTOAlumnoBeca AlumnoBeca, DTO.Usuario.DTOUsuario Usuario)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -10864,6 +11844,7 @@ namespace BLL
                 db.SaveChanges();
             }
         }
+
         public static bool UpdateAlumno(DTOAlumno objAlumno, DTOProspectoDetalle objAlumnoD, int UsuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

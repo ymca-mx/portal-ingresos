@@ -42,6 +42,7 @@ namespace DAL
             this.Pagare = new HashSet<Pagare>();
             this.PagoCancelacionDetalle = new HashSet<PagoCancelacionDetalle>();
             this.PagoParcialBitacora = new HashSet<PagoParcialBitacora>();
+            this.PromocionCasa = new HashSet<PromocionCasa>();
             this.ProspectoSeguimiento = new HashSet<ProspectoSeguimiento>();
             this.Recibo = new HashSet<Recibo>();
             this.ReciboDetalle = new HashSet<ReciboDetalle>();
@@ -120,6 +121,8 @@ namespace DAL
         public virtual ICollection<PagoCancelacionDetalle> PagoCancelacionDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoParcialBitacora> PagoParcialBitacora { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromocionCasa> PromocionCasa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProspectoSeguimiento> ProspectoSeguimiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

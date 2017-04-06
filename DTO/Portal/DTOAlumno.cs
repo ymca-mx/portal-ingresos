@@ -78,6 +78,7 @@ namespace DTO
         public int SubPeriodoId { get; set; }
         public decimal Monto { get; set; }
         public bool AlumnoProspecto { get; set; }
+        public int UsuarioId { get; set; }
     }
 
     public class DTOAlumnoCambioCarrera
