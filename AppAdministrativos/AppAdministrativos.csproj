@@ -10049,7 +10049,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>25246</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/AppAdministrativos</IISUrl>
+          <IISUrl>http://localhost/portaladministrativo</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
