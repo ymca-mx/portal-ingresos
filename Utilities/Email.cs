@@ -71,10 +71,13 @@ namespace Utilities
             MailMessage Nuevo = new MailMessage();
             Nuevo.From = new MailAddress(remitente, display);
 
-            string[] Destinos = DestinosCopia.Split(SeparadorDestinosCC);
-            foreach(string cc in Destinos)
+            if (DestinosCopia.Length > 1)
             {
-                Nuevo.Bcc.Add(cc);
+                string[] Destinos = DestinosCopia.Split(SeparadorDestinosCC);
+                foreach (string cc in Destinos)
+                {
+                    Nuevo.Bcc.Add(cc);
+                }
             }
 
             if (destinatarios.Length > 0)

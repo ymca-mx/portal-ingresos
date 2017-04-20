@@ -449,6 +449,7 @@ namespace BLL
             {
                 try
                 {
+                    
 
                     DTOAlumno objAlumno = (from a in db.Alumno
                                            where a.AlumnoId == AlumnoId
@@ -504,6 +505,19 @@ namespace BLL
                     {
                         objAlumno.lstAlumnoInscrito.Add(a.FirstOrDefault());
                     });
+
+                    //Plantel
+                    var ultima = db.AlumnoInscrito
+                                        .Where(a => a.AlumnoId == objAlumno.AlumnoId)
+                                        .OrderBy(k => new { k.Anio, k.PeriodoId });
+
+                    var ultima2 = ultima.Select(k => k.OfertaEducativa)
+                                        .ToList();
+
+                    int plantel = ultima2?
+                                        .FirstOrDefault()?
+                                        .SucursalId ?? 0;
+                    objAlumno.Plantel = (plantel == 1 || plantel == 4) ? 1 : (plantel == 2) ? 2 : 3;
 
                     return objAlumno;
                 }

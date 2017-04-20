@@ -206,7 +206,7 @@
 
     function Alerta() {
         
-        var ahref = "<a class='btn blue' href=javascript:window.open('../Views/Pago/ListaConceptos.html'," + "'Tramites'" + "," + "'width=800,height=450'" + ");>click aqui</a>";
+        var ahref = "<a class='btn blue' href=javascript:window.open('/Views/Pago/ListaConceptos.html'," + "'Tramites'" + "," + "'width=800,height=450'" + ");>click aqui</a>";
         $.notific8('zindex', 11500);
         $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas información " + ahref ), settings);
 
