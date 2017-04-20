@@ -1531,7 +1531,7 @@ namespace AppAdministrativos.WS
                                 "</html>";
                     #endregion
                     
-                    Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, opjAl.DTOAlumnoDetalle.Email, ',', "programador1@ymcacdmex.org.mx", ';', "Claves de acceso Portal Universidad YMCA", body,ruta, ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
+                    Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, opjAl.DTOAlumnoDetalle.Email, ',', "programador1@ymcacdmex.org.mx;obeddelcastillo@uniymca.edu.mx", ';', "Claves de acceso Portal Universidad YMCA", body,ruta, ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
                 }
                 catch (Exception e)
                 {
