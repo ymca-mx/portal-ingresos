@@ -35,5 +35,8 @@ namespace DTO
         public string OtroDescuento { get; set; }
         public string Periodo { get; set; }
         public string Pagado { get; set; }
+        public string Usuario { get; set; }
+
+
     }
 }

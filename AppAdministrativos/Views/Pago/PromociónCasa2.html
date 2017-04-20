@@ -56,16 +56,107 @@
                         <div class="portlet-body">
                             <div class="row">
                                 <div class="col-md-12 ">
-
-                                    <div class="form-group col-md-3">
-                                        <label class="control-label"> Periodo </label>
-                                        <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
+                                    <div class="col-md-12">
+                                        <label class="control-label">Clave del Alumno</label>
+                                        <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                                        <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="row">
+                                        <div> &nbsp;</div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Alumno: </label>&nbsp;&nbsp;
+                                            <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label"> Oferta Educativa</label>
+                                            <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <hr />
+                                                <table id="dtAlumno" class="table table-striped table-bordered table-advance table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:center">
+                                                                Clave | Nombre Alumno
+                                                            </th>
+                                                            <th style="text-align:center">
+                                                                Oferta Educativa
+                                                            </th>
+                                                            <th style="text-align:center">
+                                                                Clave | Nombre Alumno Prospecto
+                                                            </th>
+                                                            <th style="text-align:center">
+                                                                Oferta Educativa Prospecto
+                                                            </th>
+                                                            <th style="text-align:center">
+                                                                Acción 
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    <div class="col-md-12" id="divPeriodo" hidden="hidden">
+                                        <hr />
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label"> Periodo </label>
+                                            <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label"> Mes </label>
+                                            <select id="slcMes" name="slcMes" class="form-control"></select>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <div> &nbsp;</div>
+                                            <label class="control-label">Monto </label>
+                                            <input type="number" id="txtMonto" class="form-control-static font-md" tabindex="1" />
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <div> &nbsp;</div>
+                                            <a class="btn blue" id="btnPromocion" tabindex="2">Aplicar Promoción</a>
+                                        </div>
+                                    </div>
+
+                                    </div>
+
+                            </div>
+
+                            </div>
+
+                        <!--Popup de Agregar prospecto-->
+                        <div class="modal fade" tabindex="-1" data-width="850" data-height="250" id="PopAlumnoProspecto">
+                            <div class="modal-dialog modal-dialog" style="width:800px">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                                    <h3 class="modal-title">Asignación de Alumno Prospecto</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 ">
+                                        <div class="col-md-12">
+                                            <label class="control-label">Clave del Alumno</label>
+                                            <input type="number" id="txtClave1" name ="txtClave1" class="form-control-static font-md" tabindex="1" />
+                                            <a class="btn blue" id="btnBuscar1" tabindex="2">Buscar Alumno</a>
+                                        </div>
+                                        <div class="col-md-12">
                                             <hr />
-                                            <table id="dtAlumno" class="table table-striped table-bordered table-advance table-hover ">
+                                            <table id="dtAlumno1" class="table table-striped table-bordered table-advance table-hover ">
                                                 <thead>
                                                     <tr>
                                                         <th style="text-align:center">
@@ -73,9 +164,6 @@
                                                         </th>
                                                         <th style="text-align:center">
                                                             Oferta Educativa
-                                                        </th>
-                                                        <th style="text-align:center">
-                                                            Clave | Nombre Alumno Prospecto
                                                         </th>
                                                         <th style="text-align:center">
                                                             Acción
@@ -87,55 +175,19 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
 
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <!--Popup de Agregar prospecto-->
-                        <div class="modal fade" tabindex="-1" data-width="600" data-height="200" id="PopAlumnoProspecto">
-                            <div class="modal-dialog modal-dialog" style="width:550px">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                    <h3 class="modal-title">Asignación de Promoción</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Alumno: </label>&nbsp;&nbsp;
-                                        <label class="bold" id="lblNombre"></label>
-                                    </div>
-                                    <div class="col-md-12 ">
-                                        <hr />
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label"> Mes </label>
-                                            <select id="slcMes" name="slcMes" class="form-control"></select>
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <div> &nbsp;</div>
-                                            <label class="control-label">Monto </label>
-                                            <input type="number" id="txtMonto" class="form-control-static font-md" tabindex="1" />
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="modal-footer">
-                                    <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
-                                    <a class="btn blue" id="btnPromocion" tabindex="2">Aplicar</a>
+                                    <button data-dismiss="modal"  aria-hidden="true" class="btn btn-default">Cerrar</button>
                                 </div>
                             </div>
-                            
                         </div>
+
 
                         <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
                             <div class="modal-dialog modal-sm" style="height: 90px;">

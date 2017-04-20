@@ -188,6 +188,7 @@ namespace AppAdministrativos.WS
         {
             return BLLUsuarioPortal.ObtenerUsuario(int.Parse(UsuarioId));
         }
+
         [WebMethod]
         public string CancelarPago(string PagoId, string Comentario, string UsuarioId, string Estatus)
         {

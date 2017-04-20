@@ -19,6 +19,7 @@ namespace DTO
         public int PreguntaTipoValoresId { get; set; }
         public int PreguntaTipoId { get; set; }
         public string Descripcion { get; set; }
+        public bool Estatus { get; set; }
     }
     public class DTORespuestas
     {

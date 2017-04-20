@@ -127,11 +127,11 @@ namespace Pruebas
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 6699,
-                anio = 2017,
-                periodoId = 1,
-                ofertaEducativaId = 21,
-                porcentajeBeca = 90.68m, //70.15
+                alumnoId = 6761,
+                anio = 2016,
+                periodoId = 2,
+                ofertaEducativaId = 14,
+                porcentajeBeca = 77.53m, //70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
@@ -1822,19 +1822,14 @@ namespace Pruebas
             
             DTOAlumnoPromocionCasa Promocion = new DTOAlumnoPromocionCasa
             {
-                AlumnoId = 8011,
-                NombreC = "MARTÍN DE JESUS LÓPEZ MARIN",
-                OfertaEducativaIdActual = 14,
-                OfertaEducativaActual = "Licenciatura en Mercadotecnia Internacional",
-                AlumnoIdProspecto = 8163,
-                NombreCProspecto = "GISELLE AZUCENA ZAVALA LOPEZ",
-                OfertaEducativaIdProspecto = 3,
-                OfertaEducativaProspecto = "Licenciatura en Derecho",
+                AlumnoId = 7486,
+                OfertaEducativaIdActual = 29,
+                AlumnoIdProspecto = 8117,
                 Anio = 2017,
                 PeriodoId = 2,
                 SubPeriodoId = 4,
                 Monto = 1500,
-                AlumnoProspecto = true,
+                EstatusId = 1,
                 UsuarioId = 8272
             };
 
@@ -1950,15 +1945,19 @@ namespace Pruebas
             }
         }
                
+        [TestMethod]
+        public void CancelarPago()
+        {
+                int PagoId = 40037;
+                int UsuarioId = 8272;
+                string Comentario = "El concepto era para pago de colegiaturas.";
 
-
+                BLL.BLLCargo.CancelarTotal(PagoId, UsuarioId, Comentario);
+          
+        }
     }
 
 
 
 }
 
-
-                                                                                        //&& AIB.Anio == 2017
-                                                                                        //&& AIB.PeriodoId == 2
-                                                                                        //&& AIB.OfertaEducativaId == ai.OfertaEducativaId

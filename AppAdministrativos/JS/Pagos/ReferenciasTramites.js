@@ -34,7 +34,7 @@
 
                     var lbl = $('#lblNombre');
                     lbl[0].innerHTML = data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno;
-                    lbl[0].innerHTML += data.d.AlumnoInscrito.EsEmpresa == true ? data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial" : ""; // +data.d.Grupo.Descripcion : ""; 
+                    lbl[0].innerHTML += data.d.AlumnoInscrito.EsEmpresa == true ? data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial" : "" + data.d.Grupo.Descripcion ; 
                     CargarPagos();
             }
         });
@@ -67,14 +67,16 @@
                             { "mDataProp": "ReferenciaId" },
                             { "mDataProp": "Periodo" },
                             { "mDataProp": "CargoFechaLimite" },
+                            { "mDataProp": "Usuario" },
                             { "mDataProp": "TotalMDescuentoMBecas" },
                             { "mDataProp": "OtroDescuento" },
                             { "mDataProp": "Pagado" },
                             { "mDataProp": "SaldoPagado" }
+                            
                         ],
                         "columnDefs": [
                           {
-                              "targets": [5],
+                              "targets": [6],
                               "visible": dk,
                               "searchable": false
                           },
@@ -103,11 +105,12 @@
                             row.childNodes[1].style.textAlign = 'left';
                             row.childNodes[2].style.textAlign = 'center';
                             row.childNodes[3].style.textAlign = 'center';
-                            row.childNodes[4].style.textAlign = 'right';
+                            row.childNodes[4].style.textAlign = 'left';
                             row.childNodes[5].style.textAlign = 'right';
                             row.childNodes[6].style.textAlign = 'right';
+                            row.childNodes[7].style.textAlign = 'right';
                             if (dk) {
-                                row.childNodes[7].style.textAlign = 'right';
+                                row.childNodes[8].style.textAlign = 'right';
                             }
                             if (data.Pagoid == 0) {
                                 row.childNodes[0].style.fontWeight = 'bold';
@@ -128,10 +131,12 @@
                          '<th></th>' +
                          '<th></th>' +
                          '<th></th>' +
-                         '<th></th>' +
+                            '<th></th>' +
+                            '<th></th>' +
                          '<th style="text-align:right">' + data[0].TotalPagado + '</th></tr>';
                     } else {
                         tr = '<tr id = "tr1">' +
+                            '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +

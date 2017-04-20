@@ -34,22 +34,36 @@
 
 
     $("#slcVisto").change(function () {
+        var l = 4;
+        vobo = ""
+
+        tblVoBo.columns(l)
+            .search(vobo)
+            .draw();
+
+        tblVoBo.columns(2)
+            .search("")
+            .draw();
+
         if ($("#slcVisto").val() != -1) {
-            if ($("#slcVisto").val() == 0)
-            {
+            if ($("#slcVisto").val() == 0) {
                 vobo = "/";
+                l= 4
+            } else if ($("#slcVisto").val() == 1) {
+                vobo = "-";
+                l= 4
             } else
             {
-                vobo = "-";
+                vobo = "No";
+                l = 2
             }
             
-        } else {
-            vobo = "";
-        }
+        } 
 
-            tblVoBo.columns(4)
-                .search(vobo)
-                .draw();
+        tblVoBo.columns(l)
+            .search(vobo)
+            .draw();
+            
         
     });
 
@@ -138,7 +152,7 @@
                                 "mDataProp": "UsuarioVoBo",
                                 "mRender": function (data, f, d) {
                                     var link
-                                    if (d.FechaVoBo == "-") {
+                                    if (d.Inscrito == "No") {
                                         link = "<a class='btn blue' name ='btnEnviar'>Enviar</a>";
                                     } else { link = ""; }
 

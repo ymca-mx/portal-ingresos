@@ -66,19 +66,16 @@ namespace DTO
     {
         public int AlumnoId { get; set; }
         public string NombreC { get; set; }
-        public List<DTOOfertaEducativa1> OfertaEducativa { get; set; }
         public int OfertaEducativaIdActual { get; set; }
         public string OfertaEducativaActual { get; set; }
         public int AlumnoIdProspecto { get; set; }
         public string NombreCProspecto { get; set; }
-        public int OfertaEducativaIdProspecto { get; set; }
-        public string OfertaEducativaProspecto { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public int SubPeriodoId { get; set; }
         public decimal Monto { get; set; }
-        public bool AlumnoProspecto { get; set; }
         public int UsuarioId { get; set; }
+        public int EstatusId { get; set; }
     }
 
     public class DTOAlumnoCambioCarrera
@@ -95,6 +92,7 @@ namespace DTO
         public string DescripcionPeriodo { get; set; }
         public string Observaciones { get; set; }
         public int UsuarioId { get; set; }
+        public int EstatusId { get; set; }
     }
 
 

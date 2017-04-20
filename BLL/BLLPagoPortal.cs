@@ -2894,7 +2894,7 @@ namespace BLL
                 {
                     int ofertaid = 0;
                     List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId 
-                        && P.EstatusId != 2 && P.EstatusId != 3  && (P.Anio != 2016 || P.PeriodoId != 1) && P.Cuota1.PagoConcepto.EsTramite == true ).AsNoTracking().ToList();
+                        && P.EstatusId != 2 && P.EstatusId != 3  && (P.Anio != 2016 || P.PeriodoId != 1) && P.Cuota1.PagoConcepto.EsTramite == true && P.OfertaEducativa.OfertaEducativaTipoId != 4 ).AsNoTracking().ToList();
                     lstPagos = lstPagos.OrderBy(P => P.OfertaEducativaId).ToList();
                     lstPagos = lstPagos.Where(p => p.EstatusId != 2).ToList();
 
@@ -2934,7 +2934,9 @@ namespace BLL
                                     Total_a_PagarS = "",
                                     TotalMDescuentoMBecas = "",
                                     EsSep = 2,
-                                    OtroDescuento=""
+                                    OtroDescuento="",
+                                    Usuario = ""
+                                    
                                 });
                             }
                             else if (ofertaid != objPago.OfertaEducativaId)
@@ -2955,7 +2957,8 @@ namespace BLL
                                     Total_a_PagarS = "",
                                     TotalMDescuentoMBecas = "",
                                     EsSep = 2,
-                                    OtroDescuento=""
+                                    OtroDescuento="",
+                                    Usuario = ""
                                 });
                             }
                             DTOPagoDetallado objPagoAdd = new DTOPagoDetallado();
@@ -3061,6 +3064,9 @@ namespace BLL
                             objPagoAdd.DescripcionOferta = objPago.OfertaEducativa.Descripcion;
                             objPagoAdd.Periodo = db.Periodo.Where(a => a.Anio == objPago.Anio && a.PeriodoId == objPago.PeriodoId).FirstOrDefault().Descripcion;
                             objPagoAdd.Pagado = (objPago.Promesa - objPago.Restante).ToString("C", Cultura);
+                            objPagoAdd.Usuario = objPago.UsuarioTipoId == 2
+                                                 ? db.Alumno.Where(alu => alu.AlumnoId == objPago.UsuarioId).Select(sel =>  sel.Nombre + " " + sel.Paterno).FirstOrDefault()
+                                                 : db.Usuario.Where(alu => alu.UsuarioId == objPago.UsuarioId).Select(sel => sel.Nombre + " " + sel.Paterno).FirstOrDefault();
 
                             lstPagosD.Add(objPagoAdd);
                             lstPagosD[0].Total_a_Pagar += total;

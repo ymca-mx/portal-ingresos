@@ -174,9 +174,9 @@ namespace AppAdministrativos.WS
 
         //Promocion en casa
         [WebMethod]
-        public DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa(string AlumnoId, string TA)
+        public List<DTOAlumnoPromocionCasa> ConsultarAlumnoPromocionCasa(string Anio, string PeriodoId)
         {
-            return BLLAlumnoPortal.ConsultarAlumnoPromocionCasa(int.Parse(AlumnoId), int.Parse(TA));
+            return BLLAlumnoPortal.ConsultarAlumnoPromocionCasa(int.Parse(Anio), int.Parse(PeriodoId));
         }
         [WebMethod]
         public List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()

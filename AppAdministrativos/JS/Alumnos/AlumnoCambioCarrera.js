@@ -7,7 +7,6 @@
         if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
         
         $('#Load').modal('show');
-
         $.ajax({
             type: "POST",
             url: "WS/Alumno.asmx/ConsultaCambioCarrera",
@@ -16,22 +15,38 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d === null) {
-                    alertify.alert("Este alumno no esta inscrito al periodo actual");
+                    alertify.alert("Este alumno no existe.");
                     $('#Load').modal('hide');
                     return false;
                 }
                 lstop.length = 0;
-
                 lstop.push(data.d);
                 $('#lblNombre').text(lstop[0].NombreC);
                 $("#slcOfertaEducativa").empty();
+                $("#slcOfertaEducativa2").empty();
+                $("#slcPeriodo").empty();
+                $('#lblInscito').empty();
+
+                if (lstop[0].OfertaEducativaIdActual == 0) {
+
+                    $('#lblInscito').text("No ha iniciado proceso de cambio de carrera.");
+                    $('#Load').modal('hide');
+                    return false;
+                }
+                if (lstop[0].EstatusId != 4 && lstop[0].EstatusId != 14) {
+
+                    $('#lblInscito').text("No ha realizado el pago para cambio de carrera.");
+                    $('#Load').modal('hide');
+                    return false;
+                }
+
                 var optionS = $(document.createElement('option'));
                 optionS.text(lstop[0].OfertaEducativaActual);
                 optionS.val(lstop[0].OfertaEducativaIdActual);
                 $("#slcOfertaEducativa").append(optionS);
                 //$("#slcOfertaEducativa").prop("disabled", true);
 
-                $("#slcOfertaEducativa2").empty();
+                
                 var optionS2 = $(document.createElement('option'));
                 optionS2.text("--Seleccionar--");
                 optionS2.val(-1);
@@ -44,7 +59,6 @@
                     option.val(this.ofertaEducativaId);
                     $("#slcOfertaEducativa2").append(option);
                 });
-                $("#slcPeriodo").empty();
                 var optionS3 = $(document.createElement('option'));
                 optionS3.text(lstop[0].Anio + " - " + lstop[0].PeriodoId + "        " + lstop[0].DescripcionPeriodo);
                 optionS3.val(1);
@@ -67,7 +81,7 @@
     });
 
     $("#btnCambio").click(function () {
-        if ($("#slcOfertaEducativa2").val() == -1)
+        if ($("#slcOfertaEducativa2").val() == -1 || $("#slcOfertaEducativa2").val() == null)
         {
             alertify.alert("Debe seleccionar una  nueva oferta.");
             return false;

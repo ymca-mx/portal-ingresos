@@ -23,30 +23,7 @@
         });
     }
 
-    function ratingDisable() {
-        $('select').barrating('destroy');
-    }
-
-    $('.rating-enable').click(function (event) {
-        event.preventDefault();
-
-        ratingEnable();
-
-        $(this).addClass('deactivated');
-        $('.rating-disable').removeClass('deactivated');
-    });
-
-    $('.rating-disable').click(function (event) {
-        event.preventDefault();
-
-        ratingDisable();
-
-        $(this).addClass('deactivated');
-        $('.rating-enable').removeClass('deactivated');
-    });
-
     ratingEnable();
-
 
     function LimpiarCampos() {
         $("#submit_form").trigger('reset');
@@ -58,17 +35,16 @@
         $('#submit_form  i').removeClass('fa-check');
     }
 
-  
     $("#DivDinamico1").on("click", "label", function () {
 
-        var valorid = $(this).data('valorid');
-        if ($(this).data('valorid') == 9 || $(this).data('valorid') == 12)
+        var estatus = $(this).data('estatus');
+        if (estatus == true)
         {
             var textarea = $(this).attr("id").substring(1);
             $("#div" + textarea).show();
             estatusTXA = 1;
 
-        } else if ($(this).data('valorid') == 10 || $(this).data('valorid') == 11)
+        } else 
         {
             var textarea = $(this).attr("id").substring(1);
             $("#div" + textarea).hide();
@@ -92,6 +68,7 @@
                     $(datos).each(function (i0, d0) {
                         if (this.PreguntaTipoId == 1 )
                         {
+
                             html += '<div class="col-md-12 ">' +
                                 '<h4>' + d0.Descripcion + '</h4>' +
                                 '</div>' +
@@ -111,7 +88,8 @@
                                 '</div>';
 
                                   raiting = "#" + d0.PreguntaId.toString();;
-                        } else if (d0.PreguntaTipoId == 2)
+                        }
+                        else if (d0.PreguntaTipoId == 2)
                         { 
                             html += '<div class="col-md-12 ">' +
                                  '<h4>' + d0.Descripcion + '</h4>' +
@@ -121,7 +99,7 @@
                              '<div class="btn-group btn-group-circle" data-toggle="buttons">';
                             objid.push("0"+d0.PreguntaId);
                             $(d0.Opciones).each(function (i, d) {
-                                html += ' <label class="btn green " data-tipoid = "' + d0.PreguntaTipoId + '" data-valorid = "' + d.PreguntaTipoValoresId + '" id="' + i + d0.PreguntaId + '" >' +
+                                html += ' <label class="btn green " data-estatus = "' + d.Estatus +'" data-tipoid = "' + d0.PreguntaTipoId + '" data-valorid = "' + d.PreguntaTipoValoresId + '" id="' + i + d0.PreguntaId + '" >' +
                                   '<input type="radio" class="toggle">' + d.Descripcion +
                                   '</label>';
                               });
@@ -133,7 +111,8 @@
                              '</div>' +
                              '<hr>' +
                       '</div>';
-                        } else if (d0.PreguntaTipoId == 3) {
+                        }
+                        else if (d0.PreguntaTipoId == 3) {
 
                             html += '<div class="col-md-12 ">' +
                                 '<h4>' + d0.Descripcion + '</h4>' +
@@ -148,7 +127,8 @@
                              '<hr>' +
                           ' </div>';
 
-                        } else if (d0.PreguntaTipoId == 4 || d0.PreguntaTipoId == 5) {
+                        }
+                        else if (d0.PreguntaTipoId == 4 || d0.PreguntaTipoId == 5) {
 
                             html +=
                                 '<div class="col-md-12 ">' +
@@ -159,7 +139,7 @@
                             '<div class="btn-group btn-group-circle" data-toggle="buttons">';
                             objid.push("0"+d0.PreguntaId);
                             $(d0.Opciones).each(function (i, d) {
-                                html += ' <label class="btn green " data-tipoid = "' + d0.PreguntaTipoId + '" data-valorid = "' + d.PreguntaTipoValoresId + '" id="' + i + d0.PreguntaId + '" >' +
+                                html += ' <label class="btn green "  data-estatus = "' + d.Estatus +'" data-tipoid = "' + d0.PreguntaTipoId + '" data-valorid = "' + d.PreguntaTipoValoresId + '" id="' + i + d0.PreguntaId + '" >' +
                                 '<input type="radio" class="toggle">' + d.Descripcion +
                                 '</label>';
                             });
@@ -329,13 +309,9 @@
             GuardarTodo(obj2);
 
         }
-
-        if (form.valid() == false) { return false; }
         
        
     });
-
-
 
     function GuardarTodo(obj2) {
 

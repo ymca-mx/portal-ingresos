@@ -1009,8 +1009,11 @@ namespace BLL
                                                                                 "<div style='color:#009966; font-size:30px; text-align:center; padding:10px'>Estimado,&nbsp; " + opjAl.Nombre + " " + opjAl.Paterno + " " + opjAl.Materno + " </div>" +
                                                                                 "<div>" +
                                                                                     "<h3 class='caption font-blue'>" +
-                                                                                        "No has concluido tu proceso de inscripción, para finalizarlo es necesario que te presentes inmediatamente con tu coordinador." +
+                                                                                        "No has concluido tu proceso de inscripción, para finalizarlo es necesario que te presentes inmediatamente al área de servicios escolares." +
                                                                                     "</h3>" +
+                                                                                    "<h4 class='caption font-blue-dark'>" +
+                                                                                        "Atentamente: Coordinación Académica" +
+                                                                                    "</h4>" +
                                                                                     "<br />" +
                                                                                     "<h4 class='caption font-blue-dark'> Universidad YMCA México. </h4>" +
                                                                                 "</div>" +
