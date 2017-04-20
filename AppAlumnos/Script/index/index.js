@@ -26,7 +26,7 @@
                  if (Datos.extensionImagen == ".png")
                      $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                  //RevisaAnticipado();
-                 VerificarDatos();
+                 //VerificarDatos();
              }
          },
          error: function (Resultado) {

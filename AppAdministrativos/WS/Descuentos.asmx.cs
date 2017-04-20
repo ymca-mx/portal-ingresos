@@ -1266,6 +1266,11 @@ namespace AppAdministrativos.WS
                     objPas.Password = Utilities.Seguridad.Desencripta(27, objPas.Password);
                     string body = "";
                     DTOAlumno opjAl = BLLAlumnoPortal.ObtenerAlumno(objPas.AlumnoId);
+                    string ruta = opjAl.Plantel == 1
+                                ? @"C:\inetpub\wwwroot\portaladministrativo\Documentos\Reglamento.pdf"
+                                : opjAl.Plantel == 2
+                                ? @"C:\inetpub\wwwroot\portaladministrativo\Documentos\ReglamentoCamohmila.pdf"
+                                : "";
                     #region "HTML"
                     body = "<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
                                 "<head>" +
@@ -1525,7 +1530,8 @@ namespace AppAdministrativos.WS
                                 "</body>" +
                                 "</html>";
                     #endregion
-                    Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, opjAl.DTOAlumnoDetalle.Email, ',', "programador1@ymcacdmex.org.mx;obeddelcastillo@uniymca.edu.mx", ';', "Claves de acceso Portal Universidad YMCA", body, "", ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
+                    
+                    Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, opjAl.DTOAlumnoDetalle.Email, ',', "programador1@ymcacdmex.org.mx", ';', "Claves de acceso Portal Universidad YMCA", body,ruta, ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
                 }
                 catch (Exception e)
                 {

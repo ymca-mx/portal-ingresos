@@ -2,6 +2,12 @@
     Menu();
     function Menu() {
         var Menu = "";
+
+        $.blockUI({
+            message: "<h1>Cargando Menu, por favor espere....</h1>",
+            css: { backgroundColor: '#48525e', color: '#fff' }
+        });
+
         $.ajax({
             url: 'WS/Usuario.asmx/ConsultarMenu',
             type: 'POST',
@@ -10,8 +16,10 @@
             dataType: 'json',
             success: function (Resultado) {
                 Datos = Resultado.d;
-                if (Datos == null)
+                if (Datos == null) {
                     alert('Error en la carga del menu');
+                    $.unblockUI();
+                }
                 else {
                     $(Resultado.d).each(function () {
                         Menu += '<li class="menu-dropdown classic-menu-dropdown ">' +
@@ -34,10 +42,12 @@
                         Menu += '</ul>' + '</li>';
                     });
                     $('#Menu').append(Menu);
+                    $.unblockUI();
                 }
             },
             error: function (Resultado) {
                 alert('Se presento un error en la validación de las credenciales');
+                $.unblockUI();
                 $(location).attr('href', 'Login.html');
             }
         });

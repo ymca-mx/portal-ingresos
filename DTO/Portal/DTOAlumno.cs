@@ -36,6 +36,7 @@ namespace DTO
         public Boolean Biblioteca { get; set; }
         public string Matricula { get; set; }
         public List<DTOAlumnoAntecendente> Antecendentes { get; set; }
+        public int Plantel { get; set; }
     }
 
     public class DTOAlumnoDatos
