@@ -17,7 +17,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PreguntaTipo()
         {
-            this.Pregunta = new HashSet<Pregunta>();
+            this.PreguntaCompuesta = new HashSet<PreguntaCompuesta>();
+            this.PreguntaConfiguracion = new HashSet<PreguntaConfiguracion>();
             this.PreguntaTipoValores = new HashSet<PreguntaTipoValores>();
         }
     
@@ -26,7 +27,9 @@ namespace DAL
         public Nullable<int> ValorId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pregunta> Pregunta { get; set; }
+        public virtual ICollection<PreguntaCompuesta> PreguntaCompuesta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreguntaConfiguracion> PreguntaConfiguracion { get; set; }
         public virtual PreguntaValor PreguntaValor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PreguntaTipoValores> PreguntaTipoValores { get; set; }

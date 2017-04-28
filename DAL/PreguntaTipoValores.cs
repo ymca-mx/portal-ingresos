@@ -14,10 +14,24 @@ namespace DAL
     
     public partial class PreguntaTipoValores
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PreguntaTipoValores()
+        {
+            this.PreguntaCompuesta = new HashSet<PreguntaCompuesta>();
+            this.Respuesta = new HashSet<Respuesta>();
+            this.Respuesta1 = new HashSet<Respuesta>();
+        }
+    
         public int PreguntaTipoValoresId { get; set; }
         public Nullable<int> PreguntaTipoId { get; set; }
         public string Descripcion { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreguntaCompuesta> PreguntaCompuesta { get; set; }
         public virtual PreguntaTipo PreguntaTipo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Respuesta> Respuesta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Respuesta> Respuesta1 { get; set; }
     }
 }

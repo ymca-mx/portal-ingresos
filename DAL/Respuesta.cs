@@ -19,10 +19,13 @@ namespace DAL
         public Nullable<int> PreguntaId { get; set; }
         public Nullable<System.DateTime> FechaGeneracion { get; set; }
         public Nullable<System.TimeSpan> HoraGeneracion { get; set; }
-        public Nullable<int> PreguntaTipoValoresId { get; set; }
+        public Nullable<int> PreguntaTipoValoresId1 { get; set; }
+        public Nullable<int> PreguntaTipoValoresId2 { get; set; }
         public string Comentario { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual Pregunta Pregunta { get; set; }
+        public virtual PreguntaTipoValores PreguntaTipoValores { get; set; }
+        public virtual PreguntaTipoValores PreguntaTipoValores1 { get; set; }
     }
 }

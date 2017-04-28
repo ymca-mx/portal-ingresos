@@ -255,6 +255,7 @@ namespace AppAdministrativos.WS
                 return new string[] { e.Message };
             }
         }
+
         [WebMethod]
         public DTOPagos GenerarPagoB(string AlumnoId, string OfertaEducativaId, string PagoConceptoId, string CuotaId, string UsuarioId)
         {
@@ -262,6 +263,15 @@ namespace AppAdministrativos.WS
 
             return objPago;
         }
+
+        [WebMethod]
+        public DTOPagos GenerarPagoC(string AlumnoId, string OfertaEducativaId, string PagoConceptoId, string CuotaId, string UsuarioId, string Anio, string PeriodoId)
+        {
+            DTOPagos objPago = BLLPagoPortal.GenerarPagoC(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(PagoConceptoId), int.Parse(CuotaId), int.Parse(UsuarioId), int.Parse(Anio), int.Parse(PeriodoId));
+
+            return objPago;
+        }
+
         [WebMethod]
         public DTOPagos GenerarPago(string AlumnoId, string OfertaEducativaId, string PagoConceptoId, string CuotaId)
         {

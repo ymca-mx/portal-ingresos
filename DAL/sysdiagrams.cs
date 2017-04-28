@@ -12,12 +12,12 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AlumnoMovimientoCarrera
+    public partial class sysdiagrams
     {
-        public int AlumnoMovimientoId { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public string Observaciones { get; set; }
-    
-        public virtual AlumnoMovimiento AlumnoMovimiento { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

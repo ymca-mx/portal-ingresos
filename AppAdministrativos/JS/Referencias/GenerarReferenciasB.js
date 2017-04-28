@@ -8,6 +8,7 @@ $(document).ready(function () {
     var PagoId = 0;
     var Bandera = 0;
     var tblReferencias;
+
     function Bloquear(Texto) {
         Bandera = 1;
         //$("#tblContenido *").prop('disabled', true);
@@ -28,8 +29,47 @@ $(document).ready(function () {
             $('#slcOfertaEducativa').empty();
             $('#slcConceptos').empty();
             DatosAlumno(clave);
+            TraerPeriodos();
         }
     });
+
+    function TraerPeriodos() {
+
+        $("#slcPeriodo").empty();
+
+        var option1 = $(document.createElement('option'));
+        option1.text("--Seleccionar--");
+        option1.val(-1);
+        $("#slcPeriodo").append(option1);
+
+        $.ajax({
+            type: "POST",
+            url: "WS/Alumno.asmx/PeriodosPromocionCasa",
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+                Periodos = data.d;
+                $(Periodos).each(function (i, d) {
+                    var option = $(document.createElement('option'));
+                    option.text(this.Descripcion);
+                    option.attr("data-Anio", this.Anio);
+                    option.attr("data-PeriodoId", this.PeriodoId);
+                    option.val(i);
+
+                    $("#slcPeriodo").append(option);
+                });
+                $("#slcPeriodo").val(-1);
+
+            }
+        });
+
+    }
+
     function ConsutlarAdeudos(AlumnoId, Oferta) {
         $("#slcConceptos").empty();
         $.ajax({
@@ -188,6 +228,14 @@ $(document).ready(function () {
         });
     }
     $('#slcConceptos').change(function () {
+       
+        if ($('#slcConceptos').val() == 18) {
+            $("#divPeriodo").show();
+        } else
+        {
+            $("#divPeriodo").hide();
+        }
+
         EsVariable = $('#slcConceptos').find('option:selected');
         var Resp = $(EsVariable[0]).data("esvariable");
         if (Resp == true) {
@@ -213,19 +261,28 @@ $(document).ready(function () {
     $('#bntClose').click(function () {
         $('#slcConceptos option')[0].selected = true;
     });
+
     $('#btnGenerar').on('click', function () {
 
         var Variables;
         var cFech;
+        var Anio,PeriodoId;
         var slcConcepto = $('#slcConceptos');
         slcConcepto = slcConcepto[0].value;
         if (slcConcepto == '-1') { return false; }
+        if (slcConcepto == 18 && $("#slcPeriodo").val() == -1) {
+            alertify.alert("Debe seleccionar el periodo.");
+            return false;
+        }
+
+      
+
         var usuario = $.cookie('userAdmin');
         $(lstCuotas).each(function () {
             var objCuota = this;
             if (objCuota.DTOPagoConcepto.PagoConceptoId == slcConcepto) {
                 if (!BuscarTabla(objCuota.DTOPagoConcepto.Descripcion)) {
-                    Variables = "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId +"',UsuarioId:'"+ usuario+ "'}";
+                   
                     alertify.confirm("<p>¿Esta seguro que desea generar la Referecia?<br><br><hr>", function (e) {
                         if (e) {
                             Bloquear("Generando Referencia");
@@ -244,8 +301,17 @@ $(document).ready(function () {
                                             + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId + "',Monto:'" + objCuota.Monto + "',UsuarioId:'" + usuario + "'}";
                                         GenerarPago2(Variables3);
                                     } else {
+                                        
+                                        if (slcConcepto == 18) {
+                                            Anio = $('#slcPeriodo').find(':selected').data("anio");
+                                            PeriodoId = $('#slcPeriodo').find(':selected').data("periodoid");
+                                            Variables = "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId + "',UsuarioId:'" + usuario + "',Anio:'" + Anio + "',PeriodoId:'" + PeriodoId + "'}";
+                                            GenerarPagoC(Variables);
+                                        } else {
+                                            Variables = "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId + "',UsuarioId:'" + usuario + "'}";
+                                            GenerarPago(Variables);
+                                            }
 
-                                        GenerarPago(Variables);
                                     }
                                 }
                             });
@@ -255,9 +321,7 @@ $(document).ready(function () {
                     });
                 }
                 else {
-                    Variables = "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId + "',UsuarioId:'" + usuario + "'}";
                     var Variables2 = "{OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "'}";
-
 
                     $.ajax({
                         type: "POST",
@@ -276,7 +340,16 @@ $(document).ready(function () {
                                             GenerarPago2(Variables3);
                                         } else {
 
-                                            GenerarPago(Variables);
+                                            if (slcConcepto == 18) {
+                                                Anio = $('#slcPeriodo').find(':selected').data("anio");
+                                                PeriodoId = $('#slcPeriodo').find(':selected').data("periodoid");
+                                                Variables = "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId + "',UsuarioId:'" + usuario + "',Anio:'" + Anio + "',PeriodoId:'" + PeriodoId + "'}";
+                                                GenerarPagoC(Variables);
+                                            } else {
+                                                Variables = "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + objCuota.OfertaEducativaId + "',PagoConceptoId:'" + objCuota.PagoConceptoId + "',CuotaId:'" + objCuota.CuotaId + "',UsuarioId:'" + usuario + "'}";
+                                                GenerarPago(Variables);
+                                            }
+                                            
                                         }
                                     }
                                 });
@@ -342,6 +415,31 @@ $(document).ready(function () {
             }
         });
     }
+    function GenerarPagoC(Cuota) {
+        $.ajax({
+            type: "POST",
+            url: "WS/Descuentos.asmx/GenerarPagoC",
+            data: Cuota, // the data in form-encoded format, ie as it would appear on a querystring
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+            success: function (data) {
+                if (data.d == null) {
+                    return false;
+                } else {
+                    var td = '<tr>';
+                    td += '<td>' + data.d.DTOCuota.DTOPagoConcepto.Descripcion + '</td>';
+                    td += '<td>' + data.d.Referencia + '</td>';//Referencia               
+                    td += '<td>' + '$' + formato_numero(data.d.Promesa, 2, '.', ',') + '</td>';//Monto
+                    td += '<td>' + data.d.objNormal.FechaLimite + '</td>';//Fecha
+                    td += '</tr>'
+
+                    $('#txtBar').text("Enviando Correo");
+                    MandarMail(data.d.PagoId, td);
+                }
+            }
+        });
+    }
+
     function GenerarPago2(Cuota) {
         $.ajax({
             type: "POST",
