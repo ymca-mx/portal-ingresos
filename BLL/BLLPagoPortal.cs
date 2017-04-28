@@ -3029,7 +3029,7 @@ namespace BLL
                                 objPagoAdd.SaldoPagado = total.ToString("C", Cultura);
                                 objPagoAdd.OfertaEducativaId = objPago.OfertaEducativaId;
                                 objPagoAdd.DescripcionOferta = objPago.OfertaEducativa.Descripcion;
-
+                                 
 
                                 lstPagosD.Add(objPagoAdd);
                                 lstPagosD[lstAdeudos.Count > 0 ? 1 : 0].Total_a_Pagar += total;
