@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Services;
@@ -33,6 +34,17 @@ namespace AppAlumnos.Services
             return Universidad.BLL.BLLAlumno.ImagenIndex(alumnoId);
         }
 
+        [WebMethod]
+        public List<Universidad.DTO.EstadoCuenta.ReferenciaProcesada> EstadoDeCuenta(string AlumnoId, string FechaI, string FechaF)
+        {
+            return
+            BLL.BLLEstadoCuenta.ObtenerCargos(new DTO.DTOAlumno{ AlumnoId = int.Parse(AlumnoId) },
+                            DateTime.ParseExact(FechaI, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            DateTime.ParseExact(FechaF, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+            BLL.BLLEstadoCuenta.ObtenerAbonos(new DTO.DTOAlumno { AlumnoId = int.Parse(AlumnoId) },
+                             DateTime.ParseExact(FechaI, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            DateTime.ParseExact(FechaF, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+        }
         [WebMethod, ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void RecuperaPassword(string email)
         {
