@@ -25,8 +25,8 @@ namespace DAL
         public Nullable<System.TimeSpan> HoraGeneracion { get; set; }
         public Nullable<System.DateTime> FechaAplicacion { get; set; }
         public Nullable<System.TimeSpan> HoraAplicacion { get; set; }
-        public Nullable<int> PagoId { get; set; }
         public Nullable<int> UsuarioId { get; set; }
+        public Nullable<int> PagoId { get; set; }
         public Nullable<int> EstatusId { get; set; }
     
         public virtual Alumno Alumno { get; set; }

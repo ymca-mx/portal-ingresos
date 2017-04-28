@@ -71,7 +71,8 @@
                             { "mDataProp": "TotalMDescuentoMBecas" },
                             { "mDataProp": "OtroDescuento" },
                             { "mDataProp": "Pagado" },
-                            { "mDataProp": "SaldoPagado" }
+                            { "mDataProp": "SaldoPagado" },
+                            { "mDataProp": "Estatus" }
                             
                         ],
                         "columnDefs": [
@@ -109,8 +110,9 @@
                             row.childNodes[5].style.textAlign = 'right';
                             row.childNodes[6].style.textAlign = 'right';
                             row.childNodes[7].style.textAlign = 'right';
+                            row.childNodes[8].style.textAlign = 'right';
                             if (dk) {
-                                row.childNodes[8].style.textAlign = 'right';
+                                row.childNodes[9].style.textAlign = 'right';
                             }
                             if (data.Pagoid == 0) {
                                 row.childNodes[0].style.fontWeight = 'bold';
@@ -133,9 +135,11 @@
                          '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
+                            '<th></th>' +
                          '<th style="text-align:right">' + data[0].TotalPagado + '</th></tr>';
                     } else {
                         tr = '<tr id = "tr1">' +
+                            '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +

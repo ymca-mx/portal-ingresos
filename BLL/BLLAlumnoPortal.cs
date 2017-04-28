@@ -480,7 +480,8 @@ namespace BLL
                                                {
                                                    UsuarioId = a.UsuarioId,
                                                    Nombre = a.Usuario.Nombre
-                                               }
+                                               },
+                                               Email = a.AlumnoDetalle.Email
 
                                            }).AsNoTracking().FirstOrDefault();
                     objAlumno.Grupo = new DTOGrupo
@@ -1699,23 +1700,55 @@ namespace BLL
                 var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
                                                                      && fechaActual <= p.FechaFinal).FirstOrDefault();
 
-                var preguntas = db.Pregunta.Where(a => a.Anio == Periodo.Anio && a.PeriodoId == Periodo.PeriodoId)
-                                           .Select(b => new DTOPreguntas
+                var preguntas2 = db.Pregunta.Where(a => a.Anio == Periodo.Anio && a.PeriodoId == Periodo.PeriodoId)
+                                           .Select(b => new DTOPreguntas2
                                            {
                                                PreguntaId = b.PreguntaId,
-                                               Descripcion = b.Descripcion,
-                                               PreguntaTipoId = (int)b.PreguntaTipoId,
-                                               SupPregunta = b.SubPregunta,
-                                               Opciones = db.PreguntaTipoValores.Where(c=> c.PreguntaTipoId == b.PreguntaTipoId)
-                                                                                . Select(d=> new DTOOpciones
-                                                                                {
-                                                                                    PreguntaTipoValoresId = d.PreguntaTipoValoresId,
-                                                                                    PreguntaTipoId= (int) d.PreguntaTipoId,
-                                                                                    Descripcion = d.Descripcion,
-                                                                                    Estatus = d.PreguntaTipoValoresId == 9 || d.PreguntaTipoValoresId == 12 ? true : false
-                                                                                }).ToList()
-                                           }).ToList();
+                                               Pregunta1 = b.Descripcion,
+                                               Pregunta2 = b.SubPregunta,
+                                               PreguntaTipoId1 = (int)b.PreguntaConfiguracion.PreguntaTipoId,
+                                               Opciones1 = b.PreguntaConfiguracion.PreguntaTipo.PreguntaTipoValores.Select(x => new DTOOpciones
+                                               {
+                                                   PreguntaTipoValoresId = x.PreguntaTipoValoresId,
+                                                   PreguntaTipoId = (int)x.PreguntaTipoId,
+                                                   Descripcion = x.Descripcion,
+                                                   Estatus = b.PreguntaConfiguracion.PreguntaCompuesta.PreguntaTipoValores.Descripcion == x.Descripcion ? true : false
+                                               }).ToList(),
+                                               PreguntaTipoId2 = b.PreguntaConfiguracion.esCompuesta == true ? (int)b.PreguntaConfiguracion.PreguntaCompuesta.PreguntaTipoId : 0,
+                                               Opciones2 = db.PreguntaCompuesta.Where(w => w.PreguntaConfiguracionId == b.PreguntaConfiguracionId).FirstOrDefault().PreguntaTipo.PreguntaTipoValores.Select(s => new DTOOpciones
+                                               {
+                                                   PreguntaTipoValoresId = s.PreguntaTipoValoresId,
+                                                   PreguntaTipoId = (int)s.PreguntaTipoId,
+                                                   Descripcion = s.Descripcion,
+                                                   Estatus = false
+                                               }).ToList()
+                                           }).OrderBy(o => o.PreguntaId).ToList();
 
+                List<DTOPreguntas> preguntas = new List<DTOPreguntas>();
+
+                preguntas2.ForEach(n =>
+                {
+                    preguntas.Add(new DTOPreguntas
+                    {
+                        PreguntaId = n.PreguntaId,
+                        Preguntas = new List<DTOPregunta>
+                           {
+                               new DTOPregunta
+                               {
+                                   Pregunta = n.Pregunta1,
+                                   PreguntaTipoId = n.PreguntaTipoId1,
+                                   Opciones = n.Opciones1
+                               },
+                               new DTOPregunta
+                               {
+                                   Pregunta = n.Pregunta2,
+                                   PreguntaTipoId = n.PreguntaTipoId2,
+                                   Opciones = n.Opciones2
+                               }
+                           }
+                    });
+                });
+                
                 return preguntas;
             }
         }
@@ -1724,8 +1757,8 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                //try
-                //{
+                try
+                {
                     var respuestas = RespuesasEncuesta.Respuestas;
 
                     respuestas.ForEach(n=> 
@@ -1736,19 +1769,20 @@ namespace BLL
                             PreguntaId = n.Pregunta,
                             FechaGeneracion = DateTime.Now,
                             HoraGeneracion = DateTime.Now.TimeOfDay,
-                            PreguntaTipoValoresId =  n.Respuesta,
+                            PreguntaTipoValoresId1 = n.Respuesta1,
+                            PreguntaTipoValoresId2 =  n.Respuesta2 == 0 ? null :n.Respuesta2 ,
                             Comentario = n.Comentario
                         });
                     }
                         );
                     db.SaveChanges();
                     return true;
-                //}
-                //catch (Exception)
-                //{
+                }
+                catch (Exception)
+                {
 
-                   // return false;
-                //}
+                    return false;
+                }
                 
             }
         }

@@ -12,23 +12,22 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Pregunta
+    public partial class PreguntaConfiguracion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pregunta()
+        public PreguntaConfiguracion()
         {
-            this.Respuesta = new HashSet<Respuesta>();
+            this.Pregunta = new HashSet<Pregunta>();
         }
     
-        public int PreguntaId { get; set; }
+        public int PreguntaConfiguracionId { get; set; }
         public string Descripcion { get; set; }
-        public string SubPregunta { get; set; }
-        public Nullable<int> PreguntaConfiguracionId { get; set; }
-        public Nullable<int> Anio { get; set; }
-        public Nullable<int> PeriodoId { get; set; }
+        public Nullable<int> PreguntaTipoId { get; set; }
+        public Nullable<bool> esCompuesta { get; set; }
     
-        public virtual PreguntaConfiguracion PreguntaConfiguracion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Respuesta> Respuesta { get; set; }
+        public virtual ICollection<Pregunta> Pregunta { get; set; }
+        public virtual PreguntaCompuesta PreguntaCompuesta { get; set; }
+        public virtual PreguntaTipo PreguntaTipo { get; set; }
     }
 }

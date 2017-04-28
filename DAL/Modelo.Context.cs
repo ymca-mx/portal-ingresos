@@ -160,6 +160,8 @@ namespace DAL
         public virtual DbSet<PolizaSubtipo> PolizaSubtipo { get; set; }
         public virtual DbSet<PolizaTipo> PolizaTipo { get; set; }
         public virtual DbSet<Pregunta> Pregunta { get; set; }
+        public virtual DbSet<PreguntaCompuesta> PreguntaCompuesta { get; set; }
+        public virtual DbSet<PreguntaConfiguracion> PreguntaConfiguracion { get; set; }
         public virtual DbSet<PreguntaTipo> PreguntaTipo { get; set; }
         public virtual DbSet<PreguntaTipoValores> PreguntaTipoValores { get; set; }
         public virtual DbSet<PreguntaValor> PreguntaValor { get; set; }
@@ -194,6 +196,7 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimiento> TipoMovimiento { get; set; }

@@ -132,6 +132,9 @@ $(document).ready(function () {
                     $("#slcOfertas").val(datos.OfertasAlumnos[0].OfertaEducativaId);
                     $("#slcOfertas").change();
                 } else {
+
+                    alertify.alert('El alumno no está inscrito a ninguna oferta educativa para el periodo actual.');
+                    $("#btnGenerarCargos").attr("disabled", "disabled");
                     $('#Load').modal('hide');
                     return false;
                 }
@@ -180,7 +183,7 @@ $(document).ready(function () {
 
                 if (da.Mensaje == "No tiene")
                 {
-                    alertify.alert('El Alumno debe estar inscrito para poder aplicar una beca deportiva gracias');
+                    alertify.alert('El Alumno debe estar inscrito para poder aplicar una beca deportiva.');
                     $("#btnGenerarCargos").attr("disabled", "disabled");
                 }
 

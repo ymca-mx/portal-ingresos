@@ -37,6 +37,7 @@ namespace DTO
         public string Matricula { get; set; }
         public List<DTOAlumnoAntecendente> Antecendentes { get; set; }
         public int Plantel { get; set; }
+        public string Email { get; set; }
     }
 
     public class DTOAlumnoDatos

@@ -162,13 +162,13 @@ namespace Pruebas
         [TestMethod]
         public void CambioCarrera()
         {
-            int AlumnoId = 8204;
-            int OfertaAnterior = 2;
-            int OfertaNueva = 29;
+            int AlumnoId = 8178;
+            int OfertaAnterior = 29;
+            int OfertaNueva = 3;
             int Anio = 2017;
             int PeriodoId = 3;
             string  mensaje;
-            int UsuarioId = 8289;
+            int UsuarioId = 8224;
             string Observaciones = "";
 
             using (UniversidadEntities db = new UniversidadEntities())
@@ -312,8 +312,8 @@ namespace Pruebas
                             OfertaEducativaId = OfertaNueva,
                             Observaciones = Observaciones
                         }
-                    });
-                    
+
+                });
                     db.SaveChanges();
                 }
                 else { mensaje = "El alumno no está inscrito para el periodo seleccionado."; }
