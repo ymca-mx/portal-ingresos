@@ -26,16 +26,6 @@
         $('#submit_form  i').removeClass('fa-check');
     }
 
-    //$('#btnBuscarAlumno').click(function () {
-    //    $('#PopDatosAlumno').modal('show');
-    //    LimpiarCampos();
-    //    var usuario = $.cookie('userAdmin');
-    //    $('#Load').modal('show');
-    //    AlumnoNum = $('#txtAlumno').val();
-    //        EsNumero(AlumnoNum);
-    //});
-
-
     function EsNumero(Alumno) {
         $.ajax({
             type: "POST",
@@ -125,6 +115,7 @@
                     $('#Load').modal('hide');
                     alertify.alert("Datos del Alumno Modificados");
                     $('#PopDatosAlumno').modal('hide');
+                    VerificarEncuesta();
                 } else {
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
@@ -135,6 +126,21 @@
         });
 
 
+    }
+
+    function VerificarEncuesta() {
+        $.ajax({
+            type: "POST",
+            url: "../WebServices/WS/Alumno.asmx/VerificaAlumnoEncuesta",
+            data: "{AlumnoId:'" + AlumnoNum + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (data.d) {
+                    $('#popDatos').load('../inscritos/Alumno/EncuestaPortal.html');
+                }
+            }
+        });
     }
 
     function CargarPaises(combo, PaisId) {

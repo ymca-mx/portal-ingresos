@@ -332,8 +332,13 @@ namespace WebServices.WS
         [WebMethod]
         public bool VerificaAlumnoDatos(string AlumnoId)
         {
-
             return BLLAlumno.VerificaAlumnoDatos(int.Parse(AlumnoId));
+        }
+
+        [WebMethod]
+        public bool VerificaAlumnoEncuesta(string AlumnoId)
+        {
+            return BLLAlumno.VerificaAlumnoEncuesta(int.Parse(AlumnoId));
         }
         //encuesta
         [WebMethod]
@@ -343,10 +348,10 @@ namespace WebServices.WS
             return BLLAlumno.PreguntasPortal();
         }
         [WebMethod]
-        public bool GuardarRespuestas(DTORespuestas RespuesasEncuesta)
+        public bool GuardarRespuestas(DTORespuestas RespuestasEncuesta)
         {
 
-            return BLLAlumno.GuardarRespuestas( RespuesasEncuesta);
+            return BLLAlumno.GuardarRespuestas( RespuestasEncuesta);
         }
 
         //encuesta

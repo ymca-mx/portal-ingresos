@@ -294,6 +294,7 @@
     <Content Include="JS\Reportes\ReporteAcademico.js" />
     <Content Include="JS\Reportes\ReporteAlumnoOferta.js" />
     <Content Include="JS\Reportes\ReporteAlumnoReferencias.js" />
+    <Content Include="JS\Reportes\ReporteVistoBueno.js" />
     <Content Include="JS\src\core\annotation.js" />
     <Content Include="JS\src\core\arithmetic_decoder.js" />
     <Content Include="JS\src\core\bidi.js" />
@@ -377,6 +378,7 @@
     <Content Include="Reportes\ReporteAlumnoAcademico.html" />
     <Content Include="Reportes\ReporteAlumnoOferta.html" />
     <Content Include="Reportes\ReporteAlumnoReferencias.html" />
+    <Content Include="Reportes\ReporteVistoBueno.html" />
     <Content Include="R_.html" />
     <Content Include="Referencias.html" />
     <Content Include="packages.config" />

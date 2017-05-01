@@ -593,18 +593,18 @@ namespace BLL
                         DTOAlumnoDetalle = new DTOAlumnoDetalle
                         {
                             EstadoCivilId = objAlB.AlumnoDetalle.EstadoCivilId,
-                            Celular = objAlB.AlumnoDetalle.Celular,
-                            TelefonoCasa = objAlB.AlumnoDetalle.TelefonoCasa,
+                            Celular = (objAlB.AlumnoDetalle.Celular.Trim()).Replace("-",""),
+                            TelefonoCasa = (objAlB.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-",""),
                             FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
                             FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
                             GeneroId = objAlB.AlumnoDetalle.GeneroId,
                             CURP = objAlB.AlumnoDetalle.CURP,
-                            Email = objAlB.AlumnoDetalle.Email,
-                            Calle = objAlB.AlumnoDetalle.Calle,
+                            Email = objAlB.AlumnoDetalle.Email.Trim(),
+                            Calle = objAlB.AlumnoDetalle.Calle.Trim(),
                             NoExterior = objAlB.AlumnoDetalle.NoExterior,
                             NoInterior = objAlB.AlumnoDetalle.NoInterior,
-                            Cp = objAlB.AlumnoDetalle.CP,
-                            Colonia = objAlB.AlumnoDetalle.Colonia,
+                            Cp = objAlB.AlumnoDetalle.CP.Trim(),
+                            Colonia = objAlB.AlumnoDetalle.Colonia.Trim(),
                             EntidadFederativaId = objAlB.AlumnoDetalle.EntidadFederativaId,
                             MunicipioId = objAlB.AlumnoDetalle.MunicipioId,
                             PaisId = objAlB.AlumnoDetalle.PaisId,
@@ -742,18 +742,18 @@ namespace BLL
                             DTOAlumnoDetalle = new DTOAlumnoDetalle
                             {
                                 EstadoCivilId = objAlB.AlumnoDetalle.EstadoCivilId,
-                                Celular = objAlB.AlumnoDetalle.Celular == " " ? "" : objAlB.AlumnoDetalle.Celular,
-                                TelefonoCasa = objAlB.AlumnoDetalle.TelefonoCasa == " " ? "" : objAlB.AlumnoDetalle.TelefonoCasa,
+                                Celular = (objAlB.AlumnoDetalle.Celular.Trim()).Replace("-", ""),
+                                TelefonoCasa = (objAlB.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-", ""),
                                 FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
                                 FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
                                 GeneroId = objAlB.AlumnoDetalle.GeneroId,
                                 CURP = objAlB.AlumnoDetalle.CURP,
-                                Email = objAlB.AlumnoDetalle.Email == " " ? "" : objAlB.AlumnoDetalle.Email,
-                                Calle = objAlB.AlumnoDetalle.Calle == " " ? "" : objAlB.AlumnoDetalle.Calle,
+                                Email = objAlB.AlumnoDetalle.Email.Trim(),
+                                Calle = objAlB.AlumnoDetalle.Calle.Trim(),
                                 NoExterior = objAlB.AlumnoDetalle.NoExterior,
                                 NoInterior = objAlB.AlumnoDetalle.NoInterior,
-                                Cp = objAlB.AlumnoDetalle.CP == " " ? "" : objAlB.AlumnoDetalle.CP,
-                                Colonia = objAlB.AlumnoDetalle.Colonia == " " ? ""  : objAlB.AlumnoDetalle.Colonia,
+                                Cp = objAlB.AlumnoDetalle.CP.Trim(),
+                                Colonia = objAlB.AlumnoDetalle.Colonia.Trim(),
                                 EntidadFederativaId = objAlB.AlumnoDetalle.EntidadFederativaId,
                                 MunicipioId = objAlB.AlumnoDetalle.MunicipioId,
                                 PaisId = objAlB.AlumnoDetalle.PaisId,
@@ -868,6 +868,45 @@ namespace BLL
                 
         }
 
+        public static bool VerificaAlumnoEncuesta(int AlumnoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    if (db.Respuesta.Where(w => w.AlumnoId == AlumnoId).Count() > 0)
+                    {
+
+                        var fechaActual = DateTime.Now;
+                        var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
+                                                                             && fechaActual <= p.FechaFinal).FirstOrDefault();
+                        DateTime? fechaEncuesta = db.Respuesta.Where(a => a.AlumnoId == AlumnoId).OrderByDescending(b=> b.FechaGeneracion).FirstOrDefault().FechaGeneracion;
+
+                        if ((Periodo.FechaInicial <= fechaEncuesta && fechaEncuesta <= Periodo.FechaFinal))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+
+                    }
+                    else
+                    {
+                        return true;
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    return false;
+                }
+            }
+
+        }
+
         public static List<DTOPreguntas> PreguntasPortal()
         {
             using (UniversidadEntities db=new UniversidadEntities ())
@@ -945,17 +984,17 @@ namespace BLL
 
                          referencia = (
                             from a in db.ReferenciaProcesada
-                            join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                            //join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
                             where a.ReferenciaTipoId == 1
                                && a.EstatusId == 1
-                               && b.EstatusId == 4
+                               //&& b.EstatusId == 4
                                && a.AlumnoId == alumnoid
                             select new ReferenciasPagadas
                             {
                                 AlumnoId = a.AlumnoId,
                                 ReferenciaId = a.ReferenciaId,
                                 FechaPagoD = a.FechaPago,
-                                MontoPagado = b.Pago.ToString(),
+                                MontoPagado = a.Importe.ToString(),
                                 MontoReferencia = a.Importe.ToString(),
                                 Saldo = a.Restante.ToString()
                             }
@@ -969,17 +1008,17 @@ namespace BLL
 
                         referencia = (
                       from a in db.ReferenciaProcesada
-                      join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                      //join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
                       where a.ReferenciaTipoId == 1
                          && a.EstatusId == 1
-                         && b.EstatusId == 4
+                        // && b.EstatusId == 4
                          && a.ReferenciaId.Contains(referenciaid)
                       select new ReferenciasPagadas
                       {
                           AlumnoId = a.AlumnoId,
                           ReferenciaId = a.ReferenciaId,
                           FechaPagoD = a.FechaPago,
-                          MontoPagado = b.Pago.ToString(),
+                          MontoPagado = a.Importe.ToString(),
                           MontoReferencia = a.Importe.ToString(),
                           Saldo = a.Restante.ToString()
                       }
@@ -993,17 +1032,17 @@ namespace BLL
 
                         referencia = (
                            from a in db.ReferenciaProcesada
-                           join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                           //join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
                            where a.ReferenciaTipoId == 1
                               && a.EstatusId == 1
-                              && b.EstatusId == 4
-                              && b.Pago == importe
+                              //&& b.EstatusId == 4
+                              && a.Importe == importe
                            select new ReferenciasPagadas
                            {
                                AlumnoId = a.AlumnoId,
                                ReferenciaId = a.ReferenciaId,
                                FechaPagoD = a.FechaPago,
-                               MontoPagado = b.Pago.ToString(),
+                               MontoPagado = a.Importe.ToString(),
                                MontoReferencia = a.Importe.ToString(),
                                Saldo = a.Restante.ToString()
                            }
@@ -1016,17 +1055,17 @@ namespace BLL
 
                         referencia = (
                            from a in db.ReferenciaProcesada
-                           join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
+                          // join b in db.PagoParcial on a.ReferenciaProcesadaId equals b.ReferenciaProcesadaId
                            where a.ReferenciaTipoId == 1
                               && a.EstatusId == 1
-                              && b.EstatusId == 4
+                              //&& b.EstatusId == 4
                               && a.FechaPago== fechapago
                            select new ReferenciasPagadas
                            {
                                AlumnoId = a.AlumnoId,
                                ReferenciaId = a.ReferenciaId,
                                FechaPagoD = a.FechaPago,
-                               MontoPagado = b.Pago.ToString(),
+                               MontoPagado = a.Importe.ToString(),
                                MontoReferencia = a.Importe.ToString(),
                                Saldo = a.Restante.ToString()
                            }
