@@ -25,18 +25,19 @@ namespace BLL
                     objMAS.Cuotas = new List<dtoCuotaReinc>();
                     objMAS.EstatusAl = new List<dtoEstatusMA>();
                     //periodo
-                    objMAS.lstPeriodos.Add((from a in db.Periodo
+                    objMAS.lstPeriodos.AddRange((from a in db.Periodo
                                             where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal
                                             select new DTOPeriodo
                                             {
                                                 Descripcion = a.Descripcion,
                                                 Anio = a.Anio,
                                                 PeriodoId = a.PeriodoId,
-                                            }).FirstOrDefault());
-
-                    int anio = objMAS.lstPeriodos[0].Anio, periodo = objMAS.lstPeriodos[0].PeriodoId;
-                    objMAS.lstPeriodos[0].Descripcion = db.Periodo.Where(d => d.Anio == anio
-                                                                                && d.PeriodoId == periodo).FirstOrDefault().Descripcion;
+                                            }).ToList());
+                    
+                    objMAS.lstPeriodos
+                            .ForEach(l => {
+                                l.Descripcion = db.Periodo.Where(k => k.Anio == l.Anio && k.PeriodoId == l.PeriodoId).FirstOrDefault().Descripcion;
+                            });
 
                     //Alumno
                     Alumno objAlumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();

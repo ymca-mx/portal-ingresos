@@ -16,13 +16,12 @@ namespace BLL
             List<DTO.ReciboDatos> recibos = new List<ReciboDatos>();
             List<DAL.Recibo> Recibos = new List<DAL.Recibo>();
 
-            using (UniversidadEntities db = new DAL.UniversidadEntities())
+            using (DAL.UniversidadEntities db = new DAL.UniversidadEntities())
             {
                 var Pagos = db.PagoParcial.Where(n => n.PagoId == pagoId && n.EstatusId == 4).ToList();
 
                 Pagos.ForEach(n =>
                 {
-
                     #region PagoParcial Bitacora
 
                     db.PagoParcialBitacora.Add(new PagoParcialBitacora
@@ -75,46 +74,9 @@ namespace BLL
 
                     else if (n.PagoTipoId == 1)
                     {
-                        /* Recibo */
-                        recibos.Add(new ReciboDatos
-                        {
-                            reciboId = n.ReciboId,
-                            sucursalCajaId = n.SucursalCajaId,
-                            importe = n.Pago
-                        });
-
-                        n.PagoDetalle.ToList().ForEach(a => { a.Importe = 0; });
                         n.ReferenciaProcesada.SeGasto = false;
                         n.ReferenciaProcesada.Restante = n.ReferenciaProcesada.Restante + n.Pago;
                         n.EstatusId = 2;
-
-                        if (recibos.Count > 0)
-                        {
-                            var RecibosTotal = (from consulta in (from a in recibos
-                                                                  select new { a })
-                                                group consulta by new
-                                                {
-                                                    consulta.a.reciboId,
-                                                    consulta.a.sucursalCajaId
-                                                } into g
-
-                                                select new DTO.ReciboDatos
-                                                {
-                                                    reciboId = g.Key.reciboId,
-                                                    sucursalCajaId = g.Key.sucursalCajaId,
-                                                    importe = g.Sum(a => a.a.importe)
-                                                }).ToList();
-
-                            RecibosTotal.ForEach(a =>
-                            {
-                                Recibos.Add(db.Recibo.Where(p => p.ReciboId == a.reciboId && p.SucursalCajaId == a.sucursalCajaId).FirstOrDefault());
-                            });
-
-                            Recibos.ForEach(a =>
-                            {
-                                a.Importe = a.Importe - (RecibosTotal.Where(p => p.reciboId == a.ReciboId && p.sucursalCajaId == a.SucursalCajaId).FirstOrDefault().importe);
-                            });
-                        }
                     }
 
                     #endregion Caja

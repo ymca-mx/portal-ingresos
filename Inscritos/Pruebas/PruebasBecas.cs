@@ -1,4 +1,5 @@
 ﻿using DAL;
+using DTO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,31 @@ namespace Pruebas
     [TestClass]
     public class PruebasBecas
     {
+        [TestMethod]
+        public void PEriodos()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                
+                var fprev = DateTime.Now.AddDays(15);
+                //var periodo = (from a in db.Periodo
+                //               where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal 
+                //                    || (fprev >= a.FechaInicial && fprev<=a.FechaFinal)
+                //               select new DTOPeriodo
+                //               {
+                //                   Descripcion = a.Descripcion,
+                //                   Anio = a.Anio,
+                //                   PeriodoId = a.PeriodoId,
+                //               }).ToList();
+                var periodo = db.Periodo
+                                 .Where(P =>
+                                   DateTime.Now >= P.FechaInicial && DateTime.Now <= P.FechaFinal).FirstOrDefault();
+                //periodo.ForEach(l =>
+                //{
+                //    Console.WriteLine(l.Descripcion);
+                //});
+            }
+        }
         [TestMethod]
         public void AlumnoDatos()
         {
