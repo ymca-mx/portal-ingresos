@@ -53,12 +53,16 @@ namespace BLL
                     {
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
-                        OfertaEducativaTipoId = i.OfertaEducativa.OfertaEducativaTipoId
+                        OfertaEducativaTipoId = i.OfertaEducativa.OfertaEducativaTipoId,
+                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f=> f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre??0
+
                     }));
                     objMAS.lstOfertas.AddRange(objAlumno.AlumnoInscritoBitacora.Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4).Select(i => new DTOOfertaEducativa
                     {
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
+                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f => f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre ?? 0
+
                     }));
 
                     List<DTOOfertaEducativa> liIDs = new List<DTOOfertaEducativa>();
@@ -387,6 +391,66 @@ namespace BLL
                     db.AlumnoRevision.Remove(AlumnoRev);
 
                 #endregion Revisión
+
+                #region Cuatrimestre
+
+                var AlumnoCuatrimestre = db.AlumnoCuatrimestre.Where(c => c.AlumnoId == Alumno.alumnoId
+                                                                     && c.OfertaEducativaId == Alumno.ofertaEducativaId)
+                                                              ?.FirstOrDefault()?? null;
+
+                if (AlumnoCuatrimestre != null)
+                {
+                    db.AlumnoCuatrimestreBitacora.Add(new AlumnoCuatrimestreBitacora
+                    {
+                        AlumnoId = AlumnoCuatrimestre.AlumnoId,
+                        OfertaEducativaId = AlumnoCuatrimestre.OfertaEducativaId,
+                        Cuatrimestre = AlumnoCuatrimestre.Cuatrimestre,
+                        Anio = AlumnoCuatrimestre.Anio,
+                        PeriodoId = AlumnoCuatrimestre.PeriodoId,
+                        esRegular = AlumnoCuatrimestre.esRegular,
+                        FechaAsignacion = AlumnoCuatrimestre.FechaAsignacion,
+                        HoraAsignacion = AlumnoCuatrimestre.HoraAsignacion,
+                        UsuarioId = AlumnoCuatrimestre.UsuarioId
+                    });
+
+                    db.AlumnoCuatrimestre.Remove(AlumnoCuatrimestre);
+
+                    var Cuatrimestre = Alumno.esRegular == true  ? AlumnoCuatrimestre.Cuatrimestre + 1 : Alumno.Cuatrimestre ;
+
+                   
+
+                    db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                    {
+                        AlumnoId = Alumno.alumnoId,
+                        OfertaEducativaId = Alumno.ofertaEducativaId,
+                        Cuatrimestre = Cuatrimestre,
+                        Anio = Alumno.anio,
+                        PeriodoId = Alumno.periodoId,
+                        esRegular = Alumno.esRegular,
+                        FechaAsignacion = DateTime.Now,
+                        HoraAsignacion = DateTime.Now.TimeOfDay,
+                        UsuarioId = Alumno.usuarioId
+                    });
+
+                }
+                else
+                {
+                    db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                    {
+                        AlumnoId = Alumno.alumnoId,
+                        OfertaEducativaId = Alumno.ofertaEducativaId,
+                        Cuatrimestre = Alumno.Cuatrimestre,
+                        Anio = Alumno.anio,
+                        PeriodoId = Alumno.periodoId,
+                        esRegular = Alumno.esRegular,
+                        FechaAsignacion = DateTime.Now,
+                        HoraAsignacion = DateTime.Now.TimeOfDay,
+                        UsuarioId = Alumno.usuarioId
+                    });
+                }
+
+
+                #endregion Cuatrimestre
 
                 if (Cabecero.Count > 0)
                 {

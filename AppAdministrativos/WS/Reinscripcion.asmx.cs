@@ -75,14 +75,16 @@ namespace AppAdministrativos.WS
                 return Menms;
             }
         }
+
         [WebMethod]
         public DTOMateriasAsesorias AlumnoReinscripcion(string AlumnoId)
         {
             return BLLReinscripcion.TraerAlumno(int.Parse(AlumnoId));
         }
+
         [WebMethod]
         public bool Generar(string AlumnoId, string anio, string periodo, string oferta, string NMaterias,
-                string NAsesorias, string Completa, string usuario, string Comentario)
+                string NAsesorias, string Completa, string usuario, string Comentario, string esRegular, string Cuatrimestre)
         {
             try
             {
@@ -96,10 +98,11 @@ namespace AppAdministrativos.WS
                     ofertaEducativaId = int.Parse(oferta),
                     periodoId = int.Parse(periodo),
                     usuarioId = int.Parse(usuario),
-                    observaciones = Comentario
+                    observaciones = Comentario,
+                    esRegular = bool.Parse(esRegular),
+                    Cuatrimestre = Cuatrimestre == "null" ? 0 : int.Parse(Cuatrimestre)
                 });
-
-                BLLAlumnoPortal.AplicaPromocionCasa2(int.Parse(AlumnoId), int.Parse(anio),int.Parse(periodo), int.Parse(oferta));
+                
                 return true;
             }
             catch { return false; }

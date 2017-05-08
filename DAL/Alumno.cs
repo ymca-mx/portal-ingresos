@@ -19,6 +19,7 @@ namespace DAL
         {
             this.AlumnoReferenciaBitacora = new HashSet<AlumnoReferenciaBitacora>();
             this.AlumnoAntecedente = new HashSet<AlumnoAntecedente>();
+            this.AlumnoCuatrimestre = new HashSet<AlumnoCuatrimestre>();
             this.AlumnoDescuento = new HashSet<AlumnoDescuento>();
             this.AlumnoDetalleBitacora = new HashSet<AlumnoDetalleBitacora>();
             this.AlumnoInscrito = new HashSet<AlumnoInscrito>();
@@ -66,6 +67,8 @@ namespace DAL
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoAntecedente> AlumnoAntecedente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoCuatrimestre> AlumnoCuatrimestre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoDescuento> AlumnoDescuento { get; set; }
         public virtual AlumnoDetalle AlumnoDetalle { get; set; }
