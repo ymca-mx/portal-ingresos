@@ -5024,7 +5024,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>41660</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/portalAlumno</IISUrl>
+          <IISUrl>http://localhost/AppAlumnos</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

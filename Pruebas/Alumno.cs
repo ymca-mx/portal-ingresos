@@ -321,5 +321,23 @@ namespace Pruebas
 
             }
         }
+
+        [TestMethod]
+        public void GenerarMatrucula()
+        {
+            Console.WriteLine("LA matricula del alumno 7584 es : ------- ");
+            Console.Write(
+            Herramientas.Matricula.ObtenerMatricula(new DTOAlumnoInscrito
+            {
+                Anio = 2016,
+                PeriodoId = 1,
+                TurnoId = 1
+            },
+            new DTOOfertaEducativa
+            {
+                Rvoe = "20100446"
+            },
+            7584));
+        }
     }
 }

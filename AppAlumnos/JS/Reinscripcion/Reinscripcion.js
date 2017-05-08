@@ -53,7 +53,7 @@
          $.ajax({
              type: "POST",
              url: "Services/Reinscripcion.asmx/GenerarInscrCole",
-             data: "{AlumnoId:" + AlumnoId + ",OfertaEducativaId:" + OfertaEducativa + ",PeriodoD:'" + Descripcion + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+             data: "{AlumnoId:'" + AlumnoId + "',OfertaEducativaId:'" + OfertaEducativa + "',PeriodoD:'" + Descripcion + "'}", // the data in form-encoded format, ie as it would appear on a querystring
              //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
              contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
              success: function (data) {
