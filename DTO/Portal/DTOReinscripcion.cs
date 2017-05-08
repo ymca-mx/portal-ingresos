@@ -17,6 +17,8 @@ namespace Universidad.DTO.Reinscripcion
         public int materia { get; set; }
         public int asesoria { get; set; }
         public string observaciones { get; set; }
+        public bool esRegular { get; set; }
+        public int Cuatrimestre { get; set; }
     }
 }
 namespace DTO.Reinscripcion

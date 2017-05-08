@@ -234,6 +234,19 @@ namespace BLL
                     EstatusId = 1
                 });
 
+                db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                {
+                    AlumnoId = objAlumnoInscrito.AlumnoId,
+                    OfertaEducativaId = objAlumnoInscrito.OfertaEducativaId,
+                    Cuatrimestre = 1,
+                    Anio = objAlumnoInscrito.Anio,
+                    PeriodoId = objAlumnoInscrito.PeriodoId,
+                    esRegular = true,
+                    FechaAsignacion = DateTime.Now,
+                    HoraAsignacion = DateTime.Now.TimeOfDay,
+                    UsuarioId = objAlumnoInscrito.UsuarioId
+                });
+
                 //Configuracion Empresa 
                 if (objAlumnoInscrito.EsEmpresa)
                 {

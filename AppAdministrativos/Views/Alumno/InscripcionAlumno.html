@@ -347,7 +347,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group col-md-10">
                                                                 <input type="checkbox" id="chkYo" />
-                                                                <label for="checkbox">Yo Mismo</label>
+                                                                <label for="chkYo">Yo Mismo</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -535,6 +535,18 @@
                                                                         <option value="-1">--Seleccionar--</option>
                                                                     </select>
                                                                 </div>
+                                                                <div class="form-group col-md-10">
+                                                                    <label class="control-label" >Promoción en Casa  </label>&nbsp;
+                                                                    <a class="btn btn-xs red" id="btnPromocion" >
+                                                                        Agregar <i class="fa fa-edit"></i>
+                                                                    </a>
+                                                                    <div>&nbsp;</div>
+                                                                    <div class="col-md-12 alert alert-info alert-dismissable" id = "divAlumnoPormocion" hidden="hidden">
+                                                                        <button type="button" class="close" id="btnClosePromo"></button>
+                                                                        <strong>Alumno :</strong> 
+                                                                        <label id="lbAlumnoPromocion"></label>
+                                                                    </div>
+                                                                </div> 
                                                                 <div class="form-group col-md-10">
                                                                     <input type="checkbox" id="chkEsEmpresa" class="form-control" />
                                                                     <label class="control-label" for="chkEsEmpresa">Es alumno de empresa.</label>
@@ -881,6 +893,58 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                <!--Popup de Agregar Alumno Promocion-->
+                                <div class="modal fade" tabindex="-1" data-width="850" data-height="250" id="PopAlumnoPromocion">
+                                    <div class="modal-dialog modal-dialog" style="width:800px">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                                            <h3 class="modal-title">Asignación de Alumno Promoción</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-md-12 ">
+                                                <div class="col-md-12">
+                                                    <label class="control-label">Clave del Alumno</label>
+                                                    <input type="number" id="txtClave1" name="txtClave1" class="form-control-static font-md" tabindex="1" />
+                                                    <a class="btn blue" id="btnBuscar1" tabindex="2">Buscar Alumno</a>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <hr />
+                                                    <table id="dtAlumno1" class="table table-striped table-bordered table-advance table-hover ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-align:center">
+                                                                    Clave | Nombre Alumno
+                                                                </th>
+                                                                <th style="text-align:center">
+                                                                    Oferta Educativa
+                                                                </th>
+                                                                <th style="text-align:center">
+                                                                    Acción
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Popup de Agregar Alumno Promocion-->
+
+
+
                                 <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
                                     <div class="modal-dialog modal-sm" style="height: 90px;">
                                         <!--<div class="modal-content" style="width:auto">-->

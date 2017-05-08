@@ -393,6 +393,7 @@
         $('#form_wizard_1').find('.button-guardar').click(function () {
             alertify.confirm("<p>¿Desea continuar guardando los descuentos?<br><br><hr>", function (e) {
                 if (e) {
+                    $('#hCarga').text("Guardando...");
                     $('#Load').modal('show');
                     if ($('#slcOferta').val() == '4') {
                         GuardarIngles();
@@ -449,6 +450,7 @@
             }
             return false;
         });
+
         function Invocar() {
             Usuario = $.cookie('userAdmin');
             if (jQuery.type(Usuario) === "undefined") {
@@ -456,6 +458,7 @@
             }
 
             /// Insertar Block al momento de Guardar
+            $('#hCarga').text("Guardando...");
             $('#Load').modal('show');
 
             var mesanio = $('#txtAñoT').val();
@@ -560,7 +563,10 @@
                         if (Alumno > 0) {
                             esEmpresa = $('#chkEsEmpresa').is(':checked');
                             if (esEmpresa === true) {
-                                $('#Load').modal('hide');
+
+                                if (hayPromocion) { GuardarPromocion(Alumno); } else { $('#Load').modal('hide');}
+                                
+                                
                                 alertify.alert("El numero del Alumno Inscrito es: " + Alumno, function () { 
                                     //$("#btnListado").click();
                                     MandarEMail(Alumno);
@@ -577,7 +583,7 @@
                                     CargarTiposPagos(data.d);
                                     CargarDescuentos(data.d);
                                     $('#form_wizard_1').bootstrapWizard('next');
-                                    $('#Load').modal('hide');
+                                    if (hayPromocion) { GuardarPromocion(Alumno); } else { $('#Load').modal('hide'); }
                                 }
                             }
                         }
@@ -592,6 +598,7 @@
 
         }
     }
+
     function CrearTabla(Periodo) {
         var th;
         var num;
@@ -628,6 +635,7 @@
             }
         });
     }
+
     function CargarTiposPagos(AlumnoId) {
         var n4;
         $.ajax({
@@ -651,9 +659,11 @@
             }
         });
     }
+
     $('#slcCarrera').change(function () {
         $('#slcPeriodo').change();
     });
+
     $('#slcPeriodo').change(function () {
         if ($('#slcPeriodo').val() == -1 || $('#slcCarrera').val() == -1)
         { return false; }
@@ -674,6 +684,7 @@
             }
         });
     })
+
     function CargarDescuentos(AlumnoId) {
         $('#txtFolio').val(AlumnoId);
         $.ajax({
@@ -739,6 +750,7 @@
             }
         });
     }
+
     function GuardarDescuentos() {
         Usuario = $.cookie('userAdmin');
         if (jQuery.type(Usuario) === "undefined") {
@@ -778,6 +790,7 @@
             }
         });
     }
+
     function MandarMail2(AlumnoId) {
         $.ajax({
             type: "POST",
@@ -794,6 +807,7 @@
             }
         });
     }
+
     function MandarEMail(alumnoid) {
         $.ajax({
             type: "POST",
@@ -816,6 +830,7 @@
             }
         });
     }
+
     function MandarMail(Alumnoid) {
         $.ajax({
             type: "POST",
@@ -842,6 +857,7 @@
             }
         });
     }
+
     function GuardarDocumentoIngles(AlumnoId, OfertaEducativa) {
         var extramail="<p>"+"Se ha enviado un mail a "+$('#txtEmail').val()+" con el usuario y password del alumno."
         +"Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados."+
@@ -864,6 +880,7 @@
             $("#btnListado").click();
         });
     }
+
     function GuardarDocumentos(Beca, Insc, Exam) {
         var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno." 
        +"Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
@@ -894,6 +911,7 @@
             $("#btnListado").click();
         });
     }
+
     function GuardarIngles() {
         Usuario = $.cookie('userAdmin');
         if (jQuery.type(Usuario) === "undefined") {
@@ -937,6 +955,7 @@
             }
         });//
     }
+
     function TemEmail(AlumnoId) {
         $.ajax({
             type: "POST",
@@ -950,6 +969,7 @@
             }
         });
     }
+
     function CargarDescuentosIdiomas(Idioma) {
         var Periodo = $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html();
         $.ajax({
@@ -996,6 +1016,7 @@
             }
         });
     }
+
     $('#chkYo').click(function () {
         if ($(this).is(':checked')) {
             $('#txtPAutorizada').val($('#txtnombre').val());
@@ -1030,7 +1051,146 @@
         }
     });
 
+    // Promocion en casa//
+    var AlumnoPromocion, tblAlumno2, dataAlumno = [], hayPromocion = false;
 
+    $("#btnPromocion").click(function ()
+    {
+        $("#PopAlumnoPromocion").modal('show');
+    });
+
+    $("#dtAlumno1").on("click", "a", function () {
+        $("#btnPromocion").text("Modificar");
+        $("#lbAlumnoPromocion").text(dataAlumno[0].AlumnoId + " | " + dataAlumno[0].NombreC);
+        $("#divAlumnoPormocion").show();
+        hayPromocion = true;
+        $("#PopAlumnoPromocion").modal('hide');
+    });
+
+    $("#btnClosePromo").click(function ()
+    {
+        $("#txtClave1").val("");
+        if (tblAlumno2 != undefined) {
+            tblAlumno2.fnClearTable();
+        }
+        $("#btnPromocion").text("Agregar");
+        hayPromocion = false;
+        $("#divAlumnoPormocion").hide();
+    });
+
+    $('#txtClave1').on('keydown', function (e) {
+        if (e.which == 13) {
+            $('#btnBuscar1').click();
+        }
+    });
+
+    $("#btnBuscar1").click(function () {
+       
+         AlumnoPromocion = $('#txtClave1').val();
+        if (AlumnoPromocion.length == 0) { return false; }
+        if (tblAlumno2 != undefined) {
+            tblAlumno2.fnClearTable();
+        }
+        $('#hCarga').text("Cargando...");
+        $('#Load').modal('show');
+
+        $.ajax({
+            type: "POST",
+            url: "WS/Alumno.asmx/ConsultarAlumnoPromocionCasa2",
+            data: "{AlumnoPromocion:'" + AlumnoPromocion + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+                dataAlumno.length = 0;
+                dataAlumno.push(data.d);
+
+                tblAlumno2 = $("#dtAlumno1").dataTable({
+                    "aaData": dataAlumno,
+                    "aoColumns": [
+                        {
+                            "mDataProp": "AlumnoId",
+                            "mRender": function (data, f, d) {
+                                var link;
+                                link = d.AlumnoId + " | " + d.NombreC;
+
+                                return link;
+                            }
+                        },
+                        { "mDataProp": "OfertaEducativaActual" },
+                        {
+                            "mDataProp": function (data) {
+
+                                return "<a class='btn blue' name ='btnAgregar'>Agregar</a>";
+
+                            }
+                        }
+                    ],
+                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                    "searching": false,
+                    "ordering": false,
+                    "async": true,
+                    "bDestroy": true,
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "asStripClasses": null,
+                    "colReorder": true,
+                    "language": {
+                        "lengthMenu": "_MENU_ Registro",
+                        "paginate": {
+                            "previos": "<",
+                            "next": ">"
+                        },
+                        "search": "Buscar Alumno ",
+                    },
+                    "order": [[1, "desc"]],
+                    "createdRow": function (row, data, dataIndex) {
+                        row.childNodes[0].style.textAlign = 'center';
+                        row.childNodes[1].style.textAlign = 'center';
+                        row.childNodes[2].style.textAlign = 'center';
+                    }
+                });//$('#dtbecas').DataTable
+
+                $('#Load').modal('hide');
+            }
+        });
+    });
+
+    function GuardarPromocion(AlumnoProspecto) {
+        
+        dataAlumno[0].AlumnoIdProspecto = AlumnoProspecto;
+        dataAlumno[0].Anio = $('#slcPeriodo').val().substring(2);
+        dataAlumno[0].PeriodoId = $('#slcPeriodo').val().substring(0, 1);
+        dataAlumno[0].UsuarioId = $.cookie('userAdmin');
+
+        var obj = {
+            "Promocion": dataAlumno[0]
+        };
+        obj = JSON.stringify(obj);
+
+
+        $.ajax({
+            type: "POST",
+            url: "WS/Alumno.asmx/GuardarPromocionCasa",
+            data: obj,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (data.d) {
+                 
+                }
+            }
+        });
+
+    }
+
+    // Promocion en casa//
     return {
         init: function () {
             FormWizard();

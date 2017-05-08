@@ -76,8 +76,8 @@ namespace Pruebas
                     Cuatrimestre = objAlumno.Cuatrimestre,
                     Anio = objAlumno.Anio,
                     PeriodoId = objAlumno.PeriodoId,
-                    FechaInscripcion = objAlumno.FechaInscripcion,
-                    HoraInscripcion = objAlumno.HoraInscripcion,
+                    FechaAsignacion = objAlumno.FechaInscripcion,
+                    HoraAsignacion = objAlumno.HoraInscripcion,
                     UsuarioId = objAlumno.UsuarioId
                 });
 

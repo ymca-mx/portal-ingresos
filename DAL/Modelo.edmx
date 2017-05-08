@@ -181,24 +181,26 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoBeca' no tiene defin
           <Property Name="Cuatrimestre" Type="int" Nullable="false" />
           <Property Name="Anio" Type="int" Nullable="false" />
           <Property Name="PeriodoId" Type="int" Nullable="false" />
-          <Property Name="FechaInscripcion" Type="date" Nullable="false" />
-          <Property Name="HoraInscripcion" Type="time" Precision="0" Nullable="false" />
+          <Property Name="esRegular" Type="bit" />
+          <Property Name="FechaAsignacion" Type="date" Nullable="false" />
+          <Property Name="HoraAsignacion" Type="time" Precision="0" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AlumnoCuatrimestreBitacora">
           <Key>
             <PropertyRef Name="AlumnoId" />
             <PropertyRef Name="OfertaEducativaId" />
-            <PropertyRef Name="FechaInscripcion" />
-            <PropertyRef Name="HoraInscripcion" />
+            <PropertyRef Name="FechaAsignacion" />
+            <PropertyRef Name="HoraAsignacion" />
           </Key>
           <Property Name="AlumnoId" Type="int" Nullable="false" />
           <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
           <Property Name="Cuatrimestre" Type="int" Nullable="false" />
           <Property Name="Anio" Type="int" Nullable="false" />
           <Property Name="PeriodoId" Type="int" Nullable="false" />
-          <Property Name="FechaInscripcion" Type="date" Nullable="false" />
-          <Property Name="HoraInscripcion" Type="time" Precision="0" Nullable="false" />
+          <Property Name="esRegular" Type="bit" />
+          <Property Name="FechaAsignacion" Type="date" Nullable="false" />
+          <Property Name="HoraAsignacion" Type="time" Precision="0" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AlumnoDescuento">
@@ -3066,6 +3068,56 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="AlumnoAntecedenteBitacora">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_Alumno">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="AlumnoCuatrimestre" Type="Self.AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_OfertaEducativa">
+          <End Role="OfertaEducativa" Type="Self.OfertaEducativa" Multiplicity="1" />
+          <End Role="AlumnoCuatrimestre" Type="Self.AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfertaEducativa">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_Periodo">
+          <End Role="Periodo" Type="Self.Periodo" Multiplicity="1" />
+          <End Role="AlumnoCuatrimestre" Type="Self.AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodo">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="AlumnoCuatrimestre" Type="Self.AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
               <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
@@ -7053,6 +7105,22 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AlumnoAntecedenteBitacora" EntitySet="AlumnoAntecedenteBitacora" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_Alumno" Association="Self.FK_AlumnoCuatrimestre_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_OfertaEducativa" Association="Self.FK_AlumnoCuatrimestre_OfertaEducativa">
+            <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_Periodo" Association="Self.FK_AlumnoCuatrimestre_Periodo">
+            <End Role="Periodo" EntitySet="Periodo" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_Usuario" Association="Self.FK_AlumnoCuatrimestre_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlumnoDescuento_Alumno" Association="Self.FK_AlumnoDescuento_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="AlumnoDescuento" EntitySet="AlumnoDescuento" />
@@ -8475,6 +8543,10 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="AlumnoAntecedente" EntitySet="AlumnoAntecedente" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_Alumno" Association="UniversidadModel.FK_AlumnoCuatrimestre_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlumnoDescuento_Alumno" Association="UniversidadModel.FK_AlumnoDescuento_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="AlumnoDescuento" EntitySet="AlumnoDescuento" />
@@ -8618,6 +8690,18 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <AssociationSet Name="FK_AlumnoAntecedenteBitacora_Usuario" Association="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AlumnoAntecedenteBitacora" EntitySet="AlumnoAntecedenteBitacora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_OfertaEducativa" Association="UniversidadModel.FK_AlumnoCuatrimestre_OfertaEducativa">
+            <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_Periodo" Association="UniversidadModel.FK_AlumnoCuatrimestre_Periodo">
+            <End Role="Periodo" EntitySet="Periodo" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoCuatrimestre_Usuario" Association="UniversidadModel.FK_AlumnoCuatrimestre_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AlumnoCuatrimestre" EntitySet="AlumnoCuatrimestre" />
           </AssociationSet>
           <AssociationSet Name="FK_AlumnoDescuento_Estatus" Association="UniversidadModel.FK_AlumnoDescuento_Estatus">
             <End Role="Estatus" EntitySet="Estatus" />
@@ -9743,6 +9827,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_Alumno_Estatus" FromRole="Alumno" ToRole="Estatus" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_Alumno_Usuario" FromRole="Alumno" ToRole="Usuario" />
           <NavigationProperty Name="AlumnoAntecedente" Relationship="UniversidadModel.FK_AlumnoAntecedente_Alumno" FromRole="Alumno" ToRole="AlumnoAntecedente" />
+          <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Alumno" FromRole="Alumno" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_Alumno" FromRole="Alumno" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoDetalle" Relationship="UniversidadModel.FK_AlumnoDetalle_Alumno" FromRole="Alumno" ToRole="AlumnoDetalle" />
           <NavigationProperty Name="AlumnoDetalleBitacora" Relationship="UniversidadModel.FK_AlumnoDetalleBitacora_Alumno" FromRole="Alumno" ToRole="AlumnoDetalleBitacora" />
@@ -9872,24 +9957,30 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <Property Name="Cuatrimestre" Type="Int32" Nullable="false" />
           <Property Name="Anio" Type="Int32" Nullable="false" />
           <Property Name="PeriodoId" Type="Int32" Nullable="false" />
-          <Property Name="FechaInscripcion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HoraInscripcion" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="esRegular" Type="Boolean" />
+          <Property Name="FechaAsignacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HoraAsignacion" Type="Time" Nullable="false" Precision="0" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Alumno" FromRole="AlumnoCuatrimestre" ToRole="Alumno" />
+          <NavigationProperty Name="OfertaEducativa" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_OfertaEducativa" FromRole="AlumnoCuatrimestre" ToRole="OfertaEducativa" />
+          <NavigationProperty Name="Periodo" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Periodo" FromRole="AlumnoCuatrimestre" ToRole="Periodo" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Usuario" FromRole="AlumnoCuatrimestre" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="AlumnoCuatrimestreBitacora">
           <Key>
             <PropertyRef Name="AlumnoId" />
             <PropertyRef Name="OfertaEducativaId" />
-            <PropertyRef Name="FechaInscripcion" />
-            <PropertyRef Name="HoraInscripcion" />
+            <PropertyRef Name="FechaAsignacion" />
+            <PropertyRef Name="HoraAsignacion" />
           </Key>
           <Property Name="AlumnoId" Type="Int32" Nullable="false" />
           <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
           <Property Name="Cuatrimestre" Type="Int32" Nullable="false" />
           <Property Name="Anio" Type="Int32" Nullable="false" />
           <Property Name="PeriodoId" Type="Int32" Nullable="false" />
-          <Property Name="FechaInscripcion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HoraInscripcion" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="esRegular" Type="Boolean" />
+          <Property Name="FechaAsignacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HoraAsignacion" Type="Time" Nullable="false" Precision="0" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AlumnoDescuento">
@@ -11228,6 +11319,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <Property Name="ClaveContable" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Adeudo" Relationship="UniversidadModel.FK_Adeudo_OfertaEducativa" FromRole="OfertaEducativa" ToRole="Adeudo" />
+          <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_OfertaEducativa" FromRole="OfertaEducativa" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_OfertaEducativa" FromRole="OfertaEducativa" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoInscrito" Relationship="UniversidadModel.FK_AlumnoInscrito_OfertaEducativa" FromRole="OfertaEducativa" ToRole="AlumnoInscrito" />
           <NavigationProperty Name="AlumnoInscritoBitacora" Relationship="UniversidadModel.FK_AlumnoInscritoBitacora_OfertaEducativa" FromRole="OfertaEducativa" ToRole="AlumnoInscritoBitacora" />
@@ -11661,6 +11753,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Meses" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Periodo" FromRole="Periodo" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_Periodo" FromRole="Periodo" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoInscrito" Relationship="UniversidadModel.FK_AlumnoInscrito_Periodo" FromRole="Periodo" ToRole="AlumnoInscrito" />
           <NavigationProperty Name="AlumnoInscritoBitacora" Relationship="UniversidadModel.FK_AlumnoInscritoBitacora_Periodo" FromRole="Periodo" ToRole="AlumnoInscritoBitacora" />
@@ -12572,6 +12665,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
           <NavigationProperty Name="AdeudoChocolates" Relationship="UniversidadModel.FK_AdeudoChocolates_Usuario" FromRole="Usuario" ToRole="AdeudoChocolates" />
           <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_Alumno_Usuario" FromRole="Usuario" ToRole="Alumno" />
           <NavigationProperty Name="AlumnoAntecedenteBitacora" Relationship="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario" FromRole="Usuario" ToRole="AlumnoAntecedenteBitacora" />
+          <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Usuario" FromRole="Usuario" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_Usuario" FromRole="Usuario" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoDescuentoPendiente" Relationship="UniversidadModel.FK_AlumnoDescuentoPendiente_Usuario" FromRole="Usuario" ToRole="AlumnoDescuentoPendiente" />
           <NavigationProperty Name="AlumnoExamenMedico" Relationship="UniversidadModel.FK_AlumnoExamenMedico_Usuario" FromRole="Usuario" ToRole="AlumnoExamenMedico" />
@@ -13128,6 +13222,18 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlumnoCuatrimestre_Alumno">
+          <End Type="UniversidadModel.Alumno" Role="Alumno" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoCuatrimestre" Role="AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlumnoDescuento_Alumno">
           <End Type="UniversidadModel.Alumno" Role="Alumno" Multiplicity="1" />
           <End Type="UniversidadModel.AlumnoDescuento" Role="AlumnoDescuento" Multiplicity="*" />
@@ -13556,6 +13662,44 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="AlumnoAntecedenteBitacora">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_OfertaEducativa">
+          <End Type="UniversidadModel.OfertaEducativa" Role="OfertaEducativa" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoCuatrimestre" Role="AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfertaEducativa">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_Periodo">
+          <End Type="UniversidadModel.Periodo" Role="Periodo" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoCuatrimestre" Role="AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodo">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoCuatrimestre_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoCuatrimestre" Role="AlumnoCuatrimestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="AlumnoCuatrimestre">
               <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
@@ -16904,8 +17048,9 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <EntityTypeMapping TypeName="UniversidadModel.AlumnoCuatrimestre">
               <MappingFragment StoreEntitySet="AlumnoCuatrimestre">
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="HoraInscripcion" ColumnName="HoraInscripcion" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="HoraAsignacion" ColumnName="HoraAsignacion" />
+                <ScalarProperty Name="FechaAsignacion" ColumnName="FechaAsignacion" />
+                <ScalarProperty Name="esRegular" ColumnName="esRegular" />
                 <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
                 <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="Cuatrimestre" ColumnName="Cuatrimestre" />
@@ -16918,8 +17063,9 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no t
             <EntityTypeMapping TypeName="UniversidadModel.AlumnoCuatrimestreBitacora">
               <MappingFragment StoreEntitySet="AlumnoCuatrimestreBitacora">
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="HoraInscripcion" ColumnName="HoraInscripcion" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="HoraAsignacion" ColumnName="HoraAsignacion" />
+                <ScalarProperty Name="FechaAsignacion" ColumnName="FechaAsignacion" />
+                <ScalarProperty Name="esRegular" ColumnName="esRegular" />
                 <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
                 <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="Cuatrimestre" ColumnName="Cuatrimestre" />

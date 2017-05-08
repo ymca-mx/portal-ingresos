@@ -112,15 +112,31 @@
                                                 <label class="control-label label-important " style="font-weight:bold; color:red" id="lblEstatus" />
                                             </div>
                                         </div>
-                                        <div class="col-md-7">
-                                            <div class="control-group col-md-12">
+                                        <div class="col-md-12">
+                                            <div class="control-group col-md-7">
                                                 <label class="control-label">OFerta Educativa</label>
                                                 <select id="slcOfertas" class="form-control"></select>
                                             </div>
-                                            <div class="control-group col-md-12">
+                                        </div>
+                                        <div class="col-md-12">
+                                            
+                                            <div class="control-group col-md-7">
                                                 <label class="control-label">Periodo</label>
                                                 <select id="slcPeriodos" class="form-control"></select>
                                             </div>
+                                            <div class="control-group col-md-2">
+                                                <label class="control-label">Es Alumno Regular</label>
+                                                <br />
+                                                <label for="rdbregularSi">&nbsp;&nbsp;Si</label>
+                                                <input type="radio" name="rdbRegular" id="rdbregularSi" value="true"/>
+                                                <label for="rdbregularNo">&nbsp;&nbsp;No</label>
+                                                <input type="radio" name="rdbRegular" id="rdbregularNo"  value="false"/>
+                                            </div>
+                                            <div class="control-group col-md-2" id="divCuatri" hidden="hidden">
+                                                <label class="control-label">Cuatrimeste</label>
+                                                <select id="slcCuatrimeste" class="form-control"></select>
+                                            </div>
+
                                         </div>
                                         <div class="col-md-12">
                                             <hr />
@@ -160,7 +176,7 @@
                                                             <td>
                                                                 <label for="rdbSi">&nbsp;&nbsp;Si</label>
                                                                 <input type="radio" name="rdbInscripcion" id="rdbSi" />
-                                                                <label for="rdbSi">&nbsp;&nbsp;No</label>
+                                                                <label for="rdbNo">&nbsp;&nbsp;No</label>
                                                                 <input type="radio" name="rdbInscripcion" id="rdbNo" />
                                                             </td>
                                                         </tr>
@@ -182,7 +198,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="col-md-12 form-group">
-                                                    <button type="button" class="col-md-8 btn blue" id="btnGuardar">Visto Bueno</button>
+                                                    <button type="button" class="col-md-8 btn blue" id="btnGuardar" disabled>Visto Bueno</button>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 form-group">
@@ -197,10 +213,12 @@
                                                                     &nbsp; Referencias
                                                                 </th>
                                                                 <th class="bg-blue-dark">
-                                                                    <i class="fa fa-calendar"></i>&nbsp; Fecha
+                                                                    <i class="fa fa-calendar"></i>
+                                                                    &nbsp; Fecha
                                                                 </th>
                                                                 <th class="bg-blue-dark">
-                                                                    <i class="fa fa-money"></i>&nbsp; Monto
+                                                                    <i class="fa fa-money"></i>
+                                                                    &nbsp; Monto
                                                                 </th>
                                                             </tr>
                                                         </thead>

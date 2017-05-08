@@ -19,8 +19,9 @@ namespace DAL
         public int Cuatrimestre { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
-        public System.DateTime FechaInscripcion { get; set; }
-        public System.TimeSpan HoraInscripcion { get; set; }
+        public Nullable<bool> esRegular { get; set; }
+        public System.DateTime FechaAsignacion { get; set; }
+        public System.TimeSpan HoraAsignacion { get; set; }
         public int UsuarioId { get; set; }
     }
 }
