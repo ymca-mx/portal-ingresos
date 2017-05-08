@@ -2947,6 +2947,8 @@ namespace BLL
                                             A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en credencial nuevo ingreso"
                                             && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
                                             A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en credencial nuevo ingreso, idiomas"
+                                            && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId  ||
+                                             A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en Examen global"
                                             && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == objPago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId)
                                         && A.OfertaEducativaId == objPago.OfertaEducativaId && A.PagoConceptoId == objPago.Cuota1.PagoConceptoId && A.EstatusId == 2).AsNoTracking().ToList();
                                 //BecaDeportiva
