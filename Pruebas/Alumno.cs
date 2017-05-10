@@ -323,7 +323,7 @@ namespace Pruebas
         }
 
         [TestMethod]
-        public void GenerarMatrucula()
+        public void GenerarMatricula()
         {
             Console.WriteLine("LA matricula del alumno 7584 es : ------- ");
             Console.Write(
@@ -338,6 +338,53 @@ namespace Pruebas
                 Rvoe = "20100446"
             },
             7584));
+        }
+
+        [TestMethod]
+        public void MatriculaMasiva()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                List<DAL.Alumno> lstAlum = db.Alumno.
+                                        Where(a => a.MatriculaId.Contains("0000"))
+                                        //Where(a=> a.AlumnoId== 732)
+                                        .ToList();
+
+                List<string> MatriculasN = new List<string>();
+                lstAlum.ForEach(k =>
+                {
+                    var ali = k.AlumnoInscrito
+                                        .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                        .ToList()
+                                        .OrderBy(i => i.Anio)
+                                            .ThenBy(i => i.PeriodoId)
+                                            .ThenBy(i => i.FechaInscripcion)
+                                            .ThenBy(i => i.HoraInscripcion)
+                                        .ToList();
+                    if (ali.Count>0)
+                    {
+                        var ult = ali.LastOrDefault();
+                        string MAtric =
+                        Herramientas.Matricula.ObtenerMatricula(new DTOAlumnoInscrito
+                        {
+                            Anio = k.Anio,
+                            PeriodoId = k.PeriodoId,
+                            TurnoId = ult.TurnoId
+                        },
+                       new DTOOfertaEducativa
+                       {
+                           Rvoe = ult.OfertaEducativa.Rvoe
+                       },
+                       k.AlumnoId);
+
+                        MatriculasN.Add("AlumnoId: " + k.AlumnoId + "- Matricula: " + MAtric);
+                        //k.MatriculaId = MAtric;
+                    }
+                });
+
+                MatriculasN.ForEach(l => Console.WriteLine(l));
+                //db.SaveChanges();
+            }
         }
     }
 }

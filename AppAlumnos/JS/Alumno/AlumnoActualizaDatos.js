@@ -160,7 +160,7 @@
                     $('#Load').modal('hide');
                     $('#PopDatosAlumno').modal('hide');
                     alertify.alert("Datos del Alumno Modificados",function(){
-                        VerificarEncuesta();
+                        //VerificarEncuesta();
                     });
                 } else {
                     $('#Load').modal('hide');

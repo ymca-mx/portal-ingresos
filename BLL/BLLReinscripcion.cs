@@ -142,7 +142,9 @@ namespace BLL
                     });
 
                         return objMAS;
-                }catch { return null; }
+                }catch  {
+                    return null;
+                }
             }
         }
 

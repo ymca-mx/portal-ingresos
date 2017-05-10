@@ -26,7 +26,7 @@
                  if (Datos.extensionImagen == ".png")
                      $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                  //RevisaAnticipado();
-                 //VerificarDatos();
+                 VerificarDatos();
              }
          },
          error: function (Resultado) {
@@ -44,10 +44,11 @@
              success: function (data) {
                  if (data.d) {
                      $('#popDatos').load('Views/Alumno/AlumnoActualizaDatos.html');
-                 } else
-                 {
-                     VerificarEncuesta();
                  }
+                 //else
+                 //{
+                 //    VerificarEncuesta();
+                 //}
 
              }
          });
