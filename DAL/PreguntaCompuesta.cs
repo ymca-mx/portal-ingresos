@@ -15,11 +15,11 @@ namespace DAL
     public partial class PreguntaCompuesta
     {
         public int PreguntaConfiguracionId { get; set; }
-        public int PreguntaTipoValoresId { get; set; }
+        public Nullable<int> PreguntaTipoValoresId { get; set; }
         public Nullable<int> PreguntaTipoId { get; set; }
     
-        public virtual PreguntaConfiguracion PreguntaConfiguracion { get; set; }
         public virtual PreguntaTipo PreguntaTipo { get; set; }
         public virtual PreguntaTipoValores PreguntaTipoValores { get; set; }
+        public virtual PreguntaConfiguracion PreguntaConfiguracion { get; set; }
     }
 }

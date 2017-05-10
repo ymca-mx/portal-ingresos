@@ -323,7 +323,7 @@ namespace Pruebas
         }
 
         [TestMethod]
-        public void GenerarMatrucula()
+        public void GenerarMatricula()
         {
             Console.WriteLine("LA matricula del alumno 7584 es : ------- ");
             Console.Write(
@@ -338,6 +338,33 @@ namespace Pruebas
                 Rvoe = "20100446"
             },
             7584));
+        }
+
+        [TestMethod]
+        public void MatriculaMasiva()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                List<DAL.Alumno> lstAlum = db.Alumno.
+                                        Where(a => a.MatriculaId.Contains("0000"))
+                                        .ToList();
+                lstAlum.ForEach(k =>
+                {
+                    var ali = k.AlumnoInscrito
+                                        .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                        .ToList()
+                                        .OrderBy(i => i.Anio)
+                                            .ThenBy(i => i.PeriodoId)
+                                            .ThenBy(i => i.FechaInscripcion)
+                                            .ThenBy(i => i.HoraInscripcion)
+                                        .ToList();
+                    if (ali.Count>2)
+                    {
+                        var pri = ali.FirstOrDefault();
+                        var ult = ali.LastOrDefault();
+                    }
+                });
+            }
         }
     }
 }
