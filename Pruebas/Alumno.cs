@@ -347,7 +347,10 @@ namespace Pruebas
             {
                 List<DAL.Alumno> lstAlum = db.Alumno.
                                         Where(a => a.MatriculaId.Contains("0000"))
+                                        //Where(a=> a.AlumnoId== 732)
                                         .ToList();
+
+                List<string> MatriculasN = new List<string>();
                 lstAlum.ForEach(k =>
                 {
                     var ali = k.AlumnoInscrito
@@ -358,12 +361,29 @@ namespace Pruebas
                                             .ThenBy(i => i.FechaInscripcion)
                                             .ThenBy(i => i.HoraInscripcion)
                                         .ToList();
-                    if (ali.Count>2)
+                    if (ali.Count>0)
                     {
-                        var pri = ali.FirstOrDefault();
                         var ult = ali.LastOrDefault();
+                        string MAtric =
+                        Herramientas.Matricula.ObtenerMatricula(new DTOAlumnoInscrito
+                        {
+                            Anio = k.Anio,
+                            PeriodoId = k.PeriodoId,
+                            TurnoId = ult.TurnoId
+                        },
+                       new DTOOfertaEducativa
+                       {
+                           Rvoe = ult.OfertaEducativa.Rvoe
+                       },
+                       k.AlumnoId);
+
+                        MatriculasN.Add("AlumnoId: " + k.AlumnoId + "- Matricula: " + MAtric);
+                        //k.MatriculaId = MAtric;
                     }
                 });
+
+                MatriculasN.ForEach(l => Console.WriteLine(l));
+                //db.SaveChanges();
             }
         }
     }
