@@ -141,10 +141,11 @@
 
           
         });
-        
+
+        $('#txtPuAsesoria').val("$0.00");
+        $('#txtPuMateria').val("$0.00");
         if (op.toString() == "-1") {            
-            $('#txtPuAsesoria').val("$0.00");
-            $('#txtPuMateria').val("$0.00");
+            
             $('#txtSTAsesoria').val("$0.00");
             $('#txtSTMateria').val("$0.00");
             $('#txtNAsesoria').val(0);
@@ -181,6 +182,8 @@
             $(spam).removeClass('checked');
             var spam1 = $('#rdbNo')[0].parentElement;
             $(spam1).removeClass('checked');
+            $("input:radio[name=rdbInscripcion]").removeAttr("checked");
+            $('#btnGuardar').prop("disabled", true);
             if (tblReferencias != null) {
                 tblReferencias.fnClearTable();
             }
