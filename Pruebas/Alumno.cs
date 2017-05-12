@@ -354,7 +354,7 @@ namespace Pruebas
                 lstAlum.ForEach(k =>
                 {
                     var ali = k.AlumnoInscrito
-                                        .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                        .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4 && o.OfertaEducativaId != 43)
                                         .ToList()
                                         .OrderBy(i => i.Anio)
                                             .ThenBy(i => i.PeriodoId)
@@ -378,12 +378,12 @@ namespace Pruebas
                        k.AlumnoId);
 
                         MatriculasN.Add("AlumnoId: " + k.AlumnoId + "- Matricula: " + MAtric);
-                        //k.MatriculaId = MAtric;
+                        k.MatriculaId = MAtric;
                     }
                 });
 
-                MatriculasN.ForEach(l => Console.WriteLine(l));
-                //db.SaveChanges();
+                //MatriculasN.ForEach(l => Console.WriteLine(l));
+                db.SaveChanges();
             }
         }
     }
