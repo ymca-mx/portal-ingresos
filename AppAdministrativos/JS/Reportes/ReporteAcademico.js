@@ -180,14 +180,17 @@
     function CargarCuatrimestre() {
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarCuatrimestre",
+            url: "WS/Reporte.asmx/CargarCuatrimestre",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
-                var datos = data.d.item1;
-                var datos2 = data.d.item2;
+                if (data.d === null) {
+                    return false;
+                }
+                var datos = data.d.periodos;
+                var datos2 = data.d.ofertas;
                 if (datos.length > 0) {
                     var n = 0;
                     $(datos).each(function () {
@@ -235,12 +238,17 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarReporteBecaCuatrimestre",
+            url: "WS/Reporte.asmx/CargaReporteBecaCuatrimestre",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+
                 tblBecas = $("#dtbecas").DataTable({
                     "aaData": data.d,
                     "aoColumns": [
@@ -302,12 +310,18 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarReporteInscrito",
+            url: "WS/Reporte.asmx/CargaReporteInscrito",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
+
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+
                 tblBecas1 = $("#dtbecas2").DataTable({
                     "aaData": data.d,
                     "aoColumns": [
@@ -365,12 +379,17 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarReporteBecaSep",
+            url: "WS/Reporte.asmx/CargaReporteBecaSep",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
+
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
                 tblBecas2 = $("#dtbecas3").DataTable({
                     "aaData": data.d,
                     "aoColumns": [
@@ -430,12 +449,17 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarReporteIneg",
+            url: "WS/Reporte.asmx/CargaReporteIneg",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
+
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
                 tblBecas3 = $("#dtbecas4").DataTable({
                     "aaData": data.d,
                     "aoColumns": [

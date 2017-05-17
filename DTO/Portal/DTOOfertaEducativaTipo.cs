@@ -12,6 +12,6 @@ namespace DTO
         public string Descripcion { get; set; }
         public int OfertaEducativa { get; set; }
         public int ProspectoDetalle { get; set; }
-        public List<DTOOfertaEducativa1> Ofertas { get; set; }
+        public List<DTOOfertaEducativa2> Ofertas { get; set; }
     }
 }

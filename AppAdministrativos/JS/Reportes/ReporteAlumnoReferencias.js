@@ -12,13 +12,18 @@
     function CargarCuatrimestre() {
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarCuatrimestre",
+            url: "WS/Reporte.asmx/CargarCuatrimestre",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
-                var datos = data.d.item1;
+
+                if (data.d === null) {
+                    return false;
+                }
+
+                var datos = data.d.ofertas;
                 if (datos.length > 0) {
                     var n = 0;
                     $(datos).each(function () {
@@ -43,12 +48,18 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarReporteAlumnoReferencia",
+            url: "WS/Reporte.asmx/CargaReporteAlumnoReferencia",
             data: "{anio:" + anio + ",periodo:" + periodo + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
+
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+
                 tblReporte = $("#dtReferencias").DataTable({
                     "aaData": data.d,
                     "aoColumns": [

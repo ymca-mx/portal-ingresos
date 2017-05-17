@@ -101,14 +101,13 @@
             $("#slcPeriodos").append(option1);
             if ($("#slcOfertas").val() != "-1") { $("#slcPeriodos").val(objAlumnoC.lstPeriodos[0].PeriodoId + " " + objAlumnoC.lstPeriodos[0].Anio); }
         }
-        $("#slcPeriodos").change();        
-        llenarCuatrimestres();
+        $("#slcPeriodos").change();      
         $(window).scrollTop($('#slcPeriodos').offset().top);
         $('#Load').modal('hide');
         
     }
 
-    function llenarCuatrimestres()
+    function llenarCuatrimestres(OfertaEducativaTipoId)
     {
         $("#slcCuatrimeste").empty();
         var optionP = $(document.createElement('option'));
@@ -116,8 +115,9 @@
         optionP.val('-1');
         $("#slcCuatrimeste").append(optionP);
         var i = 1;
+        var f = OfertaEducativaTipoId == 1 ? 9 : OfertaEducativaTipoId == 2 ? 3 : OfertaEducativaTipoId == 3 ? 5 :  0;
 
-        while (i <= 9)
+        while (i <= f)
         {
             var optionP2 = $(document.createElement('option'));
             optionP2.text(i);
@@ -131,12 +131,16 @@
     $("#slcOfertas").change(function () {
 
         var op = $("#slcOfertas").val();
+        $("#lbCuatrimestre").text("");
+
 
         $(objAlumnoC.lstOfertas).each(function () {
             if (String(this.OfertaEducativaId) == op) {
                 if (this.OfertaEducativaTipoId != 1) { $('#trAsesoria').hide(); } else { $('#trAsesoria').show(); }
                 hayCuatrimestre = this.Cuatrimestre != 0 ? true : false;
-
+                llenarCuatrimestres(this.OfertaEducativaTipoId);
+                var c = this.Cuatrimestre != 0 ? "Cuatrimestre anterior:  " + this.Cuatrimestre : ""
+                $("#lbCuatrimestre").text(c);
             }
 
           
@@ -144,6 +148,7 @@
 
         $('#txtPuAsesoria').val("$0.00");
         $('#txtPuMateria').val("$0.00");
+
         if (op.toString() == "-1") {            
             
             $('#txtSTAsesoria').val("$0.00");

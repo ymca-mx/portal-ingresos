@@ -6,11 +6,17 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostraReporteAlumnoOferta",
+            url: "WS/Reporte.asmx/ObtenerReporteAlumnoOferta",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
+
+                if (data.d === null) {
+                    $('#Load').modal('hide');
+                    return false;
+                }
+
                 tblReporte = $("#dtReporte").DataTable({
                     "aaData": data.d,
                     "aoColumns": [

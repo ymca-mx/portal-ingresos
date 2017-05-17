@@ -20,56 +20,56 @@ namespace AppAdministrativos.WS
     {
 
         [WebMethod]
-        public List<DTOReporteAlumnoOferta> MostraReporteAlumnoOferta()
+        public List<DTOReporteAlumnoOferta> ObtenerReporteAlumnoOferta()
         {
             return BLLReportePortal.ObtenerReporteAlumnoOferta();
         }
 
         [WebMethod]
-        public DTOFIltros MostrarCuatrimestre()
+        public DTOCuatrimestre CargarCuatrimestre()
         {
             return BLLReportePortal.CargarCuatrimestre();
         }
 
         [WebMethod]
-        public List<DTOReporteBecasCuatrimestre> MostrarReporteBecaCuatrimestre(int anio, int periodo)
+        public List<DTOReporteBecasCuatrimestre> CargaReporteBecaCuatrimestre(int anio, int periodo)
         {
             return BLLReportePortal.CargaReporteBecaCuatrimestre(anio, periodo);
         }
 
         [WebMethod]
-        public List<DTOReporteInscrito> MostrarReporteInscrito(int anio, int periodo)
+        public List<DTOReporteInscrito> CargaReporteInscrito(int anio, int periodo)
         {
             return BLLReportePortal.CargaReporteInscrito(anio, periodo);
         }
 
         [WebMethod]
-        public List<DTOReporteBecaSep> MostrarReporteBecaSep(int anio, int periodo)
+        public List<DTOReporteBecaSep> CargaReporteBecaSep(int anio, int periodo)
         {
             return BLLReportePortal.CargaReporteBecaSep(anio, periodo);
         }
 
 
         [WebMethod]
-        public List<DTOReporteInegi> MostrarReporteIneg(int anio, int periodo)
+        public List<DTOReporteInegi> CargaReporteIneg(int anio, int periodo)
         {
             return BLLReportePortal.CargaReporteIneg(anio, periodo);
         }
 
         [WebMethod]
-        public List<DTOReporteAlumnoReferencia> MostrarReporteAlumnoReferencia(int anio, int periodo)
+        public List<DTOReporteAlumnoReferencia> CargaReporteAlumnoReferencia(int anio, int periodo)
         {
             return BLLReportePortal.CargaReporteAlumnoReferencia(anio, periodo);
         }
         [WebMethod]
-        public DTOVoBo ReporteVoBo(int anio, int periodoid, int usuarioid)
+        public DTOVoBo CargarReporteVoBo(int anio, int periodoid, int usuarioid)
         {
-            return BLLReportePortal.ReporteVoBo(anio, periodoid,usuarioid);
+            return BLLReportePortal.CargarReporteVoBo(anio, periodoid,usuarioid);
         }
         [WebMethod]
-        public bool ReporteVoBoEmail(int AlumnoId, string EmailAlumno)
+        public bool ReporteVoBoEnviarEmail(int AlumnoId, string EmailAlumno)
         {
-            return BLLReportePortal.ReporteVoBoEmail(AlumnoId, EmailAlumno);
+            return BLLReportePortal.ReporteVoBoEnviarEmail(AlumnoId, EmailAlumno);
         }
 
 
