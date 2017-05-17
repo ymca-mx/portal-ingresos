@@ -14,12 +14,12 @@ namespace DTO
         public string ultimoAnio { get; set; }
     }
 
-    public class DTOFIltros
-    {
-        public List<DTOCuatrimestre> item1 { get; set; }
-        public List<DTOOfertaEducativa1> item2 { get; set; }
-    }
     public class DTOCuatrimestre
+    {
+        public List<DTOPeriodo2> periodos { get; set; }
+        public List<DTOOfertaEducativa2> ofertas { get; set; }
+    }
+    public class DTOPeriodo2
     {
         public int anio { get; set; }
         public int periodoId { get; set; }
@@ -31,7 +31,7 @@ namespace DTO
 
     }
 
-    public class DTOOfertaEducativa1
+    public class DTOOfertaEducativa2
     {
         public int ofertaEducativaId { get; set; }
         public string descripcion { get; set; }
@@ -162,7 +162,7 @@ namespace DTO
 
     public class DTOVoBo
     {
-        public List<DTOReporteVoBo> lstVoBo { get; set; }
-        public bool Sw { get; set; }
+        public List<DTOReporteVoBo> AlumnoVoBo { get; set; }
+        public bool EsEscolares { get; set; }
     }
 }

@@ -927,6 +927,7 @@ namespace BLL
                 }
             }
         }
+
         public static List<DTOAlumnoOfertas> ObtenerOfertasAlumno(int v)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -950,6 +951,7 @@ namespace BLL
                 }
             }
         }
+
         public static DTOAlumno ObtenerAlumnoCompleto(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -12087,7 +12089,7 @@ namespace BLL
                     {
                         var ofertaTipo = db.OfertaEducativa.Where(a => a.OfertaEducativaId == Alumno.OfertaEducativaIdActual).FirstOrDefault().OfertaEducativaTipoId;
                         Alumno.OfertaEducativa = db.OfertaEducativa.Where(b => b.OfertaEducativaTipoId == ofertaTipo && b.OfertaEducativaId != Alumno.OfertaEducativaIdActual)
-                                                                   .Select(c => new DTOOfertaEducativa1
+                                                                   .Select(c => new DTOOfertaEducativa2
                                                                    {
                                                                        ofertaEducativaId = c.OfertaEducativaId,
                                                                        descripcion = c.Descripcion

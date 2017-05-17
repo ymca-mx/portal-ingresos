@@ -84,7 +84,7 @@ namespace DTO
     { 
         public int AlumnoId { get; set; }
         public string NombreC { get; set; }
-        public List<DTOOfertaEducativa1> OfertaEducativa { get; set; }
+        public List<DTOOfertaEducativa2> OfertaEducativa { get; set; }
         public int OfertaEducativaIdActual { get; set; }
         public string OfertaEducativaActual { get; set; }
         public int OfertaEducativaIdNueva { get; set; }

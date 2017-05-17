@@ -8,7 +8,6 @@
         return false;
     });
 
-
     $("#slcCuatrimestre").change(function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
@@ -67,20 +66,21 @@
         
     });
 
-    
-
-
     function CargarCuatrimestre() {
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/MostrarCuatrimestre",
+            url: "WS/Reporte.asmx/CargarCuatrimestre",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
-                var datos = data.d.item1;
-                var datos2 = data.d.item2;
+
+                if (data.d === null) {
+                    return false;
+                }
+                var datos = data.d.periodos;
+                var datos2 = data.d.ofertas;
                 if (datos.length > 0) {
                     var n = 0;
                     $(datos).each(function () {
@@ -113,7 +113,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/ReporteVoBo",
+            url: "WS/Reporte.asmx/CargarReporteVoBo",
             data: "{anio:" + anio + ",periodoid:" + periodo + ", usuarioid:"+ usuarioid +"}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -121,7 +121,7 @@
             success: function (data) {
                 if(data.d != null )
                {
-                     Mostra = data.d.Sw;
+                    Mostra = data.d.EsEscolares;
 
                     var Mostra2 = true ;
                     if (Mostra)
@@ -129,7 +129,7 @@
                         Mostra2 = false;
                     }
                     tblVoBo = $("#dtVoBo").DataTable({
-                        "aaData": data.d.lstVoBo,
+                        "aaData": data.d.AlumnoVoBo,
                         "aoColumns": [
                              {
                                  "mDataProp": "AlumnoId",
@@ -244,7 +244,7 @@
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
-            url: "WS/Reporte.asmx/ReporteVoBoEmail",
+            url: "WS/Reporte.asmx/ReporteVoBoEnviarEmail",
             data: "{AlumnoId:" + alumnoid + ",EmailAlumno:'" + $("#txtMail").val()+"'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

@@ -738,7 +738,6 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                string[] AlumnoID;
                 DTOAlumnoInscrito objOferta = BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId, OfertaEducativaId);
                 objOferta.Anio = Anio;
                 objOferta.PeriodoId = PeriodoId;
@@ -1524,8 +1523,7 @@ namespace BLL
                         {
                             objPago.ReferenciaId = db.spGeneraReferencia(objPago.PagoId).FirstOrDefault();
                         }
-
-                        List<Pago> lstPagosG;
+                        
                         listAlumnos.ForEach(delegate (AlumnoInscrito Alumno)
                         {
                             Cuota objCuotaIn;

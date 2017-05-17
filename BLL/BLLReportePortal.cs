@@ -18,8 +18,10 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                
-                return (db.AlumnoInscrito.Where(a => a.OfertaEducativa.Descripcion != "Desconocida").Select(
+
+                try
+                {
+                    return (db.AlumnoInscrito.Where(a => a.OfertaEducativa.Descripcion != "Desconocida").Select(
                    b => new DTOReporteAlumnoOferta
                    {
                        alumnoId = b.AlumnoId,
@@ -27,46 +29,58 @@ namespace BLL
                        oferta = b.OfertaEducativa.Descripcion,
                        ultimoAnio = b.FechaInscripcion.Year.ToString()
                    }).OrderBy(d => d.alumnoId).ToList());
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+                
 
             }
         }//ObtenerReporteAlumnoOferta()
 
-        public static DTOFIltros CargarCuatrimestre()
+        public static DTOCuatrimestre CargarCuatrimestre()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                var per = db.Periodo.Select(a => new DTOCuatrimestre
+                try
                 {
-                    anio = a.Anio,
-                    periodoId = a.PeriodoId,
-                    descripcion = a.Descripcion,
-                    fechaInicial1 = a.FechaInicial,
-                    fechaFinal1 = a.FechaFinal,
-                }
-                       ).Where(b => b.fechaInicial1 <= DateTime.Today).OrderByDescending(c => c.anio).Take(3).ToList();
-
-                per = per.Select(
-                   a => new DTOCuatrimestre
-                   {
-                       anio = a.anio,
-                       periodoId = a.periodoId,
-                       descripcion = a.descripcion,
-                       fechaInicial = a.fechaInicial1.ToString("dd/MM/yyyy", Cultura),
-                       fechaFinal = a.fechaFinal1.ToString("dd/MM/yyyy", Cultura)
-                   }
-                   ).ToList();
-
-                var ofe = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 && w.Descripcion != "Desconocida").OrderByDescending(g => g.OfertaEducativaTipoId).Select(o =>
-                    new DTOOfertaEducativa1
+                    List<DTOPeriodo2> periodo = db.Periodo.Select(a => new DTOPeriodo2
                     {
-                        ofertaEducativaId = o.OfertaEducativaId,
-                        descripcion = o.Descripcion
+                        anio = a.Anio,
+                        periodoId = a.PeriodoId,
+                        descripcion = a.Descripcion,
+                        fechaInicial1 = a.FechaInicial,
+                        fechaFinal1 = a.FechaFinal,
                     }
-                    ).ToList();
+                ).Where(b => b.fechaInicial1 <= DateTime.Today).OrderByDescending(c => c.anio).Take(3).ToList();
 
-                var filtro = new DTOFIltros { item1 = per, item2 = ofe };
+                    periodo = periodo.Select(
+                       a => new DTOPeriodo2
+                       {
+                           anio = a.anio,
+                           periodoId = a.periodoId,
+                           descripcion = a.descripcion,
+                           fechaInicial = a.fechaInicial1.ToString("dd/MM/yyyy", Cultura),
+                           fechaFinal = a.fechaFinal1.ToString("dd/MM/yyyy", Cultura)
+                       }
+                       ).ToList();
 
-                return (filtro);
+                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 && w.Descripcion != "Desconocida").OrderByDescending(g => g.OfertaEducativaTipoId).Select(o =>
+                        new DTOOfertaEducativa2
+                        {
+                            ofertaEducativaId = o.OfertaEducativaId,
+                            descripcion = o.Descripcion
+                        }
+                        ).ToList();
+
+                    return (new DTOCuatrimestre { periodos = periodo, ofertas = ofertaEducativa });
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+                
             }
         }
 
@@ -75,58 +89,67 @@ namespace BLL
 
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                var AlumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
+                try
+                {
+                    List<AlumnoInscritoCompleto> alumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
 
-                var AlumnosPagoPlanNull = AlumnoInscrito.Where(a => a.PagoPlanId != 0).Select(b => b.AlumnoId).ToList();
+                    List<int> alumnosPagoPlanNull = alumnoInscrito.Where(a => a.PagoPlanId != 0).Select(b => b.AlumnoId).ToList();
 
-                var becas = (from a in db.AlumnoDescuento
-                             join b in db.Alumno on a.AlumnoId equals b.AlumnoId
-                             join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
-                             join d in db.Usuario on a.UsuarioId equals d.UsuarioId
-                             join e in db.Descuento on a.DescuentoId equals e.DescuentoId
-                             join g in db.AlumnoDetalle on a.AlumnoId equals g.AlumnoId
-                             where a.Anio == anio
-                             && a.PeriodoId == periodo
-                             && a.PagoConceptoId == 800
-                             && a.EstatusId == 2
-                             && AlumnosPagoPlanNull.Contains(a.AlumnoId)
-                             orderby a.AlumnoId
+                    List<DTOReporteBecasCuatrimestre> becas = (from a in db.AlumnoDescuento
+                                                               join b in db.Alumno on a.AlumnoId equals b.AlumnoId
+                                                               join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
+                                                               join d in db.Usuario on a.UsuarioId equals d.UsuarioId
+                                                               join e in db.Descuento on a.DescuentoId equals e.DescuentoId
+                                                               join g in db.AlumnoDetalle on a.AlumnoId equals g.AlumnoId
+                                                               where a.Anio == anio
+                                                               && a.PeriodoId == periodo
+                                                               && a.PagoConceptoId == 800
+                                                               && a.EstatusId == 2
+                                                               && alumnosPagoPlanNull.Contains(a.AlumnoId)
+                                                               orderby a.AlumnoId
 
-                             select new DTOReporteBecasCuatrimestre
-                             {
-                                 alumnoId = a.AlumnoId,
-                                 nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                 especialidad = c.Descripcion,
-                                 especialidadId = c.OfertaEducativaId,
-                                 becaDescuento = e.Descripcion,
-                                 porcentajeDescuento = a.Monto + "%",
-                                 comentario = a.Comentario,
-                                 fechaGeneracion1 = a.FechaGeneracion,
-                                 horaGeneracion = a.HoraGeneracion.ToString(),
-                                 usuarioAplico = d.Nombre + " " + d.Paterno + " " + d.Materno
+                                                               select new DTOReporteBecasCuatrimestre
+                                                               {
+                                                                   alumnoId = a.AlumnoId,
+                                                                   nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                                   especialidad = c.Descripcion,
+                                                                   especialidadId = c.OfertaEducativaId,
+                                                                   becaDescuento = e.Descripcion,
+                                                                   porcentajeDescuento = a.Monto + "%",
+                                                                   comentario = a.Comentario,
+                                                                   fechaGeneracion1 = a.FechaGeneracion,
+                                                                   horaGeneracion = a.HoraGeneracion.ToString(),
+                                                                   usuarioAplico = d.Nombre + " " + d.Paterno + " " + d.Materno
 
-                             }
-                        ).ToList();
+                                                               }
+                            ).ToList();
 
 
 
-                becas = becas.Select(a =>
-                     new DTOReporteBecasCuatrimestre
-                     {
-                         alumnoId = a.alumnoId,
-                         nombreAlumno = a.nombreAlumno,
-                         especialidad = a.especialidad,
-                         especialidadId = a.especialidadId,
-                         becaDescuento = a.becaDescuento,
-                         porcentajeDescuento = a.porcentajeDescuento,
-                         comentario = a.comentario,
-                         fechaGeneracion = a.fechaGeneracion1.ToString("dd/MM/yyyy", Cultura),
-                         fechaGeneracion1 = a.fechaGeneracion1,
-                         horaGeneracion = a.horaGeneracion,
-                         usuarioAplico = a.usuarioAplico
-                     }).ToList();
+                    becas = becas.Select(a =>
+                         new DTOReporteBecasCuatrimestre
+                         {
+                             alumnoId = a.alumnoId,
+                             nombreAlumno = a.nombreAlumno,
+                             especialidad = a.especialidad,
+                             especialidadId = a.especialidadId,
+                             becaDescuento = a.becaDescuento,
+                             porcentajeDescuento = a.porcentajeDescuento,
+                             comentario = a.comentario,
+                             fechaGeneracion = a.fechaGeneracion1.ToString("dd/MM/yyyy", Cultura),
+                             fechaGeneracion1 = a.fechaGeneracion1,
+                             horaGeneracion = a.horaGeneracion,
+                             usuarioAplico = a.usuarioAplico
+                         }).ToList();
 
-                return (becas);
+                    return (becas);
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+                
 
             }
 
@@ -138,114 +161,119 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
 
-                db.Configuration.LazyLoadingEnabled = true;
-
-                var pagoconcepto = new int[] { 304, 320, 15 };
-                var estatus = new int[] { 1, 4, 14 };
-
-                var AlumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
-
-                var listFechas = db.AlumnoInscritoBitacora.Where(k => anio == k.Anio && periodo == k.PeriodoId).ToList();
-                List<DTOReporteInscrito> ins = new List<DTOReporteInscrito>();
-                List<DTOReporteInscrito> temp = new List<DTOReporteInscrito>();
-                #region alumnoInscrito
-                if (anio < 2017 || (anio == 2017 && periodo == 1))
+                try
                 {
-                    var temp0 = (from a in AlumnoInscrito
-                                 join b in db.Alumno on a.AlumnoId equals b.AlumnoId
-                                 join c in db.Usuario on a.UsuarioId equals c.UsuarioId
-                                 join d in db.OfertaEducativa on a.OfertaEducativaId equals d.OfertaEducativaId 
-                                 where a.Anio == anio
-                                 && a.PeriodoId == periodo
-                                 && a.EstatusId == 1
-                                 && d.OfertaEducativaTipoId != 4
-                                 select new DTOReporteInscrito
-                                 {
-                                     alumnoId = a.AlumnoId,
-                                     nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                     especialidad = d.Descripcion,
-                                     especialidadId = a.OfertaEducativaId,
-                                     fechaInscripcion1 = listFechas.Where(w=> w.AlumnoId==a.AlumnoId && w.OfertaEducativaId == a.OfertaEducativaId).OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? a.FechaInscripcion,
-                                     porcentajeDescuento = a.Descuento,
-                                     tipoAlumno = a.TipoAlumno,
-                                     esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
-                                     usuarioAplico = c.Paterno + " " + c.Materno + " " + c.Nombre
-                                 }
-                                              ).ToList();
+                    int[] pagoConcepto = new int[] { 304, 320, 15 };
+                    int[] estatus = new int[] { 1, 4, 14 };
 
+                    List<AlumnoInscritoCompleto> alumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
 
-                    ///alumnos con  materias sueltas
-                    var temp1 = (from a in db.Pago
-                                 join c in db.Usuario on a.UsuarioId equals c.UsuarioId
-                                 join d in db.Alumno on a.AlumnoId equals d.AlumnoId
-                                 where pagoconcepto.Contains(a.Cuota1.PagoConceptoId)
-                                 && a.Anio == anio
-                                 && a.PeriodoId == periodo
-                                 && estatus.Contains(a.EstatusId)
-                                 && (db.Pago.Where(o =>
-                                              o.AlumnoId == a.AlumnoId
-                                              && o.Cuota1.PagoConceptoId == 800
-                                              && o.Anio == anio
-                                              && o.PeriodoId == periodo
-                                              && o.EstatusId != 2).ToList().Count) == 0
-                                 select new DTOReporteInscrito
-                                 {
-                                     alumnoId = a.AlumnoId,
-                                     nombreAlumno = d.Paterno + " " + d.Materno + " " + d.Nombre,
-                                     especialidad = a.OfertaEducativa.Descripcion,
-                                     especialidadId = a.OfertaEducativaId,
-                                     fechaInscripcion1 = a.FechaGeneracion,
-                                     porcentajeDescuento = "0.00%",
-                                     tipoAlumno = db.AlumnoInscritoBitacora.Where(f =>
-                                                                                    (f.Anio < a.Anio || (f.Anio == a.Anio && f.PeriodoId < a.PeriodoId)) && f.OfertaEducativaId == a.OfertaEducativaId
-                                                                                  && f.AlumnoId == a.AlumnoId).FirstOrDefault() == null ? "Nuevo Ingreso" : "Reinscrito ",
-                                     esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
-                                     usuarioAplico = c.Nombre + " " + c.Paterno + " " + c.Materno
-                                 }
-                                   ).Distinct().ToList();
-                    ins.AddRange(temp0);
-                    ins.AddRange(temp1);
+                    List<AlumnoInscritoBitacora> alumnoInscritoBitacora = db.AlumnoInscritoBitacora.Where(k => anio == k.Anio && periodo == k.PeriodoId).ToList();
+                    List<DTOReporteInscrito> inscritos = new List<DTOReporteInscrito>();
+                    #region alumnoInscrito
+                    if (anio < 2017 || (anio == 2017 && periodo == 1))
+                    {
+                        List<DTOReporteInscrito> alumnoInscrito2 = (from a in alumnoInscrito
+                                                                    join b in db.Alumno on a.AlumnoId equals b.AlumnoId
+                                                                    join c in db.Usuario on a.UsuarioId equals c.UsuarioId
+                                                                    join d in db.OfertaEducativa on a.OfertaEducativaId equals d.OfertaEducativaId
+                                                                    where a.Anio == anio
+                                                                    && a.PeriodoId == periodo
+                                                                    && a.EstatusId == 1
+                                                                    && d.OfertaEducativaTipoId != 4
+                                                                    select new DTOReporteInscrito
+                                                                    {
+                                                                        alumnoId = a.AlumnoId,
+                                                                        nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                                        especialidad = d.Descripcion,
+                                                                        especialidadId = a.OfertaEducativaId,
+                                                                        fechaInscripcion1 = alumnoInscritoBitacora.Where(w => w.AlumnoId == a.AlumnoId && w.OfertaEducativaId == a.OfertaEducativaId).OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? a.FechaInscripcion,
+                                                                        porcentajeDescuento = a.Descuento,
+                                                                        tipoAlumno = a.TipoAlumno,
+                                                                        esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
+                                                                        usuarioAplico = c.Paterno + " " + c.Materno + " " + c.Nombre
+                                                                    }
+                                                                      ).ToList();
+                        ///alumnos con  materias sueltas
+                        var alumnoMateriaSuerta = (from a in db.Pago
+                                                   join c in db.Usuario on a.UsuarioId equals c.UsuarioId
+                                                   join d in db.Alumno on a.AlumnoId equals d.AlumnoId
+                                                   where pagoConcepto.Contains(a.Cuota1.PagoConceptoId)
+                                                   && a.Anio == anio
+                                                   && a.PeriodoId == periodo
+                                                   && estatus.Contains(a.EstatusId)
+                                                   && (db.Pago.Where(o =>
+                                                                o.AlumnoId == a.AlumnoId
+                                                                && o.Cuota1.PagoConceptoId == 800
+                                                                && o.Anio == anio
+                                                                && o.PeriodoId == periodo
+                                                                && o.EstatusId != 2).ToList().Count) == 0
+                                                   select new DTOReporteInscrito
+                                                   {
+                                                       alumnoId = a.AlumnoId,
+                                                       nombreAlumno = d.Paterno + " " + d.Materno + " " + d.Nombre,
+                                                       especialidad = a.OfertaEducativa.Descripcion,
+                                                       especialidadId = a.OfertaEducativaId,
+                                                       fechaInscripcion1 = a.FechaGeneracion,
+                                                       porcentajeDescuento = "0.00%",
+                                                       tipoAlumno = db.AlumnoInscritoBitacora.Where(f =>
+                                                                                                      (f.Anio < a.Anio || (f.Anio == a.Anio && f.PeriodoId < a.PeriodoId)) && f.OfertaEducativaId == a.OfertaEducativaId
+                                                                                                    && f.AlumnoId == a.AlumnoId).FirstOrDefault() == null ? "Nuevo Ingreso" : "Reinscrito ",
+                                                       esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
+                                                       usuarioAplico = c.Nombre + " " + c.Paterno + " " + c.Materno
+                                                   }
+                                       ).Distinct().ToList();
+                        inscritos.AddRange(alumnoInscrito2);
+                        inscritos.AddRange(alumnoMateriaSuerta);
+                    }
+                    else
+                    {
+                        List<DTOReporteInscrito> alumnoInscrito2 = (from a in alumnoInscrito
+                                                                    join b in db.Usuario on a.UsuarioId equals b.UsuarioId
+                                                                    join c in db.Alumno on a.AlumnoId equals c.AlumnoId
+                                                                    join d in db.OfertaEducativa on a.OfertaEducativaId equals d.OfertaEducativaId
+                                                                    where a.Anio == anio
+                                                                    && a.PeriodoId == periodo
+                                                                    && a.EstatusId == 1
+                                                                    && d.OfertaEducativaTipoId != 4
+                                                                    select new DTOReporteInscrito
+                                                                    {
+                                                                        alumnoId = a.AlumnoId,
+                                                                        nombreAlumno = c.Paterno + " " + c.Materno + " " + c.Nombre,
+                                                                        especialidad = d.Descripcion,
+                                                                        especialidadId = a.OfertaEducativaId,
+                                                                        fechaInscripcion1 = alumnoInscritoBitacora.Where(w => w.AlumnoId == a.AlumnoId && w.OfertaEducativaId == a.OfertaEducativaId).OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? a.FechaInscripcion,
+                                                                        porcentajeDescuento = a.Descuento,
+                                                                        tipoAlumno = a.TipoAlumno,
+                                                                        esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
+                                                                        usuarioAplico = b.Paterno + " " + b.Materno + " " + b.Nombre
+                                                                    }
+                                                  ).ToList();
+
+                        inscritos.AddRange(alumnoInscrito2);
+                    }
+                    #endregion
+
+                    return (inscritos.GroupBy(c => c.alumnoId).Select(i => i.FirstOrDefault()).ToList().Select(a => new DTOReporteInscrito
+                    {
+                        alumnoId = a.alumnoId,
+                        nombreAlumno = a.nombreAlumno,
+                        especialidad = a.especialidad,
+                        especialidadId = a.especialidadId,
+                        fechaInscripcion = a.fechaInscripcion1.ToString("dd/MM/yyyy", Cultura),
+                        porcentajeDescuento = a.porcentajeDescuento,
+                        tipoAlumno = a.tipoAlumno,
+                        esEmpresa = a.esEmpresa,
+                        usuarioAplico = a.usuarioAplico
+                    }).OrderBy(b => b.alumnoId).ToList());
                 }
-                else
+                catch (Exception)
                 {
-                    var temp0 = (from a in AlumnoInscrito
-                                 join b in db.Usuario on a.UsuarioId equals b.UsuarioId
-                                 join c in db.Alumno on a.AlumnoId equals c.AlumnoId
-                                 join d in db.OfertaEducativa on a.OfertaEducativaId equals d.OfertaEducativaId 
-                                 where a.Anio == anio
-                                 && a.PeriodoId == periodo
-                                 && a.EstatusId == 1
-                                 && d.OfertaEducativaTipoId != 4
-                                 select new DTOReporteInscrito
-                                 {
-                                     alumnoId = a.AlumnoId,
-                                     nombreAlumno = c.Paterno + " " + c.Materno + " " + c.Nombre,
-                                     especialidad = d.Descripcion,
-                                     especialidadId = a.OfertaEducativaId,
-                                     fechaInscripcion1 = listFechas.Where(w => w.AlumnoId == a.AlumnoId && w.OfertaEducativaId == a.OfertaEducativaId).OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? a.FechaInscripcion,
-                                     porcentajeDescuento = a.Descuento,
-                                     tipoAlumno = a.TipoAlumno,
-                                     esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
-                                     usuarioAplico = b.Paterno + " " + b.Materno + " " + b.Nombre
-                                 }
-                                              ).ToList();
-                    
-                    ins.AddRange(temp0);
-                }
-                #endregion
 
-                return (ins.GroupBy(c => c.alumnoId).Select(i => i.FirstOrDefault()).ToList().Select(a => new DTOReporteInscrito
-                {
-                    alumnoId = a.alumnoId,
-                    nombreAlumno = a.nombreAlumno,
-                    especialidad = a.especialidad,
-                    especialidadId = a.especialidadId,
-                    fechaInscripcion = a.fechaInscripcion1.ToString("dd/MM/yyyy", Cultura),
-                    porcentajeDescuento = a.porcentajeDescuento,
-                    tipoAlumno = a.tipoAlumno,
-                    esEmpresa = a.esEmpresa,
-                    usuarioAplico = a.usuarioAplico
-                }).OrderBy(b => b.alumnoId).ToList());
+                    return null;
+                }
+
+                
 
             }//using
 
@@ -256,8 +284,9 @@ namespace BLL
 
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                var AlumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
-                var AlumnosPagoPlanNull = AlumnoInscrito.Where(a => a.PagoPlanId != 0).Select(b => b.AlumnoId).ToList();
+
+                List<AlumnoInscritoCompleto> alumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
+                List<int> alumnosPagoPlanNull = alumnoInscrito.Where(a => a.PagoPlanId != 0).Select(b => b.AlumnoId).ToList();
                 List<DTOReporteBecaSep> FiltroDos = new List<DTOReporteBecaSep>();
 
                 //Descuentos que tienen beca sep y beca comite
@@ -268,7 +297,7 @@ namespace BLL
                                                && a.EstatusId == 2
                                                && a.EsSEP
                                                && a.EsComite
-                                               && AlumnosPagoPlanNull.Contains(a.AlumnoId)
+                                               && alumnosPagoPlanNull.Contains(a.AlumnoId)
                                                select new DTOReporteBecaSep
                                               {
                                                   alumnoId = a.AlumnoId,
@@ -377,7 +406,7 @@ namespace BLL
                                                   where a.Anio == anio
                                                   && a.PeriodoId == periodo
                                                   && a.PagoConceptoId == 800
-                                                  && AlumnosPagoPlanNull.Contains(a.AlumnoId)
+                                                  && alumnosPagoPlanNull.Contains(a.AlumnoId)
                                                   && a.EsSEP
                                                   && !a.EsComite
                                                   select new DTOReporteBecaSep
@@ -429,120 +458,128 @@ namespace BLL
             
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                var AlumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo);
-               
-                db.Configuration.LazyLoadingEnabled = true;
-
-                var pagoconcepto = new int[] { 304, 320, 15 };
-                var estatus = new int[] { 1, 4, 14 };
-                List<DTOReporteInegi> ins = new List<DTOReporteInegi>();
-                //#region alumnoInscrito
-                if (anio < 2017 || (anio == 2017 && periodo == 1))
+                try
                 {
+                    List<AlumnoInscritoCompleto> alumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
 
-                    var temp = (from a in AlumnoInscrito
-                                join b in db.Alumno on a.AlumnoId equals b.AlumnoId
-                                join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
-                                join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
-                                where a.Anio == anio
-                                && a.PeriodoId == periodo
-                                && a.EstatusId == 1
-                                && c.OfertaEducativaTipoId != 4
-                                select new DTOReporteInegi
-                                {
-                                    alumnoId = a.AlumnoId,
-                                    nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                    ciclo = a.Anio + "-" + a.PeriodoId,
-                                    especialidad = c.Descripcion,
-                                    especialidadId = a.OfertaEducativaId,
-                                    sexo = d.Genero.Descripcion,
-                                    fechaNacimiento1 = d.FechaNacimiento,
-                                    lugarNacimiento = d.EntidadFederativa.Descripcion,
-                                    Cuatrimestre=""
-                                }
-                            ).ToList();
+                    int[] pagoConcepto = new int[] { 304, 320, 15 };
+                    int[] estatus = new int[] { 1, 4, 14 };
+                    List<DTOReporteInegi> inscritoInegi = new List<DTOReporteInegi>();
+                    //#region alumnoInscrito
+                    if (anio < 2017 || (anio == 2017 && periodo == 1))
+                    {
 
-                    var temp1 = (from a in db.Pago
-                                 join c in db.Alumno on a.AlumnoId equals c.AlumnoId
-                                 join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
-                                 where pagoconcepto.Contains(a.Cuota1.PagoConceptoId)
-                                 && a.Anio == anio
-                                 && a.PeriodoId == periodo
-                                 && estatus.Contains(a.EstatusId)
-                                 && (db.Pago.Where(o =>
-                                              o.AlumnoId == a.AlumnoId
-                                              && o.Cuota1.PagoConceptoId == 802
-                                              && o.Anio == anio
-                                              && o.PeriodoId == periodo
-                                              && o.EstatusId != 2).ToList().Count) == 0
-                                 select new DTOReporteInegi
-                                 {
-                                     alumnoId = a.AlumnoId,
-                                     nombreAlumno = c.Paterno + " " + c.Materno + " " + c.Nombre,
-                                     ciclo = a.Anio + "-" + a.PeriodoId,
-                                     especialidad = a.OfertaEducativa.Descripcion,
-                                     especialidadId = a.OfertaEducativaId,
-                                     sexo = d.Genero.Descripcion,
-                                     fechaNacimiento1 = d.FechaNacimiento,
-                                     lugarNacimiento = d.EntidadFederativa.Descripcion,
-                                     Cuatrimestre = ""
-                                 }
-                                   ).Distinct().ToList();
+                        List<DTOReporteInegi> alumnoInegi = (from a in alumnoInscrito
+                                                             join b in db.Alumno on a.AlumnoId equals b.AlumnoId
+                                                             join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
+                                                             join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
+                                                             where a.Anio == anio
+                                                             && a.PeriodoId == periodo
+                                                             && a.EstatusId == 1
+                                                             && c.OfertaEducativaTipoId != 4
+                                                             select new DTOReporteInegi
+                                                             {
+                                                                 alumnoId = a.AlumnoId,
+                                                                 nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                                 ciclo = a.Anio + "-" + a.PeriodoId,
+                                                                 especialidad = c.Descripcion,
+                                                                 especialidadId = a.OfertaEducativaId,
+                                                                 sexo = d.Genero.Descripcion,
+                                                                 fechaNacimiento1 = d.FechaNacimiento,
+                                                                 lugarNacimiento = d.EntidadFederativa.Descripcion,
+                                                                 Cuatrimestre = ""
+                                                             }
+                                ).ToList();
+
+                        List<DTOReporteInegi> alumnoMateriaInegi = (from a in db.Pago
+                                                                    join c in db.Alumno on a.AlumnoId equals c.AlumnoId
+                                                                    join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
+                                                                    where pagoConcepto.Contains(a.Cuota1.PagoConceptoId)
+                                                                    && a.Anio == anio
+                                                                    && a.PeriodoId == periodo
+                                                                    && estatus.Contains(a.EstatusId)
+                                                                    && (db.Pago.Where(o =>
+                                                                                 o.AlumnoId == a.AlumnoId
+                                                                                 && o.Cuota1.PagoConceptoId == 802
+                                                                                 && o.Anio == anio
+                                                                                 && o.PeriodoId == periodo
+                                                                                 && o.EstatusId != 2).ToList().Count) == 0
+                                                                    select new DTOReporteInegi
+                                                                    {
+                                                                        alumnoId = a.AlumnoId,
+                                                                        nombreAlumno = c.Paterno + " " + c.Materno + " " + c.Nombre,
+                                                                        ciclo = a.Anio + "-" + a.PeriodoId,
+                                                                        especialidad = a.OfertaEducativa.Descripcion,
+                                                                        especialidadId = a.OfertaEducativaId,
+                                                                        sexo = d.Genero.Descripcion,
+                                                                        fechaNacimiento1 = d.FechaNacimiento,
+                                                                        lugarNacimiento = d.EntidadFederativa.Descripcion,
+                                                                        Cuatrimestre = ""
+                                                                    }
+                                      ).Distinct().ToList();
 
 
 
-                    ins.AddRange(temp);
-                    ins.AddRange(temp1);
+                        inscritoInegi.AddRange(alumnoInegi);
+                        inscritoInegi.AddRange(alumnoMateriaInegi);
+                    }
+                    else
+                    {
+
+
+                        List<DTOReporteInegi> alumnoInegi = (from a in alumnoInscrito
+                                                             join b in db.Alumno on a.AlumnoId equals b.AlumnoId
+                                                             join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
+                                                             join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
+                                                             join e in db.AlumnoCuatrimestre on new { a.AlumnoId, a.OfertaEducativaId, a.Anio, a.PeriodoId } equals
+                                                                                                new { e.AlumnoId, e.OfertaEducativaId, e.Anio, e.PeriodoId }
+                                                             where a.Anio == anio
+                                                             && a.PeriodoId == periodo
+                                                             && a.EstatusId == 1
+                                                             && c.OfertaEducativaTipoId != 4
+                                                             select new DTOReporteInegi
+                                                             {
+                                                                 alumnoId = a.AlumnoId,
+                                                                 nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                                 ciclo = a.Anio + "-" + a.PeriodoId,
+                                                                 especialidad = c.Descripcion,
+                                                                 especialidadId = a.OfertaEducativaId,
+                                                                 sexo = d.Genero.Descripcion,
+                                                                 fechaNacimiento1 = d.FechaNacimiento,
+                                                                 lugarNacimiento = d.EntidadFederativa.Descripcion,
+                                                                 tipoAlumno = a.TipoAlumno,
+                                                                 Cuatrimestre = e.Cuatrimestre + " Cuatrimestre"
+                                                             }
+                                                  ).ToList();
+
+                        inscritoInegi.AddRange(alumnoInegi);
+
+                    }
+
+                    DateTime ahora = DateTime.Now;
+
+                    return (inscritoInegi.GroupBy(c => c.alumnoId).Select(i => i.FirstOrDefault()).ToList().Select(a => new DTOReporteInegi
+                    {
+                        alumnoId = a.alumnoId,
+                        nombreAlumno = a.nombreAlumno,
+                        ciclo = a.ciclo,
+                        especialidad = a.especialidad,
+                        especialidadId = a.especialidadId,
+                        sexo = a.sexo,
+                        edad = (ahora.Month < a.fechaNacimiento1.Month || (ahora.Month == a.fechaNacimiento1.Month && ahora.Day < a.fechaNacimiento1.Day)) ? (ahora.Year - a.fechaNacimiento1.Year) - 1 + " Años" : ahora.Year - a.fechaNacimiento1.Year + " Años",
+                        fechaNacimiento = a.fechaNacimiento1.ToString("dd/MM/yyyy", Cultura),
+                        lugarNacimiento = a.lugarNacimiento,
+                        Cuatrimestre = a.Cuatrimestre
+                    }).OrderBy(b => b.alumnoId).ToList());
+
                 }
-                else
+                catch (Exception)
                 {
-                    
 
-                    var temp0 = (from a in AlumnoInscrito
-                                 join b in db.Alumno on a.AlumnoId equals b.AlumnoId
-                                 join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
-                                 join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
-                                 join e in db.AlumnoCuatrimestre on new {a.AlumnoId,a.OfertaEducativaId,a.Anio,a.PeriodoId } equals 
-                                                                    new {e.AlumnoId, e.OfertaEducativaId, e.Anio, e.PeriodoId }
-                                 where a.Anio == anio
-                                 && a.PeriodoId == periodo
-                                 && a.EstatusId == 1
-                                 && c.OfertaEducativaTipoId != 4
-                                 select new DTOReporteInegi
-                                 {
-                                     alumnoId = a.AlumnoId,
-                                     nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                     ciclo = a.Anio + "-" + a.PeriodoId,
-                                     especialidad = c.Descripcion,
-                                     especialidadId = a.OfertaEducativaId,
-                                     sexo = d.Genero.Descripcion,
-                                     fechaNacimiento1 = d.FechaNacimiento,
-                                     lugarNacimiento = d.EntidadFederativa.Descripcion,
-                                     tipoAlumno = a.TipoAlumno,
-                                     Cuatrimestre = e.Cuatrimestre + " Cuatrimestre"
-                                 }
-                                              ).ToList();
-
-                    ins.AddRange(temp0);
-
+                    return null;
                 }
 
-                DateTime ahora = DateTime.Now;
-
-                return (ins.GroupBy(c => c.alumnoId).Select(i => i.FirstOrDefault()).ToList().Select(a => new DTOReporteInegi
-                {
-                    alumnoId = a.alumnoId,
-                    nombreAlumno = a.nombreAlumno,
-                    ciclo = a.ciclo,
-                    especialidad = a.especialidad,
-                    especialidadId = a.especialidadId,
-                    sexo = a.sexo,
-                    edad = (ahora.Month < a.fechaNacimiento1.Month || (ahora.Month == a.fechaNacimiento1.Month && ahora.Day < a.fechaNacimiento1.Day)) ? (ahora.Year - a.fechaNacimiento1.Year) - 1 + " Años" : ahora.Year - a.fechaNacimiento1.Year + " Años",
-                    fechaNacimiento = a.fechaNacimiento1.ToString("dd/MM/yyyy", Cultura),
-                    lugarNacimiento = a.lugarNacimiento,
-                    Cuatrimestre = a.Cuatrimestre
-                }).OrderBy(b => b.alumnoId).ToList());
-
+              
 
             }//using
 
@@ -553,120 +590,127 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                var pagosid = new int[] { 802, 304, 320, 800, 15 };
-                var pagocolegiatura = new int[] { 800 };
-                var pagomateria = new int[] { 304, 320 };
-                var estatus = new int[] { 1, 4, 14 };
-                //Alumnos que estan inscritos y  tienen referencias
 
-                var AlumnosInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
-
-
-                var referencias = (from a in db.Pago
-                                   join c in db.Cuota on a.CuotaId equals c.CuotaId
-                                   where a.Anio == anio && a.PeriodoId == periodo && pagosid.Contains(c.PagoConceptoId) && estatus.Contains(a.EstatusId)
-                                   orderby a.AlumnoId
-                                   group a by new { c.PagoConceptoId, a.AlumnoId, a.OfertaEducativaId } into grp
-                                   select new DTOReporteAlumnoReferencia1
-                                   {
-                                       alumnoId = grp.Key.AlumnoId,
-                                       ofertaId = grp.Key.OfertaEducativaId,
-                                       pagoConcepto = grp.Key.PagoConceptoId,
-                                       suma = grp.Count()
-                                   }).ToList();
-
-
-                // var alumno = referencias.Where(a => a.alumnoId == 7697).ToList();
-
-                List<DTOReporteAlumnoReferencia> union = new List<DTOReporteAlumnoReferencia>();
-
-                union.AddRange(referencias.GroupBy(a => new { a.alumnoId, a.ofertaId }).Select(a => new DTOReporteAlumnoReferencia
+                try
                 {
-                    alumnoId = a.Key.alumnoId,
-                    especialidadId = a.Key.ofertaId
-                }));
+                    int[] pagosId = new int[] { 802, 304, 320, 800, 15 };
+                    int[] pagoColegiatura = new int[] { 800 };
+                    int[] pagoMateria = new int[] { 304, 320 };
+                    int[] estatus = new int[] { 1, 4, 14 };
+                    //Alumnos que estan inscritos y  tienen referencias
 
-                var calificacionesantecedente = db.CalificacionesAntecedente.Where(v => v.Anio == anio
-                                                                                          && v.PeriodoId == periodo).ToList();
-                ///ins
-                union = union.Select(a => new DTOReporteAlumnoReferencia
-                {
-                    alumnoId = a.alumnoId,
-                    especialidadId = a.especialidadId,
-                    inscripcion = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 802).FirstOrDefault()?.suma ,
-                    colegiatura = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 800).FirstOrDefault()?.suma ,
-                    materiaSuelta = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && pagomateria.Contains(b.pagoConcepto)).FirstOrDefault()?.suma,
-                    asesoriaEspecial = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 15).FirstOrDefault()?.suma ,
-                    noMaterias = calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoMaterias ?? 0,
-                    calificacionMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.CalificacionMaterias ?? "",
-                    noBaja = calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoBajas ?? 0,
-                    bajaMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.BajaMaterias ?? ""
+                    List<AlumnoInscritoCompleto> alumnosInscrito = db.spAlumnoInscritoCompleto(anio, periodo).ToList();
+
+
+                    List<DTOReporteAlumnoReferencia1> referencias = (from a in db.Pago
+                                                                     join c in db.Cuota on a.CuotaId equals c.CuotaId
+                                                                     where a.Anio == anio && a.PeriodoId == periodo && pagosId.Contains(c.PagoConceptoId) && estatus.Contains(a.EstatusId)
+                                                                     orderby a.AlumnoId
+                                                                     group a by new { c.PagoConceptoId, a.AlumnoId, a.OfertaEducativaId } into grp
+                                                                     select new DTOReporteAlumnoReferencia1
+                                                                     {
+                                                                         alumnoId = grp.Key.AlumnoId,
+                                                                         ofertaId = grp.Key.OfertaEducativaId,
+                                                                         pagoConcepto = grp.Key.PagoConceptoId,
+                                                                         suma = grp.Count()
+                                                                     }).ToList();
+
+
+
+                    List<DTOReporteAlumnoReferencia> alumnoRefencias = new List<DTOReporteAlumnoReferencia>();
+
+                    alumnoRefencias.AddRange(referencias.GroupBy(a => new { a.alumnoId, a.ofertaId }).Select(a => new DTOReporteAlumnoReferencia
+                    {
+                        alumnoId = a.Key.alumnoId,
+                        especialidadId = a.Key.ofertaId
+                    }));
+
+                    List<CalificacionesAntecedente> calificacionesAntecedente = db.CalificacionesAntecedente.Where(v => v.Anio == anio
+                                                                                              && v.PeriodoId == periodo).ToList();
+
+                    alumnoRefencias = alumnoRefencias.Select(a => new DTOReporteAlumnoReferencia
+                    {
+                        alumnoId = a.alumnoId,
+                        especialidadId = a.especialidadId,
+                        inscripcion = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 802).FirstOrDefault()?.suma,
+                        colegiatura = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 800).FirstOrDefault()?.suma,
+                        materiaSuelta = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && pagoMateria.Contains(b.pagoConcepto)).FirstOrDefault()?.suma,
+                        asesoriaEspecial = "" + referencias.Where(b => b.alumnoId == a.alumnoId && b.ofertaId == a.especialidadId && b.pagoConcepto == 15).FirstOrDefault()?.suma,
+                        noMaterias = calificacionesAntecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoMaterias ?? 0,
+                        calificacionMaterias = "" + calificacionesAntecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.CalificacionMaterias ?? "",
+                        noBaja = calificacionesAntecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.NoBajas ?? 0,
+                        bajaMaterias = "" + calificacionesAntecedente.Where(v => v.AlumnoId == a.alumnoId && v.OfertaEducativaId == a.especialidadId).FirstOrDefault()?.BajaMaterias ?? ""
+                    }
+                    ).ToList();
+
+
+                    //Alumnos que estan inscritos y no tienen referencias
+                    var alumnoInscrito2 = alumnosInscrito.Where(a => a.Anio == anio && a.PeriodoId == periodo && alumnoRefencias.Where(f => f.alumnoId == a.AlumnoId && f.especialidadId == a.OfertaEducativaId).ToList().Count == 0)
+                                                 .Select(d => new DTOReporteAlumnoReferencia
+                                                 {
+                                                     alumnoId = d.AlumnoId,
+                                                     especialidadId = d.OfertaEducativaId,
+                                                     inscripcion = "0",
+                                                     colegiatura = "0",
+                                                     materiaSuelta = "0",
+                                                     asesoriaEspecial = "0",
+                                                     noMaterias = calificacionesAntecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoMaterias ?? 0,
+                                                     calificacionMaterias = "" + calificacionesAntecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.CalificacionMaterias ?? "",
+                                                     noBaja = calificacionesAntecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoBajas ?? 0,
+                                                     bajaMaterias = "" + calificacionesAntecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.BajaMaterias ?? ""
+                                                 }
+                                                 ).ToList();
+
+
+
+                    alumnoRefencias.AddRange(alumnoInscrito2);
+
+
+
+                    //consentrar todas las referencias
+
+                    alumnoRefencias = (from a in alumnoRefencias
+                                       join b in db.Alumno on a.alumnoId equals b.AlumnoId
+                                       join c in db.OfertaEducativa on a.especialidadId equals c.OfertaEducativaId
+                                       select new DTOReporteAlumnoReferencia
+                                       {
+                                           alumnoId = a.alumnoId,
+                                           nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                           especialidad = c.Descripcion,
+                                           inscripcion = a.inscripcion == "" ? "0" : a.inscripcion,
+                                           colegiatura = a.colegiatura == "" ? "0" : a.colegiatura,
+                                           materiaSuelta = a.materiaSuelta == "" ? "0" : a.materiaSuelta,
+                                           asesoriaEspecial = a.asesoriaEspecial == "" ? "0" : a.asesoriaEspecial,
+                                           noMaterias = a.noMaterias,
+                                           calificacionMaterias = a.calificacionMaterias,
+                                           noBaja = a.noBaja,
+                                           bajaMaterias = a.bajaMaterias,
+                                           tipo = a.noMaterias > 0 && a.noBaja > 0 && a.noBaja < a.noMaterias ? 1
+                                           : a.noMaterias == 0 && a.noBaja > 0 ? 2
+                                           : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) > 0 && a.noMaterias == 0 && a.noBaja == 0 ? 3
+                                           : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) == 0 && a.noMaterias > 0 || a.noBaja > 0 ? 4 : 0,
+                                       }).Distinct().ToList();
+
+                    return alumnoRefencias;
+
                 }
-                ).ToList();
-
-
-                //Alumnos que estan inscritos y no tienen referencias
-                var parte2 = AlumnosInscrito.Where(a => a.Anio == anio && a.PeriodoId == periodo && union.Where(f => f.alumnoId == a.AlumnoId && f.especialidadId == a.OfertaEducativaId).ToList().Count == 0)
-                                             .Select(d => new DTOReporteAlumnoReferencia
-                                             {
-                                                 alumnoId = d.AlumnoId,
-                                                 especialidadId = d.OfertaEducativaId,
-                                                 inscripcion = "0",
-                                                 colegiatura = "0",
-                                                 materiaSuelta = "0",
-                                                 asesoriaEspecial = "0",
-                                                 noMaterias = calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoMaterias ?? 0,
-                                                 calificacionMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.CalificacionMaterias ?? "",
-                                                 noBaja = calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.NoBajas ?? 0,
-                                                 bajaMaterias = "" + calificacionesantecedente.Where(v => v.AlumnoId == d.AlumnoId && v.OfertaEducativaId == d.OfertaEducativaId).FirstOrDefault()?.BajaMaterias ?? ""
-                                             }
-                                             ).ToList();
-
-            
-
-                union.AddRange(parte2);
-
-
-
-                //union
-
-                union = (from a in union
-                         join b in db.Alumno on a.alumnoId equals b.AlumnoId
-                         join c in db.OfertaEducativa on a.especialidadId equals c.OfertaEducativaId
-                         select new DTOReporteAlumnoReferencia
-                         {
-                             alumnoId = a.alumnoId,
-                             nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                             especialidad = c.Descripcion,
-                             inscripcion = a.inscripcion == "" ? "0" : a.inscripcion,
-                             colegiatura = a.colegiatura == "" ? "0" : a.colegiatura,
-                             materiaSuelta = a.materiaSuelta == "" ? "0" : a.materiaSuelta,
-                             asesoriaEspecial = a.asesoriaEspecial == "" ? "0" : a.asesoriaEspecial,
-                             noMaterias = a.noMaterias,
-                             calificacionMaterias = a.calificacionMaterias,
-                             noBaja = a.noBaja,
-                             bajaMaterias = a.bajaMaterias,
-                             tipo = a.noMaterias > 0 && a.noBaja > 0 && a.noBaja < a.noMaterias ? 1
-                             : a.noMaterias == 0 && a.noBaja > 0 ? 2
-                             : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) > 0 && a.noMaterias == 0 && a.noBaja == 0 ? 3 
-                             : int.Parse(a.inscripcion + a.colegiatura + a.materiaSuelta + a.asesoriaEspecial) == 0 && a.noMaterias > 0 || a.noBaja > 0 ? 4 : 0,
-                         }).Distinct().ToList();
-
-                return  union;
-
+                catch (Exception)
+                {
+                    return null;
+                }
 
             }//using
 
 
         }//CargaReporteIneg
 
-        public static DTOVoBo ReporteVoBo(int anio, int periodoid, int usuarioid)
+        public static DTOVoBo CargarReporteVoBo(int anio, int periodoid, int usuarioid)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    var todos = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
+                    List<DTOAlumnosVoBo> alumnoRevicion = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
                                                                         && ar.PeriodoId == periodoid
                                                                         && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
 
@@ -688,7 +732,7 @@ namespace BLL
                                      }).ToList();
 
 
-                    var todos1 = todos.Select(td => new DTOReporteVoBo
+                    List<DTOReporteVoBo> alumnoVoBo = alumnoRevicion.Select(td => new DTOReporteVoBo
                     {
                         AlumnoId = td.AlumnoId,
                         Nombre = td.Nombre,
@@ -708,15 +752,14 @@ namespace BLL
                         Email = td.Email
                     }).ToList();
 
-                    bool sw = false;  
-                    int usuariotipo = db.Usuario.Where(a => a.UsuarioId == usuarioid).FirstOrDefault().UsuarioTipoId;
-                    if (usuariotipo == 12 || usuariotipo == 10)
+                    bool esEscolares = false;  
+                    int usuarioTipo = db.Usuario.Where(a => a.UsuarioId == usuarioid).FirstOrDefault().UsuarioTipoId;
+                    if (usuarioTipo == 12 || usuarioTipo == 10)
                     {
-                        sw = true;
+                        esEscolares = true;
                     }
-
-                    var VoVo = new DTOVoBo { lstVoBo = todos1, Sw = sw } ;
-                    return VoVo;
+                    
+                    return (new DTOVoBo { AlumnoVoBo = alumnoVoBo, EsEscolares = esEscolares });
                 }
                 catch (Exception)
                 {
@@ -726,13 +769,13 @@ namespace BLL
             }
         }
 
-        public static bool ReporteVoBoEmail(int  AlumnoId, string EmailAlumno)
+        public static bool ReporteVoBoEnviarEmail(int  AlumnoId, string EmailAlumno)
         {
-            DTOCuentaMail objCuenta = BLLCuentaMail.ConsultarCuentaMail();
+            DTOCuentaMail CuentaEmail = BLLCuentaMail.ConsultarCuentaMail();
             
             try
             {
-                var refere = new Utilities.ProcessResult();
+                ProcessResult refere = new Utilities.ProcessResult();
                 string body = "";
                 DTOAlumno opjAl = BLLAlumnoPortal.ObtenerAlumno(AlumnoId);
 
@@ -1042,7 +1085,7 @@ namespace BLL
                             "</html>";
                 #endregion
 
-                Email.Enviar(objCuenta.Email, objCuenta.Password, objCuenta.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', objCuenta.Smtp, objCuenta.Puerto, objCuenta.SSL, true, ref refere);
+                Email.Enviar(CuentaEmail.Email, CuentaEmail.Password, CuentaEmail.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', CuentaEmail.Smtp, CuentaEmail.Puerto, CuentaEmail.SSL, true, ref refere);
                 return true;
             }
             catch (Exception e)
