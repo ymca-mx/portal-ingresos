@@ -29,7 +29,7 @@
                         if (value.length > 0) {
                             lstDescuentos.push({
                                 Indice: index,
-                                Valor: value,
+                                Valor: value.replace("%",""),
                                 TipoB: "Academica - SEP"
                             });
                         }
@@ -41,7 +41,7 @@
                         if (value.length > 0) {
                             lstDescuentos.push({
                                 Indice: index,
-                                Valor: value,
+                                Valor: value.replace("%", ""),
                                 TipoB: "Otros"
                             });
                         }

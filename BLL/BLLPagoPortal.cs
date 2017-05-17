@@ -450,7 +450,7 @@ namespace BLL
                     DateTime fNow = DateTime.Now;
                     List<Pago> listPagos = db.Pago.Where(p => p.AlumnoId == AlumnoId
                     //&& p.EstatusId != 2 
-                    && p.PagoParcial.Count <= 1 //<----Preguntarle a Enrique
+                    //&& p.PagoParcial.Count <= 1 //<----Preguntarle a Enrique
                     ).OrderByDescending(f => f.FechaGeneracion).ToList();
 
 

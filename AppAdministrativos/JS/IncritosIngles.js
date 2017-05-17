@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function init() {
     //$.cookie('userAdmin', 6883, { expires: 1 });
     $('#Contenedor').hide();
     var Usuario;
@@ -292,24 +292,24 @@
                         //});
 
                     } else {
-                        if ($('#slcOferta').val() == 2 || $('#slcOferta').val() == 3) {
-                            $.ajax({
-                                type: "POST",
-                                url: "WS/Descuentos.asmx/ConsultarAdeudo",
-                                data: '{AlumnoId:' + fid + '}',
-                                contentType: "application/json; charset=utf-8",
-                                success: function (data) {
-                                    if (data.d == "Debe") {
-                                        alertify.alert('El alumno ' + $('#txtNombre').val() + ' tiene adeudo, favor de pasar a Control Administrativo para resolver su situación financiera.');
-                                        $('#slcOfertaEducativa').val(-1);
-                                    } else {
-                                        DescuentosPeriodos(Idioma, Periodo);
-                                    }
-                                }
-                            });
-                        } else {
+                        //if ($('#slcOferta').val() == 2 || $('#slcOferta').val() == 3) {
+                        //    $.ajax({
+                        //        type: "POST",
+                        //        url: "WS/Descuentos.asmx/ConsultarAdeudo",
+                        //        data: '{AlumnoId:' + fid + '}',
+                        //        contentType: "application/json; charset=utf-8",
+                        //        success: function (data) {
+                        //            if (data.d == "Debe") {
+                        //                alertify.alert('El alumno ' + $('#txtNombre').val() + ' tiene adeudo, favor de pasar a Control Administrativo para resolver su situación financiera.');
+                        //                $('#slcOfertaEducativa').val(-1);
+                        //            } else {
+                        //                DescuentosPeriodos(Idioma, Periodo);
+                        //            }
+                        //        }
+                        //    });
+                        //} else {
                             DescuentosPeriodos(Idioma, Periodo);
-                        }
+                        //}
                     }
                 } else {
                     alertify.alert('El alumno ya tiene registrado la opción seleccionada');
