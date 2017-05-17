@@ -70,7 +70,7 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOAlumnoPermitido> lstPermitido = (from b in db.AlumnoPermitido
+                    List<DTOAlumnoPermitido> ListaPermitido = (from b in db.AlumnoPermitido
                                                              where b.AlumnoId == AlumnoId
                                                              select new DTOAlumnoPermitido
                                                              {
@@ -83,13 +83,13 @@ namespace BLL
                                                                  Descripcion = b.Descripcion
                                                              }).ToList();
 
-                    lstPermitido.ForEach(c =>
+                    ListaPermitido.ForEach(c =>
                     {
                         c.FechaRegistroS = c.FechaRegistro.ToString("dd/MM/yyyy", Cultura);
                         c.HoraRegistroS = c.HoraRegistro.ToString();
                     });
 
-                    return lstPermitido;
+                    return ListaPermitido;
                 }
                 catch (Exception)
                 {

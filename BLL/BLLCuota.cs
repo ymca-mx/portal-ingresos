@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DTO;
 using DAL;
 using System.Globalization;
+using System.Data.Entity;
 
 namespace BLL
 {
@@ -167,12 +168,12 @@ namespace BLL
                         }).FirstOrDefault();
             }
         }
-        public static List<object> CuotaCredencial(int AlumnoId, int OfertaEducativaId)
+        public static async Task<Tuple<List<CString_Alumno>,List<CString_OfertaEducativa>, List<CString_Cuota>>> CuotaCredencial(int AlumnoId, int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 DTOPeriodo objPeriodo = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-                DTOAlumno objAlumno = (from a in db.Alumno
+                DTOAlumno objAlumno =await (from a in db.Alumno
                                        join b in db.AlumnoInscrito on a.AlumnoId equals b.AlumnoId
                                        where a.AlumnoId == AlumnoId && b.OfertaEducativaId == OfertaEducativaId
                                        select new DTOAlumno
@@ -194,9 +195,12 @@ namespace BLL
                                                }
                                            }
                                        }
-                                     ).FirstOrDefault();
-                DTOCuota objCuotaCred = (from a in db.Cuota
-                                         where a.OfertaEducativaId == OfertaEducativaId && a.Anio == objAlumno.AlumnoInscrito.Anio && a.PeriodoId==objAlumno.AlumnoInscrito.PeriodoId && a.PagoConceptoId == 1000
+                                     ).FirstOrDefaultAsync();
+                DTOCuota objCuotaCred =await (from a in db.Cuota
+                                         where a.OfertaEducativaId == OfertaEducativaId 
+                                            && a.Anio == objAlumno.AlumnoInscrito.Anio 
+                                            && a.PeriodoId==objAlumno.AlumnoInscrito.PeriodoId 
+                                            && a.PagoConceptoId == 1000
                                          select new DTOCuota
                                          {
                                              CuotaId = a.CuotaId,
@@ -206,23 +210,23 @@ namespace BLL
                                              PagoConceptoId = a.PagoConceptoId,
                                              Monto = a.Monto,
                                              EsEmpresa = a.EsEmpresa
-                                         }).FirstOrDefault();
+                                         }).FirstOrDefaultAsync();
                 CString_Alumno objAlumnoA = CString_Alumno.Convert(objAlumno);
                 CString_OfertaEducativa objOferta = CString_OfertaEducativa.Convert(objAlumno.AlumnoInscrito.OfertaEducativa);
                 List<CString_Cuota> lstCuotas = new List<CString_Cuota>();
 
                 lstCuotas.Add(CString_Cuota.Convert(objCuotaCred));
-                lstCuotas[0].MontoReposicion = (from a in db.Cuota
-                                                where a.OfertaEducativaId == OfertaEducativaId && a.Anio == objAlumno.AlumnoInscrito.Anio && a.PagoConceptoId == 5
-                                                select a.Monto).FirstOrDefault().ToString("C");
-                List<object> tdLista = new List<object>() { 
-                   new List<CString_Alumno>{ objAlumnoA},
-                   new List<CString_OfertaEducativa>{ objOferta},
-                    lstCuotas
-                };
+                lstCuotas[0].MontoReposicion = (await (from a in db.Cuota
+                                                       where a.OfertaEducativaId == OfertaEducativaId
+                                                       && a.Anio == objAlumno.AlumnoInscrito.Anio
+                                                       && a.PagoConceptoId == 5
+                                                       select a.Monto).FirstOrDefaultAsync()).ToString("C");
 
+                List<CString_Alumno> listaAlumno = new List<CString_Alumno> { objAlumnoA };
+                List<CString_OfertaEducativa> ListaOfertaNombre = new List<CString_OfertaEducativa> { objOferta };
 
-                return tdLista;
+                return Tuple.Create(listaAlumno, ListaOfertaNombre, lstCuotas);
+               
             }
         }
         public static Cuota TraerPeriodoParcialIngles(int OfertaEducativaId, int Anio, int PeriodoId, int PagoConceptoId, DateTime fCorriendo)

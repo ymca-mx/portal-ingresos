@@ -2061,14 +2061,21 @@ namespace BLL
             {
                 try
                 {
-                    DateTime fHoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                    if (fHoy.Month == 4 || fHoy.Month == 8 || fHoy.Month == 12)
-                    { fHoy.AddMonths(1); }
+                    DateTime FechaActual= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    if (FechaActual.Month == 4 || FechaActual.Month == 8 || FechaActual.Month == 12)
+                    { FechaActual.AddMonths(1); }
 
-                    Periodo objPer = db.Periodo.Where(p => fHoy >= p.FechaInicial && fHoy <= p.FechaFinal).FirstOrDefault();
+                    Periodo PeriodoActual= db.Periodo
+                                                .Where(p => FechaActual >= p.FechaInicial 
+                                                                && FechaActual <= p.FechaFinal)
+                                                .FirstOrDefault();
 
 
-                    if (db.AlumnoPermitido.Where(A => A.AlumnoId == AlumnoId && A.Anio == objPer.Anio && A.PeriodoId == objPer.PeriodoId).ToList().Count > 0)
+                    if (db.AlumnoPermitido
+                                .Where(A => A.AlumnoId == AlumnoId 
+                                            && A.Anio == PeriodoActual.Anio 
+                                            && A.PeriodoId == PeriodoActual.PeriodoId)
+                                .ToList().Count > 0)
                     {
                         return new DTOAlumnoPermitido1
                         {
@@ -2079,7 +2086,7 @@ namespace BLL
                     }
                     else
                     {
-                        DTOAlumnoPermitido1 objAlumno = (from a in db.Alumno
+                        DTOAlumnoPermitido1 Alumno = (from a in db.Alumno
                                                          where a.AlumnoId == AlumnoId
                                                          select new DTOAlumnoPermitido1
                                                          {
@@ -2087,9 +2094,10 @@ namespace BLL
                                                              Nombre = a.Nombre,
                                                              Paterno = a.Paterno,
                                                              Materno = a.Materno
-                                                         }).AsNoTracking().FirstOrDefault();
-                        objAlumno.lstBitacora = BLLAlumnoPermitido.RegistrosdeAlumno(AlumnoId);
-                        return objAlumno;
+                                                         }).AsNoTracking()
+                                                         .FirstOrDefault();
+                        Alumno.lstBitacora = BLLAlumnoPermitido.RegistrosdeAlumno(AlumnoId);
+                        return Alumno;
                     }
                 }
                 catch
@@ -2744,7 +2752,7 @@ namespace BLL
                                 objPago.BecaAcademica = "0";
                                 objPago.BecaAcademicaD = 0;
                             }
-                            else if (lstAlumnoDescuento.Where(s => db.Descuento.Where(d => d.DescuentoId == s.DescuentoId).FirstOrDefault().Descripcion == "Beca Académica"
+                            else if (lstAlumnoDescuento.Where(s => (db.Descuento.Where(d => d.DescuentoId == s.DescuentoId)?.FirstOrDefault()?.Descripcion ?? "") == "Beca Académica"
                               && s.PagoConceptoId == 800).ToList().Count > 0)
                             {
                                 objPago.BecaSEP = "0";

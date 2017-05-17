@@ -10,32 +10,41 @@ using BLL;
 using Utilities;
 using Reportes.Reportes;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace AppAdministrativos.Views.Alumno
 {
     public partial class Credenciales : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        int AlumnoId;
+        int OfertaEducativaid;
+        public async void Page_Load(object sender, EventArgs e)
         {
-            int AlumnoId = int.Parse(Request.QueryString["AlumnoId"]);
-            int OfertaEducativaid = int.Parse(Request.QueryString["OfertaEducativaId"]);
-            List<object> lstobj = BLLCuota.CuotaCredencial(AlumnoId, OfertaEducativaid);
-            EntregaCredenciales rptCredenciales = new EntregaCredenciales();
-            rptCredenciales.Database.Tables["Alumno"].SetDataSource(lstobj[0]);
-            rptCredenciales.Database.Tables["OfertaEducativa"].SetDataSource(lstobj[1]);
-            rptCredenciales.Database.Tables["Cuota"].SetDataSource(lstobj[2]);
-            //rptCredenciales.SetParameterValue("CredencialN","100");
-            //rptCredenciales.SetParameterValue("CredencialR", "200");
-            string ruta=Path.GetTempPath();
-            ruta += "Credencial.pdf";
+             AlumnoId= int.Parse(Request.QueryString["AlumnoId"]);
+            OfertaEducativaid = int.Parse(Request.QueryString["OfertaEducativaId"]);
+
+            await CrearReporteAsync();
             
+        }
+        public async Task CrearReporteAsync()
+        {
+            Tuple<List<CString_Alumno>, List<CString_OfertaEducativa>, List<CString_Cuota>> ObjetoCompuesto = 
+                await BLLCuota.CuotaCredencial(AlumnoId, OfertaEducativaid);
+            EntregaCredenciales ReporteCredenciales = new EntregaCredenciales();
+
+            ReporteCredenciales.Database.Tables["Alumno"].SetDataSource(ObjetoCompuesto.Item1);
+            ReporteCredenciales.Database.Tables["OfertaEducativa"].SetDataSource(ObjetoCompuesto.Item2);
+            ReporteCredenciales.Database.Tables["Cuota"].SetDataSource(ObjetoCompuesto.Item3);
+            string ruta = Path.GetTempPath();
+            ruta += "Credencial.pdf";
+
             //CrystalReportViewer1.ReportSource = rptCredenciales;
             Stream pdf;
-            rptCredenciales.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, ruta);
+            ReporteCredenciales.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, ruta);
 
-            pdf = rptCredenciales.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-           var MemoryStream= new MemoryStream();
-           pdf.CopyTo(MemoryStream);
+            pdf = ReporteCredenciales.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            var MemoryStream = new MemoryStream();
+            pdf.CopyTo(MemoryStream);
 
             Response.Expires = 0;
             Response.Buffer = true;

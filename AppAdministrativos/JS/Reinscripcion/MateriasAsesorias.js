@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function init() {
     var tblAlumnos;
     var AlumnoNum;
     var tblReferencias;
@@ -325,7 +325,7 @@
             }
         });
     }
-
+    
     function Guardar() {
         var op = $("#slcPeriodos").val();
         if (op == -1) { return false; }
@@ -341,7 +341,12 @@
         var comentario = $('#txtComentario').val();
         var esRegular = ($('#rdbregularSi').attr("checked") ? true : false);
         var Cuatrimestre = ($("#divCuatri").is(":visible") ? $("#slcCuatrimeste").val() : null);
-
+        
+        if (nAse === "0" && nMat === "0" && completa === false) {
+            $('#Load').modal('hide');
+            alertify.alert("Favor de especificar el numero de adelanto de materia o asesoria especial.")
+            return false;
+        }
         //AlumnoNum
         var Datos = '{AlumnoId:"' + AlumnoNum + '",anio:"' + anio + '",periodo:"'
             + periodo + '",oferta:"' + op1 + '",NMaterias:"' + nMat + '",NAsesorias:"'

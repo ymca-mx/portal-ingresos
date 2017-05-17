@@ -326,7 +326,7 @@ namespace BLL
                 {
                     DTOPeriodo objPeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
 
-                    var lstDocumentosAlumno = db.AlumnoInscritoDocumento
+                    List< DTOAlumnoInscritoBecaDocumento> lstDocumentosAlumno = db.AlumnoInscritoDocumento
                         .Where(a => a.AlumnoId == AlumnoId
                         && a.OfertaEducativaId == OfertaEducativaId)
                             .Select(l=> new DTOAlumnoInscritoBecaDocumento
