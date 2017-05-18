@@ -815,7 +815,7 @@ namespace BLL
                db.ReferenciaProcesada.AsNoTracking()
                .Where(n => n.AlumnoId == Alumno.AlumnoId &&
                        (n.FechaPago >= FechaInicial && n.FechaPago <= FechaFinal)
-                       && n.Importe > 0
+                       && n.Importe > 0 && n.EstatusId == 1
                        //&& referenciaTipoId.Contains(n.ReferenciaTipoId)
                        )
                    .Select(n => new Universidad.DTO.EstadoCuenta.ReferenciaProcesada

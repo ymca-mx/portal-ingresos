@@ -44,6 +44,7 @@
     }
     $('#slcOfertaEducativa').change(function () {
         if ($('#slcOfertaEducativa').val() == -1) { return false; } else {
+            $('#divpul').hide();
             $('#Load').modal('show');
             Adeudos();
         }
@@ -252,6 +253,12 @@
                     $('#btnGenerar').prop("disabled", false);
                     Tipo = $('#slcOfertaEducativa').find('option:selected');
                     //Pendiente();
+                    var TipoOferta = $(Tipo).data("tipo");
+                    if (TipoOferta === 2) {
+                        $('#pulsate-regular').pulsate({color:"#de3030"});
+                        $('#divpul').show();
+                        
+                    }
                     $('#Load').modal('hide');
                 }
             }
