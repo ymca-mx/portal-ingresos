@@ -279,24 +279,16 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public doblesobj ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
+        public Tuple<List<DTOPagoDetallado>,bool> ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
         {
-            doblesobj objr = new doblesobj();
-
             try
             {
-                List<DTOPagoDetallado> lstRes = BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
-                bool rest;
-                int cout = lstRes.Where(l => l.OtroDescuento.Length > 0).ToList().Count;
-                rest = cout > 0 ? true : false;
-                objr.item1 = lstRes;
-                objr.item2 = rest;
-
-                return objr;
+                List<DTOPagoDetallado> ReferenciasPagadas = BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));              
+                return Tuple.Create(ReferenciasPagadas, ReferenciasPagadas.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false);
             }
             catch
             {
-                return objr;
+                return null;
             }
         }
 
