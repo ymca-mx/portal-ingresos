@@ -771,13 +771,13 @@ namespace BLL
 
         public static bool ReporteVoBoEnviarEmail(int  AlumnoId, string EmailAlumno)
         {
-            DTOCuentaMail CuentaEmail = BLLCuentaMail.ConsultarCuentaMail();
+            DTOCuentaMail cuentaEmail = BLLCuentaMail.ConsultarCuentaMail();
             
             try
             {
                 ProcessResult respuesta = new Utilities.ProcessResult();
                 string body = "";
-                DTOAlumno Alumno = BLLAlumnoPortal.ObtenerAlumno(AlumnoId);
+                DTOAlumno alumno = BLLAlumnoPortal.ObtenerAlumno(AlumnoId);
 
                 #region "HTML"
                 body = "<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
@@ -1049,7 +1049,7 @@ namespace BLL
                                                                     "<tbody>" +
                                                                         "<tr>" +
                                                                             "<td align='center' valign='top'>" +
-                                                                                "<div style='color:#009966; font-size:30px; text-align:center; padding:10px'>Estimado,&nbsp; " + opjAl.Nombre + " " + opjAl.Paterno + " " + opjAl.Materno + " </div>" +
+                                                                                "<div style='color:#009966; font-size:30px; text-align:center; padding:10px'>Estimado,&nbsp; " + alumno.Nombre + " " + alumno.Paterno + " " + alumno.Materno + " </div>" +
                                                                                 "<div>" +
                                                                                     "<h3 class='caption font-blue'>" +
                                                                                         "No has concluido tu proceso de inscripción, para finalizarlo es necesario que te presentes inmediatamente al área de servicios escolares." +
@@ -1085,7 +1085,7 @@ namespace BLL
                             "</html>";
                 #endregion
 
-                Email.Enviar(CuentaEmail.Email, CuentaEmail.Password, CuentaEmail.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', CuentaEmail.Smtp, CuentaEmail.Puerto, CuentaEmail.SSL, true, ref respuesta);
+                Email.Enviar(cuentaEmail.Email, cuentaEmail.Password, cuentaEmail.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', cuentaEmail.Smtp, cuentaEmail.Puerto, cuentaEmail.SSL, true, ref respuesta);
                 return true;
             }
             catch (Exception e)

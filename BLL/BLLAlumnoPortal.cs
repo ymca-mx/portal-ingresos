@@ -1245,7 +1245,7 @@ namespace BLL
                 try
                 {
 
-                    var datos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
+                    DTOAlumnoDatos alumnoDatos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
                                         .Select(b => new DTOAlumnoDatos
                                         {
                                             AlumnoId = b.AlumnoId,
@@ -1259,11 +1259,11 @@ namespace BLL
                                             EntidadNacimientoId = b.AlumnoDetalle.EntidadNacimientoId,
                                         }).FirstOrDefault();
 
-                    datos.FechaNacimientoC = datos.FechaNacimiento.ToString("dd/MM/yyyy", Cultura);
+                    alumnoDatos.FechaNacimientoC = alumnoDatos.FechaNacimiento.ToString("dd/MM/yyyy", Cultura);
 
-                    datos.DatosContacto = new List<DTOAlumnoDatos2>();
+                    alumnoDatos.DatosContacto = new List<DTOAlumnoDatos2>();
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Estado Civil",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EstadoCivil.Descripcion.ToString() ?? "",
@@ -1272,7 +1272,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Correo Electrónico",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Email.ToString() ?? "",
@@ -1281,7 +1281,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Teléfono Celular",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Celular.ToString() ?? "",
@@ -1290,7 +1290,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Teléfono Casa",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.TelefonoCasa.ToString() ?? "",
@@ -1299,7 +1299,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Calle",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Calle.ToString() ?? "",
@@ -1308,7 +1308,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Número Exterior",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoExterior.ToString() ?? "",
@@ -1317,7 +1317,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Numero Interior",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoInterior.ToString() ?? "",
@@ -1326,7 +1326,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Código Postal",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.CP.ToString() ?? "",
@@ -1335,7 +1335,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Colonia",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Colonia.ToString() ?? "",
@@ -1344,7 +1344,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Estado",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EntidadFederativa.Descripcion.ToString() ?? "",
@@ -1353,7 +1353,7 @@ namespace BLL
                     }
                     );
 
-                    datos.DatosContacto.Add(new DTOAlumnoDatos2
+                    alumnoDatos.DatosContacto.Add(new DTOAlumnoDatos2
                     {
                         Dato = "Delegación | Municipio",
                         Alumno = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Municipio.Descripcion.ToString() ?? "",
@@ -1362,7 +1362,7 @@ namespace BLL
                     }
                     );
 
-                    return datos;
+                    return alumnoDatos;
                 }
                 catch (Exception)
                 {
@@ -1434,11 +1434,11 @@ namespace BLL
             {
                 try
                 {
-                    var alumnoid = AlumnoDatos.AlumnoId;
+                    int alumnoid = AlumnoDatos.AlumnoId;
 
                     if (db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == alumnoid).Count() > 0)
                     {
-                        var AlumnoActualizaDatos = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == alumnoid).FirstOrDefault();
+                        AlumnoDetalleCoordinador AlumnoActualizaDatos = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == alumnoid).FirstOrDefault();
 
                         AlumnoActualizaDatos.EstadoCivilId = AlumnoDatos.EstadoCivilId;
                         AlumnoActualizaDatos.EntidadFederativaId = AlumnoDatos.EntidadFederativaId;
@@ -11989,7 +11989,7 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOAlumno> lstAlumnos = (from a in db.Alumno
+                    List<DTOAlumno> alumnos = (from a in db.Alumno
                                                   where (a.Nombre + " " + a.Paterno + " " + a.Materno).Contains(Cadena)
                                                   select new DTOAlumno
                                                   {
@@ -12028,11 +12028,11 @@ namespace BLL
                                                                      Nombre = f.Nombre
                                                                  }).FirstOrDefault()
                                                   }).ToList();
-                    lstAlumnos.ForEach(delegate (DTOAlumno objAlumno)
+                    alumnos.ForEach(delegate (DTOAlumno alumno)
                     {
-                        if (objAlumno.AlumnoInscrito == null)
+                        if (alumno.AlumnoInscrito == null)
                         {
-                            objAlumno.AlumnoInscrito = new DTOAlumnoInscrito
+                            alumno.AlumnoInscrito = new DTOAlumnoInscrito
                             {
                                 OfertaEducativaId = 0,
                                 OfertaEducativa = new DTOOfertaEducativa
@@ -12043,9 +12043,9 @@ namespace BLL
                             };
                         }
                     });
-                    //List<DTOAlumno> lstAlumnos2 = lstAlumnos.FindAll(X => X.Paterno.Contains(Paterno));
-                    //lstAlumnos = lstAlumnos2.FindAll(X => X.Materno.Contains(Materno));
-                    return lstAlumnos;
+                    //List<DTOAlumno> alumnos2 = alumnos.FindAll(X => X.Paterno.Contains(Paterno));
+                    //alumnos = alumnos2.FindAll(X => X.Materno.Contains(Materno));
+                    return alumnos;
                 }
                 catch
                 {

@@ -34,6 +34,7 @@
         $(".date-picker").datepicker("setDate", Fecha);
         //$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
     }
+
     form.validate({
         errorElement: 'span', //default input error message container
         errorClass: 'help-block help-block-error', // default input error message class

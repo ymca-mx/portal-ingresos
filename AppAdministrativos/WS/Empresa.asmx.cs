@@ -27,6 +27,7 @@ namespace AppAdministrativos.WS
         {
             return BLLEmpresa.ListaEmpresas();
         }
+
         [WebMethod]
         public string GuardarEmpresa(string Razon, string NombreC, string Paterno, string Materno, string EmailC, string Telefono, string Celular, string Pais, string Estado, string Delegacion,
             string CP, string NoExterior, string NoInterior, string Calle, string Email, string RFC, string Observacion, string Colonia, string CalleF, string NoExteriorF,
@@ -193,11 +194,12 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public string DireccionEmpresa(string SucursalId)
         {
-            DTOSucursal objSucursal = BLLSucursal.TraerSucursal(int.Parse(SucursalId));
-            if (objSucursal.Detalle.Calle != null)
-            { return "Calle " + objSucursal.Detalle.Calle + " No.Esterior " + objSucursal.Detalle.NoExterior + " Colonia " + objSucursal.Detalle.Colonia + " Delegación " + objSucursal.Detalle.Delegacion; }
+            DTOSucursal sucursal = BLLSucursal.TraerSucursal(int.Parse(SucursalId));
+            if (sucursal.Detalle.Calle != null)
+            { return "Calle " + sucursal.Detalle.Calle + " No.Esterior " + sucursal.Detalle.NoExterior + " Colonia " + sucursal.Detalle.Colonia + " Delegación " + sucursal.Detalle.Delegacion; }
             else { return ""; }
         }
+
         [WebMethod]
         public string GenerarPagos(string Alumnos, string Grupo)
         {
@@ -212,6 +214,7 @@ namespace AppAdministrativos.WS
                 return "";
             }
         }
+
         [WebMethod]
         public string GenerarPagos2(string Alumnos, string Grupo, string Usuario)
         {
