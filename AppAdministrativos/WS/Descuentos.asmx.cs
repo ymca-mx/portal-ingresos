@@ -259,9 +259,7 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public DTOPagos GenerarPagoB(string AlumnoId, string OfertaEducativaId, string PagoConceptoId, string CuotaId, string UsuarioId)
         {
-            DTOPagos objPago = BLLPagoPortal.GenerarPago(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(PagoConceptoId), int.Parse(CuotaId), int.Parse(UsuarioId));
-
-            return objPago;
+            return BLLPagoPortal.GenerarPago(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(PagoConceptoId), int.Parse(CuotaId), int.Parse(UsuarioId));            
         }
 
         [WebMethod]

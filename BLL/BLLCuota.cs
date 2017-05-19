@@ -261,60 +261,56 @@ namespace BLL
             {
                 try
                 {
-                    DateTime fHoy = DateTime.Now;
-                    Periodo objPerActual = db.Periodo.Where(P => fHoy >= P.FechaInicial && fHoy <= P.FechaFinal).FirstOrDefault();
-                    int SubId = db.Subperiodo.Where(S => S.PeriodoId == objPerActual.PeriodoId && S.MesId == fHoy.Month).FirstOrDefault().SubperiodoId;
+                    DateTime FechaActual = DateTime.Now;
+                    Periodo PeriodoActual = db.Periodo.Where(P => FechaActual >= P.FechaInicial && FechaActual <= P.FechaFinal).FirstOrDefault();
+                    int SubPeriodoId = db.Subperiodo.Where(S => S.PeriodoId == PeriodoActual.PeriodoId && S.MesId == FechaActual.Month).FirstOrDefault().SubperiodoId;
 
-                    if (SubId != 4) { return null; }
-                    int PeriodoS = objPerActual.PeriodoId == 3 ? 1 : objPerActual.PeriodoId + 1, AnioS = objPerActual.PeriodoId == 3 ? objPerActual.Anio + 1 : objPerActual.Anio;
+                    if (SubPeriodoId != 4) { return null; }
+                    int PeriodoTexto = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1, AnioS = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio;
 
-                    List<Pago> lstCuotas = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.Anio == AnioS && P.PeriodoId == PeriodoS
+                    List<Pago> Cuotas = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.Anio == AnioS && P.PeriodoId == PeriodoTexto
                         && P.EstatusId == 1 && (P.Cuota1.PagoConceptoId == 800 || P.Cuota1.PagoConceptoId == 802)).ToList();
-                    List<OfertaEducativa> lstOfertas=new List<OfertaEducativa>();
-                    List<Oferta_Costo> lstofcos = new List<Oferta_Costo>();
-                    lstCuotas.ForEach(delegate(Pago objPago)
+                    List<OfertaEducativa> OfertasAlumno=new List<OfertaEducativa>();
+                    List<Oferta_Costo> CostosOfertas = new List<Oferta_Costo>();
+                    Cuotas.ForEach(Pago=> 
                     {
-                        if (lstOfertas.Count < 1)
+                        if (OfertasAlumno.Count < 1)
                         {
-                            lstOfertas.Add(db.OfertaEducativa.Where(OF => OF.OfertaEducativaId == objPago.OfertaEducativaId).FirstOrDefault());
+                            OfertasAlumno.Add(db.OfertaEducativa.Where(OF => OF.OfertaEducativaId == Pago.OfertaEducativaId).FirstOrDefault());
                         }
                         else
                         {
-                            if (lstOfertas.Where(O => O.OfertaEducativaId == objPago.OfertaEducativaId).ToList().Count < 1)
+                            if (OfertasAlumno.Where(O => O.OfertaEducativaId == Pago.OfertaEducativaId).ToList().Count < 1)
                             {
-                                lstOfertas.Add(db.OfertaEducativa.Where(OF => OF.OfertaEducativaId == objPago.OfertaEducativaId).FirstOrDefault());
+                                OfertasAlumno.Add(db.OfertaEducativa.Where(OF => OF.OfertaEducativaId == Pago.OfertaEducativaId).FirstOrDefault());
                             }
                         }
                     });
 
-                    lstOfertas.ForEach(delegate(OfertaEducativa objOferta)
+                    OfertasAlumno.ForEach(OFerta=>
                     {
-                        decimal DescIn = db.PeriodoAnticipado.Where(l => l.Anio == Anio
+                        decimal DescuentoInscripcion = db.PeriodoAnticipado.Where(l => l.Anio == Anio
                                                                        && l.PeriodoId == PeriodoId
-                                                                       && l.OfertaEducativaTipoId == objOferta.OfertaEducativaTipoId
+                                                                       && l.OfertaEducativaTipoId == OFerta.OfertaEducativaTipoId
                                                                        && l.PagoConceptoId == 802).FirstOrDefault().ImporteDescuento;
-                        decimal DescCol = db.PeriodoAnticipado.Where(l => l.Anio == Anio
+                        decimal DescuentoColegiatura = db.PeriodoAnticipado.Where(l => l.Anio == Anio
                                                                        && l.PeriodoId == PeriodoId
-                                                                       && l.OfertaEducativaTipoId == objOferta.OfertaEducativaTipoId
+                                                                       && l.OfertaEducativaTipoId == OFerta.OfertaEducativaTipoId
                                                                        && l.PagoConceptoId == 800).FirstOrDefault().ImporteDescuento; 
 
-                        Pago objPagoCol = lstCuotas.Where(C => C.OfertaEducativaId == objOferta.OfertaEducativaId && C.SubperiodoId == 1 && C.Cuota1.PagoConceptoId == 800).FirstOrDefault();
-                        Pago objPagoIns = lstCuotas.Where(C => C.OfertaEducativaId == objOferta.OfertaEducativaId && C.SubperiodoId == 1 && C.Cuota1.PagoConceptoId == 802).FirstOrDefault();
-                        lstofcos.Add(new Oferta_Costo
+                        Pago PagoCol = Cuotas.Where(C => C.OfertaEducativaId == OFerta.OfertaEducativaId && C.SubperiodoId == 1 && C.Cuota1.PagoConceptoId == 800).FirstOrDefault();
+                        Pago PagoIns = Cuotas.Where(C => C.OfertaEducativaId == OFerta.OfertaEducativaId && C.SubperiodoId == 1 && C.Cuota1.PagoConceptoId == 802).FirstOrDefault();
+                        CostosOfertas.Add(new Oferta_Costo
                         {
-                            OfertaEducativa = objOferta.Descripcion,
-                            ReferenciaInsc = objPagoIns != null ? int.Parse(objPagoIns.ReferenciaId).ToString() : null,
-                            MontoReins = objPagoIns != null ? objPagoIns.Cuota.ToString("C", Cultura) + " - " + DescIn.ToString("C", Cultura) + " = " + (objPagoIns.Cuota - DescIn).ToString("C", Cultura) : null,
-                            ReferenciaColg = objPagoCol != null ? int.Parse(objPagoCol.ReferenciaId).ToString() : null,
-                            MontoColeg = objPagoCol != null ? objPagoCol.Cuota.ToString("C", Cultura) + " - " + DescCol.ToString("C", Cultura) + " = " + (objPagoCol.Cuota - DescCol).ToString("C", Cultura) : null,
+                            OfertaEducativa = OFerta.Descripcion,
+                            ReferenciaInsc = PagoIns != null ? int.Parse(PagoIns.ReferenciaId).ToString() : null,
+                            MontoReins = PagoIns != null ? PagoIns.Cuota.ToString("C", Cultura) + " - " + DescuentoInscripcion.ToString("C", Cultura) + " = " + (PagoIns.Cuota - DescuentoInscripcion).ToString("C", Cultura) : null,
+                            ReferenciaColg = PagoCol != null ? int.Parse(PagoCol.ReferenciaId).ToString() : null,
+                            MontoColeg = PagoCol != null ? PagoCol.Cuota.ToString("C", Cultura) + " - " + DescuentoColegiatura.ToString("C", Cultura) + " = " + (PagoCol.Cuota - DescuentoColegiatura).ToString("C", Cultura) : null,
                         });
                     });
                     
-                    //lstOfertas.ForEach(delegate(OfertaEducativa oftobj)
-                    //{
-                        
-                    //});
-                    return lstofcos.Count > 0 ? lstofcos : null;
+                    return CostosOfertas.Count > 0 ? CostosOfertas : null;
 
                 }
                 catch

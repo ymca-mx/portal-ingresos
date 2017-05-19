@@ -467,7 +467,7 @@ namespace BLL
                 {
                     
 
-                    DTOAlumno objAlumno = (from a in db.Alumno
+                    DTOAlumno Alumno = (from a in db.Alumno
                                            where a.AlumnoId == AlumnoId
                                            select new DTOAlumno
                                            {
@@ -500,43 +500,45 @@ namespace BLL
                                                Email = a.AlumnoDetalle.Email
 
                                            }).AsNoTracking().FirstOrDefault();
-                    objAlumno.Grupo = new DTOGrupo
+                    Alumno.Grupo = new DTOGrupo
                     {
                         Descripcion = db.GrupoAlumnoConfiguracion
                                            .Where(k=> k.AlumnoId==AlumnoId).ToList()?.LastOrDefault()?.Grupo?.Descripcion ?? ""
                     };
-                    //objAlumno.AlumnoInscrito.OfertaEducativa.Descripcion = objAlumno.AlumnoInscrito != null ? objAlumno.AlumnoInscrito.OfertaEducativa.Descripcion : "";
-                    objAlumno.AlumnoInscrito = objAlumno.AlumnoInscrito == null ? new DTOAlumnoInscrito { OfertaEducativa = new DTOOfertaEducativa { Descripcion = "" } } : objAlumno.AlumnoInscrito;
-                    objAlumno.AlumnoInscrito.EsEmpresa = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId).ToList().Count > 0 ?
-                        db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId).ToList().Where(a => a.EsEmpresa == true).ToList().Count > 0 ?
-                        true : false : false;
+                    //Alumno.AlumnoInscrito.OfertaEducativa.Descripcion = Alumno.AlumnoInscrito != null ? Alumno.AlumnoInscrito.OfertaEducativa.Descripcion : "";
+                    Alumno.AlumnoInscrito = (Alumno?.AlumnoInscrito ?? new DTOAlumnoInscrito { OfertaEducativa = new DTOOfertaEducativa { Descripcion = "" } });
 
-                    objAlumno.AlumnoInscrito.EsEspecial =
+                    Alumno.AlumnoInscrito.EsEmpresa = (db.AlumnoInscrito
+                                                            .Where(a => a.AlumnoId == AlumnoId && a.EsEmpresa == true)?
+                                                            .ToList()?
+                                                            .Count ?? 0) > 0 ? true : false;
+
+                    Alumno.AlumnoInscrito.EsEspecial =
                                     db.GrupoAlumnoConfiguracion.Where(k => k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList().Count > 0 ? true : false;
 
-                    objAlumno.lstAlumnoInscrito = db.AlumnoInscrito.Where(A => A.AlumnoId == AlumnoId).ToList().ConvertAll(new Converter<AlumnoInscrito, DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
-                    var lstAlumno = objAlumno.lstAlumnoInscrito.GroupBy(v => v.OfertaEducativaId).Select(A => A.ToList()).ToList();
+                    Alumno.lstAlumnoInscrito = db.AlumnoInscrito.Where(A => A.AlumnoId == AlumnoId).ToList().ConvertAll(new Converter<AlumnoInscrito, DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
+                    List<List<DTOAlumnoInscrito>> AlumnoInscrito = Alumno.lstAlumnoInscrito.GroupBy(v => v.OfertaEducativaId).Select(A => A.ToList()).ToList();
 
-                    objAlumno.lstAlumnoInscrito.Clear();
-                    lstAlumno.ForEach(a =>
+                    Alumno.lstAlumnoInscrito.Clear();
+                    AlumnoInscrito.ForEach(a =>
                     {
-                        objAlumno.lstAlumnoInscrito.Add(a.FirstOrDefault());
+                        Alumno.lstAlumnoInscrito.Add(a.FirstOrDefault());
                     });
 
                     //Plantel
-                    var ultima = db.AlumnoInscrito
-                                        .Where(a => a.AlumnoId == objAlumno.AlumnoId)
+                   IOrderedQueryable<AlumnoInscrito> UltimoRegistroInscrito = db.AlumnoInscrito
+                                        .Where(a => a.AlumnoId == Alumno.AlumnoId)
                                         .OrderBy(k => new { k.Anio, k.PeriodoId });
 
-                    var ultima2 = ultima.Select(k => k.OfertaEducativa)
+                    List<OfertaEducativa> UltimaOFerta = UltimoRegistroInscrito.Select(k => k.OfertaEducativa)
                                         .ToList();
 
-                    int plantel = ultima2?
+                    int plantel = UltimaOFerta?
                                         .FirstOrDefault()?
                                         .SucursalId ?? 0;
-                    objAlumno.Plantel = (plantel == 1 || plantel == 4) ? 1 : (plantel == 2) ? 2 : 3;
+                    Alumno.Plantel = (plantel == 1 || plantel == 4) ? 1 : (plantel == 2) ? 2 : 3;
 
-                    return objAlumno;
+                    return Alumno;
                 }
                 catch
                 {
