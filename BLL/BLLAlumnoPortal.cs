@@ -958,40 +958,40 @@ namespace BLL
             {
                 try
                 {
-                    Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                    Alumno AlumnoBase = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
-                    objAlB.AlumnoInscrito = new List<AlumnoInscrito>(objAlB.AlumnoInscrito
+                    AlumnoBase.AlumnoInscrito = new List<AlumnoInscrito>(AlumnoBase.AlumnoInscrito
                         .OrderBy(o => o.Anio).ThenBy(o=> o.PeriodoId).Reverse());
                     
 
-                    DTOAlumno objAlumno = new DTOAlumno
+                    DTOAlumno Alumno = new DTOAlumno
                     {
                         AlumnoId = AlumnoId,
-                        Nombre = objAlB.Nombre,
-                        Paterno = objAlB.Paterno,
-                        Materno = objAlB.Materno,
-                        Matricula = objAlB.MatriculaId,
+                        Nombre = AlumnoBase.Nombre,
+                        Paterno = AlumnoBase.Paterno,
+                        Materno = AlumnoBase.Materno,
+                        Matricula = AlumnoBase.MatriculaId,
                         DTOAlumnoDetalle = new DTOAlumnoDetalle
                         {
-                            EstadoCivilId = objAlB.AlumnoDetalle.EstadoCivilId,
-                            Celular = (objAlB.AlumnoDetalle.Celular.Trim()).Replace("-",""),
-                            TelefonoCasa = (objAlB.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-",""),
-                            FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
-                            FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
-                            GeneroId = objAlB.AlumnoDetalle.GeneroId,
-                            CURP = objAlB.AlumnoDetalle.CURP,
-                            Email = objAlB.AlumnoDetalle.Email.Trim(),
-                            Calle = objAlB.AlumnoDetalle.Calle.Trim(),
-                            NoExterior = objAlB.AlumnoDetalle.NoExterior,
-                            NoInterior = objAlB.AlumnoDetalle.NoInterior,
-                            Cp = objAlB.AlumnoDetalle.CP.Trim(),
-                            Colonia = objAlB.AlumnoDetalle.Colonia.Trim(),
-                            EntidadFederativaId = objAlB.AlumnoDetalle.EntidadFederativaId,
-                            MunicipioId = objAlB.AlumnoDetalle.MunicipioId,
-                            PaisId = objAlB.AlumnoDetalle.PaisId,
-                            EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId
+                            EstadoCivilId = AlumnoBase.AlumnoDetalle.EstadoCivilId,
+                            Celular = (AlumnoBase.AlumnoDetalle.Celular.Trim()).Replace("-",""),
+                            TelefonoCasa = (AlumnoBase.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-",""),
+                            FechaNacimiento = AlumnoBase.AlumnoDetalle.FechaNacimiento,
+                            FechaNacimientoC = AlumnoBase.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
+                            GeneroId = AlumnoBase.AlumnoDetalle.GeneroId,
+                            CURP = AlumnoBase.AlumnoDetalle.CURP,
+                            Email = AlumnoBase.AlumnoDetalle.Email.Trim(),
+                            Calle = AlumnoBase.AlumnoDetalle.Calle.Trim(),
+                            NoExterior = AlumnoBase.AlumnoDetalle.NoExterior,
+                            NoInterior = AlumnoBase.AlumnoDetalle.NoInterior,
+                            Cp = AlumnoBase.AlumnoDetalle.CP.Trim(),
+                            Colonia = AlumnoBase.AlumnoDetalle.Colonia.Trim(),
+                            EntidadFederativaId = AlumnoBase.AlumnoDetalle.EntidadFederativaId,
+                            MunicipioId = AlumnoBase.AlumnoDetalle.MunicipioId,
+                            PaisId = AlumnoBase.AlumnoDetalle.PaisId,
+                            EntidadNacimientoId = AlumnoBase.AlumnoDetalle.EntidadNacimientoId
                         },
-                        lstOfertas = objAlB.AlumnoInscrito                                                
+                        lstOfertas = AlumnoBase.AlumnoInscrito                                                
                         .Select(s =>
                          new DTOAlumnoOfertas
                          {
@@ -999,8 +999,7 @@ namespace BLL
                              OfertaEducativaId = s.OfertaEducativaId,
                              OfertaEducativaTipoId = s.OfertaEducativa.OfertaEducativaTipoId
                          }).ToList(),
-                        Antecendentes = db.AlumnoAntecedente
-                                        .Where(at => at.AlumnoId == AlumnoId)
+                        Antecendentes = AlumnoBase.AlumnoAntecedente
                                         .Select(i => new DTOAlumnoAntecendente
                                         {
                                             AlumnoId = i.AlumnoId,
@@ -1032,19 +1031,17 @@ namespace BLL
                                                 OfertaEducativaId = d.OfertaEducativaId,
                                                 OfertaEducativaTipoId = d.OfertaEducativa.OfertaEducativaTipoId
                                             }).ToList();
-                    if (lstBitacora.Count > 0)
-                    {
+                  
                         lstBitacora.ForEach(i =>
                         {
-                            if (objAlumno.lstOfertas.Where(s => s.OfertaEducativaId == i.OfertaEducativaId).ToList().Count == 0)
+                            if (Alumno.lstOfertas.Where(s => s.OfertaEducativaId == (i?.OfertaEducativaId ?? 0)).ToList().Count == 0)
                             {
-                                objAlumno.lstOfertas.Add(i);
+                                Alumno.lstOfertas.Add(i);
                             }
                         });
-                    }
 
 
-                    objAlumno.DTOPersonaAutorizada = (from d in objAlB.PersonaAutorizada
+                    Alumno.DTOPersonaAutorizada = (from d in AlumnoBase.PersonaAutorizada
                                                       select new DTOPersonaAutorizada
                                                       {
                                                           Nombre = d.Nombre,
@@ -1057,7 +1054,7 @@ namespace BLL
                                                           Autoriza = d.EsAutorizada
                                                       }).ToList();
 
-                    return objAlumno;
+                    return Alumno;
                 }
                 catch
                 {
@@ -11780,156 +11777,156 @@ namespace BLL
             }
         }
 
-        public static bool UpdateAlumno(DTOAlumno objAlumno, DTOProspectoDetalle objAlumnoD, int UsuarioId)
+        public static bool UpdateAlumno(DTOAlumno AlumnoActualizacion, int UsuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    Alumno objAlumnoDB = db.Alumno.Where(a => a.AlumnoId == objAlumno.AlumnoId).FirstOrDefault();
+                    Alumno AlumnoOriginal = db.Alumno.Where(a => a.AlumnoId == AlumnoActualizacion.AlumnoId).FirstOrDefault();
                     //Alumno
                     db.AlumnoBitacora.Add(new AlumnoBitacora
                     {
-                        AlumnoId = objAlumnoDB.AlumnoId,
-                        Anio = objAlumnoDB.Anio,
-                        EstatusId = objAlumnoDB.EstatusId,
+                        AlumnoId = AlumnoOriginal.AlumnoId,
+                        Anio = AlumnoOriginal.Anio,
+                        EstatusId = AlumnoOriginal.EstatusId,
                         Fecha = DateTime.Now,
-                        FechaRegistro = objAlumnoDB.FechaRegistro,
-                        Materno = objAlumnoDB.Materno,
-                        MatriculaId = objAlumnoDB.MatriculaId,
-                        Nombre = objAlumnoDB.Nombre,
-                        Paterno = objAlumnoDB.Paterno,
-                        PeriodoId = objAlumnoDB.PeriodoId,
-                        UsuarioId = objAlumnoDB.UsuarioId,
+                        FechaRegistro = AlumnoOriginal.FechaRegistro,
+                        Materno = AlumnoOriginal.Materno,
+                        MatriculaId = AlumnoOriginal.MatriculaId,
+                        Nombre = AlumnoOriginal.Nombre,
+                        Paterno = AlumnoOriginal.Paterno,
+                        PeriodoId = AlumnoOriginal.PeriodoId,
+                        UsuarioId = AlumnoOriginal.UsuarioId,
                         UsuarioIdBitacora = UsuarioId
                     });
-                    objAlumnoDB.Nombre = objAlumno.Nombre;
-                    objAlumnoDB.Paterno = objAlumno.Paterno;
-                    objAlumnoDB.Materno = objAlumno.Materno;
+                    AlumnoOriginal.Nombre = AlumnoActualizacion.Nombre;
+                    AlumnoOriginal.Paterno = AlumnoActualizacion.Paterno;
+                    AlumnoOriginal.Materno = AlumnoActualizacion.Materno;
 
 
                     //AlumnoDetalle
                     db.AlumnoDetalleBitacora.Add(new AlumnoDetalleBitacora
                     {
-                        AlumnoId = objAlumnoDB.AlumnoDetalle.AlumnoId,
-                        Calle = objAlumnoDB.AlumnoDetalle.Calle,
+                        AlumnoId = AlumnoOriginal.AlumnoDetalle.AlumnoId,
+                        Calle = AlumnoOriginal.AlumnoDetalle.Calle,
                         UsuarioId = UsuarioId,
-                        Celular = objAlumnoDB.AlumnoDetalle.Celular,
-                        Colonia = objAlumnoDB.AlumnoDetalle.Colonia,
-                        CP = objAlumnoDB.AlumnoDetalle.CP,
-                        CURP = objAlumnoDB.AlumnoDetalle.CURP,
-                        Email = objAlumnoDB.AlumnoDetalle.Email,
-                        EntidadFederativaId = objAlumnoDB.AlumnoDetalle.EntidadFederativaId,
-                        EntidadNacimientoId = objAlumnoDB.AlumnoDetalle.EntidadNacimientoId,
-                        EstadoCivilId = objAlumnoDB.AlumnoDetalle.EstadoCivilId,
+                        Celular = AlumnoOriginal.AlumnoDetalle.Celular,
+                        Colonia = AlumnoOriginal.AlumnoDetalle.Colonia,
+                        CP = AlumnoOriginal.AlumnoDetalle.CP,
+                        CURP = AlumnoOriginal.AlumnoDetalle.CURP,
+                        Email = AlumnoOriginal.AlumnoDetalle.Email,
+                        EntidadFederativaId = AlumnoOriginal.AlumnoDetalle.EntidadFederativaId,
+                        EntidadNacimientoId = AlumnoOriginal.AlumnoDetalle.EntidadNacimientoId,
+                        EstadoCivilId = AlumnoOriginal.AlumnoDetalle.EstadoCivilId,
                         Fecha = DateTime.Now,
-                        FechaNacimiento = objAlumnoDB.AlumnoDetalle.FechaNacimiento,
-                        GeneroId = objAlumnoDB.AlumnoDetalle.GeneroId,
-                        MunicipioId = objAlumnoDB.AlumnoDetalle.MunicipioId,
-                        NoExterior = objAlumnoDB.AlumnoDetalle.NoExterior,
-                        NoInterior = objAlumnoDB.AlumnoDetalle.NoInterior,
-                        PaisId = objAlumnoDB.AlumnoDetalle.PaisId,
-                        TelefonoCasa = objAlumnoDB.AlumnoDetalle.TelefonoCasa,
-                        TelefonoOficina = objAlumnoDB.AlumnoDetalle.TelefonoOficina
+                        FechaNacimiento = AlumnoOriginal.AlumnoDetalle.FechaNacimiento,
+                        GeneroId = AlumnoOriginal.AlumnoDetalle.GeneroId,
+                        MunicipioId = AlumnoOriginal.AlumnoDetalle.MunicipioId,
+                        NoExterior = AlumnoOriginal.AlumnoDetalle.NoExterior,
+                        NoInterior = AlumnoOriginal.AlumnoDetalle.NoInterior,
+                        PaisId = AlumnoOriginal.AlumnoDetalle.PaisId,
+                        TelefonoCasa = AlumnoOriginal.AlumnoDetalle.TelefonoCasa,
+                        TelefonoOficina = AlumnoOriginal.AlumnoDetalle.TelefonoOficina
                     });
-                    objAlumnoDB.AlumnoDetalle.Calle = objAlumno.DTOAlumnoDetalle.Calle;
-                    objAlumnoDB.AlumnoDetalle.Celular = objAlumno.DTOAlumnoDetalle.Celular;
-                    objAlumnoDB.AlumnoDetalle.Colonia = objAlumno.DTOAlumnoDetalle.Colonia;
-                    objAlumnoDB.AlumnoDetalle.CP = objAlumno.DTOAlumnoDetalle.Cp;
-                    objAlumnoDB.AlumnoDetalle.CURP = objAlumno.DTOAlumnoDetalle.CURP;
-                    objAlumnoDB.AlumnoDetalle.Email = objAlumno.DTOAlumnoDetalle.Email;
-                    objAlumnoDB.AlumnoDetalle.EntidadFederativaId = objAlumno.DTOAlumnoDetalle.EntidadFederativaId;
-                    objAlumnoDB.AlumnoDetalle.EntidadNacimientoId = objAlumno.DTOAlumnoDetalle.EntidadNacimientoId;
-                    objAlumnoDB.AlumnoDetalle.EstadoCivilId = objAlumno.DTOAlumnoDetalle.EstadoCivilId;
-                    objAlumnoDB.AlumnoDetalle.FechaNacimiento = objAlumno.DTOAlumnoDetalle.FechaNacimiento;
-                    objAlumnoDB.AlumnoDetalle.GeneroId = objAlumno.DTOAlumnoDetalle.GeneroId;
-                    objAlumnoDB.AlumnoDetalle.MunicipioId = objAlumno.DTOAlumnoDetalle.MunicipioId;
-                    objAlumnoDB.AlumnoDetalle.NoExterior = objAlumno.DTOAlumnoDetalle.NoExterior;
-                    objAlumnoDB.AlumnoDetalle.NoInterior = objAlumno.DTOAlumnoDetalle.NoInterior;
-                    objAlumnoDB.AlumnoDetalle.PaisId = objAlumno.DTOAlumnoDetalle.PaisId;
-                    //objAlumnoDB.AlumnoDetalle.ProspectoId = objAlumno.DTOAlumnoDetalle.AlumnoId;
-                    objAlumnoDB.AlumnoDetalle.TelefonoCasa = objAlumno.DTOAlumnoDetalle.TelefonoCasa;
-                    objAlumnoDB.AlumnoDetalle.TelefonoOficina = objAlumno.DTOAlumnoDetalle.TelefonoOficina;
+                    AlumnoOriginal.AlumnoDetalle.Calle = AlumnoActualizacion.DTOAlumnoDetalle.Calle;
+                    AlumnoOriginal.AlumnoDetalle.Celular = AlumnoActualizacion.DTOAlumnoDetalle.Celular;
+                    AlumnoOriginal.AlumnoDetalle.Colonia = AlumnoActualizacion.DTOAlumnoDetalle.Colonia;
+                    AlumnoOriginal.AlumnoDetalle.CP = AlumnoActualizacion.DTOAlumnoDetalle.Cp;
+                    AlumnoOriginal.AlumnoDetalle.CURP = AlumnoActualizacion.DTOAlumnoDetalle.CURP;
+                    AlumnoOriginal.AlumnoDetalle.Email = AlumnoActualizacion.DTOAlumnoDetalle.Email;
+                    AlumnoOriginal.AlumnoDetalle.EntidadFederativaId = AlumnoActualizacion.DTOAlumnoDetalle.EntidadFederativaId;
+                    AlumnoOriginal.AlumnoDetalle.EntidadNacimientoId = AlumnoActualizacion.DTOAlumnoDetalle.EntidadNacimientoId;
+                    AlumnoOriginal.AlumnoDetalle.EstadoCivilId = AlumnoActualizacion.DTOAlumnoDetalle.EstadoCivilId;
+                    AlumnoOriginal.AlumnoDetalle.FechaNacimiento = AlumnoActualizacion.DTOAlumnoDetalle.FechaNacimiento;
+                    AlumnoOriginal.AlumnoDetalle.GeneroId = AlumnoActualizacion.DTOAlumnoDetalle.GeneroId;
+                    AlumnoOriginal.AlumnoDetalle.MunicipioId = AlumnoActualizacion.DTOAlumnoDetalle.MunicipioId;
+                    AlumnoOriginal.AlumnoDetalle.NoExterior = AlumnoActualizacion.DTOAlumnoDetalle.NoExterior;
+                    AlumnoOriginal.AlumnoDetalle.NoInterior = AlumnoActualizacion.DTOAlumnoDetalle.NoInterior;
+                    AlumnoOriginal.AlumnoDetalle.PaisId = AlumnoActualizacion.DTOAlumnoDetalle.PaisId;
+                    //AlumnoOriginal.AlumnoDetalle.ProspectoId = AlumnoActualizacion.DTOAlumnoDetalle.AlumnoId;
+                    AlumnoOriginal.AlumnoDetalle.TelefonoCasa = AlumnoActualizacion.DTOAlumnoDetalle.TelefonoCasa;
+                    AlumnoOriginal.AlumnoDetalle.TelefonoOficina = AlumnoActualizacion.DTOAlumnoDetalle.TelefonoOficina;
 
 
                     #region Personas Autorizadas
-                    if (objAlumno.DTOPersonaAutorizada.Count > 0)
+                    if (AlumnoActualizacion.DTOPersonaAutorizada.Count > 0)
                     {
-                        if (objAlumnoDB.PersonaAutorizada.Count > 0)
+                        if (AlumnoOriginal.PersonaAutorizada.Count > 0)
                         {
 
                             db.PersonaAutorizadaBitacora.Add(new PersonaAutorizadaBitacora
                             {
-                                AlumnoId = objAlumnoDB.PersonaAutorizada.First().AlumnoId,
-                                Celular = objAlumnoDB.PersonaAutorizada.First().Celular,
-                                Email = objAlumnoDB.PersonaAutorizada.First().Email,
-                                EsAutorizada = objAlumnoDB.PersonaAutorizada.First().EsAutorizada,
-                                Materno = objAlumnoDB.PersonaAutorizada.First().Materno,
-                                Nombre = objAlumnoDB.PersonaAutorizada.First().Nombre,
-                                ParentescoId = objAlumnoDB.PersonaAutorizada.First().ParentescoId,
-                                Paterno = objAlumnoDB.PersonaAutorizada.First().Paterno,
-                                PersonaAutorizadaId = objAlumnoDB.PersonaAutorizada.First().PersonaAutorizadaId,
-                                Telefono = objAlumnoDB.PersonaAutorizada.First().Telefono,
+                                AlumnoId = AlumnoOriginal.PersonaAutorizada.First().AlumnoId,
+                                Celular = AlumnoOriginal.PersonaAutorizada.First().Celular,
+                                Email = AlumnoOriginal.PersonaAutorizada.First().Email,
+                                EsAutorizada = AlumnoOriginal.PersonaAutorizada.First().EsAutorizada,
+                                Materno = AlumnoOriginal.PersonaAutorizada.First().Materno,
+                                Nombre = AlumnoOriginal.PersonaAutorizada.First().Nombre,
+                                ParentescoId = AlumnoOriginal.PersonaAutorizada.First().ParentescoId,
+                                Paterno = AlumnoOriginal.PersonaAutorizada.First().Paterno,
+                                PersonaAutorizadaId = AlumnoOriginal.PersonaAutorizada.First().PersonaAutorizadaId,
+                                Telefono = AlumnoOriginal.PersonaAutorizada.First().Telefono,
                                 Fecha = DateTime.Now,
                                 UsuarioId = UsuarioId
                             });
 
-                            objAlumnoDB.PersonaAutorizada.First().Celular = objAlumno.DTOPersonaAutorizada[0].Celular;
-                            objAlumnoDB.PersonaAutorizada.First().Email = objAlumno.DTOPersonaAutorizada[0].Email;
-                            objAlumnoDB.PersonaAutorizada.First().EsAutorizada = objAlumno.DTOPersonaAutorizada[0].Autoriza;
-                            objAlumnoDB.PersonaAutorizada.First().Materno = objAlumno.DTOPersonaAutorizada[0].Materno;
-                            objAlumnoDB.PersonaAutorizada.First().Nombre = objAlumno.DTOPersonaAutorizada[0].Nombre;
-                            objAlumnoDB.PersonaAutorizada.First().ParentescoId = objAlumno.DTOPersonaAutorizada[0].ParentescoId;
-                            objAlumnoDB.PersonaAutorizada.First().Paterno = objAlumno.DTOPersonaAutorizada[0].Paterno;
-                            objAlumnoDB.PersonaAutorizada.First().Telefono = objAlumno.DTOPersonaAutorizada[0].Telefono;
+                            AlumnoOriginal.PersonaAutorizada.First().Celular = AlumnoActualizacion.DTOPersonaAutorizada[0].Celular;
+                            AlumnoOriginal.PersonaAutorizada.First().Email = AlumnoActualizacion.DTOPersonaAutorizada[0].Email;
+                            AlumnoOriginal.PersonaAutorizada.First().EsAutorizada = AlumnoActualizacion.DTOPersonaAutorizada[0].Autoriza;
+                            AlumnoOriginal.PersonaAutorizada.First().Materno = AlumnoActualizacion.DTOPersonaAutorizada[0].Materno;
+                            AlumnoOriginal.PersonaAutorizada.First().Nombre = AlumnoActualizacion.DTOPersonaAutorizada[0].Nombre;
+                            AlumnoOriginal.PersonaAutorizada.First().ParentescoId = AlumnoActualizacion.DTOPersonaAutorizada[0].ParentescoId;
+                            AlumnoOriginal.PersonaAutorizada.First().Paterno = AlumnoActualizacion.DTOPersonaAutorizada[0].Paterno;
+                            AlumnoOriginal.PersonaAutorizada.First().Telefono = AlumnoActualizacion.DTOPersonaAutorizada[0].Telefono;
 
-                            if (objAlumnoDB.PersonaAutorizada.Count > 1)
+                            if (AlumnoOriginal.PersonaAutorizada.Count > 1)
                             {
-                                if (objAlumno.DTOPersonaAutorizada.Count > 1)
+                                if (AlumnoActualizacion.DTOPersonaAutorizada.Count > 1)
                                 {
                                     db.PersonaAutorizadaBitacora.Add(new PersonaAutorizadaBitacora
                                     {
-                                        AlumnoId = objAlumnoDB.PersonaAutorizada.Last().AlumnoId,
-                                        Celular = objAlumnoDB.PersonaAutorizada.Last().Celular,
-                                        Email = objAlumnoDB.PersonaAutorizada.Last().Email,
-                                        EsAutorizada = objAlumnoDB.PersonaAutorizada.Last().EsAutorizada,
-                                        Materno = objAlumnoDB.PersonaAutorizada.Last().Materno,
-                                        Nombre = objAlumnoDB.PersonaAutorizada.Last().Nombre,
-                                        ParentescoId = objAlumnoDB.PersonaAutorizada.Last().ParentescoId,
-                                        Paterno = objAlumnoDB.PersonaAutorizada.Last().Paterno,
-                                        PersonaAutorizadaId = objAlumnoDB.PersonaAutorizada.Last().PersonaAutorizadaId,
-                                        Telefono = objAlumnoDB.PersonaAutorizada.Last().Telefono,
+                                        AlumnoId = AlumnoOriginal.PersonaAutorizada.Last().AlumnoId,
+                                        Celular = AlumnoOriginal.PersonaAutorizada.Last().Celular,
+                                        Email = AlumnoOriginal.PersonaAutorizada.Last().Email,
+                                        EsAutorizada = AlumnoOriginal.PersonaAutorizada.Last().EsAutorizada,
+                                        Materno = AlumnoOriginal.PersonaAutorizada.Last().Materno,
+                                        Nombre = AlumnoOriginal.PersonaAutorizada.Last().Nombre,
+                                        ParentescoId = AlumnoOriginal.PersonaAutorizada.Last().ParentescoId,
+                                        Paterno = AlumnoOriginal.PersonaAutorizada.Last().Paterno,
+                                        PersonaAutorizadaId = AlumnoOriginal.PersonaAutorizada.Last().PersonaAutorizadaId,
+                                        Telefono = AlumnoOriginal.PersonaAutorizada.Last().Telefono,
                                         Fecha = DateTime.Now,
                                         UsuarioId = UsuarioId
                                     });
 
-                                    objAlumnoDB.PersonaAutorizada.Last().Celular = objAlumno.DTOPersonaAutorizada[1].Celular;
-                                    objAlumnoDB.PersonaAutorizada.Last().Email = objAlumno.DTOPersonaAutorizada[1].Email;
-                                    objAlumnoDB.PersonaAutorizada.Last().EsAutorizada = objAlumno.DTOPersonaAutorizada[1].Autoriza;
-                                    objAlumnoDB.PersonaAutorizada.Last().Materno = objAlumno.DTOPersonaAutorizada[1].Materno;
-                                    objAlumnoDB.PersonaAutorizada.Last().Nombre = objAlumno.DTOPersonaAutorizada[1].Nombre;
-                                    objAlumnoDB.PersonaAutorizada.Last().ParentescoId = objAlumno.DTOPersonaAutorizada[1].ParentescoId;
-                                    objAlumnoDB.PersonaAutorizada.Last().Paterno = objAlumno.DTOPersonaAutorizada[1].Paterno;
-                                    objAlumnoDB.PersonaAutorizada.Last().Telefono = objAlumno.DTOPersonaAutorizada[1].Telefono;
+                                    AlumnoOriginal.PersonaAutorizada.Last().Celular = AlumnoActualizacion.DTOPersonaAutorizada[1].Celular;
+                                    AlumnoOriginal.PersonaAutorizada.Last().Email = AlumnoActualizacion.DTOPersonaAutorizada[1].Email;
+                                    AlumnoOriginal.PersonaAutorizada.Last().EsAutorizada = AlumnoActualizacion.DTOPersonaAutorizada[1].Autoriza;
+                                    AlumnoOriginal.PersonaAutorizada.Last().Materno = AlumnoActualizacion.DTOPersonaAutorizada[1].Materno;
+                                    AlumnoOriginal.PersonaAutorizada.Last().Nombre = AlumnoActualizacion.DTOPersonaAutorizada[1].Nombre;
+                                    AlumnoOriginal.PersonaAutorizada.Last().ParentescoId = AlumnoActualizacion.DTOPersonaAutorizada[1].ParentescoId;
+                                    AlumnoOriginal.PersonaAutorizada.Last().Paterno = AlumnoActualizacion.DTOPersonaAutorizada[1].Paterno;
+                                    AlumnoOriginal.PersonaAutorizada.Last().Telefono = AlumnoActualizacion.DTOPersonaAutorizada[1].Telefono;
                                 }
                             }
                             else
                             {
-                                if (objAlumno.DTOPersonaAutorizada.Count > 1)
+                                if (AlumnoActualizacion.DTOPersonaAutorizada.Count > 1)
                                 {
-                                    if (objAlumno.DTOPersonaAutorizada[1].ParentescoId > 0)
+                                    if (AlumnoActualizacion.DTOPersonaAutorizada[1].ParentescoId > 0)
                                     {
-                                        objAlumnoDB.PersonaAutorizada.Add(new PersonaAutorizada
+                                        AlumnoOriginal.PersonaAutorizada.Add(new PersonaAutorizada
                                         {
-                                            AlumnoId = objAlumno.AlumnoId,
-                                            Celular = objAlumno.DTOPersonaAutorizada[1].Celular,
-                                            Email = objAlumno.DTOPersonaAutorizada[1].Email,
-                                            EsAutorizada = objAlumno.DTOPersonaAutorizada[1].Autoriza,
-                                            Materno = objAlumno.DTOPersonaAutorizada[1].Materno,
-                                            Nombre = objAlumno.DTOPersonaAutorizada[1].Nombre,
-                                            ParentescoId = objAlumno.DTOPersonaAutorizada[1].ParentescoId,
-                                            Paterno = objAlumno.DTOPersonaAutorizada[1].Paterno,
-                                            Telefono = objAlumno.DTOPersonaAutorizada[1].Telefono
+                                            AlumnoId = AlumnoActualizacion.AlumnoId,
+                                            Celular = AlumnoActualizacion.DTOPersonaAutorizada[1].Celular,
+                                            Email = AlumnoActualizacion.DTOPersonaAutorizada[1].Email,
+                                            EsAutorizada = AlumnoActualizacion.DTOPersonaAutorizada[1].Autoriza,
+                                            Materno = AlumnoActualizacion.DTOPersonaAutorizada[1].Materno,
+                                            Nombre = AlumnoActualizacion.DTOPersonaAutorizada[1].Nombre,
+                                            ParentescoId = AlumnoActualizacion.DTOPersonaAutorizada[1].ParentescoId,
+                                            Paterno = AlumnoActualizacion.DTOPersonaAutorizada[1].Paterno,
+                                            Telefono = AlumnoActualizacion.DTOPersonaAutorizada[1].Telefono
                                         });
                                     }
                                 }
@@ -11938,34 +11935,34 @@ namespace BLL
                         }
                         else
                         {
-                            if (objAlumno.DTOPersonaAutorizada[0].ParentescoId > 0)
+                            if (AlumnoActualizacion.DTOPersonaAutorizada[0].ParentescoId > 0)
                             {
-                                objAlumnoDB.PersonaAutorizada.Add(new PersonaAutorizada
+                                AlumnoOriginal.PersonaAutorizada.Add(new PersonaAutorizada
                                 {
-                                    AlumnoId = objAlumno.AlumnoId,
-                                    Celular = objAlumno.DTOPersonaAutorizada[0].Celular,
-                                    Email = objAlumno.DTOPersonaAutorizada[0].Email,
-                                    EsAutorizada = objAlumno.DTOPersonaAutorizada[0].Autoriza,
-                                    Materno = objAlumno.DTOPersonaAutorizada[0].Materno,
-                                    Nombre = objAlumno.DTOPersonaAutorizada[0].Nombre,
-                                    ParentescoId = objAlumno.DTOPersonaAutorizada[0].ParentescoId,
-                                    Paterno = objAlumno.DTOPersonaAutorizada[0].Paterno,
-                                    Telefono = objAlumno.DTOPersonaAutorizada[0].Telefono
+                                    AlumnoId = AlumnoActualizacion.AlumnoId,
+                                    Celular = AlumnoActualizacion.DTOPersonaAutorizada[0].Celular,
+                                    Email = AlumnoActualizacion.DTOPersonaAutorizada[0].Email,
+                                    EsAutorizada = AlumnoActualizacion.DTOPersonaAutorizada[0].Autoriza,
+                                    Materno = AlumnoActualizacion.DTOPersonaAutorizada[0].Materno,
+                                    Nombre = AlumnoActualizacion.DTOPersonaAutorizada[0].Nombre,
+                                    ParentescoId = AlumnoActualizacion.DTOPersonaAutorizada[0].ParentescoId,
+                                    Paterno = AlumnoActualizacion.DTOPersonaAutorizada[0].Paterno,
+                                    Telefono = AlumnoActualizacion.DTOPersonaAutorizada[0].Telefono
                                 });
                             }
-                            if (objAlumno.DTOPersonaAutorizada.Count > 1)
+                            if (AlumnoActualizacion.DTOPersonaAutorizada.Count > 1)
                             {
-                                objAlumnoDB.PersonaAutorizada.Add(new PersonaAutorizada
+                                AlumnoOriginal.PersonaAutorizada.Add(new PersonaAutorizada
                                 {
-                                    AlumnoId = objAlumno.AlumnoId,
-                                    Celular = objAlumno.DTOPersonaAutorizada[1].Celular,
-                                    Email = objAlumno.DTOPersonaAutorizada[1].Email,
-                                    EsAutorizada = objAlumno.DTOPersonaAutorizada[1].Autoriza,
-                                    Materno = objAlumno.DTOPersonaAutorizada[1].Materno,
-                                    Nombre = objAlumno.DTOPersonaAutorizada[1].Nombre,
-                                    ParentescoId = objAlumno.DTOPersonaAutorizada[1].ParentescoId,
-                                    Paterno = objAlumno.DTOPersonaAutorizada[1].Paterno,
-                                    Telefono = objAlumno.DTOPersonaAutorizada[1].Telefono
+                                    AlumnoId = AlumnoActualizacion.AlumnoId,
+                                    Celular = AlumnoActualizacion.DTOPersonaAutorizada[1].Celular,
+                                    Email = AlumnoActualizacion.DTOPersonaAutorizada[1].Email,
+                                    EsAutorizada = AlumnoActualizacion.DTOPersonaAutorizada[1].Autoriza,
+                                    Materno = AlumnoActualizacion.DTOPersonaAutorizada[1].Materno,
+                                    Nombre = AlumnoActualizacion.DTOPersonaAutorizada[1].Nombre,
+                                    ParentescoId = AlumnoActualizacion.DTOPersonaAutorizada[1].ParentescoId,
+                                    Paterno = AlumnoActualizacion.DTOPersonaAutorizada[1].Paterno,
+                                    Telefono = AlumnoActualizacion.DTOPersonaAutorizada[1].Telefono
                                 });
                             }
                         }

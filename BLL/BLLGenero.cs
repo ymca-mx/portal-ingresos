@@ -15,13 +15,12 @@ namespace BLL
             //List<DTO.DTOGenero> lstGenero=new List<DTO.DTOGenero>;
             using(UniversidadEntities db= new UniversidadEntities())
             {
-                List<DTOGenero> lstGenero = (from a in db.Genero
+                return (from a in db.Genero
                                                  select new DTOGenero
                                                  {
                                                      GeneroId = a.GeneroId,
                                                      Descripcion=a.Descripcion
                                                  }).ToList();
-                return lstGenero;
             }
         }
     }

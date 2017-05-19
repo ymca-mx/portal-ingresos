@@ -14,13 +14,12 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOParentesco> lstParentesco = (from a in db.Parentesco
+                return (from a in db.Parentesco
                                                          select new DTOParentesco
                                                          {
                                                              ParentescoId=a.ParentescoId,
                                                              Descripcion=a.Descripcion
                                                          }).ToList();
-                return lstParentesco;
             }
         }
     }
