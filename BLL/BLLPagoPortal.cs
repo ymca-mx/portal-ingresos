@@ -57,7 +57,7 @@ namespace BLL
             {
                 try
                 {
-                    var pago = db.Pago.Where(p => p.PagoId == PagoId).FirstOrDefault();
+                    Pago pago = db.Pago.Where(p => p.PagoId == PagoId).FirstOrDefault();
 
                     pago.EstatusId = 1;
                     pago.Restante = pago.Promesa;
@@ -3967,13 +3967,13 @@ namespace BLL
             {
                 try
                 {
-                    PagoCancelacion objBitacora = db.PagoCancelacion.Where(a => a.PagoId == PagoId).FirstOrDefault();
-                    Pago objPago = db.Pago.Where(P => P.PagoId == PagoId).FirstOrDefault();
-                    objPago.Restante = objPago.Promesa;
-                    if (objBitacora != null)
+                    PagoCancelacion PagoCancelacion = db.PagoCancelacion.Where(a => a.PagoId == PagoId).FirstOrDefault();
+                    Pago Pago = db.Pago.Where(P => P.PagoId == PagoId).FirstOrDefault();
+                    Pago.Restante = Pago.Promesa;
+                    if (PagoCancelacion != null)
                     {
-                        objPago.EstatusId = 2;
-                        objBitacora.EstatusId = 2;
+                        Pago.EstatusId = 2;
+                        PagoCancelacion.EstatusId = 2;
                     }
                     else
                     {
@@ -3992,10 +3992,10 @@ namespace BLL
                             } }
                         });
 
-                        objPago.EstatusId = 2;
-                        if (objPago.PagoRecargo != null)
+                        Pago.EstatusId = 2;
+                        if (Pago.PagoRecargo != null)
                         {
-                            List<Pago> lstRecargos = objPago.PagoRecargo.Where(kl => kl.Pago1.EstatusId == 1).ToList().Select(k => k.Pago1).ToList();
+                            List<Pago> lstRecargos = Pago.PagoRecargo.Where(kl => kl.Pago1.EstatusId == 1).ToList().Select(k => k.Pago1).ToList();
 
                             lstRecargos.ForEach(ok =>
                             {
