@@ -132,7 +132,7 @@ namespace AppAdministrativos.WS
         public string BecaDeportiva(string AlumnoId, string OfertaEducativaId, string Anio, string PeriodoId,
                 string Porcentaje, string UsuarioId)
         {
-            DTO.Alumno.Beca.DTOAlumnoBecaDeportiva objBeca = new DTO.Alumno.Beca.DTOAlumnoBecaDeportiva
+            DTO.Alumno.Beca.DTOAlumnoBecaDeportiva AlumnoBeca = new DTO.Alumno.Beca.DTOAlumnoBecaDeportiva
             {
                 alumnoId = int.Parse(AlumnoId),
                 anio = int.Parse(Anio),
@@ -143,7 +143,7 @@ namespace AppAdministrativos.WS
             };
             try
             {
-                BLL.BLLAlumnoPortal.AplicaBecaDeportiva(objBeca, false);
+                BLL.BLLAlumnoPortal.AplicaBecaDeportiva(AlumnoBeca, false);
                 return "Guardado";
             }
             catch { return "Fallo"; }

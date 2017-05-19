@@ -775,9 +775,9 @@ namespace BLL
             
             try
             {
-                ProcessResult refere = new Utilities.ProcessResult();
+                ProcessResult respuesta = new Utilities.ProcessResult();
                 string body = "";
-                DTOAlumno opjAl = BLLAlumnoPortal.ObtenerAlumno(AlumnoId);
+                DTOAlumno Alumno = BLLAlumnoPortal.ObtenerAlumno(AlumnoId);
 
                 #region "HTML"
                 body = "<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
@@ -1085,7 +1085,7 @@ namespace BLL
                             "</html>";
                 #endregion
 
-                Email.Enviar(CuentaEmail.Email, CuentaEmail.Password, CuentaEmail.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', CuentaEmail.Smtp, CuentaEmail.Puerto, CuentaEmail.SSL, true, ref refere);
+                Email.Enviar(CuentaEmail.Email, CuentaEmail.Password, CuentaEmail.DisplayName, EmailAlumno, ',', "antoniogalvan@ymcacdmex.org.mx", ';', "Aviso Portal Universidad YMCA", body, "", ',', CuentaEmail.Smtp, CuentaEmail.Puerto, CuentaEmail.SSL, true, ref respuesta);
                 return true;
             }
             catch (Exception e)
