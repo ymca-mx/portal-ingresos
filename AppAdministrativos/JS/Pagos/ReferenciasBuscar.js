@@ -46,10 +46,10 @@
             data: "{AlumnoId:'" + AlumnoId + "',Anio:'" + Anio + "',PeriodoId:'" + PeriodoId + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
-            success: function (res) {
-                var data = res.d.item1;
-                var dk = res.d.item2;
-                var Especial = res.d.item1[0].EsEspecial;
+            success: function (dat1a) {
+                var data = dat1a.d.Item1;
+                var dk = dat1a.d.Item2;
+                var Especial = dat1a.d.Item1[0].EsEspecial;
                 if (data[0].esEmpresa) {
                     $('#tblReferencias2').hide();
                     $('#tblReferencias').hide();
