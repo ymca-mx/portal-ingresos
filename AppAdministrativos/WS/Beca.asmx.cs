@@ -101,7 +101,7 @@ namespace AppAdministrativos.WS
 
             if (Respuesta == "Procede")
             {
-                DTO.Alumno.Beca.DTOAlumnoBeca objBeca = new DTO.Alumno.Beca.DTOAlumnoBeca
+                DTO.Alumno.Beca.DTOAlumnoBeca AlumnoBeca = new DTO.Alumno.Beca.DTOAlumnoBeca
                 {
                     alumnoId = int.Parse(AlumnoId),
                     anio = int.Parse(Anio),
@@ -117,10 +117,10 @@ namespace AppAdministrativos.WS
 
                 try
                 {
-                    BLL.BLLAlumnoPortal.AplicaBeca(objBeca, false);
+                    BLL.BLLAlumnoPortal.AplicaBeca(AlumnoBeca, false);
                     return "Guardado";
                 }
-                catch(Exception k) { return "Fallo"; /* return k.InnerException.InnerException.Message;*/ }
+                catch { return "Fallo"; }
             }
             else
             {
