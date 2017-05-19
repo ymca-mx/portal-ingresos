@@ -268,7 +268,7 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOPeriodo> lstPeriodos = (from a in db.Pago
+                    List<DTOPeriodo> Periodos = (from a in db.Pago
                                                     where a.AlumnoId == AlumnoId && a.EstatusId != 2 && a.EstatusId != 3
                                                      && (a.Cuota1.PagoConceptoId != 1007 && a.Cuota1.PagoConceptoId != 1001)
                                                     //&& (a.PeriodoId != 1 || a.Anio != 2016)
@@ -280,12 +280,12 @@ namespace BLL
                                                         FechaFinal = a.Periodo.FechaFinal,
                                                         FechaInicial = a.Periodo.FechaInicial
                                                     }).Distinct().ToList();
-                    lstPeriodos.ForEach(delegate(DTOPeriodo objPer)
+                    Periodos.ForEach(Periodo=>
                     {
-                        objPer._FechaFinal = objPer.FechaFinal.ToString("dd/MM/yyyy", Cultura);
-                        objPer._FechaInicial = objPer.FechaInicial.ToString("dd/MM/yyyy", Cultura);
+                        Periodo._FechaFinal = Periodo.FechaFinal.ToString("dd/MM/yyyy", Cultura);
+                        Periodo._FechaInicial = Periodo.FechaInicial.ToString("dd/MM/yyyy", Cultura);
                     });
-                    return lstPeriodos;
+                    return Periodos;
                 }
                 catch
                 {
