@@ -5440,7 +5440,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Views\Alumno\Credenciales.aspx" />
-    <Content Include="Views\Empresas\Empresas.html" />
     <Content Include="Views\Empresas\Empresas2.html" />
     <Content Include="Views\IdiomasGrupos\GruposIdiomas.html" />
     <Content Include="Imagenes\Cancelar1.png" />
@@ -5477,7 +5476,6 @@
     <Content Include="JS\DatePickerRange\moment.js" />
     <Content Include="JS\DatePickerRange\moment.min.js" />
     <Content Include="JS\Descuentos.js" />
-    <Content Include="JS\Empresas\Empresa.js" />
     <Content Include="JS\Empresas\Empresa2.js" />
     <Content Include="JS\EntidadFederativa.js" />
     <Content Include="JS\EnviarArchivo.js" />

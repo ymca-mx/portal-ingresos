@@ -14,7 +14,7 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOPais> lstPaises = (from a in db.Pais
+                List<DTOPais> paises = (from a in db.Pais
                                                        where a.PaisId != 146
                                                        orderby a.Descripcion ascending
                                                        select new DTOPais
@@ -22,7 +22,7 @@ namespace BLL
                                                            PaisId = a.PaisId,
                                                            Descripcion = a.Descripcion
                                                        }).ToList();
-                return lstPaises;
+                return paises;
             }
         }
 
@@ -30,14 +30,14 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOPais> lstPaises = (from a in db.Pais
+                List<DTOPais> paises = (from a in db.Pais
                                            orderby a.Descripcion ascending
                                            select new DTOPais
                                            {
                                                PaisId = a.PaisId,
                                                Descripcion = a.Descripcion
                                            }).ToList();
-                return lstPaises;
+                return paises;
             }
         }
     }
