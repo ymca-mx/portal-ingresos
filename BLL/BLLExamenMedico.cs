@@ -13,7 +13,7 @@ namespace BLL
     {
         public static DTOExamenMedico TraerAlumno(int AlumnoId)
         {
-            using(UniversidadEntities db = new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
@@ -26,19 +26,21 @@ namespace BLL
                                 Nombre = k.Alumno.Nombre + " " + k.Alumno.Paterno + " " + k.Alumno.Materno,
                                 ExamenMedico = k.TieneExamenMedico
                             }).FirstOrDefault();
-                }catch { return null; }
+                }
+                catch { return null; }
             }
         }
         public static bool GuardarExamenMedico(int AlumnoId, bool Examen, int UsuarioId, string Comentario)
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    var alumno = db.AlumnoDetalle
+                    AlumnoDetalle alumno = db.AlumnoDetalle
                         .Where(AL => AL.AlumnoId == AlumnoId)
                         .FirstOrDefault();
 
+                    #region No Tiene Examen Medico 
                     if (db.AlumnoExamenMedico.Where(k => k.AlumnoId == AlumnoId).ToList().Count == 0)
                     {
                         db.AlumnoExamenMedico.Add(new AlumnoExamenMedico
@@ -50,7 +52,10 @@ namespace BLL
                             UsuarioId = UsuarioId
                         });
                     }
-                        alumno.TieneExamenMedico = Examen;
+                    #endregion
+
+                    #region Tiene Examen (Actualizacion)
+                    alumno.TieneExamenMedico = Examen;
 
                     db.AlumnoDetalleBitacora
                         .Add(new AlumnoDetalleBitacora
@@ -77,6 +82,7 @@ namespace BLL
                             TelefonoOficina = alumno.TelefonoOficina,
                             UsuarioId = UsuarioId
                         });
+                    #endregion
 
                     db.SaveChanges();
                     return true;
