@@ -11,6 +11,7 @@
         $('#btnGuardar').prop("disabled", true);
         objAlumnoC = undefined;
         AlumnoNum = $('#txtAlumno').val();
+        $("#lbCuatrimestre").text("");
         $('#frmAlumnos').hide();
         $('#lblEstatus').text('');
         $('#submit_form').trigger('reset');
@@ -75,6 +76,7 @@
             $("#slcOfertas").val(objAlumnoC.lstOfertas[0].OfertaEducativaId);
             hayCuatrimestre = objAlumnoC.lstOfertas[0].Cuatrimestre != 0 ? true : false;
         }
+        $("#slcOfertas").change();
 
         llenarPeriodos();
     }
