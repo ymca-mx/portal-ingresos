@@ -18,7 +18,7 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOGrupo> lstGrupo = (from a in db.Grupo
+                List<DTOGrupo> grupo = (from a in db.Grupo
                                            where a.EmpresaId == EmpresaId
                                            select new DTOGrupo
                                            {
@@ -35,46 +35,10 @@ namespace BLL
                                                FechaRegistroS = (a.FechaRegistro.Day.ToString().Length > 1 ? a.FechaRegistro.Day.ToString() : "0" + a.FechaRegistro.Day.ToString()) + "/" +
                                                (a.FechaRegistro.Month.ToString().Length > 1 ? a.FechaRegistro.Month.ToString() : "0" + a.FechaRegistro.Month.ToString()) + "/" + (a.FechaRegistro.Year.ToString()),
                                                NumeroDePagos = a.NumeroPagos
-                                               //GrupoDetalle = new DTOGrupoDetalle
-                                               //{
-                                               //    CuotaId = a.GrupoDetalle.CuotaId,
-                                               //    GrupoId = a.GrupoDetalle.GrupoId,
-                                               //    NoPagos = a.GrupoDetalle.NoPagos,
-                                               //    EsCongelada = a.GrupoDetalle.EsCuotaCongelada,
-                                               //    Cuota = new DTOCuota
-                                               //    {
-                                               //        CuotaId = a.GrupoDetalle.Cuota.CuotaId,
-                                               //        Anio = a.GrupoDetalle.Cuota.Anio,
-                                               //        PeriodoId = a.GrupoDetalle.Cuota.PeriodoId,
-                                               //        OfertaEducativaId = a.GrupoDetalle.Cuota.OfertaEducativaId,
-                                               //        PagoConceptoId = a.GrupoDetalle.Cuota.PagoConceptoId,
-                                               //        Monto = a.GrupoDetalle.Cuota.Monto,
-                                               //        EsEmpresa = a.GrupoDetalle.Cuota.EsEmpresa
-                                               //    }
-                                               //}
                                            }).ToList();
 
-                //lstGrupo.ForEach(delegate(DTOGrupo objGrupo)
-                //{
-                //    DTOPeriodo objPeriodo = BLLPeriodo.TraerPeriodoEntreFechas(objGrupo.FechaRegistro);
-                //    objGrupo.GrupoDetalle.CuotaI = (from b in db.Cuota
-                //                                    where b.OfertaEducativaId == objGrupo.OfertaEducativaId && b.Anio == objPeriodo.Anio
-                //                                    && b.PeriodoId == objPeriodo.PeriodoId && b.PagoConceptoId == 802
-                //                                    select new DTOCuota
-                //                                    {
-                //                                        PagoConceptoId = b.PagoConceptoId,
-                //                                        //Monto = Math.Round(b.Monto - ((b.Monto * ((decimal) objGrupo.GrupoDetalle.PorcentajeInscripcion)) / 100))
-                //                                    }).FirstOrDefault();
-                //    objGrupo.GrupoDetalle.CuotaB = new DTOCuota
-                //    {
-                //        PagoConceptoId = objGrupo.GrupoDetalle.Cuota.PagoConceptoId,
-                //        Monto = 0,// Math.Round(objGrupo.GrupoDetalle.Cuota.Monto - ((objGrupo.GrupoDetalle.Cuota.Monto * ((decimal)objGrupo.GrupoDetalle.PorcentajeColegiatura)) / 100))
-                //    };
-                //    objGrupo.GrupoDetalle.CuotaI.MontoS = objGrupo.GrupoDetalle.CuotaI.Monto.ToString("C", Cultura);
-                //    objGrupo.GrupoDetalle.CuotaB.MontoS = objGrupo.GrupoDetalle.CuotaB.Monto.ToString("C", Cultura);
-                //});
 
-                return lstGrupo;
+                return grupo;
             }
         }
 
@@ -110,6 +74,7 @@ namespace BLL
                 return db.Grupo.Local[0].GrupoId;
             }
         }
+
         public static DTOGrupo ObtenerGrupo(int GrupoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -221,14 +186,13 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOAlumnoEspecial> lstAlumnos = new List<DTOAlumnoEspecial>();
+                    List<DTOAlumnoEspecial> alumnos = new List<DTOAlumnoEspecial>();
 
                     db.Configuration.LazyLoadingEnabled = true;
 
                     if (GrupoId != 0)
                     {
-                        //lstAlumnos = lstAlumnos.Where(a => a.GrupoAlumno != null).ToList().Where(b=> b.GrupoAlumno.GrupoId == GrupoId ).ToList();
-                        lstAlumnos = (from al in db.GrupoAlumnoConfiguracion
+                        alumnos = (from al in db.GrupoAlumnoConfiguracion
                                       join ale in db.AlumnoInscrito on new { al.AlumnoId, al.OfertaEducativaId } equals
                                                                       new { ale.AlumnoId, ale.OfertaEducativaId }
                                       where
@@ -275,9 +239,7 @@ namespace BLL
                                         
                     }else
                     {
-                                            //&& k.Anio == db.AlumnoInscrito.Where(c => c.AlumnoId == k.AlumnoId).ToList().Max(d => d.Anio)
-                                            //&& k.PeriodoId == db.AlumnoInscrito.Where(c => c.Anio == (db.AlumnoInscrito.Where(d => d.AlumnoId == k.AlumnoId).ToList().Max(e => e.Anio))).ToList().Max(b => b.PeriodoId)
-                        lstAlumnos = db.AlumnoInscrito.Where(al =>
+                        alumnos = db.AlumnoInscrito.Where(al =>
                                      al.EsEmpresa == true
                                      && al.OfertaEducativa.OfertaEducativaTipoId != 4
                                      && al.EstatusId == 1)
@@ -324,7 +286,7 @@ namespace BLL
                     }
 
 
-                    return lstAlumnos;
+                    return alumnos;
                 }
                 catch
                 { return null; }
@@ -440,38 +402,36 @@ namespace BLL
 
         }
 
-        public static bool GuardarAlumnoConfiguracion(DTOGrupoAlumnoCuotaString objAlumno)
+        public static bool GuardarAlumnoConfiguracion(DTOGrupoAlumnoCuotaString alumnoConfiguracion)
         {
             using(UniversidadEntities db=new UniversidadEntities())
             {
                 try
                 {
 
-                    int Alumnoid = int.Parse(objAlumno.AlumnoId), ofertaEducativa = int.Parse(objAlumno.OfertaEducativaId), ofertaEducativaAnterior = int.Parse(objAlumno.OfertaEducativaIdAnterior);
-                    var alumno = db.AlumnoInscrito.
+                    int alumnoid = int.Parse(alumnoConfiguracion.AlumnoId), ofertaEducativa = int.Parse(alumnoConfiguracion.OfertaEducativaId), ofertaEducativaAnterior = int.Parse(alumnoConfiguracion.OfertaEducativaIdAnterior);
+                    AlumnoInscrito alumno = db.AlumnoInscrito.
                         Where(a =>
-                            a.AlumnoId == Alumnoid
+                            a.AlumnoId == alumnoid
                             && a.OfertaEducativaId == ofertaEducativaAnterior
-                            //&& a.PagoPlanId == null
                             && a.EsEmpresa == true).FirstOrDefault();
                     
                     ///solo si va a cambiar la oferta educativa
                     if (alumno.OfertaEducativaId != ofertaEducativa)
                     {
-
-                        //alumno.OfertaEducativaId = ofertaEducativa;
+                        
                         db.AlumnoInscrito.Add(new AlumnoInscrito
                         {
-                            AlumnoId = int.Parse(objAlumno.AlumnoId),
-                            OfertaEducativaId = int.Parse(objAlumno.OfertaEducativaId),
-                            Anio = int.Parse(objAlumno.Anio),
-                            PeriodoId = int.Parse(objAlumno.PeriodoId),
+                            AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
+                            OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
+                            Anio = int.Parse(alumnoConfiguracion.Anio),
+                            PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId),
                             FechaInscripcion = DateTime.Now,
                             HoraInscripcion = DateTime.Now.TimeOfDay,
-                            PagoPlanId = int.Parse(objAlumno.PagoPlanId),
+                            PagoPlanId = int.Parse(alumnoConfiguracion.PagoPlanId),
                             TurnoId = alumno.TurnoId,
                             EsEmpresa = alumno.EsEmpresa,
-                            UsuarioId = int.Parse(objAlumno.UsuarioId),
+                            UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
                             EstatusId = 1
                         });
 
@@ -479,7 +439,7 @@ namespace BLL
                         db.AlumnoInscrito.Remove(alumno);
 
 
-                        Alumno objAlumnoDb = db.Alumno.Where(a => a.AlumnoId == Alumnoid).FirstOrDefault();
+                        Alumno alumnoDB = db.Alumno.Where(a => a.AlumnoId == alumnoid).FirstOrDefault();
 
                         ////Actualiza MAtricula
                         if (db.OfertaEducativa.Where(l => l.OfertaEducativaId == ofertaEducativa).FirstOrDefault().OfertaEducativaTipoId != 4)
@@ -488,18 +448,18 @@ namespace BLL
                             #region Bitacora Alumno
                             db.AlumnoBitacora.Add(new AlumnoBitacora
                             {
-                                AlumnoId = objAlumnoDb.AlumnoId,
-                                Anio = objAlumnoDb.Anio,
-                                EstatusId = objAlumnoDb.EstatusId,
+                                AlumnoId = alumnoDB.AlumnoId,
+                                Anio = alumnoDB.Anio,
+                                EstatusId = alumnoDB.EstatusId,
                                 Fecha = DateTime.Now,
-                                FechaRegistro = objAlumnoDb.FechaRegistro,
-                                Materno = objAlumnoDb.Materno,
-                                MatriculaId = objAlumnoDb.MatriculaId,
-                                Nombre = objAlumnoDb.Nombre,
-                                Paterno = objAlumnoDb.Paterno,
-                                PeriodoId = objAlumnoDb.PeriodoId,
-                                UsuarioId = objAlumnoDb.UsuarioId,
-                                UsuarioIdBitacora = int.Parse(objAlumno.UsuarioId)
+                                FechaRegistro = alumnoDB.FechaRegistro,
+                                Materno = alumnoDB.Materno,
+                                MatriculaId = alumnoDB.MatriculaId,
+                                Nombre = alumnoDB.Nombre,
+                                Paterno = alumnoDB.Paterno,
+                                PeriodoId = alumnoDB.PeriodoId,
+                                UsuarioId = alumnoDB.UsuarioId,
+                                UsuarioIdBitacora = int.Parse(alumnoConfiguracion.UsuarioId)
 
                             });
                             #endregion
@@ -514,18 +474,18 @@ namespace BLL
                                {
                                    OfertaEducativaId = ofertaEducativa,
                                    Rvoe = db.OfertaEducativa.Where(l => l.OfertaEducativaId == ofertaEducativa).FirstOrDefault().Rvoe,
-                               }, Alumnoid);
+                               }, alumnoid);
 
-                            if (objAlumnoDb.MatriculaId != NMatricula)
+                            if (alumnoDB.MatriculaId != NMatricula)
                             {
                                 #region Update Alumno
 
-                                objAlumnoDb.MatriculaId = NMatricula;
-                                objAlumnoDb.Anio = int.Parse(objAlumno.Anio);
-                                objAlumnoDb.PeriodoId = int.Parse(objAlumno.PeriodoId);
-                                objAlumnoDb.EstatusId = 1;
-                                objAlumnoDb.FechaRegistro = DateTime.Now;
-                                objAlumnoDb.UsuarioId = int.Parse(objAlumno.UsuarioId);
+                                alumnoDB.MatriculaId = NMatricula;
+                                alumnoDB.Anio = int.Parse(alumnoConfiguracion.Anio);
+                                alumnoDB.PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId);
+                                alumnoDB.EstatusId = 1;
+                                alumnoDB.FechaRegistro = DateTime.Now;
+                                alumnoDB.UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId);
 
                                 #endregion
 
@@ -534,13 +494,13 @@ namespace BLL
                                 #region Bitacora Matricula
                                 db.Matricula.Add(new Matricula
                                 {
-                                    AlumnoId = objAlumnoDb.AlumnoId,
-                                    Anio = objAlumnoDb.Anio,
-                                    FechaAsignacion = objAlumnoDb.FechaRegistro,
-                                    MatriculaId = objAlumnoDb.MatriculaId,
+                                    AlumnoId = alumnoDB.AlumnoId,
+                                    Anio = alumnoDB.Anio,
+                                    FechaAsignacion = alumnoDB.FechaRegistro,
+                                    MatriculaId = alumnoDB.MatriculaId,
                                     OfertaEducativaId = ofertaEducativa,
-                                    PeriodoId = objAlumnoDb.PeriodoId,
-                                    UsuarioId = objAlumnoDb.UsuarioId
+                                    PeriodoId = alumnoDB.PeriodoId,
+                                    UsuarioId = alumnoDB.UsuarioId
                                 });
                                 #endregion
                             }
@@ -566,16 +526,16 @@ namespace BLL
 
                         db.AlumnoInscrito.Add(new AlumnoInscrito
                         {
-                            AlumnoId = int.Parse(objAlumno.AlumnoId),
-                            OfertaEducativaId = int.Parse(objAlumno.OfertaEducativaId),
-                            Anio = int.Parse(objAlumno.Anio),
-                            PeriodoId = int.Parse(objAlumno.PeriodoId),
+                            AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
+                            OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
+                            Anio = int.Parse(alumnoConfiguracion.Anio),
+                            PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId),
                             FechaInscripcion = DateTime.Now,
                             HoraInscripcion = DateTime.Now.TimeOfDay,
-                            PagoPlanId = int.Parse(objAlumno.PagoPlanId),
+                            PagoPlanId = int.Parse(alumnoConfiguracion.PagoPlanId),
                             TurnoId = alumno.TurnoId,
                             EsEmpresa = alumno.EsEmpresa,
-                            UsuarioId = int.Parse(objAlumno.UsuarioId),
+                            UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
                             EstatusId = 1
                         });
 
@@ -583,7 +543,7 @@ namespace BLL
                         db.AlumnoInscrito.Remove(alumno);
                     }
 
-                    var actualizarGrupoAlumnoConfiguracion = db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == Alumnoid && a.OfertaEducativaId == ofertaEducativaAnterior).FirstOrDefault();
+                    GrupoAlumnoConfiguracion actualizarGrupoAlumnoConfiguracion = db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == alumnoid && a.OfertaEducativaId == ofertaEducativaAnterior).FirstOrDefault();
 
                     db.GrupoAlumnoConfiguracionBitacora.Add(
                         new GrupoAlumnoConfiguracionBitacora
@@ -610,28 +570,28 @@ namespace BLL
                     db.GrupoAlumnoConfiguracion.Add(
                         new GrupoAlumnoConfiguracion
                         {
-                            AlumnoId = int.Parse(objAlumno.AlumnoId),
-                            GrupoId = int.Parse(objAlumno.GrupoId),
-                            Anio = int.Parse(objAlumno.Anio),
-                            PeriodoId = int.Parse(objAlumno.PeriodoId),
-                            CuotaColegiatura = decimal.Parse(objAlumno.CuotaColegiatura),
-                            CuotaInscripcion = decimal.Parse(objAlumno.CuotaInscripcion),
-                            EsCuotaCongelada = bool.Parse(objAlumno.EsCuotaCongelada),
-                            EsInscripcionCongelada = bool.Parse(objAlumno.EsCuotaCongelada),
-                            EsEspecial = bool.Parse(objAlumno.EsEspecial),
+                            AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
+                            GrupoId = int.Parse(alumnoConfiguracion.GrupoId),
+                            Anio = int.Parse(alumnoConfiguracion.Anio),
+                            PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId),
+                            CuotaColegiatura = decimal.Parse(alumnoConfiguracion.CuotaColegiatura),
+                            CuotaInscripcion = decimal.Parse(alumnoConfiguracion.CuotaInscripcion),
+                            EsCuotaCongelada = bool.Parse(alumnoConfiguracion.EsCuotaCongelada),
+                            EsInscripcionCongelada = bool.Parse(alumnoConfiguracion.EsCuotaCongelada),
+                            EsEspecial = bool.Parse(alumnoConfiguracion.EsEspecial),
                             FechaRegistro = DateTime.Now,
                             HoraRegistro = DateTime.Now.TimeOfDay,
-                            OfertaEducativaId = int.Parse(objAlumno.OfertaEducativaId),
-                            PagoPlanId = int.Parse(objAlumno.PagoPlanId),
-                            UsuarioId = int.Parse(objAlumno.UsuarioId),
-                            NumeroPagos = objAlumno.NoPagos,
+                            OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
+                            PagoPlanId = int.Parse(alumnoConfiguracion.PagoPlanId),
+                            UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
+                            NumeroPagos = alumnoConfiguracion.NoPagos,
                             EstatusId = 1
                         });
 
-                    if (objAlumno.Credenciales)
+                    if (alumnoConfiguracion.Credenciales)
                     {
-                        int Anio = int.Parse(objAlumno.Anio), PeriodoId = int.Parse(objAlumno.PeriodoId), UsuarioId = int.Parse(objAlumno.UsuarioId);
-                        var CuotaCredencial = db.Cuota.Where(
+                        int Anio = int.Parse(alumnoConfiguracion.Anio), PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId), UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId);
+                        List<Cuota> CuotaCredencial = db.Cuota.Where(
                             C => C.Anio == Anio
                                 && C.PeriodoId == PeriodoId
                                 && C.OfertaEducativaId == ofertaEducativa
@@ -642,10 +602,10 @@ namespace BLL
                             db.Pago.Add(
                                 new Pago
                                 {
-                                    AlumnoId = int.Parse(objAlumno.AlumnoId),
+                                    AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
                                     Anio = Anio,
                                     PeriodoId = PeriodoId,
-                                    OfertaEducativaId = int.Parse(objAlumno.OfertaEducativaId),
+                                    OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
                                     UsuarioId = UsuarioId,
                                     Cuota = CuotaCredencial.First().Monto,
                                     CuotaId = CuotaCredencial.First().CuotaId,

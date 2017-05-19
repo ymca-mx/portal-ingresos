@@ -48,7 +48,7 @@ namespace BLL
             }
         }
 
-        public static string GuardarEmpresa(DTOEmpresa objEmpresa)
+        public static string GuardarEmpresa(DTOEmpresa empresa)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -56,58 +56,56 @@ namespace BLL
                 {
                     db.Empresa.Add(new Empresa 
                     {
-                        RFC= objEmpresa.RFC,
-                        RazonSocial = objEmpresa.RazonSocial,
+                        RFC= empresa.RFC,
+                        RazonSocial = empresa.RazonSocial,
                         FechaAlta = DateTime.Now,
-                        FechaVigencia = objEmpresa.FechaVigencia,
-                        UsuarioId = objEmpresa.Usuarioid,
+                        FechaVigencia = empresa.FechaVigencia,
+                        UsuarioId = empresa.Usuarioid,
 
                         EmpresaDetalle = new EmpresaDetalle
                         {
 
-                            Nombre = objEmpresa.EmpresaDetalle.Nombre,
-                            Paterno = objEmpresa.EmpresaDetalle.Paterno,
-                            Materno = objEmpresa.EmpresaDetalle.Materno,
-                            EmailContacto = objEmpresa.EmpresaDetalle.EmailContacto,
-                            Telefono = objEmpresa.EmpresaDetalle.Telefono,
-                            Celular = objEmpresa.EmpresaDetalle.Celular,
-                            PaisId = objEmpresa.EmpresaDetalle.PaisId,
-                            EntidadFederativaId = objEmpresa.EmpresaDetalle.EntidadFederativaId,
-                            MunicipioId = objEmpresa.EmpresaDetalle.MunicipioId,
-                            CP = objEmpresa.EmpresaDetalle.CP,
-                            Colonia = objEmpresa.EmpresaDetalle.Colonia,
-                            Calle = objEmpresa.EmpresaDetalle.Calle,
-                            NoExterior = objEmpresa.EmpresaDetalle.NoExterior,
-                            NoInterior = objEmpresa.EmpresaDetalle.NoInterior,
-                            Email = objEmpresa.EmpresaDetalle.Email,
-                            Observacion = objEmpresa.EmpresaDetalle.Observacion,
+                            Nombre = empresa.EmpresaDetalle.Nombre,
+                            Paterno = empresa.EmpresaDetalle.Paterno,
+                            Materno = empresa.EmpresaDetalle.Materno,
+                            EmailContacto = empresa.EmpresaDetalle.EmailContacto,
+                            Telefono = empresa.EmpresaDetalle.Telefono,
+                            Celular = empresa.EmpresaDetalle.Celular,
+                            PaisId = empresa.EmpresaDetalle.PaisId,
+                            EntidadFederativaId = empresa.EmpresaDetalle.EntidadFederativaId,
+                            MunicipioId = empresa.EmpresaDetalle.MunicipioId,
+                            CP = empresa.EmpresaDetalle.CP,
+                            Colonia = empresa.EmpresaDetalle.Colonia,
+                            Calle = empresa.EmpresaDetalle.Calle,
+                            NoExterior = empresa.EmpresaDetalle.NoExterior,
+                            NoInterior = empresa.EmpresaDetalle.NoInterior,
+                            Email = empresa.EmpresaDetalle.Email,
+                            Observacion = empresa.EmpresaDetalle.Observacion,
 
                         },
 
                         DatosFiscales = new DatosFiscales
                         {
-                            RFC = objEmpresa.EmpresaDetalle.DatosFiscales.RFC,
-                            PaisId = objEmpresa.EmpresaDetalle.DatosFiscales.PaisId,
-                            EntidadFederativaId = objEmpresa.EmpresaDetalle.DatosFiscales.EntidadFederativaId,
-                            MunicipioId = objEmpresa.EmpresaDetalle.DatosFiscales.MunicipioId,
-                            CP = objEmpresa.EmpresaDetalle.DatosFiscales.CP,
-                            Colonia = objEmpresa.EmpresaDetalle.DatosFiscales.Colonia,
-                            Calle = objEmpresa.EmpresaDetalle.DatosFiscales.Calle,
-                            NoExterior = objEmpresa.EmpresaDetalle.DatosFiscales.NoExterior,
-                            NoInterior = objEmpresa.EmpresaDetalle.DatosFiscales.NoInterior,
-                            Observacion = objEmpresa.EmpresaDetalle.DatosFiscales.Observacion,
-                            EsEmpresa = (bool)objEmpresa.EmpresaDetalle.DatosFiscales.EsEmpresa,
+                            RFC = empresa.EmpresaDetalle.DatosFiscales.RFC,
+                            PaisId = empresa.EmpresaDetalle.DatosFiscales.PaisId,
+                            EntidadFederativaId = empresa.EmpresaDetalle.DatosFiscales.EntidadFederativaId,
+                            MunicipioId = empresa.EmpresaDetalle.DatosFiscales.MunicipioId,
+                            CP = empresa.EmpresaDetalle.DatosFiscales.CP,
+                            Colonia = empresa.EmpresaDetalle.DatosFiscales.Colonia,
+                            Calle = empresa.EmpresaDetalle.DatosFiscales.Calle,
+                            NoExterior = empresa.EmpresaDetalle.DatosFiscales.NoExterior,
+                            NoInterior = empresa.EmpresaDetalle.DatosFiscales.NoInterior,
+                            Observacion = empresa.EmpresaDetalle.DatosFiscales.Observacion,
+                            EsEmpresa = (bool)empresa.EmpresaDetalle.DatosFiscales.EsEmpresa,
                         }
 
                     });
 
                     db.SaveChanges();
-                    //return db.Empresa.Local[0].EmpresaId;
                     return true.ToString();
                 }
                 catch (Exception )
                 {
-                    //return e.Message;
                     return false.ToString();
                 }
             }

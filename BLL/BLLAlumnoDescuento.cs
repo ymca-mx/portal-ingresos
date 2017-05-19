@@ -1058,22 +1058,22 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                DTOPeriodo objP = BLLPeriodoPortal.ConsultarPeriodo(periodo);
-                List<DTODescuentos> listDescuentos = new List<DTODescuentos> { BLLDescuentos.obtenerDescuentos(OfertaEducativaId, 802),
+                DTOPeriodo periodos = BLLPeriodoPortal.ConsultarPeriodo(periodo);
+                List<DTODescuentos> descuentos = new List<DTODescuentos> { BLLDescuentos.obtenerDescuentos(OfertaEducativaId, 802),
                 BLLDescuentos.obtenerDescuentos(OfertaEducativaId, 800,"Beca Académica"),
                 BLLDescuentos.obtenerDescuentos(OfertaEducativaId,1),
                 BLLDescuentos.obtenerDescuentos(OfertaEducativaId, 1000)};
 
-                List<DTOCuota> lstCuotas = new List<DTOCuota>();
-                foreach (DTODescuentos objDescuento in listDescuentos)
+                List<DTOCuota> cuotas = new List<DTOCuota>();
+                foreach (DTODescuentos descuento in descuentos)
                 {
-                    if (objDescuento != null)
+                    if (descuento != null)
                     {
-                        lstCuotas.Add(BLLCuota.traerCuotaParametros(new DTOAlumnoInscrito { OfertaEducativaId = OfertaEducativaId, Anio = objP.Anio, PeriodoId = objP.PeriodoId }, objDescuento));
-                        lstCuotas.Last().Descuento = objDescuento;
+                        cuotas.Add(BLLCuota.traerCuotaParametros(new DTOAlumnoInscrito { OfertaEducativaId = OfertaEducativaId, Anio = periodos.Anio, PeriodoId = periodos.PeriodoId }, descuento));
+                        cuotas.Last().Descuento = descuento;
                     }
                 }
-                return lstCuotas;
+                return cuotas;
             }
         }
 
