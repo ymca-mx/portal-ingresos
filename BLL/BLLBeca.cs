@@ -190,29 +190,30 @@ namespace BLL
                 else { return "No tiene"; }
             }
         }
+
         public static DTOAlumnoBecaDeportiva ObtenerAlumnoDeportiva(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    PeridoBeca Actual = db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(1).Select(d => new PeridoBeca
+                    PeridoBeca PeriodoActual = db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(1).Select(d => new PeridoBeca
                     {
                         Anio = d.Anio,
                         PeriodoId = d.PeriodoId,
                         Descripcion = d.Descripcion
                     }).FirstOrDefault();
 
-                    DTOAlumnoBecaDeportiva objDep = db.Alumno.Where(a => a.AlumnoId == AlumnoId).Select(a => new DTOAlumnoBecaDeportiva
+                    DTOAlumnoBecaDeportiva AlumnoDeportiva = db.Alumno.Where(a => a.AlumnoId == AlumnoId).Select(a => new DTOAlumnoBecaDeportiva
                     {
                         AlumnoId = a.AlumnoId,
                         Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
                     }).FirstOrDefault();
 
-                    objDep.lstDescuentos = new List<DTOAlumnoDescuento>();
-                    objDep.PeriodosAlumno = new List<PeridoBeca>();
+                    AlumnoDeportiva.lstDescuentos = new List<DTOAlumnoDescuento>();
+                    AlumnoDeportiva.PeriodosAlumno = new List<PeridoBeca>();
 
-                    objDep.OfertasAlumnos = (db.Pago.Where(s => s.AlumnoId == AlumnoId
+                    AlumnoDeportiva.OfertasAlumnos = (db.Pago.Where(s => s.AlumnoId == AlumnoId
                                                     && (s.Cuota1.PagoConceptoId == 800
                                                     || s.Cuota1.PagoConceptoId == 802)
                                                     && s.EstatusId != 2)
@@ -224,23 +225,23 @@ namespace BLL
                                                         Descripcion = ""
                                                     } ) ).ToList();
 
-                    objDep.OfertasAlumnos.ForEach(s2 =>
+                    AlumnoDeportiva.OfertasAlumnos.ForEach(s2 =>
                     {
                         s2.Descripcion = db.OfertaEducativa.Where(o => o.OfertaEducativaId == s2.OfertaEducativaId).FirstOrDefault().Descripcion;
-                        s2.Mensaje = VerificarInscripcionActual(AlumnoId,s2.OfertaEducativaId, Actual.Anio, Actual.PeriodoId);
+                        s2.Mensaje = VerificarInscripcionActual(AlumnoId,s2.OfertaEducativaId, PeriodoActual.Anio, PeriodoActual.PeriodoId);
                     });
 
 
-               
 
-                    objDep.PeriodosAlumno.Add(db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(2).Select(d => new PeridoBeca
+
+                    AlumnoDeportiva.PeriodosAlumno.Add(db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(2).Select(d => new PeridoBeca
                                                {
                                                    Anio = d.Anio,
                                                    PeriodoId = d.PeriodoId,
                                                    Descripcion = d.Descripcion,
                                                }).FirstOrDefault());
 
-                            List<DTOAlumnoDescuento> objDesc = db.AlumnoDescuento.Where(ad => ad.AlumnoId == AlumnoId
+                            List<DTOAlumnoDescuento> Descuento = db.AlumnoDescuento.Where(ad => ad.AlumnoId == AlumnoId
                                                                                    && ad.Anio > 2016
                                                                                    && ad.EstatusId == 2
                                                                                    && ad.PagoConceptoId == 800 ).Select(p => new DTOAlumnoDescuento
@@ -274,7 +275,7 @@ namespace BLL
                     
 
                             decimal MontoDeportiva = 0;
-                            objDesc.ForEach(n => 
+                    Descuento.ForEach(n => 
                             {
                              
                              if (n.BecaSEP != "No") { n.SMonto = "Beca Sep - " + n.BecaSEP;}
@@ -285,12 +286,12 @@ namespace BLL
                             
                             });
                             
-                            if (objDesc != null)
+                            if (Descuento != null)
                             {
-                                objDep.lstDescuentos.AddRange(objDesc);
+                        AlumnoDeportiva.lstDescuentos.AddRange(Descuento);
                             }
 
-                    return objDep;
+                    return AlumnoDeportiva;
                 }
                 catch { return null; }
             }

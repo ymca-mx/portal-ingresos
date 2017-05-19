@@ -1159,34 +1159,34 @@ namespace BLL
 
                 if (db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).Count() > 0)
                 {
-                    Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
-                    AlumnoDetalleCoordinador objAlB2 = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                    Alumno alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                    AlumnoDetalleCoordinador AlumnoCoordinador = db.AlumnoDetalleCoordinador.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
                     DTOAlumno objAlumno = new DTOAlumno
                     {
                         AlumnoId = AlumnoId,
-                        Nombre = objAlB.Nombre,
-                        Paterno = objAlB.Paterno,
-                        Materno = objAlB.Materno,
+                        Nombre = alumno.Nombre,
+                        Paterno = alumno.Paterno,
+                        Materno = alumno.Materno,
                         DTOAlumnoDetalle = new DTOAlumnoDetalle
                         {
-                            EstadoCivilId = objAlB2.EstadoCivilId,
-                            Celular = objAlB2.Celular,
-                            TelefonoCasa = objAlB2.TelefonoCasa,
-                            FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
-                            FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
-                            GeneroId = objAlB.AlumnoDetalle.GeneroId,
-                            CURP = objAlB.AlumnoDetalle.CURP,
-                            Email = objAlB2.Email,
-                            Calle = objAlB2.Calle,
-                            NoExterior = objAlB2.NoExterior,
-                            NoInterior = objAlB2.NoInterior,
-                            Cp = objAlB2.CP,
-                            Colonia = objAlB2.Colonia,
-                            EntidadFederativaId = objAlB2.EntidadFederativaId,
-                            MunicipioId = objAlB2.MunicipioId,
-                            PaisId = objAlB.AlumnoDetalle.PaisId,
-                            EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId
+                            EstadoCivilId = AlumnoCoordinador.EstadoCivilId,
+                            Celular = AlumnoCoordinador.Celular,
+                            TelefonoCasa = AlumnoCoordinador.TelefonoCasa,
+                            FechaNacimiento = alumno.AlumnoDetalle.FechaNacimiento,
+                            FechaNacimientoC = alumno.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
+                            GeneroId = alumno.AlumnoDetalle.GeneroId,
+                            CURP = alumno.AlumnoDetalle.CURP,
+                            Email = AlumnoCoordinador.Email,
+                            Calle = AlumnoCoordinador.Calle,
+                            NoExterior = AlumnoCoordinador.NoExterior,
+                            NoInterior = AlumnoCoordinador.NoInterior,
+                            Cp = AlumnoCoordinador.CP,
+                            Colonia = AlumnoCoordinador.Colonia,
+                            EntidadFederativaId = AlumnoCoordinador.EntidadFederativaId,
+                            MunicipioId = AlumnoCoordinador.MunicipioId,
+                            PaisId = alumno.AlumnoDetalle.PaisId,
+                            EntidadNacimientoId = alumno.AlumnoDetalle.EntidadNacimientoId
                         }
                     };
 
@@ -1195,34 +1195,34 @@ namespace BLL
                 }
                 else {
                   
-                        Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                        Alumno alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
 
                         DTOAlumno objAlumno = new DTOAlumno
                         {
                             AlumnoId = AlumnoId,
-                            Nombre = objAlB.Nombre,
-                            Paterno = objAlB.Paterno,
-                            Materno = objAlB.Materno,
+                            Nombre = alumno.Nombre,
+                            Paterno = alumno.Paterno,
+                            Materno = alumno.Materno,
                             DTOAlumnoDetalle = new DTOAlumnoDetalle
                             {
-                                EstadoCivilId = objAlB.AlumnoDetalle.EstadoCivilId,
-                                Celular = (objAlB.AlumnoDetalle.Celular.Trim()).Replace("-", ""),
-                                TelefonoCasa = (objAlB.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-", ""),
-                                FechaNacimiento = objAlB.AlumnoDetalle.FechaNacimiento,
-                                FechaNacimientoC = objAlB.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
-                                GeneroId = objAlB.AlumnoDetalle.GeneroId,
-                                CURP = objAlB.AlumnoDetalle.CURP,
-                                Email = objAlB.AlumnoDetalle.Email.Trim(),
-                                Calle = objAlB.AlumnoDetalle.Calle.Trim(),
-                                NoExterior = objAlB.AlumnoDetalle.NoExterior,
-                                NoInterior = objAlB.AlumnoDetalle.NoInterior,
-                                Cp = objAlB.AlumnoDetalle.CP.Trim(),
-                                Colonia = objAlB.AlumnoDetalle.Colonia.Trim(),
-                                EntidadFederativaId = objAlB.AlumnoDetalle.EntidadFederativaId,
-                                MunicipioId = objAlB.AlumnoDetalle.MunicipioId,
-                                PaisId = objAlB.AlumnoDetalle.PaisId,
-                                EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId
+                                EstadoCivilId = alumno.AlumnoDetalle.EstadoCivilId,
+                                Celular = (alumno.AlumnoDetalle.Celular.Trim()).Replace("-", ""),
+                                TelefonoCasa = (alumno.AlumnoDetalle.TelefonoCasa.Trim()).Replace("-", ""),
+                                FechaNacimiento = alumno.AlumnoDetalle.FechaNacimiento,
+                                FechaNacimientoC = alumno.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
+                                GeneroId = alumno.AlumnoDetalle.GeneroId,
+                                CURP = alumno.AlumnoDetalle.CURP,
+                                Email = alumno.AlumnoDetalle.Email.Trim(),
+                                Calle = alumno.AlumnoDetalle.Calle.Trim(),
+                                NoExterior = alumno.AlumnoDetalle.NoExterior,
+                                NoInterior = alumno.AlumnoDetalle.NoInterior,
+                                Cp = alumno.AlumnoDetalle.CP.Trim(),
+                                Colonia = alumno.AlumnoDetalle.Colonia.Trim(),
+                                EntidadFederativaId = alumno.AlumnoDetalle.EntidadFederativaId,
+                                MunicipioId = alumno.AlumnoDetalle.MunicipioId,
+                                PaisId = alumno.AlumnoDetalle.PaisId,
+                                EntidadNacimientoId = alumno.AlumnoDetalle.EntidadNacimientoId
                             }
                         };
 
@@ -11090,7 +11090,7 @@ namespace BLL
                         {
                             #region Referenciados
 
-                            var Referenciados = db.PagoParcial.Where(s => s.PagoTipoId == 2 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                            List<PagoParcial> Referenciados = db.PagoParcial.Where(s => s.PagoTipoId == 2 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
                             Referenciados.ForEach(s =>
                             {
                                 if (saldo > 0)
@@ -11172,7 +11172,7 @@ namespace BLL
 
                             #region Caja
 
-                            var Caja = db.PagoParcial.Where(s => s.PagoTipoId == 1 && s.PagoId == n.PagoId && s.EstatusId == 4).ToList();
+                            List<PagoParcial> Caja = db.PagoParcial.Where(s => s.PagoTipoId == 1 && s.PagoId == n.PagoId && s.EstatusId == 4).ToList();
                             Caja.ForEach(s =>
                             {
                                 if (saldo > 0)
@@ -11223,7 +11223,7 @@ namespace BLL
                                             importe = saldo
                                         });
 
-                                        var Detalles = s.PagoDetalle.ToList();
+                                        List<PagoDetalle> Detalles = s.PagoDetalle.ToList();
                                         decimal saldoDetalles = saldo;
 
                                         Detalles.ForEach(a =>
@@ -11287,7 +11287,7 @@ namespace BLL
 
                             if (recibos.Count > 0)
                             {
-                                var RecibosTotal = (from consulta in
+                                List<DTO.ReciboDatos> RecibosTotal = (from consulta in
                                                         (from a in recibos
                                                          select new { a })
                                                     group consulta by new
@@ -11374,7 +11374,7 @@ namespace BLL
                         {
                             #region Referenciados
 
-                            var Referenciados = db.PagoParcial.Where(s => s.PagoTipoId == 2 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
+                            List<PagoParcial> Referenciados = db.PagoParcial.Where(s => s.PagoTipoId == 2 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
                             Referenciados.ForEach(s =>
                             {
 
@@ -11457,7 +11457,7 @@ namespace BLL
 
                             #region Caja
 
-                            var Caja = db.PagoParcial.Where(s => s.PagoTipoId == 1 && s.PagoId == n.PagoId && s.EstatusId == 4).ToList();
+                            List<PagoParcial> Caja = db.PagoParcial.Where(s => s.PagoTipoId == 1 && s.PagoId == n.PagoId && s.EstatusId == 4).ToList();
                             Caja.ForEach(s =>
                             {
                                 if (saldo > 0)
@@ -11508,7 +11508,7 @@ namespace BLL
                                             importe = saldo
                                         });
 
-                                        var Detalles = s.PagoDetalle.ToList();
+                                        List<PagoDetalle> Detalles = s.PagoDetalle.ToList();
                                         decimal saldoDetalles = saldo;
 
                                         Detalles.ForEach(a =>
@@ -11572,7 +11572,7 @@ namespace BLL
 
                             if (recibos.Count > 0)
                             {
-                                var RecibosTotal = (from consulta in
+                                List<DTO.ReciboDatos> RecibosTotal = (from consulta in
                                                         (from a in recibos
                                                          select new { a })
                                                     group consulta by new
