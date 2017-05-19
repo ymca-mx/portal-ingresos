@@ -900,7 +900,7 @@ namespace BLL
             {
                 try
                 {
-                    DTOAlumno objAlumno = (from a in db.Alumno
+                    return (from a in db.Alumno
                                            where a.AlumnoId == AlumnoId
                                            select new DTOAlumno
                                            {
@@ -921,7 +921,6 @@ namespace BLL
                                                    Nombre = a.Usuario.Nombre
                                                }
                                            }).AsNoTracking().FirstOrDefault();
-                    return objAlumno;
                 }
                 catch
                 {

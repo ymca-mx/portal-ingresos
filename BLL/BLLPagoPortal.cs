@@ -446,45 +446,33 @@ namespace BLL
             {
                 try
                 {
-                    //int idPago = 2588;
                     DateTime FechaActual = DateTime.Now;
-                    List<Pago> listPagos = db.Pago.Where(p => p.AlumnoId == AlumnoId
-                    //&& p.EstatusId != 2 
-                    //&& p.PagoParcial.Count <= 1 //<----Preguntarle a Enrique
+                    List<Pago> Pagos = db.Pago.Where(p => p.AlumnoId == AlumnoId
                     ).OrderByDescending(f => f.FechaGeneracion).ToList();
 
-
-                    //listPagos.ForEach(a =>
-                    //{
-                    //    if (a.PagoParcial.Count > 1)
-                    //    {
-                    //        listPagos.Remove(a);
-                    //    }
-                    //});
-
-                    //FechaActual = FechaActual.AddDays(-7);
-                    List<DTOPagos> lstPagos = new List<DTOPagos>();
-                    listPagos.ForEach(p =>
+                    
+                    List<DTOPagos> PagosDTO = new List<DTOPagos>();
+                    Pagos.ForEach(p =>
                     {
 
-                        DTOPagos objPjk = new DTOPagos();
+                        DTOPagos PagoDTO = new DTOPagos();
 
-                        objPjk.PagoId = p.PagoId;
-                        objPjk.AlumnoId = p.AlumnoId;
-                        objPjk.Anio = p.Anio;
-                        objPjk.PeriodoId = p.PeriodoId;
-                        objPjk.DTOPeriodo = new DTOPeriodo
+                        PagoDTO.PagoId = p.PagoId;
+                        PagoDTO.AlumnoId = p.AlumnoId;
+                        PagoDTO.Anio = p.Anio;
+                        PagoDTO.PeriodoId = p.PeriodoId;
+                        PagoDTO.DTOPeriodo = new DTOPeriodo
                         {
                             PeriodoId = p.Periodo.PeriodoId,
                             Anio = p.Periodo.Anio,
                         };
-                        objPjk.SubperiodoId = p.SubperiodoId;
-                        objPjk.OfertaEducativaId = p.OfertaEducativaId;
-                        objPjk.FechaGeneracion = p.FechaGeneracion;
-                        objPjk.CuotaId = p.CuotaId;
-                        objPjk.Cuota = p.Cuota;
-                        objPjk.FechaPago = (DateTime)new DateTime(p.Anio, p.Subperiodo.MesId, 01);
-                        objPjk.DTOCuota = new DTOCuota
+                        PagoDTO.SubperiodoId = p.SubperiodoId;
+                        PagoDTO.OfertaEducativaId = p.OfertaEducativaId;
+                        PagoDTO.FechaGeneracion = p.FechaGeneracion;
+                        PagoDTO.CuotaId = p.CuotaId;
+                        PagoDTO.Cuota = p.Cuota;
+                        PagoDTO.FechaPago = (DateTime)new DateTime(p.Anio, p.Subperiodo.MesId, 01);
+                        PagoDTO.DTOCuota = new DTOCuota
                         {
                             CuotaId = p.Cuota1.CuotaId,
                             Anio = p.Cuota1.Anio,
@@ -510,41 +498,31 @@ namespace BLL
                                 PagoConceptoId = p.Cuota1.PagoConcepto.PagoConceptoId
                             }
                         };
-                        objPjk.Promesa = p.Promesa;
-                        objPjk.Pagado = (p.Promesa - p.Restante).ToString();
-                        objPjk.Restante = p.Restante.ToString();
-                        objPjk.Referencia = p.ReferenciaId;
-                        objPjk.EstatusId = p.EstatusId;
-                        lstPagos.Add(objPjk);
+                        PagoDTO.Promesa = p.Promesa;
+                        PagoDTO.Pagado = (p.Promesa - p.Restante).ToString();
+                        PagoDTO.Restante = p.Restante.ToString();
+                        PagoDTO.Referencia = p.ReferenciaId;
+                        PagoDTO.EstatusId = p.EstatusId;
+                        PagosDTO.Add(PagoDTO);
                     });
 
-                    lstPagos.ForEach(delegate (DTOPagos objP)
+                    PagosDTO.ForEach(Pago => 
                     {
-                        objP.FechaGeneracionS = objP.FechaGeneracion.ToString("dd/MM/yyyy", Cultura);
-                        objP.Cancelable = objP.FechaGeneracion.ToShortDateString() == FechaActual.ToShortDateString() ? true : false;
-                        objP.objNormal = new Pagos_Detalles
+                        Pago.FechaGeneracionS = Pago.FechaGeneracion.ToString("dd/MM/yyyy", Cultura);
+                        Pago.Cancelable = Pago.FechaGeneracion.ToShortDateString() == FechaActual.ToShortDateString() ? true : false;
+                        Pago.objNormal = new Pagos_Detalles
                         {
-                            FechaLimite = (Utilities.Fecha.Prorroga(objP.FechaPago.Value.Year, objP.FechaPago.Value.Month, true, 5).ToString("dd/MM/yyyy", Cultura)),
-                            Monto = objP.Promesa.ToString("C", Cultura),
-                            Restante = decimal.Parse(objP.Pagado).ToString("C", Cultura),
-                            Estatus = objP.EstatusId == 2 ? "Cancelado" : objP.Promesa == decimal.Parse(objP.Restante) ? (objP.Promesa == 0 ? "Pagado" : "Pendiente") : (objP.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
+                            FechaLimite = (Utilities.Fecha.Prorroga(Pago.FechaPago.Value.Year, Pago.FechaPago.Value.Month, true, 5).ToString("dd/MM/yyyy", Cultura)),
+                            Monto = Pago.Promesa.ToString("C", Cultura),
+                            Restante = decimal.Parse(Pago.Pagado).ToString("C", Cultura),
+                            Estatus = Pago.EstatusId == 2 ? "Cancelado" : Pago.Promesa == decimal.Parse(Pago.Restante) ? (Pago.Promesa == 0 ? "Pagado" : "Pendiente") : (Pago.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
                         };
-                        if (objP.Anio == 2016 && objP.PeriodoId == 1)
-                        {
-                            objP.DTOCuota.PeridoAnio = "";
-                        }
-                        else
-                        {
-                            objP.DTOCuota.PeridoAnio = objP.DTOCuota.Anio.ToString() + "-" + objP.DTOCuota.PeriodoId.ToString();
-                            int Anio, Periodo, Oferta, Concepto;
-                            Anio = (objP.DTOPeriodo.PeriodoId == 4 ? objP.DTOPeriodo.Anio - 1 : objP.DTOPeriodo.Anio);
-                            Periodo = (objP.DTOPeriodo.PeriodoId == 1 ? 4 : objP.DTOPeriodo.PeriodoId - 1);
-                            Oferta = objP.OfertaEducativaId;
-                            Concepto = objP.DTOCuota.PagoConceptoId;
-                        }
+                        Pago.DTOCuota.PeridoAnio = Pago.Anio == 2016 && Pago.PeriodoId == 1 ? "" :
+                        Pago.DTOCuota.Anio.ToString() + "-" + Pago.DTOCuota.PeriodoId.ToString();
+                        
 
                     });
-                    return lstPagos;
+                    return PagosDTO;
                 }
                 catch (Exception)
                 {
