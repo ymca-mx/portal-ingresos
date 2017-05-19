@@ -21,18 +21,18 @@ namespace BLL
                 try
                 {
                     //DTOPeriodo objPEr = BLLPeriodo.TraerPeriodoEntreFechas(DateTime.Now);
-                    DTOAlumnoBecaComite objCom = db.Alumno.Where(a => a.AlumnoId == AlumnoId).Select(a => new DTOAlumnoBecaComite
+                    DTOAlumnoBecaComite Alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).Select(a => new DTOAlumnoBecaComite
                     {
                         AlumnoId = a.AlumnoId,
                         Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
                     }).FirstOrDefault();
-                    objCom.EsEmpresa = db.AlumnoInscrito.Where(l => l.AlumnoId == AlumnoId && l.EsEmpresa).ToList().Count > 0 ? true : false;
+                    Alumno.EsEmpresa = db.AlumnoInscrito.Where(l => l.AlumnoId == AlumnoId && l.EsEmpresa).ToList().Count > 0 ? true : false;
 
-                    objCom.lstDescuentos = new List<DTOAlumnoDescuento>();
-                    objCom.PeriodosAlumno = new List<PeridoBeca>();
+                    Alumno.lstDescuentos = new List<DTOAlumnoDescuento>();
+                    Alumno.PeriodosAlumno = new List<PeridoBeca>();
 
                     #region Group by Ofertas Alumnos
-                    var oferaPa = db.Pago.Where(s => s.AlumnoId == AlumnoId
+                   IEnumerable<DTOAlumnoOfertas> OfertasAlumno = db.Pago.Where(s => s.AlumnoId == AlumnoId
                                                     && (s.Cuota1.PagoConceptoId == 800
                                                     || s.Cuota1.PagoConceptoId == 802)
                                                     && s.EstatusId != 2)
@@ -44,7 +44,7 @@ namespace BLL
                                                         Descripcion=""
                                                     });
 
-                    objCom.OfertasAlumnos = (from a in oferaPa
+                    Alumno.OfertasAlumnos = (from a in OfertasAlumno
                                              select new DTOAlumnoOfertas
                                              {
                                                  Descripcion = a.Descripcion,
@@ -52,12 +52,12 @@ namespace BLL
                                              }).ToList();
                     #endregion
 
-                    objCom.OfertasAlumnos.ForEach(s2 =>
+                    Alumno.OfertasAlumnos.ForEach(s2 =>
                     {
                     #region Group By Periodo de Ofertas
                     s2.Descripcion = db.OfertaEducativa.Where(o => o.OfertaEducativaId == s2.OfertaEducativaId).FirstOrDefault().Descripcion;
 
-                    var oferaPaPeriod = db.Pago.Where(s => s.AlumnoId == AlumnoId
+                    IEnumerable<PeridoBeca> OfertasAlumnoAnioPeriodo = db.Pago.Where(s => s.AlumnoId == AlumnoId
                                                 && (s.Cuota1.PagoConceptoId == 800
                                                 || s.Cuota1.PagoConceptoId == 802)
                                                 && s.EstatusId != 2
@@ -72,7 +72,7 @@ namespace BLL
                                                     Descripcion = ""
                                                 });
 
-                        objCom.PeriodosAlumno.AddRange((from a in oferaPaPeriod
+                        Alumno.PeriodosAlumno.AddRange((from a in OfertasAlumnoAnioPeriodo
                                                         select new PeridoBeca
                                                         {
                                                             Anio = a.Anio,
@@ -82,23 +82,23 @@ namespace BLL
                                                             
                                                         }).ToList());
 
-                        objCom.PeriodosAlumno.ForEach(o =>
+                        Alumno.PeriodosAlumno.ForEach(o =>
                         {
-                            List<AlumnoInscrito> lstAl = db.AlumnoInscrito.Where(ai =>
+                            List<AlumnoInscrito> AlumnoInscrito = db.AlumnoInscrito.Where(ai =>
                                       ai.AlumnoId == AlumnoId
                                       && ai.Anio == o.Anio
                                       && ai.OfertaEducativaId == o.OfertaEducativaId
                                       && ai.PeriodoId == o.PeriodoId
                                       && ai.EsEmpresa == true).ToList();
-                            if (lstAl.Count == 0)
+                            if (AlumnoInscrito.Count == 0)
                             {
-                                List<AlumnoInscritoBitacora> lstAl1 = db.AlumnoInscritoBitacora.Where(ai =>
+                                List<AlumnoInscritoBitacora> AlumnoInscrito1 = db.AlumnoInscritoBitacora.Where(ai =>
                                             ai.AlumnoId == AlumnoId
                                           && ai.Anio == o.Anio
                                           && ai.OfertaEducativaId == o.OfertaEducativaId
                                           && ai.PeriodoId == o.PeriodoId
                                           && ai.EsEmpresa == true).ToList();
-                                o.EsEmprea = lstAl1.Count > 0 ? true : false;
+                                o.EsEmprea = AlumnoInscrito1.Count > 0 ? true : false;
                             }
                             else
                             { o.EsEmprea = true; }
@@ -112,16 +112,16 @@ namespace BLL
                                                                       && doc.Anio == o.Anio
                                                                       && doc.PeriodoId == o.PeriodoId).ToList();
                             #region Descuentos 
-                            AlumnoDescuento objDesc = db.AlumnoDescuento.Where(ad => ad.AlumnoId == AlumnoId
+                            AlumnoDescuento DescuentoAlumno = db.AlumnoDescuento.Where(ad => ad.AlumnoId == AlumnoId
                                                                                    && ad.Anio == o.Anio
                                                                                    && ad.PeriodoId == o.PeriodoId
                                                                                    && ad.OfertaEducativaId == s2.OfertaEducativaId
                                                                                    && ad.PagoConceptoId == 800
                                                                                    && ad.EstatusId == 2
                                                                                    && ad.Monto>0).FirstOrDefault();
-                            if (objDesc != null)
+                            if (DescuentoAlumno != null)
                             {
-                                objCom.lstDescuentos.Add(new DTOAlumnoDescuento
+                                Alumno.lstDescuentos.Add(new DTOAlumnoDescuento
                                 {
                                     DescripcionPeriodo = o.Descripcion,
                                     AlumnoId = AlumnoId,
@@ -130,33 +130,32 @@ namespace BLL
                                     AnioPeriodoId = o.Anio + " - " + o.PeriodoId,
                                     Usuario = new DTOUsuario
                                     {
-                                        Nombre = objDesc.Usuario.Nombre,
-                                        UsuarioId = objDesc.UsuarioId
+                                        Nombre = DescuentoAlumno.Usuario.Nombre,
+                                        UsuarioId = DescuentoAlumno.UsuarioId
                                     },
-                                    Monto = objDesc.Monto,
-                                    BecaComite = objDesc.EsComite == true ? "Si" : "No",
-                                    BecaDeportiva = objDesc.EsDeportiva == true ? "Si" : "No",
-                                    BecaSEP = objDesc.EsSEP == true ? "Si" : "No",
-                                    FechaAplicacionS = (objDesc.FechaAplicacion.Value.Day < 10 ?
-                                                        "0" + objDesc.FechaAplicacion.Value.Day :
-                                                            objDesc.FechaAplicacion.Value.Day.ToString()) + "/" +
-                                                        (objDesc.FechaAplicacion.Value.Month < 10 ?
-                                                        "0" + objDesc.FechaAplicacion.Value.Month :
-                                                            objDesc.FechaAplicacion.Value.Month.ToString()) + "/" +
-                                                        objDesc.FechaAplicacion.Value.Year.ToString(),
+                                    Monto = DescuentoAlumno.Monto,
+                                    BecaComite = DescuentoAlumno.EsComite == true ? "Si" : "No",
+                                    BecaDeportiva = DescuentoAlumno.EsDeportiva == true ? "Si" : "No",
+                                    BecaSEP = DescuentoAlumno.EsSEP == true ? "Si" : "No",
+                                    FechaAplicacionS = (DescuentoAlumno.FechaAplicacion.Value.Day < 10 ?
+                                                        "0" + DescuentoAlumno.FechaAplicacion.Value.Day :
+                                                            DescuentoAlumno.FechaAplicacion.Value.Day.ToString()) + "/" +
+                                                        (DescuentoAlumno.FechaAplicacion.Value.Month < 10 ?
+                                                        "0" + DescuentoAlumno.FechaAplicacion.Value.Month :
+                                                            DescuentoAlumno.FechaAplicacion.Value.Month.ToString()) + "/" +
+                                                        DescuentoAlumno.FechaAplicacion.Value.Year.ToString(),
                                     OfertaEducativaId = s2.OfertaEducativaId,
-                                    SMonto = objDesc.Monto.ToString(),
-                                    DocAcademicaId = lstDocumentosAlumno.Count > 0 ?
-                                                        lstDocumentosAlumno.Where(a => a.TipoDocumento == 1).ToList().Count > 0 ?
-                                                            lstDocumentosAlumno.Where(a => a.TipoDocumento == 1).FirstOrDefault().AlumnoInscritoDocumentoId.ToString()
-                                                            : string.Empty
-                                                        : string.Empty,
+                                    SMonto = DescuentoAlumno.Monto.ToString(),
+                                    DocAcademicaId = (lstDocumentosAlumno?
+                                                        .Where(a => a.TipoDocumento == 1)?
+                                                        .FirstOrDefault()?
+                                                        .AlumnoInscritoDocumentoId.ToString() ?? ""),
 
-                                    DocComiteRutaId = lstDocumentosAlumno.Count > 0 ?
-                                                        lstDocumentosAlumno.Where(a => a.TipoDocumento == 2).ToList().Count > 0 ?
-                                                            lstDocumentosAlumno.Where(a => a.TipoDocumento == 2).FirstOrDefault().AlumnoInscritoDocumentoId.ToString()
-                                                            : string.Empty
-                                                        : string.Empty,
+                                    DocComiteRutaId = (lstDocumentosAlumno?
+                                                            .Where(a => a.TipoDocumento == 2)?
+                                                            .FirstOrDefault()?
+                                                            .AlumnoInscritoDocumentoId.ToString() ?? "")
+                                                            
                                 });
                             }
                             #endregion
@@ -165,7 +164,7 @@ namespace BLL
 
                     });
 
-                    return objCom;
+                    return Alumno;
                 }
                 catch { return null; }                 
             }
@@ -176,17 +175,17 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                var AlumnoInscr = db.AlumnoInscrito
+                List<AlumnoInscrito> AlumnoInscrito = db.AlumnoInscrito
                                     .Where(k => k.AlumnoId == AlumnoId
                                         && k.OfertaEducativaId == OfertaEducativaId
                                         && k.PeriodoId == PeriodoId
                                         && k.Anio == Anio).ToList();
-                var AlumnoInscrB = db.AlumnoInscritoBitacora
+                List<AlumnoInscritoBitacora> AlumnoInscritoBitacora = db.AlumnoInscritoBitacora
                                     .Where(k => k.AlumnoId == AlumnoId
                                         && k.OfertaEducativaId == OfertaEducativaId
                                         && k.PeriodoId == PeriodoId
                                         && k.Anio == Anio).ToList();
-                if (AlumnoInscr.Count > 0 || AlumnoInscrB.Count > 0)
+                if (AlumnoInscrito.Count > 0 || AlumnoInscritoBitacora.Count > 0)
                 { return "Procede"; }
                 else { return "No tiene"; }
             }

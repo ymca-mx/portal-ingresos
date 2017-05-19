@@ -389,14 +389,14 @@ namespace AppAdministrativos.WS
             string Telefono2PA2, string Autoriza2)
         {
             int? defaul = null;
-            DTOAlumno objAlumnoUpdate = new DTOAlumno
+            DTOAlumno Alumno = new DTOAlumno
             {
                 Nombre = Nombre,
                 Paterno = Paterno,
                 Materno = Materno,
                 AlumnoId = int.Parse(AlumnoId),
             };
-            objAlumnoUpdate.DTOAlumnoDetalle = new DTOAlumnoDetalle
+            Alumno.DTOAlumnoDetalle = new DTOAlumnoDetalle
             {
                 AlumnoId = int.Parse(AlumnoId),
                 Calle = Calle,
@@ -418,8 +418,8 @@ namespace AppAdministrativos.WS
                 TelefonoCasa = TelCasa,
                 TelefonoOficina = ""
             };
-            objAlumnoUpdate.DTOPersonaAutorizada = new List<DTOPersonaAutorizada>();
-            objAlumnoUpdate.DTOPersonaAutorizada.Add(
+            Alumno.DTOPersonaAutorizada = new List<DTOPersonaAutorizada>();
+            Alumno.DTOPersonaAutorizada.Add(
                 new DTOPersonaAutorizada
                 {
                     AlumnoId = int.Parse(AlumnoId),
@@ -435,7 +435,7 @@ namespace AppAdministrativos.WS
 
             if (NombrePA2.Length > 1)
             {
-                objAlumnoUpdate.DTOPersonaAutorizada.Add(new DTOPersonaAutorizada
+                Alumno.DTOPersonaAutorizada.Add(new DTOPersonaAutorizada
                 {
                     AlumnoId = int.Parse(AlumnoId),
                     Autoriza = bool.Parse(Autoriza2),
@@ -448,23 +448,10 @@ namespace AppAdministrativos.WS
                     Telefono = Telefono2PA2
                 });
             }
-            DTOProspectoDetalle objProspectoDetalle = new DTOProspectoDetalle();
-
-            objProspectoDetalle.Calle = Calle;
-            objProspectoDetalle.Celular = Celular;
-            objProspectoDetalle.Colonia = Colonia;
-            objProspectoDetalle.CP = CP;
-            objProspectoDetalle.CURP = CURP;
-            objProspectoDetalle.Email = Email;
-            objProspectoDetalle.EntidadFederativaId = int.Parse(Estado);
-            objProspectoDetalle.EstadoCivilId = int.Parse(EstadoCivil);
-            objProspectoDetalle.MunicipioId = int.Parse(Municipio);
-            objProspectoDetalle.NoExterior = objAlumnoUpdate.DTOAlumnoDetalle.NoExterior;
-            objProspectoDetalle.NoInterior = objAlumnoUpdate.DTOAlumnoDetalle.NoInterior;
 
 
 
-            return BLLAlumnoPortal.UpdateAlumno(objAlumnoUpdate, objProspectoDetalle, int.Parse(UsuarioId));
+            return BLLAlumnoPortal.UpdateAlumno(Alumno, int.Parse(UsuarioId));
         }
         [WebMethod]
         public bool UpdateMail(string AlumnoId, string Email, string UsuarId)

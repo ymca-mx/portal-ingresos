@@ -14,14 +14,13 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOEntidadFederativa> lstEntidadFederativa = (from a in db.EntidadFederativa
+                return (from a in db.EntidadFederativa
                                                                    orderby a.Descripcion ascending
                                                                  select new DTOEntidadFederativa
                                                            {
                                                                EntidadFederativaId = a.EntidadFederativaId,
                                                                Descripcion = a.Descripcion
                                                            }).ToList();
-                return lstEntidadFederativa;
             }
         }
     }

@@ -18,30 +18,30 @@ namespace BLL
             {
                 try
                 {
-                    AlumnoDetalle objAlDetalle= db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
-                    objAlDetalle.Email = Mail;
+                    AlumnoDetalle AlumnoDetalleAnterior= db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                    AlumnoDetalleAnterior.Email = Mail;
                     db.AlumnoDetalleBitacora.Add(new AlumnoDetalleBitacora
                     {
-                        AlumnoId = objAlDetalle.AlumnoId,
-                        Calle = objAlDetalle.Calle,
-                        Celular = objAlDetalle.Celular,
-                        Colonia = objAlDetalle.Colonia,
-                        CP = objAlDetalle.CP,
-                        CURP = objAlDetalle.CURP,
-                        Email = objAlDetalle.Email,
-                        EntidadFederativaId = objAlDetalle.EntidadFederativaId,
-                        EntidadNacimientoId = objAlDetalle.EntidadNacimientoId,
-                        EstadoCivilId = objAlDetalle.EstadoCivilId,
+                        AlumnoId = AlumnoDetalleAnterior.AlumnoId,
+                        Calle = AlumnoDetalleAnterior.Calle,
+                        Celular = AlumnoDetalleAnterior.Celular,
+                        Colonia = AlumnoDetalleAnterior.Colonia,
+                        CP = AlumnoDetalleAnterior.CP,
+                        CURP = AlumnoDetalleAnterior.CURP,
+                        Email = AlumnoDetalleAnterior.Email,
+                        EntidadFederativaId = AlumnoDetalleAnterior.EntidadFederativaId,
+                        EntidadNacimientoId = AlumnoDetalleAnterior.EntidadNacimientoId,
+                        EstadoCivilId = AlumnoDetalleAnterior.EstadoCivilId,
                         Fecha = DateTime.Now,
-                        FechaNacimiento = objAlDetalle.FechaNacimiento,
-                        GeneroId = objAlDetalle.GeneroId,
-                        MunicipioId = objAlDetalle.MunicipioId,
-                        NoExterior = objAlDetalle.NoExterior,
-                        NoInterior = objAlDetalle.NoInterior,
-                        PaisId = objAlDetalle.PaisId,
+                        FechaNacimiento = AlumnoDetalleAnterior.FechaNacimiento,
+                        GeneroId = AlumnoDetalleAnterior.GeneroId,
+                        MunicipioId = AlumnoDetalleAnterior.MunicipioId,
+                        NoExterior = AlumnoDetalleAnterior.NoExterior,
+                        NoInterior = AlumnoDetalleAnterior.NoInterior,
+                        PaisId = AlumnoDetalleAnterior.PaisId,
                         
-                        TelefonoCasa = objAlDetalle.TelefonoCasa,
-                        TelefonoOficina = objAlDetalle.TelefonoOficina,
+                        TelefonoCasa = AlumnoDetalleAnterior.TelefonoCasa,
+                        TelefonoOficina = AlumnoDetalleAnterior.TelefonoOficina,
                         UsuarioId = UsuarioId,
                     });
 

@@ -14,12 +14,11 @@ namespace BLL
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
-                List<DTOTurno> lstTurno = (from a in db.Turno
+                return (from a in db.Turno
                                                select new DTOTurno { 
                                                TurnoId=a.TurnoId,
                                                Descripcion=a.Descripcion
                                                }).ToList();
-                return lstTurno;
             }
         }
     }

@@ -14,13 +14,12 @@ namespace BLL
         {
             using(UniversidadEntities db=new UniversidadEntities())
             {
-                List<DTOEstadoCivil> lstEstadoCivil = (from a in db.EstadoCivil
-                                                           select new DTOEstadoCivil
-                                                           {
-                                                               EstadoCivilId = a.EstadoCivilId,
-                                                               Descripcion = a.Descripcion
-                                                           }).ToList();
-                return lstEstadoCivil;
+                return (from a in db.EstadoCivil
+                        select new DTOEstadoCivil
+                        {
+                            EstadoCivilId = a.EstadoCivilId,
+                            Descripcion = a.Descripcion
+                        }).ToList();
             }
         }
     }
