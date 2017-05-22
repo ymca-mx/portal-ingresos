@@ -131,24 +131,18 @@ namespace AppAlumnos.Services
         }
 
         [WebMethod]
-        public doblesobj ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
+        public Tuple<List<DTO.DTOPagoDetallado>,bool> ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
         {
-            doblesobj objr = new doblesobj();
-
             try
             {
-                List<DTO.DTOPagoDetallado> lstRes = BLL.BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
-                bool rest;
-                int cout = lstRes.Where(l => l.OtroDescuento.Length > 0).ToList().Count;
-                rest = cout > 0 ? true : false;
-                objr.item1 = lstRes;
-                objr.item2 = rest;
+                List<DTO.DTOPagoDetallado> ListaReferencias = BLL.BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
+                int cout = ListaReferencias.Where(l => l.OtroDescuento.Length > 0).ToList().Count;
 
-                return objr;
+                return Tuple.Create(ListaReferencias, ListaReferencias.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false);
             }
             catch
             {
-                return objr;
+                return null;
             }
         }
 

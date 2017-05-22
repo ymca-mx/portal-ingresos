@@ -105,19 +105,19 @@ namespace BLL
             {
                 try
                 {
-                    DTOPeriodo objPeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-                    List<DTOOfertaEducativa> lstAlumno = (from a in db.AlumnoInscrito
+                    DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+                    List<DTOOfertaEducativa> OfertasAlumnos = (from a in db.AlumnoInscrito
                                                           where a.AlumnoId == AlumnoId && a.OfertaEducativa.OfertaEducativaTipoId != 4
-                                                          && a.PeriodoId == objPeriodoActual.PeriodoId && a.Anio == objPeriodoActual.Anio
+                                                          && a.PeriodoId == PeriodoActual.PeriodoId && a.Anio == PeriodoActual.Anio
                                                           select new DTOOfertaEducativa
                                                           {
                                                               OfertaEducativaId = a.OfertaEducativa.OfertaEducativaId,
                                                               OfertaEducativaTipoId = a.OfertaEducativa.OfertaEducativaTipoId,
                                                               Descripcion = a.OfertaEducativa.Descripcion
                                                           }).ToList();
-                    if (lstAlumno.Count == 0)
+                    if (OfertasAlumnos.Count == 0)
                     {
-                        lstAlumno = (from a in db.AlumnoInscrito
+                        OfertasAlumnos = (from a in db.AlumnoInscrito
                                      where a.AlumnoId == AlumnoId && a.OfertaEducativa.OfertaEducativaTipoId != 4
                                      select new DTOOfertaEducativa
                                      {
@@ -126,16 +126,16 @@ namespace BLL
                                          Descripcion = a.OfertaEducativa.Descripcion
                                      }).ToList();
                     }
-                    var lstal = lstAlumno.GroupBy(a => a.OfertaEducativaId).
+                    List<DTOOfertaEducativa> OfertasAgrupadas = OfertasAlumnos.GroupBy(a => a.OfertaEducativaId).
                         Select(s => s.FirstOrDefault()).
                         ToList();
                         
 
-                    List<DTOOfertaEducativa> lstAlumnos2 = new List<DTOOfertaEducativa>();
-                    lstal.ForEach(a =>
+                    List<DTOOfertaEducativa> ListaFinal = new List<DTOOfertaEducativa>();
+                    OfertasAgrupadas.ForEach(a =>
                     {
                         DTOOfertaEducativa obja=(DTOOfertaEducativa) a;
-                        lstAlumnos2.Add(new DTOOfertaEducativa
+                        ListaFinal.Add(new DTOOfertaEducativa
                         {
                             OfertaEducativaId = obja.OfertaEducativaId,
                             OfertaEducativaTipoId = obja.OfertaEducativaTipoId,
@@ -143,7 +143,7 @@ namespace BLL
                         });
                     });
 
-                    return lstAlumnos2;
+                    return ListaFinal;
                 }
                 catch (Exception)
                 { return null; }

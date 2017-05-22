@@ -32,9 +32,7 @@ namespace AppAlumnos.Services
         [WebMethod]
         public DTOPagos GenerarPago(string AlumnoId, string OfertaEducativaId, string PagoConceptoId, string CuotaId)
         {
-            DTOPagos objPago = BLLPagoPortal.GenerarPago(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(PagoConceptoId), int.Parse(CuotaId));
-
-            return objPago;
+            return BLLPagoPortal.GenerarPago(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(PagoConceptoId), int.Parse(CuotaId));            
         }
 
     }

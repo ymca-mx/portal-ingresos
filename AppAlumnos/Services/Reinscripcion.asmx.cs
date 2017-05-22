@@ -59,8 +59,8 @@ namespace AppAlumnos.Services
         [WebMethod]
         public string InscribirGenerar(string AlumnoId, string OfertaEducativaId)
         {
-            DTOPeriodo objP = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-            string Menms = BLLPagoPortal.GenerarInscripcionColegiatura(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), objP.Anio, objP.PeriodoId);
+            DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+            string Menms = BLLPagoPortal.GenerarInscripcionColegiatura(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), PeriodoActual.Anio, PeriodoActual.PeriodoId);
             if (Menms == "Guardado")
             {
                 bool resp = false;// BLL.BLLAlumno.AplicaBecaAlumno(objBeca);
