@@ -33,7 +33,7 @@ namespace AppAdministrativos.WS
             string CP, string NoExterior, string NoInterior, string Calle, string Email, string RFC, string Observacion, string Colonia, string CalleF, string NoExteriorF,
             string NoInteriorF, string CPF, string ColoniaF, string PaisF, string EstadoF, string DelegacionF, string ObservacionF, string Igual, string FechaV, string UsuarioId)
         {
-            var objEmpresa = (new DTOEmpresa
+            DTOEmpresa empresa = (new DTOEmpresa
             {
                 RFC = RFC,
                 RazonSocial = Razon,
@@ -89,66 +89,17 @@ namespace AppAdministrativos.WS
                 }
             });
 
-            return BLLEmpresa.GuardarEmpresa(objEmpresa);
+            return BLLEmpresa.GuardarEmpresa(empresa);
         }
 
-        [WebMethod]
-        public string GuardarGrupo(string EmpresaId, string Nombre, string Sede, string Direccion, string TipoOferta, string Oferta,
-            string FechaInicio, string CuotaColegiatura, string DescuentoColegiatura, string CuotaInscripcion, string DescuentoInscripcion,
-            string Periodo, string NoPagos, string AplicaDescuento, string JustificacionIn, string JustificacionBec)
-        {
-            ///DTOPeriodo objPer = BLLPeriodo.ConsultarPeriodo(Periodo);
-            DTOPeriodo objPer = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.ParseExact(FechaInicio.Replace('-', '/'), "dd/MM/yyyy", CultureInfo.InvariantCulture));
-            DTOCuota objCuota = BLLCuota.TraerCuotaPagoConcepto(int.Parse(CuotaInscripcion), new DTOAlumnoInscrito
-            {
-                OfertaEducativaId = int.Parse(Oferta),
-                Anio = objPer.Anio,
-                PeriodoId = objPer.PeriodoId
-            });
-
-            DTOGrupo objGrupo = new DTOGrupo
-            {
-                RFC = EmpresaId,
-                Descripcion = Nombre,
-                SucursalId = int.Parse(Sede),
-                SucursalDireccion = Direccion,
-                OfertaEducativaTipoId = int.Parse(TipoOferta),
-                OfertaEducativaId = int.Parse(Oferta),
-                FechaInicio = DateTime.ParseExact(FechaInicio.Replace('-', '/'), "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                GrupoDetalle = new DTOGrupoDetalle
-                {
-                    //PorcentajeInscripcion = decimal.Parse(DescuentoInscripcion),
-                    //SiempreInscripcion = bool.Parse(AplicaDescuento),
-                    NoPagos = int.Parse(NoPagos),
-                    Cuota = new DTOCuota
-                    {
-                        Anio = objPer.Anio,
-                        PeriodoId = objPer.PeriodoId,
-                        OfertaEducativaId = int.Parse(Oferta),
-                        PagoConceptoId = objCuota.PagoConceptoId,
-                        Monto = int.Parse(CuotaColegiatura)
-                    }
-                }
-            };
-            objGrupo.GrupoId = BLLGrupo.GuardarGrupo(objGrupo);
-            return objGrupo.GrupoId.ToString();
-        }
-
+        
 
         [WebMethod]
         public string GuardarGrupo2(int EmpresaId, int GrupoId, string Nombre, string Sede, string Direccion,
             string FechaIni, string UsuarioId)
         {
-            /////DTOPeriodo objPer = BLLPeriodo.ConsultarPeriodo(Periodo);
-            //DTOPeriodo objPer = BLLPeriodo.TraerPeriodoEntreFechas(DateTime.ParseExact(FechaInicio.Replace('-', '/'), "dd/MM/yyyy", CultureInfo.InvariantCulture));
-            //DTOCuota objCuota = BLLCuota.TraerCuotaPagoConcepto(int.Parse(CuotaInscripcion), new DTOAlumnoInscrito
-            //{
-            //    OfertaEducativaId = int.Parse(Oferta),
-            //    Anio = objPer.Anio,
-            //    PeriodoId = objPer.PeriodoId
-            //});
-
-            DTOGrupo objGrupo = new DTOGrupo
+           
+            DTOGrupo grupo = new DTOGrupo
             {
                 EmpresaId = EmpresaId,
                 GrupoId = GrupoId,
@@ -157,19 +108,10 @@ namespace AppAdministrativos.WS
                 SucursalDireccion = Direccion,
                 FechaInicio = DateTime.ParseExact(FechaIni.Replace('-', '/'), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 UsuarioId = int.Parse(UsuarioId)
-
-                //GrupoDetalle = new DTOGrupoDetalle
-                //{
-                //    //PorcentajeInscripcion = decimal.Parse(DescuentoInscripcion),
-                //    //PorcentajeColegiatura = decimal.Parse(DescuentoColegiatura),
-                //    //SiempreInscripcion = bool.Parse(AplicaDescuento),
-                //    NoPagos = int.Parse(NoPagos),
-                //    CuotaId = int.Parse(CuotaId),
-                //    EsCongelada = Congelada == "true" ? true : false,
-                //}
+                
             };
-            objGrupo.GrupoId = BLLGrupo.GuardarGrupo2(objGrupo);
-            return objGrupo.GrupoId.ToString();
+            grupo.GrupoId = BLLGrupo.GuardarGrupo2(grupo);
+            return grupo.GrupoId.ToString();
         }
 
 
@@ -240,6 +182,7 @@ namespace AppAdministrativos.WS
                 return e.Message;
             }
         }
+
         [WebMethod]
         public string GuardarDocumentos()
         {

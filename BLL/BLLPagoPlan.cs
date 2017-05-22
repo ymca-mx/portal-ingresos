@@ -39,7 +39,7 @@ namespace BLL
         {
             using (UniversidadEntities db= new UniversidadEntities())
             {
-                List<DTOPagoPlan> lstPagosPlan = (from a in db.PagoPlan
+                List<DTOPagoPlan> pagosPlan = (from a in db.PagoPlan
                                                   join b in db.OfertaEducativaPlan on a.PagoPlanId equals b.PagoPlanId
                                                   join c in db.OfertaEducativaTipo on b.OfertaEducativaTipoId equals c.OfertaEducativaTipoId
                                                   where c.OfertaEducativaTipoId==Carrera && a.EstatusId==1
@@ -50,12 +50,12 @@ namespace BLL
                                                       Descripcion = a.Descripcion,
                                                       Pagos = a.Pagos
                                                   }).ToList();
-                foreach (DTOPagoPlan objL in lstPagosPlan)
+                foreach (DTOPagoPlan pagosPlan2 in pagosPlan)
                 {
-                    string descP = objL.Pagos > 1 ? objL.Pagos + " Pagos" : objL.Pagos + " Pago";
-                    objL.PlanPago += " - " + descP;
+                    string descuentoPlan = pagosPlan2.Pagos > 1 ? pagosPlan2.Pagos + " Pagos" : pagosPlan2.Pagos + " Pago";
+                    pagosPlan2.PlanPago += " - " + descuentoPlan;
                 }
-                return lstPagosPlan;
+                return pagosPlan;
             }
         }
 

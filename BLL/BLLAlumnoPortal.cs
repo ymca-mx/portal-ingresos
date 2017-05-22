@@ -1918,8 +1918,8 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                DTOGrupo objGrupo = BLLGrupo.ObtenerGrupo(GrupoId);
-                List<DTOAlumno> lstAlIns = (from a in db.Alumno
+
+                List<DTOAlumno> AlumnosEmpresa = (from a in db.Alumno
                                             join ai in db.AlumnoInscrito on new { a.AlumnoId } equals new { ai.AlumnoId }
                                             where ai.EsEmpresa == true && a.GrupoAlumnoConfiguracion.Where(o => o.EstatusId == 1).LastOrDefault().GrupoId == GrupoId
                                             select new DTOAlumno
@@ -1930,7 +1930,6 @@ namespace BLL
                                                 Materno = a.Materno,
                                                 FechaRegistro = a.FechaRegistro.ToString(),
                                                 UsuarioId = a.UsuarioId,
-                                                //Grupo=a.Grupo
                                                 AlumnoInscrito = new DTOAlumnoInscrito
                                                 {
                                                     AlumnoId = ai.AlumnoId,
@@ -1958,8 +1957,8 @@ namespace BLL
                                                     Paterno = a.Paterno
                                                 }
                                             }).ToList();
-                //lstAlIns=lstAlIns.Select(X=>X.g)
-                return lstAlIns;
+
+                return AlumnosEmpresa;
             }
         }
 
