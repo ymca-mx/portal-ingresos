@@ -324,9 +324,7 @@ namespace BLL
 
                 try
                 {
-                    DTOPeriodo objPeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-
-                    List< DTOAlumnoInscritoBecaDocumento> lstDocumentosAlumno = db.AlumnoInscritoDocumento
+                    List< DTOAlumnoInscritoBecaDocumento> DocumentosBeca = db.AlumnoInscritoDocumento
                         .Where(a => a.AlumnoId == AlumnoId
                         && a.OfertaEducativaId == OfertaEducativaId)
                             .Select(l=> new DTOAlumnoInscritoBecaDocumento
@@ -340,8 +338,8 @@ namespace BLL
                             })
                             .ToList();
                     
-                    List<DTOAlumnoDescuento> lstAlumnoDescuento = new List<DTOAlumnoDescuento>();
-                    List<DTOAlumnoInscrito> lstHistorico = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId
+                    List<DTOAlumnoDescuento> DescuentosAlumno = new List<DTOAlumnoDescuento>();
+                    List<DTOAlumnoInscrito> ListaAlumnoInscrito = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId
                     && a.OfertaEducativaId == OfertaEducativaId )
                         .ToList().Select(s => new DTOAlumnoInscrito
                         {
@@ -351,7 +349,7 @@ namespace BLL
                             Anio = s.Anio,
                             EsEmpresa = s.EsEmpresa
                         }).ToList();
-                    lstHistorico.AddRange(db.AlumnoInscritoBitacora.Where(a => a.AlumnoId == AlumnoId
+                    ListaAlumnoInscrito.AddRange(db.AlumnoInscritoBitacora.Where(a => a.AlumnoId == AlumnoId
                     && a.OfertaEducativaId == OfertaEducativaId )
                         .ToList().Select(s => new DTOAlumnoInscrito
                         {
@@ -362,7 +360,7 @@ namespace BLL
                             EsEmpresa = s.EsEmpresa
                         }).ToList());
 
-                    lstHistorico = lstHistorico.GroupBy(a => new
+                    ListaAlumnoInscrito = ListaAlumnoInscrito.GroupBy(a => new
                     {
                         a.Anio,
                         a.PeriodoId
@@ -370,21 +368,18 @@ namespace BLL
 
                                        
 
-                    List<AlumnoDescuento> lstAlDescuento = db.AlumnoDescuento.Where(d => d.PagoConceptoId == 800 && d.AlumnoId == AlumnoId
+                    List<AlumnoDescuento> ListaDescuentoDB = db.AlumnoDescuento.Where(d => d.PagoConceptoId == 800 && d.AlumnoId == AlumnoId
                      && d.OfertaEducativaId == OfertaEducativaId && d.EstatusId == 2).ToList();
-
-                    List<AlumnoInscritoDetalle> lstAlDetalle = db.AlumnoInscritoDetalle.Where(ad => ad.AlumnoId == AlumnoId &&
-                    ad.OfertaEducativaId == OfertaEducativaId).ToList();
-
-                    lstAlDescuento.ForEach(a =>
+                    
+                    ListaDescuentoDB.ForEach(a =>
                     {
 
-                        DTOAlumnoInscrito objAlInscrito = new DTOAlumnoInscrito();
-                        objAlInscrito = lstHistorico.Where(O => a.Anio == O.Anio
+                        DTOAlumnoInscrito AlumnoInscrito = new DTOAlumnoInscrito();
+                        AlumnoInscrito = ListaAlumnoInscrito.Where(O => a.Anio == O.Anio
                                                                    && a.PeriodoId == O.PeriodoId
                                                                    && a.OfertaEducativaId == O.OfertaEducativaId)
                                                                 .ToList().Count > 0 ?
-                                                                lstHistorico.Where(O => a.Anio == O.Anio
+                                                                ListaAlumnoInscrito.Where(O => a.Anio == O.Anio
                                                                 && a.PeriodoId == O.PeriodoId
                                                                 && a.OfertaEducativaId == O.OfertaEducativaId).FirstOrDefault() :
                                                                 new DTOAlumnoInscrito
@@ -393,7 +388,7 @@ namespace BLL
                                                                     AlumnoId = -1
                                                                 };
 
-                        if (objAlInscrito.AlumnoId != -1)
+                        if (AlumnoInscrito.AlumnoId != -1)
                         {
 
                             bool esBeca = db.Descuento.Where(i => i.DescuentoId == a.DescuentoId)
@@ -401,7 +396,7 @@ namespace BLL
                                                 .Where(D => D.Descripcion == "Beca Académica" || D.Descripcion == "Beca SEP").ToList().Count > 0
                                                 ?
                                                 true : false;
-                            lstAlumnoDescuento.Add(
+                            DescuentosAlumno.Add(
                                 new DTOAlumnoDescuento
                                 {
                                 //AlumnoDescuentoId = a.AlumnoDescuentoId,
@@ -409,9 +404,9 @@ namespace BLL
                                     Anio = a.Anio,
                                     ConceptoId = a.PagoConceptoId,
                                     DescuentoId = a.DescuentoId,
-                                    SMonto = !esBeca || a.EsDeportiva || objAlInscrito.EsEmpresa ? ""
+                                    SMonto = !esBeca || a.EsDeportiva || AlumnoInscrito.EsEmpresa ? ""
                                                 : ("" + a.Monto) + "%",
-                                    OtrosDescuentos = objAlInscrito.EsEmpresa ? "" + a.Monto : "",
+                                    OtrosDescuentos = AlumnoInscrito.EsEmpresa ? "" + a.Monto : "",
                                     BecaDeportiva = a.EsDeportiva ? ("" + a.Monto) + "%" : "",
                                     PeriodoId = a.PeriodoId,
                                     AnioPeriodoId = ("" + a.Anio + " " + a.PeriodoId),
@@ -424,21 +419,21 @@ namespace BLL
                                                   Nombre = a1.Nombre
                                               }).FirstOrDefault(),
                                     BecaComite = (a.EsComite ? "Si" : ""),
-                                    esEmpresa = objAlInscrito.EsEmpresa,
+                                    esEmpresa = AlumnoInscrito.EsEmpresa,
                                     FechaAplicacionS = a.FechaAplicacion.Value.ToString("dd/MM/yyyy", Cultura),
-                                    DocComiteRutaId = "" + lstDocumentosAlumno.Where(o => a.Anio == o.Anio
+                                    DocComiteRutaId = "" + DocumentosBeca.Where(o => a.Anio == o.Anio
                                                         && a.PeriodoId == o.PeriodoId
                                                         && o.TipoDocumentoId == 2).FirstOrDefault()?.AlumnoInscritoDocumentoId ?? "-1",
 
-                                    DocAcademicaId = "" + lstDocumentosAlumno.Where(o => a.Anio == o.Anio
+                                    DocAcademicaId = "" + DocumentosBeca.Where(o => a.Anio == o.Anio
                                                            && a.PeriodoId == o.PeriodoId
                                                            && o.TipoDocumentoId == 1).FirstOrDefault()?.AlumnoInscritoDocumentoId ?? "-1"
                                 });
                         }
                     });
 
-                    lstAlumnoDescuento = lstAlumnoDescuento.OrderBy(a => a.Anio).ThenBy(s => s.PeriodoId).ToList();
-                    return lstAlumnoDescuento;
+                    DescuentosAlumno = DescuentosAlumno.OrderBy(a => a.Anio).ThenBy(s => s.PeriodoId).ToList();
+                    return DescuentosAlumno;
 
                 }
                 catch

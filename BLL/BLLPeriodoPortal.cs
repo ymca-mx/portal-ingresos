@@ -222,11 +222,11 @@ namespace BLL
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
-                DateTime fh = new DateTime(FechaActual.Year, FechaActual.Month, FechaActual.Day, 00, 00, 00);
+                DateTime Fecha = new DateTime(FechaActual.Year, FechaActual.Month, FechaActual.Day, 00, 00, 00);
 
-                DTOPeriodo objPeriodo= (from b in db.Periodo
-                        where b.FechaInicial <= fh && b.FechaFinal >= fh
-                        select new DTOPeriodo
+                DTOPeriodo Periodo= (from b in db.Periodo
+                        where b.FechaInicial <= Fecha && b.FechaFinal >= Fecha
+                                        select new DTOPeriodo
                         {
                             Anio=b.Anio,
                             Descripcion=b.Descripcion,
@@ -236,8 +236,8 @@ namespace BLL
                             PeriodoId=b.PeriodoId,
                         }).AsNoTracking().FirstOrDefault();
 
-                objPeriodo.SubPeriodoId = TraerSubPeriodoEntreFechas(FechaActual);
-                return objPeriodo;
+                Periodo.SubPeriodoId = TraerSubPeriodoEntreFechas(FechaActual);
+                return Periodo;
             }
         }
         public static int TraerSubPeriodoEntreFechas(DateTime FechaActual)
@@ -271,7 +271,6 @@ namespace BLL
                     List<DTOPeriodo> Periodos = (from a in db.Pago
                                                     where a.AlumnoId == AlumnoId && a.EstatusId != 2 && a.EstatusId != 3
                                                      && (a.Cuota1.PagoConceptoId != 1007 && a.Cuota1.PagoConceptoId != 1001)
-                                                    //&& (a.PeriodoId != 1 || a.Anio != 2016)
                                                     select new DTOPeriodo
                                                     {
                                                         Anio = a.Periodo.Anio,

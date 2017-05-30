@@ -16,18 +16,23 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOCuota> lstConceptos;
-                    AlumnoInscrito objAlumno = db.AlumnoInscrito.Where(P => P.AlumnoId == AlumnoId && P.OfertaEducativaId == OfertaEducativaId).AsNoTracking().FirstOrDefault();
-                    List<Pago> lstPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.EstatusId == 1).ToList();
-                    Pago objPagoRe = lstPagos.Where(LP => LP.Anio == 2016 && LP.PeriodoId == 1).FirstOrDefault();
-                    //int cuenta = db.Pago.Where(P => P.Anio == 2016 && P.PeriodoId == 1).Count();
-                    DTOPeriodo objPeriodo = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-                  
-                        lstConceptos = (from a in db.PagoConcepto
+                    List<DTOCuota> Conceptos;
+
+                    List<Pago> Pagos = db.Pago
+                                                .Where(P => P.AlumnoId == AlumnoId && P.EstatusId == 1)
+                                                .ToList();
+
+                    DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+
+                    Conceptos = (from a in db.PagoConcepto
                                         join b in db.AlumnoInscrito on a.OfertaEducativaId equals b.OfertaEducativaId
                                         join c in db.Cuota on new { a.PagoConceptoId, a.OfertaEducativaId } equals new { c.PagoConceptoId, c.OfertaEducativaId }
                                         where (a.EsVariable == false && a.EsVisible == true)
-                                        && b.AlumnoId == AlumnoId && c.PeriodoId == objPeriodo.PeriodoId && c.Anio == objPeriodo.Anio && c.OfertaEducativaId == OfertaEducativaId
+                                                && b.AlumnoId == AlumnoId 
+                                                && c.PeriodoId == PeriodoActual.PeriodoId 
+                                                && c.Anio == PeriodoActual.Anio 
+                                                && c.OfertaEducativaId == OfertaEducativaId
+                                                && a.PagoConceptoId != 807
                                         orderby a.Descripcion ascending
                                         select new DTOCuota
                                         {
@@ -43,28 +48,8 @@ namespace BLL
                                             OfertaEducativaId = c.OfertaEducativaId,
                                             PagoConceptoId = c.PagoConceptoId,
                                             PeriodoId = c.PeriodoId
-                                        }).ToList();
-                    
-                    int band = 0, i = 0;
-                   List<int >IndicesQ= new List<int>();
-                    lstConceptos.ForEach(a =>
-                    {
-                        
-                        if (a.PagoConceptoId == 807 && band==0)
-                        { band = 1; }
-                        else if (a.PagoConceptoId == 807)
-                        {
-                            IndicesQ.Add(i);
-                        }
-                        i += 1;
-                    });
-
-                    foreach(int a in IndicesQ)
-                    {
-                        lstConceptos.RemoveAt(a);
-                    }
-                    
-                    return lstConceptos;
+                                        }).ToList();                    
+                    return Conceptos;
 
 
                 }
