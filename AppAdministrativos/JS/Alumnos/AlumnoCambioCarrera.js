@@ -90,7 +90,7 @@
     });
 
     $("#btnGuardar").click(function () {
-
+        $("#PopComentario").modal("hide");
         $('#Load').modal('show');
         
         lstop[0].OfertaEducativaIdNueva = $('#slcOfertaEducativa2').val();
@@ -111,14 +111,14 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d == true) {
-                    $("").empty();
-                    $("#PopComentario").modal("hide");
+                    $("#txtComentario").empty();
+                    $("#slcOfertaEducativa").empty();
+                    $("#slcPeriodo").empty();
+                    $("#slcOfertaEducativa2").empty();
+                    $("#btnCambio").attr('disabled', 'disabled');
                     alertify.alert("El  cambio se realizó correctamente.");
-                    $('#btnBuscar').click();
-                    $("#btnCambio").prop('disabled', true);
                 } else {
-                    $("").empty();
-                    $("#PopComentario").modal("hide");
+                    $("#txtComentario").empty();
                     alertify.alert("Error al  realizar cambio.");
                 }
                 $('#Load').modal('hide');

@@ -148,7 +148,7 @@
     <Content Include="JS\index\index.js" />
     <Content Include="JS\login\animacion.js" />
     <Content Include="JS\login\valida.js" />
-    <Content Include="JS\Pagos\PromocionCasa.js" />
+    <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="login.html" />
     <Content Include="Style\assets\admin\layout2\css\custom.css" />
@@ -4467,7 +4467,7 @@
     <Content Include="Style\templates\admin3\ui_tree.html" />
     <Content Include="Style\templates\admin3\ui_typography.html" />
     <Content Include="Views\Alumno\AlumnoCambioCarrera.html" />
-    <Content Include="Views\Pago\PromociónCasa.html" />
+    <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Views\Style\engato\index\css\componentes.css" />
     <Content Include="Views\Style\engato\index\imagenes\Guest.png" />
@@ -5497,7 +5497,6 @@
     <Content Include="JS\NuevoValidacion.js" />
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
-    <Content Include="JS\Pagos\PromocionCasa2.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasConsulta.js" />
     <Content Include="JS\Pagos\ReferenciasTramites.js" />
@@ -5583,7 +5582,6 @@
     <Content Include="Views\Pago\EstadodeCuenta2Buscar.html" />
     <Content Include="Views\Pago\Pagos.html" />
     <Content Include="Views\Pago\Pagos2Buscar.html" />
-    <Content Include="Views\Pago\PromociónCasa2.html" />
     <Content Include="Views\Pago\ReferenciasConsulta.html" />
     <Content Include="Views\Pago\ReferenciasTramites.html" />
     <Content Include="Views\Referencias\ReferenciasBuscar.html" />

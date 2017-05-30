@@ -516,7 +516,6 @@
             },
             error: function (Respuesta) {
                 alertify.alert('Error al cargar datos');
-                
             }
         });
     }
