@@ -386,5 +386,25 @@ namespace Pruebas
                 db.SaveChanges();
             }
         }
+
+        [TestMethod]
+        public void BuscarFiltro()
+        {
+
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                string Cadena = "Lopez GARCÍA JULIO";
+                string[] varios = Cadena.Split(' ');
+                varios = varios.Where(c => c != " ")
+               .ToArray();
+
+                List<DAL.Alumno> alumnos = (from a in db.Alumno
+                                            where varios.Contains(a.Nombre) && varios.Contains(a.Paterno) && varios.Contains(a.Materno)
+                                            select a)
+                                              .ToList();
+
+            }
+        }
+
     }
 }

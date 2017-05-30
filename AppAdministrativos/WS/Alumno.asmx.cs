@@ -500,6 +500,11 @@ namespace AppAdministrativos.WS
             return BLLPagoPortal.TraerAdeudos(int.Parse(AlumnoId), int.Parse(OfertaEducativaId));
         }
         [WebMethod]
+        public string ConsultarAdeudoCoordinador(string AlumnoId, string OfertaEducativaId)
+        {
+            return BLLPagoPortal.TraerAdeudosCoordinadores(int.Parse(AlumnoId), int.Parse(OfertaEducativaId));
+        }
+        [WebMethod]
         public List<Universidad.DTO.EstadoCuenta.ReferenciaProcesada> EstadoDeCuenta(string AlumnoId, string FechaI, string FechaF)
         {
             return

@@ -571,6 +571,33 @@ namespace BLL
             }
         }
 
+        public static string TraerAdeudosCoordinadores(int AlumnoId, int OfertaEducativaid)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    DTOPeriodo Periodo = BLL.BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+                        List<Pago> Pagos =
+                        db.Pago.Where(P =>
+                            P.AlumnoId == AlumnoId
+                            && P.EstatusId == 1
+                            && P.OfertaEducativaId == OfertaEducativaid
+                            && (P.Anio != 2016 || P.PeriodoId != 1)
+                            && (P.Cuota1.PagoConceptoId == 800
+                                    || P.Cuota1.PagoConceptoId == 802)).ToList();
+
+                    Pagos = Pagos.Where(P =>
+                    P.PeriodoId != Periodo.PeriodoId
+                    && P.Anio != Periodo.Anio
+                    ).ToList();
+                    return Pagos.Count > 0 ? "Debe" : "";
+                }
+                catch (Exception a)
+                { return a.Message; }
+            }
+        }
+
         public static List<DTOPagos> ConsultarReferencias(int AlumnoId, Boolean Procesadas)
         {
 

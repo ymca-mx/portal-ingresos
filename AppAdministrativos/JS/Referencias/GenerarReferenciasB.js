@@ -1,7 +1,5 @@
-﻿//$(document).ready(function () {
-
-//});
-$(document).ready(function () {
+﻿//JS de Generacion de Referencias Coordinadores
+$(function init() {
     var lstCuotas;
     var AlumnoId;
     var EsVariable;
@@ -73,7 +71,7 @@ $(document).ready(function () {
     function ConsutlarAdeudos(AlumnoId, Oferta) {
         $("#slcConceptos").empty();
         $.ajax({
-            url: 'WS/Alumno.asmx/ConsultarAdeudo',
+            url: 'WS/Alumno.asmx/ConsultarAdeudoCoordinador',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"'+Oferta +'"}',

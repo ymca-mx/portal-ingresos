@@ -149,6 +149,7 @@
     <Content Include="JS\login\animacion.js" />
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Pagos\PromocionCasa.js" />
+    <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="login.html" />
     <Content Include="Style\assets\admin\layout2\css\custom.css" />
@@ -4468,6 +4469,7 @@
     <Content Include="Style\templates\admin3\ui_typography.html" />
     <Content Include="Views\Alumno\AlumnoCambioCarrera.html" />
     <Content Include="Views\Pago\PromociónCasa.html" />
+    <Content Include="Views\Pago\ReferenciasSemestrales.html" />
     <Content Include="Views\Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Views\Style\engato\index\css\componentes.css" />
     <Content Include="Views\Style\engato\index\imagenes\Guest.png" />
