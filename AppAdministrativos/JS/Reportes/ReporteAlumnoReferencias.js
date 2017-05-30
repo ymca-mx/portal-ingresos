@@ -2,10 +2,10 @@
     var tblReporte, anio, periodo;
     CargarCuatrimestre();
 
-    $("#slcCuatrimestre").change(function () {
+    $("#slcPeriodo").change(function () {
 
-        anio = $('#slcCuatrimestre').find(':selected').data("anio");
-        periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
+        anio = $('#slcPeriodo').find(':selected').data("anio");
+        periodo = $('#slcPeriodo').find(':selected').data("periodoid");
         CargarReporteReferencias(anio, periodo);
     });
 
@@ -23,7 +23,7 @@
                     return false;
                 }
 
-                var datos = data.d.ofertas;
+                var datos = data.d.periodos;
                 if (datos.length > 0) {
                     var n = 0;
                     $(datos).each(function () {
@@ -33,11 +33,11 @@
                         option.attr("data-PeriodoId", this.periodoId);
                         option.val(n);
 
-                        $("#slcCuatrimestre").append(option);
+                        $("#slcPeriodo").append(option);
                         n++;
                     });// $(datos).each(function ()
-                    $("#slcCuatrimestre").val(0);
-                    $("#slcCuatrimestre").change();
+                    $("#slcPeriodo").val(0);
+                    $("#slcPeriodo").change();
                 }//if
             }//success
         });// $.ajax

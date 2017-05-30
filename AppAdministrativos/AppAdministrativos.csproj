@@ -5499,7 +5499,6 @@
     <Content Include="JS\NuevoValidacion.js" />
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
-    <Content Include="JS\Pagos\PromocionCasa2.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasConsulta.js" />
     <Content Include="JS\Pagos\ReferenciasTramites.js" />
@@ -5585,7 +5584,6 @@
     <Content Include="Views\Pago\EstadodeCuenta2Buscar.html" />
     <Content Include="Views\Pago\Pagos.html" />
     <Content Include="Views\Pago\Pagos2Buscar.html" />
-    <Content Include="Views\Pago\PromociónCasa2.html" />
     <Content Include="Views\Pago\ReferenciasConsulta.html" />
     <Content Include="Views\Pago\ReferenciasTramites.html" />
     <Content Include="Views\Referencias\ReferenciasBuscar.html" />

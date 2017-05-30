@@ -595,7 +595,7 @@ namespace BLL
                 using (UniversidadEntities db = new UniversidadEntities ())
                 {
 
-                    var alumno = db.PromocionCasa.Where(a=> a.Anio == Anio && a.PeriodoId == PeriodoId)
+                    List<DTOAlumnoPromocionCasa> alumnos = db.PromocionCasa.Where(a=> a.Anio == Anio && a.PeriodoId == PeriodoId)
                                                  .Select(s => new DTOAlumnoPromocionCasa
                                                  {
                                                      AlumnoId = s.AlumnoId,
@@ -609,7 +609,7 @@ namespace BLL
                                                      EstatusId = (int)s.EstatusId                                                      
                                                  }).ToList();
                     
-                    return alumno;
+                    return alumnos;
                     }
                     
                     
@@ -627,8 +627,8 @@ namespace BLL
             {
                 try
                 {
-                    var fechaactual = DateTime.Now;
-                    var periodos = db.Periodo.Where(p => p.FechaFinal >= fechaactual).Take(2)
+                    DateTime fechaActual = DateTime.Now;
+                    List<DTOPeriodoPromocionCasa> periodos = db.Periodo.Where(p => p.FechaFinal >= fechaActual).Take(2)
                                              .Select(s => new DTOPeriodoPromocionCasa
                                              {
                                                  Descripcion = s.Descripcion,
@@ -657,10 +657,10 @@ namespace BLL
             {
                 try
                 {
-                  
+
 
                     //ver si hay referecias generadas de ese subperido
-                    var pago = db.Pago.Where(p => p.AlumnoId == Promocion.AlumnoId
+                    Pago pago = db.Pago.Where(p => p.AlumnoId == Promocion.AlumnoId
                                                   && p.OfertaEducativaId == Promocion.OfertaEducativaIdActual
                                                   && p.Anio == Promocion.Anio
                                                   && p.PeriodoId == Promocion.PeriodoId
@@ -669,16 +669,16 @@ namespace BLL
 
                     if (pago != null)
                     {
-                        int numeroPP = 0;
-                        var Estatusid = new int[] { 4, 14 };
+                        int noPagosParciales = 0;
+                        int []  estatusId = new int[] { 4, 14 };
 
                         //obtener descuentoId de Promocion en casa
-                        var descuentoid = db.Descuento.Where(d => d.PagoConceptoId == 800
+                        int descuentoId = db.Descuento.Where(d => d.PagoConceptoId == 800
                                                              && d.OfertaEducativaId == Promocion.OfertaEducativaIdActual
                                                              && d.Descripcion.Contains("Promoción en Casa")).FirstOrDefault().DescuentoId;
 
 
-                        if (Estatusid.Contains(pago.EstatusId)) /// pagado
+                        if (estatusId.Contains(pago.EstatusId)) /// pagado
                         {
                             if (pago.Promesa < Promocion.Monto)
                             {
@@ -690,15 +690,15 @@ namespace BLL
                             db.PagoDescuento.Add(new PagoDescuento
                                 {
                                     PagoId = pago.PagoId,
-                                    DescuentoId = descuentoid,
+                                    DescuentoId = descuentoId,
                                     Monto = Promocion.Monto
                                 });
 
-                                //obtener lista pago parcial
-                                var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
+                            //obtener lista pago parcial
+                            List<PagoParcial>  PagosParciales = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
                                
-                                var auxMonto = Promocion.Monto;
-                                lstPP.ForEach(n =>
+                                decimal auxMonto = Promocion.Monto;
+                            PagosParciales.ForEach(n =>
                                 {
                                     if (auxMonto > 0)
                                     {
@@ -710,8 +710,8 @@ namespace BLL
                                             n.Pago = 0;
                                             n.EstatusId = 2;
                                             //cambiar PagoDetalle
-                                            var PagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
-                                            PagoDetalle.Importe = 0;
+                                            PagoDetalle pagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
+                                            pagoDetalle.Importe = 0;
                                         }
                                         else
                                         {
@@ -720,14 +720,14 @@ namespace BLL
                                             n.Pago = n.Pago - (decimal)auxMonto;
                                             auxMonto = 0;
                                             //cambiar PagoDetalle
-                                            var PagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
-                                            PagoDetalle.Importe = n.Pago ;
+                                            PagoDetalle pagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
+                                            pagoDetalle.Importe = n.Pago ;
                                         }
                                     }//if (promocion.Monto < 0)
 
 
                                 });
-                            numeroPP = lstPP.Count(npp => npp.EstatusId == 4);
+                            noPagosParciales = PagosParciales.Count(npp => npp.EstatusId == 4);
                             
                         }
                         else if (pago.EstatusId == 1)  // sin pagar
@@ -746,7 +746,7 @@ namespace BLL
                                     db.PagoDescuento.Add(new PagoDescuento
                                     {
                                         PagoId = pago.PagoId,
-                                        DescuentoId = descuentoid,
+                                        DescuentoId = descuentoId,
                                         Monto = Promocion.Monto
                                     });
 
@@ -758,14 +758,14 @@ namespace BLL
                                     }
                                     else
                                     {
-                                        var auxMonto = Promocion.Monto - pago.Restante;
+                                        decimal auxMonto = Promocion.Monto - pago.Restante;
                                         pago.Restante = 0;
 
                                         //obtener lista pago parcial
-                                        var lstPP = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
+                                        List<PagoParcial> PagosParciales = db.PagoParcial.Where(pp => pp.PagoId == pago.PagoId && pp.EstatusId == 4).ToList();
 
 
-                                        lstPP.ForEach(n =>
+                                    PagosParciales.ForEach(n =>
                                         {
                                             if (auxMonto > 0)
                                             {
@@ -777,8 +777,8 @@ namespace BLL
                                                     n.Pago = 0;
                                                     n.EstatusId = 2;
                                                     //cambiar PagoDetalle
-                                                    var PagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
-                                                    PagoDetalle.Importe = 0;
+                                                    PagoDetalle pagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
+                                                    pagoDetalle.Importe = 0;
                                                 }
                                                 else
                                                 {
@@ -787,15 +787,15 @@ namespace BLL
                                                     n.Pago = n.Pago - (decimal)auxMonto;
                                                     auxMonto = 0;
                                                     //cambiar PagoDetalle
-                                                    var PagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
-                                                    PagoDetalle.Importe = n.Pago;
+                                                    PagoDetalle pagoDetalle = db.PagoDetalle.Where(a => a.PagoParcialId == n.PagoParcialId).FirstOrDefault();
+                                                    pagoDetalle.Importe = n.Pago;
                                                 }
                                             }//if (promocion.Monto < 0)
 
 
                                         });//fin foreach
 
-                                    numeroPP = lstPP.Count(npp => npp.EstatusId == 4);  
+                                    noPagosParciales = PagosParciales.Count(npp => npp.EstatusId == 4);  
 
                                     }// if (pago.Restante >= promocion.Monto)
 
@@ -811,7 +811,7 @@ namespace BLL
                                 db.PagoDescuento.Add(new PagoDescuento
                                     {
                                         PagoId = pago.PagoId,
-                                        DescuentoId = descuentoid,
+                                        DescuentoId = descuentoId,
                                         Monto = Promocion.Monto
                                     });
 
@@ -822,16 +822,16 @@ namespace BLL
 
                         if (pago.Restante == 0)
                         {
-                            if (numeroPP == 1)
+                            if (noPagosParciales == 1)
                             {
                                 pago.EstatusId = 4;
                             }
-                            else if (numeroPP > 1)
+                            else if (noPagosParciales > 1)
                                 pago.EstatusId = 14;
                         }
 
 
-                        var promo = db.PromocionCasa.Where(a => a.AlumnoId == Promocion.AlumnoId && a.Anio == Promocion.Anio && a.PeriodoId == Promocion.PeriodoId).FirstOrDefault();
+                        PromocionCasa promo = db.PromocionCasa.Where(a => a.AlumnoId == Promocion.AlumnoId && a.Anio == Promocion.Anio && a.PeriodoId == Promocion.PeriodoId).FirstOrDefault();
 
                         promo.SubPeriodoId = Promocion.SubPeriodoId;
                         promo.Monto = Promocion.Monto;
@@ -848,7 +848,7 @@ namespace BLL
                     }//if (pago != null )
                     else
                     {
-                        var promo = db.PromocionCasa.Where(a => a.AlumnoId == Promocion.AlumnoId && a.Anio == Promocion.Anio && a.PeriodoId == Promocion.PeriodoId).FirstOrDefault();
+                        PromocionCasa promo = db.PromocionCasa.Where(a => a.AlumnoId == Promocion.AlumnoId && a.Anio == Promocion.Anio && a.PeriodoId == Promocion.PeriodoId).FirstOrDefault();
                         promo.SubPeriodoId = Promocion.SubPeriodoId;
                         promo.Monto = Promocion.Monto;
                         promo.UsuarioId = Promocion.UsuarioId;
@@ -872,7 +872,7 @@ namespace BLL
             {
                 using (UniversidadEntities db = new UniversidadEntities())
                 {
-                    var alumno = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId && a.OfertaEducativa.OfertaEducativaTipoId != 4)
+                    DTOAlumnoPromocionCasa alumno = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId && a.OfertaEducativa.OfertaEducativaTipoId != 4)
                                                   .OrderByDescending(c=> new {c.Anio, c.PeriodoId})
                                                   .Select(b => new DTOAlumnoPromocionCasa
                                                   {
@@ -1378,11 +1378,11 @@ namespace BLL
             {
                 try
                 {
-                    var alumnoid = AlumnoDatos.AlumnoId;
+                    int alumnoId = AlumnoDatos.AlumnoId;
 
-                    if (db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == alumnoid).Count() > 0)
+                    if (db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == alumnoId).Count() > 0)
                     {
-                        var AlumnoActualizaDatos = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == alumnoid).FirstOrDefault();
+                        AlumnoDetalleAlumno AlumnoActualizaDatos = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == alumnoId).FirstOrDefault();
 
                         AlumnoActualizaDatos.EstadoCivilId = AlumnoDatos.EstadoCivilId;
                         AlumnoActualizaDatos.EntidadFederativaId = AlumnoDatos.EntidadFederativaId;
@@ -1495,12 +1495,12 @@ namespace BLL
                     if (db.AlumnoDetalleAlumno.Where(w => w.AlumnoId == AlumnoId).Count() > 0)
                     {
 
-                        var fechaActual = DateTime.Now;
-                        var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
+                        DateTime fechaActual = DateTime.Now;
+                        Periodo periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
                                                                              && fechaActual <= p.FechaFinal).FirstOrDefault();
                         DateTime fechaActualizo = db.AlumnoDetalleAlumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault().Fecha;
 
-                        if ((Periodo.FechaInicial <= fechaActualizo && fechaActualizo <= Periodo.FechaFinal))
+                        if ((periodo.FechaInicial <= fechaActualizo && fechaActualizo <= periodo.FechaFinal))
                         {
                             return false;
                         }
@@ -1534,12 +1534,12 @@ namespace BLL
                     if (db.Respuesta.Where(w => w.AlumnoId == AlumnoId).Count() > 0)
                     {
 
-                        var fechaActual = DateTime.Now;
-                        var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
+                        DateTime fechaActual = DateTime.Now;
+                        Periodo periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
                                                                              && fechaActual <= p.FechaFinal).FirstOrDefault();
                         DateTime? fechaEncuesta = db.Respuesta.Where(a => a.AlumnoId == AlumnoId).OrderByDescending(b=> b.FechaGeneracion).FirstOrDefault().FechaGeneracion;
 
-                        if ((Periodo.FechaInicial <= fechaEncuesta && fechaEncuesta <= Periodo.FechaFinal))
+                        if ((periodo.FechaInicial <= fechaEncuesta && fechaEncuesta <= periodo.FechaFinal))
                         {
                             return false;
                         }
@@ -1568,11 +1568,11 @@ namespace BLL
         {
             using (UniversidadEntities db=new UniversidadEntities ())
             {
-                var fechaActual = DateTime.Now;
-                var Periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
+                DateTime fechaActual = DateTime.Now;
+                Periodo periodo = db.Periodo.Where(p => p.FechaInicial <= fechaActual
                                                                      && fechaActual <= p.FechaFinal).FirstOrDefault();
 
-                var preguntas2 = db.Pregunta.Where(a => a.Anio == Periodo.Anio && a.PeriodoId == Periodo.PeriodoId)
+                List<DTOPreguntas2> preguntas2 = db.Pregunta.Where(a => a.Anio == periodo.Anio && a.PeriodoId == periodo.PeriodoId)
                                            .Select(b => new DTOPreguntas2
                                            {
                                                PreguntaId = b.PreguntaId,
@@ -1631,7 +1631,7 @@ namespace BLL
             {
                 try
                 {
-                    var respuestas = RespuesasEncuesta.Respuestas;
+                    List<DTORespuestas1> respuestas = RespuesasEncuesta.Respuestas;
 
                     respuestas.ForEach(n=> 
                     {
@@ -12061,10 +12061,27 @@ namespace BLL
                 try
                 {
                     DTOAlumnoCambioCarrera Alumno = new DTOAlumnoCambioCarrera();
+
+
+                    DateTime hoy = DateTime.Now;
+
+                    Periodo periodoActual = db.Periodo.Where(a => a.FechaInicial <= hoy && a.FechaFinal >= hoy).FirstOrDefault();
+
+                    bool alumnoMovimiento = db.AlumnoMovimiento.Count(a => a.AlumnoId == AlumnoId
+                                                                    && a.TipoMovimientoId == 4
+                                                                    && a.Anio == periodoActual.Anio
+                                                                    && a.PeriodoId == periodoActual.PeriodoId
+                                                                    ) > 0 ? true : false;
+                                                                   
                     
 
-                      Alumno =  db.Pago.Where(a=> a.AlumnoId == AlumnoId && a.Cuota1.PagoConceptoId == 18 && a.EstatusId != 2)
-                                        .Select(b => new DTOAlumnoCambioCarrera
+                    Alumno =  db.Pago.Where(a=> a.AlumnoId == AlumnoId 
+                                               && a.Cuota1.PagoConceptoId == 18 
+                                               && a.EstatusId != 2
+                                               && (a.Anio > periodoActual.Anio || (a.Anio == periodoActual.Anio && a.PeriodoId >= periodoActual.PeriodoId))
+                                               && alumnoMovimiento == false
+                                               )
+                                     .Select(b => new DTOAlumnoCambioCarrera
                                         {
                                             AlumnoId = b.AlumnoId,
                                             NombreC = b.Alumno.Nombre + " " +  b.Alumno.Paterno + " " + b.Alumno.Materno,
@@ -12081,7 +12098,8 @@ namespace BLL
 
                     if (Alumno != null)
                     {
-                        var ofertaTipo = db.OfertaEducativa.Where(a => a.OfertaEducativaId == Alumno.OfertaEducativaIdActual).FirstOrDefault().OfertaEducativaTipoId;
+                        int ofertaTipo = db.OfertaEducativa.Where(a => a.OfertaEducativaId == Alumno.OfertaEducativaIdActual).FirstOrDefault().OfertaEducativaTipoId;
+
                         Alumno.OfertaEducativa = db.OfertaEducativa.Where(b => b.OfertaEducativaTipoId == ofertaTipo && b.OfertaEducativaId != Alumno.OfertaEducativaIdActual)
                                                                    .Select(c => new DTOOfertaEducativa2
                                                                    {
@@ -12116,8 +12134,8 @@ namespace BLL
             {
                 try
                  {
-                    
-                    var AlumnoInscrito = db.AlumnoInscrito.Where(a => a.AlumnoId == Cambio.AlumnoId
+
+                    AlumnoInscrito AlumnoInscrito = db.AlumnoInscrito.Where(a => a.AlumnoId == Cambio.AlumnoId
                                                             && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
                                                             && a.EstatusId == 1
                                                             && a.Anio == Cambio.Anio
@@ -12140,7 +12158,7 @@ namespace BLL
 
                         db.AlumnoInscrito.Remove(AlumnoInscrito);
 
-                        var AlumnoDescuento = db.AlumnoDescuento.Where(a => a.AlumnoId == Cambio.AlumnoId
+                        List<AlumnoDescuento> AlumnoDescuento = db.AlumnoDescuento.Where(a => a.AlumnoId == Cambio.AlumnoId
                                                                 && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
                                                                 && a.EstatusId != 3
                                                                 && a.Anio == Cambio.Anio
@@ -12153,7 +12171,7 @@ namespace BLL
                             a.DescuentoId = db.Descuento.Where(m => m.PagoConceptoId == a.PagoConceptoId && m.OfertaEducativaId == Cambio.OfertaEducativaIdNueva).FirstOrDefault().DescuentoId;
                         });
 
-                        var Pago = db.Pago.Where(a => a.AlumnoId == Cambio.AlumnoId
+                        List<Pago> Pago = db.Pago.Where(a => a.AlumnoId == Cambio.AlumnoId
                                                                 && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
                                                                 && a.EstatusId != 2
                                                                 && a.Anio == Cambio.Anio
@@ -12164,8 +12182,8 @@ namespace BLL
                             a.OfertaEducativaId = Cambio.OfertaEducativaIdNueva;
                             a.CuotaId = db.Cuota.Where(w => w.PagoConceptoId == a.Cuota1.PagoConceptoId && w.OfertaEducativaId == Cambio.OfertaEducativaIdNueva).FirstOrDefault().CuotaId;
                         });
-                        var pago2 = Pago.Select(i => i.PagoId).ToList();
-                        var PagoDescuento = db.PagoDescuento.Where(q => pago2.Contains(q.PagoId)).ToList();
+                        List<int> pago2 = Pago.Select(i => i.PagoId).ToList();
+                        List<PagoDescuento> PagoDescuento = db.PagoDescuento.Where(q => pago2.Contains(q.PagoId)).ToList();
 
                         PagoDescuento.ForEach(a =>
                         {
@@ -12179,7 +12197,7 @@ namespace BLL
 
                         db.PagoDescuento.RemoveRange(PagoDescuento);
 
-                        var alumno = db.Alumno.Where(a => a.AlumnoId == Cambio.AlumnoId).FirstOrDefault();
+                        Alumno alumno = db.Alumno.Where(a => a.AlumnoId == Cambio.AlumnoId).FirstOrDefault();
 
                         #region Bitacora Alumno
                         db.AlumnoBitacora.Add(new AlumnoBitacora
@@ -12245,6 +12263,8 @@ namespace BLL
                         {
                             AlumnoId = Cambio.AlumnoId,
                             OfertaEducativaId = Cambio.OfertaEducativaIdActual,
+                            Anio = Cambio.Anio,
+                            PeriodoId = Cambio.PeriodoId,
                             TipoMovimientoId = 4,
                             Fecha = DateTime.Now,
                             Hora = DateTime.Now.TimeOfDay,

@@ -17,6 +17,8 @@ namespace DAL
         public int AlumnoMovimientoId { get; set; }
         public Nullable<int> AlumnoId { get; set; }
         public Nullable<int> OfertaEducativaId { get; set; }
+        public Nullable<int> Anio { get; set; }
+        public Nullable<int> PeriodoId { get; set; }
         public Nullable<int> TipoMovimientoId { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public Nullable<System.TimeSpan> Hora { get; set; }
