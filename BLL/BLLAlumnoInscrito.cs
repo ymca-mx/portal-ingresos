@@ -165,6 +165,8 @@ namespace BLL
                 List<AlumnoInscrito> lstAlumnoOfertas = db.AlumnoInscrito.Where(w => w.AlumnoId == objAlumnoInscrito.AlumnoId &&
                     w.OfertaEducativa.OfertaEducativaTipoId != 4).ToList();
                 Alumno objAlumnoDb = db.Alumno.Where(a => a.AlumnoId == objAlumnoInscrito.AlumnoId).FirstOrDefault();
+                //OFerta
+                OfertaEducativa ofertaN = db.OfertaEducativa.Where(o => o.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId).FirstOrDefault();
 
                 ////Actualiza MAtricula
                 if (db.OfertaEducativa.Where(l => l.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId).FirstOrDefault().OfertaEducativaTipoId != 4)
@@ -275,13 +277,16 @@ namespace BLL
                         });
                 }
 
-                var OFertas = db.AlumnoInscrito
+                if (ofertaN.OfertaEducativaTipoId != 4)
+                {
+                    List<AlumnoInscrito> OFertas = db.AlumnoInscrito
                         .Where(k => k.AlumnoId == objAlumnoInscrito.AlumnoId
                                 && k.OfertaEducativaId != objAlumnoInscrito.OfertaEducativaId
                                 && k.OfertaEducativa.OfertaEducativaTipoId != 4)
                                 .ToList();
-
-                OFertas.ForEach(O => { O.EstatusId = 2; });
+                
+                    OFertas.ForEach(O => { O.EstatusId = 2; });
+                }
 
                 db.SaveChanges();
                 return new DTOAlumnoInscrito

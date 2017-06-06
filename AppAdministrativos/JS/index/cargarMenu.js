@@ -22,8 +22,8 @@
                 }
                 else {
                     $(Resultado.d).each(function () {
-                        Menu += '<li class="menu-dropdown classic-menu-dropdown ">' +
-                            '<a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">' +
+                        Menu += '<li class="menu-dropdown mega-menu-dropdown ">' +
+                            '<a class="dropdown-toggle"  data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">'+
 
                             this.Descripcion +
 
@@ -32,8 +32,8 @@
                             '<ul class="dropdown-menu pull-left">';
                         $(this.SubMenu).each(function (ind, ele) {
                             Menu +=
-                             '<li >' +
-                             '<a href="' + ele.Direccion + '" class="contenido">' +
+                             '<li class="dropdown-submenu">' +
+                            '<a href="' + ele.Direccion + '" class="contenido">' +
                              '<i class="fa fa-history"></i>'
                              + ele.Descripcion +
                              '</a>' +

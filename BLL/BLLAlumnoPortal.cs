@@ -489,7 +489,8 @@ namespace BLL
                                                    OfertaEducativa = new DTOOfertaEducativa
                                                    {
                                                        OfertaEducativaId = Ai.OfertaEducativa.OfertaEducativaId,
-                                                       Descripcion = Ai.OfertaEducativa.Descripcion
+                                                       Descripcion = Ai.OfertaEducativa.Descripcion,
+                                                       OfertaEducativaTipoId=Ai.OfertaEducativa.OfertaEducativaTipoId
                                                    }
                                                }).FirstOrDefault(),
                                                Usuario = new DTOUsuario
@@ -516,7 +517,15 @@ namespace BLL
                     Alumno.AlumnoInscrito.EsEspecial =
                                     db.GrupoAlumnoConfiguracion.Where(k => k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList().Count > 0 ? true : false;
 
-                    Alumno.lstAlumnoInscrito = db.AlumnoInscrito.Where(A => A.AlumnoId == AlumnoId).ToList().ConvertAll(new Converter<AlumnoInscrito, DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
+                    Alumno.lstAlumnoInscrito = db.AlumnoInscrito
+                                                    .Where(A => A.AlumnoId == AlumnoId)
+                                                    .ToList()
+                                                    .OrderByDescending(a=> a.Anio)
+                                                    .ThenByDescending(a=> a.PeriodoId)
+                                                    .ToList()
+                                                    .ConvertAll(new Converter<AlumnoInscrito, 
+                                                                    DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
+
                     List<List<DTOAlumnoInscrito>> AlumnoInscrito = Alumno.lstAlumnoInscrito.GroupBy(v => v.OfertaEducativaId).Select(A => A.ToList()).ToList();
 
                     Alumno.lstAlumnoInscrito.Clear();
@@ -8158,9 +8167,23 @@ namespace BLL
                 }
 
                 db.SaveChanges();
+                VerificarDescuentos();
             }
         }
+        public static void VerificarDescuentos()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                List<PagoDescuento> Descuentos = db.PagoDescuento.Where(x => x.Monto == 0).ToList();
 
+                Descuentos.ForEach(x =>
+                {
+                    db.PagoDescuento.Remove(x);
+                });
+
+                db.SaveChanges();
+            }
+        }
         public static void AplicaBeca_Excepcion(DTO.Alumno.Beca.DTOAlumnoBeca AlumnoBeca, bool aplicacionExtemporanea)
         {
             List<DAL.Pago> PagosPendientes = new List<Pago>();

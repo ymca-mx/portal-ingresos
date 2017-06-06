@@ -69,14 +69,25 @@
                                     <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
                                     <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
                                 </div>
-                                <div class="col-md-12">
-                                    <br />
-                                    <b><label class="control-label black" style="font-weight:bold" id="lblNombre"></label></b>
+                                
+                                <div class="col-md-12 form-group">
+                                    <hr />
+                                    <span style="font-weight:bold">Nombre:</span> 
+                                    <b><label class="control-label black" style="font-weight:bold; font-size:14px" id="lblNombre"></label></b>
                                 </div>
                                 <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label ">Oferta Educativa:</label>
+                                            <select class="form-control select2-arrow" id="slcOfertaEducativa"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <hr />
                                     <label class="control-label ">Selecciona el mes inicial:</label>
                                     <div class="row">
-                                        <div class="col-md-6 form-group">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label">Mes inicial:</label>
                                             <select class="form-control font-md col-md-6" id="sclMesinicial">
                                                 <option value="-1">--Seleccionar--</option>
@@ -94,8 +105,8 @@
                                                 <option value="12">Diciembre</option>                                                
                                             </select>
                                         </div>
-                                        <div class="col-md-6 form-group">
-                                            <label class="control-label">Mes inicial:</label>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Mes Final:</label>
                                             <select class="form-control font-md col-md-6" id="sclMesFinal" disabled>
                                                 <option value="-1">--Seleccionar--</option>
                                                 <option value="1">Enero</option>
@@ -112,10 +123,16 @@
                                                 <option value="12">Diciembre</option>      
                                             </select>
                                         </div>
+                                        <div class="col-md-3 form-group">
+                                            <label class="control-label">&nbsp;</label>
+                                            <a href="#" class="btn bg-blue form-control col-md-8" id="ModalMontos">Guardar 
+                                            <span class="glyphicon glyphicon-floppy-save"></span> 
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-
+                                    <hr />
                                 </div>
                             </div>
 
@@ -124,16 +141,6 @@
                                     <table class="table table-hover table-bordered1 dataTables" id="tblReferencias" >
                                         <thead>
                                             <tr>
-                                                <th class="Titulo-Tabla" colspan="2"></th>
-                                                <th class="Titulo-Tabla bold" colspan="2">Cargo</th>
-                                                <th class="Titulo-Tabla bold" colspan="2"></th>
-                                                <th class="Titulo-Tabla bold" colspan="2">BECA Academica</th>
-                                                <th class="Titulo-Tabla bold" colspan="2" id="thBeca">BECA Academica</th>
-                                                <th class="Titulo-Tabla bold" colspan="1"></th>
-                                                <th class="Titulo-Tabla bold" colspan="1"></th>
-                                                <th class="Titulo-Tabla bold" colspan="1"></th>
-                                            </tr>
-                                            <tr>
                                                 <th class="Titulo-Tabla">
                                                     Concepto
                                                 </th>
@@ -141,31 +148,9 @@
                                                     Referencia
                                                 </th>
                                                 <th class="Titulo-Tabla">
-                                                    $
+                                                    Monto
                                                 </th>
-                                                <th class="Titulo-Tabla">
-                                                    Fecha <br /> Limite de Pago
-                                                </th>
-                                                <th class="Titulo-Tabla">
-                                                    Descuento por <br /> pago anticipado
-                                                </th>
-                                                <th class="Titulo-Tabla">
-                                                    Cargos - <br /> Descuento por <br /> pago anticipado
-                                                </th>
-                                                <th class="Titulo-Tabla">%</th>
-                                                <th class="Titulo-Tabla">$</th>
-                                                <th class="Titulo-Tabla" id="thBecaP">%</th>
-                                                <th class="Titulo-Tabla" id="thBecaM">$</th>
-                                                <th class="Titulo-Tabla">Otros <br /> Descuentos</th>
-                                                <th class="Titulo-Tabla">Total a Pagar</th>
                                                 <th class="Titulo-Tabla">Saldo por pagar</th>
-
-                                                <!--<th class="Titulo-Tabla">
-                                                    Recargo después de<br /> fecha límite de pago
-                                                </th>
-                                                <th class="Titulo-Tabla">
-                                                    Total a pagar con<br /> recargos
-                                                </th>-->
                                             </tr>
                                         </thead>
                                     </table>
@@ -204,6 +189,36 @@
                                     <strong>• Conserva tu comprobante de pago. </strong>
                                     <p>Para cualquier aclaración ante la Universidad YMCA, debes presentar el comprobante de pago que te entrega el banco.													</p>
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" tabindex="-1" data-backdrop="static" id="Montos" data-keyboard="false" style="width: 650px !important;">
+                            <div class="modal-dialog modal-sm" >
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Montos Colegiatura & Inscripción</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label">Monto Inscripción</label>
+                                                    <input type="number" class="form-control" id="txtMontoInscripcion" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label">Monto Colegiatura</label>
+                                                    <input type="number" class="form-control" id="txtMontoColegiatura" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="btnGuardar">Generar Cuotas</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
