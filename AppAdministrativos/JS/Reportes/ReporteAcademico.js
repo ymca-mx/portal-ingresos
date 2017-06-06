@@ -167,25 +167,37 @@
                 tblBecas1.draw();
                 break;
             case 2:
-                if (oferta1.includes('Derecho')) {
-                    tblBecas2.columns(2)
-                        .search(oferta1)
-                        .draw();
+                if (oferta1 != "--Todas--") {
+                    if (oferta1.includes('Derecho')) {
+                        tblBecas2.columns(2)
+                            .search(oferta1)
+                            .draw();
+                    } else {
+                        tblBecas2.columns(2)
+                            .search("^" + oferta1 + "$", true, false, true)
+                            .draw();
+                    }
                 } else {
                     tblBecas2.columns(2)
-                        .search("^" + oferta1 + "$", true, false, true)
+                        .search("")
                         .draw();
                 }
                 tblBecas2.draw();
                 break;
             case 3:
-                if (oferta1.includes('Derecho')) {
-                    tblBecas3.columns(2)
-                        .search(oferta1)
-                        .draw();
+                if (oferta1 != "--Todas--") {
+                    if (oferta1.includes('Derecho')) {
+                        tblBecas3.columns(2)
+                            .search(oferta1)
+                            .draw();
+                    } else {
+                        tblBecas3.columns(2)
+                            .search("^" + oferta1 + "$", true, false, true)
+                            .draw();
+                    }
                 } else {
                     tblBecas3.columns(2)
-                        .search("^" + oferta1 + "$", true, false, true)
+                        .search("")
                         .draw();
                 }
                 break;
