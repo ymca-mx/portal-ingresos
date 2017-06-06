@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Alumno.cs" />
     <Compile Include="EnvioCorreo.cs" />
+    <Compile Include="Pagos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PruebasBecas.cs" />
     <Compile Include="PruebasEmpresa.cs" />

@@ -11990,7 +11990,8 @@ namespace BLL
                 {
                     List<DTOAlumno> alumnos = (from a in db.Alumno
                                                   where (a.Nombre + " " + a.Paterno + " " + a.Materno).Contains(Cadena)
-                                                  select new DTOAlumno
+                                                        || (a.Materno + " " + a.Nombre + " " + a.Paterno ).Contains(Cadena)
+                                               select new DTOAlumno
                                                   {
                                                      
 
