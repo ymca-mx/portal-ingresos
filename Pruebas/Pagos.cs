@@ -17,10 +17,7 @@ namespace Pruebas
         [TestMethod]
         public void PagosSemestrales()
         {
-            using(UniversidadEntities db= new UniversidadEntities())
-            {
-
-            }
+            BLL.BLLPagoPortal.GenerarSemestre(803, 44, 11, 6, 100000, 0, 2000);
         }
     }
 }

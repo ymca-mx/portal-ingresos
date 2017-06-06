@@ -48,8 +48,34 @@ namespace BLL
                     objMAS.AlumnoId = AlumnoId;
                     objMAS.Nombre = objAlumno.Nombre + " " + objAlumno.Paterno + " " + objAlumno.Materno;
 
+                    #region Dejar ofertas mas altas
+                    List<AlumnoInscrito> Mayores = new List<AlumnoInscrito>{ objAlumno.AlumnoInscrito
+                                                            .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                                            .OrderByDescending(O => O.Anio)
+                                                            .ThenByDescending(O => O.PeriodoId)
+                                                            .Select(a => a)
+                                                            .FirstOrDefault() };
+                    Mayores.AddRange(objAlumno.AlumnoInscrito
+                                                .Where(M => M.Anio == Mayores.FirstOrDefault().Anio
+                                                        && M.PeriodoId == Mayores.FirstOrDefault().PeriodoId
+                                                        && M.OfertaEducativaId != Mayores.FirstOrDefault().OfertaEducativaId)
+                                                 .ToList());
+
+                    List<AlumnoInscritoBitacora> MayoresB= new List<AlumnoInscritoBitacora>{ objAlumno.AlumnoInscritoBitacora
+                                                            .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                                            .OrderByDescending(O => O.Anio)
+                                                            .ThenByDescending(O => O.PeriodoId)
+                                                            .Select(a => a)
+                                                            .FirstOrDefault() };
+                    MayoresB.AddRange(objAlumno.AlumnoInscritoBitacora
+                                                .Where(M => M.Anio == MayoresB.FirstOrDefault().Anio
+                                                        && M.PeriodoId == MayoresB.FirstOrDefault().PeriodoId
+                                                        && M.OfertaEducativaId != MayoresB.FirstOrDefault().OfertaEducativaId)
+                                                 .ToList());
+                    #endregion
+
                     // Ofertas
-                    objMAS.lstOfertas.AddRange(objAlumno.AlumnoInscrito.Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4).Select(i => new DTOOfertaEducativa
+                    objMAS.lstOfertas.AddRange(Mayores.Select(i => new DTOOfertaEducativa
                     {
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
@@ -57,7 +83,7 @@ namespace BLL
                         Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f=> f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre??0
 
                     }));
-                    objMAS.lstOfertas.AddRange(objAlumno.AlumnoInscritoBitacora.Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4).Select(i => new DTOOfertaEducativa
+                    objMAS.lstOfertas.AddRange(MayoresB.Select(i => new DTOOfertaEducativa
                     {
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
@@ -80,7 +106,16 @@ namespace BLL
                     {
                         objMAS.lstPeriodos.ForEach(l =>
                         {
-                            objMAS.EstatusAl.AddRange(db.AlumnoRevision
+                            objMAS.EstatusAl.AddRange(
+                                                    objAlumno.Pago
+                                                    .Where(a=> a.OfertaEducativaId==o.OfertaEducativaId
+                                                            && a.Anio==l.Anio
+                                                            && a.PeriodoId == l.PeriodoId
+                                                            && (a.EstatusId==1 || a.EstatusId == 4))
+                                                    .ToList()
+                                                    .Count>0?
+
+                                                   db.AlumnoRevision
                                                    .Where(i => i.AlumnoId == AlumnoId
                                                              && i.OfertaEducativaId == o.OfertaEducativaId
                                                              && i.Anio == l.Anio
@@ -89,7 +124,7 @@ namespace BLL
                                                                  Anio = k.Anio,
                                                                  OfertaEducativaId = k.OfertaEducativaId,
                                                                  Periodo = k.PeriodoId
-                                                             }).ToList());
+                                                             }).ToList(): null );
                             objMAS.Cuotas.AddRange(db.Cuota.Where(c => c.Anio == l.Anio
                                                              && c.PeriodoId == l.PeriodoId
                                                              && c.OfertaEducativaId == o.OfertaEducativaId
