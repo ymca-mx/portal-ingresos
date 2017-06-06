@@ -66,7 +66,7 @@ namespace BLL
                        }
                        ).ToList();
 
-                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 && w.Descripcion != "Desconocida").OrderByDescending(g => g.OfertaEducativaTipoId).Select(o =>
+                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 && w.Descripcion != "Desconocida" && w.SucursalId!=4).OrderByDescending(g => g.OfertaEducativaTipoId).Select(o =>
                         new DTOOfertaEducativa2
                         {
                             ofertaEducativaId = o.OfertaEducativaId,
