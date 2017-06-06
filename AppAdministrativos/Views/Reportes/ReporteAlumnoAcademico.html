@@ -80,6 +80,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group" id="divSlc2">
+                                                
                                                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                                 <label class="control-label">Oferta Educativa</label>
 
@@ -93,16 +94,18 @@
                                         </div>
 
                                         <div class="col-md-3" id="rangoFechas">
-                                            <label class="control-label">Rango de fechas</label>
+
+                                           <input type="checkbox" id="chkYo">
+                                            <label for="chkYo">Rango de fechas</label>
                                             <div class="input-group input-large date-picker input-daterange" data-date="11/10/2012" data-date-format="dd/mm/yyyy">
                                                 <span class="input-group-addon">
                                                     Del:
                                                 </span>
-                                                <input type="text" class="form-control" name="from" id="from">
+                                                <input type="text" class="form-control" name="from" id="from" disabled>
                                                 <span class="input-group-addon">
                                                     Al:
                                                 </span>
-                                                <input type="text" class="form-control" name="to" id="to">
+                                                <input type="text" class="form-control" name="to" id="to" disabled>
                                             </div>
                                         </div>
 

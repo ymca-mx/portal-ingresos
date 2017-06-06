@@ -124,24 +124,41 @@
         fecha1[reporte] = $("#from").val();
         fecha2[reporte] = $("#to").val();
 
+       
+
         switch (reporte) {
             case 0:
                 if (oferta1 != "--Todas--") {
-                    tblBecas.columns(2)
-                                .search("^" + oferta1 + "$", true, false, true)
-                                .draw();
+                    if (oferta1.includes('Derecho')) {
+                        tblBecas.columns(2)
+                            .search(oferta1)
+                            .draw();
+                    } else {
+                        tblBecas.columns(2)
+                            .search("^" + oferta1 + "$", true, false, true)
+                            .draw();
+                    }
+                   
+
                 } else {
                     tblBecas.columns(2)
                            .search("")
-                   .draw();
+                           .draw();
                 }
-                tblBecas.draw();
+                    tblBecas.draw();
+                
                 break;
             case 1:
                 if (oferta1 != "--Todas--") {
-                    tblBecas1.columns(2)
-                                .search("^" + oferta1 + "$", true, false, true)
-                                .draw();
+                    if (oferta1.includes('Derecho')) {
+                        tblBecas1.columns(2)
+                            .search(oferta1)
+                            .draw();
+                    } else {
+                        tblBecas1.columns(2)
+                            .search("^" + oferta1 + "$", true, false, true)
+                            .draw();
+                    }
                 } else {
                     tblBecas1.columns(2)
                            .search("")
@@ -150,25 +167,26 @@
                 tblBecas1.draw();
                 break;
             case 2:
-                if (oferta1 != "--Todas--") {
+                if (oferta1.includes('Derecho')) {
                     tblBecas2.columns(2)
-                                .search("^" + oferta1 + "$", true, false, true)
-                                .draw();
+                        .search(oferta1)
+                        .draw();
                 } else {
                     tblBecas2.columns(2)
-                           .search("")
-                   .draw();
+                        .search("^" + oferta1 + "$", true, false, true)
+                        .draw();
                 }
+                tblBecas2.draw();
                 break;
             case 3:
-                if (oferta1 != "--Todas--") {
+                if (oferta1.includes('Derecho')) {
                     tblBecas3.columns(2)
-                                .search("^" + oferta1 + "$", true, false, true)
-                                .draw();
+                        .search(oferta1)
+                        .draw();
                 } else {
                     tblBecas3.columns(2)
-                           .search("")
-                   .draw();
+                        .search("^" + oferta1 + "$", true, false, true)
+                        .draw();
                 }
                 break;
         }
@@ -521,7 +539,7 @@
     $.fn.dataTableExt.afnFiltering.push(
 	function (oSettings, aData, iDataIndex) {
 
-	    if (reporte === 3) {
+        if (reporte === 3 || !$('#chkYo').prop('checked') ) {
 	        var iFini = "";
 	        var iFfin = "";
 	    }
@@ -605,6 +623,20 @@
         }
     }
 
+
+    $('#chkYo').change(function ()
+    {
+        if ($('#chkYo').prop('checked')) {
+            $("#from").prop('disabled', false);
+            $("#to").prop('disabled', false);
+            filtros();
+        } else
+        {
+            $("#from").prop('disabled', true);
+            $("#to").prop('disabled', true);
+            filtros();
+        }
+    });
 });
 
 
