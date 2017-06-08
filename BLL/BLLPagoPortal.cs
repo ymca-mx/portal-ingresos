@@ -3400,7 +3400,7 @@ namespace BLL
                                 decimal Beca = DescuentosAlumno.Count > 0 ?
                                     Pago.PagoDescuento.Count > 0 ? (from a in Pago.PagoDescuento
                                                                        where DescuentosAlumno.Where(s => s.DescuentoId == a.DescuentoId).ToList().Count > 0
-                                                                       select a).FirstOrDefault().Monto : 0 : 0;
+                                                                       select a).FirstOrDefault()?.Monto??0 : 0 : 0;
 
                                 decimal DescuentoBecaDeportiva = DescuentosBecaDeportiva.Count > 0 ?
                                                         Pago.PagoDescuento?.Where(P => P.DescuentoId == DescuentosBecaDeportiva.FirstOrDefault().DescuentoId)?.FirstOrDefault()?.Monto ?? 0
