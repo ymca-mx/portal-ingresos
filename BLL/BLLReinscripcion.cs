@@ -106,16 +106,14 @@ namespace BLL
                     {
                         objMAS.lstPeriodos.ForEach(l =>
                         {
-                            objMAS.EstatusAl.AddRange(
-                                                    objAlumno.Pago
-                                                    .Where(a=> a.OfertaEducativaId==o.OfertaEducativaId
-                                                            && a.Anio==l.Anio
+                            int numerodepagos = objAlumno.Pago
+                                                    .Where(a => a.OfertaEducativaId == o.OfertaEducativaId
+                                                            && a.Anio == l.Anio
                                                             && a.PeriodoId == l.PeriodoId
-                                                            && (a.EstatusId==1 || a.EstatusId == 4))
+                                                            && (a.EstatusId == 1 || a.EstatusId == 4))
                                                     .ToList()
-                                                    .Count>0?
-
-                                                   db.AlumnoRevision
+                                                    .Count;
+                            List<dtoEstatusMA> Revision = db.AlumnoRevision
                                                    .Where(i => i.AlumnoId == AlumnoId
                                                              && i.OfertaEducativaId == o.OfertaEducativaId
                                                              && i.Anio == l.Anio
@@ -124,7 +122,12 @@ namespace BLL
                                                                  Anio = k.Anio,
                                                                  OfertaEducativaId = k.OfertaEducativaId,
                                                                  Periodo = k.PeriodoId
-                                                             }).ToList(): null );
+                                                             }).ToList();
+
+                            if (numerodepagos > 0 && Revision.Count > 0)
+                            {
+                                objMAS.EstatusAl.AddRange(Revision);
+                            }
                             objMAS.Cuotas.AddRange(db.Cuota.Where(c => c.Anio == l.Anio
                                                              && c.PeriodoId == l.PeriodoId
                                                              && c.OfertaEducativaId == o.OfertaEducativaId
@@ -163,7 +166,7 @@ namespace BLL
                                                                  Monto = k.Cuota.ToString(),
                                                                  OfertaEducativaId = k.OfertaEducativaId,
                                                                  PeriodoId = k.PeriodoId,
-                                                                 Referencia =k.ReferenciaId.ToString()
+                                                                 Referencia = k.ReferenciaId.ToString()
                                                              }).ToList());
                         });
                     });

@@ -144,6 +144,7 @@
     <Content Include="JS\account\validacionRecovery.js" />
     <Content Include="JS\Alumnos\AlumnoCambioCarrera.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
+    <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\index\bitacora.js" />
     <Content Include="JS\index\cargarMenu.js" />
     <Content Include="JS\index\index.js" />
@@ -4469,6 +4470,7 @@
     <Content Include="Style\templates\admin3\ui_typography.html" />
     <Content Include="Views\Alumno\AlumnoCambioCarrera.html" />
     <Content Include="Views\Alumno\PromociónCasa.html" />
+    <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Pago\ReferenciasSemestrales.html" />
     <Content Include="Views\Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Views\Style\engato\index\css\componentes.css" />
