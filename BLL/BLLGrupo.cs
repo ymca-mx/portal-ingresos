@@ -314,9 +314,11 @@ namespace BLL
                                                             && a.PagoConceptoId == 800).FirstOrDefault().Monto;
 
                 decimal PorcentajeInscripcion = 100 - ((CuotaInscripcion * 100) / CuotaInscripcionbd);
-                decimal PorcentajeColegiatura = 100 - ((CuotaColegiatura * 100) / CuotaColegiaturabd);
+                PorcentajeInscripcion = Math.Round(PorcentajeInscripcion, 2);
 
-                
+                decimal PorcentajeColegiatura = 100 - ((CuotaColegiatura * 100) / CuotaColegiaturabd);
+                PorcentajeColegiatura = Math.Round(PorcentajeColegiatura, 2);
+
 
                 DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
                 {
