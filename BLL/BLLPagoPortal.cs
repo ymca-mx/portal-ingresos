@@ -454,73 +454,80 @@ namespace BLL
                     List<DTOPagos> PagosDTO = new List<DTOPagos>();
                     Pagos.ForEach(p =>
                     {
-
-                        DTOPagos PagoDTO = new DTOPagos();
-
-                        PagoDTO.PagoId = p.PagoId;
-                        PagoDTO.AlumnoId = p.AlumnoId;
-                        PagoDTO.Anio = p.Anio;
-                        PagoDTO.PeriodoId = p.PeriodoId;
-                        PagoDTO.DTOPeriodo = new DTOPeriodo
+                        try
                         {
-                            PeriodoId = p.Periodo.PeriodoId,
-                            Anio = p.Periodo.Anio,
-                        };
-                        PagoDTO.SubperiodoId = p.SubperiodoId;
-                        PagoDTO.OfertaEducativaId = p.OfertaEducativaId;
-                        PagoDTO.FechaGeneracion = p.FechaGeneracion;
-                        PagoDTO.CuotaId = p.CuotaId;
-                        PagoDTO.Cuota = p.Cuota;
-                        PagoDTO.FechaPago = (DateTime)new DateTime(p.Anio, p.Subperiodo.MesId, 01);
-                        PagoDTO.DTOCuota = new DTOCuota
-                        {
-                            CuotaId = p.Cuota1.CuotaId,
-                            Anio = p.Cuota1.Anio,
-                            PeriodoId = p.Cuota1.PeriodoId,
-                            OfertaEducativaId = p.Cuota1.OfertaEducativaId,
-                            PagoConceptoId = p.Cuota1.PagoConceptoId,
-                            Monto = p.Cuota1.Monto,
-                            EsEmpresa = p.Cuota1.EsEmpresa,
-                            DTOPagoConcepto = new DTOPagoConcepto
+
+                            DTOPagos PagoDTO = new DTOPagos();
+
+                            PagoDTO.PagoId = p.PagoId;
+                            PagoDTO.AlumnoId = p.AlumnoId;
+                            PagoDTO.Anio = p.Anio;
+                            PagoDTO.PeriodoId = p.PeriodoId;
+                            PagoDTO.DTOPeriodo = new DTOPeriodo
                             {
-                                CuentaContable = p.Cuota1.PagoConcepto.CuentaContable,
-                                Descripcion = p.Cuota1.PagoConceptoId == 800 || p.Cuota1.PagoConceptoId == 802 ? (p.Cuota1.PagoConcepto.Descripcion +
-                                                                                     " " + p.Subperiodo.Mes.Descripcion +
-                                                                                     " " + p.Periodo.FechaInicial.Year.ToString())
-                                                                                     : p.Cuota1.PagoConcepto.Descripcion
-                                           + " " + (p.Cuota1.PagoConceptoId == 306 ?
-                                           p.PagoRecargo1.FirstOrDefault().Pago.Cuota1.PagoConcepto.Descripcion
-                                           + " " + p.PagoRecargo1.FirstOrDefault().Pago.Subperiodo.Mes.Descripcion + " " +
-                                           p.PagoRecargo1.FirstOrDefault().Pago.Periodo.FechaInicial.Year.ToString()
-                                           : ""),
-                                EstatusId = p.Cuota1.PagoConcepto.EstatusId,
-                                OfertaEducativaId = p.Cuota1.PagoConcepto.OfertaEducativaId,
-                                PagoConceptoId = p.Cuota1.PagoConcepto.PagoConceptoId
-                            }
-                        };
-                        PagoDTO.Promesa = p.Promesa;
-                        PagoDTO.Pagado = (p.Promesa - p.Restante).ToString();
-                        PagoDTO.Restante = p.Restante.ToString();
-                        PagoDTO.Referencia = p.ReferenciaId;
-                        PagoDTO.EstatusId = p.EstatusId;
-                        PagosDTO.Add(PagoDTO);
+                                PeriodoId = p.Periodo.PeriodoId,
+                                Anio = p.Periodo.Anio,
+                            };
+                            PagoDTO.SubperiodoId = p.SubperiodoId;
+                            PagoDTO.OfertaEducativaId = p.OfertaEducativaId;
+                            PagoDTO.FechaGeneracion = p.FechaGeneracion;
+                            PagoDTO.CuotaId = p.CuotaId;
+                            PagoDTO.Cuota = p.Cuota;
+                            PagoDTO.FechaPago = (DateTime)new DateTime(p.Anio, p.Subperiodo.MesId, 01);
+                            PagoDTO.DTOCuota = new DTOCuota
+                            {
+                                CuotaId = p.Cuota1.CuotaId,
+                                Anio = p.Cuota1.Anio,
+                                PeriodoId = p.Cuota1.PeriodoId,
+                                OfertaEducativaId = p.Cuota1.OfertaEducativaId,
+                                PagoConceptoId = p.Cuota1.PagoConceptoId,
+                                Monto = p.Cuota1.Monto,
+                                EsEmpresa = p.Cuota1.EsEmpresa,
+                                DTOPagoConcepto = new DTOPagoConcepto
+                                {
+                                    CuentaContable = p.Cuota1.PagoConcepto.CuentaContable,
+                                    Descripcion = p.Cuota1.PagoConceptoId == 800 || p.Cuota1.PagoConceptoId == 802 ? (p.Cuota1.PagoConcepto.Descripcion +
+                                                                                         " " + p.Subperiodo.Mes.Descripcion +
+                                                                                         " " + p.Periodo.FechaInicial.Year.ToString())
+                                                                                         : p.Cuota1.PagoConcepto.Descripcion
+                                               + " " + (p.Cuota1.PagoConceptoId == 306 ?
+                                               p.PagoRecargo1?.FirstOrDefault()?.Pago?.Cuota1?.PagoConcepto?.Descripcion ?? ""
+                                               + " " + p.PagoRecargo1?.FirstOrDefault()?.Pago?.Subperiodo?.Mes?.Descripcion ??""+ " " +
+                                               p.PagoRecargo1?.FirstOrDefault()?.Pago?.Periodo?.FechaInicial.Year.ToString() ?? ""
+                                               : ""),
+                                    EstatusId = p.Cuota1.PagoConcepto.EstatusId,
+                                    OfertaEducativaId = p.Cuota1.PagoConcepto.OfertaEducativaId,
+                                    PagoConceptoId = p.Cuota1.PagoConcepto.PagoConceptoId
+                                }
+                            };
+                            PagoDTO.Promesa = p.Promesa;
+                            PagoDTO.Pagado = (p.Promesa - p.Restante).ToString();
+                            PagoDTO.Restante = p.Restante.ToString();
+                            PagoDTO.Referencia = p.ReferenciaId;
+                            PagoDTO.EstatusId = p.EstatusId;
+                            PagosDTO.Add(PagoDTO);
+                        }
+                        catch { }
                     });
 
-                    PagosDTO.ForEach(Pago => 
+                    PagosDTO.ForEach(Pago =>
                     {
-                        Pago.FechaGeneracionS = Pago.FechaGeneracion.ToString("dd/MM/yyyy", Cultura);
-                        Pago.Cancelable = Pago.FechaGeneracion.ToShortDateString() == FechaActual.ToShortDateString() ? true : false;
-                        Pago.objNormal = new Pagos_Detalles
+                        try
                         {
-                            FechaLimite = (Utilities.Fecha.Prorroga(Pago.FechaPago.Value.Year, Pago.FechaPago.Value.Month, true, 5).ToString("dd/MM/yyyy", Cultura)),
-                            Monto = Pago.Promesa.ToString("C", Cultura),
-                            Restante = decimal.Parse(Pago.Pagado).ToString("C", Cultura),
-                            Estatus = Pago.EstatusId == 2 ? "Cancelado" : Pago.Promesa == decimal.Parse(Pago.Restante) ? (Pago.Promesa == 0 ? "Pagado" : "Pendiente") : (Pago.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
-                        };
-                        Pago.DTOCuota.PeridoAnio = Pago.Anio == 2016 && Pago.PeriodoId == 1 ? "" :
-                        Pago.DTOCuota.Anio.ToString() + "-" + Pago.DTOCuota.PeriodoId.ToString();
-                        
+                            Pago.FechaGeneracionS = Pago.FechaGeneracion.ToString("dd/MM/yyyy", Cultura);
+                            Pago.Cancelable = Pago.FechaGeneracion.ToShortDateString() == FechaActual.ToShortDateString() ? true : false;
+                            Pago.objNormal = new Pagos_Detalles
+                            {
+                                FechaLimite = (Utilities.Fecha.Prorroga(Pago.FechaPago.Value.Year, Pago.FechaPago.Value.Month, true, 5).ToString("dd/MM/yyyy", Cultura)),
+                                Monto = Pago.Promesa.ToString("C", Cultura),
+                                Restante = decimal.Parse(Pago.Pagado).ToString("C", Cultura),
+                                Estatus = Pago.EstatusId == 2 ? "Cancelado" : Pago.Promesa == decimal.Parse(Pago.Restante) ? (Pago.Promesa == 0 ? "Pagado" : "Pendiente") : (Pago.Restante == "0.00" ? "Pagado" : "Parcialmente Pagado")
+                            };
+                            Pago.DTOCuota.PeridoAnio = Pago.Anio == 2016 && Pago.PeriodoId == 1 ? "" :
+                            Pago.DTOCuota.Anio.ToString() + "-" + Pago.DTOCuota.PeriodoId.ToString();
 
+                        }
+                        catch { }
                     });
                     return PagosDTO;
                 }
