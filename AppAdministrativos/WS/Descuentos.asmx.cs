@@ -25,33 +25,32 @@ namespace AppAdministrativos.WS
     {
 
         [WebMethod]
-        public string[] GuardarDescuentos(string lstDatos)
+        public string[] GuardarDescuentos(int AlumnoId, string DescuentoIns, string JustificacionIns, string DescuentoBec, string JustificacionBec,
+            string Observacion, string SistemaPago, string DescuentoExamen, string JustificacionExam, string Credencial, string JustificacionCred, int Usuario)
         {
-
-            lstDatos = lstDatos.Replace('[', ' ').Replace(']', ' ').Replace('{', ' ').Replace('}', ' ').Replace('/', ' ').Replace('"', ' ').Trim();//.Replace(" ","");
-            List<string> lst = new List<string>(lstDatos.Split(','));
+            
             try
             {
-                DTOAlumnoInscrito objAl = BLLAlumnoInscrito.ConsultarAlumnoInscrito(int.Parse((lst[0].Split(':')[1]).Trim()));
+                DTOAlumnoInscrito objAl = BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId);
 
-                BLLAlumnoInscrito.ActializarAlumnoInscrito(int.Parse((lst[0].Split(':')[1]).Trim()), int.Parse((lst[6].Split(':')[1]).Trim()));
+                BLLAlumnoInscrito.ActializarAlumnoInscrito(AlumnoId, int.Parse(SistemaPago));
 
-                DTOAlumnoPassword objPas = BLLAlumnoPassword.GuardarPassword(int.Parse((lst[0].Split(':')[1]).Trim()), Utilities.Seguridad.Encripta(27, ConvertidorT.CrearPass()));
+                DTOAlumnoPassword objPas = BLLAlumnoPassword.GuardarPassword(AlumnoId, Utilities.Seguridad.Encripta(27, ConvertidorT.CrearPass()));
 
 
                 string[] Resultados;
-                Resultados = BLLAlumnoDescuento.InsertarDescuentoNormal(int.Parse((lst[0].Split(':')[1]).Trim()),
-                     decimal.Parse((lst[3].Split(':')[1]).Trim()), decimal.Parse((lst[1].Split(':')[1]).Trim()),
-                     (lst[2].Split(':')[1]).Trim(), (lst[4].Split(':')[1]).Trim(), decimal.Parse((lst[7].Split(':')[1]).Trim()),
-                     (lst[8].Split(':')[1]).Trim(), decimal.Parse((lst[9].Split(':')[1]).Trim()), (lst[10].Split(':')[1]).Trim(),
-                     int.Parse((lst[6].Split(':')[1]).Trim()), int.Parse((lst[11].Split(':')[1]).Trim()), 0);
+                Resultados = BLLAlumnoDescuento.InsertarDescuentoNormal(AlumnoId,
+                     decimal.Parse(DescuentoBec), decimal.Parse(DescuentoIns),
+                     JustificacionIns, JustificacionBec, decimal.Parse(DescuentoExamen),
+                     JustificacionExam, decimal.Parse(Credencial), JustificacionCred,
+                     int.Parse(SistemaPago), Usuario, 0);
 
-                decimal BecaAca = decimal.Parse((lst[3].Split(':')[1]).Trim());
+                decimal BecaAca = decimal.Parse(DescuentoBec);
 
                 return Resultados;
-                //return BLLAlumnoDescuento.InsertarDescuento(int.Parse((lst[0].Split(':')[1]).Trim()),
-                //    decimal.Parse((lst[3].Split(':')[1]).Trim()), decimal.Parse((lst[1].Split(':')[1]).Trim()),
-                //    (lst[2].Split(':')[1]).Trim(), (lst[4].Split(':')[1]).Trim(), 2016, 1);
+                //return BLLAlumnoDescuento.InsertarDescuento(AlumnoId,
+                //    decimal.Parse(DescuentoBec), decimal.Parse(DescuentoIns),
+                //    JustificacionIns, JustificacionBec, 2016, 1);
             }
             catch (Exception ex)
             {
@@ -178,36 +177,37 @@ namespace AppAdministrativos.WS
             { return null; }
         }
         [WebMethod]
-        public string[] GuardarIdioma(string Datos)
+        public string[] GuardarIdioma(int AlumnoId,int OfertaEducativa, string Turno, string Periodo, string SistemaPago, string DescuentoBec,
+            string JustificacionBec, string Credencial , string JustificacionCred, string Material, string EsEmpresa, string DescuentoExamen,
+            string JustificacionExam, string DescuentoIns, string JustificacionIns, int Usuario)
         {
             try
             {
-                Nullable<int> defaul = null;
-                Datos = Datos.Replace('[', ' ').Replace(']', ' ').Replace('{', ' ').Replace('}', ' ').Replace('/', ' ').Replace('"', ' ').Trim();//.Replace(" ","");
-                List<string> lst = new List<string>(Datos.Split(','));
-                DTOOfertaEducativaTipo objOfti = BLLOfertaEducativaTipo.ConsultarOferta(int.Parse((lst[1].Split(':')[1]).Trim()));
-                int Anio = BLLPeriodoPortal.ConsultarPeriodo((lst[3].Split(':')[1]).Trim()).Anio, Periodoid = int.Parse((lst[3].Split(':')[1]).Trim().Substring(0, 1));
-                int usu = lst.Count < 15 ? int.Parse((lst[11].Split(':')[1]).Trim()) : int.Parse((lst[15].Split(':')[1]).Trim());
+                Nullable<int> defaul = null;                
+                
+                DTOOfertaEducativaTipo objOfti = BLLOfertaEducativaTipo.ConsultarOferta(OfertaEducativa);
+                int Anio = BLLPeriodoPortal.ConsultarPeriodo(Periodo).Anio, Periodoid = int.Parse(Periodo.Substring(0, 1));
+                int usu = Usuario;
                 DTOAlumnoInscrito objInscribir = new DTOAlumnoInscrito
                 {
-                    AlumnoId = int.Parse((lst[0].Split(':')[1]).Trim()),
+                    AlumnoId = AlumnoId,
                     PeriodoId = Periodoid,
                     Anio = Anio,
-                    OfertaEducativaId = int.Parse((lst[1].Split(':')[1]).Trim()),
-                    PagoPlanId = bool.Parse((lst[10].Split(':')[1]).Trim()) == true ? defaul : int.Parse((lst[4].Split(':')[1]).Trim()),
-                    EsEmpresa = bool.Parse((lst[10].Split(':')[1]).Trim()),
-                    TurnoId = int.Parse((lst[2].Split(':')[1]).Trim()),
+                    OfertaEducativaId = OfertaEducativa,
+                    PagoPlanId = bool.Parse(EsEmpresa) == true ? defaul : int.Parse(SistemaPago),
+                    EsEmpresa = bool.Parse(EsEmpresa),
+                    TurnoId = int.Parse(Turno),
                     UsuarioId = usu
                 };
                 DTOAlumnoInscrito objinsc = BLLAlumnoInscrito.ConsultarAlumnoInscrito(objInscribir.AlumnoId, objInscribir.OfertaEducativaId);
-                if (bool.Parse((lst[10].Split(':')[1]).Trim()) == false)
+                if (bool.Parse(EsEmpresa) == false)
                 {
                     if (objinsc == null)
                     {
 
                         BLLAlumnoInscrito.InsertarAlumnoInscrito2(objInscribir);
                     }
-                    else { BLLAlumnoInscrito.ActializarAlumnoInscrito(int.Parse((lst[0].Split(':')[1]).Trim()), int.Parse((lst[4].Split(':')[1]).Trim())); }
+                    else { BLLAlumnoInscrito.ActializarAlumnoInscrito(AlumnoId, int.Parse(SistemaPago)); }
                 }
                 else
                 {
@@ -220,33 +220,33 @@ namespace AppAdministrativos.WS
                 }
                 if (objOfti.OfertaEducativaTipoId != 4)
                 {
-                    if (bool.Parse((lst[10].Split(':')[1]).Trim()) == true) { return new string[] { "Guardado" }; } //Codicion si EsEmpresa
+                    if (bool.Parse(EsEmpresa) == true) { return new string[] { "Guardado" }; } //Codicion si EsEmpresa
                     else
                     {
-                        return BLLAlumnoDescuento.InsertarDescuentoNormal(int.Parse((lst[0].Split(':')[1]).Trim()), decimal.Parse((lst[5].Split(':')[1]).Trim()), decimal.Parse((lst[13].Split(':')[1]).Trim()),
-                            ((lst[14].Split(':')[1]).Trim()).ToString() == "null" ? " " : ((lst[14].Split(':')[1]).Trim()).ToString(), ((lst[6].Split(':')[1]).Trim()).ToString() == "null" ? " " : ((lst[6].Split(':')[1]).Trim()).ToString(),
-                            decimal.Parse((lst[11].Split(':')[1]).Trim()), ((lst[12].Split(':')[1]).Trim()).ToString() == "null" ? " " : ((lst[12].Split(':')[1]).Trim()).ToString(),
-                            decimal.Parse((lst[7].Split(':')[1]).Trim()), ((lst[8].Split(':')[1]).Trim()).ToString() == "null" ? " " : ((lst[8].Split(':')[1]).Trim()).ToString(),
-                            int.Parse((lst[4].Split(':')[1]).Trim()), int.Parse((lst[15].Split(':')[1]).Trim()), int.Parse((lst[1].Split(':')[1]).Trim()));
+                        return BLLAlumnoDescuento.InsertarDescuentoNormal(AlumnoId, decimal.Parse(DescuentoBec), decimal.Parse(DescuentoIns),
+                            (JustificacionIns == "null" ? " " : JustificacionIns), (JustificacionBec == "null" ? " " : JustificacionBec),
+                            decimal.Parse(DescuentoExamen), JustificacionExam == "null" ? " " : JustificacionExam,
+                            decimal.Parse(Credencial), JustificacionCred == "null" ? " " : JustificacionCred,
+                            int.Parse(SistemaPago), usu, OfertaEducativa);
                     }
                 }
                 else
                 {
-                    if (bool.Parse((lst[10].Split(':')[1]).Trim()) == true) { return new string[] { "Guardado" }; }
+                    if (bool.Parse(EsEmpresa) == true) { return new string[] { "Guardado" }; }
                     else
                     {
-                        DTOAlumnoPassword objAlumPas = BLLAlumnoPassword.ConsultarAlumnoPassword(int.Parse((lst[0].Split(':')[1]).Trim()));
+                        DTOAlumnoPassword objAlumPas = BLLAlumnoPassword.ConsultarAlumnoPassword(AlumnoId);
                         if (objAlumPas != null)
                         {
                             if (objAlumPas.AlumnoId == 0)
                             {
-                                DTOAlumnoPassword objp = BLLAlumnoPassword.GuardarPassword(int.Parse((lst[0].Split(':')[1]).Trim()), Utilities.Seguridad.Encripta(27, ConvertidorT.CrearPass()));
+                                DTOAlumnoPassword objp = BLLAlumnoPassword.GuardarPassword(AlumnoId, Utilities.Seguridad.Encripta(27, ConvertidorT.CrearPass()));
                             }
                         }
-                        return new string[]{ BLLAlumnoDescuento.InsertarDescuentosIdiomas(int.Parse((lst[0].Split(':')[1]).Trim()), int.Parse((lst[1].Split(':')[1]).Trim()),
-                        decimal.Parse((lst[5].Split(':')[1]).Trim()), ((lst[6].Split(':')[1]).Trim()).ToString() == "null" ? " " : ((lst[6].Split(':')[1]).Trim()).ToString(),
-                        decimal.Parse((lst[7].Split(':')[1]).Trim()), ((lst[8].Split(':')[1]).Trim()).ToString() == "null" ? " " : ((lst[8].Split(':')[1]).Trim()).ToString(),
-                        bool.Parse(((lst[9].Split(':')[1]).Trim())),lst.Count>12? int.Parse((lst[15].Split(':')[1]).Trim()): int.Parse((lst[11].Split(':')[1]).Trim()),Anio,Periodoid)};
+                        return new string[]{ BLLAlumnoDescuento.InsertarDescuentosIdiomas(AlumnoId, OfertaEducativa,
+                        decimal.Parse(DescuentoBec), JustificacionBec == "null" ? " " : JustificacionBec,
+                        decimal.Parse(Credencial), (JustificacionCred).ToString() == "null" ? " " : (JustificacionCred).ToString(),
+                        bool.Parse(Material),Usuario ,Anio,Periodoid)};
                     }
                 }
             }

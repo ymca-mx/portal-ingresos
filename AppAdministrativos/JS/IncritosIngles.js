@@ -421,23 +421,24 @@
         }
         var Resultado;
 
-        var Campos = new Array();
-        Campos.push({ 'AlumnoId': fid });//0
-        Campos.push({ 'Idioma': $('#slcOfertaEducativa').val() });//1
-        Campos.push({ 'Turno': $('#slcTurno').val() });//2
-        Campos.push({ 'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html() }); //3
-        Campos.push({ 'SistemaPago': $('#slcSistemaPago').val() });//4
-        Campos.push({ 'DescuentoBec': $('#txtDescuentoBec').val() });//5
-        Campos.push({ 'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val() });//6
-        Campos.push({ 'Credencial': $('#txtDescuentoCred').val() });//7
-        Campos.push({ 'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val() });//8
-        Campos.push({ 'Material': $('#chkMaterial').attr("checked") ? 'true' : 'false' });//9
-        Campos.push({ 'EsEmpresa': $('#chkEsEmpresa').attr("checked") ? 'true' : 'false' });//10
-        Campos.push({ 'DescuentoExamen': Mas == 1 ? '-1' : $('#txtDescuentoExa').val() }); //Descuento Examen 11
-        Campos.push({ 'JustificacionExam': $('#txtJustificacionExa').val() == '' ? 'null' : $('#txtJustificacionExa').val() }); //Comentario Examen 12
-        Campos.push({ 'DescuentoIns': $('#txtDescuentoIns').val() });//13
-        Campos.push({ 'JustificacionIns': $('#txtJustificacionIns').val() == '' ? 'null' : $('#txtJustificacionIns').val() });//14
-        Campos.push({ 'Usuario': Usuario });//10
+        var Campos = {
+            'AlumnoId': fid,//0
+            'OfertaEducativa': $('#slcOfertaEducativa').val(),//1
+            'Turno': $('#slcTurno').val(),//2
+            'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//3
+            'SistemaPago': $('#slcSistemaPago').val(),//4
+            'DescuentoBec': $('#txtDescuentoBec').val(),//5
+            'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),//6
+            'Credencial': $('#txtDescuentoCred').val(),//7
+            'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),//8
+            'Material': $('#chkMaterial').attr("checked") ? 'true' : 'false',//9
+            'EsEmpresa': $('#chkEsEmpresa').attr("checked") ? 'true' : 'false',//10
+            'DescuentoExamen': Mas == 1 ? '-1' : $('#txtDescuentoExa').val(),//11
+            'JustificacionExam': $('#txtJustificacionExa').val() == '' ? 'null' : $('#txtJustificacionExa').val(),//12
+            'DescuentoIns': $('#txtDescuentoIns').val(),//13
+            'JustificacionIns': $('#txtJustificacionIns').val() == '' ? 'null' : $('#txtJustificacionIns').val(),//14
+            'Usuario': Usuario//15
+        };
         alertify.confirm("¿Esta seguro que desea guardar los cambios?", function (e) {
             if (e == true) {
                 $('#Load').modal('show');
@@ -445,7 +446,7 @@
                 $.ajax({
                     type: "POST",
                     url: "WS/Descuentos.asmx/GuardarIdioma",
-                    data: "{Datos:'" + JSON.stringify(Campos) + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+                    data:  JSON.stringify(Campos) , // the data in form-encoded format, ie as it would appear on a querystring
                     //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
                     datatype: JSON,
                     contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml

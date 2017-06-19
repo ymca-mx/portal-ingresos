@@ -756,26 +756,25 @@
         if (jQuery.type(Usuario) === "undefined") {
             return false;
         }
-        var lsDatos = new Array();
-        lsDatos.push({ 'AlumnoId': $('#txtFolio').val() });//0
-        lsDatos.push({ 'DescuentoIns': $('#txtDescuentoIns').val() });//1
-        lsDatos.push({ 'JustificacionIns': $('#txtJustificacionIns').val() });//2
-        //lsDatos.push({''});
-        lsDatos.push({ 'DescuentoBec': $('#txtDescuentoBec').val() });//3
-        lsDatos.push({ 'JustificacionBec': $('#txtJustificacionBec').val() });//4
-        //lsDatos.push({''});
-        lsDatos.push({ 'Observacion': $('#txtObservacion').val() });//5
-        lsDatos.push({ 'SistemaPago': $('#slcSistemaPago').val() });//6
-        lsDatos.push({ 'DescuentoExamen': $('#txtDescuentoExa').val() }); //Descuento Examen 7
-        lsDatos.push({ 'JustificacionExam': $('#txtJustificacionExa').val() }); //Comentario Examen 8
-        lsDatos.push({ 'Credencial': $('#txtDescuentoCred').val() });//9
-        lsDatos.push({ 'JustificacionCred': $('#txtJustificacionCred').val() });//10
-        lsDatos.push({ 'Usuario': Usuario });//11
+        var lsDatos = {
+            'AlumnoId': $('#txtFolio').val(),//0
+            'DescuentoIns': $('#txtDescuentoIns').val(),//1
+            'JustificacionIns': $('#txtJustificacionIns').val(),//2        
+            'DescuentoBec': $('#txtDescuentoBec').val(),//3
+            'JustificacionBec': $('#txtJustificacionBec').val(),//4
+            'Observacion': $('#txtObservacion').val(),//5
+            'SistemaPago': $('#slcSistemaPago').val(),//6
+            'DescuentoExamen': $('#txtDescuentoExa').val(), //Descuento Examen 7
+            'JustificacionExam': $('#txtJustificacionExa').val(), //Comentario Examen 8
+            'Credencial': $('#txtDescuentoCred').val(),//9
+            'JustificacionCred': $('#txtJustificacionCred').val(),//10
+            'Usuario': Usuario //11
+        };
 
         $.ajax({
             type: "POST",
             url: "WS/Descuentos.asmx/GuardarDescuentos",
-            data: "{lstDatos:'" + JSON.stringify(lsDatos) + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+            data:JSON.stringify(lsDatos), // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             datatype: JSON,
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -917,25 +916,30 @@
         if (jQuery.type(Usuario) === "undefined") {
             return false;
         }
-        var Campos = new Array();
-        Campos.push({ 'AlumnoId': $('#txtFolio').val() });//0
-        Campos.push({ 'Idioma': $('#slcCarrera').val() });//1
-        Campos.push({ 'Turno': $('#slcTurno').val() });//2
-        Campos.push({ 'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html() }); //3
-        Campos.push({ 'SistemaPago': $('#slcSistemaPago').val() });//4
-        Campos.push({ 'DescuentoBec': $('#txtDescuentoBec').val() });//5
-        Campos.push({ 'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val() });//6
-        Campos.push({ 'Credencial': $('#txtDescuentoCred').val() });//7
-        Campos.push({ 'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val() });//8
-        Campos.push({ 'Material': $('#chkMaterial').attr("checked") ? 'true' : 'false' });//9
-        Campos.push({ 'EsEmpresa': $('#chkEsEmpresa').prop('checked') == true ? 'true' : 'false' });
-        Campos.push({ 'Usuario': Usuario });//10
+        var Campos = {
+            'AlumnoId': $('#txtFolio').val(),
+            'OfertaEducativa': $('#slcCarrera').val(),
+            'Turno': $('#slcTurno').val(),
+            'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),
+            'SistemaPago': $('#slcSistemaPago').val(),
+            'DescuentoBec': $('#txtDescuentoBec').val(),
+            'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),
+            'Credencial': $('#txtDescuentoCred').val(),
+            'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),
+            'Material': $('#chkMaterial').attr("checked") ? 'true' : 'false',
+            'EsEmpresa': $('#chkEsEmpresa').prop('checked') == true ? 'true' : 'false',
+            'DescuentoExamen': null,
+            'JustificacionExam': null,
+            'DescuentoIns': null,
+            'JustificacionIns': null,
+            'Usuario': Usuario
+        };
         alertify.confirm("¿Esta seguro que desea guardar los cambios?", function (Respuesta) {
             if (Respuesta == true) {
                 $.ajax({
                     type: "POST",
                     url: "WS/Descuentos.asmx/GuardarIdioma",
-                    data: "{Datos:'" + JSON.stringify(Campos) + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+                    data: JSON.stringify(Campos) , // the data in form-encoded format, ie as it would appear on a querystring
                     //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
                     datatype: JSON,
                     contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
