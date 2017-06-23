@@ -27,7 +27,7 @@ namespace BLL
                     //periodo
                     DateTime fhoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                     //DateTime fhoy = new DateTime(2017, 4, 16);
-                    var fprev = fhoy.AddDays(15);
+                    DateTime fprev = fhoy.AddDays(15);
                     objMAS.lstPeriodos.AddRange((from a in db.Periodo
                                                  where fhoy >= a.FechaInicial && fhoy <= a.FechaFinal
                                                       || (fprev >= a.FechaInicial && fprev <= a.FechaFinal)
@@ -80,15 +80,15 @@ namespace BLL
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
                         OfertaEducativaTipoId = i.OfertaEducativa.OfertaEducativaTipoId,
-                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f=> f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre??0
-
+                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f=> f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre??0,
+                        SucursalId=i.OfertaEducativa.SucursalId
                     }));
                     objMAS.lstOfertas.AddRange(MayoresB.Select(i => new DTOOfertaEducativa
                     {
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
-                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f => f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre ?? 0
-
+                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f => f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre ?? 0,
+                        SucursalId = i.OfertaEducativa.SucursalId
                     }));
 
                     List<DTOOfertaEducativa> liIDs = new List<DTOOfertaEducativa>();
@@ -96,9 +96,27 @@ namespace BLL
                     {
                         if (liIDs.FindIndex(d => d.OfertaEducativaId == o.OfertaEducativaId) == -1)
                         {
+                            if (o.OfertaEducativaTipoId == 2)
+                            {
+                                List<AlumnoInscritoBitacora> listahitorial = objAlumno
+                                                                .AlumnoInscritoBitacora
+                                                                .Where(alb => alb.OfertaEducativaId == o.OfertaEducativaId)
+                                                                .GroupBy(alb => new { alb.Anio, alb.PeriodoId })
+                                                                .Select(alb => alb.FirstOrDefault())
+                                                                .ToList();
+                                                       
+                                List<AlumnoInscrito> listaactual = objAlumno
+                                                                .AlumnoInscrito
+                                                                .Where(al => al.OfertaEducativaId == o.OfertaEducativaId)
+                                                                .GroupBy(al => new { al.Anio, al.PeriodoId })
+                                                                .Select(al => al.FirstOrDefault())
+                                                                .ToList();
+                                o.AplicaMaestria = (listahitorial.Count + listaactual.Count) >= 2 ? true : false;
+                            }
                             liIDs.Add(o);
                         }
                     });
+
                     objMAS.lstOfertas = liIDs;
 
                     //Referencias 
@@ -183,6 +201,51 @@ namespace BLL
                 }catch  {
                     return null;
                 }
+            }
+        }
+
+        public static bool Pasar_a_Maestria(int alumnoId, int anio, int periodoId, int especialidadId, int maestriaId, int usuarioId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    AlumnoInscrito alumno = db.AlumnoInscrito
+                                            .Where(ai => ai.AlumnoId == alumnoId
+                                                    && ai.OfertaEducativaId == especialidadId)
+                                            .FirstOrDefault();
+                    #region AlumnoInscrito
+                    db.AlumnoInscrito.Add(new AlumnoInscrito
+                    {
+                        AlumnoId = alumnoId,
+                        Anio = anio,
+                        EsEmpresa = alumno.EsEmpresa,
+                        EstatusId = 1,
+                        FechaInscripcion = DateTime.Now,
+                        HoraInscripcion = DateTime.Now.TimeOfDay,
+                        OfertaEducativaId = maestriaId,
+                        PagoPlanId = db.OfertaEducativaPlan.Where(of => of.OfertaEducativaTipoId == 3 && of.PagoPlan.Pagos == 4).FirstOrDefault().PagoPlanId,
+                        PeriodoId = periodoId,
+                        TurnoId = alumno.TurnoId,
+                        UsuarioId = usuarioId
+                    });
+                    #endregion
+
+                    if (alumno.EsEmpresa)
+                    {
+                        #region Es Empresa
+
+                        #endregion
+                    }
+                    else
+                    {
+                        #region Normal
+
+                        #endregion
+                    }
+                    return true;
+                }
+                catch { return false; }
             }
         }
 

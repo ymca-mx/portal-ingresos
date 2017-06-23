@@ -5,6 +5,7 @@
     var objAlumnoC;
     var estado = "";
     var hayCuatrimestre = false; 
+    var Planel;
 
     $('#btnBuscarAlumno').click(function () {
         $('#divCuatri').hide();
@@ -20,10 +21,10 @@
         } if (tblReferencias != null) {
             tblReferencias.fnClearTable();
         }
-        
-        if (!isNaN(AlumnoNum)) {
+
+        if (!isNaN(AlumnoNum) && AlumnoNum.length>0) {
             EsNumero(AlumnoNum);
-        } else {
+        } else if (AlumnoNum.length > 0){
             EsString(AlumnoNum);
         }
     });
@@ -66,12 +67,14 @@
                 var option1 = $(document.createElement('option'));
                 option1.text(this.Descripcion);
                 option1.val(this.OfertaEducativaId);
+                Planel = this.SucursalId;
                 $("#slcOfertas").append(option1);
             });
         } else {
             var option1 = $(document.createElement('option'));
             option1.text(objAlumnoC.lstOfertas[0].Descripcion);
             option1.val(objAlumnoC.lstOfertas[0].OfertaEducativaId);
+            Planel = objAlumnoC.lstOfertas[0].SucursalId;
             $("#slcOfertas").append(option1);
             $("#slcOfertas").val(objAlumnoC.lstOfertas[0].OfertaEducativaId);
             hayCuatrimestre = objAlumnoC.lstOfertas[0].Cuatrimestre != 0 ? true : false;
@@ -93,13 +96,17 @@
             $(objAlumnoC.lstPeriodos).each(function () {
                 var option1 = $(document.createElement('option'));
                 option1.text(this.Descripcion);
-                option1.val(this.PeriodoId+" " +this.Anio);
+                option1.val(this.PeriodoId + " " + this.Anio);
+                option1.attr("data-Anio", this.Anio);
+                option1.attr("data-PeriodoId", this.PeriodoId);
                 $("#slcPeriodos").append(option1);
             });
         } else {
             var option1 = $(document.createElement('option'));
             option1.text(objAlumnoC.lstPeriodos[0].Descripcion);
             option1.val(objAlumnoC.lstPeriodos[0].PeriodoId + " " + objAlumnoC.lstPeriodos[0].Anio);
+            option1.attr("data-Anio", objAlumnoC.lstPeriodos[0].Anio);
+            option1.attr("data-PeriodoId", objAlumnoC.lstPeriodos[0].PeriodoId);
             $("#slcPeriodos").append(option1);
             if ($("#slcOfertas").val() != "-1") { $("#slcPeriodos").val(objAlumnoC.lstPeriodos[0].PeriodoId + " " + objAlumnoC.lstPeriodos[0].Anio); }
         }
@@ -129,9 +136,85 @@
         }
 
     }
+    $('#btnGuardarMaestria').on('click', function () {
+        if ($("#slcMaestrias").val() != -1) {
+            var objGM = {
+                AlumnoId,
+                EspecialidadId,
+                MaestriaId,
+                PeriodoId,
+                Anio,
+                UsuarioId
+            };
+            objGM.Anio = $('#slcPeriodos').data("anio");
+            objGM.PeriodoId = $('#slcPeriodos').data("periodoid");
+            objGM.AlumnoId = objAlumnoC.AlumnoId;
+            objGM.MaestriaId = $("#slcMaestrias").val();
+            objGM.EspecialidadId = $("#slcOfertas").val();
+            objGM.UsuarioId = $.cookie('userAdmin');
+            objGM = JSON.stringify(objGM);
+
+            $.ajax({
+                type: "POST",
+                url: "WS/Reinscripcion.asmx/GenerarMaestria",
+                data: objGM,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                }
+            });
+        }
+    });
+
+    $('#btnMaestria').on('click', function () {
+        $('#Load').modal('show');
+        TraerMaestrias();
+        $('#ModalMaestria').modal('show');        
+    });
+    $('#btnCancelar').on('click', function() {
+        $('#ModalMaestria').modal('hide');
+    });
+    function TraerMaestrias() {
+        var obj = {
+            'tipoOferta': '3',
+            'Plantel':  Planel 
+        };
+        obj = JSON.stringify(obj);
+        $.ajax({
+            type: "POST",
+            url: "WS/General.asmx/ConsultarOfertaEducativa",
+            data: obj,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#slcMaestrias").empty();
+                var optionP = $(document.createElement('option'));
+                optionP.text('--Seleccionar--');
+                optionP.val(-1);
+                $("#slcMaestrias").append(optionP);
+                if (data.d.length == 0) { return false; }
+                if (data.d.length > 1) {
+                    $(data.d).each(function () {
+                        var option1 = $(document.createElement('option'));
+                        option1.text(this.Descripcion);
+                        option1.val(this.OfertaEducativaId);
+                        $("#slcMaestrias").append(option1);
+                    });
+                } else {
+                    var option1 = $(document.createElement('option'));
+                    option1.text(data.d.Descripcion);
+                    option1.val(data.d.OfertaEducativaId);
+                    $("#slcMaestrias").append(option1);
+                }
+                $("#slcMaestrias").change();      
+                $('#Load').modal('hide');
+            },
+            error: function () {
+                $('#Load').modal('hide');
+            }
+        });
+    }
 
     $("#slcOfertas").change(function () {
-
+        $('#divMaestria').hide();
         var op = $("#slcOfertas").val();
         $("#lbCuatrimestre").text("");
 
@@ -141,11 +224,13 @@
                 if (this.OfertaEducativaTipoId != 1) { $('#trAsesoria').hide(); } else { $('#trAsesoria').show(); }
                 hayCuatrimestre = this.Cuatrimestre != 0 ? true : false;
                 llenarCuatrimestres(this.OfertaEducativaTipoId);
-                var c = this.Cuatrimestre != 0 ? "Cuatrimestre anterior:  " + this.Cuatrimestre : ""
+                var c = this.Cuatrimestre != 0 ? "Cuatrimestre anterior:  " + this.Cuatrimestre : "";
+                if (this.AplicaMaestria) {
+                    Planel = this.SucursalId;
+                    //$('#divMaestria').show();
+                }
                 $("#lbCuatrimestre").text(c);
-            }
-
-          
+            }          
         });
 
         $('#txtPuAsesoria').val("$0.00");

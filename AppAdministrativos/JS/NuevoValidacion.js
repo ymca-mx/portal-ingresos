@@ -564,7 +564,7 @@
                             esEmpresa = $('#chkEsEmpresa').is(':checked');
                             if (esEmpresa === true) {
 
-                                if (hayPromocion) { GuardarPromocion(Alumno); } else { $('#Load').modal('hide');}
+                                if (hayPromocion) { GuardarPromocion(Alumno); }
                                 
                                 
                                 alertify.alert("El numero del Alumno Inscrito es: " + Alumno, function () { 
