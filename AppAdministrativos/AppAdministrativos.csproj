@@ -143,7 +143,9 @@
     <Content Include="JS\account\recovery.js" />
     <Content Include="JS\account\validacionRecovery.js" />
     <Content Include="JS\Alumnos\AlumnoCambioCarrera.js" />
+    <Content Include="JS\Alumnos\AlumnoNuevoIngreso.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
+    <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\index\bitacora.js" />
     <Content Include="JS\index\cargarMenu.js" />
     <Content Include="JS\index\index.js" />
@@ -152,6 +154,9 @@
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="login.html" />
+    <None Include="Scripts\jquery-2.2.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.4.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Style\assets\admin\layout2\css\custom.css" />
     <Content Include="Style\assets\admin\layout2\css\layout.css" />
     <Content Include="Style\assets\admin\layout2\css\themes\blue.css" />
@@ -4468,7 +4473,9 @@
     <Content Include="Style\templates\admin3\ui_tree.html" />
     <Content Include="Style\templates\admin3\ui_typography.html" />
     <Content Include="Views\Alumno\AlumnoCambioCarrera.html" />
+    <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\PromociónCasa.html" />
+    <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Pago\ReferenciasSemestrales.html" />
     <Content Include="Views\Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Views\Style\engato\index\css\componentes.css" />
@@ -5409,6 +5416,7 @@
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\fontawesome-stars.less" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\mixins.less" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\variables.less" />
+    <Content Include="Scripts\jquery-2.2.4.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

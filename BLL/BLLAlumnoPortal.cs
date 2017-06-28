@@ -480,7 +480,9 @@ namespace BLL
                                             {
                                                 AlumnoId = a.AlumnoDetalle.AlumnoId,
                                                 FechaNacimiento = a.AlumnoDetalle.FechaNacimiento,
-                                                Email = a.AlumnoDetalle.Email
+                                                Email = a.AlumnoDetalle.Email,
+                                                GeneroId=a.AlumnoDetalle.GeneroId,
+                                                CURP=a.AlumnoDetalle.CURP
                                             },
                                             AlumnoInscrito = a.AlumnoInscrito.Select(Ai => new DTOAlumnoInscrito
                                             {
@@ -513,7 +515,7 @@ namespace BLL
                                                             .Where(a => a.AlumnoId == AlumnoId && a.EsEmpresa == true)?
                                                             .ToList()?
                                                             .Count ?? 0) > 0 ? true : false;
-
+                    Alumno.DTOAlumnoDetalle.FechaNacimientoC = Alumno.DTOAlumnoDetalle.FechaNacimiento.ToString("yyyy-MM-dd", Cultura);
                     Alumno.AlumnoInscrito.EsEspecial =
                                     db.GrupoAlumnoConfiguracion.Where(k => k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList().Count > 0 ? true : false;
 
@@ -12183,49 +12185,6 @@ namespace BLL
 
                     db.AlumnoInscrito.Remove(AlumnoInscrito);
 
-                    AlumnoRevision AlumnoRevision = db.AlumnoRevision.Where(a => a.AlumnoId == Cambio.AlumnoId
-                                                            && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
-                                                            && a.Anio == Cambio.Anio
-                                                            && a.PeriodoId == Cambio.PeriodoId).FirstOrDefault();
-
-                    db.AlumnoRevision.Add(new AlumnoRevision
-                    {
-                        AlumnoId = Cambio.AlumnoId,
-                        OfertaEducativaId = Cambio.OfertaEducativaIdNueva,
-                        Anio= Cambio.Anio,
-                        PeriodoId = Cambio.PeriodoId,
-                        UsuarioId = AlumnoRevision.UsuarioId,
-                        FechaRevision = AlumnoRevision.FechaRevision,
-                        HoraRevision = AlumnoRevision.HoraRevision,
-                        InscripcionCompleta = AlumnoRevision.InscripcionCompleta,
-                        AsesoriaEspecial = AlumnoRevision.AsesoriaEspecial,
-                        AdelantoMateria = AlumnoRevision.AdelantoMateria,
-                        Observaciones = AlumnoRevision.Observaciones
-                    });
-                    db.AlumnoRevision.Remove(AlumnoRevision);
-
-                    //pendiente definir//
-
-                    AlumnoCuatrimestre AlumnoCuatrimestre = db.AlumnoCuatrimestre.Where(a => a.AlumnoId == Cambio.AlumnoId
-                                                            && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
-                                                            && a.Anio == Cambio.Anio
-                                                            && a.PeriodoId == Cambio.PeriodoId).FirstOrDefault();
-                    db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
-                    {
-                        AlumnoId = Cambio.AlumnoId,
-                        OfertaEducativaId = Cambio.OfertaEducativaIdNueva,
-                        Cuatrimestre = AlumnoCuatrimestre.Cuatrimestre,
-                        Anio = Cambio.Anio,
-                        PeriodoId = Cambio.PeriodoId,
-                        esRegular = AlumnoCuatrimestre.esRegular,
-                        FechaAsignacion= AlumnoCuatrimestre.FechaAsignacion,
-                        HoraAsignacion= AlumnoCuatrimestre.HoraAsignacion,
-                        UsuarioId = AlumnoCuatrimestre.UsuarioId
-                    });
-
-                    db.AlumnoCuatrimestre.Remove(AlumnoCuatrimestre);
-
-
                     List<AlumnoDescuento> AlumnoDescuento = db.AlumnoDescuento.Where(a => a.AlumnoId == Cambio.AlumnoId
                                                             && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
                                                             && a.EstatusId != 3
@@ -12248,14 +12207,13 @@ namespace BLL
                     Pago.ForEach(a =>
                     {
                         a.OfertaEducativaId = Cambio.OfertaEducativaIdNueva;
-                        a.CuotaId = db.Cuota.Where(w => w.PagoConceptoId == a.Cuota1.PagoConceptoId && w.Anio == a.Anio && w.PeriodoId == a.PeriodoId && w.OfertaEducativaId == Cambio.OfertaEducativaIdNueva).FirstOrDefault().CuotaId;
+                        a.CuotaId = db.Cuota.Where(w => w.PagoConceptoId == a.Cuota1.PagoConceptoId && w.OfertaEducativaId == Cambio.OfertaEducativaIdNueva).FirstOrDefault().CuotaId;
                     });
                     List<int> pago2 = Pago.Select(i => i.PagoId).ToList();
                     List<PagoDescuento> PagoDescuento = db.PagoDescuento.Where(q => pago2.Contains(q.PagoId)).ToList();
 
                     PagoDescuento.ForEach(a =>
                     {
-                        var d = db.Descuento.Where(e => e.PagoConceptoId == a.Pago.Cuota1.PagoConceptoId && e.OfertaEducativaId == Cambio.OfertaEducativaIdNueva).FirstOrDefault().DescuentoId;
                         db.PagoDescuento.Add(new PagoDescuento
                         {
                             PagoId = a.PagoId,
@@ -12357,5 +12315,46 @@ namespace BLL
                 }
             }
         }
+        public static List<DTOAlumnoLigero> ConsultarAlumnosNuevos()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+                    DTOPeriodo PeriodoSiguiente = new DTOPeriodo
+                    {
+                        Anio = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio,
+                        PeriodoId = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1,
+                    };
+
+
+                    return db.Alumno
+                                            .Where(a => ((a.Anio == PeriodoActual.Anio && a.PeriodoId == PeriodoActual.PeriodoId) ||
+                                                        (a.Anio == PeriodoSiguiente.Anio && a.PeriodoId == PeriodoSiguiente.PeriodoId))
+                                                       && a.AlumnoInscrito.Count ==1 
+                                                       && a.AlumnoInscritoBitacora.Count==0
+                                                       && a.EstatusId != 3)
+                                             .Select(a => new DTOAlumnoLigero
+                                             {
+                                                 AlumnoId = a.AlumnoId,
+                                                 Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                                                 Usuario=a.Usuario.Nombre,
+                                                 FechaRegistro=((a.FechaRegistro.Day<10?"0"+a.FechaRegistro.Day:""+ a.FechaRegistro.Day)+"/"+
+                                                                (a.FechaRegistro.Month < 10 ? "0" + a.FechaRegistro.Month : "" + a.FechaRegistro.Month) + "/"+
+                                                                ""+a.FechaRegistro.Year),
+                                                 OfertasEducativas = a.AlumnoInscrito
+                                                                                .Select(AI => AI.OfertaEducativa.Descripcion)
+                                                                                    .ToList(),
+                                             })
+                                            .ToList();                    
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
     }
 }

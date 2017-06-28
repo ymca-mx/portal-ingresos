@@ -25,5 +25,6 @@ namespace DTO
         public int SucursalId { get; set; }
         public DTOOfertaEducativaTipo DTOOfertaEducativaTipo { get; set; }
         public int Cuatrimestre { get; set; }
+        public bool AplicaMaestria { get; set; }
     }
 }

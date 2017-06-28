@@ -148,6 +148,11 @@ namespace AppAdministrativos.WS
             catch (Exception ex)
             { return ex.Message + " " + AñoPrepa; }
         }
+        [WebMethod]
+        public List<DTOAlumnoLigero> ConsultarAlumnosNuevos()
+        {
+            return BLLAlumnoPortal.ConsultarAlumnosNuevos();
+        }
 
         [WebMethod]
         public List<DTOAlumnoLigero> ConsultarAlumnos()
