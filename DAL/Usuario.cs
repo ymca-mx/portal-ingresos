@@ -32,7 +32,6 @@ namespace DAL
             this.AlumnoRevision = new HashSet<AlumnoRevision>();
             this.BecaDeportiva = new HashSet<BecaDeportiva>();
             this.CuotaIncremento = new HashSet<CuotaIncremento>();
-            this.Docente = new HashSet<Docente>();
             this.Empresa = new HashSet<Empresa>();
             this.Grupo = new HashSet<Grupo>();
             this.GrupoAlumnoConfiguracion = new HashSet<GrupoAlumnoConfiguracion>();
@@ -101,8 +100,6 @@ namespace DAL
         public virtual ICollection<BecaDeportiva> BecaDeportiva { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuotaIncremento> CuotaIncremento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Docente> Docente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Empresa> Empresa { get; set; }
         public virtual Estatus Estatus { get; set; }

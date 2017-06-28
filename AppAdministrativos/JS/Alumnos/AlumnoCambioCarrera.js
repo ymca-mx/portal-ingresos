@@ -90,6 +90,14 @@
     });
 
     $("#btnGuardar").click(function () {
+        var comentario = $('#txtComentario').val();
+        comentario = $.trim(comentario);
+        if (comentario.length < 5)
+        {
+            alertify.alert("Inserte un comentario.");
+            return false;
+        } 
+
         $("#PopComentario").modal("hide");
         $('#Load').modal('show');
         

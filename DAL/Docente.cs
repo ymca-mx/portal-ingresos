@@ -18,10 +18,9 @@ namespace DAL
         public string Nombre { get; set; }
         public string Paterno { get; set; }
         public string Materno { get; set; }
-        public System.DateTime FechaAlta { get; set; }
-        public int UsuarioId { get; set; }
-    
-        public virtual Usuario Usuario { get; set; }
-        public virtual DocenteDetalle DocenteDetalle { get; set; }
+        public Nullable<System.DateTime> FechaAlta { get; set; }
+        public Nullable<System.TimeSpan> HoraAlta { get; set; }
+        public Nullable<int> UsuarioId { get; set; }
+        public Nullable<int> EstatusId { get; set; }
     }
 }

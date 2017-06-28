@@ -532,7 +532,7 @@ namespace BLL
                                                              join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
                                                              join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
                                                              join e in db.AlumnoCuatrimestre on new { a.AlumnoId, a.OfertaEducativaId, a.Anio, a.PeriodoId } equals
-                                                                                                new { e.AlumnoId, e.OfertaEducativaId, e.Anio, e.PeriodoId }
+                                                                                               new { e.AlumnoId, e.OfertaEducativaId, e.Anio, e.PeriodoId }
                                                              where a.Anio == anio
                                                              && a.PeriodoId == periodo
                                                              && a.EstatusId == 1
@@ -549,6 +549,7 @@ namespace BLL
                                                                  lugarNacimiento = d.EntidadFederativa.Descripcion,
                                                                  tipoAlumno = a.TipoAlumno,
                                                                  Cuatrimestre = e.Cuatrimestre + " Cuatrimestre"
+                                                                 //Cuatrimestre = db.AlumnoCuatrimestre.Where(e=> a.AlumnoId == e.AlumnoId && a.OfertaEducativaId == e.OfertaEducativaId && a.Anio == e.Anio && a.PeriodoId == e.PeriodoId).FirstOrDefault()?.Cuatrimestre + " Cuatrimestre" ?? ""
                                                              }
                                                   ).ToList();
 
@@ -710,7 +711,7 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOAlumnosVoBo> alumnoRevicion = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
+                    List<DTOAlumnosVoBo> alumnoRevision = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
                                                                         && ar.PeriodoId == periodoid
                                                                         && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
 
@@ -732,7 +733,7 @@ namespace BLL
                                      }).ToList();
 
 
-                    List<DTOReporteVoBo> alumnoVoBo = alumnoRevicion.Select(td => new DTOReporteVoBo
+                    List<DTOReporteVoBo> alumnoVoBo = alumnoRevision.Select(td => new DTOReporteVoBo
                     {
                         AlumnoId = td.AlumnoId,
                         Nombre = td.Nombre,

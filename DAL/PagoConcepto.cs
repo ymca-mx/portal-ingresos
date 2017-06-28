@@ -36,6 +36,7 @@ namespace DAL
         public bool EsCancelable { get; set; }
         public bool TieneDescripcion { get; set; }
         public string ClaveContable { get; set; }
+        public bool EsOtrosIngresos { get; set; }
         public int EstatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

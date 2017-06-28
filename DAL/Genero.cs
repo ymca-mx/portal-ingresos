@@ -18,7 +18,6 @@ namespace DAL
         public Genero()
         {
             this.AlumnoDetalle = new HashSet<AlumnoDetalle>();
-            this.DocenteDetalle = new HashSet<DocenteDetalle>();
             this.ProspectoDetalle = new HashSet<ProspectoDetalle>();
             this.UsuarioDetalle = new HashSet<UsuarioDetalle>();
         }
@@ -28,8 +27,6 @@ namespace DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoDetalle> AlumnoDetalle { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocenteDetalle> DocenteDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProspectoDetalle> ProspectoDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -19,6 +19,7 @@ namespace DAL
         {
             this.TipoUsuarioSubmenu = new HashSet<TipoUsuarioSubmenu>();
             this.Usuario = new HashSet<Usuario>();
+            this.TipoUsuarioSubmenu1 = new HashSet<TipoUsuarioSubmenu1>();
             this.UsuarioTipoPagoConcepto = new HashSet<UsuarioTipoPagoConcepto>();
         }
     
@@ -29,6 +30,8 @@ namespace DAL
         public virtual ICollection<TipoUsuarioSubmenu> TipoUsuarioSubmenu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
     }

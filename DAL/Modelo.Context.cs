@@ -90,8 +90,6 @@ namespace DAL
         public virtual DbSet<Descuento> Descuento { get; set; }
         public virtual DbSet<DescuentoTipo> DescuentoTipo { get; set; }
         public virtual DbSet<Dia> Dia { get; set; }
-        public virtual DbSet<Docente> Docente { get; set; }
-        public virtual DbSet<DocenteDetalle> DocenteDetalle { get; set; }
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<EmpresaDetalle> EmpresaDetalle { get; set; }
         public virtual DbSet<EntidadFederativa> EntidadFederativa { get; set; }
@@ -214,9 +212,28 @@ namespace DAL
         public virtual DbSet<UsuarioPermiso> UsuarioPermiso { get; set; }
         public virtual DbSet<UsuarioTipo> UsuarioTipo { get; set; }
         public virtual DbSet<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
+        public virtual DbSet<Docente> Docente { get; set; }
+        public virtual DbSet<DocenteDetalle> DocenteDetalle { get; set; }
+        public virtual DbSet<DocenteEstudio> DocenteEstudio { get; set; }
+        public virtual DbSet<DocenteEstudioDocumento> DocenteEstudioDocumento { get; set; }
+        public virtual DbSet<DocentePublicacion> DocentePublicacion { get; set; }
+        public virtual DbSet<DocumentoTipo> DocumentoTipo { get; set; }
+        public virtual DbSet<Hora> Hora { get; set; }
+        public virtual DbSet<Materia> Materia { get; set; }
+        public virtual DbSet<MateriaApertura> MateriaApertura { get; set; }
+        public virtual DbSet<MateriaCompartida> MateriaCompartida { get; set; }
+        public virtual DbSet<MateriaCompartidaDetalle> MateriaCompartidaDetalle { get; set; }
+        public virtual DbSet<MateriaTipo> MateriaTipo { get; set; }
+        public virtual DbSet<Menu1> Menu1 { get; set; }
+        public virtual DbSet<Salon> Salon { get; set; }
+        public virtual DbSet<SalonAsignacion> SalonAsignacion { get; set; }
+        public virtual DbSet<Sede> Sede { get; set; }
+        public virtual DbSet<SubMenu1> SubMenu1 { get; set; }
+        public virtual DbSet<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
+        public virtual DbSet<AlumnoPermitido20162> AlumnoPermitido20162 { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }
@@ -226,6 +243,7 @@ namespace DAL
         public virtual DbSet<Saldos> Saldos { get; set; }
         public virtual DbSet<Tabla2> Tabla2 { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
+        public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {
