@@ -19,9 +19,24 @@
     $("#slcOferta").change(function () {
         if ($("#slcOferta").val() != -1) {
             oferta = $("#slcOferta option:selected").html();
-            tblVoBo.columns(1)
-                .search("^" + oferta + "$", true, false, true)
-                .draw();
+
+            if (oferta.includes('Derecho')) {
+                tblVoBo.columns(1)
+                    .search(oferta)
+                    .draw();
+            } else if (oferta.includes('Maestría en Educación')) {
+                var selected = [];
+                selected.push("^" + oferta + "$");
+                selected.push("^" + oferta + " SAT$");
+                var regex = selected.join("|");
+                tblVoBo.columns(1)
+                    .search(regex, true, false, true)
+                    .draw();
+            } else {
+                tblVoBo.columns(1)
+                    .search("^" + oferta + "$", true, false, true)
+                    .draw();
+            }
         } else
         {
             oferta = "";
@@ -93,7 +108,7 @@
                         $("#slcCuatrimestre").append(option);
                         n++;
                     });// $(datos).each(function ()
-                    $("#slcCuatrimestre").val(0);
+                    $("#slcCuatrimestre").val(1);
                     $("#slcCuatrimestre").change();
                 }//if
                 if (datos2.length > 0) {

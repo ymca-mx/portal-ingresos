@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     var tblBecas, tblBecas1, tblBecas2, tblBecas3, anio, periodo, reporte, of, oferta1, hoy;
-    var cuatri = new Array("0", "0", "0", "0");
+    var cuatri = new Array("1", "1", "1", "1");
     //var fechainicial = new Array(3);
     //var fechafinal = new Array(3);
     var fecha1 = new Array("", "", "", "");
@@ -86,8 +86,7 @@
     });
 
     $('.date-picker').on("hide", function () {
-        if ($("#from").val()=== "")
-        {
+        if ($("#from").val() === "") {
             $('.input-daterange input').datepicker("setDate", hoy);
         }
         if ($("#to").val() === "") {
@@ -119,12 +118,11 @@
     function filtros() {
 
         cuatri[reporte] = $("#slcCuatrimestre").val();
-        oferta1 =  $("#slcOferta option:selected").html() ;
+        oferta1 = $("#slcOferta option:selected").html();
         oferta[reporte] = $("#slcOferta").val();
         fecha1[reporte] = $("#from").val();
         fecha2[reporte] = $("#to").val();
 
-       
 
         switch (reporte) {
             case 0:
@@ -133,26 +131,41 @@
                         tblBecas.columns(2)
                             .search(oferta1)
                             .draw();
-                    } else {
+                    } else if (oferta1.includes('Maestría en Educación')) {
+                        var selected = [];
+                        selected.push("^" + oferta1 + "$");
+                        selected.push("^" + oferta1 + " SAT$");
+                        var regex = selected.join("|");
+                        tblBecas1.columns(2)
+                            .search(regex, true, false, true)
+                            .draw();
+                    }else {
                         tblBecas.columns(2)
                             .search("^" + oferta1 + "$", true, false, true)
                             .draw();
                     }
-                   
 
                 } else {
                     tblBecas.columns(2)
-                           .search("")
-                           .draw();
+                        .search("")
+                        .draw();
                 }
-                    tblBecas.draw();
-                
+                tblBecas.draw();
+
                 break;
             case 1:
                 if (oferta1 != "--Todas--") {
-                    if (oferta1.includes('Derecho')) {
+                    if (oferta1.includes('Derecho')  ) {
                         tblBecas1.columns(2)
                             .search(oferta1)
+                            .draw();
+                    } else if (oferta1.includes('Maestría en Educación') ){
+                        var selected = []; 
+                        selected.push("^" + oferta1 + "$");
+                        selected.push("^" + oferta1 + " SAT$");
+                        var regex = selected.join("|");
+                        tblBecas1.columns(2)
+                            .search( regex, true, false, true)
                             .draw();
                     } else {
                         tblBecas1.columns(2)
@@ -161,8 +174,8 @@
                     }
                 } else {
                     tblBecas1.columns(2)
-                           .search("")
-                   .draw();
+                        .search("")
+                        .draw();
                 }
                 tblBecas1.draw();
                 break;
@@ -172,7 +185,15 @@
                         tblBecas2.columns(2)
                             .search(oferta1)
                             .draw();
-                    } else {
+                    } else if (oferta1.includes('Maestría en Educación')) {
+                        var selected = [];
+                        selected.push("^" + oferta1 + "$");
+                        selected.push("^" + oferta1 + " SAT$");
+                        var regex = selected.join("|");
+                        tblBecas1.columns(2)
+                            .search(regex, true, false, true)
+                            .draw();
+                    }else {
                         tblBecas2.columns(2)
                             .search("^" + oferta1 + "$", true, false, true)
                             .draw();
@@ -189,6 +210,14 @@
                     if (oferta1.includes('Derecho')) {
                         tblBecas3.columns(2)
                             .search(oferta1)
+                            .draw();
+                    } else if (oferta1.includes('Maestría en Educación')) {
+                        var selected = [];
+                        selected.push("^" + oferta1 + "$");
+                        selected.push("^" + oferta1 + " SAT$");
+                        var regex = selected.join("|");
+                        tblBecas1.columns(2)
+                            .search(regex, true, false, true)
                             .draw();
                     } else {
                         tblBecas3.columns(2)
@@ -233,7 +262,7 @@
                         $("#slcCuatrimestre").append(option);
                         n++;
                     });// $(datos).each(function ()
-                    $("#slcCuatrimestre").val(0);
+                    $("#slcCuatrimestre").val(1);
                     $("#slcCuatrimestre").change();
                 }//if
                 if (datos2.length > 0) {
@@ -320,19 +349,19 @@
                         row.childNodes[6].style.textAlign = 'center';
                         row.childNodes[7].style.textAlign = 'center';
                     }
-                    ,"fnDrawCallback": function (oSettings) {
+                    , "fnDrawCallback": function (oSettings) {
                         filtosdatatable();
                         registros[reporte] = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros[reporte]);
                     }
                 });//$('#dtbecas').DataTable
                 filtros();
-                
+
 
                 $('#Load').modal('hide');
             },//success
         });// end $.ajax
-        
+
 
     }//function CargarReporteBecas()
 
@@ -390,11 +419,11 @@
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'right';
                     }
-                     ,"fnDrawCallback": function (oSettings) {
-                         filtosdatatable();
-                         registros[reporte] = oSettings.aiDisplay.length;
-                         $('#lbBecas').text(registros[reporte]);
-                     }
+                    , "fnDrawCallback": function (oSettings) {
+                        filtosdatatable();
+                        registros[reporte] = oSettings.aiDisplay.length;
+                        $('#lbBecas').text(registros[reporte]);
+                    }
                 });//$('#dtbecas').DataTable
                 filtros();
                 $('#Load').modal('hide');
@@ -402,7 +431,7 @@
 
         });//$.ajax
 
-        
+
     }//CargarAlumnosInscritos()
 
     function CargarAlumnosBecaSep(anio, periodo) {
@@ -472,7 +501,7 @@
 
         });//$.ajax
 
-       
+
     }//function CargarAlumnosBecaSep()
 
     function CargarBecasInegi(anio, periodo) {
@@ -524,7 +553,7 @@
                         },
                         "search": "Buscar Alumno ",
                     },
-                   
+
                     "order": [[1, "desc"]],
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[2].style.textAlign = 'right';
@@ -544,43 +573,43 @@
 
         });//$.ajax
 
-       
+
     }//function CargarBecasInegi()
 
 
     $.fn.dataTableExt.afnFiltering.push(
-	function (oSettings, aData, iDataIndex) {
+        function (oSettings, aData, iDataIndex) {
 
-        if (reporte === 3 || !$('#chkYo').prop('checked') ) {
-	        var iFini = "";
-	        var iFfin = "";
-	    }
-	    else {
-	        var iFini = document.getElementById('from').value;
-	        var iFfin = document.getElementById('to').value;
-	    }
-	    var iStartDateCol = of;
+            if (reporte === 3 || !$('#chkYo').prop('checked')) {
+                var iFini = "";
+                var iFfin = "";
+            }
+            else {
+                var iFini = document.getElementById('from').value;
+                var iFfin = document.getElementById('to').value;
+            }
+            var iStartDateCol = of;
 
-	    iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
-	    iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
+            iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
+            iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
 
-	    var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
+            var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
 
-	    if (iFini === "" && iFfin === "") {
-	        return true;
-	    }
-	    else if (iFini === "" && iFfin >= datofini) {
-	        return true;
-	    }
-	    else if (iFini <= datofini && iFfin === "") {
-	        return true;
-	    }
-	    else if (iFini <= datofini && iFfin >= datofini) {
-	        return true;
-	    }
-	    return false;
-	}
-);
+            if (iFini === "" && iFfin === "") {
+                return true;
+            }
+            else if (iFini === "" && iFfin >= datofini) {
+                return true;
+            }
+            else if (iFini <= datofini && iFfin === "") {
+                return true;
+            }
+            else if (iFini <= datofini && iFfin >= datofini) {
+                return true;
+            }
+            return false;
+        }
+    );
 
     if (jQuery().datepicker) {
 
@@ -617,7 +646,7 @@
                 $("#dtbecas2").tableExport.remove();
                 $("#dtbecas2").tableExport({
                     formats: ["xlsx"],
-                    escape:'false'
+                    escape: 'false'
                 });
                 break;
             case 2:
@@ -636,14 +665,12 @@
     }
 
 
-    $('#chkYo').change(function ()
-    {
+    $('#chkYo').change(function () {
         if ($('#chkYo').prop('checked')) {
             $("#from").prop('disabled', false);
             $("#to").prop('disabled', false);
             filtros();
-        } else
-        {
+        } else {
             $("#from").prop('disabled', true);
             $("#to").prop('disabled', true);
             filtros();
