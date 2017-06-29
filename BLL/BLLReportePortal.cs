@@ -53,7 +53,22 @@ namespace BLL
                         fechaInicial1 = a.FechaInicial,
                         fechaFinal1 = a.FechaFinal,
                     }
-                ).Where(b => b.fechaInicial1 <= DateTime.Today).OrderByDescending(c => c.anio).Take(3).ToList();
+                ).Where(b => b.fechaInicial1 <= DateTime.Today).OrderByDescending(c => c.anio).Take(2).ToList();
+
+
+                    int Anio = periodo[0].periodoId == 3 ? periodo[0].anio + 1 : periodo[0].anio;
+                    int PeriodoId = periodo[0].periodoId == 3 ? 1 : periodo[0].periodoId + 1;
+
+                periodo.Add(db.Periodo.Select(a => new DTOPeriodo2
+                {
+                    anio = a.Anio,
+                    periodoId = a.PeriodoId,
+                    descripcion = a.Descripcion,
+                    fechaInicial1 = a.FechaInicial,
+                    fechaFinal1 = a.FechaFinal,
+                }
+                ).Where(b => b.anio == Anio && b.periodoId == PeriodoId).FirstOrDefault());  
+
 
                     periodo = periodo.Select(
                        a => new DTOPeriodo2
@@ -64,9 +79,12 @@ namespace BLL
                            fechaInicial = a.fechaInicial1.ToString("dd/MM/yyyy", Cultura),
                            fechaFinal = a.fechaFinal1.ToString("dd/MM/yyyy", Cultura)
                        }
-                       ).ToList();
+                       ).OrderByDescending(b=> b.anio).ThenByDescending(c=> c.periodoId).ToList();
 
-                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 && w.Descripcion != "Desconocida" && w.SucursalId!=4).OrderByDescending(g => g.OfertaEducativaTipoId).Select(o =>
+                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 
+                                                                                           && w.Descripcion != "Desconocida" 
+                                                                                           && w.SucursalId!=4
+                                                                                           && w.OfertaEducativaId !=48 ).OrderBy(g => g.OfertaEducativaTipoId).Select(o =>
                         new DTOOfertaEducativa2
                         {
                             ofertaEducativaId = o.OfertaEducativaId,
