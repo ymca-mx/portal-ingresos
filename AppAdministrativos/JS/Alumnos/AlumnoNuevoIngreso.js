@@ -1,6 +1,8 @@
 ﻿$(function init() {
+    console.log("Estoy dentro del JS ALumnos Nuevos....");
     var tblAlumnos;
     TraerAlumnos();
+  
     function TraerAlumnos() {
         $('#Load').modal('show');
         $.ajax({
@@ -37,7 +39,7 @@
                         },
                         "search": "Buscar Alumno ",
                     },
-                    "order": [[2, "desc"]]
+                    "order": [[0, "desc"]]
                 });
                 var fil = $('#tblAlumnos_filter label input');
                 fil.removeClass('input-small').addClass('input-large');
@@ -48,7 +50,16 @@
             }
         });
     }
-
+    var objGuardar = {
+        AlumnoId:0,
+        Nombre:'',
+        Paterno:'',
+        Materno:'',
+        Nacimiento:'',
+        GeneroId:0,
+        CURP:'',
+        UsuarioId:0
+    }  
     $('#tblAlumnos').on('click', 'a', function () {
         $('#Load').modal('show');
         var fid = tblAlumnos.fnGetData(this.parentNode.parentNode, 0);
@@ -60,6 +71,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d != null) {
+                    objGuardar.AlumnoId = data.d.AlumnoId;
                     $('#ModalDatos').modal('show');
                     $('#txtNombre').val('');
                     $('#txtNombre').val(data.d.Nombre);
@@ -82,10 +94,46 @@
     $('#btnCancelar').on('click', function () {
         $('#ModalDatos').modal('hide');
     });
-    $('#btnGuardarDatos').on('click', function () {
-        var frm = $('#frmDatos');
-        if (frm.valid()) {
-            alertify.alert("Valido");
+
+    $('#btnGuardarDatos').on('click', function () {        
+        var $frm = $('#frmDatos');
+        if ($frm[0].checkValidity()) {
+            /* submit the form */
+            $('#Load').modal('show');
+            objGuardar.Nombre = $('#txtNombre').val();
+            objGuardar.Paterno = $('#txtPaterno').val();
+            objGuardar.Materno = $('#txtMaterno').val();
+            objGuardar.Nacimiento = $('#txtFecha').val();
+            objGuardar.GeneroId = $('#slcSexo').val();
+            objGuardar.CURP = $('#txtCURP').val();
+            objGuardar.UsuarioId = $.cookie('userAdmin');
+            Guardar(JSON.stringify(objGuardar));
         }
     });
+
+    function Guardar(Datos) {
+        $.ajax({
+            url: 'WS/Alumno.asmx/AtualizarAlumno',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: Datos,
+            dataType: 'json',
+            success: function (data) {
+                if (data.d) {
+                    $('#ModalDatos').modal('hide');
+                    $('#Load').modal('hide');
+                    alertify.alert("Se guardo correctamente", function () {
+                        TraerAlumnos();
+                    });                    
+                } else {
+                    alertify.alert("Ocurrio un error al guardar, intente nuevamente.");
+                    $('#Load').modal('hide');
+                }
+            },
+            error: function () {
+                alertify.alert("Ocurrio un error al guardar, intente nuevamente.");
+                $('#Load').modal('hide');
+            }
+        });
+    }
 });

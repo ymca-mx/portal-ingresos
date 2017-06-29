@@ -50,17 +50,17 @@
                 <div class="modal-header">
                     <h3 class="modal-title">Datos del Alumno</h3>
                 </div>
-                <div class="modal-body">
-                    <form id="frmDatos">
+                <form id="frmDatos" onSubmit="return false;" >
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="col-md-12 form-group">
                                     <label class="control-label">Nombre:</label>
-                                    <input class="form-control" id="txtNombre" required pattern=".{2,300}" title="2 letras minimo" type="text"/>
+                                    <input class="form-control" id="txtNombre" required pattern=".{2,300}" title="2 letras minimo" type="text" />
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <label class="control-label">Paterno:</label>
-                                    <input class="form-control" id="txtPaterno" required type="text" pattern=".{2,300}" title="2 letras minimo"/>
+                                    <input class="form-control" id="txtPaterno" required type="text" pattern=".{2,300}" title="2 letras minimo" />
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <label class="control-label">Materno:</label>
@@ -78,16 +78,16 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <label class="control-label">CURP:</label>
-                                    <input class="form-control" id="txtCURP" required type="text" pattern=".{18,20}" title="18 letras minimo"/>
+                                    <input class="form-control" id="txtCURP" required type="text" pattern=".{18,20}" title="18 letras minimo" />
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" id="btnCancelar">Cancelar</button>
-                    <button class="btn btn-primary" id="btnGuardarDatos">Guardar</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-default" id="btnCancelar">Cancelar</a>
+                        <button class="btn btn-primary" id="btnGuardarDatos">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -105,8 +105,8 @@
             </div>
         </div>
     </div>
-    <script src="JS/Alumnos/AlumnoNuevoIngreso.js"></script>
     <script src="JS/Genero.js"></script>
+    <script src="JS/Alumnos/AlumnoNuevoIngreso.js"></script>    
     <script>
         Genero.init();
     </script>
