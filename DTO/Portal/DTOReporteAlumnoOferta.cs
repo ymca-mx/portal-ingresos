@@ -99,6 +99,7 @@ namespace DTO
         public System.DateTime fechaNacimiento1 { get; set; }
         public string fechaNacimiento { get; set; }
         public string lugarNacimiento { get; set; }
+        public string lugarEstudio { get; set; }
         public string tipoAlumno { get; set; }
         public string Cuatrimestre { get; set; }
     }

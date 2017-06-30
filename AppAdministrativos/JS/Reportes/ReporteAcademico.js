@@ -522,14 +522,15 @@
                 tblBecas3 = $("#dtbecas4").DataTable({
                     "aaData": data.d,
                     "aoColumns": [
-                        { "mDataProp": "alumnoId", "sWidth": "15%" },
+                        { "mDataProp": "alumnoId", "sWidth": "10%" },
                         { "mDataProp": "nombreAlumno", "sWidth": "20%" },
                         { "mDataProp": "especialidad", "sWidth": "10%" },
                         { "mDataProp": "Cuatrimestre", "sWidth": "10%" },
                         { "mDataProp": "sexo", "sWidth": "10%" },
                         { "mDataProp": "edad", "sWidth": "10%" },
                         { "mDataProp": "fechaNacimiento", "sWidth": "10%" },
-                        { "mDataProp": "lugarNacimiento", "sWidth": "15%" },
+                        { "mDataProp": "lugarNacimiento", "sWidth": "10%" },
+                        { "mDataProp": "lugarEstudio", "sWidth": "10%" },
 
                     ],
                     "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
