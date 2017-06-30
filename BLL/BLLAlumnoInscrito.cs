@@ -308,13 +308,19 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 string Archivo = "Documentos/";
-                List<DTOAlumnoInscrito> lstAlumnoOfertas = (from a in db.AlumnoInscrito
-                                                            where a.AlumnoId == Alumno && a.OfertaEducativa.OfertaEducativaTipoId != 4
-                                                            select a).ToList().ConvertAll(new Converter<AlumnoInscrito, DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
-                Archivo += lstAlumnoOfertas.Count == 0 ? "" : (lstAlumnoOfertas[0].OfertaEducativa.SucursalId == 2 ?
-                    (lstAlumnoOfertas[0].OfertaEducativa.OfertaEducativaTipoId == 2 ? "Posgrado C.pdf" : lstAlumnoOfertas[0].OfertaEducativa.OfertaEducativaTipoId == 3 ? "" : "") :
-                    (lstAlumnoOfertas[0].OfertaEducativa.OfertaEducativaTipoId == 1 ? lstAlumnoOfertas[0].OfertaEducativa.OfertaEducativaId == 30 ? "Musica.pdf" : "Licenciatura.pdf"
-                    : lstAlumnoOfertas[0].OfertaEducativa.OfertaEducativaTipoId == 2 ? "Posgrado.pdf" : lstAlumnoOfertas[0].OfertaEducativa.OfertaEducativaTipoId == 4 ? "Ingles.pdf" : ""));
+                List<AlumnoInscrito> OfertasAlumno = db.AlumnoInscrito
+                                                        .Where(al => al.AlumnoId == Alumno
+                                                            && al.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                                        .OrderByDescending(a=> a.Anio)
+                                                        .ThenByDescending(a=> a.PeriodoId)
+                                                        .ToList();
+
+                Archivo += OfertasAlumno?.FirstOrDefault()?.OfertaEducativa?.SucursalId == 2 ?
+                    (OfertasAlumno?.FirstOrDefault()?.OfertaEducativa?.OfertaEducativaTipoId == 2 ? "Posgrado C.pdf" :
+                    OfertasAlumno?.FirstOrDefault()?.OfertaEducativa?.OfertaEducativaTipoId == 3 ? "" : "") :
+                    (OfertasAlumno?.FirstOrDefault()?.OfertaEducativa?.OfertaEducativaTipoId == 1 ? OfertasAlumno?.FirstOrDefault()?.OfertaEducativaId == 30 ? "Musica.pdf" : "Licenciatura.pdf" :
+                    OfertasAlumno?.FirstOrDefault()?.OfertaEducativa?.OfertaEducativaTipoId == 2 ? "Posgrado.pdf" : OfertasAlumno?.FirstOrDefault()?.OfertaEducativa?.OfertaEducativaTipoId == 4 ? "Ingles.pdf" : "");
+                
 
                 return Archivo.Length > 11 ? Archivo : null;
             }
