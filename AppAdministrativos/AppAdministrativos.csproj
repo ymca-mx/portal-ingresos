@@ -5504,7 +5504,7 @@
     <Content Include="JS\jquery.printElement.js" />
     <Content Include="JS\ListadoAlumno.js" />
     <Content Include="JS\MedioDifusion.js" />
-    <Content Include="JS\NuevoValidacion.js" />
+    <Content Include="JS\InscripcionAlumno.js" />
     <Content Include="JS\Pagos.js" />
     <Content Include="JS\Pagos\EstadoCuentaBuscar.js" />
     <Content Include="JS\Pagos\ReferenciasBuscar.js" />
