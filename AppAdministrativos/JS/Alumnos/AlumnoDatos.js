@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(function init() {
     var Now = new Date();
     var años = Now.getFullYear() - 18;
     var mes = Now.getMonth() + 1;
@@ -213,6 +212,9 @@ $(document).ready(function () {
         $('#submit_form  select').prop("disabled", true);
         $('#submit_form  button').prop("disabled", true);
         $('#slcOfertaEducativa').removeAttr("disabled");
+        $('#slcOfertasAlumno').removeAttr("disabled");
+        $('#slcOfertasAlumno1').removeAttr("disabled");
+        
         $('#chkUni').attr("checked", false);
         $('#uniform-chkUniSi').removeClass('disabled');
         $('#divGuardar').hide();
