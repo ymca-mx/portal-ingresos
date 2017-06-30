@@ -1,8 +1,7 @@
-﻿$(document).ready(function () {
+﻿$(function init() {
     var AlumnoObject;
     var tblBecas=null;
     var Alumnoid;
-
     $('#btnGenerarCargos').click(function () {
         var txtMonto = $('#txtBecaMonto').val();
         var Perid = $('#slcPeriodo').val();

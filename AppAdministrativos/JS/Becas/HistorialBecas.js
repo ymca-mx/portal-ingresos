@@ -57,8 +57,8 @@
             });
         } else {
             var option1 = $(document.createElement('option'));
-            option1.text(ofertas[0].Descripcion);
-            option1.val(ofertas[0].OfertaEducativaId);
+            option1.text(ofertas[0].OfertaEducativa.Descripcion);
+            option1.val(ofertas[0].OfertaEducativa.OfertaEducativaId);
             $("#slcOfertas").append(option1);            
         }
         $("#slcOfertas").val(ofertas[0].OfertaEducativaId);
