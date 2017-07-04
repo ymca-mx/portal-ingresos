@@ -459,6 +459,73 @@ namespace BLL
 
         }
 
+        public static bool UpdateAlumnoRP(int alumnoId, string nombre, string paterno, string materno, string nacimiento, int generoId, string cURP, int usuarioId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    Alumno Alumno = db.Alumno.Where(a => a.AlumnoId == alumnoId).FirstOrDefault();
+
+                    db.AlumnoBitacora.Add(new AlumnoBitacora
+                    {
+                        AlumnoId = Alumno.AlumnoId,
+                        Anio = Alumno.Anio,
+                        PeriodoId = Alumno.PeriodoId,
+                        EstatusId = Alumno.EstatusId,
+                        Fecha = DateTime.Now,
+                        FechaRegistro = Alumno.FechaRegistro,
+                        Materno = Alumno.Materno,
+                        MatriculaId = Alumno.MatriculaId,
+                        Nombre = Alumno.Nombre,
+                        Paterno = Alumno.Paterno,
+                        UsuarioId = Alumno.UsuarioId,
+                    });
+                    db.AlumnoDetalleBitacora.Add(new AlumnoDetalleBitacora
+                    {
+                        AlumnoId = Alumno.AlumnoId,
+                        Calle = Alumno.AlumnoDetalle.Calle,
+                        Celular = Alumno.AlumnoDetalle.Celular,
+                        Colonia = Alumno.AlumnoDetalle.Colonia,
+                        CP = Alumno.AlumnoDetalle.CP,
+                        CURP = Alumno.AlumnoDetalle.CURP,
+                        Email = Alumno.AlumnoDetalle.Email,
+                        EntidadFederativaId = Alumno.AlumnoDetalle.EntidadFederativaId,
+                        EntidadNacimientoId = Alumno.AlumnoDetalle.EntidadNacimientoId,
+                        EstadoCivilId = Alumno.AlumnoDetalle.EstadoCivilId,
+                        Fecha = DateTime.Now,
+                        FechaNacimiento = Alumno.AlumnoDetalle.FechaNacimiento,
+                        GeneroId = Alumno.AlumnoDetalle.GeneroId,
+                        MunicipioId = Alumno.AlumnoDetalle.MunicipioId,
+                        NoExterior = Alumno.AlumnoDetalle.NoExterior,
+                        NoInterior = Alumno.AlumnoDetalle.NoInterior,
+                        PaisId = Alumno.AlumnoDetalle.PaisId,
+                        ProspectoId = Alumno.AlumnoId,
+                        TelefonoCasa = Alumno.AlumnoDetalle.TelefonoCasa,
+                        TelefonoOficina = Alumno.AlumnoDetalle.TelefonoOficina,
+                        UsuarioId = usuarioId
+                    });
+
+                    DateTime fechan= DateTime.ParseExact(nacimiento, "yyyy-MM-dd", Cultura);
+
+                    Alumno.Nombre = nombre;
+                    Alumno.Paterno = paterno;
+                    Alumno.Materno = materno;
+                    Alumno.AlumnoDetalle.FechaNacimiento = fechan;
+                    Alumno.AlumnoDetalle.GeneroId = generoId;
+                    Alumno.AlumnoDetalle.CURP = cURP;
+                    Alumno.UsuarioId = usuarioId;
+
+                    db.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
         public static DTOAlumno ObtenerAlumno(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

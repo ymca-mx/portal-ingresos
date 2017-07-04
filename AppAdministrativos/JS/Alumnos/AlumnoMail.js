@@ -71,6 +71,7 @@
                     alertify.alert("No se pudo enviar el correo al alumno favor de revisar el Correo");
                     return false;
                 }
+                alertify.alert("Se enviaron las credenciales al alumno");
                 $('#txtMail').val('');
                 $('#lblNombre').text('');
                 Alumno = 0;

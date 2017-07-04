@@ -233,7 +233,8 @@
         $('#txtPagarCred').text('');
         $('#txtJustificacionBec').val('');
         $('#txtJustificacionCred').val('');
-        $('#chkMaterial').prop("checked", false);
+        $('#chkMaterial')[0].checked = false;
+        $('#chkEsEmpresa')[0].checked = false;
         $('#Encabezado').show();
         $('#Contenedor').hide();
         //$('#tblDescuentos').hide();
@@ -406,6 +407,8 @@
         $('#txtPagarIn').text('');
         $('#txtcuotaExa').text('');
         $('#txtPagarExa').text('');
+        $('#chkMaterial')[0].checked = false;
+        $('#chkEsEmpresa')[0].checked = false;
     }
     $('#btnGuardar').on('click', function () {
         if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
@@ -431,8 +434,8 @@
             'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),//6
             'Credencial': $('#txtDescuentoCred').val(),//7
             'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),//8
-            'Material': $('#chkMaterial').attr("checked") ? 'true' : 'false',//9
-            'EsEmpresa': $('#chkEsEmpresa').attr("checked") ? 'true' : 'false',//10
+            'Material': $('#chkMaterial')[0].checked,//9
+            'EsEmpresa': $('#chkEsEmpresa')[0].checked,//10
             'DescuentoExamen': Mas == 1 ? '-1' : $('#txtDescuentoExa').val(),//11
             'JustificacionExam': $('#txtJustificacionExa').val() == '' ? 'null' : $('#txtJustificacionExa').val(),//12
             'DescuentoIns': $('#txtDescuentoIns').val(),//13

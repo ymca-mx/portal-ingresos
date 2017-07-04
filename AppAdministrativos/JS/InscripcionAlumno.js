@@ -464,90 +464,76 @@
             var mesanio = $('#txtAñoT').val();
             mesanio = mesanio + '-' + ($('#txtMesT').val().length == 1 ? '0' + $('#txtMesT').val() : $('#txtMesT').val());
             //var Lista1="{"
-            var lista = new Array();
-            lista.push({ 'Nombre': $('#txtnombre').val() });//0
-            lista.push({ 'Paterno': $('#txtApPaterno').val() });//1
-            lista.push({ 'Materno': $('#txtApMaterno').val() });//2
+            var lista = {
+                Nombre: $('#txtnombre').val(),//0
+                Paterno: $('#txtApPaterno').val(),//1
+                Materno: $('#txtApMaterno').val(),//2
 
-            lista.push({ 'Sexo': $('#slcSexo').val() });//3
-            lista.push({ 'EstadoCivil': $('#slcEstadoCivil').val() });//4
-            lista.push({ 'FNacimiento': $('#txtFNacimiento').val() });//5
-            lista.push({ 'Curp': $('#txtCURP').val() });//6
-            lista.push({ 'Pais': $('#slcLugarN').val() });//7----->Pais|Estado
-            lista.push({ 'Entidad': $('#slcEstado').val() });//8
-            lista.push({ 'Delegacion': $('#slcMunicipio').val() });//9
-            lista.push({ 'CP': $('#txtCP').val() });//10
-            lista.push({ 'Colonia': $('#txtColonia').val() });//11
-            lista.push({ 'Calle': $('#txtCalle').val() });//12
-            lista.push({ 'NoExterior': $('#txtNumeroE').val() });//13
-            lista.push({ 'NoInterior': $('#txtNumeroI').val() == '' ? 'null' : $('#txtNumeroI').val() });//14
-            lista.push({ 'TCasa': $('#txtTelefonoCasa').val() });//15
-            lista.push({ 'TCelular': $('#txtCelular').val() });//16
-            lista.push({ 'Email': $('#txtEmail').val() });//17
+                Sexo: $('#slcSexo').val(),//3
+                EstadoCivil: $('#slcEstadoCivil').val(),//4
+                FNacimiento: $('#txtFNacimiento').val(),//5
+                Curp: $('#txtCURP').val(),//6
+                Pais: $('#slcLugarN').val(),//7----->Pais|Estado
+                Entidad: $('#slcEstado').val(),//8
+                Delegacion: $('#slcMunicipio').val(),//9
+                CP: $('#txtCP').val(),//10
+                Colonia: $('#txtColonia').val(),//11
+                Calle: $('#txtCalle').val(),//12
+                NoExterior: $('#txtNumeroE').val(),//13
+                NoInterior: $('#txtNumeroI').val() == '' ? 'null' : $('#txtNumeroI').val(),//14
+                TCasa: $('#txtTelefonoCasa').val(),//15
+                TCelular: $('#txtCelular').val(),//16
+                Email: $('#txtEmail').val(),//17
 
-            lista.push({ 'PANombre': $('#txtPAutorizada').val() });//18
-            lista.push({ 'PAPaterno': $('#txtAPPaterno').val() });//19
-            lista.push({ 'PAMaterno': $('#txtAPMaterno').val() });//20
-            lista.push({ 'PATCelular': $('#txtTelefonoPA').val() });//21
-            lista.push({ 'PAEmail': $('#txtPEmail').val() });//22
-            lista.push({ 'Parentesco': $('#slcParentesco').val() });//23
+                PANombre: $('#txtPAutorizada').val(),//18
+                PAPaterno: $('#txtAPPaterno').val(),//19
+                PAMaterno: $('#txtAPMaterno').val(),//20
+                PATCelular: $('#txtTelefonoPA').val(),//21
+                PAEmail: $('#txtPEmail').val(),//22
+                Parentesco: $('#slcParentesco').val(),//23
 
-            lista.push({ 'OfertaEducativa': $('#slcCarrera').val() });//24
-            lista.push({ 'Turno': $('#slcTurno').val() }); //25
-            lista.push({ 'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html() }); //26
+                OfertaEducativa: $('#slcCarrera').val(),//24
+                Turno: $('#slcTurno').val(),//25
+                Periodo: $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//26
+                Preparatoria: $('#txtNombrePrepa').val() == "" || $('#txtNombrePrepa').val() == " " ? 'null' : $('#txtNombrePrepa').val(),//27
+                Area: $('#slcArea').val(),//28
+                AñoPrepa: mesanio,//29
+                Promedio: $('#txtPromedio').val() == "" || $('#txtPromedio').val() == " " ? 'null' : $('#txtPromedio').val(), //30
+                Universidad: $('#chkUni')[0].checked == false ? 'null' : $('#txtUni').val(),//31
+                Plantel: $('#slcPlantel').val(),//32            
 
-            if ($('#txtNombrePrepa').val() == "" || $('#txtNombrePrepa').val() == " ") { lista.push({ 'Preparatoria': 'null' }) }
-            else { lista.push({ 'Preparatoria': $('#txtNombrePrepa').val() }); } //27
-            //if ($('#txtArea').val() == "" || $('#txtArea').val() == " ") { lista.push({ 'Area': 'null' }) }
-            //else { lista.push({ 'Area': $('#txtArea').val() }); } //28
-            lista.push({ 'Area': $('#slcArea').val() });//28
-            lista.push({ 'AñoPrepa': mesanio }); //29
-            if ($('#txtPromedio').val() == "" || $('#txtPromedio').val() == " ") { lista.push({ 'Promedio': 'null' }) }
-            else { lista.push({ 'Promedio': $('#txtPromedio').val() }); } //30
-            if ($('#chkUni').prop('checked') == false) {
-                lista.push({ 'Universidad': 'null' }); //31
-            } else {
-                lista.push({ 'Universidad': $('#txtUni').val() });
+                //Persona Aurtorizada 2
+                PANombre2: $('#txtPAutorizada2').val() == '' ? 'null' : $('#txtPAutorizada2').val(),//33
+                PAPaterno2: $('#txtAPPaterno2').val() == '' ? 'null' : $('#txtAPPaterno2').val(),//34
+                PAMaterno2: $('#txtAPMaterno2').val() == '' ? 'null' : $('#txtAPMaterno2').val(),//35
+                PATCelular2: $('#txtTelefonoPA2').val() == '' ? 'null' : $('#txtTelefonoPA2').val(),//36
+                PAEmail2: $('#txtPEmail2').val() == '' ? 'null' : $('#txtPEmail2').val(),//37
+                Parentesco2: $('#slcParentesco2').val() == '- 1' ? 'null' : $('#slcParentesco2').val(),//38
+
+                //Nacionalidad Persona
+                Nacionalidad: $('#slcNacionalidad').val(), //39 NAcionalidad
+
+                //Pais|Nacionalidad Prepa
+                NacionalidadPre: $('#slcNacionalidadPrep').val() == '- 1' ? 'null' : $('#slcNacionalidadPrep').val(),//40 NAcionalidad PRepa
+                PaisEstadoPre: $('#slcEstadoPais').val() == '- 1' ? 'null' : $('#slcEstadoPais').val(),//41 PAis Estado Prepa
+
+                //Pais|Nacionalidad Prepa
+                NacionalidadUni: 'null',//42NAcionalidad Uni
+                PaisEstadoUni: 'null',//43PAis Estado Uni
+                Titulado: $('#chkUniSi')[0].checked,//44
+                Motivo: $('#chkUniSi')[0].checked == true ? $('#txtUniMotivo').val() : 'null',//45
+
+                //Check de autorizacion
+                Autoriza1: $('#chkAuotiza1')[0].checked,//46
+                Autoriza2: $('#chkAuotiza2')[0].checked,//47
+                TelefonoCasaP: $('#txtTelefonoPAT').val() == '' ? 'null' : $('#txtTelefonoPAT').val(),//48
+                TelefonoCasaP2: $('#txtTelefonoPAT2').val() == '' ? 'null' : $('#txtTelefonoPAT2').val(),//49
+                EsEmpresa: $('#chkEsEmpresa')[0].checked ,//50
+                MedioDifusion: $("#slcMedio").val(),//51
+                Usuario: Usuario //52
             }
 
-            lista.push({ 'Plantel': $('#slcPlantel').val() }); //32            
-
-            //Persona Aurtorizada 2
-            lista.push({ 'PANombre2': $('#txtPAutorizada2').val() == '' ? 'null' : $('#txtPAutorizada2').val() });//33
-            lista.push({ 'PAPaterno2': $('#txtAPPaterno2').val() == '' ? 'null' : $('#txtAPPaterno2').val() });//34
-            lista.push({ 'PAMaterno2': $('#txtAPMaterno2').val() == '' ? 'null' : $('#txtAPMaterno2').val() });//35
-            lista.push({ 'PATCelular2': $('#txtTelefonoPA2').val() == '' ? 'null' : $('#txtTelefonoPA2').val() });//36
-            lista.push({ 'PAEmail2': $('#txtPEmail2').val() == '' ? 'null' : $('#txtPEmail2').val() });//37
-            lista.push({ 'Parentesco2': $('#slcParentesco2').val() == '-1' ? 'null' : $('#slcParentesco2').val() });//38
-            //Nacionalidad Persona
-            lista.push({ 'Nacionalidad': $('#slcNacionalidad').val() })//39 NAcionalidad
-            //Pais|Nacionalidad Prepa
-            lista.push({ 'NacionalidadPre': $('#slcNacionalidadPrep').val() == '-1' ? 'null' : $('#slcNacionalidadPrep').val() });//40 NAcionalidad PRepa
-            lista.push({ 'PaisEstadoPre': $('#slcEstadoPais').val() == '-1' ? 'null' : $('#slcEstadoPais').val() });//41 PAis Estado Prepa
-            //Pais|Nacionalidad Prepa
-            lista.push({ 'NacionalidadUni': 'null' });//42NAcionalidad Uni
-            lista.push({ 'PaisEstadoUni': 'null' });//43PAis Estado Uni
-            lista.push({ 'Titulado': $('#chkUniSi').prop('checked') == true ? 'true' : 'false' });//44
-            lista.push({ 'Motivo': $('#chkUniSi').prop('checked') == true ? $('#txtUniMotivo').val() : 'null' });//45
-            //Check de autorizacion
-            lista.push({ 'Autoriza1': $('#chkAuotiza1').attr("checked") ? 'true' : 'false' });//46
-            lista.push({ 'Autoriza2': $('#chkAuotiza2').attr("checked") ? 'true' : 'false' });//47
-            lista.push({ 'TelefonoCasaP': $('#txtTelefonoPAT').val() == '' ? 'null' : $('#txtTelefonoPAT').val() });//48
-            lista.push({ 'TelefonoCasaP2': $('#txtTelefonoPAT2').val() == '' ? 'null' : $('#txtTelefonoPAT2').val() });//49
-            lista.push({ 'EsEmpresa': $('#chkEsEmpresa').prop('checked') == true ? 'true' : 'false' });//50
-            lista.push({ 'MedioDifusion': $("#slcMedio").val() });//51
-            lista.push({ 'Usuario': Usuario });//52
-            //var lstDatos = JSON.stringify(lista);
-            //var objSon = JSON.parse(lstSerializada);
-            var objetos = "{";
-            lista.forEach(function (name) {
-                var obj = JSON.stringify(name);
-                var nombre = obj.substring(2, obj.indexOf('":'));
-                var valu = obj.substring(obj.indexOf(':"') + 1, obj.length - 1);
-                objetos += nombre + ":" + valu + ",";
-            });
-            objetos = objetos.substring(0, objetos.lastIndexOf(","));
-            objetos += "}";
+            var objetos = JSON.stringify(lista);
 
             var Periodo = $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html();
             $.ajax({
@@ -561,7 +547,7 @@
                     if (!isNaN(data.d)) {
                         var Alumno = parseInt(data.d);
                         if (Alumno > 0) {
-                            esEmpresa = $('#chkEsEmpresa').is(':checked');
+                            esEmpresa = $('#chkEsEmpresa')[0].checked 
                             if (esEmpresa === true) {
 
                                 if (hayPromocion) { GuardarPromocion(Alumno); }
@@ -926,8 +912,8 @@
             'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),
             'Credencial': $('#txtDescuentoCred').val(),
             'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),
-            'Material': $('#chkMaterial').attr("checked") ? 'true' : 'false',
-            'EsEmpresa': $('#chkEsEmpresa').prop('checked') == true ? 'true' : 'false',
+            'Material': $('#chkMaterial')[0].checked ,
+            'EsEmpresa': $('#chkEsEmpresa')[0].checked ,
             'DescuentoExamen': null,
             'JustificacionExam': null,
             'DescuentoIns': null,

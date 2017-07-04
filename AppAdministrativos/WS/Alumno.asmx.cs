@@ -529,5 +529,11 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
         }
+
+        [WebMethod]
+        public bool AtualizarAlumno(int AlumnoId, string Nombre, string Paterno, string Materno, string Nacimiento, int GeneroId, string CURP, int UsuarioId)
+        {
+            return BLLAlumnoPortal.UpdateAlumnoRP(AlumnoId, Nombre, Paterno, Materno, Nacimiento, GeneroId, CURP, UsuarioId);
+        }
     }
 }
