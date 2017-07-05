@@ -5983,7 +5983,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -6065,7 +6065,7 @@ namespace BLL
 
                                 #endregion Saldo a Favor
 
-                                if (Descuentos != null)
+                                if (Descuentos != null && Descuentos?.Count>0)
                                     db.PagoDescuento.RemoveRange(Descuentos);
                             }
 
@@ -6365,7 +6365,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -6748,7 +6748,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -7128,7 +7128,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -7508,7 +7508,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -7888,7 +7888,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -8812,7 +8812,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -9194,7 +9194,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -9577,7 +9577,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -9957,7 +9957,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -10337,7 +10337,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {
@@ -10717,7 +10717,7 @@ namespace BLL
                                     #region A Favor
 
                                     var AFavor = db.PagoParcial.Where(s => s.PagoTipoId == 3 && s.PagoId == n.PagoId && s.EstatusId == 4 && s.ReferenciaProcesada.EsIngles == false).ToList();
-                                    Referenciados.ForEach(s =>
+                                    AFavor.ForEach(s =>
                                     {
                                         if (saldo > 0)
                                         {

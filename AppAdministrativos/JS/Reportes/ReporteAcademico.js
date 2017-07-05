@@ -634,31 +634,48 @@
         return false;
     });
 
+    //Botones
+    var tb = $("#dtbecas").tableExport({
+        formats: ["xlsx"],
+    });
+    var tb1 = $("#dtbecas2").tableExport({
+        formats: ["xlsx"],
+    });
+    var tb2 = $("#dtbecas3").tableExport({
+        formats: ["xlsx"],
+    });
+    var tb3 = $("#dtbecas4").tableExport({
+        formats: ["xlsx"],
+    });
+
     function filtosdatatable() {
 
         switch (reporte) {
             case 0:
-                $("#dtbecas").tableExport.remove();
-                $("#dtbecas").tableExport({
+                tb.remove();
+                tb = null;
+                tb = $("#dtbecas").tableExport({
                     formats: ["xlsx"],
                 });
                 break;
             case 1:
-                $("#dtbecas2").tableExport.remove();
-                $("#dtbecas2").tableExport({
-                    formats: ["xlsx"],
-                    escape: 'false'
-                });
-                break;
-            case 2:
-                $("#dtbecas3").tableExport.remove();
-                $("#dtbecas3").tableExport({
+                tb1.remove();
+                tb1 = null;
+                tb1 = $("#dtbecas2").tableExport({
                     formats: ["xlsx"],
                 });
                 break;
-            case 3:
-                $("#dtbecas4").tableExport.remove();
-                $("#dtbecas4").tableExport({
+            case 2:  
+                tb2.remove();
+                tb2 = null;
+                tb2 = $("#dtbecas3").tableExport({
+                    formats: ["xlsx"],
+                });
+                break;
+            case 3:   
+                tb3.remove();
+                tb3 = null;
+                tb3 = $("#dtbecas4").tableExport({
                     formats: ["xlsx"],
                 });
                 break;

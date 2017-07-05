@@ -587,12 +587,16 @@
                 MItable = $('#tbAlumnos').dataTable({
                     "aaData": Respuesta.d,
                     "aoColumns": [
-                        { "mDataProp": "AlumnoId", "Nombre": "AlumnoId" },
+                        {
+                            "mDataProp": "AlumnoId", "Nombre": "AlumnoId",
+                            Stextalign: 'center'
+                        },
                         {
                             "mDataProp": "Nombre",
                             "mRender": function (data) {
                                 return "<a href=''onclick='return false;'>" + data + " </a> ";
-                            }
+                            },
+                            sWidth: '350px' 
                         },
                         { "mDataProp": "FechaRegistro" },
                         { "mDataProp": "Descripcion" },
