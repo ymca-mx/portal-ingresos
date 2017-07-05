@@ -218,47 +218,48 @@
         var op = $("#slcOfertas").val();
         $("#lbCuatrimestre").text("");
 
-
-        $(objAlumnoC.lstOfertas).each(function () {
-            if (String(this.OfertaEducativaId) == op) {
-                if (this.OfertaEducativaTipoId != 1) { $('#trAsesoria').hide(); } else { $('#trAsesoria').show(); }
-                hayCuatrimestre = this.Cuatrimestre != 0 ? true : false;
-                llenarCuatrimestres(this.OfertaEducativaTipoId);
-                var c = this.Cuatrimestre != 0 ? "Cuatrimestre anterior:  " + this.Cuatrimestre : "";
-                if (this.AplicaMaestria) {
-                    Planel = this.SucursalId;
-                    //$('#divMaestria').show();
+        if (objAlumnoC.lstOfertas.length !== 0) {
+            $(objAlumnoC.lstOfertas).each(function () {
+                if (String(this.OfertaEducativaId) == op) {
+                    if (this.OfertaEducativaTipoId != 1) { $('#trAsesoria').hide(); } else { $('#trAsesoria').show(); }
+                    hayCuatrimestre = this.Cuatrimestre != 0 ? true : false;
+                    llenarCuatrimestres(this.OfertaEducativaTipoId);
+                    var c = this.Cuatrimestre != 0 ? "Cuatrimestre anterior:  " + this.Cuatrimestre : "";
+                    if (this.AplicaMaestria) {
+                        Planel = this.SucursalId;
+                        //$('#divMaestria').show();
+                    }
+                    $("#lbCuatrimestre").text(c);
                 }
-                $("#lbCuatrimestre").text(c);
-            }          
-        });
+            });
 
-        $('#txtPuAsesoria').val("$0.00");
-        $('#txtPuMateria').val("$0.00");
+            $('#txtPuAsesoria').val("$0.00");
+            $('#txtPuMateria').val("$0.00");
 
-        if (op.toString() == "-1") {            
-            
-            $('#txtSTAsesoria').val("$0.00");
-            $('#txtSTMateria').val("$0.00");
-            $('#txtNAsesoria').val(0);
-            $('#txtNMateria').val(0);
-            $("#slcPeriodos").val("-1");
-            var spam = $('#rdbSi')[0].parentElement;
-            $(spam).removeClass('checked');
-            var spam1 = $('#rdbNo')[0].parentElement;
-            $(spam1).removeClass('checked');
-            if (tblReferencias != null) {
-                tblReferencias.fnClearTable();
+            if (op.toString() == "-1") {
+
+                $('#txtSTAsesoria').val("$0.00");
+                $('#txtSTMateria').val("$0.00");
+                $('#txtNAsesoria').val(0);
+                $('#txtNMateria').val(0);
+                $("#slcPeriodos").val("-1");
+                var spam = $('#rdbSi')[0].parentElement;
+                $(spam).removeClass('checked');
+                var spam1 = $('#rdbNo')[0].parentElement;
+                $(spam1).removeClass('checked');
+                if (tblReferencias != null) {
+                    tblReferencias.fnClearTable();
+                }
+                $('#btnGuardar').prop("disabled", true);
+                $("#divCuatri").hide();
+                $("input:radio")[0].checked = false;
+                return false;
             }
-            $('#btnGuardar').prop("disabled", true);
-            $("#divCuatri").hide();
-            $("input:radio").removeAttr("checked");
-            return false;
-        }
 
-        $("#divCuatri").hide();
-        $("input:radio[name=rdbRegular]").removeAttr("checked");
-        llenarPeriodos();
+            $("#divCuatri").hide();
+            $("input:radio[name=rdbRegular]")[0].checked = false;
+            llenarPeriodos();
+        }
     });
 
     $("#slcPeriodos").change(function () {
@@ -274,7 +275,7 @@
             $(spam).removeClass('checked');
             var spam1 = $('#rdbNo')[0].parentElement;
             $(spam1).removeClass('checked');
-            $("input:radio[name=rdbInscripcion]").removeAttr("checked");
+            $("input:radio[name=rdbInscripcion]")[0].checked = false;
             $('#btnGuardar').prop("disabled", true);
             if (tblReferencias != null) {
                 tblReferencias.fnClearTable();
@@ -429,9 +430,9 @@
         var usuario = $.cookie('userAdmin');
         var nAse = $('#txtNAsesoria').val();
         var nMat = $('#txtNMateria').val();
-        var completa = ($('#rdbSi').attr("checked") ? true : false);
+        var completa = ($('#rdbSi')[0].checked);
         var comentario = $('#txtComentario').val();
-        var esRegular = ($('#rdbregularSi').attr("checked") ? true : false);
+        var esRegular = ($('#rdbregularSi')[0].checked);
         var Cuatrimestre = ($("#divCuatri").is(":visible") ? $("#slcCuatrimeste").val() : null);
         
         if (nAse === "0" && nMat === "0" && completa === false) {
@@ -474,8 +475,8 @@
                                 var spam = $('#rdbSi')[0].parentElement;
                                 $(spam).removeClass('checked');
                                 var spam1 = $('#rdbNo')[0].parentElement;
-                                $(spam1).removeClass('checked');     
-                                $("input:radio").removeAttr("checked");
+                                $(spam1).removeClass('checked');
+                                $("input:radio")[0].checked = false;
                                 $('#divCuatri').hide();
                                 objAlumnoC = data.d;
                                 CargarEstatus(op1, anio, periodo);
