@@ -1,6 +1,5 @@
 ﻿var Estado = function () {
     var cargarEstado = function () {
-        $('#Load').modal('show');
         $.ajax({
             type: "POST",
             url: "WS/General.asmx/ConsultarEntidadFederativa",
@@ -24,7 +23,6 @@
     }
 
     $("#slcEstado").change(function () {
-        $('#Load').modal('show');
         $("#slcMunicipio").empty();
         var Entidad = $("#slcEstado");
         var optionP = $(document.createElement('option'));

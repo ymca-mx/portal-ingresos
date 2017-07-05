@@ -154,6 +154,11 @@
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="login.html" />
+    <Content Include="Documentos\Manuales\Manual Generacion Semestres.pdf" />
+    <Content Include="Documentos\Manuales\ManualDescuentos.pdf" />
+    <Content Include="Documentos\Manuales\ManualModificacionNuevoIngreso.pdf" />
+    <Content Include="Documentos\Manuales\ManualMSI.pdf" />
+    <Content Include="Documentos\Manuales\ManualScotiabank.pdf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
