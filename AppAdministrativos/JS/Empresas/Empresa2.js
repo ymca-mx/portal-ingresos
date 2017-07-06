@@ -1250,7 +1250,8 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $('#txtNPagos').val(rowadd.AlumnoCuota.NoPagos);
         $("#txtNPagos").prop('disabled', true);
 
-
+        var chk = $('#chkCongelada');
+        $(chk).prop('disabled', true);
         if (rowadd.AlumnoCuota.CuotaCongelada) {
             $('#chkCongelada')[0].checked = true;
         }
@@ -1258,18 +1259,18 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         var chk2 = $('#chkInCongelada');
         $(chk2).prop('disabled', true);
         if (rowadd.AlumnoCuota.InscripcionCongelada) {
-            $('#chkInCongelada')[0].checked = true
+            $('#chkInCongelada')[0].checked = true;
         }
 
         var chk1 = $('#chkEspecial');
         $(chk1).prop('disabled', true);
         if (rowadd.AlumnoCuota.EsEspecial) {
-            $(chk1[0].parentElement).addClass('checked');
+            $('#chkEspecial')[0].checked = true;
         }
 
         var chkCre = $('#chkCredenciales');
         $(chkCre).prop('disabled', true);
-        $(chkCre[0].parentElement).addClass('checked');
+        $('#chkCredenciales')[0].checked = true;
 
 
         var opc = $('#slcPeriodo').find('option[value="1"]').val();
@@ -1297,19 +1298,19 @@ $('#tblAlumnosCom').on('click', 'button', function () {
 
         var chk = $('#chkCongelada');
         $(chk).prop('disabled', false);
-        $(chk[0].parentElement).removeClass('checked');
+        $('#chkCongelada')[0].checked = false;
 
         var chk2 = $('#chkInCongelada');
         $(chk2).prop('disabled', false);
-        $(chk2[0].parentElement).removeClass('checked');
+        $('#chkInCongelada')[0].checked = false;
 
         var chk1 = $('#chkEspecial');
         $(chk1).prop('disabled', false);
-        $(chk1[0].parentElement).removeClass('checked');
+        $('#chkEspecial')[0].checked = false;
 
         var chkCre = $('#chkCredenciales');
         $(chkCre).prop('disabled', false);
-        $(chkCre[0].parentElement).removeClass('checked');
+        $('#chkCredenciales')[0].checked = false;
 
 
         var opc = $('#slcPeriodo').find('option[value="1"]').val();

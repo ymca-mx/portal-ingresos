@@ -4447,6 +4447,8 @@
     <Content Include="Style\Complementos\js-xlsx-master\xlsx.core.js" />
     <Content Include="Style\Complementos\js-xlsx-master\xlsx.core.min.js" />
     <Content Include="Style\Complementos\js-xlsx-master\xlsx.js" />
+    <Content Include="Style\Complementos\JsZip\jszip.js" />
+    <Content Include="Style\Complementos\JsZip\jszip.min.js" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\.gitignore" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\jquery.barrating.min.js" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-1to10.css" />

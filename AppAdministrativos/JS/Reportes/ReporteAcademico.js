@@ -350,7 +350,6 @@
                         row.childNodes[7].style.textAlign = 'center';
                     }
                     , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
                         registros[reporte] = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros[reporte]);
                     }
@@ -420,7 +419,6 @@
                         row.childNodes[4].style.textAlign = 'right';
                     }
                     , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
                         registros[reporte] = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros[reporte]);
                     }
@@ -490,7 +488,6 @@
                         row.childNodes[6].style.textAlign = 'center';
                     }
                     , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
                         registros[reporte] = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros[reporte]);
                     }
@@ -563,7 +560,6 @@
 
                     }
                     , "fnDrawCallback": function (oSettings) {
-                        filtosdatatable();
                         registros[reporte] = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros[reporte]);
                     }
@@ -634,53 +630,31 @@
         return false;
     });
 
-    //Botones
-    var tb = $("#dtbecas").tableExport({
-        formats: ["xlsx"],
-    });
-    var tb1 = $("#dtbecas2").tableExport({
-        formats: ["xlsx"],
-    });
-    var tb2 = $("#dtbecas3").tableExport({
-        formats: ["xlsx"],
-    });
-    var tb3 = $("#dtbecas4").tableExport({
-        formats: ["xlsx"],
-    });
-
-    function filtosdatatable() {
-
-        switch (reporte) {
-            case 0:
-                tb.remove();
-                tb = null;
-                tb = $("#dtbecas").tableExport({
-                    formats: ["xlsx"],
-                });
-                break;
-            case 1:
-                tb1.remove();
-                tb1 = null;
-                tb1 = $("#dtbecas2").tableExport({
-                    formats: ["xlsx"],
-                });
-                break;
-            case 2:  
-                tb2.remove();
-                tb2 = null;
-                tb2 = $("#dtbecas3").tableExport({
-                    formats: ["xlsx"],
-                });
-                break;
-            case 3:   
-                tb3.remove();
-                tb3 = null;
-                tb3 = $("#dtbecas4").tableExport({
-                    formats: ["xlsx"],
-                });
-                break;
-        }
+    function Exportar(NombreTabla) {
+        $('#Load').modal('show');
+        var tablabe = $('#' + NombreTabla)[0];
+        var instanse = new TableExport(tablabe, {
+            formats: ['xlsx'],
+            exportButtons: false
+        });
+        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
+        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
+        $('#Load').modal('hide');
     }
+    //Botones
+    $('#btndtbecas').on('click', function () {        
+        Exportar('dtbecas');        
+    });
+    $('#btndtbecas2').on('click', function () {
+        Exportar('dtbecas2');        
+    });
+    $('#btndtbecas3').on('click', function () {
+        Exportar('dtbecas3');        
+    });
+    $('#btndtbecas4').on('click', function () {
+        Exportar('dtbecas4');        
+    });
+    
 
 
     $('#chkYo').change(function () {
