@@ -449,7 +449,9 @@ namespace BLL
                                                                  sexo = d.Genero.Descripcion,
                                                                  fechaNacimiento1 = d.FechaNacimiento,
                                                                  lugarNacimiento = d.EntidadFederativa.Descripcion,
-                                                                 lugarEstudio = d.Alumno.AlumnoAntecedente.FirstOrDefault()?.EntidadFederativa.Descripcion,
+                                                                 lugarEstudio = d.Alumno.AlumnoAntecedente.FirstOrDefault()?.PaisId ==146?
+                                                                 d.Alumno.AlumnoAntecedente.FirstOrDefault()?.EntidadFederativa.Descripcion :
+                                                                 d.Alumno.AlumnoAntecedente.FirstOrDefault()?.Pais.Descripcion,
                                                                  tipoAlumno = a.TipoAlumno,
                                                                  Cuatrimestre = e.Cuatrimestre + " Cuatrimestre"
                                                                  //Cuatrimestre = db.AlumnoCuatrimestre.Where(e=> a.AlumnoId == e.AlumnoId && a.OfertaEducativaId == e.OfertaEducativaId && a.Anio == e.Anio && a.PeriodoId == e.PeriodoId).FirstOrDefault()?.Cuatrimestre + " Cuatrimestre" ?? ""
