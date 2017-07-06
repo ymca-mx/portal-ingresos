@@ -654,7 +654,7 @@
             "',NombreC:'" + $('#txtNombre').val() + "',Paterno:'" + $('#txtPaterno').val() + "',Materno:'" + $('#txtMaterno').val() + "',EmailC:'" + $('#txtEmail').val() + "',Telefono:'" + $('#txtTelefono').val() +
             "',Celular:'" + $('#txtCelular').val() + "'";
 
-        if ($('#chkFiscales').prop('checked') == false) {
+        if ($('#chkFiscales')[0].checked == false) {
             query += ",CalleF:'" + $('#txtCalleFiscal').val() + "',CPF:'" + $('#txtCPFiscal').val() + "',NoExteriorF:'" + $('#NoExteriorFiscal').val() + "',NoInteriorF:'" + $('#NoInteriorFiscal').val() +
                 "',PaisF:'" + $('#slcPaisUniFiscal').val() + "',EstadoF:'" + $('#slcEstadoPaisFiscal').val() + "',DelegacionF:'" + $('#slcDelegacionFiscal').val() + "',ObservacionF:'" + $('#txtObservacionFiscal').val() + "',ColoniaF:'" + $('#txtColoniaFiscal').val() + "',Igual:'false'}";;
         } else {
@@ -832,7 +832,7 @@
 
                     $("#slcDelegacionFiscal").append(option);
                 });
-                if ($('#chkFiscales').prop('checked') == false) {
+                if ($('#chkFiscales')[0].checked == false) {
                     $("#slcDelegacionFiscal").val('-1');
                 } else {
                     $("#slcDelegacionFiscal").val($('#slcDelegacion').val());
@@ -1121,15 +1121,15 @@
                 'PagoPlanId': $('#slcSistemaPago').val(),
                 'CuotaInscripcion': $('#txtCuotaInscripcion').val(),
                 'CuotaColegiatura': $('#txtCuotaColegiatura').val(),
-                'EsCuotaCongelada': $('#chkCongelada').attr("checked") ? true : false,
-                'EsInscripcionCongelada': $('#chkInCongelada').attr("checked") ? true : false,                
-                'EsEspecial': $('#chkEspecial').attr("checked") ? true : false,
+                'EsCuotaCongelada': $('#chkCongelada')[0].checked,
+                'EsInscripcionCongelada': $('#chkInCongelada')[0].checked,                
+                'EsEspecial': $('#chkEspecial')[0].checked,
                 'NoPagos':$('#txtNPagos').val(),
                 'UsuarioId': usuario,
                 'GrupoId': GrupoI,
                 'Anio': anio,
                 'PeriodoId': periodoId,
-                'Credenciales': $('#chkCredenciales').attr("checked") ? true : false
+                'Credenciales': $('#chkCredenciales')[0].checked
             }
         };
         obj = JSON.stringify(obj);
@@ -1250,16 +1250,15 @@ $('#tblAlumnosCom').on('click', 'button', function () {
         $('#txtNPagos').val(rowadd.AlumnoCuota.NoPagos);
         $("#txtNPagos").prop('disabled', true);
 
-        var chk = $('#chkCongelada');
-        $(chk).prop('disabled', true);
+
         if (rowadd.AlumnoCuota.CuotaCongelada) {
-            $(chk[0].parentElement).addClass('checked');
+            $('#chkCongelada')[0].checked = true;
         }
 
         var chk2 = $('#chkInCongelada');
         $(chk2).prop('disabled', true);
         if (rowadd.AlumnoCuota.InscripcionCongelada) {
-            $(chk2[0].parentElement).addClass('checked');
+            $('#chkInCongelada')[0].checked = true
         }
 
         var chk1 = $('#chkEspecial');
