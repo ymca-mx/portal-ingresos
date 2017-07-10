@@ -19,7 +19,7 @@
 
     
     function EsNumero(Alumno) {
-        $('#chkExamen').attr("checked", false);
+        $('#chkExamen')[0].checked = false;
         var spam = $('#chkExamen')[0].parentElement;
         $(spam).removeClass('checked');
 
@@ -34,7 +34,7 @@
                 if (data.d != null) {
                     $('#txtNombre').val(data.d.Nombre);
                     if (data.d.ExamenMedico) {
-                        $('#chkExamen').attr("checked", true);
+                        $('#chkExamen')[0].checked = true;
                         var spq = $('#chkExamen')[0].parentElement;
                         $(spq).addClass('checked');
                     }
@@ -51,7 +51,7 @@
         var usuario = $.cookie('userAdmin');
         if (AlumnoId == -1) { return false; }
         var comentario = $('#txtComentario').val();
-        var Examen = $('#chkExamen').attr("checked") ? true : false;
+        var Examen = $('#chkExamen')[0].checked;
         var objAl = {
             'Alumno': {
                 'AlumnoId': AlumnoId,
@@ -76,7 +76,7 @@
                             $('#Load').modal('hide');
                             alertify.alert("Datos guardados", function () {
 
-                                $('#chkExamen').attr("checked", false);
+                                $('#chkExamen')[0].checked = false;
                                 var spam = $('#chkExamen')[0].parentElement;
                                 $(spam).removeClass('checked');
 

@@ -220,7 +220,7 @@
                             row.childNodes[7].style.textAlign = 'center';
                         }
                         , "fnDrawCallback": function (oSettings) {
-                            filtosdatatable();
+                            //filtosdatatable();
                             registros = oSettings.aiDisplay.length;
                             $('#lbRegistros').text(registros);
                         }
@@ -245,13 +245,21 @@
             $("#txtMail").val(rowData.Email);
             $("#PopEnviar").modal("show");
     });
-
-    function filtosdatatable() {
-
-        $("#dtVoBo").tableExport.remove();
-        $("#dtVoBo").tableExport({
-            formats: ["xlsx"],
+    $('#btndtVoBo').on('mausedown', function () {
+        $('#Load').modal('show');
+    });
+    $('#btndtVoBo').on('click', function () {
+        Exportar('dtVoBo');
+    });
+    function Exportar(NombreTabla) {        
+        var tablabe = $('#' + NombreTabla)[0];
+        var instanse = new TableExport(tablabe, {
+            formats: ['xlsx'],
+            exportButtons: false
         });
+        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
+        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
+        $('#Load').modal('hide');
     }
 
     $("#btnEnviar").click(function ()

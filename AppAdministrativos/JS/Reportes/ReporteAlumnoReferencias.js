@@ -121,8 +121,6 @@
                         row.childNodes[6].style.textAlign = 'left';
                         row.childNodes[8].style.textAlign = 'left';
                         row.childNodes[10].style.textAlign = 'left';
-                    }, "fnDrawCallback": function (oSettings) {
-                        ExportarExcel();
                     }
 
                 });//$('#dtbecas').DataTable
@@ -133,14 +131,24 @@
 
     }//function CargarReporteBecas()
 
-
-    function ExportarExcel()
-    {
-        $("#dtReferencias").tableExport.remove();
-        $("#dtReferencias").tableExport({
-            formats: ["xlsx"],
+    $('#dtReferencias').on('mausedown', function () {
+        $('#Load').modal('show');
+    });
+    $('#dtReferencias').on('click', function () {
+        Exportar('dtReferencias');
+    });
+    function Exportar(NombreTabla) {
+        $('#Load').modal('show');
+        var tablabe = $('#' + NombreTabla)[0];
+        var instanse = new TableExport(tablabe, {
+            formats: ['xlsx'],
+            exportButtons: false
         });
+        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
+        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
+        $('#Load').modal('hide');
     }
+
 });
 
 

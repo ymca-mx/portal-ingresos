@@ -631,7 +631,6 @@
     });
 
     function Exportar(NombreTabla) {
-        $('#Load').modal('show');
         var tablabe = $('#' + NombreTabla)[0];
         var instanse = new TableExport(tablabe, {
             formats: ['xlsx'],
@@ -639,11 +638,37 @@
         });
         var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
         instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
-        $('#Load').modal('hide');
+        
     }
     //Botones
-    $('#btndtbecas').on('click', function () {        
-        Exportar('dtbecas');        
+    $('#btndtbecas').mousedown(function () {
+        if (this.which === 1) {
+            $('#Load').modal('show', $('#btndtbecas').click());
+            $('#Load').modal('hide');
+        }
+    });
+    $('#btndtbecas2').mousedown(function () {
+        if (this.which === 1) {
+            $('#Load').modal('show', $('#btndtbecas2').click());
+            $('#Load').modal('hide');
+        }
+    });
+    $('#btndtbecas3').mousedown(function () {
+        if (this.which === 1) {
+            $('#Load').modal('show', $('#btndtbecas3').click());
+            $('#Load').modal('hide');
+        }
+    });
+    $('#btndtbecas4').mousedown(function () {
+        if (this.which === 1) {
+            $('#Load').modal('show', $('#btndtbecas4').click());
+            $('#Load').modal('hide');
+        }
+    });
+
+    $('#btndtbecas').on('click', function () {
+        setTimeout(
+            Exportar('dtbecas'), 1000);
     });
     $('#btndtbecas2').on('click', function () {
         Exportar('dtbecas2');        
