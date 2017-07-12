@@ -8,6 +8,7 @@
     var Planel;
 
     $('#btnBuscarAlumno').click(function () {
+        $('#btnBuscarAlumno').blur();
         $('#divCuatri').hide();
         $('#btnGuardar').prop("disabled", true);
         objAlumnoC = undefined;
@@ -137,29 +138,32 @@
 
     }
     $('#btnGuardarMaestria').on('click', function () {
+        $('#btnGuardarMaestria').blur();
         if ($("#slcMaestrias").val() != -1) {
+            $('#Load').modal('show');
             var objGM = {
-                AlumnoId,
-                EspecialidadId,
-                MaestriaId,
-                PeriodoId,
-                Anio,
-                UsuarioId
+                AlumnoId : objAlumnoC.AlumnoId,
+                EspecialidadId : $("#slcOfertas").val(),
+                MaestriaId : $("#slcMaestrias").val(),
+                PeriodoId: $('#slcPeriodos option:selected').data("periodoid"),
+                Anio: $('#slcPeriodos option:selected').data("anio"),
+                UsuarioId:$.cookie('userAdmin')
             };
-            objGM.Anio = $('#slcPeriodos').data("anio");
-            objGM.PeriodoId = $('#slcPeriodos').data("periodoid");
-            objGM.AlumnoId = objAlumnoC.AlumnoId;
-            objGM.MaestriaId = $("#slcMaestrias").val();
-            objGM.EspecialidadId = $("#slcOfertas").val();
-            objGM.UsuarioId = $.cookie('userAdmin');
             objGM = JSON.stringify(objGM);
-
+            
             $.ajax({
                 type: "POST",
                 url: "WS/Reinscripcion.asmx/GenerarMaestria",
                 data: objGM,
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $('#Load').modal('hide');
+                    if (data.d == "Guardado") {
+                        $('#ModalMaestria').modal('hide');
+                        alertify.alert("Se guardo correctaente.")
+                    } else {
+                        alertify.alert("Error, no se pudo inscribir a la Maestria intente nuevamente.");
+                    }
                 }
             });
         }
@@ -227,7 +231,7 @@
                     var c = this.Cuatrimestre != 0 ? "Cuatrimestre anterior:  " + this.Cuatrimestre : "";
                     if (this.AplicaMaestria) {
                         Planel = this.SucursalId;
-                        //$('#divMaestria').show();
+                        $('#divMaestria').show();
                     }
                     $("#lbCuatrimestre").text(c);
                 }
@@ -382,6 +386,7 @@
     });
 
     $('#btnGuardar').click(function () {
+        //$('#btnGuardar').blur();
         var res = $('input:radio[name=rdbRegular]:checked').val();
 
         if (res == undefined) {

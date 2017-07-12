@@ -24,5 +24,20 @@ namespace Herramientas
             return Cad;
 
         }
+
+        public static string GenerarMatricula(int anio, int periodoId, int alumnoid, string RVOE, int TurnoId)
+        {
+            //Periodo
+            string Cad = anio.ToString();
+            Cad = Cad.Substring(2, 2);
+            Cad += periodoId.ToString();
+            //RVO
+            Cad += RVOE.Substring(4);
+            //AlumnoId
+            Cad += alumnoid.ToString();
+            //Turno
+            Cad += "-" + TurnoId.ToString();
+            return Cad;
+        }
     }
 }

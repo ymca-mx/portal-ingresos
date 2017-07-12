@@ -113,6 +113,31 @@ namespace BLL
             }
         }
 
+        public static DTOGrupoAlumnoCuota TraerConfiguracion(int alumnoId, int especialidadId, int anio, int periodoId)
+        {
+            using(UniversidadEntities db=new UniversidadEntities())
+            {
+                return 
+                db.GrupoAlumnoConfiguracion
+                    .Where(a => a.AlumnoId == alumnoId
+                                && a.OfertaEducativaId == especialidadId
+                                && a.Anio == anio
+                                && a.PeriodoId == periodoId)
+                                .Select(a => new DTOGrupoAlumnoCuota
+                                {
+                                    AlumnoId = a.AlumnoId,
+                                    Anio = a.Anio,
+                                    PeriodoId = a.PeriodoId,
+                                    OfertaEducativaId = a.OfertaEducativaId,
+                                    CuotaColegiatura = a.CuotaColegiatura,
+                                    CuotaCongelada = a.EsCuotaCongelada,
+                                    CuotaInscripcion = a.CuotaInscripcion,
+                                    InscripcionCongelada = a.EsInscripcionCongelada
+                                })
+                                .FirstOrDefault() ?? null;
+            }
+        }
+
         public static int GuardarGrupo2(DTOGrupo objGrupo)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -753,72 +778,75 @@ namespace BLL
 
         public static List<DTOCuota> TraerInscripcion(int AlumnoId, int OfertaEducativaId, int Anio, int PeriodoId, int UsuarioId, decimal BecaColegiatura)
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    var ConfigAl=
-                    db.GrupoAlumnoConfiguracion
-                            .Where(K => K.AlumnoId == AlumnoId
-                                        && K.OfertaEducativaId == OfertaEducativaId
-                                        && K.PeriodoId == PeriodoId
-                                        && K.Anio == Anio)
-                            .ToList();
-
-                    if (ConfigAl.Count > 0)
+                    if ((db.AlumnoInscrito.Where(al => al.AlumnoId == AlumnoId
+                                                     && al.EsEmpresa)?.FirstOrDefault()?.EsEmpresa ?? null) != null)
                     {
-                        var ConfigAl1 = ConfigAl.FirstOrDefault();
-                        
-                        var cuotadb = db.Cuota
-                                        .Where(k => k.Anio == ConfigAl1.Anio
-                                                    && k.PeriodoId == ConfigAl1.PeriodoId
-                                                    && k.OfertaEducativaId == ConfigAl1.OfertaEducativaId
-                                                    && k.PagoConceptoId == 802).First();
-                        var InscriMo = (ConfigAl1.CuotaInscripcion * 100) / cuotadb.Monto;
-                        InscriMo = 100 - Math.Round(InscriMo, 2);
+                        var ConfigAl =
+                        db.GrupoAlumnoConfiguracion
+                                .Where(K => K.AlumnoId == AlumnoId
+                                            && K.OfertaEducativaId == OfertaEducativaId
+                                            && K.PeriodoId == PeriodoId
+                                            && K.Anio == Anio)
+                                .ToList();
 
-                        var cuotadb2 = db.Cuota
-                                      .Where(k => k.Anio == ConfigAl1.Anio
-                                                  && k.PeriodoId == ConfigAl1.PeriodoId
-                                                  && k.OfertaEducativaId == ConfigAl1.OfertaEducativaId
-                                                  && k.PagoConceptoId == 800).First();
-                        var ColegMo = (ConfigAl1.CuotaColegiatura * 100) / cuotadb2.Monto;
-                        ColegMo = 100 - Math.Round(ColegMo, 2);
+                        if (ConfigAl.Count > 0)
+                        {
+                            var ConfigAl1 = ConfigAl.FirstOrDefault();
+
+                            var cuotadb = db.Cuota
+                                            .Where(k => k.Anio == ConfigAl1.Anio
+                                                        && k.PeriodoId == ConfigAl1.PeriodoId
+                                                        && k.OfertaEducativaId == ConfigAl1.OfertaEducativaId
+                                                        && k.PagoConceptoId == 802).First();
+                            var InscriMo = (ConfigAl1.CuotaInscripcion * 100) / cuotadb.Monto;
+                            InscriMo = 100 - Math.Round(InscriMo, 2);
+
+                            var cuotadb2 = db.Cuota
+                                          .Where(k => k.Anio == ConfigAl1.Anio
+                                                      && k.PeriodoId == ConfigAl1.PeriodoId
+                                                      && k.OfertaEducativaId == ConfigAl1.OfertaEducativaId
+                                                      && k.PagoConceptoId == 800).First();
+                            var ColegMo = (ConfigAl1.CuotaColegiatura * 100) / cuotadb2.Monto;
+                            ColegMo = 100 - Math.Round(ColegMo, 2);
 
 
-                        if (ColegMo != BecaColegiatura && BecaColegiatura>0)
-                        { 
+                            if (ColegMo != BecaColegiatura && BecaColegiatura > 0)
+                            {
 
-                            db.GrupoAlumnoConfiguracionBitacora
-                                .Add(
-                                ConfigAl.Count > 0 ?
-                                    new GrupoAlumnoConfiguracionBitacora
-                                    {
-                                        AlumnoId = ConfigAl1.AlumnoId,
-                                        Anio = ConfigAl1.Anio,
-                                        CuotaColegiatura = ConfigAl1.CuotaColegiatura,
-                                        CuotaInscripcion = ConfigAl1.CuotaInscripcion,
-                                        EsCuotaCongelada = ConfigAl1.EsCuotaCongelada,
-                                        EsEspecial = ConfigAl1.EsEspecial,
-                                        EsInscripcionCongelada = ConfigAl1.EsInscripcionCongelada,
-                                        FechaRegistro = ConfigAl1.FechaRegistro,
-                                        GrupoId = ConfigAl1.GrupoId,
-                                        HoraRegistro = ConfigAl1.HoraRegistro,
-                                        NumeroPagos = ConfigAl1.NumeroPagos,
-                                        OfertaEducativaId = ConfigAl1.OfertaEducativaId,
-                                        PagoPlanId = ConfigAl1.PagoPlanId,
-                                        PeriodoId = ConfigAl1.PeriodoId,
-                                        UsuarioId = ConfigAl1.UsuarioId
-                                    }
-                                    : null);
-                            ConfigAl1.CuotaColegiatura = BecaColegiatura;
-                            ConfigAl1.HoraRegistro = DateTime.Now.TimeOfDay;
-                            ConfigAl1.FechaRegistro = DateTime.Now;
-                            ConfigAl1.UsuarioId = UsuarioId;
-                            db.SaveChanges();
-                        }
+                                db.GrupoAlumnoConfiguracionBitacora
+                                    .Add(
+                                    ConfigAl.Count > 0 ?
+                                        new GrupoAlumnoConfiguracionBitacora
+                                        {
+                                            AlumnoId = ConfigAl1.AlumnoId,
+                                            Anio = ConfigAl1.Anio,
+                                            CuotaColegiatura = ConfigAl1.CuotaColegiatura,
+                                            CuotaInscripcion = ConfigAl1.CuotaInscripcion,
+                                            EsCuotaCongelada = ConfigAl1.EsCuotaCongelada,
+                                            EsEspecial = ConfigAl1.EsEspecial,
+                                            EsInscripcionCongelada = ConfigAl1.EsInscripcionCongelada,
+                                            FechaRegistro = ConfigAl1.FechaRegistro,
+                                            GrupoId = ConfigAl1.GrupoId,
+                                            HoraRegistro = ConfigAl1.HoraRegistro,
+                                            NumeroPagos = ConfigAl1.NumeroPagos,
+                                            OfertaEducativaId = ConfigAl1.OfertaEducativaId,
+                                            PagoPlanId = ConfigAl1.PagoPlanId,
+                                            PeriodoId = ConfigAl1.PeriodoId,
+                                            UsuarioId = ConfigAl1.UsuarioId
+                                        }
+                                        : null);
+                                ConfigAl1.CuotaColegiatura = BecaColegiatura;
+                                ConfigAl1.HoraRegistro = DateTime.Now.TimeOfDay;
+                                ConfigAl1.FechaRegistro = DateTime.Now;
+                                ConfigAl1.UsuarioId = UsuarioId;
+                                db.SaveChanges();
+                            }
 
-                        return new List<DTOCuota> {
+                            return new List<DTOCuota> {
                             new DTOCuota
                             {
                                 DTOPagoConcepto = new DTOPagoConcepto
@@ -838,70 +866,71 @@ namespace BLL
                                 Monto=ColegMo
                             }
                         };
-                    }
-                    else {
-                        
-                        UpdateAlumnoConfiguracion(Anio, PeriodoId, AlumnoId, OfertaEducativaId, UsuarioId);
-
-                        ConfigAl =
-                    db.GrupoAlumnoConfiguracion
-                            .Where(K => K.AlumnoId == AlumnoId
-                                        && K.OfertaEducativaId == OfertaEducativaId
-                                        && K.PeriodoId == PeriodoId
-                                        && K.Anio == Anio)
-                            .ToList();
-                        if (ConfigAl.Count == 0) { return null; }
-
-                        var configAl1 = ConfigAl.FirstOrDefault();
-
-                        var cuotadb = db.Cuota
-                                        .Where(k => k.Anio == configAl1.Anio
-                                                    && k.PeriodoId == configAl1.PeriodoId
-                                                    && k.OfertaEducativaId == configAl1.OfertaEducativaId
-                                                    && k.PagoConceptoId == 802).First();
-                        var InscriMo = (configAl1.CuotaInscripcion * 100) / cuotadb.Monto;
-                        InscriMo = 100 - Math.Round(InscriMo, 2);
-
-                        var cuotadb2 = db.Cuota
-                                      .Where(k => k.Anio == configAl1.Anio
-                                                  && k.PeriodoId == configAl1.PeriodoId
-                                                  && k.OfertaEducativaId == configAl1.OfertaEducativaId
-                                                  && k.PagoConceptoId == 800).First();
-                        var ColegMo = (configAl1.CuotaColegiatura * 100) / cuotadb2.Monto;
-                        ColegMo = 100 - Math.Round(ColegMo, 2);
-
-                        if(ColegMo !=  BecaColegiatura && BecaColegiatura > 0)
+                        }
+                        else
                         {
 
-                            db.GrupoAlumnoConfiguracionBitacora
-                                .Add(
-                                ConfigAl.Count > 0 ?
-                                    new GrupoAlumnoConfiguracionBitacora
-                                    {
-                                        AlumnoId = configAl1.AlumnoId,
-                                        Anio = configAl1.Anio,
-                                        CuotaColegiatura = configAl1.CuotaColegiatura,
-                                        CuotaInscripcion = configAl1.CuotaInscripcion,
-                                        EsCuotaCongelada = configAl1.EsCuotaCongelada,
-                                        EsEspecial = configAl1.EsEspecial,
-                                        EsInscripcionCongelada = configAl1.EsInscripcionCongelada,
-                                        FechaRegistro = configAl1.FechaRegistro,
-                                        GrupoId = configAl1.GrupoId,
-                                        HoraRegistro = configAl1.HoraRegistro,
-                                        NumeroPagos = configAl1.NumeroPagos,
-                                        OfertaEducativaId = configAl1.OfertaEducativaId,
-                                        PagoPlanId = configAl1.PagoPlanId,
-                                        PeriodoId = configAl1.PeriodoId,
-                                        UsuarioId = configAl1.UsuarioId
-                                    }
-                                    : null);
-                            configAl1.CuotaColegiatura = BecaColegiatura;
-                            configAl1.HoraRegistro = DateTime.Now.TimeOfDay;
-                            configAl1.FechaRegistro = DateTime.Now;
-                            configAl1.UsuarioId = UsuarioId;
-                            db.SaveChanges();
-                        }
-                        return new List<DTOCuota> {
+                            UpdateAlumnoConfiguracion(Anio, PeriodoId, AlumnoId, OfertaEducativaId, UsuarioId);
+
+                            ConfigAl =
+                        db.GrupoAlumnoConfiguracion
+                                .Where(K => K.AlumnoId == AlumnoId
+                                            && K.OfertaEducativaId == OfertaEducativaId
+                                            && K.PeriodoId == PeriodoId
+                                            && K.Anio == Anio)
+                                .ToList();
+                            if (ConfigAl.Count == 0) { return null; }
+
+                            var configAl1 = ConfigAl.FirstOrDefault();
+
+                            var cuotadb = db.Cuota
+                                            .Where(k => k.Anio == configAl1.Anio
+                                                        && k.PeriodoId == configAl1.PeriodoId
+                                                        && k.OfertaEducativaId == configAl1.OfertaEducativaId
+                                                        && k.PagoConceptoId == 802).First();
+                            var InscriMo = (configAl1.CuotaInscripcion * 100) / cuotadb.Monto;
+                            InscriMo = 100 - Math.Round(InscriMo, 2);
+
+                            var cuotadb2 = db.Cuota
+                                          .Where(k => k.Anio == configAl1.Anio
+                                                      && k.PeriodoId == configAl1.PeriodoId
+                                                      && k.OfertaEducativaId == configAl1.OfertaEducativaId
+                                                      && k.PagoConceptoId == 800).First();
+                            var ColegMo = (configAl1.CuotaColegiatura * 100) / cuotadb2.Monto;
+                            ColegMo = 100 - Math.Round(ColegMo, 2);
+
+                            if (ColegMo != BecaColegiatura && BecaColegiatura > 0)
+                            {
+
+                                db.GrupoAlumnoConfiguracionBitacora
+                                    .Add(
+                                    ConfigAl.Count > 0 ?
+                                        new GrupoAlumnoConfiguracionBitacora
+                                        {
+                                            AlumnoId = configAl1.AlumnoId,
+                                            Anio = configAl1.Anio,
+                                            CuotaColegiatura = configAl1.CuotaColegiatura,
+                                            CuotaInscripcion = configAl1.CuotaInscripcion,
+                                            EsCuotaCongelada = configAl1.EsCuotaCongelada,
+                                            EsEspecial = configAl1.EsEspecial,
+                                            EsInscripcionCongelada = configAl1.EsInscripcionCongelada,
+                                            FechaRegistro = configAl1.FechaRegistro,
+                                            GrupoId = configAl1.GrupoId,
+                                            HoraRegistro = configAl1.HoraRegistro,
+                                            NumeroPagos = configAl1.NumeroPagos,
+                                            OfertaEducativaId = configAl1.OfertaEducativaId,
+                                            PagoPlanId = configAl1.PagoPlanId,
+                                            PeriodoId = configAl1.PeriodoId,
+                                            UsuarioId = configAl1.UsuarioId
+                                        }
+                                        : null);
+                                configAl1.CuotaColegiatura = BecaColegiatura;
+                                configAl1.HoraRegistro = DateTime.Now.TimeOfDay;
+                                configAl1.FechaRegistro = DateTime.Now;
+                                configAl1.UsuarioId = UsuarioId;
+                                db.SaveChanges();
+                            }
+                            return new List<DTOCuota> {
                             new DTOCuota
                             {
                                 DTOPagoConcepto = new DTOPagoConcepto
@@ -921,7 +950,9 @@ namespace BLL
                                 Monto=ColegMo
                             }
                         };
+                        }
                     }
+                    else { return null; }
                 }
                 catch
                 { return null; }

@@ -83,10 +83,11 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public bool GenerarMaestria(int AlumnoId, int EspecialidadId,int MaestriaId, int PeriodoId, int Anio, int UsuarioId)
+        public string GenerarMaestria(int AlumnoId, int EspecialidadId,int MaestriaId, int PeriodoId, int Anio, int UsuarioId)
         {
             return
             BLLReinscripcion.Pasar_a_Maestria(AlumnoId, Anio, PeriodoId, EspecialidadId, MaestriaId, UsuarioId);
+            
         }
 
         [WebMethod]
