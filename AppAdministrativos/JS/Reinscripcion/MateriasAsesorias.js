@@ -386,7 +386,7 @@
     });
 
     $('#btnGuardar').click(function () {
-        //$('#btnGuardar').blur();
+        $('#btnGuardar').blur();
         var res = $('input:radio[name=rdbRegular]:checked').val();
 
         if (res == undefined) {
