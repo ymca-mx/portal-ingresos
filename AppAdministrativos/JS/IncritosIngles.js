@@ -157,6 +157,7 @@
         var tipo = $("#slcOferta");
         tipo = tipo[0].value;
 
+
         if (tipo != -1) {
             $('#lblOFerta').html(tipo == 1 ? 'Licenciatura' : tipo == 2 ? 'Especialidad' : tipo == 3 ? 'Meastría' : tipo == 4 ? 'Idioma' : tipo == 5 ? 'Doctorado' : ' ');
             if (tipo == 4) {
@@ -167,6 +168,17 @@
                 $('#divCredencial').hide();
                 $('#divMaterial').show();
             } else {
+                if (tipo === "1") {
+                    $('#lblLugarP').text("Lugar donde estudio la preparatoria");
+                    $('#hOfertaTitulo').text('Preparatoria de Procedencia');
+                    $('#lblOfertaTitulo2').text('Preparatoria de Procedencia');
+                    $('#txtNombrePrepa').val("");
+                } else if (tipo === "2" || tipo === "3") {
+                    $('#hOfertaTitulo').text('Universidad de Procedencia');
+                    $('#lblOfertaTitulo2').text('Universidad de Procedencia');
+                    $('#lblLugarP').text("Lugar donde estudio la Universidad");
+                    $('#txtNombrePrepa').val("universidad YMCA");
+                }
                 $('#txtDescuentoBec').val(50).trigger('change');
                 $('#DivCol').show();
                 $('#divInscripcion').show();
@@ -417,7 +429,7 @@
     });
     $('#btnGuardarAntecedente').on('click', function () {
         if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
-
+        if (!form.valid()) { return false; }
         Usuario = $.cookie('userAdmin');
         if (jQuery.type(Usuario) === "undefined") {
             return false;
@@ -442,40 +454,28 @@
             'JustificacionIns': $('#txtJustificacionIns').val() == '' ? 'null' : $('#txtJustificacionIns').val(),//14
             'Usuario': Usuario//15
         };
+        var Antecedentes = {
+            AlumnoId: fid,
+            AntecedenteTipoId: $('#slcOferta').val(),
+            UsuarioId: Usuario,
+            Procedencia: $('#txtNombrePrepa').val(),
+            MesId: $('#txtMesT').val(),
+            Anio: $('#txtAñoT').val(),
+            AreaAcademicaId: $('#slcArea').val(),
+            Promedio: $('#txtPromedio').val(),
+            EsEquivalencia: $('#chkUni')[0].checked,
+            EscuelaEquivalencia: $('#txtUni').val(),
+            PaisId: $('#slcNacionalidadPrep').val() === "1" ? 146 : $('#slcEstadoPais').val(),
+            EntidadFederativaId: $('#slcNacionalidadPrep').val() === "1" ? $('#slcEstadoPais').val() : 33,
+            EsTitulado: $('#chkUniSi')[0].checked ? true : false,
+            TitulacionMedio: $('#txtUniMotivo').val(),
+            MedioDifusionId: $('#slcMedio').val(),
+        };
+        Antecedentes = JSON.stringify(Antecedentes);
         alertify.confirm("¿Esta seguro que desea guardar los cambios?", function (e) {
             if (e == true) {
                 $('#Load').modal('show');
-
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Descuentos.asmx/GuardarIdioma",
-                    data:  JSON.stringify(Campos) , // the data in form-encoded format, ie as it would appear on a querystring
-                    //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                    datatype: JSON,
-                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                    success: function (data) {
-                        if (data.d[0] == "Guardado") {
-                            GuardarDocumentoIngles(fid, $('#slcOfertaEducativa').val());
-                            Resultado = "guardado";
-                        } else if (data.d != null) {
-                            GuardarDocumentos(data.d[1], data.d[0], data.d[2]);
-                            Resultado = "guardado";
-                        }
-                        if (Resultado == "guardado") {
-                            alertify.alert("Alumno Guardado", function () {
-                                $('#Encabezado').show();
-                                $('#Contenedor').hide();
-                                Cargar();
-                            });
-
-                        } else {
-                            alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
-                                $('#Load').modal('hide');
-                                return false;
-                            });
-                        }
-                    }
-                });
+                CargadInfoAntecedentes.GuardarAntecedentes(Antecedentes, Campos);
             }
         });
 
@@ -838,16 +838,124 @@
                     });
                 }
             });
+        },
+        GuardarDescuentos: function (Campos) {
+            $.ajax({
+                type: "POST",
+                url: "WS/Descuentos.asmx/GuardarIdioma",
+                data: JSON.stringify(Campos), // the data in form-encoded format, ie as it would appear on a querystring
+                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+                datatype: JSON,
+                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                success: function (data) {
+                    if (data.d[0] == "Guardado") {
+                        GuardarDocumentoIngles(fid, $('#slcOfertaEducativa').val());
+                        Resultado = "guardado";
+                    } else if (data.d != null) {
+                        GuardarDocumentos(data.d[1], data.d[0], data.d[2]);
+                        Resultado = "guardado";
+                    }
+                    if (Resultado == "guardado") {
+                        alertify.alert("Alumno Guardado", function () {
+                            CargadInfoAntecedentes.Email(fid);
+                        });
+
+                    } else {
+                        alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
+                            $('#Load').modal('hide');
+                            return false;
+                        });
+                    }
+                }
+            });
+        },
+        GuardarAntecedentes: function (Antecedente, Campos) {
+            $.ajax({
+                type: "POST",
+                url: "WS/Alumno.asmx/GuardarAntecedentes",
+                data: Antecedente,
+                datatype: JSON,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.d) {
+                        $('#Antecedentes').modal('hide');
+                        CargadInfoAntecedentes.GuardarDescuentos(Campos);
+                    } else {
+                        alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
+                            $('#Load').modal('hide');
+                            return false;
+                        });
+                    }
+                }
+            });
+        },
+        Email: function (alumnoid) {
+            $.ajax({
+                type: "POST",
+                url: "WS/Descuentos.asmx/EnviarMail2",
+                data: "{listaID:'" + alumnoid + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                success: function (data) {
+                    if (data.d.length > 1) {
+                        CargadInfoAntecedentes.Email2(alumnoid);
+                    } else {
+                        var extramail = "<p>" + "Se ha enviado un mail al Alumno en el cual podra visualizar el reglamento escolar." + "</p>";
+                        alertify.alert(extramail, function () {
+                            $('#Encabezado').show();
+                            $('#Contenedor').hide();
+                            Cargar();
+                        });
+                    }
+                }
+            });
+        },
+        Email2: function (Alumnoid) {
+            $.ajax({
+                type: "POST",
+                url: "WS/Descuentos.asmx/EnviarMail2",
+                data: "{listaID:'" + Alumnoid + "'}", // the data in form-encoded format, ie as it would appear on a querystring
+                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                success: function (data) {
+                    if (data.d.length > 1) {
+                        CargadInfoAntecedentes.Email2(Alumnoid);
+                    } else {                            
+                            var extramail = "<p>" + "Se ha enviado un mail al Alumno en el cual podra visualizar el reglamento escolar." + "</p>";
+                            alertify.alert(extramail, function () {
+                                $('#Encabezado').show();
+                                $('#Contenedor').hide();
+                                Cargar();
+                            });
+                        
+                    }
+                }
+            });
         }
     }
+    
     CargadInfoAntecedentes.AreasCursadas();
     CargadInfoAntecedentes.MedioDifusion();
     $('#slcNacionalidadPrep').on('change', function () {
         $('#Load').modal('show');
-        if (this.val === 1) { CargadInfoAntecedentes.Estados(); }
-        else if (this.val === 2) { CargadInfoAntecedentes.Paises(); }
+        if (this.value === "1") { CargadInfoAntecedentes.Estados(); }
+        else if (this.value === "2") { CargadInfoAntecedentes.Paises(); }
         else { $('#slcEstadoPais').empty(); }
         $('#Load').modal('hide');
+    });
+    $('#chkUniSi').on('click', function () {
+        if (this.checked) {
+            $('#txtUniMotivo').prop('disabled', false);
+        }
+    });
+    $('#chkUniNo').on('click', function () {
+        if (this.checked) {
+            $('#txtUniMotivo').prop('disabled', true);
+        }
+    });
+    $('#chkUni').on('click', function () {
+        if (this.checked) { $('#txtUni').prop('disabled', false); }
+        else { $('#txtUni').prop('disabled', true); }
     });
 });
  

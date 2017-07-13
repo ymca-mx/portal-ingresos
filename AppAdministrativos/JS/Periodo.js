@@ -15,7 +15,9 @@
                     var option = $(document.createElement('option'));
                     option.text(this.Descripcion);
                     option.val(this.PeriodoId +" "+ this.Anio);
-                    
+                    option.attr("data-Anio", this.Anio);
+                    option.attr("data-PeriodoId", this.PeriodoId);
+
                     $("#slcPeriodo").append(option);
                 });
                 Pariodo = datos[0].PeriodoId + " " + datos[0].Anio;
