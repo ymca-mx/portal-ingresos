@@ -412,8 +412,8 @@
     }
     $('#btnGuardar').on('click', function () {
         if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
-        //$('#Antecedentes').modal('show');
-        $('#btnGuardarAntecedente').click();
+        $('#Antecedentes').modal('show');
+        //$('#btnGuardarAntecedente').click();
     });
     $('#btnGuardarAntecedente').on('click', function () {
         if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
@@ -735,5 +735,119 @@
         }
     }
 
+
+    var CargadInfoAntecedentes = {
+        AreasCursadas: function () {
+            $('#slcArea').empty();
+            var option1 = $(document.createElement('option'));
+
+            option1.text("--Seleccionar--");
+            option1.val(-1);
+            $("#slcArea").append(option1);
+            $.ajax({
+                type: "POST",
+                url: "WS/General.asmx/ObtenerAreas",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var datos = data.d;
+                    $(datos).each(function () {
+                        var option = $(document.createElement('option'));
+
+                        option.text(this.Descripcion);
+                        option.val(this.AreaAcademicaId);
+
+                        $("#slcArea").append(option);
+                    });
+                }
+            });
+        },
+        Paises: function () {
+            $('#slcEstadoPais').empty();
+            var option1 = $(document.createElement('option'));
+
+            option1.text("--Seleccionar--");
+            option1.val(-1);
+            $("#slcEstadoPais").append(option1);
+            $.ajax({
+                type: "POST",
+                url: "WS/General.asmx/ConsultarPaises",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var datos = data.d;
+                    $(datos).each(function () {
+                        var option = $(document.createElement('option'));
+                        option.text(this.Descripcion);
+                        option.val(this.PaisId);
+
+                        $("#slcEstadoPais").append(option);
+                    });
+                }
+            });
+
+        },
+        Estados: function () {
+            $('#slcEstadoPais').empty();
+            var option1 = $(document.createElement('option'));
+
+            option1.text("--Seleccionar--");
+            option1.val(-1);
+            $("#slcEstadoPais").append(option1);
+            $.ajax({
+                type: "POST",
+                url: "WS/General.asmx/ConsultarEntidadFederativa",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var datos = data.d;
+                    $(datos).each(function () {
+                        var option = $(document.createElement('option'));
+
+                        option.text(this.Descripcion);
+                        option.val(this.EntidadFederativaId);
+
+                        $("#slcEstadoPais").append(option);
+                    });
+                    $("#slcEstadoPais").val(9);
+
+                }
+            });
+        },
+        MedioDifusion: function () {
+            $('#slcMedio').empty();
+            var option1 = $(document.createElement('option'));
+
+            option1.text("--Seleccionar--");
+            option1.val(-1);
+            $("#slcMedio").append(option1);
+            $.ajax({
+                type: "POST",
+                url: "WS/General.asmx/TraerListaMedios",
+                data: "{}", 
+                contentType: "application/json; charset=utf-8", 
+                success: function (data) {
+                    var datos = data.d;
+                    $(datos).each(function () {
+                        var option = $(document.createElement('option'));
+
+                        option.text(this.Descripcion);
+                        option.val(this.MedioDifusionId);
+
+                        $("#slcMedio").append(option);
+                    });
+                }
+            });
+        }
+    }
+    CargadInfoAntecedentes.AreasCursadas();
+    CargadInfoAntecedentes.MedioDifusion();
+    $('#slcNacionalidadPrep').on('change', function () {
+        $('#Load').modal('show');
+        if (this.val === 1) { CargadInfoAntecedentes.Estados(); }
+        else if (this.val === 2) { CargadInfoAntecedentes.Paises(); }
+        else { $('#slcEstadoPais').empty(); }
+        $('#Load').modal('hide');
+    });
 });
  

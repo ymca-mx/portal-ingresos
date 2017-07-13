@@ -111,6 +111,12 @@ namespace BLL
                                                                 .GroupBy(al => new { al.Anio, al.PeriodoId })
                                                                 .Select(al => al.FirstOrDefault())
                                                                 .ToList();
+                                listaactual.ForEach(la =>
+                                {
+                                    listahitorial.RemoveAll(sd => sd.Anio == la.Anio
+                                                                && sd.PeriodoId == la.PeriodoId);
+                                });
+
                                 o.AplicaMaestria = (listahitorial.Count + listaactual.Count) >= 2 ? true : false;
                             }
                             liIDs.Add(o);
