@@ -4720,6 +4720,7 @@
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
+    <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
     <Content Include="Views\Pago\ReferenciasSemestrales.html" />
     <Content Include="Views\Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Views\Style\engato\index\css\componentes.css" />
