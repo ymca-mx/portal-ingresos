@@ -68,6 +68,7 @@
     <Compile Include="BLLAsignatura.cs" />
     <Compile Include="BLLBeca.cs" />
     <Compile Include="BLLCajaConfiguracion.cs" />
+    <Compile Include="BLLCalendarioEscolar.cs" />
     <Compile Include="BLLCargo.cs" />
     <Compile Include="BLLCuentaMail.cs" />
     <Compile Include="BLLCuota.cs" />

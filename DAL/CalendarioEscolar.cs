@@ -12,21 +12,19 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class SubMenu1
+    public partial class CalendarioEscolar
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SubMenu1()
+        public CalendarioEscolar()
         {
-            this.TipoUsuarioSubmenu1 = new HashSet<TipoUsuarioSubmenu1>();
+            this.OfertaCalendario = new HashSet<OfertaCalendario>();
         }
     
-        public int SubmenuId { get; set; }
-        public int MenuId { get; set; }
-        public string Descripcion { get; set; }
+        public int CalendarioEscolarId { get; set; }
+        public string Nombre { get; set; }
         public string Direccion { get; set; }
     
-        public virtual Menu1 Menu1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
+        public virtual ICollection<OfertaCalendario> OfertaCalendario { get; set; }
     }
 }

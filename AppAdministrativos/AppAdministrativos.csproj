@@ -146,6 +146,7 @@
     <Content Include="JS\Alumnos\AlumnoNuevoIngreso.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
+    <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
     <Content Include="JS\index\bitacora.js" />
     <Content Include="JS\index\cargarMenu.js" />
     <Content Include="JS\index\index.js" />

@@ -81,6 +81,7 @@ namespace DAL
         public virtual DbSet<BitacoraReinscripcionAdeudo> BitacoraReinscripcionAdeudo { get; set; }
         public virtual DbSet<Caja> Caja { get; set; }
         public virtual DbSet<CajaConfiguracion> CajaConfiguracion { get; set; }
+        public virtual DbSet<CalendarioEscolar> CalendarioEscolar { get; set; }
         public virtual DbSet<CalificacionesAntecedente> CalificacionesAntecedente { get; set; }
         public virtual DbSet<CuentaMail> CuentaMail { get; set; }
         public virtual DbSet<Cuota> Cuota { get; set; }
@@ -116,6 +117,7 @@ namespace DAL
         public virtual DbSet<Mes> Mes { get; set; }
         public virtual DbSet<Municipio> Municipio { get; set; }
         public virtual DbSet<NivelAcademico> NivelAcademico { get; set; }
+        public virtual DbSet<OfertaCalendario> OfertaCalendario { get; set; }
         public virtual DbSet<OfertaEducativa> OfertaEducativa { get; set; }
         public virtual DbSet<OfertaEducativaAntecedente> OfertaEducativaAntecedente { get; set; }
         public virtual DbSet<OfertaEducativaPlan> OfertaEducativaPlan { get; set; }
@@ -194,7 +196,6 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
-        public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimiento> TipoMovimiento { get; set; }
         public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
@@ -212,24 +213,6 @@ namespace DAL
         public virtual DbSet<UsuarioPermiso> UsuarioPermiso { get; set; }
         public virtual DbSet<UsuarioTipo> UsuarioTipo { get; set; }
         public virtual DbSet<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
-        public virtual DbSet<Docente> Docente { get; set; }
-        public virtual DbSet<DocenteDetalle> DocenteDetalle { get; set; }
-        public virtual DbSet<DocenteEstudio> DocenteEstudio { get; set; }
-        public virtual DbSet<DocenteEstudioDocumento> DocenteEstudioDocumento { get; set; }
-        public virtual DbSet<DocentePublicacion> DocentePublicacion { get; set; }
-        public virtual DbSet<DocumentoTipo> DocumentoTipo { get; set; }
-        public virtual DbSet<Hora> Hora { get; set; }
-        public virtual DbSet<Materia> Materia { get; set; }
-        public virtual DbSet<MateriaApertura> MateriaApertura { get; set; }
-        public virtual DbSet<MateriaCompartida> MateriaCompartida { get; set; }
-        public virtual DbSet<MateriaCompartidaDetalle> MateriaCompartidaDetalle { get; set; }
-        public virtual DbSet<MateriaTipo> MateriaTipo { get; set; }
-        public virtual DbSet<Menu1> Menu1 { get; set; }
-        public virtual DbSet<Salon> Salon { get; set; }
-        public virtual DbSet<SalonAsignacion> SalonAsignacion { get; set; }
-        public virtual DbSet<Sede> Sede { get; set; }
-        public virtual DbSet<SubMenu1> SubMenu1 { get; set; }
-        public virtual DbSet<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
@@ -241,9 +224,7 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
-        public virtual DbSet<Tabla2> Tabla2 { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
-        public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {

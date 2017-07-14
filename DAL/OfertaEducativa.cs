@@ -32,6 +32,7 @@ namespace DAL
             this.GrupoAlumnoConfiguracion = new HashSet<GrupoAlumnoConfiguracion>();
             this.IdiomaGrupoAlumno = new HashSet<IdiomaGrupoAlumno>();
             this.Matricula = new HashSet<Matricula>();
+            this.OfertaCalendario = new HashSet<OfertaCalendario>();
             this.PagoConcepto = new HashSet<PagoConcepto>();
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
             this.OfertaEducativaRequerimiento = new HashSet<OfertaEducativaRequerimiento>();
@@ -83,6 +84,8 @@ namespace DAL
         public virtual ICollection<IdiomaGrupoAlumno> IdiomaGrupoAlumno { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matricula> Matricula { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OfertaCalendario> OfertaCalendario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
         public virtual OfertaEducativaTipo OfertaEducativaTipo { get; set; }
