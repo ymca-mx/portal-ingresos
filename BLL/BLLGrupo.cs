@@ -359,7 +359,6 @@ namespace BLL
                     usuarioId = int.Parse(alumnoConfig.UsuarioId), //Usua4rio que inscribio  -> Alejandra 6070
                     fecha = "", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                     genera = true
-
                     //    //Colegiatura = decimal
                     //    //Inscripcion = decimal
                 };
@@ -537,37 +536,41 @@ namespace BLL
                     }
                     else
                     {
-                        db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                        if (alumno.UsuarioId != 6070 )
                         {
-                            AlumnoId = alumno.AlumnoId,
-                            OfertaEducativaId = alumno.OfertaEducativaId,
-                            Anio = alumno.Anio,
-                            PeriodoId = alumno.PeriodoId,
-                            FechaInscripcion = alumno.FechaInscripcion,
-                            HoraInscripcion = alumno.HoraInscripcion,
-                            PagoPlanId = alumno.PagoPlanId,
-                            TurnoId = alumno.TurnoId,
-                            EsEmpresa = alumno.EsEmpresa,
-                            UsuarioId = alumno.UsuarioId
-                        });
+                            db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                            {
+                                AlumnoId = alumno.AlumnoId,
+                                OfertaEducativaId = alumno.OfertaEducativaId,
+                                Anio = alumno.Anio,
+                                PeriodoId = alumno.PeriodoId,
+                                FechaInscripcion = alumno.FechaInscripcion,
+                                HoraInscripcion = alumno.HoraInscripcion,
+                                PagoPlanId = alumno.PagoPlanId,
+                                TurnoId = alumno.TurnoId,
+                                EsEmpresa = alumno.EsEmpresa,
+                                UsuarioId = alumno.UsuarioId
+                            });
 
-                        db.AlumnoInscrito.Add(new AlumnoInscrito
-                        {
-                            AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
-                            OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
-                            Anio = int.Parse(alumnoConfiguracion.Anio),
-                            PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId),
-                            FechaInscripcion = DateTime.Now,
-                            HoraInscripcion = DateTime.Now.TimeOfDay,
-                            PagoPlanId = int.Parse(alumnoConfiguracion.PagoPlanId),
-                            TurnoId = alumno.TurnoId,
-                            EsEmpresa = alumno.EsEmpresa,
-                            UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
-                            EstatusId = 1
-                        });
+                            db.AlumnoInscrito.Add(new AlumnoInscrito
+                            {
+                                AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
+                                OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
+                                Anio = int.Parse(alumnoConfiguracion.Anio),
+                                PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId),
+                                FechaInscripcion = DateTime.Now,
+                                HoraInscripcion = DateTime.Now.TimeOfDay,
+                                PagoPlanId = int.Parse(alumnoConfiguracion.PagoPlanId),
+                                TurnoId = alumno.TurnoId,
+                                EsEmpresa = alumno.EsEmpresa,
+                                UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
+                                EstatusId = 1
+                            });
 
 
-                        db.AlumnoInscrito.Remove(alumno);
+                            db.AlumnoInscrito.Remove(alumno);
+                        }
+                        
                     }
 
                     GrupoAlumnoConfiguracion actualizarGrupoAlumnoConfiguracion = db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == alumnoid && a.OfertaEducativaId == ofertaEducativaAnterior).FirstOrDefault();

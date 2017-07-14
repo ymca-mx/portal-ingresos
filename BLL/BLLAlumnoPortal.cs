@@ -8233,7 +8233,7 @@ namespace BLL
 
                     var F = db.AlumnoInscrito.AsNoTracking().Where(n => n.AlumnoId == AlumnoBeca.alumnoId && n.OfertaEducativaId == AlumnoBeca.ofertaEducativaId && n.Anio == AlumnoBeca.anio && n.PeriodoId == AlumnoBeca.periodoId).Count();
 
-                    if (F == 0)
+                    if (F == 0 )
                         Inscribir(AlumnoBeca, Usuario);
                 }
 
