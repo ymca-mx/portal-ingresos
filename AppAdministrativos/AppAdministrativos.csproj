@@ -160,6 +160,10 @@
     <Content Include="Documentos\Manuales\ManualModificacionNuevoIngreso.pdf" />
     <Content Include="Documentos\Manuales\ManualMSI.pdf" />
     <Content Include="Documentos\Manuales\ManualScotiabank.pdf" />
+    <Content Include="Documentos\Calendarios\Licenciatura.pdf" />
+    <Content Include="Documentos\Calendarios\Musica.pdf" />
+    <Content Include="Documentos\Calendarios\Posgrado C.pdf" />
+    <Content Include="Documentos\Calendarios\Posgrado.pdf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
@@ -5191,6 +5195,7 @@
     <Content Include="Views\Adeudos\Chocolates.html" />
     <Content Include="WS\Alumno.asmx" />
     <Content Include="WS\Beca.asmx" />
+    <Content Include="WS\Calendario.asmx" />
     <Content Include="WS\Descuentos.asmx" />
     <Content Include="WS\Docentes.asmx" />
     <Content Include="WS\Empresa.asmx" />
@@ -5881,11 +5886,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.scss" />
-    <Content Include="Documentos\Ingles.pdf" />
-    <Content Include="Documentos\Licenciatura.pdf" />
-    <Content Include="Documentos\Musica.pdf" />
-    <Content Include="Documentos\Posgrado C.pdf" />
-    <Content Include="Documentos\Posgrado.pdf" />
     <Content Include="Documentos\Reglamento.pdf" />
     <Content Include="Documentos\ReglamentoCamohmila.pdf" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
@@ -10222,6 +10222,10 @@
     </Compile>
     <Compile Include="WS\Beca.asmx.cs">
       <DependentUpon>Beca.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WS\Calendario.asmx.cs">
+      <DependentUpon>Calendario.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WS\Descuentos.asmx.cs">

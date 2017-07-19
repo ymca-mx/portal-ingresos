@@ -2,9 +2,9 @@
 {
     public class DTOOFertaCalendario
     {
-        int OFertaCalendarioId { get; set; }
-        int CalendarioEscolarId { get; set; }
-        int OfertaEducativaId { get; set; }
-        DTOOfertaEducativa OFertaEducativa { get; set; }
+        public int OFertaCalendarioId { get; set; }
+        public int CalendarioEscolarId { get; set; }
+        public int OfertaEducativaId { get; set; }
+        public DTOOfertaEducativa OFertaEducativa { get; set; }
     }
 }
