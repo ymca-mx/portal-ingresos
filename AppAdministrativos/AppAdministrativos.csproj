@@ -147,6 +147,7 @@
     <Content Include="JS\Alumnos\AlumnoNuevoIngreso.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
+    <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
     <Content Include="JS\index\bitacora.js" />
     <Content Include="JS\index\cargarMenu.js" />
     <Content Include="JS\index\index.js" />
@@ -160,6 +161,10 @@
     <Content Include="Documentos\Manuales\ManualModificacionNuevoIngreso.pdf" />
     <Content Include="Documentos\Manuales\ManualMSI.pdf" />
     <Content Include="Documentos\Manuales\ManualScotiabank.pdf" />
+    <Content Include="Documentos\Calendarios\Licenciatura.pdf" />
+    <Content Include="Documentos\Calendarios\Musica.pdf" />
+    <Content Include="Documentos\Calendarios\Posgrado C.pdf" />
+    <Content Include="Documentos\Calendarios\Posgrado.pdf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
@@ -4191,6 +4196,24 @@
     <Content Include="Style\assets\global\plugins\zoom\jquery.zoom.min.js" />
     <Content Include="Style\assets\global\scripts\datatable.js" />
     <Content Include="Style\assets\global\scripts\metronic.js" />
+    <Content Include="Style\Complementos\Alertify\alertify.js" />
+    <Content Include="Style\Complementos\Alertify\alertify.min.js" />
+    <Content Include="Style\Complementos\Alertify\css\alertify.css" />
+    <Content Include="Style\Complementos\Alertify\css\alertify.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\alertify.rtl.css" />
+    <Content Include="Style\Complementos\Alertify\css\alertify.rtl.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\bootstrap.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\bootstrap.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\bootstrap.rtl.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\bootstrap.rtl.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\default.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\default.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\default.rtl.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\default.rtl.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\semantic.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\semantic.min.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\semantic.rtl.css" />
+    <Content Include="Style\Complementos\Alertify\css\themes\semantic.rtl.min.css" />
     <Content Include="Style\Complementos\Blob.js-master\.gitignore" />
     <Content Include="Style\Complementos\Blob.js-master\Blob.js" />
     <Content Include="Style\Complementos\Blob.js-master\Blob.min.js" />
@@ -4722,6 +4745,7 @@
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
+    <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
     <Content Include="Views\Pago\ReferenciasSemestrales.html" />
     <Content Include="Views\Style\assets\global\plugins\jquery-knob\js\jquery.knob.js" />
     <Content Include="Views\Style\engato\index\css\componentes.css" />
@@ -5191,6 +5215,7 @@
     <Content Include="Views\Adeudos\Chocolates.html" />
     <Content Include="WS\Alumno.asmx" />
     <Content Include="WS\Beca.asmx" />
+    <Content Include="WS\Calendario.asmx" />
     <Content Include="WS\Descuentos.asmx" />
     <Content Include="WS\Docentes.asmx" />
     <Content Include="WS\Empresa.asmx" />
@@ -5725,7 +5750,6 @@
     <Content Include="Imagenes\Solicitud1.png" />
     <Content Include="Imagenes\UYMCA-100px.png" />
     <Content Include="Imagenes\UYMCA-500px.png" />
-    <Content Include="JS\alertify.js" />
     <Content Include="JS\AlumnoDescuento.js" />
     <Content Include="JS\Alumnos\AlumnoDatos.js" />
     <Content Include="JS\Alumnos\AlumnoDatosConsulta.js" />
@@ -5848,8 +5872,6 @@
     <Content Include="JS\src\shared\global.js" />
     <Content Include="JS\src\shared\util.js" />
     <Content Include="JS\src\worker_loader.js" />
-    <Content Include="JS\themes\alertify.core.css" />
-    <Content Include="JS\themes\alertify.default.css" />
     <Content Include="JS\Tools.js" />
     <Content Include="JS\Turno.js" />
     <Content Include="JS\UpdatePanel.js" />
@@ -5881,11 +5903,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.scss" />
-    <Content Include="Documentos\Ingles.pdf" />
-    <Content Include="Documentos\Licenciatura.pdf" />
-    <Content Include="Documentos\Musica.pdf" />
-    <Content Include="Documentos\Posgrado C.pdf" />
-    <Content Include="Documentos\Posgrado.pdf" />
     <Content Include="Documentos\Reglamento.pdf" />
     <Content Include="Documentos\ReglamentoCamohmila.pdf" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
@@ -10222,6 +10239,10 @@
     </Compile>
     <Compile Include="WS\Beca.asmx.cs">
       <DependentUpon>Beca.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WS\Calendario.asmx.cs">
+      <DependentUpon>Calendario.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WS\Descuentos.asmx.cs">

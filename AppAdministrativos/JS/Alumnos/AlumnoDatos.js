@@ -107,7 +107,7 @@
                         $('#txtTelefonoPAT').val(data.d.DTOPersonaAutorizada[0].Telefono);
 
                         if (data.d.DTOPersonaAutorizada[0].Autoriza == true) {
-                            $('#chkAuotiza1').attr("checked", true);
+                            $('#chkAuotiza1').prop("checked", true);
                             var spq = $('#chkAuotiza1')[0].parentElement;
                             $(spq).addClass('checked');
                         }
@@ -121,7 +121,7 @@
                             $('#txtTelefonoPAT2').val(data.d.DTOPersonaAutorizada[1].Telefono);
 
                             if (data.d.DTOPersonaAutorizada[1].Autoriza == true) {
-                                $('#chkAuotiza2').attr("checked", true);
+                                $('#chkAuotiza2').prop("checked", true);
                                 var spam = $('#chkAuotiza2')[0].parentElement;
                                 $(spam).addClass('checked');
                             }
@@ -215,7 +215,7 @@
         $('#slcOfertasAlumno').removeAttr("disabled");
         $('#slcOfertasAlumno1').removeAttr("disabled");
         
-        $('#chkUni').attr("checked", false);
+        $('#chkUni').prop("checked", false);
         $('#uniform-chkUniSi').removeClass('disabled');
         $('#divGuardar').hide();
         var chk = $('#chkUni')[0];
@@ -258,7 +258,7 @@
         $('#txtUni').prop("disabled", true);
         $('#divGuardar').show();
         if ($('#chkUniNo')[0].checked) {
-            $('#txtUniMotivo').attr('disabled', true);
+            $('#txtUniMotivo').prop('disabled', true);
         }
 
     });
@@ -329,7 +329,7 @@
         Variables += "EmailPA1:'" + $('#txtPEmail').val() + "',";
         Variables += "TelefonoPA1:'" + $('#txtTelefonoPA').val() + "',";
         Variables += "Telefono2PA1:'" + $('#txtTelefonoPAT').val() + "',";
-        Variables += "Autoriza1:'" + ($('#chkAuotiza1').attr("checked") ? 'true' : 'false') + "',";
+        Variables += "Autoriza1:'" + ($('#chkAuotiza1').prop("checked") ? 'true' : 'false') + "',";
 
         //////////////////
         Variables += "NombrePA2:'" + $('#txtPAutorizada2').val() + "',";
@@ -339,7 +339,7 @@
         Variables += "EmailPA2:'" + $('#txtPEmail2').val() + "',";
         Variables += "TelefonoPA2:'" + $('#txtTelefonoPA2').val() + "',";
         Variables += "Telefono2PA2:'" + $('#txtTelefonoPAT2').val() + "',";
-        Variables += "Autoriza2:'" + ($('#chkAuotiza2').attr("checked") ? 'true' : 'false') + "'}";
+        Variables += "Autoriza2:'" + ($('#chkAuotiza2').prop("checked") ? 'true' : 'false') + "'}";
 
         GuardarAntecedentesTmp();
         ///////////////////////////
@@ -1001,6 +1001,10 @@
             $("#slcOfertasAlumno").append(option);
             $("#slcOfertasAlumno1").append(option1);
         });
+        if (datos.length === 1) {
+            $("#slcOfertasAlumno1").val(datos[0].OfertaEducativaId);
+            $("#slcOfertasAlumno1").change();
+        }
 
     }
     function GuardarAntecedentesTmp() {
@@ -1025,9 +1029,9 @@
                    EntidadFederativaId: $('#slcNacionalidadPrep').val() == -1 ? -1 :
                                 $('#slcNacionalidadPrep').val() == 1 ? $('#slcEstadoPais').val():-1,
                    EscuelaEquivalencia: $('#txtUni').val(),
-                   EsTitulado: ($('#chkUniSi').attr("checked") ? true : false),
+                   EsTitulado: ($('#chkUniSi').prop("checked") ? true : false),
                    FechaRegistro:"",
-                   EsEquivalencia: ($('#chkUni').attr("checked") ? true : false),
+                   EsEquivalencia: ($('#chkUni').prop("checked") ? true : false),
                    MedioDifusionId: $('#slcMedio').val(),
                    MesId: $("#txtMesT").val(),
                    PaisId: $('#slcNacionalidadPrep').val() == -1 ? -1 :
@@ -1046,7 +1050,7 @@
             Antecendentes[posobj].MesId = $("#txtMesT").val();
             Antecendentes[posobj].AreaAcademicaId = $("#slcArea").val();
             Antecendentes[posobj].EscuelaEquivalencia = $("#txtUni").val();
-            Antecendentes[posobj].EsTitulado = ($('#chkUniSi').attr("checked") ? true : false);
+            Antecendentes[posobj].EsTitulado = ($('#chkUniSi').prop("checked") ? true : false);
             
             if ($('#slcNacionalidadPrep').val() === 1) {
                 Antecendentes[posobj].PaisId = 146;
@@ -1054,7 +1058,7 @@
             } else if($('#slcNacionalidadPrep').val() === 2) {
                 Antecendentes[posobj].PaisId = $('#slcEstadoPais').val();
             }
-            Antecendentes[posobj].EsEquivalencia = ($('#chkUni').attr("checked") ? true : false);
+            Antecendentes[posobj].EsEquivalencia = ($('#chkUni').prop("checked") ? true : false);
             Antecendentes[posobj].MedioDifusionId = $('#slcMedio').val();
             Antecendentes[posobj].TitulacionMedio = $('#txtUniMotivo').val();
         }
@@ -1070,14 +1074,14 @@
         $('#txtUniMotivo').prop("disabled", true);
         $('#txtUni').prop("disabled", true);
 
-        $('#chkUniNo').attr("checked", true);
+        $('#chkUniNo').prop("checked", true);
         var spam2U = $('#chkUniNo')[0].parentElement;
         $(spam2U).addClass('checked');
-        $('#chkUniSi').attr("checked", false);
+        $('#chkUniSi').prop("checked", false);
         var spamu = $('#chkUniSi')[0].parentElement;
         $(spamu).removeClass('checked');
 
-        $('#chkUni').attr("checked", false);
+        $('#chkUni').prop("checked", false);
         var spam1U = $('#chkUni')[0].parentElement;
         $(spam1U).removeClass('checked');
 
@@ -1110,27 +1114,27 @@
                     } 
                     $("#slcMedio").val(this.MedioDifusionId);
                     if (this.EsTitulado == true) {
-                        $('#chkUniSi').attr("checked", true);
+                        $('#chkUniSi').prop("checked", true);
                         var spam2 = $('#chkUniSi')[0].parentElement;
                         $(spam2).addClass('checked');
 
-                        $('#chkUniNo').attr("checked", false);
+                        $('#chkUniNo').prop("checked", false);
                         var spam = $('#chkUniNo')[0].parentElement;
                         $(spam).removeClass('checked');
                         $('#txtUniMotivo').val(this.TitulacionMedio);
                         $('#txtUniMotivo').prop("disabled", false);
 
                     } else {
-                        $('#chkUniNo').attr("checked", true);
+                        $('#chkUniNo').prop("checked", true);
                         var spam2 = $('#chkUniNo')[0].parentElement;
                         $(spam2).addClass('checked');
 
-                        $('#chkUniSi').attr("checked", false);
+                        $('#chkUniSi').prop("checked", false);
                         var spam = $('#chkUniSi')[0].parentElement;
                         $(spam).removeClass('checked');
                     }
                     if (this.EsEquivalencia) {
-                        $('#chkUni').attr("checked", true);
+                        $('#chkUni').prop("checked", true);
                         var spam1 = $('#chkUni')[0].parentElement;
                         $(spam1).addClass('checked');
                         $('#txtUni').prop("disabled", false);

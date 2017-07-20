@@ -12431,22 +12431,24 @@ namespace BLL
                     return db.Alumno
                                             .Where(a => ((a.Anio == PeriodoActual.Anio && a.PeriodoId == PeriodoActual.PeriodoId) ||
                                                         (a.Anio == PeriodoSiguiente.Anio && a.PeriodoId == PeriodoSiguiente.PeriodoId))
-                                                       && a.AlumnoInscrito.Count ==1 
-                                                       && a.AlumnoInscritoBitacora.Count==0
+                                                       && a.AlumnoInscrito.Count == 1
+                                                       && (a.AlumnoInscritoBitacora.Count == 0 || a.AlumnoInscritoBitacora
+                                                                                                    .Where(k => k.PagoPlanId == null).ToList().Count == 1)
                                                        && a.EstatusId != 3)
                                              .Select(a => new DTOAlumnoLigero
                                              {
                                                  AlumnoId = a.AlumnoId,
                                                  Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
-                                                 Usuario=a.Usuario.Nombre,
-                                                 FechaRegistro=((a.FechaRegistro.Day<10?"0"+a.FechaRegistro.Day:""+ a.FechaRegistro.Day)+"/"+
-                                                                (a.FechaRegistro.Month < 10 ? "0" + a.FechaRegistro.Month : "" + a.FechaRegistro.Month) + "/"+
-                                                                ""+a.FechaRegistro.Year),
+                                                 Usuario = a.Usuario.Nombre,
+                                                 FechaRegistro = ((a.FechaRegistro.Day < 10 ? "0" + a.FechaRegistro.Day : "" + a.FechaRegistro.Day) + "/" +
+                                                                (a.FechaRegistro.Month < 10 ? "0" + a.FechaRegistro.Month : "" + a.FechaRegistro.Month) + "/" +
+                                                                "" + a.FechaRegistro.Year),
                                                  OfertasEducativas = a.AlumnoInscrito
                                                                                 .Select(AI => AI.OfertaEducativa.Descripcion)
                                                                                     .ToList(),
                                              })
-                                            .ToList();                    
+                                             .OrderBy(k => k.AlumnoId)
+                                            .ToList();
                 }
                 catch
                 {

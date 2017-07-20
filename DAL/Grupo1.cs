@@ -12,9 +12,13 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class UniversidadNewAdeudo
+    public partial class Grupo1
     {
-        public int AlumnoID { get; set; }
-        public Nullable<decimal> UniversidadNewAdeudo1 { get; set; }
+        public int GrupoId { get; set; }
+        public string Descripcion { get; set; }
+        public Nullable<int> OfertaEducativaId { get; set; }
+        public Nullable<System.DateTime> FechaGeneracion { get; set; }
+        public Nullable<System.TimeSpan> HoraGeneracion { get; set; }
+        public Nullable<int> EstatusId { get; set; }
     }
 }

@@ -230,6 +230,9 @@
     <Compile Include="CajaConfiguracion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="CalendarioEscolar.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="CalificacionesAntecedente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -301,6 +304,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Grupo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Grupo1.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="GrupoAlumno.cs">
@@ -394,6 +400,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="NivelAcademico.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfertaCalendario.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="OfertaEducativa.cs">
@@ -661,12 +670,6 @@
     <Compile Include="SucursalDetalle.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="Tabla2.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TempAdeudo.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="TipoDocumento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -686,9 +689,6 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UniversidadAdeudo.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UniversidadNewAdeudo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UniversidadValidacion.cs">

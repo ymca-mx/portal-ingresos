@@ -52,6 +52,8 @@
     <Compile Include="Alumno\DTOAlumnoReinscripcion.cs" />
     <Compile Include="Alumno\DTODatos.cs" />
     <Compile Include="Alumno\DTOReinscripcion.cs" />
+    <Compile Include="Calendarios\DTOCalendarioEscolar.cs" />
+    <Compile Include="Calendarios\DTOOFertaCalendario.cs" />
     <Compile Include="Configuracion\DTOConfiguracion.cs" />
     <Compile Include="Menu\DTOMenu.cs" />
     <Compile Include="Menu\DTOSubMenu.cs" />

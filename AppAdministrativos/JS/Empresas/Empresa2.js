@@ -647,6 +647,7 @@
 
     $('#btnGuardar').click(function () {
         if (form.valid() == false) { return false; }
+        $('#NuevaEmpresa').modal('hide');
         var query = "{";
         query += "Razon:'" + $('#txtDescripcion').val() + "',RFC:'" + $('#txtRFC').val() + "',UsuarioId:'" + $.cookie('userAdmin') + "',Email:'" + $('#txtmail').val() + "',Calle:'" + $('#txtCalle').val() + "',CP:'" + $('#txtCP').val() +
             "',NoExterior:'" + $('#NoExterior').val() + "',NoInterior:'" + $('#NoInterior').val() + "',Pais:'" + $('#slcPaisUni').val() + "',Estado:'" + $('#slcEstadoPais').val() +
@@ -669,6 +670,7 @@
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
+                $('#NuevaEmpresa').modal('show');
                 if (data.d == "True") {
                     alertify.alert("Empresa Guardada", function () {
 
