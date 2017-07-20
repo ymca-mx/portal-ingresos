@@ -12222,6 +12222,38 @@ namespace BLL
             }
         }
 
+
+        public static DTOAlumnoBaja ConsultaAlumnoBaja(int AlumnoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    DTOAlumnoBaja Alumno = new DTOAlumnoBaja();
+
+
+                    DateTime hoy = DateTime.Now;
+
+                    Periodo periodoActual = db.Periodo.Where(a => a.FechaInicial <= hoy && a.FechaFinal >= hoy).FirstOrDefault();
+
+                    return null;
+
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+                    
+
+                    
+
+            }
+        }
+
+
+        
+
         public static bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
         {
             using (UniversidadEntities db = new UniversidadEntities())

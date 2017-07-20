@@ -525,6 +525,12 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
+        public DTOAlumnoBaja ConsultaAlumnoBaja(string AlumnoId)
+        {
+            return BLLAlumnoPortal.ConsultaAlumnoBaja(int.Parse(AlumnoId));
+        }
+
+        [WebMethod]
         public bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
         {
             return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);

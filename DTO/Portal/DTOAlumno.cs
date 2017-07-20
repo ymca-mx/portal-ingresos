@@ -97,6 +97,20 @@ namespace DTO
         public int EstatusId { get; set; }
     }
 
+    public class DTOAlumnoBaja
+    {
+        public int AlumnoId { get; set; }
+        public string NombreC { get; set; }
+        public int OfertaEducativaId { get; set; }
+        public string OfertaEducativa { get; set; }
+        public int Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public string DescripcionPeriodo { get; set; }
+        public string Observaciones { get; set; }
+        public int UsuarioId { get; set; }
+        public int EstatusId { get; set; }
+    }
+
 
     public class DTOPeriodoPromocionCasa
     {

@@ -430,7 +430,7 @@ namespace BLL
 
         public static bool GuardarAlumnoConfiguracion(DTOGrupoAlumnoCuotaString alumnoConfiguracion)
         {
-            using(UniversidadEntities db=new UniversidadEntities())
+            using(UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
@@ -460,8 +460,7 @@ namespace BLL
                             UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
                             EstatusId = 1
                         });
-
-
+                        
                         db.AlumnoInscrito.Remove(alumno);
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Cambio de carrera</title>
+    <title>Baja Academica</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -24,7 +24,7 @@
                                     <img src="Imagenes/UYMCA-100px.png" width="70" />
                                 </div>
                                 <div class="col-md-6">
-                                    <h4 class="caption title">CAMBIO DE CARRERA </h4>
+                                    <h4 class="caption title"> BAJA ACADEMICA </h4>
                                 </div>
                             </div>
                         </div>
@@ -33,55 +33,62 @@
                             <div class="row">
                                 <div class="col-md-12 ">
                                     <div class="col-md-12">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                        <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
+                                        <div class="col-md-12">
+                                            <label class="control-label">Clave del Alumno</label>
+                                            <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                                            <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div> &nbsp;</div>
                                         <div class="form-group col-md-6">
-                                            <label class="control-label">Alumno: </label>&nbsp;&nbsp;
-                                            <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
+
+                                            <div class="caption font-blue-steel ">
+                                                <i class="fa fa-male"></i>
+                                                <span class="caption-subject bold uppercase h4"> Alumno:  </span>
+                                                <span class="caption-helper h5" id="lblNombre">LINDSHAY WENDY CONCEPCION MONTIJO MARTINEZ</span>
+                                            </div>
 
                                         </div>
-                                        <div  class="col-md-12" style="padding:8px;" >
-                                            <label class="control-label bold font-red-flamingo" id="lblInscito" ></label>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group col-md-12">
+
+                                            <div class="caption border-green ">
+                                                <i class="fa fa-mortar-board"></i>
+                                                <span class="caption-subject bold uppercase h4"> Oferta Educativa  </span>
+                                                <span class="caption-helper h5" id="lbOfertaEducativa"></span>
+                                            </div>
+                                            <br />
+                                            <div class="caption border-green ">
+                                                <i class="fa fa-calendar"></i>
+                                                <span class="caption-subject bold uppercase h4"> Periodo  </span>
+                                                <span class="caption-helper h5" id="lbPeriodo"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label"> Motivo Baja</label>
+                                            <select id="slcMotivo" name="slcMotivo" class="form-control"></select>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="form-group col-md-5">
-                                            <label class="control-label"> Oferta Educativa Actual</label>
-                                            <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
-                                            <div>&nbsp;</div>
-                                            <label class="control-label"> Periodo </label>
-                                            <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
+                                        <div class="col-md-9"></div>
+                                        <div class="col-md-1">
+                                            <a class="btn green" id="btnBaja" tabindex="2" disabled>Dar de Baja</a>
                                         </div>
-                                        <div>&nbsp;</div><div>&nbsp;</div>
-                                        <div class="form-group col-md-1">
-                                            <div>&nbsp;</div>
-                                            <img src="Imagenes/actualizar.png" width="80" height="30">
-                                        </div>
-                                            <div class="form-group col-md-5">
-                                                <label class="control-label">  Nueva Oferta Educativa</label>
-                                                <select id="slcOfertaEducativa2" name="slcOfertaEducativa2" class="form-control"></select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-12">
-                                            <div class="col-md-9"></div>
-                                            <div class="col-md-1">
-                                                <a class="btn green" id="btnCambio" tabindex="2" disabled>Realizar Cambio</a>
-                                            </div>
-                                        </div>
-
                                     </div>
+
+                                </div>
 
                             </div>
 
                         </div>
-                        
+
                         <!--cometario-->
                         <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
                             <div class="modal-dialog modal-sm" style="width:700px">
@@ -119,7 +126,7 @@
             </div>
         </div>
     </div>
-    <script src="JS/Alumnos/AlumnoCambioCarrera.js"></script>
-   
+    <script src="JS/Alumnos/AlumnoBaja.js"></script>
+
 </body>
 </html>
