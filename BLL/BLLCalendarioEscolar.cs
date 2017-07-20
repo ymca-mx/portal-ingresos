@@ -68,5 +68,29 @@ namespace BLL
                 catch { return 0; }
             }
         }
+
+        public static bool ModificarCalendario(DTOCalendarioEscolar Calendario)
+        {
+            using(UniversidadEntities db=new UniversidadEntities())
+            {
+                try
+                {
+                    CalendarioEscolar Calendariodb = db.CalendarioEscolar.Where(a =>
+                                                  a.CalendarioEscolarId == Calendario.CalendarioEscolarId)
+                                                .FirstOrDefault();
+
+                    if ((Calendariodb?.CalendarioEscolarId ?? 0) == 0) { return false; }
+
+                    Calendariodb.Direccion = Calendario.Direccion;
+                    Calendariodb.Nombre = Calendario.Nombre;
+                    Calendariodb.UsuarioId = Calendario.UsuarioId;
+                    Calendariodb.EstatusId = Calendario.EstatusId;
+
+                    db.SaveChanges();
+                    return true;
+                }
+                catch { return false; }
+            }
+        }
     }
 }

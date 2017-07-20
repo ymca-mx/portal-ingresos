@@ -42,12 +42,12 @@
                 <div class="modal-header">
                     <h3 class="modal-title">Datos del Calendario</h3>
                 </div>
-                <form id="frmDatos" onSubmit="return false;">
+                <form id="frmDatos"  method="post" action="javascript:;" >
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12 form-group">
                                 <label class="control-label">Nombre:</label>
-                                <input class="form-control" type="text" id="txtNombre" required data-calendarioid="0" pattern=".{8,150}" title="8 letras minimo"/>
+                                <input class="form-control " type="text" id="txtNombre" required data-calendarioid="0" pattern=".{8,150}" title="8 letras minimo"/>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="control-label">Archivo</label>

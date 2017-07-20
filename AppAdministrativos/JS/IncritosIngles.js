@@ -472,12 +472,15 @@
             MedioDifusionId: $('#slcMedio').val(),
         };
         Antecedentes = JSON.stringify(Antecedentes);
-        alertify.confirm("¿Esta seguro que desea guardar los cambios?", function (e) {
-            if (e == true) {
+        $('#Antecedentes').modal('hide');
+        alertify.confirm("¿Esta seguro que desea guardar los cambios?",
+            function (e) {
                 $('#Load').modal('show');
                 CargadInfoAntecedentes.GuardarAntecedentes(Antecedentes, Campos);
-            }
-        });
+            },
+            function () {
+                $('#Antecedentes').modal('show');
+            });
 
     });
     function GuardarDocumentoIngles(AlumnoId, OfertaEducativa) {
@@ -881,8 +884,9 @@
                         $('#Antecedentes').modal('hide');
                         CargadInfoAntecedentes.GuardarDescuentos(Campos);
                     } else {
+                        $('#Load').modal('hide');
                         alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
-                            $('#Load').modal('hide');
+                            $('#Antecedentes').modal('show');                            
                             return false;
                         });
                     }

@@ -19,6 +19,9 @@
             });
         },
         PintarCalendarios: function (Tabla) {
+            if (Calendarios != undefined) {
+                Calendarios.fnClearTable();
+            }
             Calendarios = $('#tblCalendarios').dataTable({
                 "aaData": Tabla,
                 "aoColumns": [
@@ -49,6 +52,7 @@
                 "searching": true,
                 "ordering": true,
                 "info": false,
+                "destroy": true,
                 "language": {
                     "lengthMenu": "_MENU_  Registros",
                     "paginate": {
@@ -112,7 +116,7 @@
 
             if (objCalendario.EstatusId === 1) {
                 $('#rdbActivo')[0].checked = true;
-            } else { $('#rdbActivo')[0].checked = false; }
+            } else { $('#rdbInactivo')[0].checked = true; }
 
             $('#ModificarCalendario').modal('show');
         },
@@ -134,8 +138,11 @@
             $('#ModificarCalendario').modal('show');
         },
         BotonGuardar: function () {
-            if (EsModificacion) { Funciones.GuardarModificacion(); }
-            else { Funciones.GuardarNuevoCalendario(); }
+            var $frm = $('#frmDatos');
+            if ($frm[0].checkValidity()) {
+                if (EsModificacion) { Funciones.GuardarModificacion(); }
+                else { Funciones.GuardarNuevoCalendario(); }
+            } 
         },
         GuardarNuevoCalendario: function() {
             $('#Load').modal('show');
@@ -165,19 +172,29 @@
 
             data.append("CalendarioEscolarId", Id);
 
-            var request = new XMLHttpRequest();
-            request.open("POST", 'WS/Calendario.asmx/GuardarCalendario', true);
-            request.send(data);
 
-            request.onreadystatechange = function () {
-                if (request.readyState === 4) {
-                    if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                        $('#Load').modal('hide');
+            $.ajax({
+                type: "POST",
+                url: "WS/Calendario.asmx/GuardarCalendario",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (data1) {
+                    $('#Load').modal('hide');
+                    var $xml = $(data1);
+                    var $bool = $xml.find("boolean");
+                    
+                    if ($bool[0].textContent === 'true') {
                         Funciones.CerrarModificar();
-                        alertify.alert(mensaje, Funciones.TraerCalendarios());
+                        alertify.alert(mensaje).set('onok', function (closeEvent) {
+                            Funciones.TraerCalendarios()
+                        });
+                    } else {
+                        $('#ModificarCalendario').modal('hide');
+                        alertify.alert("Fallo la subida del Archivo, intente nuevamente.", function () { $('#ModificarCalendario').modal('show'); });
                     }
                 }
-            }
+            });            
         },
         GuardarModificacion: function () {
             $('#Load').modal('show');
@@ -191,10 +208,17 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.d) {
-                        Funciones.SubirArchivo($('#txtNombre').data('calendarioid'), 'Se guardaron las modificaciones');
+                        if (CambioArchivo) {
+                            Funciones.SubirArchivo($('#txtNombre').data('calendarioid'), 'Se guardaron las modificaciones');
+                        } else {
+                            $('#Load').modal('hide');
+                            Funciones.CerrarModificar();
+                            alertify.alert('Se guardaron las modificaciones').set('onok', function (CloseEvent) { Funciones.TraerCalendarios();});
+                        }
                     } else {
                         $('#Load').modal('hide');
-                        alertify.alert('Error no se pudo modificar el calendario, intente más tarde.');
+                        $('#ModificarCalendario').modal('hide');
+                        alertify.alert('Error no se pudo modificar el calendario, intente más tarde.', function () { $('#ModificarCalendario').modal('show');   });
                     }
                 }
             });

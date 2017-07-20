@@ -37,7 +37,7 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public bool Update(DTOCalendarioEscolar Calendario)
         {
-            return false;
+            return BLLCalendarioEscolar.ModificarCalendario(Calendario);
         }
 
         [WebMethod]
