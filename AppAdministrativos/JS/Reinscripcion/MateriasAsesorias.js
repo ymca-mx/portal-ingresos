@@ -139,12 +139,11 @@
     }
     $('#btnGuardarMaestria').on('click', function () {
         $('#btnGuardarMaestria').blur();
-        if ($("#slcMaestrias").val() != -1) {
             $('#Load').modal('show');
             var objGM = {
                 AlumnoId : objAlumnoC.AlumnoId,
-                EspecialidadId : $("#slcOfertas").val(),
-                MaestriaId : $("#slcMaestrias").val(),
+                EspecialidadId: $("#slcOfertas").val(),
+                MaestriaId: $("#txtMaestria").data('maestriaid'),
                 PeriodoId: $('#slcPeriodos option:selected').data("periodoid"),
                 Anio: $('#slcPeriodos option:selected').data("anio"),
                 UsuarioId:$.cookie('userAdmin')
@@ -166,7 +165,6 @@
                     }
                 }
             });
-        }
     });
 
     $('#btnMaestria').on('click', function () {
@@ -179,37 +177,21 @@
     });
     function TraerMaestrias() {
         var obj = {
-            'tipoOferta': '3',
-            'Plantel':  Planel 
+            'OfertaEducativaId': $('#slcOfertas').val(),
         };
         obj = JSON.stringify(obj);
         $.ajax({
             type: "POST",
-            url: "WS/General.asmx/ConsultarOfertaEducativa",
+            url: "WS/General.asmx/TraerMaestria",
             data: obj,
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $("#slcMaestrias").empty();
-                var optionP = $(document.createElement('option'));
-                optionP.text('--Seleccionar--');
-                optionP.val(-1);
-                $("#slcMaestrias").append(optionP);
-                if (data.d.length == 0) { return false; }
-                if (data.d.length > 1) {
-                    $(data.d).each(function () {
-                        var option1 = $(document.createElement('option'));
-                        option1.text(this.Descripcion);
-                        option1.val(this.OfertaEducativaId);
-                        $("#slcMaestrias").append(option1);
-                    });
-                } else {
-                    var option1 = $(document.createElement('option'));
-                    option1.text(data.d.Descripcion);
-                    option1.val(data.d.OfertaEducativaId);
-                    $("#slcMaestrias").append(option1);
-                }
-                $("#slcMaestrias").change();      
                 $('#Load').modal('hide');
+
+                if (data.d === null) { return false; }
+                $("#txtMaestria").val(data.d.Descripcion);
+                $("#txtMaestria").data('maestriaid', data.d.OfertaEducativaId);
+                
             },
             error: function () {
                 $('#Load').modal('hide');

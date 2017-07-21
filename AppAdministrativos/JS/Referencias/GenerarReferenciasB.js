@@ -6,6 +6,7 @@ $(function init() {
     var PagoId = 0;
     var Bandera = 0;
     var tblReferencias;
+    var Estatus;
 
     function Bloquear(Texto) {
         Bandera = 1;
@@ -169,6 +170,7 @@ $(function init() {
         PagoId = 0;
         var rowadd = tblReferencias.fnGetData($(this).closest('tr'));
         PagoId = rowadd.PagoId;
+        Estatus = rowadd.objNormal.Estatus;
         $('#PopComentario').modal('show');
     });
     function ReferenciasTbl(R) {
@@ -373,10 +375,11 @@ $(function init() {
             $.ajax({
                 type: "POST",
                 url: "WS/General.asmx/CancelarPago",
-                data: "{PagoId:'" + PagoId + "',Comentario:'" + $('#txtComentario').val() + "',UsuarioId:'" + usuario + "'}",
+                data: "{PagoId:'" + PagoId + "',Comentario:'" + $('#txtComentario').val() + "',UsuarioId:'" + usuario + "',Estatus:'" + Estatus + "'}",
                 contentType: "application/json; charset=utf-8", 
                 success: function (data) {
                     if (data.d == "Guardado") {
+                        Estatus = "";
                         $('#btnBuscar').click();
                     }
                     DesBloquear();
@@ -474,9 +477,10 @@ $(function init() {
                     MandarMail(PagoId, td);
                 } else {
                     DesBloquear();
-                    //$('#tblReferencias').append(td);
-                    $('#btnBuscar').click();
-                    alertify.alert("Referencia Generada");
+                    //$('#tblReferencias').append(td);                    
+                    alertify.alert("Referencia Generada").set('onok', function () {
+                        $('#btnBuscar').click();
+                    });
                 }
             }
         });

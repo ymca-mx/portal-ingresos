@@ -94,6 +94,7 @@ namespace DAL
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<EmpresaDetalle> EmpresaDetalle { get; set; }
         public virtual DbSet<EntidadFederativa> EntidadFederativa { get; set; }
+        public virtual DbSet<EspecialidadMaestriaRelacion> EspecialidadMaestriaRelacion { get; set; }
         public virtual DbSet<EstadoCivil> EstadoCivil { get; set; }
         public virtual DbSet<Estatus> Estatus { get; set; }
         public virtual DbSet<Financiamiento> Financiamiento { get; set; }
@@ -235,7 +236,6 @@ namespace DAL
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
-        public virtual DbSet<AlumnoPermitido20162> AlumnoPermitido20162 { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }

@@ -12,11 +12,13 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AlumnoPermitido20162
+    public partial class EspecialidadMaestriaRelacion
     {
-        public int AlumnoId { get; set; }
-        public int UsuarioId { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        public System.TimeSpan HoraRegistro { get; set; }
+        public int EspecialidadMaestriaRelacionId { get; set; }
+        public int EspecialidadId { get; set; }
+        public int MaestriaId { get; set; }
+    
+        public virtual OfertaEducativa OfertaEducativa { get; set; }
+        public virtual OfertaEducativa OfertaEducativa1 { get; set; }
     }
 }

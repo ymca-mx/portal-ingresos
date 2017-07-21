@@ -149,5 +149,23 @@ namespace BLL
                 { return null; }
             }
         }
+
+        public static DTOOfertaEducativa TraerMaestriaRelacionada(int EspecialidadId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    return db.EspecialidadMaestriaRelacion
+                            .Where(a => a.EspecialidadId == EspecialidadId)
+                            .Select(a => new DTOOfertaEducativa
+                            {
+                                OfertaEducativaId = a.OfertaEducativa1.OfertaEducativaId,
+                                Descripcion = a.OfertaEducativa1.Descripcion
+                            }).FirstOrDefault();
+                }
+                catch { return null; }
+            }
+        }
     }
 }
