@@ -71,6 +71,9 @@
     <Compile Include="AlumnoAntecedenteBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoBajaDocumento.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoBeca.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -670,6 +673,12 @@
     <Compile Include="SucursalDetalle.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tabla2.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempAdeudo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="TipoDocumento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -689,6 +698,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UniversidadAdeudo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UniversidadNewAdeudo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UniversidadValidacion.cs">

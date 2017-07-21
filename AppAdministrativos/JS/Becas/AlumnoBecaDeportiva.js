@@ -12,7 +12,7 @@ $(document).ready(function () {
             alertify.alert('Periodo Invalido');
             return true;
         }
-        beca = porcentajeBeca +parseInt(txtMonto);
+        beca = porcentajeBeca + parseInt(txtMonto);
         if (beca > 100) {
             alertify.alert('El porcentaje de la Beca no puede exceder el 100%');
             return false;

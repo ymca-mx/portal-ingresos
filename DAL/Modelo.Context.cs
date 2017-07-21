@@ -34,6 +34,7 @@ namespace DAL
         public virtual DbSet<AlumnoAccesoBitacora> AlumnoAccesoBitacora { get; set; }
         public virtual DbSet<AlumnoAntecedente> AlumnoAntecedente { get; set; }
         public virtual DbSet<AlumnoAntecedenteBitacora> AlumnoAntecedenteBitacora { get; set; }
+        public virtual DbSet<AlumnoBajaDocumento> AlumnoBajaDocumento { get; set; }
         public virtual DbSet<AlumnoBitacora> AlumnoBitacora { get; set; }
         public virtual DbSet<AlumnoCuatrimestre> AlumnoCuatrimestre { get; set; }
         public virtual DbSet<AlumnoCuatrimestreBitacora> AlumnoCuatrimestreBitacora { get; set; }
@@ -197,6 +198,7 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
+        public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimiento> TipoMovimiento { get; set; }
         public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
@@ -243,7 +245,9 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
+        public virtual DbSet<Tabla2> Tabla2 { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
+        public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {

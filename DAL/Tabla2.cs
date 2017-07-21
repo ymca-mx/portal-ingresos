@@ -12,16 +12,14 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AlumnoMovimientoBaja
+    public partial class Tabla2
     {
-        public int AlumnoMovimientoId { get; set; }
-        public int BajaMotivoId { get; set; }
-        public System.DateTime FechaRecepcion { get; set; }
-        public int Folio { get; set; }
-        public string Observaciones { get; set; }
-    
-        public virtual AlumnoBajaDocumento AlumnoBajaDocumento { get; set; }
-        public virtual AlumnoMovimiento AlumnoMovimiento { get; set; }
-        public virtual BajaMotivo BajaMotivo { get; set; }
+        public int ConsecutivoId { get; set; }
+        public int AlumnoId { get; set; }
+        public int TipoAdeudoId { get; set; }
+        public int Valor { get; set; }
+        public System.DateTime FechaOperacion { get; set; }
+        public System.TimeSpan HoraOperacion { get; set; }
+        public int UsuarioId { get; set; }
     }
 }

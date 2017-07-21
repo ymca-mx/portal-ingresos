@@ -517,11 +517,25 @@ namespace AppAdministrativos.WS
             BLLEstadoCuenta.ObtenerAbonos(new DTOAlumno { AlumnoId = int.Parse(AlumnoId) }, DateTime.Parse(FechaI), DateTime.Parse(FechaF)));
         }
 
-
+        //Cambio carrera//
         [WebMethod]
         public DTOAlumnoCambioCarrera ConsultaCambioCarrera(string AlumnoId)
         {
             return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId)); 
+        }
+        [WebMethod]
+        public bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
+        {
+            return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
+        }
+        //Cambio carrera//
+
+        //Baja Academica//
+        
+        [WebMethod]
+        public DTOCatalogoBaja ConsultaCatalogosBaja()
+        {
+            return BLLAlumnoPortal.ConsultaCatalogosBaja();
         }
 
         [WebMethod]
@@ -530,11 +544,7 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ConsultaAlumnoBaja(int.Parse(AlumnoId));
         }
 
-        [WebMethod]
-        public bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
-        {
-            return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
-        }
+        //Baja Academica//
 
         [WebMethod]
         public bool AtualizarAlumno(int AlumnoId, string Nombre, string Paterno, string Materno, string Nacimiento, int GeneroId, string CURP, int UsuarioId)

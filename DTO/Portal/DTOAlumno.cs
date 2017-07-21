@@ -106,9 +106,31 @@ namespace DTO
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public string DescripcionPeriodo { get; set; }
+        public int TipoMovimientoId { get; set; }
+        public int BajaMotivoId { get; set; }
+        public DateTime FechaRecepcion { get; set; }
+        public int Folio { get; set; }
         public string Observaciones { get; set; }
         public int UsuarioId { get; set; }
         public int EstatusId { get; set; }
+    }
+
+
+    public class DTOTipoMovimiento
+    {
+        public int TipoMovimientoId { get; set; }
+        public string Descripcion { get; set; }
+    }
+
+    public class DTOBajaMotivo
+    {
+        public int BajaMotivoId { get; set; }
+        public string Descripcion { get; set; }
+    }
+    public class DTOCatalogoBaja
+    {
+        public List<DTOTipoMovimiento> TipoMovimiento { get; set; }
+        public List<DTOBajaMotivo> BajaMotivo { get; set; }
     }
 
 
