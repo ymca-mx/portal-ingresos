@@ -96,7 +96,7 @@
                 var file = $('#FileCalendario');
                 $('#txtCalendario').text('');
                 file.removeClass('fileinput-exists').addClass('fileinput-new');
-                File[0] = null;
+                $('#ArchivoCalendario')[0].value = null;
                 $('#FileCalendario span span').text('Seleccionar Archivo...');
             }
         },

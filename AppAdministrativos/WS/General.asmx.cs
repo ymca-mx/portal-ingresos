@@ -252,5 +252,11 @@ namespace AppAdministrativos.WS
         {
            return BLLOfertaEducativaTipo.ConsultaOfertaTipo();
         }
+
+        [WebMethod]
+        public DTOOfertaEducativa TraerMaestria(int OfertaEducativaId)
+        {
+            return BLLOfertaEducativaPortal.TraerMaestriaRelacionada(OfertaEducativaId);
+        }
     }
 }

@@ -59,12 +59,17 @@ namespace BLL
                 {
                     Pago pago = db.Pago.Where(p => p.PagoId == PagoId).FirstOrDefault();
 
-                    pago.EstatusId = 1;
+                    pago.EstatusId = pago.Promesa == 0 ? 4 : 1;
                     pago.Restante = pago.Promesa;
 
-                    db.PagoCancelacionDetalle.Remove(pago?.PagoCancelacion?.PagoCancelacionDetalle?.FirstOrDefault() ?? null);
-                    db.PagoCancelacion.Remove(pago?.PagoCancelacion ?? null);                    
-
+                    if ((pago?.PagoCancelacion?.PagoCancelacionDetalle?.FirstOrDefault() ?? null) != null)
+                    {
+                        db.PagoCancelacionDetalle.Remove(pago?.PagoCancelacion?.PagoCancelacionDetalle?.FirstOrDefault());
+                    }
+                    if ((pago?.PagoCancelacion ?? null) != null)
+                    {
+                        db.PagoCancelacion.Remove(pago?.PagoCancelacion);
+                    }
                     db.SaveChanges();
                     return "Guardado";
                 }

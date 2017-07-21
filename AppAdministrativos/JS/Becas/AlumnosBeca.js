@@ -707,7 +707,7 @@
         var file = $('#FileCarta');
         $('#txtCartaArchivo').text('');
         file.removeClass('fileinput-exists').addClass('fileinput-new');
-        File[0] = null;
+        $('#CartaArchivo')[0].value = null;
         $('#FileCarta span span').text('Seleccionar Archivo...');
     });
     function RecortarNombre(name) {
