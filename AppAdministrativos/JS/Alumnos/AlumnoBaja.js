@@ -1,17 +1,15 @@
 ﻿$(document).ready(function () {
     var AlumnoId;
-    funciones.traerMotivo();
-    
+    var Alumno;
+
     var funciones =
         {
-
-            traerCatalogos: function ()
-            {
+            traerCatalogos: function () {
                 $('#Load').modal('show');
                 $.ajax({
                     type: "POST",
                     url: "WS/Alumno.asmx/ConsultaCatalogosBaja",
-                    data: "{AlumnoId:'" + AlumnoId + "'}",
+                    data: "{}",
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (data) {
@@ -20,25 +18,36 @@
                             $('#Load').modal('hide');
                             return false;
                         }
-                        var datos = data.d 
+                        var datos = data.d
 
                         var optionS = $(document.createElement('option'));
                         optionS.text("--Seleccionar--");
-                        optionS.val(-1);
-                        $("#slcMotivo").append(optionS);
+                        optionS.val("");
+                        $("#slcTipo").append(optionS);
 
-                        $(datos).each(function (i, d) {
+                        $(datos.TipoMovimiento).each(function (i, d) {
                             var option = $(document.createElement('option'));
-                            option.text(this.descripcion);
-                            option.val(this.ofertaEducativaId);
-                            $("#slcOfertaEducativa2").append(option);
+                            option.text(this.Descripcion);
+                            option.val(this.TipoMovimientoId);
+                            $("#slcTipo").append(option);
+                        });
+
+                        var optionS2 = $(document.createElement('option'));
+                        optionS2.text("--Seleccionar--");
+                        optionS2.val("");
+                        $("#slcMotivo").append(optionS2);
+
+                        $(datos.BajaMotivo).each(function (i, d) {
+                            var option = $(document.createElement('option'));
+                            option.text(this.Descripcion);
+                            option.val(this.BajaMotivoId);
+                            $("#slcMotivo").append(option);
                         });
                         $('#Load').modal('hide');
                     }
                 });
             },
-            BuscarAlumno: function ()
-            {
+            BuscarAlumno: function () {
                 AlumnoId = $('#txtClave').val();
                 if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
 
@@ -51,63 +60,76 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.d === null) {
-                            alertify.alert("Este alumno no existe.");
+                            alumno = null;
+
+                            alertify.alert("Este alumno no existe o ya esta dado de baja.");
                             $('#Load').modal('hide');
                             return false;
                         }
-                        lstop.length = 0;
-                        lstop.push(data.d);
-                        $('#lblNombre').text(lstop[0].NombreC);
-                        $("#slcOfertaEducativa").empty();
-                        $("#slcOfertaEducativa2").empty();
-                        $("#slcPeriodo").empty();
-                        $('#lblInscito').empty();
+                        Alumno = data.d;
 
-                        if (lstop[0].OfertaEducativaIdActual == 0) {
+                        $("#lbNombre").text(Alumno.NombreC);
+                        $("#lbOfertaEducativa").text(Alumno.OfertaEducativa);
+                        $("#lbPeriodo").text(Alumno.DescripcionPeriodo);
 
-                            $('#lblInscito').text("No ha iniciado proceso de cambio de carrera.");
-                            $('#Load').modal('hide');
-                            return false;
-                        }
-                        if (lstop[0].EstatusId != 4 && lstop[0].EstatusId != 14) {
-
-                            $('#lblInscito').text("No ha realizado el pago para cambio de carrera.");
-                            $('#Load').modal('hide');
-                            return false;
-                        }
-
-                        var optionS = $(document.createElement('option'));
-                        optionS.text(lstop[0].OfertaEducativaActual);
-                        optionS.val(lstop[0].OfertaEducativaIdActual);
-                        $("#slcOfertaEducativa").append(optionS);
-                        //$("#slcOfertaEducativa").prop("disabled", true);
-
-
-                        var optionS2 = $(document.createElement('option'));
-                        optionS2.text("--Seleccionar--");
-                        optionS2.val(-1);
-                        $("#slcOfertaEducativa2").append(optionS2);
-
-                        $(lstop[0].OfertaEducativa).each(function (i, d) {
-                            var option = $(document.createElement('option'));
-                            option.text(this.descripcion);
-                            option.val(this.ofertaEducativaId);
-                            $("#slcOfertaEducativa2").append(option);
-                        });
-                        var optionS3 = $(document.createElement('option'));
-                        optionS3.text(lstop[0].Anio + " - " + lstop[0].PeriodoId + "        " + lstop[0].DescripcionPeriodo);
-                        optionS3.val(1);
-                        $("#slcPeriodo").append(optionS3);
-                        $("#slcOfertaEducativa2").val(-1);
-
-                        $("#btnCambio").removeAttr("disabled");
                         $('#Load').modal('hide');
                     }
                 });
 
+            },
+            RecortarNombre: function (name) {
+                var cadena;
+                if (name.length > 15) {
+                    cadena = name.substring(0, 8);
+                    cadena += name.substring(name.length - 4, name.length);
+                    return cadena;
+                } else {
+                    return name;
+                }
+            },
+            GuardarDocumentos: function (AlumnoMovimientoId) {
+                var data = new FormData();
+                var fileFormato;
+                fileFormato = $('#DeportivaArchivo');
+                fileFormato = fileFormato[0].files[0];
+                data.append("DocumentoDeportiva", fileFormato);
+                data.append("AlumnoMovimientoId", AlumnoMovimientoId);
             }
-
         }
+
+    funciones.traerCatalogos();
+
+    if (jQuery().datepicker) {
+        $('.date-picker').datepicker({
+            rtl: Metronic.isRTL(),
+            orientation: "left",
+            autoclose: true,
+            language: 'es'
+        });
+    }
+
+    $('#BajaArchivo').bind('change', function () {
+        var file = $('#FileFormato');
+        var tex = $('#TxtFolioArchivo').html();
+        if (this.files.length > 0) {
+            $('#TxtFolioArchivo').text(funciones.RecortarNombre(this.files[0].name));
+            file.addClass('fileinput-exists').removeClass('fileinput-new');
+            $('#FileFormato span span').text('Cambiar');
+        }
+        else {
+            $('#TxtFolioArchivo').text('');
+            file.removeClass('fileinput-exists').addClass('fileinput-new');
+            $('#FileFormato span span').text('Seleccionar Archivo...');
+        }
+    });
+
+    $('#FileFormato a').click(function () {
+        var file = $('#FileFormato');
+        $('#TxtFolioArchivo').text('');
+        file.removeClass('fileinput-exists').addClass('fileinput-new');
+        File[0] = null;
+        $('#FileFormato span span').text('Seleccionar Archivo...');
+    });
 
     $('#btnBuscar').click(funciones.BuscarAlumno);
 
@@ -117,27 +139,33 @@
         }
     });
 
-    $("#btnCambio").click(function () {
-        if ($("#slcOfertaEducativa2").val() == -1 || $("#slcOfertaEducativa2").val() == null)
-        {
-            alertify.alert("Debe seleccionar una  nueva oferta.");
-            return false;
+    $("#btnBaja").click(function () {
+        var $frm = $('#frmBaja');
+        if ($frm[0].checkValidity()) {
+            $("#PopComentario").modal('show');
         }
-        $("#PopComentario").modal('show');
     });
+
+    $('#btnGuardarDatos').on('click', function () {
+        var $frm = $('#frmDatos');
+        if ($frm[0].checkValidity()) {
+            /* submit the form */
+            $('#Load').modal('show');
+        }
+    });
+
 
     $("#btnGuardar").click(function () {
         var comentario = $('#txtComentario').val();
         comentario = $.trim(comentario);
-        if (comentario.length < 5)
-        {
+        if (comentario.length < 5) {
             alertify.alert("Inserte un comentario.");
             return false;
-        } 
+        }
 
         $("#PopComentario").modal("hide");
         $('#Load').modal('show');
-        
+
         lstop[0].OfertaEducativaIdNueva = $('#slcOfertaEducativa2').val();
         lstop[0].Observaciones = $("#txtComentario").val();
         lstop[0].UsuarioId = $.cookie('userAdmin');

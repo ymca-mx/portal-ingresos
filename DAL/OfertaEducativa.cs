@@ -29,6 +29,8 @@ namespace DAL
             this.BecaDeportiva = new HashSet<BecaDeportiva>();
             this.Cuota = new HashSet<Cuota>();
             this.Descuento = new HashSet<Descuento>();
+            this.EspecialidadMaestriaRelacion = new HashSet<EspecialidadMaestriaRelacion>();
+            this.EspecialidadMaestriaRelacion1 = new HashSet<EspecialidadMaestriaRelacion>();
             this.GrupoAlumnoConfiguracion = new HashSet<GrupoAlumnoConfiguracion>();
             this.IdiomaGrupoAlumno = new HashSet<IdiomaGrupoAlumno>();
             this.Matricula = new HashSet<Matricula>();
@@ -77,6 +79,10 @@ namespace DAL
         public virtual ICollection<Cuota> Cuota { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descuento> Descuento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EspecialidadMaestriaRelacion> EspecialidadMaestriaRelacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EspecialidadMaestriaRelacion> EspecialidadMaestriaRelacion1 { get; set; }
         public virtual Estatus Estatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GrupoAlumnoConfiguracion> GrupoAlumnoConfiguracion { get; set; }
