@@ -28,20 +28,49 @@ namespace BLL
                                                                     EstatusId = c.EstatusId,
                                                                     Nombre = c.Nombre,
                                                                     UsuarioId = c.UsuarioId,
-                                                                    UsuarioNombre = c.Usuario.Nombre,
-                                                                    OfertasCalendario = c.OfertaCalendario.Select(of =>
-                                                                     new DTOOFertaCalendario
-                                                                     {
-                                                                         CalendarioEscolarId = of.CalendarioEscolarId,
-                                                                         OFertaCalendarioId = of.OfertaCalendarioId,
-                                                                         OfertaEducativaId = of.OfertaEducativaId,
-                                                                         OFertaEducativa = new DTOOfertaEducativa
-                                                                         {
-                                                                             OfertaEducativaId = of.OfertaEducativa.OfertaEducativaId,
-                                                                             Descripcion = of.OfertaEducativa.Descripcion
-                                                                         }
-                                                                     }).ToList()
+                                                                    UsuarioNombre = c.Usuario.Nombre, 
                                                                 }).ToList();
+
+                ListaCalendarios.ForEach(Calendario=> { 
+                List<OfertaEducativa> OfertasCalendario = db.OfertaCalendario
+                                                            .Where(c => c.CalendarioEscolarId == Calendario.CalendarioEscolarId)
+                                                            .Select(c => c.OfertaEducativa)
+                                                            .ToList();
+                    List<DTOSucursalTree> Sucursales = OfertasCalendario
+                        .GroupBy(of => of.Sucursal)
+                        .Select(of => of.FirstOrDefault().Sucursal)
+                        .Select(of =>
+                            new DTOSucursalTree
+                            {
+                                Descripcion = of.DescripcionId,
+                                SucursalId = of.SucursalId,
+                            }).ToList();
+                    Sucursales.ForEach(a =>
+                    {
+                        a.OFertaEducativaTipo = OfertasCalendario
+                                                .Where(of => of.SucursalId == a.SucursalId)
+                                                .GroupBy(ot => ot.OfertaEducativaTipo)
+                                                            .Select(ot => ot.FirstOrDefault().OfertaEducativaTipo)
+                                                            .Where(ot => ot.OfertaEducativa.Where(of => of.SucursalId == a.SucursalId).ToList().Count > 0)
+                                                            .Select(ot =>
+                                                                new DTOOfertaEducativaTipo
+                                                                {
+                                                                    Descripcion = ot.Descripcion,
+                                                                    OfertaEducativaTipoId = ot.OfertaEducativaTipoId,
+                                                                    Ofertas = ot.OfertaEducativa
+                                                                                .Where(of1 => of1.SucursalId == a.SucursalId)
+                                                                                .Select(of1 =>
+                                                                                    new DTOOfertaEducativa2
+                                                                                    {
+                                                                                        descripcion = of1.Descripcion,
+                                                                                        ofertaEducativaId = of1.OfertaEducativaId
+                                                                                    }).ToList()
+                                                                })
+                                                                .ToList();
+                    });
+                    Calendario.Sucursales = Sucursales;
+                });
+
                 return ListaCalendarios;
             }
         }

@@ -3393,6 +3393,12 @@ namespace BLL
                                             && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == Pago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
                                             A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en credencial nuevo ingreso, idiomas"
                                             && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == Pago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId  ||
+
+                                             A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en Adelanto de materia, Licenciatura"
+                                            && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == Pago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+                                             A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en Adelanto de materia, Maestría"
+                                            && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == Pago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId ||
+
                                              A.DescuentoId == db.Descuento.Where(D => D.Descripcion == "Descuento en Examen global"
                                             && D.OfertaEducativaId == ofertaid && D.PagoConceptoId == Pago.Cuota1.PagoConceptoId).FirstOrDefault().DescuentoId)
                                         && A.OfertaEducativaId == Pago.OfertaEducativaId && A.PagoConceptoId == Pago.Cuota1.PagoConceptoId && A.EstatusId == 2).AsNoTracking().ToList();

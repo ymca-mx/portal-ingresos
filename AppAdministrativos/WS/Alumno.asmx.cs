@@ -193,7 +193,7 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public DTOAlumnoPromocionCasa ConsultarAlumnoPromocionCasa2(string AlumnoPromocion)
         {
-            return BLLAlumnoPortal.ConsultarAlumnoPromocionCasa2( int.Parse(AlumnoPromocion));
+            return BLLAlumnoPortal.ConsultarAlumnoPromocionCasa2(int.Parse(AlumnoPromocion));
         }
         [WebMethod]
         public List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()
@@ -285,19 +285,20 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.BuscarAlumnoTexto(Filtro);
         }
 
-        //[WebMethod]
-        //public Tuple<List<DTOPagoDetallado>, bool> ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
-        //{
-        //    try
-        //    {
-        //        List<DTOPagoDetallado> ReferenciasPagadas = BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
-        //        return Tuple.Create(ReferenciasPagadas, ReferenciasPagadas.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false);
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
+
+        [WebMethod]
+        public PantallaPago ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
+        {
+            try
+            {
+                List<DTOPagoDetallado> ReferenciasPagadas = BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
+                return new PantallaPago { Pagos = ReferenciasPagadas, Estatus = ReferenciasPagadas.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false };
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         [WebMethod]
         public doblesobj ConsultaPagosTramites(string AlumnoId)
@@ -342,7 +343,7 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));
         }
-        
+
 
         //datos personales  generados por el coordinador
         [WebMethod]
@@ -356,20 +357,20 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.ObenerDatosAlumnoTodos(int.Parse(AlumnoId));
         }
-        
+
         [WebMethod]
         public bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
         {
 
             return BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos);
         }
-        
+
 
         //datos personales  generados por el alumnos
         [WebMethod]
         public List<ReferenciasPagadas> ReferenciasConsulta(string Dato, string TipoBusqueda)
         {
-            return BLLAlumnoPortal.ReferenciasConsulta( Dato,int.Parse(TipoBusqueda));
+            return BLLAlumnoPortal.ReferenciasConsulta(Dato, int.Parse(TipoBusqueda));
         }
 
         [WebMethod]
@@ -523,7 +524,7 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public DTOAlumnoCambioCarrera ConsultaCambioCarrera(string AlumnoId)
         {
-            return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId)); 
+            return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId));
         }
         [WebMethod]
         public bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
@@ -533,7 +534,7 @@ namespace AppAdministrativos.WS
         //Cambio carrera//
 
         //Baja Academica//
-        
+
         [WebMethod]
         public DTOCatalogoBaja ConsultaCatalogosBaja()
         {
@@ -581,6 +582,10 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.UpdateAlumnoRP(AlumnoId, Nombre, Paterno, Materno, Nacimiento, GeneroId, CURP, UsuarioId);
         }
-
+    }
+    public class PantallaPago
+    {
+        public List<DTOPagoDetallado> Pagos { get; set; }
+        public bool Estatus { get; set; }
     }
 }

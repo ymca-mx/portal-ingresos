@@ -3,30 +3,75 @@
     var EsModificacion = false;
     var CambioArchivo = false;
     var Funciones = {
+        init: function () {
+            Funciones.TraerCalendarios();            
+            Funciones.TraerPlantel();
+        },
         TraerCalendarios: function () {
             $('#Load').modal('show');
             $.ajax({
                 type: "POST",
                 url: "WS/Calendario.asmx/Listar",
-                data:"",
-                contentType: "application/json; charset=utf-8", 
+                data: "",
+                contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
                     if (data.d.length > 0) {
                         Funciones.PintarCalendarios(data.d);
-                    } else { $('#Load').modal('hide');}
+                    } else { $('#Load').modal('hide'); }
                 }
             });
         },
+        
+        CargarOfertas: function (DTOCalendario) {
+            $("#slcSucursal").val(-1);
+            $("#slcSucursal").change();
+            Funciones.Planteles.NuevoPlantel = [];
+            Funciones.Planteles.PlantelSeleccionado = [];
+
+            
+            $(DTOCalendario.Sucursales).each(function (f, obj) {
+                var sucursal = {
+                    Descripcion: obj.Descripcion,
+                    PlantelId: obj.SucursalId,
+                    OfertasTipo: []
+                };
+
+                $(obj.OFertaEducativaTipo).each(function (a, obj1) {
+
+                    var TipoOFerta = {
+                        OfertaEducativaTipoId: obj1.OfertaEducativaTipoId,
+                        Descripcion: obj1.Descripcion,
+                        OFertasEducativas: []
+                    };
+
+                    $(obj1.Ofertas).each(function (c, obj2) {
+                        var Oferta = {
+                            OfertaEducativaId: obj2.ofertaEducativaId,
+                            Descripcion: obj2.descripcion,
+                            visible: true
+                        };
+                        TipoOFerta.OFertasEducativas.push(Oferta);
+                    });
+
+                    sucursal.OfertasTipo.push(TipoOFerta);
+
+                });
+
+                Funciones.Planteles.PlantelSeleccionado.push(sucursal);            
+            });
+
+            $('#ModalOfertas').modal('show');                    
+        },
         PintarCalendarios: function (Tabla) {
-            if (Calendarios != undefined) {
+            if (Calendarios !== undefined) {
                 Calendarios.fnClearTable();
             }
             Calendarios = $('#tblCalendarios').dataTable({
                 "aaData": Tabla,
                 "aoColumns": [
-                    { "mDataProp": "Nombre" },                    
-                    { "mDataProp": "FechaAlta" },                    
+                    { "mDataProp": "Nombre" },
+                    { "mDataProp": "FechaAlta" },
                     { "mDataProp": "UsuarioNombre" },
                     {
                         "mDataProp": "EstatusId",
@@ -66,15 +111,15 @@
             $('#Load').modal('hide');
         },
         ClickTabla: function (eventObject) {
+            var row = this.parentNode.parentNode;
+            var rowadd = Calendarios.fnGetData($(this).closest('tr'));
             if (this.name === "Edit") {
-                var row = this.parentNode.parentNode;
-                var rowadd = Calendarios.fnGetData($(this).closest('tr'));
                 Funciones.CargarDatosCalendario(rowadd);
             } else if (this.name === "Show") {
-
+                Funciones.CargarOfertas(rowadd);
             }
         },
-        CambiarArchivo: function() {
+        CambiarArchivo: function () {
             var file = $('#FileCalendario');
             var tex = $('#txtCalendario').html();
             if (this.files.length > 0) {
@@ -130,8 +175,8 @@
             $('#rdbActivo')[0].checked = false;
             $('#rdbActivo')[0].checked = false;
             EsModificacion = false;
-            
-            $('#ModificarCalendario').modal('hide');            
+
+            $('#ModificarCalendario').modal('hide');
         },
         NuevoCalendario: function () {
             $('#ArchivoCalendario').attr('required', true);
@@ -142,9 +187,9 @@
             if ($frm[0].checkValidity()) {
                 if (EsModificacion) { Funciones.GuardarModificacion(); }
                 else { Funciones.GuardarNuevoCalendario(); }
-            } 
+            }
         },
-        GuardarNuevoCalendario: function() {
+        GuardarNuevoCalendario: function () {
             $('#Load').modal('show');
             var objGuardar = Funciones.CamposCalendario();
             objGuardar = JSON.stringify(objGuardar);
@@ -164,7 +209,7 @@
                 }
             });
         },
-        SubirArchivo: function (Id,mensaje) {
+        SubirArchivo: function (Id, mensaje) {
             var data = new FormData();
             var fileCalendario = $('#ArchivoCalendario'); // FileList object
             fileCalendario = fileCalendario[0].files[0];
@@ -183,7 +228,7 @@
                     $('#Load').modal('hide');
                     var $xml = $(data1);
                     var $bool = $xml.find("boolean");
-                    
+
                     if ($bool[0].textContent === 'true') {
                         Funciones.CerrarModificar();
                         alertify.alert(mensaje).set('onok', function (closeEvent) {
@@ -194,7 +239,7 @@
                         alertify.alert("Fallo la subida del Archivo, intente nuevamente.", function () { $('#ModificarCalendario').modal('show'); });
                     }
                 }
-            });            
+            });
         },
         GuardarModificacion: function () {
             $('#Load').modal('show');
@@ -213,12 +258,12 @@
                         } else {
                             $('#Load').modal('hide');
                             Funciones.CerrarModificar();
-                            alertify.alert('Se guardaron las modificaciones').set('onok', function (CloseEvent) { Funciones.TraerCalendarios();});
+                            alertify.alert('Se guardaron las modificaciones').set('onok', function (CloseEvent) { Funciones.TraerCalendarios(); });
                         }
                     } else {
                         $('#Load').modal('hide');
                         $('#ModificarCalendario').modal('hide');
-                        alertify.alert('Error no se pudo modificar el calendario, intente más tarde.', function () { $('#ModificarCalendario').modal('show');   });
+                        alertify.alert('Error no se pudo modificar el calendario, intente más tarde.', function () { $('#ModificarCalendario').modal('show'); });
                     }
                 }
             });
@@ -233,15 +278,282 @@
                     EstatusId: ($('#rdbActivo')[0].checked ? 1 : 2)
                 }
             };
+        },
+        CerrarPopOfertas: function () {
+            $('#frmOfertas')[0].reset();
+            $('#ModalOfertas').modal('hide');
+        },
+        SlcSucursalChange: function () {
+            var valSelec = $(this)[0].value;
+            valSelec = parseInt(valSelec);
+            $('#divChkXAgregar').empty();
+            $('#divChkAgregadas').empty();
+            if (valSelec !== -1) {
+                $("#slcTipoOferta").empty();
+                var opt1 = $(document.createElement('option'));
+                opt1.text('--Seleccionar--');
+                opt1.val(-1);
+                $("#slcTipoOferta").append(opt1);
+
+                $(Funciones.Planteles.Plantel).each(function (ind, plan) {
+                    if (plan.PlantelId === valSelec) {
+                        $(plan.OfertasTipo).each(function (ind2, plan2) {
+                            var opt = $(document.createElement('option'));
+                            opt.text(plan2.Descripcion);
+                            opt.val(plan2.OfertaEducativaTipoId);
+                            $("#slcTipoOferta").append(opt);
+                        });
+                    }
+                });
+            }
+        },
+        SlcTipoOfertaChange: function () {
+            var valSelec = $("#slcSucursal").val();
+            valSelec = parseInt(valSelec);
+
+            var TipoF = $(this)[0].value;
+            TipoF = parseInt(TipoF);
+            $('#divChkXAgregar').empty();
+            $('#divChkAgregadas').empty();
+            if (valSelec !== -1) {                
+                var Ofertas = [];
+
+                $(Funciones.Planteles.PlantelSeleccionado).each(function (ind, plan) {
+                    if (plan.PlantelId === valSelec) {
+                        $(plan.OfertasTipo).each(function (ind2, plan2) {
+                            if (TipoF === plan2.OfertaEducativaTipoId) {
+                                $(plan2.OFertasEducativas).each(function (ind3, plan3) {
+                                    Ofertas.push(plan3.OfertaEducativaId);
+                                    var id = 'Id=chk' + plan3.OfertaEducativaId;
+                                    var check = "<div class='checkbox'><label class='control-label' style='padding-left:20px' >";
+                                    check += "<input type='checkbox'" + id + " />" + plan3.Descripcion + "</label></div>";
+                                    $('#divChkAgregadas').append(check);
+                                });
+                            }
+                        });
+                    }
+                });
+
+                $(Funciones.Planteles.Plantel).each(function (ind, plan) {
+                    if (plan.PlantelId === valSelec) {
+                        $(plan.OfertasTipo).each(function (ind2, plan2) {
+                            if (TipoF === plan2.OfertaEducativaTipoId) {                                
+                                $(plan2.OFertasEducativas).each(function (ind3, plan3) {
+                                    if (jQuery.inArray(plan3.OfertaEducativaId, Ofertas) === -1) {
+                                        
+                                        var id = 'Id=chk' + plan3.OfertaEducativaId;
+                                        var check = "<div class='checkbox'><label class='control-label' style='padding-left:20px' >";
+                                        check += "<input type='checkbox'" + id + " data-ofertaid='" + plan3.OfertaEducativaId + "'/>" + plan3.Descripcion + "</label></div>";
+                                        $('#divChkXAgregar').append(check);
+
+                                        if (jQuery.inArray(plan3.OfertaEducativaId, Funciones.OfertasAgregar) !== -1) {
+                                            $('#chk' + plan3.OfertaEducativaId)[0].checked = true;
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });               
+            }
+        },
+        TraerPlantel: function () {
+            $.ajax({
+                type: "POST",
+                url: "WS/Calendario.asmx/TraerOfertas",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data1) {
+                    if (data1.d.length > 0) {
+
+                        var optionP = $(document.createElement('option'));
+                        optionP.text('--Seleccionar--');
+                        optionP.val(-1);
+                       
+                        $("#slcSucursal").append(optionP);
+
+
+                        Funciones.Planteles.Plantel = [];
+                        $(data1.d).each(function (f, obj) {
+                            var optionP1 = $(document.createElement('option'));
+                            optionP1.text(obj.Descripcion);
+                            optionP1.val(obj.SucursalId);
+                            $("#slcSucursal").append(optionP1);
+
+                            var sucursal = {
+                                Descripcion: obj.Descripcion,
+                                PlantelId: obj.SucursalId,
+                                OfertasTipo: []
+                            };
+
+                            $(obj.OFertaEducativaTipo).each(function (a, obj1) {
+
+                                var TipoOFerta = {
+                                    OfertaEducativaTipoId: obj1.OfertaEducativaTipoId,
+                                    Descripcion: obj1.Descripcion,
+                                    OFertasEducativas: []
+                                };
+
+                                $(obj1.Ofertas).each(function (c, obj2) {
+                                    var Oferta = {
+                                        OfertaEducativaId: obj2.ofertaEducativaId,
+                                        Descripcion: obj2.descripcion,
+                                        visible: true
+                                    };
+                                    TipoOFerta.OFertasEducativas.push(Oferta);
+                                });
+
+                                sucursal.OfertasTipo.push(TipoOFerta);
+
+                            });
+
+                            Funciones.Planteles.Plantel.push(sucursal);
+                        });
+                    } else {
+                        alertify.alert("Fallo la carga de sucursales");
+                    }
+                },
+                error: function () {
+                    alertify.alert("Fallo la carga de sucursales");
+                }
+            });
+        },
+        Planteles:
+        {
+            Plantel: [{
+                PlantelId: 0,
+                Descripcion: "",
+                OfertasTipo: [{
+                    OfertaEducativaTipoId: 0,
+                    Descripcion: "",
+                    OFertasEducativas: [{
+                        OfertaEducativaId: 0,
+                        Descripcion: "",
+                        visible: true
+                    }]
+                }]
+            }],
+            NuevoPlantel: [{
+                PlantelId: 0,
+                Descripcion: "",
+                OfertasTipo: [{
+                    OfertaEducativaTipoId: 0,
+                    Descripcion: "",
+                    OFertasEducativas: [{
+                        OfertaEducativaId: 0,
+                        Descripcion: "",
+                        visible: true
+                    }]
+                }]
+            }],
+            PlantelSeleccionado: [{
+                PlantelId: 0,
+                Descripcion: "",
+                OfertasTipo: [{
+                    OfertaEducativaTipoId: 0,
+                    Descripcion: "",
+                    OFertasEducativas: [{
+                        OfertaEducativaId: 0,
+                        Descripcion: "",
+                        visible: true
+                    }]
+                }]
+            }]
+        },
+        ClickCheckBoxXAdd: function () {                        
+            var oid = $(this).data('ofertaid');
+            if ($(this)[0].checked) {
+                if (Funciones.Planteles.NuevoPlantel.length === 0) {
+                    var Nuevo = {
+                        PlantelId: $("#slcSucursal").val(),
+                        Descripcion: $("#slcSucursal option:selected").text(),
+                        OfertasTipo: [{
+                            OfertaEducativaTipoId: $("#slcTipoOferta").val(),
+                            Descripcion: $("#slcTipoOferta option:selected").text(),
+                            OFertasEducativas: [{
+                                OfertaEducativaId: oid,
+                                Descripcion: $(this)[0].parentNode.innerText,
+                                visible: true
+                            }]
+                        }]
+                    };
+                    Funciones.Planteles.NuevoPlantel.push(Nuevo);
+                } else {
+                    var valSelec = $("#slcSucursal").val();
+                    valSelec = parseInt(valSelec);
+
+                    var TipoF = $("#slcTipoOferta").val();
+                    TipoF = parseInt(TipoF);
+
+                    if (jQuery.inArray(valSelec, Funciones.Planteles.NuevoPlantel) !== -1) {
+
+                    }
+                }
+                
+                
+                Funciones.OfertasAgregar.push(oid);
+                //Funciones.Planteles.PlantelSeleccionado.push(Nuevo);
+            } else {
+                var valSelec = $("#slcSucursal").val();
+                valSelec = parseInt(valSelec);
+
+                var TipoF = $("#slcTipoOferta").val();
+                TipoF = parseInt(TipoF);
+
+                var planE = 0, tipoE = 0, ofE = 0;
+
+                $(Funciones.Planteles.NuevoPlantel).each(function (ind, plan) {
+                    if (plan.PlantelId === valSelec) {
+                        $(plan.OfertasTipo).each(function (ind2, plan2) {
+                            if (TipoF === plan2.OfertaEducativaTipoId) {
+                                $(plan2.OFertasEducativas).each(function (ind3, plan3) {
+                                    if (plan3.ofertaEducativaId === oid) {
+                                        planE = ind;
+                                        tipoE = ind2;
+                                        ofE = ind3;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                Funciones.Planteles.NuevoPlantel[planE].OfertasTipo[tipoE].OFertasEducativas.splice(ofE, 1);
+                if (jQuery.inArray(oid, Funciones.OfertasAgregar) !== -1) {
+                    Funciones.OfertasAgregar.splice(jQuery.inArray(oid, Funciones.OfertasAgregar));
+                }
+
+                if (Funciones.Planteles.NuevoPlantel[planE].OfertasTipo[tipoE].OFertasEducativas.length === 0) {
+                    Funciones.Planteles.NuevoPlantel[planE].OfertasTipo.splice(tipoE, 1);
+                    if (Funciones.Planteles.NuevoPlantel[planE].OfertasTipo.length === 0) {
+                        Funciones.Planteles.NuevoPlantel.splice(planE, 1);
+                        if (Funciones.Planteles.NuevoPlantel.length === 0) {
+                            Funciones.Planteles.NuevoPlantel = [];
+                        }
+                    }
+                }
+            }
+            if (Funciones.Planteles.NuevoPlantel.length > 0) {
+                $('#btnPasar').prop("disabled", false);
+            } else { $('#btnPasar').prop('disabled', true); }
+
+            //Funciones.SlcTipoOfertaChange();
+        },
+        OfertasAgregar: [],
+        BtnPasarClick: function () {
+
         }
-    }
-
-
-    Funciones.TraerCalendarios();
+    };
+    Funciones.init();
     $('#tblCalendarios').on('click', 'a', Funciones.ClickTabla);
     $('#ArchivoCalendario').bind('change', Funciones.CambiarArchivo);
     $('#FileCalendario a').click(Funciones.ClickArchivo);
     $('#btnCancelar').on('click', Funciones.CerrarModificar);
+    $('#btnCancelarOf').on('click', Funciones.CerrarPopOfertas);
     $('#btnNuevo').on('click', Funciones.NuevoCalendario);
     $('#btnGuardarDatos').on('click', Funciones.BotonGuardar);
+    $("#slcSucursal").on('change', Funciones.SlcSucursalChange);
+    $("#slcTipoOferta").on('change', Funciones.SlcTipoOfertaChange);
+    $("#divChkXAgregar").on('click', 'input', Funciones.ClickCheckBoxXAdd)
+    $('#btnPasar').on('click', Funciones.BtnPasarClick);
 });

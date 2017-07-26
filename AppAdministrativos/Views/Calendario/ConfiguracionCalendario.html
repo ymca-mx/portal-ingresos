@@ -17,7 +17,7 @@
                     <button class="btn bg-blue-dark" id="btnNuevo">Añadir Nuevo Calendario</button>
                 </div>
                 <div class="col-md-12">
-                    <h4>Calendarios</h4>                    
+                    <h4>Calendarios</h4>
                     <div class="table">
                         <table class="table table-striped" id="tblCalendarios">
                             <thead>
@@ -42,12 +42,12 @@
                 <div class="modal-header">
                     <h3 class="modal-title">Datos del Calendario</h3>
                 </div>
-                <form id="frmDatos"  method="post" action="javascript:;" >
+                <form id="frmDatos" method="post" action="javascript:;">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12 form-group">
                                 <label class="control-label">Nombre:</label>
-                                <input class="form-control " type="text" id="txtNombre" required data-calendarioid="0" pattern=".{8,150}" title="8 letras minimo"/>
+                                <input class="form-control " type="text" id="txtNombre" required data-calendarioid="0" pattern=".{8,150}" title="8 letras minimo" />
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="control-label">Archivo</label>
@@ -86,8 +86,62 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a class="btn btn-default" id="btnCancelar" >Cancelar</a>
+                        <a class="btn btn-default" id="btnCancelar">Cancelar</a>
                         <button class="btn btn-primary" id="btnGuardarDatos">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" data-backdrop="static" id="ModalOfertas" data-keyboard="false" data-width="950">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Ofertas Educativas</h3>
+                </div>
+                <form id="frmOfertas" onSubmit="return false;">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Selecciona la Sucursal:</label>
+                                <select class="form-control" id="slcSucursal"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Selecciona el Tipo de OFerta Educativa:</label>
+                                <select class="form-control" id="slcTipoOferta"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <hr />
+                            <div class="col-md-5">
+                                <h3>Ofertas a Agregar</h3>
+                                <div class="col-md-12 form-group">
+                                    <div id="divChkXAgregar" style="overflow:auto; height:150px" class="list-group">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="height:200px">
+                                <div class="col-md-12" style="margin-top:110px">
+                                    <button class="btn bg-blue-dark" disabled id="btnPasar">>></button>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn bg-blue-steel" disabled id="btnRegresa"><<</button>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <h3>Ofertas Agregadas</h3>
+                                <div class="col-md-12 form-group">
+                                    <div id="divChkAgregadas" style="overflow:auto; height:150px" class="list-group">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-default" id="btnCancelarOf">Cancelar</a>
+                        <button class="btn btn-primary" id="btnGuardarOfertas">Guardar</button>
                     </div>
                 </form>
             </div>

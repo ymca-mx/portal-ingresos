@@ -47,9 +47,9 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (dat1a) {
-                var data = dat1a.d.Item1;
-                var dk = dat1a.d.Item2;
-                var Especial = dat1a.d.Item1[0].EsEspecial;
+                var data = dat1a.d.Pagos;
+                var dk = dat1a.d.Estatus;
+                var Especial = dat1a.d.Pagos[0].EsEspecial;
                 if (data[0].esEmpresa) {
                     $('#tblReferencias2').hide();
                     $('#tblReferencias').hide();

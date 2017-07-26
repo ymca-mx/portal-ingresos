@@ -20,8 +20,8 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (res) {
-                var data = res.d.Item1;
-                var dk = res.d.Item2;
+                var data = res.d.Pagos;
+                var dk = res.d.Estatus;
 
                 var sep = data.length == 1 ? 0 : 1;
                 if (data[0].esEmpresa) {

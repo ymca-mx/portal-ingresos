@@ -131,14 +131,12 @@ namespace AppAlumnos.Services
         }
 
         [WebMethod]
-        public Tuple<List<DTO.DTOPagoDetallado>,bool> ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
+        public PantallaPago ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
         {
             try
             {
-                List<DTO.DTOPagoDetallado> ListaReferencias = BLL.BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
-                int cout = ListaReferencias.Where(l => l.OtroDescuento.Length > 0).ToList().Count;
-
-                return Tuple.Create(ListaReferencias, ListaReferencias.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false);
+                List<DTO.DTOPagoDetallado> ReferenciasPagadas = BLL.BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
+                return new PantallaPago { Pagos = ReferenciasPagadas, Estatus = ReferenciasPagadas.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false };
             }
             catch
             {
@@ -169,5 +167,10 @@ namespace AppAlumnos.Services
         {
             return BLL.BLLPagoPortal.ConsultarReferenciasConceptos(int.Parse(AlumnoId));
         }
+    }
+    public class PantallaPago
+    {
+        public List<DTO.DTOPagoDetallado> Pagos { get; set; }
+        public bool Estatus { get; set; }
     }
 }

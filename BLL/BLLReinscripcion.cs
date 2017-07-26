@@ -268,10 +268,11 @@ namespace BLL
                         UsuarioId = usuarioId
                     });
                     #endregion
-                    #region AlumnoInscrito
+                    #region AlumnoInscrito && AlumnoRevision
                     AlumnoInscrito AlumnoMaestria = alumno.Alumno.AlumnoInscrito.Where(a => a.OfertaEducativaId == maestriaId).FirstOrDefault();
                     if ((AlumnoMaestria?.AlumnoId ?? null) == null)
                     {
+                        alumno.Alumno.AlumnoInscrito.ToList().ForEach(al => { al.EstatusId = al.OfertaEducativa.OfertaEducativaTipoId != 4 ? 2 : al.EstatusId; });
                         db.AlumnoInscrito.Add(new AlumnoInscrito
                         {
                             AlumnoId = alumnoId,
@@ -316,6 +317,21 @@ namespace BLL
                             PeriodoId = AlumnoMaestria.PeriodoId,
                             TurnoId = AlumnoMaestria.TurnoId,
                             UsuarioId = usuarioId
+                        });
+
+                        db.AlumnoRevision.Add(new AlumnoRevision
+                        {
+                            AlumnoId = alumnoId,
+                            OfertaEducativaId = maestriaId,
+                            Anio = anio,
+                            PeriodoId = periodoId,
+                            UsuarioId = usuarioId,
+                            FechaRevision = DateTime.Now,
+                            HoraRevision = DateTime.Now.TimeOfDay,
+                            InscripcionCompleta = true,
+                            AdelantoMateria = 0,
+                            AsesoriaEspecial = 0,
+                            Observaciones = "Pase Automatico a Maestria"
                         });
                         db.AlumnoInscrito.Remove(AlumnoMaestria);
                     }
