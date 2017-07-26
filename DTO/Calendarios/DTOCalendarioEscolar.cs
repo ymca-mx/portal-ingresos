@@ -12,6 +12,6 @@ namespace DTO
         public int UsuarioId { get; set; }
         public string UsuarioNombre { get; set; }
         public int EstatusId { get; set; }
-        public List<DTOOFertaCalendario> OfertasCalendario { get; set; }
+        public List<DTOSucursalTree> Sucursales { get; set; }
     }
 }

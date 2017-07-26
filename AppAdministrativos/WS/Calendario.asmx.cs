@@ -69,5 +69,12 @@ namespace AppAdministrativos.WS
                 return false;
             }
         }
+
+        [WebMethod]
+        public List<DTOSucursalTree> TraerOfertas()
+        {
+            return BLLSucursal.TraerTodas();
+        }
+        
     }
 }
