@@ -108,7 +108,7 @@ namespace DTO
         public string DescripcionPeriodo { get; set; }
         public int TipoMovimientoId { get; set; }
         public int BajaMotivoId { get; set; }
-        public DateTime FechaRecepcion { get; set; }
+        public string FechaRecepcion { get; set; }
         public int Folio { get; set; }
         public string Observaciones { get; set; }
         public int UsuarioId { get; set; }

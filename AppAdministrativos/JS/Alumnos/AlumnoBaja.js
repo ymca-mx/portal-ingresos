@@ -71,7 +71,7 @@
                         $("#lbNombre").text(Alumno.NombreC);
                         $("#lbOfertaEducativa").text(Alumno.OfertaEducativa);
                         $("#lbPeriodo").text(Alumno.DescripcionPeriodo);
-
+                        $("#btnBaja").removeAttr("disabled");
                         $('#Load').modal('hide');
                     }
                 });
@@ -87,13 +87,94 @@
                     return name;
                 }
             },
+            Validar: function () {
+                var $frm = $('#frmBaja');
+                if ($frm[0].checkValidity()) {
+                    $("#PopComentario").modal('show');
+                }
+            },
+            Guardar: function () {
+                var comentario = $('#txtComentario').val();
+                comentario = $.trim(comentario);
+                if (comentario.length < 5) {
+                    alertify.alert("Inserte un comentario.");
+                    return false;
+                }
+
+                $("#PopComentario").modal("hide");
+                $('#Load').modal('show');
+
+                Alumno.TipoMovimientoId = $("#slcTipo").val();
+                Alumno.BajaMotivoId = $("#slcMotivo").val();
+                Alumno.FechaRecepcion = $("#txtFecha").val();
+                Alumno.Folio = $("#txtFolio").val();
+                Alumno.Observaciones = comentario;
+                Alumno.UsuarioId = $.cookie('userAdmin');
+
+                var obj = {
+                    "Alumno": Alumno
+                };
+                obj = JSON.stringify(obj);
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "WS/Alumno.asmx/AplicarBaja",
+                    data: obj,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.d != -1) {
+                            $("#txtClave").val("");
+                            $("#lbNombre").text("");
+                            $("#lbNombre").text("");
+                            $("#lbNombre").text("");
+                            $("#slcTipo").val("");
+                            $("#slcMotivo").val("");
+                            $("#txtFecha").val("");
+                            $("#txtFolio").val("");
+                            $("#deleteFile").click();
+                            $("#txtComentario").empty();
+                            $("#btnBaja").attr('disabled', 'disabled');
+                            Alumno = null;
+                            funciones.GuardarDocumentos(data.d)
+                        } else {
+                            $("#txtComentario").empty();
+                            alertify.alert("Error al  realizar cambio.");
+                            $('#Load').modal('hide');
+                        }
+                       
+                    }
+                });
+            } ,
             GuardarDocumentos: function (AlumnoMovimientoId) {
                 var data = new FormData();
                 var fileFormato;
-                fileFormato = $('#DeportivaArchivo');
+                fileFormato = $('#BajaArchivo');
                 fileFormato = fileFormato[0].files[0];
-                data.append("DocumentoDeportiva", fileFormato);
+                data.append("Documento", fileFormato);
                 data.append("AlumnoMovimientoId", AlumnoMovimientoId);
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "WS/Alumno.asmx/GuardarDocumentoBaja",
+                    data: data,
+                    contentType: false,
+                    processData : false,
+                    success: function (data) {
+                        if (data.d == true) {
+                            alertify.alert("La baja se realizó correctamente.");
+                            $('#Load').modal('hide');
+                        } else {
+                            $("#txtComentario").empty();
+                            alertify.alert("Error al  guardar documento.");
+                            $('#Load').modal('hide');
+                        }
+
+                    }
+                });
+                
             }
         }
 
@@ -139,67 +220,7 @@
         }
     });
 
-    $("#btnBaja").click(function () {
-        var $frm = $('#frmBaja');
-        if ($frm[0].checkValidity()) {
-            $("#PopComentario").modal('show');
-        }
-    });
+    $("#btnBaja").click(funciones.Validar);
 
-    $('#btnGuardarDatos').on('click', function () {
-        var $frm = $('#frmDatos');
-        if ($frm[0].checkValidity()) {
-            /* submit the form */
-            $('#Load').modal('show');
-        }
-    });
-
-
-    $("#btnGuardar").click(function () {
-        var comentario = $('#txtComentario').val();
-        comentario = $.trim(comentario);
-        if (comentario.length < 5) {
-            alertify.alert("Inserte un comentario.");
-            return false;
-        }
-
-        $("#PopComentario").modal("hide");
-        $('#Load').modal('show');
-
-        lstop[0].OfertaEducativaIdNueva = $('#slcOfertaEducativa2').val();
-        lstop[0].Observaciones = $("#txtComentario").val();
-        lstop[0].UsuarioId = $.cookie('userAdmin');
-
-        var obj = {
-            "Cambio": lstop[0]
-        };
-        obj = JSON.stringify(obj);
-
-
-        $.ajax({
-            type: "POST",
-            url: "WS/Alumno.asmx/AplicarCambioCarrera",
-            data: obj,
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                if (data.d == true) {
-                    $("#txtComentario").empty();
-                    $("#slcOfertaEducativa").empty();
-                    $("#slcPeriodo").empty();
-                    $("#slcOfertaEducativa2").empty();
-                    $("#btnCambio").attr('disabled', 'disabled');
-                    alertify.alert("El  cambio se realizó correctamente.");
-                } else {
-                    $("#txtComentario").empty();
-                    alertify.alert("Error al  realizar cambio.");
-                }
-                $('#Load').modal('hide');
-            }
-        });
-
-    });
-
-
-
+    $("#btnGuardar").click(funciones.Guardar);
 });

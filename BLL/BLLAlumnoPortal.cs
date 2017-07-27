@@ -12486,33 +12486,58 @@ namespace BLL
                                                      && a.Anio == periodoActual.Anio
                                                      && a.PeriodoId == periodoActual.PeriodoId
                                                      && a.SubperiodoId > subPeriodo).ToList();
-
-                    int [] estatus = new  int [] {2,4};
-
                     
 
                     pagos.ForEach(n => 
                     {
-                        if (estatus.Contains(n.EstatusId))
+                        if (n.Restante<n.Promesa)
                         {
-                            List<int> referenciasProcesadas = db.PagoParcial.Where(a => a.PagoId == n.PagoId
-                                                                                   && a.EstatusId == 4)
-                                                                            .Select(b=> b.ReferenciaProcesadaId ).ToList();
+                            
 
-                            referenciasProcesadas.ForEach(rp=> 
+                            List<PagoParcial> pagoParcial = db.PagoParcial.Where(a => a.PagoId == n.PagoId && a.EstatusId == 4).ToList();
+
+
+                            pagoParcial.ForEach(p =>
                             {
-                                ReferenciaProcesada referenciaProcesada = db.ReferenciaProcesada.Where(a => a.ReferenciaProcesadaId == rp).FirstOrDefault();
-                            });
+                                ReferenciaProcesada referenciaProcesada = db.ReferenciaProcesada.Where(a => a.ReferenciaProcesadaId == p.ReferenciaProcesadaId 
+                                                                                   && a.EstatusId == 1).FirstOrDefault();
 
-                            n.EstatusId = 2;
+
+                                p.EstatusId = 2;
+                                referenciaProcesada.Restante = referenciaProcesada.Restante + p.Pago;
+                                referenciaProcesada.SeGasto = false;
+                            });
+                            
+                            n.Restante = n.Promesa;
                         }
-                        else
-                        {
-                            n.EstatusId = 2; 
-                        }
+                        n.EstatusId = 2;
                     });
 
-                    return 0;
+                    DateTime fecharecepcion = DateTime.Parse(Alumno.FechaRecepcion);
+                    db.AlumnoMovimiento.Add(new AlumnoMovimiento
+                    {
+                        AlumnoId = Alumno.AlumnoId,
+                        OfertaEducativaId = Alumno.OfertaEducativaId,
+                        Anio = Alumno.Anio,
+                        PeriodoId = Alumno.PeriodoId,
+                        TipoMovimientoId = Alumno.TipoMovimientoId,
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now.TimeOfDay,
+                        UsuarioId = Alumno.UsuarioId,
+                        EstatusId = 1,
+                        AlumnoMovimientoBaja = new AlumnoMovimientoBaja
+                        {
+                            BajaMotivoId = Alumno.BajaMotivoId,
+                            FechaRecepcion = fecharecepcion,
+                            Folio = Alumno.Folio,
+                            Observaciones = Alumno.Observaciones
+                        }
+                    });
+                    db.SaveChanges();
+
+                   int ALumnoMovimientoId =  db.AlumnoMovimiento.Local.FirstOrDefault().AlumnoMovimientoId;
+                    
+                    return ALumnoMovimientoId;
                 }
                 catch (Exception)
                 {
@@ -12522,9 +12547,33 @@ namespace BLL
 
         }
 
-        //baja academica
+        public static bool GuardarDocumentoBaja(int AlumnoMovimientoId,byte []  FormatoFil)
+        {
+            using (UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    db.AlumnoBajaDocumento.Add(new AlumnoBajaDocumento
+                    {
+                        AlumnoMovimientoId = AlumnoMovimientoId,
+                        Documento = FormatoFil
+                    });
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
 
-        public static List<DTOAlumnoLigero> ConsultarAlumnosNuevos()
+                    return false;
+                }
+            }
+
+        }
+
+
+            //baja academica
+
+            public static List<DTOAlumnoLigero> ConsultarAlumnosNuevos()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {

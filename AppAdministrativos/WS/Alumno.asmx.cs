@@ -6,6 +6,8 @@ using System.Web.Services;
 using DTO;
 using BLL;
 using System.Globalization;
+using System.Web.Script.Services;
+using System.IO;
 
 namespace AppAdministrativos.WS
 {
@@ -543,6 +545,34 @@ namespace AppAdministrativos.WS
         public DTOAlumnoBaja ConsultaAlumnoBaja(string AlumnoId)
         {
             return BLLAlumnoPortal.ConsultaAlumnoBaja(int.Parse(AlumnoId));
+        }
+
+        [WebMethod]
+        public int AplicarBaja(DTOAlumnoBaja Alumno)
+        {
+            return BLLAlumnoPortal.AplicarBaja(Alumno);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public bool GuardarDocumentoBaja()
+        {
+            HttpContext Contex = HttpContext.Current;
+            HttpFileCollection httpFileCollection = Context.Request.Files;
+            System.Collections.Specialized.NameValueCollection Formato = Context.Request.Form;
+            try
+            {
+                int AlumnoMovimientoId = int.Parse(Formato["AlumnoMovimientoId"]);
+                HttpPostedFile httpFormato = httpFileCollection["Documento"];
+                Stream strFormato = httpFormato.InputStream;
+                byte[] FormatoFil = Herramientas.ConvertidorT.ConvertirStream(strFormato, httpFormato.ContentLength);
+                
+                return BLLAlumnoPortal.GuardarDocumentoBaja(AlumnoMovimientoId, FormatoFil);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //Baja Academica//
