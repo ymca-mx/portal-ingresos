@@ -18,4 +18,12 @@ namespace DTO
         public DTOUsuario Usuario { get; set; }
         public DTODocenteDetalle DocenteDetalle { get; set; }
     }
+
+    public class DTODocenteActualizar
+    {
+        public int DocenteId { get; set; }
+        public string Nombre { get; set; }
+        public string Paterno { get; set; }
+        public string Materno { get; set; }
+    }
 }
