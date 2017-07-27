@@ -12,11 +12,11 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class TempAdeudo
+    public partial class AlumnoPermitido20162
     {
         public int AlumnoId { get; set; }
-        public decimal Adeudo { get; set; }
-        public int Tipo { get; set; }
-        public int OfertaEducativaId { get; set; }
+        public int UsuarioId { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+        public System.TimeSpan HoraRegistro { get; set; }
     }
 }

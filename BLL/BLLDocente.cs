@@ -14,7 +14,7 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                db.Docente.Select(a=> a);
+                db.Docente.Select(a=> a.DocenteActualizacion.FirstOrDefault().DocenteCurso);
             }
         }
     }
