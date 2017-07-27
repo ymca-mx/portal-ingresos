@@ -148,6 +148,7 @@
     <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
+    <Content Include="JS\EvaluacionDocente\ActualizacionDocente.js" />
     <Content Include="JS\index\bitacora.js" />
     <Content Include="JS\index\cargarMenu.js" />
     <Content Include="JS\index\index.js" />
@@ -4757,6 +4758,7 @@
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
+    <Content Include="Views\EvaluacionDocente\ActualizacionDocente.html" />
     <Content Include="Views\Pago\ReferenciasSemestrales.html" />
     <Content Include="Views\Account\recovery.html" />
     <Content Include="Views\Alumno\InscripcionAlumno.html" />

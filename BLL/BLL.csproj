@@ -75,6 +75,7 @@
     <Compile Include="BLLDescuento.cs" />
     <Compile Include="BLLDescuentos.cs" />
     <Compile Include="BLLDia.cs" />
+    <Compile Include="BLLDocente.cs" />
     <Compile Include="BLLEmpresa.cs" />
     <Compile Include="BLLEntidadFederativa.cs" />
     <Compile Include="BLLEstadoCivil.cs" />

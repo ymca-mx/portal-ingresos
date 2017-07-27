@@ -45,5 +45,11 @@ namespace AppAdministrativos.WS
         //{
         //    return BLL.BLLDocente.ListarDocentesNormal();
         //}
+
+        [WebMethod]
+        public void TraerDocentes()
+        {
+
+        }
     }
 }
