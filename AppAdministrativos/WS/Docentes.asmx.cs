@@ -47,9 +47,10 @@ namespace AppAdministrativos.WS
         //}
 
         [WebMethod]
-        public void TraerDocentes()
+        public List<DTO.DTODocenteActualizar> TraerDocentes()
         {
-
+            return
+            BLL.BLLDocente.ListaDocentesActualizar();
         }
     }
 }

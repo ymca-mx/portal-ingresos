@@ -33,6 +33,7 @@ namespace DAL
         public Nullable<int> UsuarioId { get; set; }
         public Nullable<int> EstatusId { get; set; }
     
+        public virtual OfertaEducativaTipo OfertaEducativaTipo { get; set; }
         public virtual Docente Docente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteActualizacion> DocenteActualizacion { get; set; }

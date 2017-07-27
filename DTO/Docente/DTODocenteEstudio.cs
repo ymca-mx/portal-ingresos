@@ -11,8 +11,8 @@ namespace DTO
         public string Carrera { get; set; }
         public Nullable<bool> Cedula { get; set; }
         public Nullable<bool> Titulo { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
-        public Nullable<System.TimeSpan> Hora { get; set; }
+        public string Fecha { get; set; }
+        public string Hora { get; set; }
         public Nullable<int> UsuarioId { get; set; }
         public Nullable<int> EstatusId { get; set; }
         public DTODocenteEstudioDocumento Documento { get; set; }

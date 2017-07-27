@@ -21,6 +21,6 @@ namespace DTO
         public string Nombre { get; set; }
         public string Paterno { get; set; }
         public string Materno { get; set; }
-        List<DTODocenteActualizacion> Actualizaciones { get; set; }
+        public List<DTODocenteActualizacion> Actualizaciones { get; set; }
     }
 }

@@ -239,7 +239,6 @@ namespace DAL
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
-        public virtual DbSet<AlumnoPermitido20162> AlumnoPermitido20162 { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }
@@ -248,7 +247,6 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
-        public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {
