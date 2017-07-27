@@ -1070,6 +1070,20 @@
                                     return link;
                                 }
                             },
+                            {
+                                "mDataProp": "AlumnoCuota",
+                                "mRender": function (data, f, d) {
+
+                                    var link = "- -";
+                                    if (d.AlumnoCuota != null) {
+                                        if (d.AlumnoCuota.EstatusId !== 8) {
+                                            link = "<button href='' class='btn blue' name='VerCredenciales' onclick='return false;'>" + "Ver" + " </button> ";
+                                        }
+                                    }
+                                    else { link = "No" }
+                                    return link;
+                                }
+                            }
                         ],
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
@@ -1232,144 +1246,150 @@ $('#tblAlumnosCom').on('click', 'a', function () {
 
 
 $('#tblAlumnosCom').on('click', 'button', function () {
-    $("#frmAlumnoCuota").trigger('reset');
-    var validator = $("#frmAlumnoCuota").validate();
-    validator.resetForm();
-    AlumnoConfig.AlumnoId = "";
-    AlumnoConfig.GrupoId = "";
     var row = this.parentNode.parentNode;
     var rowadd = tblAlumnosCompletos.fnGetData($(this).closest('tr'));
-    AlumnoConfig.AlumnoId = rowadd.AlumnoId;
-    AlumnoConfig.GrupoId = rowadd.GrupoId;
-    if (rowadd.AlumnoCuota.EstatusId != 8) {
-        $("#slcSistemaPago").prop('disabled', true);
-        $("#slcOferta").prop('disabled', true);
-        $("#slcOfertaEducativa").prop('disabled', true);
-        $('#txtCuotaInscripcion').val(rowadd.AlumnoCuota.CuotaInscripcion);
-        $("#txtCuotaInscripcion").prop('disabled', true);
-        $('#txtCuotaColegiatura').val(rowadd.AlumnoCuota.CuotaColegiatura);
-        $("#txtCuotaColegiatura").prop('disabled', true);
-        $('#txtNPagos').val(rowadd.AlumnoCuota.NoPagos);
-        $("#txtNPagos").prop('disabled', true);
 
-        var chk = $('#chkCongelada');
-        $(chk).prop('disabled', true);
-        if (rowadd.AlumnoCuota.CuotaCongelada) {
-            $('#chkCongelada')[0].checked = true;
-        }
-
-        var chk2 = $('#chkInCongelada');
-        $(chk2).prop('disabled', true);
-        if (rowadd.AlumnoCuota.InscripcionCongelada) {
-            $('#chkInCongelada')[0].checked = true;
-        }
-
-        var chk1 = $('#chkEspecial');
-        $(chk1).prop('disabled', true);
-        if (rowadd.AlumnoCuota.EsEspecial) {
-            $('#chkEspecial')[0].checked = true;
-        }
-
-        var chkCre = $('#chkCredenciales');
-        $(chkCre).prop('disabled', true);
-        $('#chkCredenciales')[0].checked = true;
-
-
-        var opc = $('#slcPeriodo').find('option[value="1"]').val();
-        if (opc == '1') {
-            $("#slcPeriodo option[value='1']").remove();
-        }
-        var optionP = $(document.createElement('option'));
-        optionP.text(rowadd.AlumnoCuota.DescipcionPeriodo);
-        optionP.val('1');
-        $("#slcPeriodo").append(optionP);
-        $("#slcPeriodo").val('1');
-
-        $("#slcPeriodo").prop('disabled', true);
-
-        $("#btnAlumnoConfig").prop('disabled', true);
+    if ($(this)[0].name === "VerCredenciales") {
+        var alumnoCred = "AlumnoId=" + rowadd.AlumnoId;
+        alumnoCred = alumnoCred + "&OfertaEducativaid=" + rowadd.OfertaEducativaId;
+        window.open('Views/Alumno/Credenciales.aspx?' + alumnoCred, '_blank');
     } else {
-        $("#slcSistemaPago").prop('disabled', false);
-        $("#slcOferta").prop('disabled', false);
-        $("#slcOfertaEducativa").prop('disabled', false);
-        $("#txtCuotaInscripcion").prop('disabled', false);
-        $("#txtCuotaColegiatura").prop('disabled', false);
-        $("#btnAlumnoConfig").prop('disabled', false);
-        $('#txtNPagos').val('');
-        $("#txtNPagos").prop('disabled', false);
+        $("#frmAlumnoCuota").trigger('reset');
+        var validator = $("#frmAlumnoCuota").validate();
+        validator.resetForm();
+        AlumnoConfig.AlumnoId = "";
+        AlumnoConfig.GrupoId = "";
 
-        var chk = $('#chkCongelada');
-        $(chk).prop('disabled', false);
-        $('#chkCongelada')[0].checked = false;
+        AlumnoConfig.AlumnoId = rowadd.AlumnoId;
+        AlumnoConfig.GrupoId = rowadd.GrupoId;
+        if (rowadd.AlumnoCuota.EstatusId != 8) {
+            $("#slcSistemaPago").prop('disabled', true);
+            $("#slcOferta").prop('disabled', true);
+            $("#slcOfertaEducativa").prop('disabled', true);
+            $('#txtCuotaInscripcion').val(rowadd.AlumnoCuota.CuotaInscripcion);
+            $("#txtCuotaInscripcion").prop('disabled', true);
+            $('#txtCuotaColegiatura').val(rowadd.AlumnoCuota.CuotaColegiatura);
+            $("#txtCuotaColegiatura").prop('disabled', true);
+            $('#txtNPagos').val(rowadd.AlumnoCuota.NoPagos);
+            $("#txtNPagos").prop('disabled', true);
 
-        var chk2 = $('#chkInCongelada');
-        $(chk2).prop('disabled', false);
-        $('#chkInCongelada')[0].checked = false;
+            var chk = $('#chkCongelada');
+            $(chk).prop('disabled', true);
+            if (rowadd.AlumnoCuota.CuotaCongelada) {
+                $('#chkCongelada')[0].checked = true;
+            }
 
-        var chk1 = $('#chkEspecial');
-        $(chk1).prop('disabled', false);
-        $('#chkEspecial')[0].checked = false;
+            var chk2 = $('#chkInCongelada');
+            $(chk2).prop('disabled', true);
+            if (rowadd.AlumnoCuota.InscripcionCongelada) {
+                $('#chkInCongelada')[0].checked = true;
+            }
 
-        var chkCre = $('#chkCredenciales');
-        $(chkCre).prop('disabled', false);
-        $('#chkCredenciales')[0].checked = false;
+            var chk1 = $('#chkEspecial');
+            $(chk1).prop('disabled', true);
+            if (rowadd.AlumnoCuota.EsEspecial) {
+                $('#chkEspecial')[0].checked = true;
+            }
+
+            var chkCre = $('#chkCredenciales');
+            $(chkCre).prop('disabled', true);
+            $('#chkCredenciales')[0].checked = true;
 
 
-        var opc = $('#slcPeriodo').find('option[value="1"]').val();
-        if (opc == '1') {
-            $("#slcPeriodo option[value='1']").remove();
+            var opc = $('#slcPeriodo').find('option[value="1"]').val();
+            if (opc == '1') {
+                $("#slcPeriodo option[value='1']").remove();
+            }
+            var optionP = $(document.createElement('option'));
+            optionP.text(rowadd.AlumnoCuota.DescipcionPeriodo);
+            optionP.val('1');
+            $("#slcPeriodo").append(optionP);
+            $("#slcPeriodo").val('1');
+
+            $("#slcPeriodo").prop('disabled', true);
+
+            $("#btnAlumnoConfig").prop('disabled', true);
+        } else {
+            $("#slcSistemaPago").prop('disabled', false);
+            $("#slcOferta").prop('disabled', false);
+            $("#slcOfertaEducativa").prop('disabled', false);
+            $("#txtCuotaInscripcion").prop('disabled', false);
+            $("#txtCuotaColegiatura").prop('disabled', false);
+            $("#btnAlumnoConfig").prop('disabled', false);
+            $('#txtNPagos').val('');
+            $("#txtNPagos").prop('disabled', false);
+
+            var chk = $('#chkCongelada');
+            $(chk).prop('disabled', false);
+            $('#chkCongelada')[0].checked = false;
+
+            var chk2 = $('#chkInCongelada');
+            $(chk2).prop('disabled', false);
+            $('#chkInCongelada')[0].checked = false;
+
+            var chk1 = $('#chkEspecial');
+            $(chk1).prop('disabled', false);
+            $('#chkEspecial')[0].checked = false;
+
+            var chkCre = $('#chkCredenciales');
+            $(chkCre).prop('disabled', false);
+            $('#chkCredenciales')[0].checked = false;
+
+
+            var opc = $('#slcPeriodo').find('option[value="1"]').val();
+            if (opc == '1') {
+                $("#slcPeriodo option[value='1']").remove();
+            }
+            $("#slcPeriodo").val(rowadd.AlumnoCuota.PeriodoIdGrupo + ' ' + rowadd.AlumnoCuota.AnioGrupo);
+            $("#slcPeriodo").prop('disabled', false);
         }
-        $("#slcPeriodo").val(rowadd.AlumnoCuota.PeriodoIdGrupo + ' ' + rowadd.AlumnoCuota.AnioGrupo);
-        $("#slcPeriodo").prop('disabled', false);
+        sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
+        $("#slcOferta").empty();
+        var optionP = $(document.createElement('option'));
+        optionP.text('--Seleccionar--');
+        optionP.val('-1');
+        $("#slcOferta").append(optionP);
+
+        $(OFertas).each(function (i, d) {
+            $(d.Ofertas).each(function (i1, d1) {
+
+                if (sucursalid == 3) {
+                    if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
+                        var option = $(document.createElement('option'));
+                        option.text(d.Descripcion);
+                        option.val(d.OfertaEducativaTipoId);
+                        $("#slcOferta").append(option);
+                    }
+
+                } else if (this.sucursalid == sucursalid) {
+
+                    if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
+                        var option = $(document.createElement('option'));
+                        option.text(d.Descripcion);
+                        option.val(d.OfertaEducativaTipoId);
+                        $("#slcOferta").append(option);
+                    }
+
+                }
+            });
+        });
+
+        $(OFertas).each(function (i, d) {
+            $(d.Ofertas).each(function (i1, d1) {
+                if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
+                    $("#slcOferta").val(d.OfertaEducativaTipoId);
+                    CargarOfertasL(rowadd.OfertaEducativaId);
+                }
+            });
+        });
+
+
+        GrupoI = rowadd.AlumnoCuota.GrupoId;
+        OfertaI = rowadd.OfertaEducativaId;
+
+        $('#PopAlumnoConfiguracion').modal('show');
     }
-    sucursalid = rowadd.AlumnoCuota.SucuralGrupo;
-    $("#slcOferta").empty();
-    var optionP = $(document.createElement('option'));
-    optionP.text('--Seleccionar--');
-    optionP.val('-1');
-    $("#slcOferta").append(optionP);
 
-    $(OFertas).each(function (i, d) {
-        $(d.Ofertas).each(function (i1, d1) {
-
-            if (sucursalid == 3) {
-                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
-                    var option = $(document.createElement('option'));
-                    option.text(d.Descripcion);
-                    option.val(d.OfertaEducativaTipoId);
-                    $("#slcOferta").append(option);
-                }
-
-            } else if (this.sucursalid == sucursalid) {
-
-                if ($("#slcOferta option[value='" + d.OfertaEducativaTipoId + "']").length == 0 && d.OfertaEducativaTipoId != 4) {
-                    var option = $(document.createElement('option'));
-                    option.text(d.Descripcion);
-                    option.val(d.OfertaEducativaTipoId);
-                    $("#slcOferta").append(option);
-                }
-                
-            }
-        });
-    });
-
-    $(OFertas).each(function (i, d) {
-        $(d.Ofertas).each(function (i1, d1) {
-            if (this.ofertaEducativaId == rowadd.OfertaEducativaId) {
-                $("#slcOferta").val(d.OfertaEducativaTipoId);
-                CargarOfertasL(rowadd.OfertaEducativaId);
-            }
-        });
-    });
-
-
-    GrupoI = rowadd.AlumnoCuota.GrupoId;
-    OfertaI = rowadd.OfertaEducativaId;
-    
-    $('#PopAlumnoConfiguracion').modal('show');
-
-     
-  
 });
 
 $('#btnAlumnos1').on('click', function () {
