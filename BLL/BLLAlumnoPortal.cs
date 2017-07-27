@@ -12467,8 +12467,12 @@ namespace BLL
                 try
                 {
                     Alumno alumno = db.Alumno.Where(a => a.AlumnoId == Alumno.AlumnoId).FirstOrDefault();
-                    if (Alumno.TipoMovimientoId != 2) { alumno.EstatusId = 3; }
-                    else { alumno.EstatusId = 2; }
+
+                    int noOfertas = db.AlumnoInscrito.Count(a=> a .AlumnoId == Alumno.AlumnoId && a.EstatusId == 1 );
+
+                    if (noOfertas == 1 ) { alumno.EstatusId = 2; }
+
+                    
 
                     AlumnoInscrito alumnoInscrito = db.AlumnoInscrito.Where(a => a.AlumnoId == Alumno.AlumnoId
                                                                             && a.OfertaEducativaId == Alumno.OfertaEducativaId
@@ -12478,28 +12482,32 @@ namespace BLL
 
 
                     DateTime hoy = DateTime.Now;
-                    Periodo periodoActual = db.Periodo.Where(a => a.FechaInicial <= hoy && a.FechaFinal >= hoy).FirstOrDefault();
+                   
+                    Periodo anioPeriodo = db.Periodo.Where(a => a.FechaInicial <= hoy && a.FechaFinal >= hoy).FirstOrDefault();
                     int subPeriodo = db.Subperiodo.Where(a => a.MesId == hoy.Month).FirstOrDefault().SubperiodoId;
+
+
+                    int[] pagoConcepto = new int[] { 15, 800, 802, 304, 320 };
 
                     List<Pago> pagos = db.Pago.Where(a => a.AlumnoId == Alumno.AlumnoId
                                                      && a.OfertaEducativaId == Alumno.OfertaEducativaId
-                                                     && a.Anio == periodoActual.Anio
-                                                     && a.PeriodoId == periodoActual.PeriodoId
-                                                     && a.SubperiodoId > subPeriodo).ToList();
+                                                     && pagoConcepto.Contains(a.Cuota1.PagoConceptoId)
+                                                     && a.EstatusId != 2
+                                                     && (a.Anio > anioPeriodo.Anio || (a.Anio == anioPeriodo.Anio && a.PeriodoId > anioPeriodo.PeriodoId) || (a.Anio == anioPeriodo.Anio && a.PeriodoId == anioPeriodo.PeriodoId && a.SubperiodoId > subPeriodo ) )
+                                                    ).ToList();
                     
-
-                    pagos.ForEach(n => 
+                    pagos.ForEach(n =>
                     {
-                        if (n.Restante<n.Promesa)
+                        if (n.Restante < n.Promesa)
                         {
-                            
+
 
                             List<PagoParcial> pagoParcial = db.PagoParcial.Where(a => a.PagoId == n.PagoId && a.EstatusId == 4).ToList();
 
 
                             pagoParcial.ForEach(p =>
                             {
-                                ReferenciaProcesada referenciaProcesada = db.ReferenciaProcesada.Where(a => a.ReferenciaProcesadaId == p.ReferenciaProcesadaId 
+                                ReferenciaProcesada referenciaProcesada = db.ReferenciaProcesada.Where(a => a.ReferenciaProcesadaId == p.ReferenciaProcesadaId
                                                                                    && a.EstatusId == 1).FirstOrDefault();
 
 
@@ -12507,7 +12515,7 @@ namespace BLL
                                 referenciaProcesada.Restante = referenciaProcesada.Restante + p.Pago;
                                 referenciaProcesada.SeGasto = false;
                             });
-                            
+
                             n.Restante = n.Promesa;
                         }
                         n.EstatusId = 2;
@@ -12535,7 +12543,7 @@ namespace BLL
                     });
                     db.SaveChanges();
 
-                   int ALumnoMovimientoId =  db.AlumnoMovimiento.Local.FirstOrDefault().AlumnoMovimientoId;
+                    int ALumnoMovimientoId =  db.AlumnoMovimiento.Local.FirstOrDefault().AlumnoMovimientoId;
                     
                     return ALumnoMovimientoId;
                 }

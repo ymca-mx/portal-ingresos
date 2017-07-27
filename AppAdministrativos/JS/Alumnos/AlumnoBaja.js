@@ -127,14 +127,14 @@
                         if (data.d != -1) {
                             $("#txtClave").val("");
                             $("#lbNombre").text("");
-                            $("#lbNombre").text("");
-                            $("#lbNombre").text("");
+                            $("#lbOfertaEducativa").text("");
+                            $("#lbPeriodo").text("");
                             $("#slcTipo").val("");
                             $("#slcMotivo").val("");
                             $("#txtFecha").val("");
                             $("#txtFolio").val("");
                             $("#deleteFile").click();
-                            $("#txtComentario").empty();
+                            $("#txtComentario").val("");
                             $("#btnBaja").attr('disabled', 'disabled');
                             Alumno = null;
                             funciones.GuardarDocumentos(data.d)
@@ -163,7 +163,11 @@
                     contentType: false,
                     processData : false,
                     success: function (data) {
-                        if (data.d == true) {
+
+                        var $xml = $(data)
+                        var $bool = $xml.find("boolean");
+
+                        if ($bool[0].textContent == "true") {
                             alertify.alert("La baja se realizó correctamente.");
                             $('#Load').modal('hide');
                         } else {
