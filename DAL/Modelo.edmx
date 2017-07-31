@@ -1367,14 +1367,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.IdiomasInscrito' no tiene de
           <Property Name="DiaInicial" Type="int" Nullable="false" />
           <Property Name="DiaFinal" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.Licenciatura_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Licenciatura_20162">
-          <Property Name="FiClave" Type="float" />
-          <Property Name="Inscritas" Type="float" />
-          <Property Name="FiCarrera" Type="float" />
-          <Property Name="Cuatrimestre" Type="float" />
-        </EntityType>-->
         <EntityType Name="Matricula">
           <Key>
             <PropertyRef Name="MatriculaId" />
@@ -1949,14 +1941,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="PolizaTipoId" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.Posgrado_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Posgrado_20162">
-          <Property Name="FiClave" Type="float" />
-          <Property Name="Inscritas" Type="float" />
-          <Property Name="FiCarrera" Type="float" />
-          <Property Name="Cuatrimestre" Type="float" />
-        </EntityType>-->
         <EntityType Name="Pregunta">
           <Key>
             <PropertyRef Name="PreguntaId" />
@@ -2754,7 +2738,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </Key>
           <Property Name="DocenteActualizacionId" Type="int" Nullable="false" />
           <Property Name="DocenteId" Type="int" Nullable="false" />
-          <Property Name="ActualizacionId" Type="int" Nullable="false" />
+          <Property Name="ActualizacionId" Type="int" />
           <Property Name="EsCurso" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DocenteCurso">
@@ -4437,7 +4421,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DocenteActualizacion_DocenteCurso">
-          <End Role="DocenteCurso" Type="Self.DocenteCurso" Multiplicity="1" />
+          <End Role="DocenteCurso" Type="Self.DocenteCurso" Multiplicity="0..1" />
           <End Role="DocenteActualizacion" Type="Self.DocenteActualizacion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DocenteCurso">
@@ -4449,7 +4433,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DocenteActualizacion_DocenteEstudio">
-          <End Role="DocenteEstudio" Type="Self.DocenteEstudio" Multiplicity="1" />
+          <End Role="DocenteEstudio" Type="Self.DocenteEstudio" Multiplicity="0..1" />
           <End Role="DocenteActualizacion" Type="Self.DocenteActualizacion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DocenteEstudio">
@@ -13276,7 +13260,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </Key>
           <Property Name="DocenteActualizacionId" Type="Int32" Nullable="false" />
           <Property Name="DocenteId" Type="Int32" Nullable="false" />
-          <Property Name="ActualizacionId" Type="Int32" Nullable="false" />
+          <Property Name="ActualizacionId" Type="Int32" />
           <Property Name="EsCurso" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Docente" Relationship="UniversidadModel.FK_DocenteActualizacion_Docente" FromRole="DocenteActualizacion" ToRole="Docente" />
           <NavigationProperty Name="DocenteCurso" Relationship="UniversidadModel.FK_DocenteActualizacion_DocenteCurso" FromRole="DocenteActualizacion" ToRole="DocenteCurso" />
@@ -17622,7 +17606,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DocenteActualizacion_DocenteCurso">
-          <End Type="UniversidadModel.DocenteCurso" Role="DocenteCurso" Multiplicity="1" />
+          <End Type="UniversidadModel.DocenteCurso" Role="DocenteCurso" Multiplicity="0..1" />
           <End Type="UniversidadModel.DocenteActualizacion" Role="DocenteActualizacion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DocenteCurso">
@@ -17634,7 +17618,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DocenteActualizacion_DocenteEstudio">
-          <End Type="UniversidadModel.DocenteEstudio" Role="DocenteEstudio" Multiplicity="1" />
+          <End Type="UniversidadModel.DocenteEstudio" Role="DocenteEstudio" Multiplicity="0..1" />
           <End Type="UniversidadModel.DocenteActualizacion" Role="DocenteActualizacion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DocenteEstudio">

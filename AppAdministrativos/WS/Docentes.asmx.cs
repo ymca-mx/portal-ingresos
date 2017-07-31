@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 namespace AppAdministrativos.WS
@@ -51,6 +53,48 @@ namespace AppAdministrativos.WS
         {
             return
             BLL.BLLDocente.ListaDocentesActualizar();
+        }
+
+        [WebMethod]
+        public int GuardarFormacion(int DocenteId, string Institucion, int OFertaTipo, string Carrera, bool Cedula, bool Titulo, int UsuarioId)
+        {
+            return BLL.BLLDocente.GuardarFormacionAcademica(DocenteId, Institucion, OFertaTipo, Carrera, Cedula, Titulo, UsuarioId);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public bool GuardarFormacionDocumento()
+        {
+            HttpContext Contex = HttpContext.Current;
+            HttpFileCollection httpFileCollection = Context.Request.Files;
+            System.Collections.Specialized.NameValueCollection Documento = Context.Request.Form;
+            try
+            {
+                int EstudioId = int.Parse(Documento["EstudioId"]);
+                int TipoDocumentoId = int.Parse(Documento["TipoDocumento"]);
+                HttpPostedFile httpDocumento = httpFileCollection["DocumentoComprobante"];
+                Stream strDocumento = httpDocumento.InputStream;
+                byte[] DocumentoByte = Herramientas.ConvertidorT.ConvertirStream(strDocumento, httpDocumento.ContentLength);
+                 
+                
+                string RutaServe =
+                            Server.MapPath("/EgresosUniYMCA/Documentos/");
+                if (BLL.BLLDocente.GuardarRelacionDocumento(EstudioId, TipoDocumentoId, RutaServe))
+                {
+                    if (File.Exists(RutaServe + EstudioId + ".pdf"))
+                    {
+                        File.Delete(RutaServe + EstudioId + ".pdf");
+                        File.WriteAllBytes(RutaServe + EstudioId + ".pdf", DocumentoByte);
+                    }
+                    else { File.WriteAllBytes(RutaServe + EstudioId + ".pdf", DocumentoByte); }
+                    return true;
+                }
+                else { return false; }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

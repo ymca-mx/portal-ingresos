@@ -28,7 +28,7 @@ namespace BLL
                                                                         a.DocenteActualizacion.Select(b =>
                                                                             new DTODocenteActualizacion
                                                                             {
-                                                                                ActualizacionId = b.ActualizacionId,
+                                                                                ActualizacionId = b.ActualizacionId??0,
                                                                                 DocenteActualizacionId = b.DocenteActualizacionId,
                                                                                 DocenteId = b.DocenteId,
                                                                                 EsCurso = b.EsCurso,
@@ -75,6 +75,70 @@ namespace BLL
                                                                 }).ToList();
                 }
                 catch { return null; }
+            }
+        }
+
+        public static bool GuardarRelacionDocumento(int estudioId, int tipoDocumentoId, string rutaServe)
+        {
+            using(UniversidadEntities db=new UniversidadEntities())
+            {
+                try
+                {
+                    db.DocenteEstudioDocumento.Add(
+                        new DocenteEstudioDocumento
+                        {
+                            EstudioId = estudioId,
+                            DocuentoTipoId = tipoDocumentoId,
+                            DocumentoUrl = rutaServe
+                        });
+                    db.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static int GuardarFormacionAcademica(int docenteId, string institucion, int oFertaTipo, string carrera, bool cedula, bool titulo, int UsuarioId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    db.DocenteEstudio.Add(
+                        new DocenteEstudio
+                        {
+                            Carrera=carrera,
+                            Cedula=cedula,
+                            DocenteId=docenteId,
+                            EstatusId=1,
+                            Fecha=DateTime.Now,
+                            Hora=DateTime.Now.TimeOfDay,
+                             Institucion=institucion,
+                             OfertaEducativaTipoId=oFertaTipo,
+                             Titulo=titulo,
+                             UsuarioId=UsuarioId
+                        });
+                    db.SaveChanges();
+
+                    db.DocenteActualizacion.Add(
+                        new DocenteActualizacion
+                        {
+                            DocenteId = docenteId,
+                            EsCurso = false,
+                            ActualizacionId = db.DocenteEstudio.Local.FirstOrDefault().EstudioId
+                        });
+
+                    db.SaveChanges();
+
+                    return db.DocenteEstudio.Local.FirstOrDefault().EstudioId;
+                }
+                catch
+                {
+                    return -1;   
+                }
             }
         }
     }
