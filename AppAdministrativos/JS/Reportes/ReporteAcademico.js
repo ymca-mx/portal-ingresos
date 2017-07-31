@@ -333,7 +333,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
-                    "colReorder": true,
+                    "colReorder": false,
                     "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
@@ -403,7 +403,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
-                    "colReorder": true,
+                    "colReorder": false,
                     "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
@@ -471,7 +471,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
-                    "colReorder": true,
+                    "colReorder": false,
                     "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
@@ -541,7 +541,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
-                    "colReorder": true,
+                    "colReorder": false,
                     "oSearch": { "bSmart": false },
                     "language": {
                         "lengthMenu": "_MENU_ Registro",

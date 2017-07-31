@@ -43,7 +43,12 @@
         });// $.ajax
 
     }//CargarCatrimestre
-
+    
+    $('#divContenido').submit(function () {
+        //do your stuff
+        return false;
+    });
+    
     function CargarReporteReferencias(anio, periodo) {
         $('#Load').modal('show');
         $.ajax({
@@ -104,7 +109,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
-                    "colReorder": true,
+                    "colReorder": false,
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
                         "paginate": {
@@ -131,10 +136,10 @@
 
     }//function CargarReporteBecas()
 
-    $('#dtReferencias').on('mausedown', function () {
+    $('#btnReferencias').on('mausedown', function () {
         $('#Load').modal('show');
     });
-    $('#dtReferencias').on('click', function () {
+    $('#btnReferencias').on('click', function () {
         Exportar('dtReferencias');
     });
     function Exportar(NombreTabla) {

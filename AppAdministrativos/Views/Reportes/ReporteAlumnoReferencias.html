@@ -32,7 +32,8 @@
                             <div class="col-md-12">
 
                                 <div class="portlet-body" id="divReferencias">
-                                    <button id="btnReferencias" class="btn btn-primary">Exportar a Excel</button>
+                                    <button id="btnReferencias"><img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                    <div> &nbsp;</div>
                                     <table id="dtReferencias" class="table table-striped table-bordered table-advance table-hover ">
                                         <thead>
                                             <tr>
@@ -133,5 +134,20 @@
 
     </div>
 </div>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+<script src="style/complementos/js-xlsx-master/xlsx.core.js"></script>
+<script src="style/complementos/blob.js-master/blob.js"></script>
+<script src="style/complementos/filesaver.js-master/filesaver.js"></script>
+<script src="style/complementos/tableexport.js"></script>
+
+
+<!--<script src="Style/Complementos/jquery.table2excel.js"></script>-->
+<!--<script src="Style/Complementos/buttons.html5.min.js"></script>-->
+
+
+<script src="Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script src="Style/assets/admin/pages/scripts/table-advanced.js"></script>
+
 
 <script src="JS/Reportes/ReporteAlumnoReferencias.js"></script>
