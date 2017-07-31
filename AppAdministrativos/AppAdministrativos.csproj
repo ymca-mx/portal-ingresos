@@ -139,6 +139,7 @@
     <Content Include="appInscripcion.html" />
     <Content Include="Documentos\Archivo.html" />
     <Content Include="Imagenes\actualizar.png" />
+    <Content Include="Imagenes\export-to-excel.png" />
     <Content Include="index.html" />
     <Content Include="JS\account\recovery.js" />
     <Content Include="JS\account\validacionRecovery.js" />
@@ -156,6 +157,7 @@
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
+    <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
     <Content Include="login.html" />
     <Content Include="Documentos\Manuales\Manual Generacion Semestres.pdf" />
     <Content Include="Documentos\Manuales\ManualDescuentos.pdf" />
@@ -4765,6 +4767,7 @@
     <Content Include="Views\packages.config" />
     <Content Include="Views\Adeudos\Biblioteca.html" />
     <Content Include="Views\Adeudos\Chocolates.html" />
+    <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
     <Content Include="WS\Alumno.asmx" />
     <Content Include="WS\Beca.asmx" />
     <Content Include="WS\Calendario.asmx" />

@@ -36,7 +36,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
-                    "colReorder": true,
+                    "colReorder": false,
                     "language": {
                         "lengthMenu": "_MENU_ Registro",
                         "paginate": {

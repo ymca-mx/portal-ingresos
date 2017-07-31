@@ -39,6 +39,42 @@ namespace BLL
             }
         }//ObtenerReporteAlumnoOferta()
 
+        public static DTOCuatrimestre CargarCuatrimestreHistorico()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    List<DTOPeriodo2> periodo = db.AlumnoInscrito.GroupBy(b => new { b.Anio, b.PeriodoId ,b.Periodo})
+                                                                 .Select(a => new DTOPeriodo2
+                                                                        {
+                                                                            anio = a.Key.Anio,
+                                                                            periodoId = a.Key.PeriodoId,
+                                                                            descripcion = a.Key.Periodo.Descripcion
+                                                                        })        
+                                                                  .OrderBy(c => new { c.anio, c.periodoId }).ToList();         
+
+                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4
+                                                                                           && w.Descripcion != "Desconocida"
+                                                                                           && w.SucursalId != 4
+                                                                                           && w.OfertaEducativaId != 48).OrderBy(g => g.OfertaEducativaTipoId).Select(o =>
+                        new DTOOfertaEducativa2
+                        {
+                            ofertaEducativaId = o.OfertaEducativaId,
+                            descripcion = o.Descripcion
+                        }
+                        ).ToList();
+
+                    return (new DTOCuatrimestre { periodos = periodo, ofertas = ofertaEducativa });
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+
+            }
+        }
+
         public static DTOCuatrimestre CargarCuatrimestre()
         {
             using (UniversidadEntities db = new UniversidadEntities())

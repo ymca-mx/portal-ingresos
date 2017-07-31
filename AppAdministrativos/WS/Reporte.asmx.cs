@@ -32,6 +32,14 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
+        public DTOCuatrimestre CargarCuatrimestreHistorico()
+        {
+            return BLLReportePortal.CargarCuatrimestreHistorico();
+        }
+
+        
+
+        [WebMethod]
         public List<DTOReporteBecasCuatrimestre> CargaReporteBecaCuatrimestre(int anio, int periodo)
         {
             return BLLReportePortal.CargaReporteBecaCuatrimestre(anio, periodo);
