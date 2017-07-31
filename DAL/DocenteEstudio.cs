@@ -14,6 +14,13 @@ namespace DAL
     
     public partial class DocenteEstudio
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DocenteEstudio()
+        {
+            this.DocenteActualizacion = new HashSet<DocenteActualizacion>();
+            this.DocenteEstudioDocumento = new HashSet<DocenteEstudioDocumento>();
+        }
+    
         public int EstudioId { get; set; }
         public Nullable<int> DocenteId { get; set; }
         public string Institucion { get; set; }
@@ -25,5 +32,12 @@ namespace DAL
         public Nullable<System.TimeSpan> Hora { get; set; }
         public Nullable<int> UsuarioId { get; set; }
         public Nullable<int> EstatusId { get; set; }
+    
+        public virtual OfertaEducativaTipo OfertaEducativaTipo { get; set; }
+        public virtual Docente Docente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocenteActualizacion> DocenteActualizacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocenteEstudioDocumento> DocenteEstudioDocumento { get; set; }
     }
 }

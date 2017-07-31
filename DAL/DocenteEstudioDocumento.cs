@@ -17,5 +17,8 @@ namespace DAL
         public int EstudioId { get; set; }
         public int DocuentoTipoId { get; set; }
         public string DocumentoUrl { get; set; }
+    
+        public virtual DocenteEstudio DocenteEstudio { get; set; }
+        public virtual DocumentoTipo DocumentoTipo { get; set; }
     }
 }

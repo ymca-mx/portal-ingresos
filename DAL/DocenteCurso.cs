@@ -12,27 +12,24 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Docente
+    public partial class DocenteCurso
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Docente()
+        public DocenteCurso()
         {
             this.DocenteActualizacion = new HashSet<DocenteActualizacion>();
-            this.DocenteEstudio = new HashSet<DocenteEstudio>();
         }
     
-        public int DocenteId { get; set; }
-        public string Nombre { get; set; }
-        public string Paterno { get; set; }
-        public string Materno { get; set; }
-        public Nullable<System.DateTime> FechaAlta { get; set; }
-        public Nullable<System.TimeSpan> HoraAlta { get; set; }
-        public Nullable<int> UsuarioId { get; set; }
-        public Nullable<int> EstatusId { get; set; }
+        public int DocenteCursoId { get; set; }
+        public string Institucion { get; set; }
+        public int Duracion { get; set; }
+        public string Descripcion { get; set; }
+        public System.DateTime FechaInicial { get; set; }
+        public System.DateTime FechaFinal { get; set; }
+        public bool EsCursoYMCA { get; set; }
+        public bool VoBo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteActualizacion> DocenteActualizacion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocenteEstudio> DocenteEstudio { get; set; }
     }
 }

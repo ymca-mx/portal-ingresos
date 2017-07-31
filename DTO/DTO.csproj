@@ -55,6 +55,9 @@
     <Compile Include="Calendarios\DTOCalendarioEscolar.cs" />
     <Compile Include="Calendarios\DTOOFertaCalendario.cs" />
     <Compile Include="Configuracion\DTOConfiguracion.cs" />
+    <Compile Include="Docente\DTODocenteActualizacion.cs" />
+    <Compile Include="Docente\DTODocenteCurso.cs" />
+    <Compile Include="Docente\DTODocenteEstudio.cs" />
     <Compile Include="Menu\DTOMenu.cs" />
     <Compile Include="Menu\DTOSubMenu.cs" />
     <Compile Include="Menu\DTOTipoUsuarioSubMenu.cs" />
@@ -107,8 +110,8 @@
     <Compile Include="Portal\DTODatosFicales.cs" />
     <Compile Include="Portal\DTODescuentos.cs" />
     <Compile Include="Portal\DTODia.cs" />
-    <Compile Include="Portal\DTODocente.cs" />
-    <Compile Include="Portal\DTODocenteDetalle.cs" />
+    <Compile Include="Docente\DTODocente.cs" />
+    <Compile Include="Docente\DTODocenteDetalle.cs" />
     <Compile Include="Portal\DTOEmpresa.cs" />
     <Compile Include="Portal\DTOEmpresaDetalle.cs" />
     <Compile Include="Portal\DTOEntidadFederativa.cs" />
