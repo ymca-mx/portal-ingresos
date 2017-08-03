@@ -12,22 +12,16 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class DocenteCurso
+    public partial class DocenteEstudioPeriodo
     {
-        public int DocenteCursoId { get; set; }
+        public int DocenteEstudioPeriodoId { get; set; }
         public int DocenteId { get; set; }
-        public string Institucion { get; set; }
-        public int Duracion { get; set; }
-        public string Descripcion { get; set; }
-        public System.DateTime FechaInicial { get; set; }
-        public System.DateTime FechaFinal { get; set; }
-        public bool EsCursoYMCA { get; set; }
-        public bool VoBo { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
-        public int UsuarioId { get; set; }
+        public int EstudioId { get; set; }
     
         public virtual Periodo Periodo { get; set; }
         public virtual Docente Docente { get; set; }
+        public virtual DocenteEstudio DocenteEstudio { get; set; }
     }
 }

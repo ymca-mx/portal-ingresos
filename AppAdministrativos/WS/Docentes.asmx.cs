@@ -47,6 +47,12 @@ namespace AppAdministrativos.WS
         //{
         //    return BLL.BLLDocente.ListarDocentesNormal();
         //}
+        [WebMethod]
+        public List<DTO.DTOPeriodo> TraerPeriodos()
+        {
+            return
+            BLL.BLLDocente.TraerPeriodoActSig();
+        }
 
         [WebMethod]
         public List<DTO.DTODocenteActualizar> TraerDocentes()
@@ -56,9 +62,15 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public int GuardarFormacion(int DocenteId, string Institucion, int OFertaTipo, string Carrera, bool Cedula, bool Titulo, int UsuarioId)
+        public int GuardarFormacion(int DocenteId, string Institucion, int OFertaTipo, string Carrera, bool Cedula, bool Titulo, int UsuarioId, int Anio, int PeriodoId)
         {
-            return BLL.BLLDocente.GuardarFormacionAcademica(DocenteId, Institucion, OFertaTipo, Carrera, Cedula, Titulo, UsuarioId);
+            return BLL.BLLDocente.GuardarFormacionAcademica(DocenteId, Institucion, OFertaTipo, Carrera, Cedula, Titulo, UsuarioId, Anio, PeriodoId);
+        }
+
+        [WebMethod]
+        public int GuardarCurso(string NombreInstitucion, string TituloCurso,int Anio, int PeriodoId, int Duracion, string FechaInicial, string FechaFinal,bool EsCursoYmca,int DocenteId, int UsuarioId)
+        {
+            return BLL.BLLDocente.GuardarCurso(NombreInstitucion, TituloCurso, Anio, PeriodoId, Duracion, FechaFinal, FechaInicial, EsCursoYmca, DocenteId, UsuarioId);
         }
 
         [WebMethod]
@@ -79,7 +91,7 @@ namespace AppAdministrativos.WS
                 
                 string RutaServe =
                             Server.MapPath("/EgresosUniYMCA/Documentos/");
-                if (BLL.BLLDocente.GuardarRelacionDocumento(EstudioId, TipoDocumentoId, RutaServe))
+                if (BLL.BLLDocente.GuardarRelacionDocumento(EstudioId, TipoDocumentoId, RutaServe + EstudioId + ".pdf"))
                 {
                     if (File.Exists(RutaServe + EstudioId + ".pdf"))
                     {

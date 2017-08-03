@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalFormacion" data-keyboard="false">
+<div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalFormacion" data-keyboard="false" data-width="650">
     <div class="modal-absolute">
         <div class="modal-content">
             <div class="modal-header">
@@ -67,7 +67,13 @@
                         <div class="col-md-6">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Radio List</label>
+                                    <label class="control-label">Periodos:</label>
+                                    <select class="form-control" id="slcPeriodo" required disabled></select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Tipo de Documento</label>
                                     <div class="input-group">
                                         <div class="icheck-list">
                                             <label>
@@ -77,7 +83,7 @@
                                             <label>
                                                 <input type="radio" id="chkTitulo" name="chkTipo" class="btn blue" />
                                                 Titulo
-                                            </label>                                           
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +120,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalCurso" data-keyboard="false">
+<div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalCurso" data-keyboard="false" data-width="650">
     <div class="modal-absolute">
         <div class="modal-content">
             <div class="modal-header">
@@ -122,8 +128,42 @@
             </div>
             <form id="frmCurso" onSubmit="return false;">
                 <div class="modal-body">
-                    <div class="row">
-
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6 form-body">
+                                <div class="form-group form-md-line-input form-md-floating-label has-error">
+                                    <input type="text" class="form-control input-sm" id="txtCursoNombreI" required pattern=".{3,}">
+                                    <label for="txtCursoNombreI">Nombre de la Institución</label>
+                                </div>
+                                <div class="form-group form-md-line-input form-md-floating-label has-error">
+                                    <input type="text" class="form-control input-sm" id="txtTituloCurso" required pattern=".{3,}">
+                                    <label for="txtTituloCurso">Titulo del Curso</label>
+                                </div>
+                                <div class="form-group form-md-line-input form-md-floating-label has-error">
+                                    <select class="form-control input-sm" id="slcPeriodoCurso" style="padding:0px" required></select>
+                                    <label for="slcPeriodoCurso">Periodo </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-body">
+                                <div class="form-group form-md-line-input form-md-floating-label has-error">
+                                    <select class="form-control input-sm" id="slcDuracion" style="padding:0px" required>
+                                        <option value=""></option>
+                                        <option value="20">20 Horas</option>
+                                        <option value="40">40 Horas</option>
+                                    </select>
+                                    <label for="slcDuracion">Seleccionar Duración </label>
+                                </div>
+                                <div class="form-group form-md-line-input form-md-floating-label has-error">
+                                    <div class="input-group">
+                                        <input type="text" style="font-size:14px;" name="daterange" id="txtFechas" class="form-control"  required pattern=".{23,}"/>
+                                        <label for="txtFechas" style="font-size:14px;">Periodo del Curso</label>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

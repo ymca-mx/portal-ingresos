@@ -216,11 +216,11 @@ namespace DAL
         public virtual DbSet<UsuarioTipo> UsuarioTipo { get; set; }
         public virtual DbSet<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
         public virtual DbSet<Docente> Docente { get; set; }
-        public virtual DbSet<DocenteActualizacion> DocenteActualizacion { get; set; }
         public virtual DbSet<DocenteCurso> DocenteCurso { get; set; }
         public virtual DbSet<DocenteDetalle> DocenteDetalle { get; set; }
         public virtual DbSet<DocenteEstudio> DocenteEstudio { get; set; }
         public virtual DbSet<DocenteEstudioDocumento> DocenteEstudioDocumento { get; set; }
+        public virtual DbSet<DocenteEstudioPeriodo> DocenteEstudioPeriodo { get; set; }
         public virtual DbSet<DocentePublicacion> DocentePublicacion { get; set; }
         public virtual DbSet<DocumentoTipo> DocumentoTipo { get; set; }
         public virtual DbSet<Grupo1> Grupo1 { get; set; }
@@ -239,6 +239,7 @@ namespace DAL
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
+        public virtual DbSet<AlumnoPermitido20162> AlumnoPermitido20162 { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }
@@ -247,6 +248,7 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
+        public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {
