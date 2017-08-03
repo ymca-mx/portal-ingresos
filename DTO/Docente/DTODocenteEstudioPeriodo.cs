@@ -8,5 +8,6 @@
         public int PeriodoId { get; set; }
         public int EstudioId { get; set; }
         public DTODocenteEstudio EstudioDocente { get; set; }
+        public DTOPeriodo Periodo { get; set; }
     }
 }

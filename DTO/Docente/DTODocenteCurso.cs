@@ -13,5 +13,6 @@
         public bool VoBo { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
+        public DTOPeriodo Periodo { get; set; }
     }
 }

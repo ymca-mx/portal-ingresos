@@ -311,7 +311,7 @@
                 radioClass: 'iradio_square-grey',
                 increaseArea: '20%' // optional
             });
-
+            $('#btnGuardarFormacion').prop("disabled", true);
             $('#ModalFormacion').modal('show');
 
         },
@@ -338,7 +338,7 @@
                     $('#txtFechas').val(this.FechaInicial + ' - ' + this.FechaFinal);
                 }
             });            
-
+            $('#btnGuardarCurso').prop("disabled", true);
             $('#ModalCurso').modal('show');
         },
         PopFormacionAcademica: function (DTODocente) {
@@ -361,6 +361,7 @@
             file.removeClass('fileinput-exists').addClass('fileinput-new');
             $('#FileComprobante span span').text('Seleccionar Archivo...');
 
+            $('#btnGuardarFormacion').prop("disabled", false);
             $('#ModalFormacion').modal('show');
         },
         PopCursoExterno: function (DTODocente) {
@@ -375,12 +376,14 @@
             $('#slcDuracion').removeClass('edited');
             $('#txtTituloCurso').removeClass('edited');
 
-            $('#ModalCurso').modal('show');
             $('#tiutuloCurso')[0].innerHTML = "Curso Externo";
             $('#slcPeriodoCurso').addClass('edited');
             $('#slcPeriodoCurso').attr('disabled', true);
             $('#slcPeriodoCurso').addClass('edited');
             $('#txtFechas').addClass('edited');
+
+            $('#btnGuardarCurso').prop("disabled", false);
+            $('#ModalCurso').modal('show');
         },
         PopCursoYMCA: function (DTODocente) {
             Funciones.DocenteSeleccionado = DTODocente.DocenteId;
@@ -389,14 +392,16 @@
             $('#frmCurso input').removeAttr('readonly');
             $('#frmCurso input').attr('disabled', false);
             $('#slcDuracion').attr('disabled', false);
-
-            $('#ModalCurso').modal('show');
+            
             $('#tiutuloCurso')[0].innerHTML = "Curso YMCA";
             $('#txtCursoNombreI').val("Unidad Ejercito");
             $('#txtCursoNombreI').addClass('edited');
             $('#slcPeriodoCurso').addClass('edited');
             $('#slcPeriodoCurso').attr('disabled', true);
             $('#txtFechas').addClass('edited');
+
+            $('#btnGuardarCurso').prop("disabled", false);
+            $('#ModalCurso').modal('show');
         },
         CerrarPopFormacion: function () {
             $('#ModalFormacion').modal('hide');

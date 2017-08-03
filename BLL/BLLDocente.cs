@@ -35,6 +35,10 @@ namespace BLL
                                                                                                 Anio = b.Anio,
                                                                                                 PeriodoId = b.PeriodoId,
                                                                                                 EstudioId = b.EstudioId,
+                                                                                                Periodo= new DTOPeriodo
+                                                                                                {
+                                                                                                    Descripcion=b.Periodo.Descripcion
+                                                                                                },
                                                                                                 EstudioDocente = new DTODocenteEstudio
                                                                                                 {
                                                                                                     Carrera = b.DocenteEstudio.Carrera,
@@ -52,6 +56,10 @@ namespace BLL
                                                                                                     OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,
                                                                                                     Titulo = b.DocenteEstudio.Titulo,
                                                                                                     UsuarioId = b.DocenteEstudio.UsuarioId,
+                                                                                                    Documento = new DTODocenteEstudioDocumento
+                                                                                                    {
+                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl
+                                                                                                    }
                                                                                                 }
                                                                                             })
                                                                                             .ToList(),
@@ -75,7 +83,11 @@ namespace BLL
                                                                                                 Institucion = b.Institucion,
                                                                                                 VoBo = b.VoBo,
                                                                                                 Anio = b.Anio,
-                                                                                                PeriodoId = b.PeriodoId
+                                                                                                PeriodoId = b.PeriodoId,
+                                                                                                Periodo= new DTOPeriodo
+                                                                                                {
+                                                                                                    Descripcion=b.Periodo.Descripcion
+                                                                                                }
                                                                                             }).ToList()
                                                                 }).ToList();
                 }
