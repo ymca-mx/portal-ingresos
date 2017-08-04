@@ -14,14 +14,26 @@ namespace DAL
     
     public partial class DocenteEstudioPeriodo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DocenteEstudioPeriodo()
+        {
+            this.CancelacionDocenteEstudio = new HashSet<CancelacionDocenteEstudio>();
+            this.VistoBuenoEstudio = new HashSet<VistoBuenoEstudio>();
+        }
+    
         public int DocenteEstudioPeriodoId { get; set; }
         public int DocenteId { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public int EstudioId { get; set; }
+        public bool EstatusId { get; set; }
     
         public virtual Periodo Periodo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CancelacionDocenteEstudio> CancelacionDocenteEstudio { get; set; }
         public virtual Docente Docente { get; set; }
         public virtual DocenteEstudio DocenteEstudio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
     }
 }

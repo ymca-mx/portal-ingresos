@@ -14,6 +14,13 @@ namespace DAL
     
     public partial class DocenteCurso
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DocenteCurso()
+        {
+            this.CancelacionCursoDocente = new HashSet<CancelacionCursoDocente>();
+            this.VistoBuenoCurso = new HashSet<VistoBuenoCurso>();
+        }
+    
         public int DocenteCursoId { get; set; }
         public int DocenteId { get; set; }
         public string Institucion { get; set; }
@@ -26,8 +33,13 @@ namespace DAL
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public int UsuarioId { get; set; }
+        public bool EstatusId { get; set; }
     
         public virtual Periodo Periodo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CancelacionCursoDocente> CancelacionCursoDocente { get; set; }
         public virtual Docente Docente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VistoBuenoCurso> VistoBuenoCurso { get; set; }
     }
 }

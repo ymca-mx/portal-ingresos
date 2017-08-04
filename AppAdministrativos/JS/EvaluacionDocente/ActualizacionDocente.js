@@ -103,7 +103,8 @@
                             if (d.ListaEstudios.length > 0) {
                                 var bot = '';
                                 $(d.ListaEstudios).each(function () {
-                                    var a = '<a name="OFertaTipoVer" class="bg-red">' + this.Anio + "-" + this.PeriodoId + "  " + this.EstudioDocente.Carrera + ' </a>'
+                                    var col = this.TieneVbo ? 'bg-success' : 'bg-red';
+                                    var a = '<a name="OFertaTipoVer" class="' + col + '">' + this.Anio + "-" + this.PeriodoId + "  " + this.EstudioDocente.Carrera + ' </a>'
                                     bot += a;
                                 });
                                 return bot;
@@ -119,15 +120,18 @@
                             var bot = '<button name="CursoExterno" class="btn bg-blue">Agregar Curso</button>';
                             if (d.CursosDocente.length > 0) {
                                 var tiene = false;
+                                var col = '';
+                                var anio, periodo, descripcion;
                                 $(d.CursosDocente).each(function () {
                                     if (this.EsCursoYMCA === false) {
                                         anio = this.Anio;
                                         periodo = this.PeriodoId;
                                         descripcion = this.Descripcion;
                                         tiene = true;
+                                        col = this.VoBo ? 'bg-success' : 'bg-red';
                                     }
                                 });
-                                bot = tiene ? '<a name="CursoExternoVer" class="bg-red">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
+                                bot = tiene ? '<a name="CursoExternoVer" class="' + col + '">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
                                     : bot;
                                 return bot;
                             } else {
@@ -141,6 +145,7 @@
                             bot = '<button name="CursoYMCA" class="btn bg-blue">Agregar Curso</button>';
                             if (d.CursosDocente.length > 0) {
                                 var tiene = false;
+                                var col = '';
                                 var anio, periodo, descripcion;
                                 $(d.CursosDocente).each(function () {
                                     if (this.EsCursoYMCA === true) {
@@ -148,9 +153,10 @@
                                         periodo = this.PeriodoId;
                                         descripcion = this.Descripcion;
                                         tiene = true;
+                                        col = this.VoBo ? 'bg-success' : 'bg-red';
                                     }
                                 });
-                                bot = tiene ? '<a name="CursoYMCAVer" class="bg-red">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
+                                bot = tiene ? '<a name="CursoYMCAVer" class="' + col + '">'+ anio + "-" + periodo + "  " + descripcion + ' </a>'
                                     : bot;
                                 return bot;
                             } else {
@@ -538,7 +544,7 @@
                     contentType: false,
                     processData: false,
                     success: function (data1) {
-                        $('#Load').modal('hide');
+                        
                         var $xml = $(data1);
                         var $bool = $xml.find("boolean");
 
@@ -547,6 +553,7 @@
                                 Funciones.TraerDocentes();
                             });
                         } else {
+                            $('#Load').modal('hide');
                             alertify.alert("Fallo la subida del Archivo, intente nuevamente.", function () { $('#ModalFormacion').modal('show'); });
                         }
                     }

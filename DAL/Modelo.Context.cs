@@ -215,6 +215,8 @@ namespace DAL
         public virtual DbSet<UsuarioPermiso> UsuarioPermiso { get; set; }
         public virtual DbSet<UsuarioTipo> UsuarioTipo { get; set; }
         public virtual DbSet<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
+        public virtual DbSet<CancelacionCursoDocente> CancelacionCursoDocente { get; set; }
+        public virtual DbSet<CancelacionDocenteEstudio> CancelacionDocenteEstudio { get; set; }
         public virtual DbSet<Docente> Docente { get; set; }
         public virtual DbSet<DocenteCurso> DocenteCurso { get; set; }
         public virtual DbSet<DocenteDetalle> DocenteDetalle { get; set; }
@@ -236,6 +238,8 @@ namespace DAL
         public virtual DbSet<Sede> Sede { get; set; }
         public virtual DbSet<SubMenu1> SubMenu1 { get; set; }
         public virtual DbSet<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
+        public virtual DbSet<VistoBuenoCurso> VistoBuenoCurso { get; set; }
+        public virtual DbSet<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }

@@ -29,15 +29,18 @@ namespace BLL
                                                                     Paterno = a.Paterno,
                                                                     ListaEstudios = a.DocenteEstudioPeriodo
                                                                                     .Where(le =>
-                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId))
+                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId)
+                                                                                            && le.EstatusId == true)
                                                                                             .Select(b => new DTODocenteEstudioPeriodo
                                                                                             {
+                                                                                                DocenteEstudioPeriodoId = b.DocenteEstudioPeriodoId,
                                                                                                 Anio = b.Anio,
                                                                                                 PeriodoId = b.PeriodoId,
                                                                                                 EstudioId = b.EstudioId,
-                                                                                                Periodo= new DTOPeriodo
+                                                                                                TieneVbo = b.VistoBuenoEstudio.Count > 0 ? true : false,
+                                                                                                Periodo = new DTOPeriodo
                                                                                                 {
-                                                                                                    Descripcion=b.Periodo.Descripcion
+                                                                                                    Descripcion = b.Periodo.Descripcion
                                                                                                 },
                                                                                                 EstudioDocente = new DTODocenteEstudio
                                                                                                 {
@@ -65,7 +68,7 @@ namespace BLL
                                                                                             .ToList(),
                                                                     CursosDocente = a.DocenteCurso
                                                                                         .Where(le =>
-                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId))
+                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId) && le.EstatusId == true)
                                                                                             .Select(b => new DTODocenteCurso
                                                                                             {
                                                                                                 Descripcion = b.Descripcion,
@@ -84,14 +87,199 @@ namespace BLL
                                                                                                 VoBo = b.VoBo,
                                                                                                 Anio = b.Anio,
                                                                                                 PeriodoId = b.PeriodoId,
-                                                                                                Periodo= new DTOPeriodo
+                                                                                                Periodo = new DTOPeriodo
                                                                                                 {
-                                                                                                    Descripcion=b.Periodo.Descripcion
+                                                                                                    Descripcion = b.Periodo.Descripcion
                                                                                                 }
                                                                                             }).ToList()
                                                                 }).ToList();
                 }
                 catch { return null; }
+            }
+        }
+
+        public static List<DTODocenteActualizar> ListaDocentesActualizarVbo()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    DTOPeriodo PeriodoActual = TraerPeriodoActSig().FirstOrDefault();
+                    return db.Docente
+                        .Where(a => (a.DocenteEstudioPeriodo.Where(b => b.EstatusId == true).ToList().Count > 0)
+                        || (a.DocenteCurso.Where(b => b.EstatusId == true).ToList().Count > 0))
+                                                            .Select(a =>
+                                                                new DTODocenteActualizar
+                                                                {
+                                                                    DocenteId = a.DocenteId,
+                                                                    Materno = a.Materno,
+                                                                    Nombre = a.Nombre,
+                                                                    Paterno = a.Paterno,
+                                                                    ListaEstudios = a.DocenteEstudioPeriodo
+                                                                                    .Where(le =>
+                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId)
+                                                                                            && le.EstatusId == true)
+                                                                                            .Select(b => new DTODocenteEstudioPeriodo
+                                                                                            {
+                                                                                                DocenteEstudioPeriodoId = b.DocenteEstudioPeriodoId,
+                                                                                                Anio = b.Anio,
+                                                                                                PeriodoId = b.PeriodoId,
+                                                                                                EstudioId = b.EstudioId,
+                                                                                                TieneVbo = b.VistoBuenoEstudio.Count > 0 ? true : false,
+                                                                                                Periodo = new DTOPeriodo
+                                                                                                {
+                                                                                                    Descripcion = b.Periodo.Descripcion
+                                                                                                },
+                                                                                                EstudioDocente = new DTODocenteEstudio
+                                                                                                {
+                                                                                                    Carrera = b.DocenteEstudio.Carrera,
+                                                                                                    Cedula = b.DocenteEstudio.Cedula,
+                                                                                                    DocenteId = b.DocenteId,
+                                                                                                    EstatusId = b.DocenteEstudio.EstatusId,
+                                                                                                    EstudioId = b.DocenteEstudio.EstudioId,
+                                                                                                    Fecha = (b.DocenteEstudio.Fecha.Value.Day < 10 ?
+                                                                                                    "0" + b.DocenteEstudio.Fecha.Value.Day : "" + b.DocenteEstudio.Fecha.Value.Day) + "/" +
+                                                                                                    (b.DocenteEstudio.Fecha.Value.Month < 10 ?
+                                                                                                    "0" + b.DocenteEstudio.Fecha.Value.Month : "" + b.DocenteEstudio.Fecha.Value.Month) + "/" + b.DocenteEstudio.Fecha.Value.Year,
+                                                                                                    Hora = (b.DocenteEstudio.Hora.Value.Hours < 10 ? "0" + b.DocenteEstudio.Hora.Value.Hours : "" + b.DocenteEstudio.Hora.Value.Hours) + ":" +
+                                                                                                (b.DocenteEstudio.Hora.Value.Minutes < 10 ? "0" + b.DocenteEstudio.Hora.Value.Minutes : "" + b.DocenteEstudio.Hora.Value.Minutes),
+                                                                                                    Institucion = b.DocenteEstudio.Institucion,
+                                                                                                    OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,
+                                                                                                    Titulo = b.DocenteEstudio.Titulo,
+                                                                                                    UsuarioId = b.DocenteEstudio.UsuarioId,
+                                                                                                    Documento = new DTODocenteEstudioDocumento
+                                                                                                    {
+                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl
+                                                                                                    }
+                                                                                                }
+                                                                                            })
+                                                                                            .ToList(),
+                                                                    CursosDocente = a.DocenteCurso
+                                                                                        .Where(le =>
+                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId) && le.EstatusId == true)
+                                                                                            .Select(b => new DTODocenteCurso
+                                                                                            {
+                                                                                                Descripcion = b.Descripcion,
+                                                                                                DocenteCursoId = b.DocenteCursoId,
+                                                                                                Duracion = b.Duracion,
+                                                                                                EsCursoYMCA = b.EsCursoYMCA,
+                                                                                                FechaFinal = (b.FechaFinal.Day < 10 ?
+                                                                                                    "0" + b.FechaFinal.Day : "" + b.FechaFinal.Day) + "/" +
+                                                                                                    (b.FechaFinal.Month < 10 ?
+                                                                                                    "0" + b.FechaFinal.Month : "" + b.FechaFinal.Month) + "/" + b.FechaFinal.Year,
+                                                                                                FechaInicial = (b.FechaInicial.Day < 10 ?
+                                                                                                    "0" + b.FechaInicial.Day : "" + b.FechaInicial.Day) + "/" +
+                                                                                                    (b.FechaInicial.Month < 10 ?
+                                                                                                    "0" + b.FechaInicial.Month : "" + b.FechaInicial.Month) + "/" + b.FechaInicial.Year,
+                                                                                                Institucion = b.Institucion,
+                                                                                                VoBo = b.VoBo,
+                                                                                                Anio = b.Anio,
+                                                                                                PeriodoId = b.PeriodoId,
+                                                                                                Periodo = new DTOPeriodo
+                                                                                                {
+                                                                                                    Descripcion = b.Periodo.Descripcion
+                                                                                                }
+                                                                                            }).ToList()
+                                                                }).ToList();
+                }
+                catch { return null; }
+            }
+        }
+
+        public static bool VboCurso(int cursoId, int usuarioId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    DocenteCurso Curso = db.DocenteCurso.Where(a => a.DocenteCursoId == cursoId).FirstOrDefault();
+                    Curso.VoBo = true;
+
+                    db.VistoBuenoCurso.Add(new VistoBuenoCurso
+                    {
+                        DocenteCursoId = cursoId,
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now.TimeOfDay,
+                        UsuarioId = usuarioId
+                    });
+                    db.SaveChanges();
+                    return true;
+                }
+                catch { return false; }
+            }
+        }
+
+        public static bool VboEstudio(int estudioId, int usuarioId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    db.VistoBuenoEstudio.Add(new VistoBuenoEstudio
+                    {
+                        DocenteEstudioPeriodoId = estudioId,
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now.TimeOfDay,
+                        UsuarioId = usuarioId
+                    });
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch { return false; }
+            }
+        }
+
+        public static bool CancelarCurso(int cursoId, string comentario, int usuarioId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    DocenteCurso Curso = db.DocenteCurso.Where(a => a.DocenteCursoId == cursoId).FirstOrDefault();
+                    Curso.EstatusId = false;
+
+                    db.CancelacionCursoDocente.Add(new CancelacionCursoDocente
+                    {
+                        Comentario = comentario,
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now.TimeOfDay,
+                        UsuarioId = usuarioId,
+                        DocenteCursoId = cursoId
+                    });
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch { return false; }
+            }
+        }
+
+        public static bool CancelarEstudio(int estudioPeriodoId, string comentario, int usuarioId)
+        {
+          using(UniversidadEntities db=new UniversidadEntities())
+            {
+                try
+                {
+                    DocenteEstudioPeriodo Estudio = db.DocenteEstudioPeriodo.Where(a => a.DocenteEstudioPeriodoId == estudioPeriodoId).FirstOrDefault();
+
+                    Estudio.EstatusId = false;
+                    db.CancelacionDocenteEstudio.Add(new CancelacionDocenteEstudio
+                    {
+                        DocenteEstudioPeriodoId = estudioPeriodoId,
+                        Comentario = comentario,
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now.TimeOfDay,
+                        UsuarioId = usuarioId
+                    });
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch { return false; }
             }
         }
 
@@ -115,7 +303,8 @@ namespace BLL
                         Institucion = NombreInstitucion,
                         PeriodoId = periodoId,
                         VoBo = false,
-                        UsuarioId = usuarioId
+                        UsuarioId = usuarioId,
+                        EstatusId = true,
                     });
                     db.SaveChanges();
 
@@ -184,6 +373,7 @@ namespace BLL
                         Anio = anio,
                         DocenteId = docenteId,
                         PeriodoId = periodoId,
+                        EstatusId = true,
                         DocenteEstudio = new DocenteEstudio
                         {
                             Carrera = carrera,
@@ -195,7 +385,7 @@ namespace BLL
                             Institucion = institucion,
                             OfertaEducativaTipoId = oFertaTipo,
                             Titulo = titulo,
-                            UsuarioId = UsuarioId
+                            UsuarioId = UsuarioId,
                         }
                     });
 

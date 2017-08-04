@@ -9,5 +9,6 @@
         public int EstudioId { get; set; }
         public DTODocenteEstudio EstudioDocente { get; set; }
         public DTOPeriodo Periodo { get; set; }
+        public bool TieneVbo { get; set; }
     }
 }

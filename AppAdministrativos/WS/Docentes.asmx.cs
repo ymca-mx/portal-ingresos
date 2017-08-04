@@ -62,6 +62,13 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
+        public List<DTO.DTODocenteActualizar> TraerDocentesConDatos()
+        {
+            return
+            BLL.BLLDocente.ListaDocentesActualizarVbo();
+        }
+
+        [WebMethod]
         public int GuardarFormacion(int DocenteId, string Institucion, int OFertaTipo, string Carrera, bool Cedula, bool Titulo, int UsuarioId, int Anio, int PeriodoId)
         {
             return BLL.BLLDocente.GuardarFormacionAcademica(DocenteId, Institucion, OFertaTipo, Carrera, Cedula, Titulo, UsuarioId, Anio, PeriodoId);
@@ -107,6 +114,32 @@ namespace AppAdministrativos.WS
             {
                 return false;
             }
+        }
+
+        [WebMethod]
+        public bool CancelarEstudio(int EstudioPeriodoId, string Comentario, int UsuarioId)
+        {
+            return BLL.BLLDocente.CancelarEstudio(EstudioPeriodoId, Comentario, UsuarioId);
+        }
+
+        [WebMethod]
+        public bool CancelarCurso(int CursoId, string Comentario, int UsuarioId)
+        {
+            return BLL.BLLDocente.CancelarCurso(CursoId, Comentario, UsuarioId);
+        }
+
+        [WebMethod]
+        public bool VboEstudio(int EstudioId, int UsuarioId)
+        {
+            return
+            BLL.BLLDocente.VboEstudio(EstudioId, UsuarioId);
+        }
+
+        [WebMethod]
+        public bool VboCurso(int CursoId, int UsuarioId)
+        {
+            return
+            BLL.BLLDocente.VboCurso(CursoId, UsuarioId);
         }
     }
 }

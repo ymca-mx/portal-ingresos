@@ -39,7 +39,7 @@
         TraerDocentes: function () {
             $.ajax({
                 type: "POST",
-                url: "WS/Docentes.asmx/TraerDocentes",
+                url: "WS/Docentes.asmx/TraerDocentesConDatos",
                 data: "",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
@@ -71,7 +71,8 @@
                             if (d.ListaEstudios.length > 0) {
                                 var bot = '';
                                 $(d.ListaEstudios).each(function () {
-                                    var a = '<a name="OFertaTipoVer" class="bg-red">' + this.Anio + "-" + this.PeriodoId + "  " + this.EstudioDocente.Carrera + ' </a>'
+                                    var col = this.TieneVbo ? 'bg-success' : 'bg-red';
+                                    var a = '<a name="OFertaTipoVer" class="' + col + '">' + this.Anio + "-" + this.PeriodoId + "  " + this.EstudioDocente.Carrera + ' </a>';
                                     bot += a;
                                 });
                                 return bot;
@@ -87,15 +88,18 @@
                             var bot = 'Aun no se captura información.'
                             if (d.CursosDocente.length > 0) {
                                 var tiene = false;
+                                var col = '';
+                                var anio, periodo, descripcion;
                                 $(d.CursosDocente).each(function () {
                                     if (this.EsCursoYMCA === false) {
                                         anio = this.Anio;
                                         periodo = this.PeriodoId;
                                         descripcion = this.Descripcion;
                                         tiene = true;
+                                        col = this.VoBo ? 'bg-success' : 'bg-red';
                                     }
                                 });
-                                bot = tiene ? '<a name="CursoExternoVer" class="bg-red">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
+                                bot = tiene ? '<a name="CursoExternoVer" class="' + col + '">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
                                     : bot;
                                 return bot;
                             } else {
@@ -109,6 +113,7 @@
                             bot = 'Aun no se captura información.'
                             if (d.CursosDocente.length > 0) {
                                 var tiene = false;
+                                var col = '';
                                 var anio, periodo, descripcion;
                                 $(d.CursosDocente).each(function () {
                                     if (this.EsCursoYMCA === true) {
@@ -116,9 +121,10 @@
                                         periodo = this.PeriodoId;
                                         descripcion = this.Descripcion;
                                         tiene = true;
+                                        col = this.VoBo ? 'bg-success' : 'bg-red';
                                     }
                                 });
-                                bot = tiene ? '<a name="CursoYMCAVer" class="bg-red">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
+                                bot = tiene ? '<a name="CursoYMCAVer" class="' + col + '">' + anio + "-" + periodo + "  " + descripcion + ' </a>'
                                     : bot;
                                 return bot;
                             } else {
@@ -179,6 +185,8 @@
         },
         MostrarFormacionAcademica: function (DTODocente) {
             Funciones.DocenteSeleccionado = DTODocente.DocenteId;
+            Funciones.DocenteEstudioId = DTODocente.ListaEstudios[0].DocenteEstudioPeriodoId;
+
 
             $('#frmFormacion')[0].reset();
 
@@ -196,12 +204,13 @@
                 radioClass: 'iradio_square-grey',
                 increaseArea: '20%' // optional
             });
-
+            $('#btnVistoBuenoFormacion').prop("disabled", DTODocente.ListaEstudios[0].TieneVbo);
             $('#ModalFormacion').modal('show');
 
         },
         MostrarCusos: function (DTODocente, esYmca) {
             Funciones.DocenteSeleccionado = DTODocente.DocenteId;
+            
             $('#frmCurso')[0].reset();
 
             $('#tiutuloCurso')[0].innerHTML = esYmca ? "Curso YMCA" : "Curso Externo";
@@ -219,9 +228,11 @@
                     $('#slcDuracion').val(this.Duracion);
                     $('#txtPeriodoCurso').val(this.Periodo.Descripcion);
                     $('#txtFechas').val(this.FechaInicial + ' - ' + this.FechaFinal);
+                    Funciones.DocenteCursoId = this.DocenteCursoId;
+                    $('#btnVistoBuenoCurso').prop("disabled", this.VoBo);
                 }
             });
-
+            
             $('#ModalCurso').modal('show');
         },
         CerrarPopFormacion: function () {
@@ -230,13 +241,136 @@
         CerrarPopCurso: function () {
             $('#ModalCurso').modal('hide');
         },
+        CancelarCurso: function () {
+            alertify.prompt("Por favor inserte un comentario.","", function (evt, value) {
+                $('#ModalCurso').modal('hide');
+                $('#Load').modal('show');
+                var objFomacion = {
+                    CursoId: Funciones.DocenteCursoId,
+                    UsuarioId: $.cookie('userAdmin'),
+                    Comentario: value
+                };
+                objFomacion = JSON.stringify(objFomacion);
+
+                $.ajax({
+                    type: "POST",
+                    url: "WS/Docentes.asmx/CancelarCurso",
+                    data: objFomacion,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.d) {
+                            alertify.alert("Guardado Correctamente.", function () {
+                                Funciones.TraerDocentes();
+                            });
+                        } else {
+                            $('#Load').modal('hide');
+                            alertify.alert("Fallo el guardado del docente, Intente nuevamente");
+                            $('#ModalCurso').modal('show');
+                        }
+                    }
+                });
+            });  
+        },
+        CancelarEstudio: function () {
+            alertify.prompt("Por favor inserte un comentario.","", function (evt, value) {
+                $('#ModalFormacion').modal('hide');
+                $('#Load').modal('show');
+                var objFomacion = {
+                    EstudioPeriodoId: Funciones.DocenteEstudioId,
+                    UsuarioId: $.cookie('userAdmin'),
+                    Comentario: value
+                };
+                objFomacion = JSON.stringify(objFomacion);
+
+                $.ajax({
+                    type: "POST",
+                    url: "WS/Docentes.asmx/CancelarEstudio",
+                    data: objFomacion,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.d) {
+                            alertify.alert("Guardado Correctamente.", function () {
+                                Funciones.TraerDocentes();
+                            });
+                        } else {
+                            $('#Load').modal('hide');
+                            alertify.alert("Fallo el guardado del docente, Intente nuevamente");
+                            $('#ModalFormacion').modal('show');
+                        }
+                    }
+                });
+            });           
+        },
+        VBoCurso: function () {
+            $('#ModalCurso').modal('hide');
+            $('#Load').modal('show');
+            var objFomacion = {
+                CursoId: Funciones.DocenteCursoId,
+                UsuarioId: $.cookie('userAdmin'),
+            };
+            objFomacion = JSON.stringify(objFomacion);
+
+            $.ajax({
+                type: "POST",
+                url: "WS/Docentes.asmx/VboCurso",
+                data: objFomacion,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.d) {
+                        alertify.alert("Guardado Correctamente.", function () {
+                            Funciones.TraerDocentes();
+                        });
+                    } else {
+                        $('#Load').modal('hide');
+                        alertify.alert("Fallo el guardado del docente, Intente nuevamente");
+                        $('#ModalCurso').modal('show');
+                    }
+                }
+            });
+        },
+        VBoEstudio: function () {
+
+            $('#ModalFormacion').modal('hide');
+            $('#Load').modal('show');
+            var objFomacion = {
+                EstudioId: Funciones.DocenteEstudioId,
+                UsuarioId: $.cookie('userAdmin'),
+            };
+            objFomacion = JSON.stringify(objFomacion);
+
+            $.ajax({
+                type: "POST",
+                url: "WS/Docentes.asmx/VboEstudio",
+                data: objFomacion,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.d) {
+                        alertify.alert("Guardado Correctamente.", function () {
+                            Funciones.TraerDocentes();
+                        });
+                    } else {
+                        $('#Load').modal('hide');
+                        alertify.alert("Fallo el guardado del docente, Intente nuevamente");
+                        $('#ModalFormacion').modal('show');
+                    }
+                }
+            });
+        },
         DocenteSeleccionado: 0,
+        DocenteCursoId: 0,
+        DocenteEstudioId: 0,
     };
 
     Funciones.init();
     $('#tblDocentes').on('click', 'a', Funciones.IdentificarBoton);
     $('#btnCancelarFormacion').on('click', Funciones.CerrarPopFormacion);
     $('#btnCancelarCurso').on('click', Funciones.CerrarPopCurso);
-    $('#btnVistoBuenoFormacion').on('click', Funciones.btnGuardarFormacionClick);
-    $('#btnVistoBuenoCurso').on('click', Funciones.btnGuardarCursoExClick);
+    $('#btnVistoBuenoFormacion').on('click', Funciones.VBoEstudio);
+    $('#btnVistoBuenoCurso').on('click', Funciones.VBoCurso);
+    $('#btnEliminarCurso').on('click', Funciones.CancelarCurso);
+    $('#btnEliminarFormacion').on('click', Funciones.CancelarEstudio);
 });
