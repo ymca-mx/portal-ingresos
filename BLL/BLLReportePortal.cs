@@ -45,7 +45,8 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOPeriodo2> periodo = db.AlumnoInscrito.GroupBy(b => new { b.Anio, b.PeriodoId ,b.Periodo})
+                    List<DTOPeriodo2> periodo = db.AlumnoInscrito.Where(d=>  (d.Anio == 2016 && d.PeriodoId >1 ) || d.Anio > 2016)
+                                                                 .GroupBy(b => new { b.Anio, b.PeriodoId ,b.Periodo})
                                                                  .Select(a => new DTOPeriodo2
                                                                         {
                                                                             anio = a.Key.Anio,

@@ -137,7 +137,7 @@ namespace Pruebas
                 esComite = false,
                 esEmpresa = true,
                 usuarioId = 8272, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                fecha = "2017-05-19", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
 
             //    //Colegiatura = decimal

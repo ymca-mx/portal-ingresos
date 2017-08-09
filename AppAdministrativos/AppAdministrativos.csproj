@@ -168,6 +168,7 @@
     <Content Include="Documentos\Calendarios\Musica.pdf" />
     <Content Include="Documentos\Calendarios\Posgrado C.pdf" />
     <Content Include="Documentos\Calendarios\Posgrado.pdf" />
+    <Content Include="Documentos\Manuales\Manual Baja Academica.pdf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
