@@ -55,7 +55,7 @@
     <Compile Include="Calendarios\DTOCalendarioEscolar.cs" />
     <Compile Include="Calendarios\DTOOFertaCalendario.cs" />
     <Compile Include="Configuracion\DTOConfiguracion.cs" />
-    <Compile Include="Docente\DTODocenteActualizacion.cs" />
+    <Compile Include="Docente\DTODocenteEstudioPeriodo.cs" />
     <Compile Include="Docente\DTODocenteCurso.cs" />
     <Compile Include="Docente\DTODocenteEstudio.cs" />
     <Compile Include="Menu\DTOMenu.cs" />

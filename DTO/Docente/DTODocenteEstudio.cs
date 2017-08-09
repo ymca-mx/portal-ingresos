@@ -14,7 +14,7 @@ namespace DTO
         public string Fecha { get; set; }
         public string Hora { get; set; }
         public Nullable<int> UsuarioId { get; set; }
-        public Nullable<int> EstatusId { get; set; }
+        public Nullable<int> EstatusId { get; set; }        
         public DTODocenteEstudioDocumento Documento { get; set; }
     }
     public class DTODocenteEstudioDocumento

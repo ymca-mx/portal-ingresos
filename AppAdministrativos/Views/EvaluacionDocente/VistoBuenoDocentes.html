@@ -7,7 +7,7 @@
                     <img src="Imagenes/UYMCA-100px.png" width="70" />
                 </div>
                 <div class="col-md-6">
-                    <h3 class="caption title">Actualizar Docente</h3>
+                    <h3 class="caption title">Visto Bueno de Docentes</h3>
                 </div>
             </div>
         </div>
@@ -48,19 +48,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Nombre de Institución:</label>
-                                    <input class="form-control" id="txtInstitucion" type="text" required />
+                                    <input class="form-control" id="txtInstitucion" type="text" required readonly />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Oferta Educativa Tipo</label>
-                                    <select class="form-control" id="slcOFertaTipo" required></select>
+                                    <select class="form-control" id="slcOFertaTipo" required disabled></select>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Carrera Cursada</label>
-                                    <input class="form-control" id="txtCarrera" type="text" required />
+                                    <input class="form-control" id="txtCarrera" type="text" required readonly />
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Periodos:</label>
-                                    <select class="form-control" id="slcPeriodo" required disabled></select>
+                                    <input class="form-control" id="txtPeriodo" required readonly />
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -77,11 +77,11 @@
                                     <div class="input-group">
                                         <div class="icheck-list">
                                             <label>
-                                                <input type="radio" id="chkCedula" name="chkTipo" class="btn blue" />
+                                                <input type="radio" id="chkCedula" name="chkTipo" class="btn blue" readonly disabled />
                                                 Cedula
                                             </label>
                                             <label>
-                                                <input type="radio" id="chkTitulo" name="chkTipo" class="btn blue" />
+                                                <input type="radio" id="chkTitulo" name="chkTipo" class="btn blue" readonly disabled />
                                                 Titulo
                                             </label>
                                         </div>
@@ -93,18 +93,7 @@
                                     <label class="control-label">Archivo</label>
                                     <div class="row fileupload-buttonbar">
                                         <div class="col-lg-12">
-                                            <div class="fileinput-new " data-provides="fileinput" id="FileComprobante">
-                                                <!-- The fileinput-button span is used to style the file input field as button -->
-                                                <span class="btn blue  fileinput-button">
-                                                    <i class="fa fa-plus"></i>
-                                                    <span>
-                                                        Seleccionar Archivo...
-                                                    </span>
-                                                    <input type="file" id="ArchivoComprobante" name="ArchivoComprobante" accept=".PDF, .pdf" />
-                                                </span>
-                                                <span id="txtComprobante" class="fileinput-filename col-lg-10"></span>
-                                                <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
-                                            </div>
+                                            <a class="btn bg-green" id="btnVer">Ver Archivo</a>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +103,8 @@
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-default" id="btnCancelarFormacion">Cancelar</a>
-                    <button class="btn btn-primary" id="btnGuardarFormacion">Guardar</button>
+                    <button class="btn btn-primary" id="btnVistoBuenoFormacion">Dar Vo.Bo</button>
+                    <button class="btn btn-danger" id="btnEliminarFormacion">Eliminar</button>
                 </div>
             </form>
         </div>
@@ -132,21 +122,21 @@
                         <div class="row">
                             <div class="col-md-6 form-body">
                                 <div class="form-group form-md-line-input form-md-floating-label has-error">
-                                    <input type="text" class="form-control input-sm" id="txtCursoNombreI" required pattern=".{3,}">
+                                    <input type="text" class="form-control input-sm" id="txtCursoNombreI" required pattern=".{3,}" readonly>
                                     <label for="txtCursoNombreI">Nombre de la Institución</label>
                                 </div>
                                 <div class="form-group form-md-line-input form-md-floating-label has-error">
-                                    <input type="text" class="form-control input-sm" id="txtTituloCurso" required pattern=".{3,}">
+                                    <input type="text" class="form-control input-sm" id="txtTituloCurso" required pattern=".{3,}" readonly>
                                     <label for="txtTituloCurso">Titulo del Curso</label>
                                 </div>
                                 <div class="form-group form-md-line-input form-md-floating-label has-error">
-                                    <select class="form-control input-sm" id="slcPeriodoCurso" style="padding:0px" required></select>
-                                    <label for="slcPeriodoCurso">Periodo </label>
+                                    <input class="form-control input-sm" id="txtPeriodoCurso" required readonly/>
+                                    <label for="txtPeriodoCurso">Periodo </label>
                                 </div>
                             </div>
                             <div class="col-md-6 form-body">
                                 <div class="form-group form-md-line-input form-md-floating-label has-error">
-                                    <select class="form-control input-sm" id="slcDuracion" style="padding:0px" required>
+                                    <select class="form-control input-sm" id="slcDuracion" style="padding:0px" required disabled>
                                         <option value=""></option>
                                         <option value="20">20 Horas</option>
                                         <option value="40">40 Horas</option>
@@ -155,7 +145,7 @@
                                 </div>
                                 <div class="form-group form-md-line-input form-md-floating-label has-error">
                                     <div class="input-group">
-                                        <input type="text" style="font-size:14px;" name="daterange" id="txtFechas" class="form-control"  required pattern=".{23,}"/>
+                                        <input type="text" style="font-size:14px;" name="daterange" id="txtFechas" class="form-control" required pattern=".{23,}" readonly />
                                         <label for="txtFechas" style="font-size:14px;">Periodo del Curso</label>
                                         <span class="input-group-addon">
                                             <i class="fa fa-envelope"></i>
@@ -168,7 +158,8 @@
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-default" id="btnCancelarCurso">Cancelar</a>
-                    <button class="btn btn-primary" id="btnGuardarCurso">Guardar</button>
+                    <button class="btn btn-primary" id="btnVistoBuenoCurso">Dar Vo.Bo</button>
+                    <button class="btn btn-danger" id="btnEliminarCurso">Eliminar</button>
                 </div>
             </form>
         </div>
@@ -189,4 +180,4 @@
     </div>
 </div>
 <script src="Style/assets/global/plugins/icheck/icheck.min.js"></script>
-<script src="JS/EvaluacionDocente/ActualizacionDocente.js"></script>
+<script src="JS/EvaluacionDocente/VistoBuenoDocentes.js"></script>

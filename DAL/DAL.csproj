@@ -173,6 +173,9 @@
     <Compile Include="AlumnoPermitido.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoPermitido20162.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoReferenciaBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -236,6 +239,12 @@
     <Compile Include="CalificacionesAntecedente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="CancelacionCursoDocente.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CancelacionDocenteEstudio.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="COLEGIATURA.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -266,9 +275,6 @@
     <Compile Include="Docente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="DocenteActualizacion.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="DocenteCurso.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -279,6 +285,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="DocenteEstudioDocumento.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocenteEstudioPeriodo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="DocentePublicacion.cs">
@@ -700,6 +709,9 @@
     <Compile Include="UniversidadAdeudo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="UniversidadNewAdeudo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="UniversidadValidacion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -734,6 +746,12 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UsuarioTipoPagoConcepto.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VistoBuenoCurso.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VistoBuenoEstudio.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
   </ItemGroup>

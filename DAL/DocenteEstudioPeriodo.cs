@@ -12,34 +12,28 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class DocenteCurso
+    public partial class DocenteEstudioPeriodo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DocenteCurso()
+        public DocenteEstudioPeriodo()
         {
-            this.CancelacionCursoDocente = new HashSet<CancelacionCursoDocente>();
-            this.VistoBuenoCurso = new HashSet<VistoBuenoCurso>();
+            this.CancelacionDocenteEstudio = new HashSet<CancelacionDocenteEstudio>();
+            this.VistoBuenoEstudio = new HashSet<VistoBuenoEstudio>();
         }
     
-        public int DocenteCursoId { get; set; }
+        public int DocenteEstudioPeriodoId { get; set; }
         public int DocenteId { get; set; }
-        public string Institucion { get; set; }
-        public int Duracion { get; set; }
-        public string Descripcion { get; set; }
-        public System.DateTime FechaInicial { get; set; }
-        public System.DateTime FechaFinal { get; set; }
-        public bool EsCursoYMCA { get; set; }
-        public bool VoBo { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
-        public int UsuarioId { get; set; }
+        public int EstudioId { get; set; }
         public bool EstatusId { get; set; }
     
         public virtual Periodo Periodo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CancelacionCursoDocente> CancelacionCursoDocente { get; set; }
+        public virtual ICollection<CancelacionDocenteEstudio> CancelacionDocenteEstudio { get; set; }
         public virtual Docente Docente { get; set; }
+        public virtual DocenteEstudio DocenteEstudio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VistoBuenoCurso> VistoBuenoCurso { get; set; }
+        public virtual ICollection<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
     }
 }
