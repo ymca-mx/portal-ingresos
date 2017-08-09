@@ -94,11 +94,12 @@ namespace AppAdministrativos.WS
                 HttpPostedFile httpDocumento = httpFileCollection["DocumentoComprobante"];
                 Stream strDocumento = httpDocumento.InputStream;
                 byte[] DocumentoByte = Herramientas.ConvertidorT.ConvertirStream(strDocumento, httpDocumento.ContentLength);
-                 
-                
-                string RutaServe =
-                            Server.MapPath("/EgresosUniYMCA/Documentos/");
-                if (BLL.BLLDocente.GuardarRelacionDocumento(EstudioId, TipoDocumentoId, RutaServe + EstudioId + ".pdf"))
+
+
+                string RutaServe = 
+                             HttpContext.Current.Server.MapPath("/EgresosUniYMCA/Documentos/");
+                string rutas2 = "../EgresosUniYMCA/Documentos/";
+                if (BLL.BLLDocente.GuardarRelacionDocumento(EstudioId, TipoDocumentoId, rutas2 + EstudioId + ".pdf"))
                 {
                     if (File.Exists(RutaServe + EstudioId + ".pdf"))
                     {

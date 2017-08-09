@@ -198,6 +198,8 @@
             $('#chkCedula')[0].checked = DTODocente.ListaEstudios[0].EstudioDocente.Cedula;
             $('#chkTitulo')[0].checked = DTODocente.ListaEstudios[0].EstudioDocente.Titulo;
             $('#btnVer').attr("href", DTODocente.ListaEstudios[0].EstudioDocente.Documento.DocumentoUrl);
+            $('#btnVer').attr('target', '_blank');
+
 
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-grey',

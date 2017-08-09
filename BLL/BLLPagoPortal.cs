@@ -3460,7 +3460,7 @@ namespace BLL
 
                                 PagosDetallesAgregar.ReferenciaId = int.Parse(Pago.ReferenciaId).ToString();
                                 PagosDetallesAgregar.CargoMonto = Pago.Cuota == 0 ? Pago.Promesa.ToString("C", Cultura) : Pago.Cuota.ToString("C", Cultura);
-                                PagosDetallesAgregar.CargoFechaLimite = Pago.Cuota1.PagoConceptoId == 800 || Pago.Cuota1.PagoConceptoId == 802 ? Utilities.Fecha.Prorroga(Pago.Anio,
+                                PagosDetallesAgregar.CargoFechaLimite = Pago.Cuota1.PagoConceptoId == 800 || Pago.Cuota1.PagoConceptoId == 802 ? Utilities.Fecha.Prorroga((Pago.PeriodoId > 1 ? Pago.Anio : Pago.Anio - 1),
                                     db.Subperiodo.Where(s => s.PeriodoId == Pago.PeriodoId && s.SubperiodoId == Pago.SubperiodoId)
                                     .FirstOrDefault().MesId, true, 5).ToString("dd/MM/yyyy", Cultura) :
                                     Pago.FechaGeneracion.AddDays(5).ToString("dd/MM/yyyy", Cultura);//; Pago.FechaGeneracion.ToString("dd/MM/yyyy", Cultura);
