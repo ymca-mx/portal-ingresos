@@ -451,16 +451,19 @@
             }
         },
         btnGuardarCursoExClick: function () {
-            $('#ModalCurso').modal('hide');
-            $('#Load').modal('show');
-            var Rango = $('#txtFechas').val();
-            var objCurso 
-            objCurso = Funciones.DatosCurso();            
-            objCurso.FechaInicial = Rango.substring(0, 10);
-            objCurso.FechaFinal = Rango.substring(13, 23);
+            var $frm = $('#frmCurso');
+            if ($frm[0].checkValidity()) {
+                $('#ModalCurso').modal('hide');
+                $('#Load').modal('show');
+                var Rango = $('#txtFechas').val();
+                var objCurso
+                objCurso = Funciones.DatosCurso();
+                objCurso.FechaInicial = Rango.substring(0, 10);
+                objCurso.FechaFinal = Rango.substring(13, 23);
 
-            objCurso = JSON.stringify(objCurso);
-            Funciones.GuardarCurso(objCurso);           
+                objCurso = JSON.stringify(objCurso);
+                Funciones.GuardarCurso(objCurso);
+            }
         },
         GuardarCurso: function (objCurso) {
             $.ajax({
