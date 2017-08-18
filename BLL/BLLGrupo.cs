@@ -224,6 +224,7 @@ namespace BLL
                                       ale.EsEmpresa == true
                                       && ale.OfertaEducativa.OfertaEducativaTipoId != 4
                                       && al.GrupoId == GrupoId
+                                      && al.Alumno.EstatusId != 3
                                       select new DTOAlumnoEspecial
                                       {
                                           AlumnoId = al.AlumnoId,
@@ -267,6 +268,7 @@ namespace BLL
                         alumnos = db.AlumnoInscrito.Where(al =>
                                      al.EsEmpresa == true
                                      && al.OfertaEducativa.OfertaEducativaTipoId != 4
+                                     && al.Alumno.EstatusId != 3
                                      && al.EstatusId == 1)
                                      .Select(al => new DTOAlumnoEspecial
                                      {
@@ -430,7 +432,7 @@ namespace BLL
 
         public static bool GuardarAlumnoConfiguracion(DTOGrupoAlumnoCuotaString alumnoConfiguracion)
         {
-            using(UniversidadEntities db = new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
@@ -441,11 +443,12 @@ namespace BLL
                             a.AlumnoId == alumnoid
                             && a.OfertaEducativaId == ofertaEducativaAnterior
                             && a.EsEmpresa == true).FirstOrDefault();
-                    
+
                     ///solo si va a cambiar la oferta educativa
                     if (alumno.OfertaEducativaId != ofertaEducativa)
+
                     {
-                        
+
                         db.AlumnoInscrito.Add(new AlumnoInscrito
                         {
                             AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
@@ -460,7 +463,7 @@ namespace BLL
                             UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId),
                             EstatusId = 1
                         });
-                        
+
                         db.AlumnoInscrito.Remove(alumno);
 
 
@@ -535,7 +538,7 @@ namespace BLL
                     }
                     else
                     {
-                        if (alumno.UsuarioId != 6070 )
+                        if (alumno.UsuarioId != 6070)
                         {
                             db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
                             {
@@ -566,10 +569,10 @@ namespace BLL
                                 EstatusId = 1
                             });
 
-
                             db.AlumnoInscrito.Remove(alumno);
+
                         }
-                        
+
                     }
 
                     GrupoAlumnoConfiguracion actualizarGrupoAlumnoConfiguracion = db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == alumnoid && a.OfertaEducativaId == ofertaEducativaAnterior).FirstOrDefault();
@@ -585,12 +588,12 @@ namespace BLL
                             CuotaInscripcion = actualizarGrupoAlumnoConfiguracion.CuotaInscripcion,
                             EsCuotaCongelada = actualizarGrupoAlumnoConfiguracion.EsCuotaCongelada,
                             EsInscripcionCongelada = actualizarGrupoAlumnoConfiguracion.EsCuotaCongelada,
-                            EsEspecial =actualizarGrupoAlumnoConfiguracion.EsEspecial,
+                            EsEspecial = actualizarGrupoAlumnoConfiguracion.EsEspecial,
                             FechaRegistro = actualizarGrupoAlumnoConfiguracion.FechaRegistro,
                             HoraRegistro = actualizarGrupoAlumnoConfiguracion.HoraRegistro,
-                            OfertaEducativaId =actualizarGrupoAlumnoConfiguracion.OfertaEducativaId,
-                            PagoPlanId =actualizarGrupoAlumnoConfiguracion.PagoPlanId,
-                            NumeroPagos=actualizarGrupoAlumnoConfiguracion.NumeroPagos,
+                            OfertaEducativaId = actualizarGrupoAlumnoConfiguracion.OfertaEducativaId,
+                            PagoPlanId = actualizarGrupoAlumnoConfiguracion.PagoPlanId,
+                            NumeroPagos = actualizarGrupoAlumnoConfiguracion.NumeroPagos,
                             UsuarioId = actualizarGrupoAlumnoConfiguracion.UsuarioId
                         });
 
@@ -616,7 +619,7 @@ namespace BLL
                             NumeroPagos = alumnoConfiguracion.NoPagos,
                             EstatusId = 1
                         });
-
+                    //Credenciales
                     if (alumnoConfiguracion.Credenciales)
                     {
                         int Anio = int.Parse(alumnoConfiguracion.Anio), PeriodoId = int.Parse(alumnoConfiguracion.PeriodoId), UsuarioId = int.Parse(alumnoConfiguracion.UsuarioId);
@@ -628,27 +631,62 @@ namespace BLL
 
                         if (CuotaCredencial.Count > 0)
                         {
-                            db.Pago.Add(
-                                new Pago
+                            int ccred = CuotaCredencial.FirstOrDefault().CuotaId;
+                            if (db.Pago.Where(p => p.AlumnoId == alumno.AlumnoId
+                                                 && p.Anio == Anio
+                                                 && p.PeriodoId == PeriodoId
+                                                 && p.OfertaEducativaId == p.OfertaEducativaId
+                                                 && p.CuotaId == ccred
+                                                 && (p.EstatusId == 1 || p.EstatusId == 4)).ToList().Count == 0)
+                            {
+                                db.Pago.Add(
+                                    new Pago
+                                    {
+                                        AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
+                                        Anio = Anio,
+                                        PeriodoId = PeriodoId,
+                                        OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
+                                        UsuarioId = UsuarioId,
+                                        Cuota = CuotaCredencial.FirstOrDefault().Monto,
+                                        CuotaId = CuotaCredencial.FirstOrDefault().CuotaId,
+                                        EsAnticipado = false,
+                                        EsEmpresa = false,
+                                        EstatusId = 1,
+                                        FechaGeneracion = DateTime.Now,
+                                        HoraGeneracion = DateTime.Now.TimeOfDay,
+                                        Promesa = CuotaCredencial.FirstOrDefault().Monto,
+                                        Restante = CuotaCredencial.FirstOrDefault().Monto,
+                                        UsuarioTipoId = db.Usuario.Where(k => k.UsuarioId == UsuarioId).FirstOrDefault().UsuarioTipoId,
+                                        ReferenciaId = "",
+                                        SubperiodoId = 1,
+                                    });
+                            }
+                        }
+                    }
+                    //Examen Diagnostico
+                    int anio = int.Parse(alumnoConfiguracion.Anio), periodo = int.Parse(alumnoConfiguracion.PeriodoId);
+                    List<Pago> pExamen = db.Pago.Where(p => p.AlumnoId == alumno.AlumnoId
+                                                    && p.Anio == anio
+                                                    && p.PeriodoId == periodo
+                                                    && p.OfertaEducativaId == p.OfertaEducativaId
+                                                    && p.Cuota1.PagoConceptoId == 1
+                                                    && (p.EstatusId == 1 || p.EstatusId == 4)).ToList();
+                    if (pExamen.Count > 0)
+                    {
+                        pExamen.FirstOrDefault().EstatusId = 2;
+                        if (pExamen.FirstOrDefault().PagoParcial.Count > 0)
+                        {
+                            pExamen.FirstOrDefault().PagoParcial.ToList().ForEach(pp =>
+                            {
+                                if (pp.EstatusId == 4)
                                 {
-                                    AlumnoId = int.Parse(alumnoConfiguracion.AlumnoId),
-                                    Anio = Anio,
-                                    PeriodoId = PeriodoId,
-                                    OfertaEducativaId = int.Parse(alumnoConfiguracion.OfertaEducativaId),
-                                    UsuarioId = UsuarioId,
-                                    Cuota = CuotaCredencial.First().Monto,
-                                    CuotaId = CuotaCredencial.First().CuotaId,
-                                    EsAnticipado = false,
-                                    EsEmpresa = false,
-                                    EstatusId = 1,
-                                    FechaGeneracion = DateTime.Now,
-                                    HoraGeneracion = DateTime.Now.TimeOfDay,
-                                    Promesa = CuotaCredencial.First().Monto,
-                                    Restante = CuotaCredencial.First().Monto,
-                                    UsuarioTipoId = db.Usuario.Where(k => k.UsuarioId == UsuarioId).FirstOrDefault().UsuarioTipoId,
-                                    ReferenciaId = "",
-                                    SubperiodoId = 1,
-                                });
+                                    
+                                    pp.EstatusId = 2;
+                                    pp.ReferenciaProcesada.Restante = (pp.ReferenciaProcesada.Restante + pp.Pago);
+                                    pp.ReferenciaProcesada.SeGasto = false;
+                                    pp.Pago = 0;
+                                }
+                            });
                         }
                     }
 

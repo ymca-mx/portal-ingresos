@@ -265,6 +265,21 @@ namespace BLL
                     Periodo PeriodoActual = db.Periodo.Where(P => FechaActual >= P.FechaInicial && FechaActual <= P.FechaFinal).FirstOrDefault();
                     int SubPeriodoId = db.Subperiodo.Where(S => S.PeriodoId == PeriodoActual.PeriodoId && S.MesId == FechaActual.Month).FirstOrDefault().SubperiodoId;
 
+                   DTOPeriodo PeriodoSiguiente = new DTOPeriodo
+                    {
+                        Anio = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio,
+                        PeriodoId = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1,
+                    };
+                    if (db.Alumno
+                                            .Where(a => ((a.Anio == PeriodoActual.Anio && a.PeriodoId == PeriodoActual.PeriodoId) ||
+                                                        (a.Anio == PeriodoSiguiente.Anio && a.PeriodoId == PeriodoSiguiente.PeriodoId))
+                                                       && a.AlumnoInscrito.Count == 1
+                                                       && (a.AlumnoInscritoBitacora.Count == 0 || a.AlumnoInscritoBitacora
+                                                                                                    .Where(k => k.PagoPlanId == null).ToList().Count == 1)
+                                                       && a.AlumnoId == AlumnoId
+                                                       && a.EstatusId != 3).ToList().Count > 0) { return null; }
+
+
                     if (SubPeriodoId != 4) { return null; }
                     int PeriodoTexto = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1, AnioS = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio;
 

@@ -115,6 +115,7 @@
                 $('#txtFechaRegistro').val(data.d.FechaRegistro);
                 $('#Encabezado').hide();
                 $('#Contenedor').show();
+                $('#DivDescuentos').show();
                 Platel();
             }
         });
@@ -422,6 +423,13 @@
         $('#chkMaterial')[0].checked = false;
         $('#chkEsEmpresa')[0].checked = false;
     }
+
+    $('#chkEsEmpresa').on('click', function () {
+        if (this.checked) {
+            $('#DivDescuentos').hide();
+        } else { $('#DivDescuentos').show();}
+    });
+
     $('#btnGuardar').on('click', function () {
         if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
         $('#Antecedentes').modal('show');

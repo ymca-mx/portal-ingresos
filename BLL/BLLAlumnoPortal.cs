@@ -573,7 +573,14 @@ namespace BLL
                     Alumno.Grupo = new DTOGrupo
                     {
                         Descripcion = db.GrupoAlumnoConfiguracion
-                                           .Where(k => k.AlumnoId == AlumnoId).ToList()?.LastOrDefault()?.Grupo?.Descripcion ?? ""
+                                           .Where(k => k.AlumnoId == AlumnoId).ToList()?.LastOrDefault()?.Grupo?.Descripcion ?? "",
+                        ConfiguracionAlumno= new DTOGrupoAlumnoCuota
+                        {
+                            CuotaColegiatura = db.GrupoAlumnoConfiguracion
+                                           .Where(k => k.AlumnoId == AlumnoId).ToList()?.LastOrDefault()?.CuotaColegiatura ?? -1,
+                            CuotaInscripcion = db.GrupoAlumnoConfiguracion
+                                           .Where(k => k.AlumnoId == AlumnoId).ToList()?.LastOrDefault()?.CuotaInscripcion ?? -1,
+                        }                        
                     };
                     //Alumno.AlumnoInscrito.OfertaEducativa.Descripcion = Alumno.AlumnoInscrito != null ? Alumno.AlumnoInscrito.OfertaEducativa.Descripcion : "";
                     Alumno.AlumnoInscrito = (Alumno?.AlumnoInscrito ?? new DTOAlumnoInscrito { OfertaEducativa = new DTOOfertaEducativa { Descripcion = "" } });
@@ -1037,7 +1044,7 @@ namespace BLL
             {
                 try
                 {
-                    Alumno AlumnoBase = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
+                    Alumno AlumnoBase = db.Alumno.Where(a => a.AlumnoId == AlumnoId && a.EstatusId != 3).FirstOrDefault();
 
                     AlumnoBase.AlumnoInscrito = new List<AlumnoInscrito>(AlumnoBase.AlumnoInscrito
                         .OrderBy(o => o.Anio).ThenBy(o => o.PeriodoId).Reverse());
@@ -12083,8 +12090,8 @@ namespace BLL
                 try
                 {
                     List<DTOAlumno> alumnos = (from a in db.Alumno
-                                               where (a.Nombre + " " + a.Paterno + " " + a.Materno).Contains(Cadena)
-                                                     || (a.Materno + " " + a.Nombre + " " + a.Paterno).Contains(Cadena)
+                                               where (a.Nombre.Trim() + " " + a.Paterno.Trim() + " " + a.Materno.Trim()).Contains(Cadena)
+                                                     || (a.Paterno.Trim() + " " + a.Materno.Trim()+ " " + a.Nombre.Trim()).Contains(Cadena)
                                                select new DTOAlumno
                                                {
 

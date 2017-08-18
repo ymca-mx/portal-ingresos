@@ -4,7 +4,7 @@
     var CambioArchivo = false;
     var Funciones = {
         init: function () {
-            Funciones.TraerCalendarios();            
+            Funciones.TraerCalendarios();
             Funciones.TraerPlantel();
         },
         TraerCalendarios: function () {
@@ -22,14 +22,42 @@
                 }
             });
         },
-        
+        Planteles:
+        {
+            Plantel: [{
+                PlantelId: 0,
+                Descripcion: "",
+                OfertasTipo: [{
+                    OfertaEducativaTipoId: 0,
+                    Descripcion: "",
+                    OFertasEducativas: [{
+                        OfertaEducativaId: 0,
+                        Descripcion: "",
+                        visible: true
+                    }]
+                }]
+            }],
+            PlantelSeleccionado: [{
+                PlantelId: 0,
+                Descripcion: "",
+                OfertasTipo: [{
+                    OfertaEducativaTipoId: 0,
+                    Descripcion: "",
+                    OFertasEducativas: [{
+                        OfertaEducativaId: 0,
+                        Descripcion: "",
+                        visible: true
+                    }]
+                }]
+            }]
+        },
         CargarOfertas: function (DTOCalendario) {
             $("#slcSucursal").val(-1);
             $("#slcSucursal").change();
-            Funciones.Planteles.NuevoPlantel = [];
             Funciones.Planteles.PlantelSeleccionado = [];
+            Funciones.OfertasExistentes = [];
+            console.log(DTOCalendario);
 
-            
             $(DTOCalendario.Sucursales).each(function (f, obj) {
                 var sucursal = {
                     Descripcion: obj.Descripcion,
@@ -51,6 +79,7 @@
                             Descripcion: obj2.descripcion,
                             visible: true
                         };
+                        Funciones.OfertasExistentes.push(obj2.ofertaEducativaId);
                         TipoOFerta.OFertasEducativas.push(Oferta);
                     });
 
@@ -58,10 +87,11 @@
 
                 });
 
-                Funciones.Planteles.PlantelSeleccionado.push(sucursal);            
+                Funciones.Planteles.PlantelSeleccionado.push(sucursal);
+                
             });
 
-            $('#ModalOfertas').modal('show');                    
+            $('#ModalOfertas').modal('show');
         },
         PintarCalendarios: function (Tabla) {
             if (Calendarios !== undefined) {
@@ -162,7 +192,7 @@
             if (objCalendario.EstatusId === 1) {
                 $('#rdbActivo')[0].checked = true;
             } else { $('#rdbInactivo')[0].checked = true; }
-
+            
             $('#ModificarCalendario').modal('show');
         },
         CerrarModificar: function () {
@@ -315,7 +345,7 @@
             TipoF = parseInt(TipoF);
             $('#divChkXAgregar').empty();
             $('#divChkAgregadas').empty();
-            if (valSelec !== -1) {                
+            if (valSelec !== -1) {
                 var Ofertas = [];
 
                 $(Funciones.Planteles.PlantelSeleccionado).each(function (ind, plan) {
@@ -324,10 +354,15 @@
                             if (TipoF === plan2.OfertaEducativaTipoId) {
                                 $(plan2.OFertasEducativas).each(function (ind3, plan3) {
                                     Ofertas.push(plan3.OfertaEducativaId);
+                                    
                                     var id = 'Id=chk' + plan3.OfertaEducativaId;
                                     var check = "<div class='checkbox'><label class='control-label' style='padding-left:20px' >";
                                     check += "<input type='checkbox'" + id + " />" + plan3.Descripcion + "</label></div>";
-                                    $('#divChkAgregadas').append(check);
+                                    if (Funciones.OfertasQuitar.findIndex(plan3.OfertaEducativaId) !== -1) {
+                                        $('#divChkAgregadas').append(check);
+                                    } else {
+                                        $('#divChkXAgregar').append(check);
+                                    }
                                 });
                             }
                         });
@@ -337,10 +372,10 @@
                 $(Funciones.Planteles.Plantel).each(function (ind, plan) {
                     if (plan.PlantelId === valSelec) {
                         $(plan.OfertasTipo).each(function (ind2, plan2) {
-                            if (TipoF === plan2.OfertaEducativaTipoId) {                                
+                            if (TipoF === plan2.OfertaEducativaTipoId) {
                                 $(plan2.OFertasEducativas).each(function (ind3, plan3) {
                                     if (jQuery.inArray(plan3.OfertaEducativaId, Ofertas) === -1) {
-                                        
+
                                         var id = 'Id=chk' + plan3.OfertaEducativaId;
                                         var check = "<div class='checkbox'><label class='control-label' style='padding-left:20px' >";
                                         check += "<input type='checkbox'" + id + " data-ofertaid='" + plan3.OfertaEducativaId + "'/>" + plan3.Descripcion + "</label></div>";
@@ -354,7 +389,7 @@
                             }
                         });
                     }
-                });               
+                });
             }
         },
         TraerPlantel: function () {
@@ -370,7 +405,7 @@
                         var optionP = $(document.createElement('option'));
                         optionP.text('--Seleccionar--');
                         optionP.val(-1);
-                       
+
                         $("#slcSucursal").append(optionP);
 
 
@@ -419,129 +454,90 @@
                 }
             });
         },
-        Planteles:
-        {
-            Plantel: [{
-                PlantelId: 0,
-                Descripcion: "",
-                OfertasTipo: [{
-                    OfertaEducativaTipoId: 0,
-                    Descripcion: "",
-                    OFertasEducativas: [{
-                        OfertaEducativaId: 0,
-                        Descripcion: "",
-                        visible: true
-                    }]
-                }]
-            }],
-            NuevoPlantel: [{
-                PlantelId: 0,
-                Descripcion: "",
-                OfertasTipo: [{
-                    OfertaEducativaTipoId: 0,
-                    Descripcion: "",
-                    OFertasEducativas: [{
-                        OfertaEducativaId: 0,
-                        Descripcion: "",
-                        visible: true
-                    }]
-                }]
-            }],
-            PlantelSeleccionado: [{
-                PlantelId: 0,
-                Descripcion: "",
-                OfertasTipo: [{
-                    OfertaEducativaTipoId: 0,
-                    Descripcion: "",
-                    OFertasEducativas: [{
-                        OfertaEducativaId: 0,
-                        Descripcion: "",
-                        visible: true
-                    }]
-                }]
-            }]
-        },
-        ClickCheckBoxXAdd: function () {                        
+        ClickCheckBoxXAdd: function () {
             var oid = $(this).data('ofertaid');
             if ($(this)[0].checked) {
-                if (Funciones.Planteles.NuevoPlantel.length === 0) {
-                    var Nuevo = {
-                        PlantelId: $("#slcSucursal").val(),
-                        Descripcion: $("#slcSucursal option:selected").text(),
-                        OfertasTipo: [{
-                            OfertaEducativaTipoId: $("#slcTipoOferta").val(),
-                            Descripcion: $("#slcTipoOferta option:selected").text(),
-                            OFertasEducativas: [{
-                                OfertaEducativaId: oid,
-                                Descripcion: $(this)[0].parentNode.innerText,
-                                visible: true
-                            }]
-                        }]
-                    };
-                    Funciones.Planteles.NuevoPlantel.push(Nuevo);
-                } else {
-                    var valSelec = $("#slcSucursal").val();
-                    valSelec = parseInt(valSelec);
-
-                    var TipoF = $("#slcTipoOferta").val();
-                    TipoF = parseInt(TipoF);
-
-                    if (jQuery.inArray(valSelec, Funciones.Planteles.NuevoPlantel) !== -1) {
-
-                    }
-                }
-                
-                
-                Funciones.OfertasAgregar.push(oid);
-                //Funciones.Planteles.PlantelSeleccionado.push(Nuevo);
-            } else {
-                var valSelec = $("#slcSucursal").val();
-                valSelec = parseInt(valSelec);
-
-                var TipoF = $("#slcTipoOferta").val();
-                TipoF = parseInt(TipoF);
-
-                var planE = 0, tipoE = 0, ofE = 0;
-
-                $(Funciones.Planteles.NuevoPlantel).each(function (ind, plan) {
-                    if (plan.PlantelId === valSelec) {
-                        $(plan.OfertasTipo).each(function (ind2, plan2) {
-                            if (TipoF === plan2.OfertaEducativaTipoId) {
-                                $(plan2.OFertasEducativas).each(function (ind3, plan3) {
-                                    if (plan3.ofertaEducativaId === oid) {
-                                        planE = ind;
-                                        tipoE = ind2;
-                                        ofE = ind3;
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-                Funciones.Planteles.NuevoPlantel[planE].OfertasTipo[tipoE].OFertasEducativas.splice(ofE, 1);
-                if (jQuery.inArray(oid, Funciones.OfertasAgregar) !== -1) {
-                    Funciones.OfertasAgregar.splice(jQuery.inArray(oid, Funciones.OfertasAgregar));
-                }
-
-                if (Funciones.Planteles.NuevoPlantel[planE].OfertasTipo[tipoE].OFertasEducativas.length === 0) {
-                    Funciones.Planteles.NuevoPlantel[planE].OfertasTipo.splice(tipoE, 1);
-                    if (Funciones.Planteles.NuevoPlantel[planE].OfertasTipo.length === 0) {
-                        Funciones.Planteles.NuevoPlantel.splice(planE, 1);
-                        if (Funciones.Planteles.NuevoPlantel.length === 0) {
-                            Funciones.Planteles.NuevoPlantel = [];
-                        }
-                    }
-                }
-            }
-            if (Funciones.Planteles.NuevoPlantel.length > 0) {
                 $('#btnPasar').prop("disabled", false);
-            } else { $('#btnPasar').prop('disabled', true); }
-
-            //Funciones.SlcTipoOfertaChange();
+                Funciones.OfertasAgregar.push(oid);
+            }
+            else {
+                Funciones.OfertasAgregar = jQuery.grep(Funciones.OfertasAgregar, function (value) {
+                    return value != oid;
+                });
+            }
+            if (Funciones.OfertasAgregar.length === 0) { $('#btnPasar').prop("disabled", true); }
         },
+        ClickCheckBoxXPut: function () {
+            var oid = $(this).data('ofertaid');
+            if ($(this)[0].checked) {
+                $('#btnRegresa').prop("disabled", false);
+                Funciones.OfertasQuitar.push(oid);
+            } else {
+                Funciones.OfertasQuitar = jQuery.grep(Funciones.OfertasQuitar, function (value) {
+                    return value != oid;
+                });
+            }
+            if (Funciones.OfertasQuitar.length === 0) { $('#btnRegresa').prop("disabled", true); }
+        },
+        OfertasExistentes:[],
         OfertasAgregar: [],
+        OfertasQuitar: [],
         BtnPasarClick: function () {
+            var hijos = $('#divChkXAgregar')[0].childNodes;
+            $(hijos).each(function () {
+                var idchk = $(this)[0].childNodes[0].childNodes[0].id;
+                var ofertaId = $('#' + idchk).data('ofertaid');
+                if (jQuery.inArray(ofertaId, Funciones.OfertasAgregar) !== -1) {
+                    $('#' + idchk)[0].checked = false;
+                    $(this).clone().appendTo('#divChkAgregadas');
+                    this.parentNode.removeChild(this);
+                    Funciones.OfertasExistentes.push(ofertaId);
+                    Funciones.OfertasAgregar = jQuery.grep(Funciones.OfertasAgregar, function (value) {
+                        return value != ofertaId;
+                    });
+                    $('#btnPasar').prop("disabled", true);
+                }
+            });
+            if (Funciones.OfertasQuitar.length === 0) { $('#btnRegresa').prop("disabled", true); }
+            Funciones.OrdenarListas('divChkAgregadas');
+        },
+        BtnRegresarClick: function () {
+            var hijos = $('#divChkAgregadas')[0].childNodes;
+            $(hijos).each(function () {
+                var idchk = $(this)[0].childNodes[0].childNodes[0].id;
+                var ofertaId = $('#' + idchk).data('ofertaid');
+                if (jQuery.inArray(ofertaId, Funciones.OfertasQuitar) !== -1) {
+                    $('#' + idchk)[0].checked = false;
+                    $(this).clone().appendTo('#divChkXAgregar');
+                    this.parentNode.removeChild(this);
 
+                    Funciones.OfertasQuitar = jQuery.grep(Funciones.OfertasQuitar, function (value) {
+                        return value != ofertaId;
+                    });
+
+                    Funciones.OfertasExistentes = jQuery.grep(Funciones.OfertasExistentes, function (value) {
+                        return value != ofertaId;
+                    });
+                    $('#btnPasar').prop("disabled", true);
+                }
+            });
+            $('#btnRegresa').prop("disabled", true); 
+            Funciones.OrdenarListas('divChkXAgregar');
+        },
+        OrdenarListas: function (idcombo) {
+            var hijos = $('#' + idcombo)[0].childNodes;
+
+            var hijos2 = $(hijos).map(function (_, o) {
+                return { objhtml: $(o)[0].innerHTML, ofertaid: $($(o)[0].childNodes[0].childNodes[0]).data("ofertaid") };
+            }).get();
+
+            hijos2.sort(function (a, b) {
+                return (a.ofertaid > b.ofertaid) ? 1 : ((a.ofertaid < b.ofertaid) ? -1 : 0);
+            });
+
+            $(hijos).each(function (i, o) {
+                o.innerHTML = hijos2[i].objhtml;
+            });            
         }
     };
     Funciones.init();
@@ -554,6 +550,8 @@
     $('#btnGuardarDatos').on('click', Funciones.BotonGuardar);
     $("#slcSucursal").on('change', Funciones.SlcSucursalChange);
     $("#slcTipoOferta").on('change', Funciones.SlcTipoOfertaChange);
-    $("#divChkXAgregar").on('click', 'input', Funciones.ClickCheckBoxXAdd)
+    $("#divChkXAgregar").on('click', 'input', Funciones.ClickCheckBoxXAdd);
+    $('#divChkAgregadas').on('click', 'input', Funciones.ClickCheckBoxXPut);
     $('#btnPasar').on('click', Funciones.BtnPasarClick);
+    $('#btnRegresa').on('click', Funciones.BtnRegresarClick);
 });
