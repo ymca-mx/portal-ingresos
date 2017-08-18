@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -158,6 +159,7 @@
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
+    <Content Include="JS\Reportes\CarteraVencida.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
     <Content Include="login.html" />
     <Content Include="Documentos\Manuales\Manual Generacion Semestres.pdf" />
@@ -4762,6 +4764,7 @@
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
+    <Content Include="Views\Reportes\CarteraVencida.html" />
     <Content Include="Views\EvaluacionDocente\ActualizacionDocente.html" />
     <Content Include="Views\EvaluacionDocente\VistoBuenoDocentes.html" />
     <Content Include="Views\Pago\ReferenciasSemestrales.html" />
