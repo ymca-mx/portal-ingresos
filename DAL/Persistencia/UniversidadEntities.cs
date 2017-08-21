@@ -67,8 +67,7 @@ namespace DAL
             return decimal.Parse(objectContext.CreateQuery<string>("UniversidadModel.Store.fnDetalleDescuentoConcepto(@alumnoDescuentoId)", parameters.ToArray())
                  .Execute(MergeOption.NoTracking)
                  .FirstOrDefault());
-        }
+        }       
 
-        
     }
 }

@@ -1,5 +1,4 @@
 ﻿$(function init() {
-    console.log("Estoy dentro del JS ALumnos Nuevos....");
     var tblAlumnos;
     TraerAlumnos();
   

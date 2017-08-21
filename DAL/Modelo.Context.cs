@@ -313,5 +313,26 @@ namespace DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spConceptoDescuento", conceptoPagoIdParameter, alumnoIdParameter, periodoParameter, anioParameter);
         }
+    
+        public virtual ObjectResult<spReporteCarteraVencida_Result> spReporteCarteraVencida(Nullable<int> anio, Nullable<int> periodoId, Nullable<System.DateTime> fechaInicial, Nullable<System.DateTime> fechaFinal)
+        {
+            var anioParameter = anio.HasValue ?
+                new ObjectParameter("anio", anio) :
+                new ObjectParameter("anio", typeof(int));
+    
+            var periodoIdParameter = periodoId.HasValue ?
+                new ObjectParameter("periodoId", periodoId) :
+                new ObjectParameter("periodoId", typeof(int));
+    
+            var fechaInicialParameter = fechaInicial.HasValue ?
+                new ObjectParameter("fechaInicial", fechaInicial) :
+                new ObjectParameter("fechaInicial", typeof(System.DateTime));
+    
+            var fechaFinalParameter = fechaFinal.HasValue ?
+                new ObjectParameter("fechaFinal", fechaFinal) :
+                new ObjectParameter("fechaFinal", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteCarteraVencida_Result>("spReporteCarteraVencida", anioParameter, periodoIdParameter, fechaInicialParameter, fechaFinalParameter);
+        }
     }
 }

@@ -7083,6 +7083,12 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
         <Function Name="spGeneraReferencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pagoId" Type="int" Mode="In" />
         </Function>
+        <Function Name="spReporteCarteraVencida" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="anio" Type="int" Mode="In" />
+          <Parameter Name="periodoId" Type="int" Mode="In" />
+          <Parameter Name="fechaInicial" Type="date" Mode="In" />
+          <Parameter Name="fechaFinal" Type="date" Mode="In" />
+        </Function>
         <Function Name="spUsuarioLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="usuarioId" Type="int" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
@@ -10357,6 +10363,12 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="SucursalCaja" EntitySet="SucursalCaja" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <FunctionImport Name="spReporteCarteraVencida" ReturnType="Collection(UniversidadModel.spReporteCarteraVencida_Result)">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="periodoId" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicial" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFinal" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AlumnoInscritoCompleto">
           <Property Type="Int32" Name="AlumnoId" Nullable="false" />
@@ -18043,6 +18055,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <End Type="UniversidadModel.SucursalCaja" Role="SucursalCaja" Multiplicity="*" />
           <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="*" />
         </Association>
+        <ComplexType Name="spReporteCarteraVencida_Result">
+          <Property Type="Int32" Name="Alumno" Nullable="false" />
+          <Property Type="DateTime" Name="FechaPago" Nullable="false" />
+          <Property Type="String" Name="Tipo_de_pago" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Concepto" Nullable="true" MaxLength="152" />
+          <Property Type="Decimal" Name="Pago" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Restante" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -21088,6 +21108,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <ScalarProperty Name="SucursalCajaId" ColumnName="SucursalCajaId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="spReporteCarteraVencida" FunctionName="UniversidadModel.Store.spReporteCarteraVencida">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spReporteCarteraVencida_Result">
+                <ScalarProperty Name="Alumno" ColumnName="Alumno" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="Tipo_de_pago" ColumnName="Tipo de pago" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="Pago" ColumnName="Pago" />
+                <ScalarProperty Name="Restante" ColumnName="Restante" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
