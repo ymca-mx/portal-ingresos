@@ -19,12 +19,15 @@ namespace DTO
         public List<spReporteBecasDetalle> Detalle { get; set; }
         public List<spReporteBecasConcentrado> Concentrado { get; set;}
         public List< DTOBecasCalculos> Calculos1 { get; set; }
+        public List<DTOBecasCalculos> Calculos2 { get; set; }
     }
 
     public class DTOBecasCalculos
     {
         public decimal valor { get; set; }
+        public int valor2 { get; set; }
     }
+    
 
     //public  class DTOBecasDetalle
     //{
