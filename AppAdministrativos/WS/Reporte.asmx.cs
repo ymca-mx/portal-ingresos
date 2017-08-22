@@ -84,6 +84,13 @@ namespace AppAdministrativos.WS
         {
             return BLLReportePortal.ReporteVoBoEnviarEmail(AlumnoId, EmailAlumno);
         }
-        
+
+        [WebMethod]
+        public List<DTOReporteCarteraVencida> CarteraVencida(int Anio, int PeriodoId, string FechaInicial, string FechaFinal)
+        {
+            return
+            BLLReportePortal.CarteraVencida(Anio, PeriodoId, FechaInicial, FechaFinal);
+        }
+
     }
 }

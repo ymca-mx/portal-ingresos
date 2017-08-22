@@ -28,6 +28,7 @@ namespace DTO
         public DTOOfertaEducativaTipo OfertaEducativaTipo { get; set; }
         public List<DTOAlumno> Alumno { get; set; }
         public List<DTOGrupoComprobante> GrupoComprobante { get; set; }
+        public DTOGrupoAlumnoCuota ConfiguracionAlumno { get; set; }
     }
 
     public class DTOGrupoLigero

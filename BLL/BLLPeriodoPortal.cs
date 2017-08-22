@@ -29,6 +29,26 @@ namespace BLL
                 return lstPeriodo;
             }
         }
+
+        public static List<DTOPeriodo> TraerPeriodos()
+        {
+            using(UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    return 
+                    db.Periodo.Where(a => a.Anio >= 2016).Select(a =>
+                                new DTOPeriodo
+                                {
+                                    Anio = a.Anio,
+                                    PeriodoId = a.PeriodoId,
+                                    Descripcion = a.Descripcion
+                                }).ToList();
+                }
+                catch { return null; }
+            }
+        }
+
         public static DTOPeriodo ConsultarPeriodo(string Descripcion)
         {
             int PeriodoId = int.Parse(Descripcion.Substring(0, 1));

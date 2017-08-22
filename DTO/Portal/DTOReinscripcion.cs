@@ -60,3 +60,25 @@ namespace DTO.Reinscripcion
         public string Monto { get; set; }
     }
 }
+
+namespace DTO
+{
+    public class DTOReporteCarteraVencida
+    {
+        public int Alumno { get; set; }
+        public DateTime FechaPago {
+            get { return new DateTime(); }
+            set { FechaPagoS = DateToString(value); } }
+        public string FechaPagoS { get; set; }
+        public string Tipo_de_pago { get; set; }
+        public string Concepto { get; set; }
+        public decimal Pago { get; set; }
+        public decimal Restante { get; set; }
+
+        private string DateToString(DateTime fecha)
+        {
+            return (fecha.Day < 10 ? "0" + fecha.Day : "" + fecha.Day) + "/" +
+                (fecha.Month < 10 ? "0" + fecha.Month : "" + fecha.Month) + "/" + fecha.Year;
+        }
+    }
+}

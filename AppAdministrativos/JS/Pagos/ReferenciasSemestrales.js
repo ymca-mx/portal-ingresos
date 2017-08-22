@@ -21,6 +21,10 @@
                             lbl[0].innerHTML = data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno;
                             lbl[0].innerHTML += data.d.AlumnoInscrito.EsEmpresa == true ? (data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial") + " - " + data.d.Grupo.Descripcion : "";
                             Alumnoid = idAlumno;
+
+                            $('#txtMontoInscripcion').val(data.d.Grupo.ConfiguracionAlumno.CuotaInscripcion === -1 ? "" : data.d.Grupo.ConfiguracionAlumno.CuotaInscripcion);
+                            $('#txtMontoColegiatura').val(data.d.Grupo.ConfiguracionAlumno.CuotaColegiatura === -1 ? "" : data.d.Grupo.ConfiguracionAlumno.CuotaColegiatura);
+
                             GenerarSemestrales.Funciones.CargarOferta(data.d.lstAlumnoInscrito);
                         } else { $('#Load').modal('hide'); }
                     }

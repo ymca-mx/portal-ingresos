@@ -670,6 +670,9 @@
     <Compile Include="spReporteBecasDetalle.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="spReporteCarteraVencida_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="spUsuarioLogin_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

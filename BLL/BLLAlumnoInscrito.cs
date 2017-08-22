@@ -188,6 +188,7 @@ namespace BLL
                     }
                     #endregion
                     #region Bitacora Alumno
+                    
                     db.AlumnoBitacora.Add(new AlumnoBitacora
                     {
                         AlumnoId = objAlumnoDb.AlumnoId,
@@ -205,6 +206,9 @@ namespace BLL
                     });
                     #endregion
                     #region Update Alumno
+
+                    db.Entry(objAlumnoDb).State = System.Data.Entity.EntityState.Modified;
+
                     objAlumnoDb.MatriculaId = Herramientas.Matricula.ObtenerMatricula(objAlumnoInscrito,
                         new DTOOfertaEducativa
                         {
@@ -216,6 +220,7 @@ namespace BLL
                     objAlumnoDb.EstatusId = 1;
                     objAlumnoDb.FechaRegistro = DateTime.Now;
                     objAlumnoDb.UsuarioId = objAlumnoInscrito.UsuarioId;
+                    
                     #endregion
 
                 }
@@ -236,19 +241,24 @@ namespace BLL
                     EstatusId = 1
                 });
 
-                db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                if (db.AlumnoCuatrimestre.Where(ac => ac.AlumnoId == objAlumnoInscrito.AlumnoId
+                                                     && ac.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId
+                                                     && ac.Anio == objAlumnoInscrito.Anio
+                                                     && ac.PeriodoId == objAlumnoInscrito.PeriodoId).ToList().Count == 0)
                 {
-                    AlumnoId = objAlumnoInscrito.AlumnoId,
-                    OfertaEducativaId = objAlumnoInscrito.OfertaEducativaId,
-                    Cuatrimestre = 1,
-                    Anio = objAlumnoInscrito.Anio,
-                    PeriodoId = objAlumnoInscrito.PeriodoId,
-                    esRegular = true,
-                    FechaAsignacion = DateTime.Now,
-                    HoraAsignacion = DateTime.Now.TimeOfDay,
-                    UsuarioId = objAlumnoInscrito.UsuarioId
-                });
-
+                    db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                    {
+                        AlumnoId = objAlumnoInscrito.AlumnoId,
+                        OfertaEducativaId = objAlumnoInscrito.OfertaEducativaId,
+                        Cuatrimestre = 1,
+                        Anio = objAlumnoInscrito.Anio,
+                        PeriodoId = objAlumnoInscrito.PeriodoId,
+                        esRegular = true,
+                        FechaAsignacion = DateTime.Now,
+                        HoraAsignacion = DateTime.Now.TimeOfDay,
+                        UsuarioId = objAlumnoInscrito.UsuarioId
+                    });
+                }
                 //Configuracion Empresa 
                 if (objAlumnoInscrito.EsEmpresa)
                 {

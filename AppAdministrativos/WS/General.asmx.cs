@@ -76,6 +76,13 @@ namespace AppAdministrativos.WS
         {
             return BLLEstadoCivil.ConsultarEstadosCiviles();
         }
+
+        [WebMethod]
+        public List<DTOPeriodo> TraerTodosLosPeriodos()
+        {
+            return BLLPeriodoPortal.TraerPeriodos();
+        }
+
         [WebMethod]
         public List<DTOEntidadFederativa> ConsultarEntidadFederativa()
         {

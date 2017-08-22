@@ -7,6 +7,9 @@ using DAL;
 using DTO;
 using System.Globalization;
 using Utilities;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.Objects;
 
 namespace BLL
 {
@@ -74,6 +77,42 @@ namespace BLL
                 }
 
             }
+        }
+
+        public static List<DTOReporteCarteraVencida> CarteraVencida(int anio, int periodoId, string fechaInicial, string fechaFinal)
+        {
+            DateTime fini = DateTime.ParseExact(fechaInicial, "yyyy/MM/dd", Cultura);
+            DateTime ffin = DateTime.ParseExact(fechaFinal, "yyyy/MM/dd", Cultura);
+
+            fechaInicial = (fini.Day < 10 ? "0" + fini.Day : "" + fini.Day) + "/" +
+                (fini.Month < 10 ? "0" + fini.Month : "" + fini.Month) + "/" + fini.Year;
+
+            fechaFinal = (ffin.Day < 10 ? "0" + ffin.Day : "" + ffin.Day) + "/" +
+                (ffin.Month < 10 ? "0" + ffin.Month : "" + ffin.Month) + "/" + ffin.Year;
+
+
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+
+                    List<DTOReporteCarteraVencida> listaresult = db.spReporteCarteraVencida(anio, periodoId, fini, ffin).ToList()
+                                    .Select(a =>
+                                    new DTOReporteCarteraVencida
+                                    {
+                                        Alumno = a.Alumno,
+                                        Concepto = a.Concepto,
+                                        FechaPago = a.FechaPago,
+                                        Pago = a.Pago,
+                                        Restante = a.Restante,
+                                        Tipo_de_pago = a.Tipo_de_pago
+                                    }).ToList();
+
+
+                    return listaresult;
+                }
+                catch { return null; }
+            }            
         }
 
         public static DTOCuatrimestre CargarCuatrimestre()
