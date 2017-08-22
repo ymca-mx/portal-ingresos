@@ -210,17 +210,25 @@ namespace BLL
                 calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.TotalCol).Sum() });
 
                 ////////////////////////////////////
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.TotalAlumnos).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.AlumnosConBeca).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.CargosInscripcion).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromedioAnticipado_).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromedioBecaInscripcion_).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.TotalDescuentoInscripcion).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.CargosColegiatura).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.BecaDeportivaPromedio_).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromoCasa_).Sum() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.TotalDescuentoColegiatura).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = "Total:" });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.TotalAlumnos).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.AlumnosConBeca).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.CargosInscripcion).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.PromedioAnticipado_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.PromedioBecaInscripcion_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.TotalDescuentoInscripcion).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.CargosColegiatura).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.BecaPromedio_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.BecaDeportivaPromedio_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((int)concentrado.Select(a => a.PromoCasa_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = ((int)concentrado.Select(a => a.TotalDescuentoColegiatura).Sum()).ToString() });
                 
 
                 #endregion

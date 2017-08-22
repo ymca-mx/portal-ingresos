@@ -25,7 +25,7 @@ namespace DTO
     public class DTOBecasCalculos
     {
         public decimal valor { get; set; }
-        public int valor2 { get; set; }
+        public string valor2 { get; set; }
     }
     
 

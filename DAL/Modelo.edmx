@@ -118,7 +118,7 @@
           <Property Name="Documento" Type="varbinary(max)" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoBeca' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoBeca' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoBeca">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -475,7 +475,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoBeca' no tiene defin
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoInscritoBitacoraBKSalome' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoInscritoBitacoraBKSalome' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoInscritoBitacoraBKSalome">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -599,7 +599,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoInscritoBitacoraBKSa
           <Property Name="FechaDocumento" Type="smalldatetime" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoMatricula' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoMatricula' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoMatricula">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -689,7 +689,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoMatricula' no tiene 
           <Property Name="Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoPermitido20162' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoPermitido20162">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -874,7 +874,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoPermitido20162' no t
           <Property Name="HoraAplicacion" Type="time" Precision="0" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.BecaSEPBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.BecaSEPBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="BecaSEPBitacora">
           <Key>
             <PropertyRef Name="PagoId" />
@@ -951,7 +951,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.BecaSEPBitacora' no tiene 
           <Property Name="BajaMaterias" Type="varchar" MaxLength="1000" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.COLEGIATURA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.COLEGIATURA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="COLEGIATURA">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -1327,7 +1327,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.COLEGIATURA' no tiene defi
           <Property Name="EstatusId" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.IdiomasInscrito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.IdiomasInscrito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="IdiomasInscrito">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -1640,7 +1640,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.IdiomasInscrito' no tiene 
           <Property Name="Monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.PagoDescuentoBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PagoDescuentoBitacora">
           <Key>
             <PropertyRef Name="PagoId" />
@@ -2344,7 +2344,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.PagoDescuentoBitacora' no 
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.ReporteEstadoCuentaDescuento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.ReporteEstadoCuentaDescuento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ReporteEstadoCuentaDescuento">
           <Key>
             <PropertyRef Name="PagoConceptoId" />
@@ -2358,7 +2358,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.ReporteEstadoCuentaDescuen
           <Property Name="TipoDescuentoDesc" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.ReporteEstadoCuentaPagosConcepto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.ReporteEstadoCuentaPagosConcepto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ReporteEstadoCuentaPagosConcepto">
           <Key>
             <PropertyRef Name="PagoConceptoID" />
@@ -2389,7 +2389,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.ReporteEstadoCuentaPagosCo
           <Property Name="Comentario" Type="varchar" MaxLength="300" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.Saldos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Saldos">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -2536,7 +2536,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.Saldos' no tiene definida 
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.Tabla2' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.Tabla2' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Tabla2">
           <Key>
             <PropertyRef Name="ConsecutivoId" />
@@ -2601,7 +2601,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.Tabla2' no tiene definida 
           <Property Name="Descripcion" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="UniversidadAdeudo">
           <Key>
             <PropertyRef Name="AlumnoID" />
@@ -2610,7 +2610,7 @@ advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadAdeudo' no tien
           <Property Name="UniversidadAdeudo" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="UniversidadNewAdeudo">
           <Key>
             <PropertyRef Name="AlumnoID" />

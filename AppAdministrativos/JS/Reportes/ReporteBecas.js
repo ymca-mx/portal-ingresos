@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var tblBecaDetalle, tblBecaConcentrado, anio, periodo;
+    var tblBecaDetalle, tblBecaConcentrado, anio, periodo,descripcion;
 
     //inicializar
     CargarCuatrimestre();
@@ -8,6 +8,7 @@
 
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
+        descripcion = $('#slcCuatrimestre option:selected').text();
         CargarReporteBecas(anio, periodo);
 
     });
@@ -126,7 +127,7 @@
                         tfoot.style.backgroundColor = "#3598dc";
                         tfoot.style.color = "white";
                         var nCells = tfoot.getElementsByTagName('th');
-
+                        nCells[2].innerHTML = "Total:";
                         $(calculos1).each(function (d, b) {
                             nCells[d + 3].innerHTML = b.valor;
                         });
@@ -201,7 +202,7 @@
                         var nCells = tfoot.getElementsByTagName('th');
 
                         $(calculos2).each(function (d, b) {
-                            nCells[d + 4].innerHTML = b.valor2;
+                            nCells[d + 1].innerHTML = b.valor2;
                         });
 
                     },
@@ -231,7 +232,7 @@
             exportButtons: false
         });
         var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
-        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
+        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename + " " + descripcion, ExpTable.fileExtension);
 
     }
 
@@ -257,7 +258,7 @@
 
     $('#btnBecas2').on('click', function () {
         setTimeout(
-            Exportar('BecaDetalle', 'BecaConcentrado'), 1000);
+            Exportar('BecaConcentrado'), 1000);
     });
 
 
