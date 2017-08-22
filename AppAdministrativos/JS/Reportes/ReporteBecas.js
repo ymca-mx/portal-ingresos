@@ -3,16 +3,14 @@
 
     //inicializar
     CargarCuatrimestre();
-
-    $("#slcCuatrimestre").change(function () {
-
+    
+    
+    $('#btnBuscar').on('click', function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
         descripcion = $('#slcCuatrimestre option:selected').text();
         CargarReporteBecas(anio, periodo);
-
     });
-
 
     function CargarCuatrimestre() {
         $.ajax({
@@ -40,7 +38,6 @@
                         n++;
                     });
                     $("#slcCuatrimestre").val(n - 2);
-                    //$("#slcCuatrimestre").change();
                 }
 
             }//success
@@ -261,8 +258,59 @@
             Exportar('BecaConcentrado'), 1000);
     });
 
+////exportar 2//////
+
+    $('#btnBecas3').on('click', function () {
+        exportarexcel();
+    });
+
+    function exportarexcel()
+    {
+        //var table = $('#BecaDetalle').dataTable().api();
+        //var data = table.data();
+        //var table1 = $('#tblDatos2').dataTable().api();
+        //var data1 = table1.data();
+        
+
+        //var ws = XLSX.utils.json_to_sheet(data);
+
+        var tbl = document.getElementById('BecaDetalle');
+        var tbl2 = document.getElementById('BecaConcentrado');
+        
+        var ws = XLSX.utils.table_to_sheet(tbl);
+
+        var ws1 = XLSX.utils.table_to_sheet(tbl2);
+
+        var ws_name = "Detalle";
+        var ws_name1 = "Concentrado";
+
+        function Workbook() {
+            if (!(this instanceof Workbook)) return new Workbook();
+            this.SheetNames = [];
+            this.Sheets = {};
+        }
+
+        var wb = new Workbook();
+
+        /* add worksheet to workbook */
+        wb.SheetNames.push(ws_name);
+        wb.SheetNames.push(ws_name1);
+
+        wb.Sheets[ws_name] = ws;
+        wb.Sheets[ws_name1] = ws1;
+
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
 
 
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Reporte Becas " + descripcion+".xlsx");
+    }
 
 
 });

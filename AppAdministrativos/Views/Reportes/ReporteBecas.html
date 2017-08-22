@@ -39,9 +39,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                     <br />
+                                    <button id="btnBuscar" class="form-control btn bg-blue">Consultar</button></div>
+
+                                    <!--<button id="btnBecas3"><img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                    &nbsp;-->
+
 
                                     <div class="col-md-12" style="background-color:aliceblue">
-
 
                                                 <div class="tabbable tabbable-custom tabbable-noborder" >
                                                     <ul class="nav nav-tabs">
@@ -56,15 +62,16 @@
                                                             </a>
                                                         </li>
                                                     </ul>
+
                                                     <div class="tab-content">
-                                                        <div class="tab-pane active table-responsive" id="tab_1">
+                                                        <div class="tab-pane active " id="tab_1">
                                                             <button id="btnBecas"><img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
                                                             &nbsp;
                                                             <label class="control-label"># de Registros :  </label>
                                                             <label class="control-label" id="lbBecas" name="lbBecas"> </label>
                                                             <div>&nbsp;</div>
 
-                                                                <table id="BecaDetalle" name="BecaDetalle" class="table table-striped table-bordered table-advance table-hover ">
+                                                                <table id="BecaDetalle"  name="BecaDetalle" class="table table-striped table-bordered table-advance table-hover table-responsive ">
                                                                     <thead>
                                                                         <tr role="rowheader">
                                                                             <th style="text-align:center" colspan="3" ></th>
@@ -179,14 +186,14 @@
                                                                     </tfoot>
                                                                 </table>
                                                         </div>
-                                                        <div class="tab-pane table-responsive" id="tab_2">
+                                                        <div class="tab-pane" id="tab_2">
                                                             <button id="btnBecas2"><img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
                                                             &nbsp;
                                                             <label class="control-label"># de Registros :  </label>
                                                             <label class="control-label" id="lbBecas2" name="lbBecas2"> </label>
                                                             <div>&nbsp;</div>
 
-                                                            <table id="BecaConcentrado" name="BecaConcentrado" class="table table-striped table-bordered table-advance table-hover ">
+                                                            <table id="BecaConcentrado" name="BecaConcentrado" class="table table-striped table-bordered table-advance table-hover table-responsive">
                                                                 <thead>
                                                                     <tr role="rowheader">
                                                                         <th colspan="4"></th>
@@ -337,14 +344,17 @@
     </div>
     <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 
-    <script src="style/complementos/js-xlsx-master/xlsx.core.js"></script>
+    <!--<script src="style/complementos/js-xlsx-master/xlsx.core.js"></script>
     <script src="style/complementos/blob.js-master/blob.js"></script>
     <script src="style/complementos/filesaver.js-master/filesaver.js"></script>
-    <script src="style/complementos/tableexport.js"></script>
+    <script src="style/complementos/tableexport.js"></script>-->
+
+    <script src="Scripts/js-xlsx/FileSaver.js"></script>
+    <script src="Scripts/js-xlsx/xlsx.full.min.js"></script>
 
 
-    <script src="Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
-    <script src="Style/assets/admin/pages/scripts/table-advanced.js"></script>
+    <!--<script src="Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="Style/assets/admin/pages/scripts/table-advanced.js"></script>-->
     <script src="JS/Reportes/ReporteBecas.js"></script>
 </body>
 </html>
