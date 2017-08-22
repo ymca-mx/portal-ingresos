@@ -34,7 +34,7 @@ namespace BLL
                 {
                     return null;
                 }
-                
+
 
             }
         }//ObtenerReporteAlumnoOferta()
@@ -45,15 +45,15 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOPeriodo2> periodo = db.AlumnoInscrito.Where(d=>  (d.Anio == 2016 && d.PeriodoId >1 ) || d.Anio > 2016)
-                                                                 .GroupBy(b => new { b.Anio, b.PeriodoId ,b.Periodo})
+                    List<DTOPeriodo2> periodo = db.AlumnoInscrito.Where(d => (d.Anio == 2016 && d.PeriodoId > 1) || d.Anio > 2016)
+                                                                 .GroupBy(b => new { b.Anio, b.PeriodoId, b.Periodo })
                                                                  .Select(a => new DTOPeriodo2
-                                                                        {
-                                                                            anio = a.Key.Anio,
-                                                                            periodoId = a.Key.PeriodoId,
-                                                                            descripcion = a.Key.Periodo.Descripcion
-                                                                        })        
-                                                                  .OrderBy(c => new { c.anio, c.periodoId }).ToList();         
+                                                                 {
+                                                                     anio = a.Key.Anio,
+                                                                     periodoId = a.Key.PeriodoId,
+                                                                     descripcion = a.Key.Periodo.Descripcion
+                                                                 })
+                                                                  .OrderBy(c => new { c.anio, c.periodoId }).ToList();
 
                     List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4
                                                                                            && w.Descripcion != "Desconocida"
@@ -96,15 +96,15 @@ namespace BLL
                     int Anio = periodo[0].periodoId == 3 ? periodo[0].anio + 1 : periodo[0].anio;
                     int PeriodoId = periodo[0].periodoId == 3 ? 1 : periodo[0].periodoId + 1;
 
-                periodo.Add(db.Periodo.Select(a => new DTOPeriodo2
-                {
-                    anio = a.Anio,
-                    periodoId = a.PeriodoId,
-                    descripcion = a.Descripcion,
-                    fechaInicial1 = a.FechaInicial,
-                    fechaFinal1 = a.FechaFinal,
-                }
-                ).Where(b => b.anio == Anio && b.periodoId == PeriodoId).FirstOrDefault());  
+                    periodo.Add(db.Periodo.Select(a => new DTOPeriodo2
+                    {
+                        anio = a.Anio,
+                        periodoId = a.PeriodoId,
+                        descripcion = a.Descripcion,
+                        fechaInicial1 = a.FechaInicial,
+                        fechaFinal1 = a.FechaFinal,
+                    }
+                    ).Where(b => b.anio == Anio && b.periodoId == PeriodoId).FirstOrDefault());
 
 
                     periodo = periodo.Select(
@@ -116,12 +116,12 @@ namespace BLL
                            fechaInicial = a.fechaInicial1.ToString("dd/MM/yyyy", Cultura),
                            fechaFinal = a.fechaFinal1.ToString("dd/MM/yyyy", Cultura)
                        }
-                       ).OrderByDescending(b=> b.anio).ThenByDescending(c=> c.periodoId).ToList();
+                       ).OrderByDescending(b => b.anio).ThenByDescending(c => c.periodoId).ToList();
 
-                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4 
-                                                                                           && w.Descripcion != "Desconocida" 
-                                                                                           && w.SucursalId!=4
-                                                                                           && w.OfertaEducativaId !=48 ).OrderBy(g => g.OfertaEducativaTipoId).Select(o =>
+                    List<DTOOfertaEducativa2> ofertaEducativa = db.OfertaEducativa.Where(w => w.OfertaEducativaTipoId != 4
+                                                                                           && w.Descripcion != "Desconocida"
+                                                                                           && w.SucursalId != 4
+                                                                                           && w.OfertaEducativaId != 48).OrderBy(g => g.OfertaEducativaTipoId).Select(o =>
                         new DTOOfertaEducativa2
                         {
                             ofertaEducativaId = o.OfertaEducativaId,
@@ -135,6 +135,64 @@ namespace BLL
                 {
                     return null;
                 }
+
+            }
+        }
+
+        public static DTOReporteBecas CargarReporteBecas(int anio, int periodo)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                List<spReporteBecasDetalle> detalle = db.spReporteBecasDetalle(anio, periodo).ToList();
+                List<spReporteBecasConcentrado> concentrado = db.spReporteBecasConcentrado(anio, periodo).ToList();
+                List<DTOBecasCalculos> calculos1 = new List<DTOBecasCalculos>();
+
+                #region CALCULOS
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.CostoIns).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoIns).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoInsPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaIns).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaInsPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalIns).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalInsPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.TotalIns).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.CostoCol).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoCol).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoColPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaCol).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaColPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaDeportiva).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaDeportivaPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.PromoCasa).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.PromoCasaPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalCol).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalColPor).Average() });
+                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.TotalCol).Sum() });
+
+                concentrado.Add(new spReporteBecasConcentrado()
+                {
+                    Descripcion = "Total:",
+                    TotalAlumnos = (int)concentrado.Select(a => a.TotalAlumnos).Sum(),
+                    AlumnosConBeca = (int)concentrado.Select(a => a.AlumnosConBeca).Sum(),
+                    CargosInscripcion = (int)concentrado.Select(a => a.CargosInscripcion).Sum(),
+                    PromedioAnticipado_ = (int)concentrado.Select(a => a.PromedioAnticipado_).Sum(),
+                    PromedioBecaInscripcion_ = (int)concentrado.Select(a => a.PromedioBecaInscripcion_).Sum(),
+                    TotalDescuentoInscripcion = (int)concentrado.Select(a => a.TotalDescuentoInscripcion).Sum(),
+                    CargosColegiatura = (int)concentrado.Select(a => a.CargosColegiatura).Sum(),
+                    PromedioAnticipado_Colegiatura = (int)concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum(),
+                    BecaDeportivaPromedio_ = (int)concentrado.Select(a => a.BecaDeportivaPromedio_).Sum(),
+                    PromoCasa_ = (int)concentrado.Select(a => a.PromoCasa_).Sum(),
+                    TotalDescuentoColegiatura = (int)concentrado.Select(a => a.TotalDescuentoColegiatura).Sum()
+                });
+
+                #endregion
+                
+                DTOReporteBecas reporteBecas = new DTOReporteBecas();
+
+                reporteBecas.Detalle = detalle;
+                reporteBecas.Concentrado = concentrado;
+                reporteBecas.Calculos1 = calculos1;
+                return reporteBecas;
                 
             }
         }

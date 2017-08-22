@@ -165,17 +165,18 @@ namespace Pruebas
         {
             DTOAlumnoCambioCarrera Cambio = new DTOAlumnoCambioCarrera
             {
-                AlumnoId = 8053,
-                OfertaEducativaIdActual = 12,
-                OfertaEducativaIdNueva= 11,
+                AlumnoId = 8301,
+                OfertaEducativaIdActual = 48,
+                OfertaEducativaIdNueva= 24,
                 Anio=2017,
                 PeriodoId = 3,
                 Observaciones = "Por error relaciones publicas",
                 UsuarioId =  8289
             };
-           
+
 
             BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
+            
 
         }
 

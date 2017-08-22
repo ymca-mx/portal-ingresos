@@ -158,6 +158,7 @@
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
+    <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
     <Content Include="login.html" />
     <Content Include="Documentos\Manuales\Manual Generacion Semestres.pdf" />
@@ -4770,6 +4771,7 @@
     <Content Include="Views\packages.config" />
     <Content Include="Views\Adeudos\Biblioteca.html" />
     <Content Include="Views\Adeudos\Chocolates.html" />
+    <Content Include="Views\Reportes\ReporteBecas.html" />
     <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
     <Content Include="WS\Alumno.asmx" />
     <Content Include="WS\Beca.asmx" />

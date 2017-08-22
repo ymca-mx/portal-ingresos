@@ -198,6 +198,8 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimiento> TipoMovimiento { get; set; }
         public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
@@ -251,6 +253,7 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
+        public virtual DbSet<Tabla2> Tabla2 { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
         public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
@@ -312,6 +315,53 @@ namespace DAL
                 new ObjectParameter("anio", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spConceptoDescuento", conceptoPagoIdParameter, alumnoIdParameter, periodoParameter, anioParameter);
+        }
+    
+        public virtual int SPU_Pagod(Nullable<int> pagoId, Nullable<int> estatusId, Nullable<int> fCUSUARIO, string fCOBSERVACIONES)
+        {
+            var pagoIdParameter = pagoId.HasValue ?
+                new ObjectParameter("PagoId", pagoId) :
+                new ObjectParameter("PagoId", typeof(int));
+    
+            var estatusIdParameter = estatusId.HasValue ?
+                new ObjectParameter("EstatusId", estatusId) :
+                new ObjectParameter("EstatusId", typeof(int));
+    
+            var fCUSUARIOParameter = fCUSUARIO.HasValue ?
+                new ObjectParameter("FCUSUARIO", fCUSUARIO) :
+                new ObjectParameter("FCUSUARIO", typeof(int));
+    
+            var fCOBSERVACIONESParameter = fCOBSERVACIONES != null ?
+                new ObjectParameter("FCOBSERVACIONES", fCOBSERVACIONES) :
+                new ObjectParameter("FCOBSERVACIONES", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPU_Pagod", pagoIdParameter, estatusIdParameter, fCUSUARIOParameter, fCOBSERVACIONESParameter);
+        }
+    
+        public virtual ObjectResult<spReporteBecasConcentrado> spReporteBecasConcentrado(Nullable<int> anio, Nullable<int> periodoId)
+        {
+            var anioParameter = anio.HasValue ?
+                new ObjectParameter("anio", anio) :
+                new ObjectParameter("anio", typeof(int));
+    
+            var periodoIdParameter = periodoId.HasValue ?
+                new ObjectParameter("periodoId", periodoId) :
+                new ObjectParameter("periodoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteBecasConcentrado>("spReporteBecasConcentrado", anioParameter, periodoIdParameter);
+        }
+    
+        public virtual ObjectResult<spReporteBecasDetalle> spReporteBecasDetalle(Nullable<int> anio, Nullable<int> periodoId)
+        {
+            var anioParameter = anio.HasValue ?
+                new ObjectParameter("anio", anio) :
+                new ObjectParameter("anio", typeof(int));
+    
+            var periodoIdParameter = periodoId.HasValue ?
+                new ObjectParameter("periodoId", periodoId) :
+                new ObjectParameter("periodoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteBecasDetalle>("spReporteBecasDetalle", anioParameter, periodoIdParameter);
         }
     }
 }

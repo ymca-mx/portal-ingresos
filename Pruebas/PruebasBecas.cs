@@ -16,10 +16,12 @@ namespace Pruebas
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
 
+
+
         [TestMethod]
         public void AlumnoDatos()
         {
-            
+
             //BLL.BLLAlumno.ObtenerAlumno(8174);
             //BLL.BLLPago.ConsultarAdeudo(8176);
             //BLL.BLLAlumno.ObtenerAlumnoCompleto(5945);
@@ -92,7 +94,7 @@ namespace Pruebas
                 //    {
                 //        s.Descripcion = string.Join(" / ", s.OfertasEducativas.ToArray());
                 //    });
-               
+
             }
 
         }
@@ -105,19 +107,19 @@ namespace Pruebas
                 db.Configuration.LazyLoadingEnabled = false;
 
                 var obj = ((from a in db.Alumno
-                                where a.EstatusId != 3
-                                //where a.FechaRegistro.Year >= DateTime.Now.Year - 7
-                                select new DTO.DTOAlumnoLigero
-                                {
-                                    AlumnoId = a.AlumnoId,
-                                    Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
-                                    FechaRegistro = a.FechaRegistro.ToString(),
-                                    Usuario = a.Usuario.Nombre,
-                                    OfertasEducativas = a.AlumnoInscrito
-                                                       .Select(AI => AI.OfertaEducativa.Descripcion)
-                                                           .ToList()
-                                }).AsNoTracking().ToList());
-               
+                            where a.EstatusId != 3
+                            //where a.FechaRegistro.Year >= DateTime.Now.Year - 7
+                            select new DTO.DTOAlumnoLigero
+                            {
+                                AlumnoId = a.AlumnoId,
+                                Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                                FechaRegistro = a.FechaRegistro.ToString(),
+                                Usuario = a.Usuario.Nombre,
+                                OfertasEducativas = a.AlumnoInscrito
+                                                   .Select(AI => AI.OfertaEducativa.Descripcion)
+                                                       .ToList()
+                            }).AsNoTracking().ToList());
+
             }
 
         }
@@ -126,13 +128,13 @@ namespace Pruebas
         {
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
-            {    
+            {
                 alumnoId = 6496,
                 anio = 2017,
                 periodoId = 3,
                 ofertaEducativaId = 5,
                 porcentajeBeca = 62.87m, //70.15
-                porcentajeInscripcion =0m,
+                porcentajeInscripcion = 0m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
@@ -140,8 +142,8 @@ namespace Pruebas
                 fecha = "2017-05-19", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
 
-            //    //Colegiatura = decimal
-            //    //Inscripcion = decimal
+                //    //Colegiatura = decimal
+                //    //Inscripcion = decimal
             };
 
             BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(Alumno, false);
@@ -1754,7 +1756,7 @@ namespace Pruebas
             });
             Errores.ForEach(i => Console.WriteLine("{0}\t", i));
             //7589 Sin ningun descuento
-            DTO.Alumno.Beca.DTOAlumnoBeca Alumno = 
+            DTO.Alumno.Beca.DTOAlumnoBeca Alumno =
             new DTO.Alumno.Beca.DTOAlumnoBeca
             {
                 alumnoId = 7992,
@@ -1778,7 +1780,7 @@ namespace Pruebas
         [TestMethod]
         public void GenerarReferencias()
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 var lstpagos = db.Pago.Where(o => o.ReferenciaId.Length < 1).ToList();
                 lstpagos.ForEach(p =>
@@ -1793,7 +1795,7 @@ namespace Pruebas
         [TestMethod]
         public void PuebasDatosAlumno()
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
 
                 var fechaactual = DateTime.Now;
@@ -1819,7 +1821,7 @@ namespace Pruebas
         [TestMethod]
         public void PuebasPromocionCasa()
         {
-            
+
             DTOAlumnoPromocionCasa Promocion = new DTOAlumnoPromocionCasa
             {
                 AlumnoId = 7486,
@@ -1841,9 +1843,9 @@ namespace Pruebas
         }
 
         [TestMethod]
-      public void AlumnosVariados()
+        public void AlumnosVariados()
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 var AlumnoTodos = db.Alumno
                                         .Where(k =>
@@ -1866,31 +1868,31 @@ namespace Pruebas
                                                                                              ).ToList().Count > 0
                                                                         ).ToList().Count > 0).ToList();
 
-                
-                var alumnoTodos2= db.Alumno
+
+                var alumnoTodos2 = db.Alumno
                                         .Where(k =>
                                                k.AlumnoInscrito
                                                         .Where(ai =>
                                                                 ai.Anio == 2017
                                                                 && ai.PeriodoId == 2
                                                                 && ai.OfertaEducativa.OfertaEducativaTipoId != 4
-                                                                && ai.PagoPlanId!=null
+                                                                && ai.PagoPlanId != null
                                                                 && db.AlumnoInscritoBitacora
                                                                         .Where(AIB => ai.AlumnoId == AIB.AlumnoId
                                                                                             && AIB.OfertaEducativaId == ai.OfertaEducativaId
-                                                                                            && ( AIB.Anio != ai.Anio
+                                                                                            && (AIB.Anio != ai.Anio
                                                                                             || (AIB.Anio == ai.Anio && AIB.PeriodoId != ai.PeriodoId))
                                                                                              && AIB.OfertaEducativa.OfertaEducativaTipoId != 4).ToList().Count == 0
-                                                                        ).ToList().Count > 0).Select ( P=> 
-                                                                        new DTO.DTOAlumno
-                                                                        {
-                                                                             AlumnoId=P.AlumnoId,
-                                                                             AlumnoOfertaEducativa=P.AlumnoInscrito
-                                                                                                    .Where(o=>o.Anio ==2017 
-                                                                                                        && o.PeriodoId ==2 ).FirstOrDefault().OfertaEducativaId
-                                                                        }).ToList();
+                                                                        ).ToList().Count > 0).Select(P =>
+                                                                      new DTO.DTOAlumno
+                                                                      {
+                                                                          AlumnoId = P.AlumnoId,
+                                                                          AlumnoOfertaEducativa = P.AlumnoInscrito
+                                                                                                  .Where(o => o.Anio == 2017
+                                                                                                      && o.PeriodoId == 2).FirstOrDefault().OfertaEducativaId
+                                                                      }).ToList();
                 Console.WriteLine("insert into #AlumnosNue Values");
-                alumnoTodos2.ForEach(i => Console.WriteLine("{0}\t", ",("+i.AlumnoId + ", " + i.AlumnoOfertaEducativa + ",2017,2)"));
+                alumnoTodos2.ForEach(i => Console.WriteLine("{0}\t", ",(" + i.AlumnoId + ", " + i.AlumnoOfertaEducativa + ",2017,2)"));
                 Console.WriteLine("Todos");
             }
         }
@@ -1903,57 +1905,69 @@ namespace Pruebas
                 var anio = 2017;
                 var periodoid = 2;
 
- var todos = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
-                                                                      && ar.PeriodoId == periodoid
-                                                                      && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
+                var todos = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
+                                                                                     && ar.PeriodoId == periodoid
+                                                                                     && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
 
-                                            || a.AlumnoInscrito.Where(ai => ai.Anio == anio
-                                                                      && ai.PeriodoId == periodoid
-                                                                      && ai.OfertaEducativa.OfertaEducativaTipoId != 4
-                                                                      && db.AlumnoInscritoBitacora.Where(aib => aib.AlumnoId == ai.AlumnoId
-                                                                                                         && aib.OfertaEducativaId == ai.OfertaEducativaId
-                                                                                                         && (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count() > 0
-                                                                      ).Count() > 0)
-                                   .Select(b => new DTOAlumnosVoBo
-                                   {
-                                       AlumnoId = b.AlumnoId,
-                                       Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                       AlumnoInscrito = b.AlumnoInscrito.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
-                                       AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
-                                       AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault()
-                                   }).ToList();
+                                                           || a.AlumnoInscrito.Where(ai => ai.Anio == anio
+                                                                                     && ai.PeriodoId == periodoid
+                                                                                     && ai.OfertaEducativa.OfertaEducativaTipoId != 4
+                                                                                     && db.AlumnoInscritoBitacora.Where(aib => aib.AlumnoId == ai.AlumnoId
+                                                                                                                        && aib.OfertaEducativaId == ai.OfertaEducativaId
+                                                                                                                        && (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count() > 0
+                                                                                     ).Count() > 0)
+                                                  .Select(b => new DTOAlumnosVoBo
+                                                  {
+                                                      AlumnoId = b.AlumnoId,
+                                                      Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                      AlumnoInscrito = b.AlumnoInscrito.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                                                      AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                                                      AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault()
+                                                  }).ToList();
 
 
-        var todos1 = todos.Select(td => new DTOReporteVoBo
-        {
-            AlumnoId = td.AlumnoId,
-            Nombre = td.Nombre,
-            OfertaEducativaid = td.AlumnoInscrito?.OfertaEducativaId ?? td.AlumnoRevision.OfertaEducativaId,
-            OfertaEducativa = td.AlumnoInscrito?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.OfertaEducativa.Descripcion,
-            Inscrito = td.AlumnoInscrito != null ? "Si" : "No",
-            FechaInscrito = td.AlumnoInscritoBitacora?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? td.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? "-",
-            HoraInscrito = td.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? td.AlumnoInscrito?.HoraInscripcion.ToString() ?? "-",
-            UsuarioInscribio = td.AlumnoInscritoBitacora != null ? td.AlumnoInscritoBitacora.Usuario.Paterno + " " + td.AlumnoInscritoBitacora.Usuario.Materno + " " + td.AlumnoInscritoBitacora.Usuario.Nombre
-               : td.AlumnoInscrito != null ? td.AlumnoInscrito.Usuario.Paterno + " " + td.AlumnoInscrito.Usuario.Materno + " " + td.AlumnoInscrito.Usuario.Nombre : "-",
-            FechaVoBo = td.AlumnoRevision?.FechaRevision.ToString("dd/MM/yyyy", Cultura) ?? "-",
-            HoraVoBo = td.AlumnoRevision?.HoraRevision.ToString() ?? "-",
-            InscripcionCompleta = td.AlumnoRevision?.InscripcionCompleta == true ? "Si" : td.AlumnoRevision?.InscripcionCompleta == false ? "No" : "-",
-            Asesorias = td.AlumnoRevision?.AsesoriaEspecial.ToString() ?? "-",
-            Materias = td.AlumnoRevision?.AdelantoMateria.ToString() ?? "-",
-            UsuarioVoBo = td.AlumnoRevision != null ? td.AlumnoRevision.Usuario.Paterno + " " + td.AlumnoRevision.Usuario.Materno + " " + td.AlumnoRevision.Usuario.Nombre : "-"
-        }).ToList();
+                var todos1 = todos.Select(td => new DTOReporteVoBo
+                {
+                    AlumnoId = td.AlumnoId,
+                    Nombre = td.Nombre,
+                    OfertaEducativaid = td.AlumnoInscrito?.OfertaEducativaId ?? td.AlumnoRevision.OfertaEducativaId,
+                    OfertaEducativa = td.AlumnoInscrito?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.OfertaEducativa.Descripcion,
+                    Inscrito = td.AlumnoInscrito != null ? "Si" : "No",
+                    FechaInscrito = td.AlumnoInscritoBitacora?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? td.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? "-",
+                    HoraInscrito = td.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? td.AlumnoInscrito?.HoraInscripcion.ToString() ?? "-",
+                    UsuarioInscribio = td.AlumnoInscritoBitacora != null ? td.AlumnoInscritoBitacora.Usuario.Paterno + " " + td.AlumnoInscritoBitacora.Usuario.Materno + " " + td.AlumnoInscritoBitacora.Usuario.Nombre
+                       : td.AlumnoInscrito != null ? td.AlumnoInscrito.Usuario.Paterno + " " + td.AlumnoInscrito.Usuario.Materno + " " + td.AlumnoInscrito.Usuario.Nombre : "-",
+                    FechaVoBo = td.AlumnoRevision?.FechaRevision.ToString("dd/MM/yyyy", Cultura) ?? "-",
+                    HoraVoBo = td.AlumnoRevision?.HoraRevision.ToString() ?? "-",
+                    InscripcionCompleta = td.AlumnoRevision?.InscripcionCompleta == true ? "Si" : td.AlumnoRevision?.InscripcionCompleta == false ? "No" : "-",
+                    Asesorias = td.AlumnoRevision?.AsesoriaEspecial.ToString() ?? "-",
+                    Materias = td.AlumnoRevision?.AdelantoMateria.ToString() ?? "-",
+                    UsuarioVoBo = td.AlumnoRevision != null ? td.AlumnoRevision.Usuario.Paterno + " " + td.AlumnoRevision.Usuario.Materno + " " + td.AlumnoRevision.Usuario.Nombre : "-"
+                }).ToList();
             }
         }
-               
+
         [TestMethod]
         public void CancelarPago()
         {
-                int PagoId = 40037;
-                int UsuarioId = 8272;
-                string Comentario = "El concepto era para pago de colegiaturas.";
+            int PagoId = 40037;
+            int UsuarioId = 8272;
+            string Comentario = "El concepto era para pago de colegiaturas.";
 
-                BLL.BLLCargo.CancelarTotal(PagoId, UsuarioId, Comentario);
-          
+            BLL.BLLCargo.CancelarTotal(PagoId, UsuarioId, Comentario);
+
+        }
+
+
+        [TestMethod]
+        public void reportesPuebas()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                List<spReporteBecasDetalle> detalle = db.spReporteBecasDetalle(2017, 3).ToList();
+                List<spReporteBecasConcentrado> concentrado = db.spReporteBecasConcentrado(2017, 3).ToList();
+            }
+
         }
     }
 

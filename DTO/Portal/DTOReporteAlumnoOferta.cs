@@ -14,6 +14,69 @@ namespace DTO
         public string ultimoAnio { get; set; }
     }
 
+    public class DTOReporteBecas
+    {
+        public List<spReporteBecasDetalle> Detalle { get; set; }
+        public List<spReporteBecasConcentrado> Concentrado { get; set;}
+        public List< DTOBecasCalculos> Calculos1 { get; set; }
+    }
+
+    public class DTOBecasCalculos
+    {
+        public decimal valor { get; set; }
+    }
+
+    //public  class DTOBecasDetalle
+    //{
+    //    public Nullable<int> AlumnoId { get; set; }
+    //    public Nullable<int> OfertaEducativaId { get; set; }
+    //    public string Descripcion { get; set; }
+    //    public Nullable<decimal> CostoIns { get; set; }
+    //    public Nullable<int> AnticipadoIns { get; set; }
+    //    public Nullable< decimal> AnticipadoInsPor { get; set; }
+    //    public Nullable<int> BecaIns { get; set; }
+    //    public string BecaInsPor { get; set; }
+    //    public Nullable<decimal> DesTotalIns { get; set; }
+    //    public string DesTotalInsPor { get; set; }
+    //    public Nullable<decimal> TotalIns { get; set; }
+    //    public Nullable<decimal> CostoCol { get; set; }
+    //    public Nullable<int> AnticipadoCol { get; set; }
+    //    public string AnticipadoColPor { get; set; }
+    //    public Nullable<int> BecaCol { get; set; }
+    //    public string BecaColPor { get; set; }
+    //    public Nullable<int> BecaDeportiva { get; set; }
+    //    public string BecaDeportivaPor { get; set; }
+    //    public Nullable<int> PromoCasa { get; set; }
+    //    public string PromoCasaPor { get; set; }
+    //    public Nullable<decimal> DesTotalCol { get; set; }
+    //    public string DesTotalColPor { get; set; }
+    //    public Nullable<decimal> TotalCol { get; set; }
+    //    public string EsEmpresa { get; set; }
+    //}
+
+    //public class DTOBecasConcentrado
+    //{
+    //    public string Descripcion { get; set; }
+    //    public Nullable<int> TotalAlumnos { get; set; }
+    //    public Nullable<int> AlumnosConBeca { get; set; }
+    //    public Nullable<decimal> CargosInscripcion { get; set; }
+    //    public string PromedioAnticipadoPor { get; set; }
+    //    public Nullable<int> PromedioAnticipado_ { get; set; }
+    //    public string PromedioBecaInscripcionPor { get; set; }
+    //    public Nullable<int> PromedioBecaInscripcion_ { get; set; }
+    //    public Nullable<decimal> TotalDescuentoInscripcion { get; set; }
+    //    public Nullable<decimal> CargosColegiatura { get; set; }
+    //    public string PromedioAnticipadoPorColegiatura { get; set; }
+    //    public Nullable<int> PromedioAnticipado_Colegiatura { get; set; }
+    //    public string BecaPromedioPor { get; set; }
+    //    public Nullable<int> BecaPromedio_ { get; set; }
+    //    public string BecaDeportivaPor { get; set; }
+    //    public Nullable<int> BecaDeportivaPromedio_ { get; set; }
+    //    public string PromoCasaPor { get; set; }
+    //    public Nullable<int> PromoCasa_ { get; set; }
+    //    public Nullable<decimal> TotalDescuentoColegiatura { get; set; }
+    //}
+
     public class DTOCuatrimestre
     {
         public List<DTOPeriodo2> periodos { get; set; }
@@ -53,6 +116,9 @@ namespace DTO
         public string horaGeneracion { get; set; }
         public string usuarioAplico { get; set; }
     }
+
+    
+
     public class DTOReporteInscrito
     {
         public int alumnoId { get; set; }

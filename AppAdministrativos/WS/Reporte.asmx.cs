@@ -37,7 +37,11 @@ namespace AppAdministrativos.WS
             return BLLReportePortal.CargarCuatrimestreHistorico();
         }
 
-        
+        [WebMethod]
+        public DTOReporteBecas CargarReporteBecas(int anio, int periodo)
+        {
+            return BLLReportePortal.CargarReporteBecas(anio, periodo);
+        }
 
         [WebMethod]
         public List<DTOReporteBecasCuatrimestre> CargaReporteBecaCuatrimestre(int anio, int periodo)
@@ -56,8 +60,7 @@ namespace AppAdministrativos.WS
         {
             return BLLReportePortal.CargaReporteBecaSep(anio, periodo);
         }
-
-
+        
         [WebMethod]
         public List<DTOReporteInegi> CargaReporteIneg(int anio, int periodo)
         {
@@ -69,18 +72,18 @@ namespace AppAdministrativos.WS
         {
             return BLLReportePortal.CargaReporteAlumnoReferencia(anio, periodo);
         }
+
         [WebMethod]
         public DTOVoBo CargarReporteVoBo(int anio, int periodoid, int usuarioid)
         {
             return BLLReportePortal.CargarReporteVoBo(anio, periodoid,usuarioid);
         }
+
         [WebMethod]
         public bool ReporteVoBoEnviarEmail(int AlumnoId, string EmailAlumno)
         {
             return BLLReportePortal.ReporteVoBoEnviarEmail(AlumnoId, EmailAlumno);
         }
-
-
-
+        
     }
 }
