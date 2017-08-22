@@ -175,6 +175,8 @@
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\js-xlsx\FileSaver.js" />
+    <Content Include="Scripts\js-xlsx\xlsx.full.min.js" />
     <Content Include="Style\assets\admin\layout2\css\custom.css" />
     <Content Include="Style\assets\admin\layout2\css\layout.css" />
     <Content Include="Style\assets\admin\layout2\css\themes\blue.css" />
