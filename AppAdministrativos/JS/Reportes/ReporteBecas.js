@@ -275,6 +275,7 @@
         //var ws = XLSX.utils.json_to_sheet(data);
 
         var tbl = document.getElementById('BecaDetalle');
+
         var tbl2 = document.getElementById('BecaConcentrado');
         
         var ws = XLSX.utils.table_to_sheet(tbl);
