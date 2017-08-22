@@ -185,6 +185,7 @@ namespace BLL
                 List<spReporteBecasDetalle> detalle = db.spReporteBecasDetalle(anio, periodo).ToList();
                 List<spReporteBecasConcentrado> concentrado = db.spReporteBecasConcentrado(anio, periodo).ToList();
                 List<DTOBecasCalculos> calculos1 = new List<DTOBecasCalculos>();
+                List<DTOBecasCalculos> calculos2 = new List<DTOBecasCalculos>();
 
                 #region CALCULOS
                 calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.CostoIns).Sum() });
@@ -208,21 +209,19 @@ namespace BLL
                 calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalColPor).Average() });
                 calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.TotalCol).Sum() });
 
-                concentrado.Add(new spReporteBecasConcentrado()
-                {
-                    Descripcion = "Total:",
-                    TotalAlumnos = (int)concentrado.Select(a => a.TotalAlumnos).Sum(),
-                    AlumnosConBeca = (int)concentrado.Select(a => a.AlumnosConBeca).Sum(),
-                    CargosInscripcion = (int)concentrado.Select(a => a.CargosInscripcion).Sum(),
-                    PromedioAnticipado_ = (int)concentrado.Select(a => a.PromedioAnticipado_).Sum(),
-                    PromedioBecaInscripcion_ = (int)concentrado.Select(a => a.PromedioBecaInscripcion_).Sum(),
-                    TotalDescuentoInscripcion = (int)concentrado.Select(a => a.TotalDescuentoInscripcion).Sum(),
-                    CargosColegiatura = (int)concentrado.Select(a => a.CargosColegiatura).Sum(),
-                    PromedioAnticipado_Colegiatura = (int)concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum(),
-                    BecaDeportivaPromedio_ = (int)concentrado.Select(a => a.BecaDeportivaPromedio_).Sum(),
-                    PromoCasa_ = (int)concentrado.Select(a => a.PromoCasa_).Sum(),
-                    TotalDescuentoColegiatura = (int)concentrado.Select(a => a.TotalDescuentoColegiatura).Sum()
-                });
+                ////////////////////////////////////
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.TotalAlumnos).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.AlumnosConBeca).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.CargosInscripcion).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromedioAnticipado_).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromedioBecaInscripcion_).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.TotalDescuentoInscripcion).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.CargosColegiatura).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.BecaDeportivaPromedio_).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.PromoCasa_).Sum() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = (int)concentrado.Select(a => a.TotalDescuentoColegiatura).Sum() });
+                
 
                 #endregion
                 
@@ -231,6 +230,7 @@ namespace BLL
                 reporteBecas.Detalle = detalle;
                 reporteBecas.Concentrado = concentrado;
                 reporteBecas.Calculos1 = calculos1;
+                reporteBecas.Calculos2 = calculos2;
                 return reporteBecas;
                 
             }

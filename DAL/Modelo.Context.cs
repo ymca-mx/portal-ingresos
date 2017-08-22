@@ -317,7 +317,28 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spConceptoDescuento", conceptoPagoIdParameter, alumnoIdParameter, periodoParameter, anioParameter);
         }
     
-        public virtual ObjectResult<spReporteCarteraVencida_Result> spReporteCarteraVencida(Nullable<int> anio, Nullable<int> periodoId, Nullable<System.DateTime> fechaInicial, Nullable<System.DateTime> fechaFinal)
+        public virtual int SPU_Pagod(Nullable<int> pagoId, Nullable<int> estatusId, Nullable<int> fCUSUARIO, string fCOBSERVACIONES)
+        {
+            var pagoIdParameter = pagoId.HasValue ?
+                new ObjectParameter("PagoId", pagoId) :
+                new ObjectParameter("PagoId", typeof(int));
+    
+            var estatusIdParameter = estatusId.HasValue ?
+                new ObjectParameter("EstatusId", estatusId) :
+                new ObjectParameter("EstatusId", typeof(int));
+    
+            var fCUSUARIOParameter = fCUSUARIO.HasValue ?
+                new ObjectParameter("FCUSUARIO", fCUSUARIO) :
+                new ObjectParameter("FCUSUARIO", typeof(int));
+    
+            var fCOBSERVACIONESParameter = fCOBSERVACIONES != null ?
+                new ObjectParameter("FCOBSERVACIONES", fCOBSERVACIONES) :
+                new ObjectParameter("FCOBSERVACIONES", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPU_Pagod", pagoIdParameter, estatusIdParameter, fCUSUARIOParameter, fCOBSERVACIONESParameter);
+        }
+    
+        public virtual ObjectResult<spReporteBecasConcentrado> spReporteBecasConcentrado(Nullable<int> anio, Nullable<int> periodoId)
         {
             var anioParameter = anio.HasValue ?
                 new ObjectParameter("anio", anio) :
@@ -327,15 +348,20 @@ namespace DAL
                 new ObjectParameter("periodoId", periodoId) :
                 new ObjectParameter("periodoId", typeof(int));
     
-            var fechaInicialParameter = fechaInicial.HasValue ?
-                new ObjectParameter("fechaInicial", fechaInicial) :
-                new ObjectParameter("fechaInicial", typeof(System.DateTime));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteBecasConcentrado>("spReporteBecasConcentrado", anioParameter, periodoIdParameter);
+        }
     
-            var fechaFinalParameter = fechaFinal.HasValue ?
-                new ObjectParameter("fechaFinal", fechaFinal) :
-                new ObjectParameter("fechaFinal", typeof(System.DateTime));
+        public virtual ObjectResult<spReporteBecasDetalle> spReporteBecasDetalle(Nullable<int> anio, Nullable<int> periodoId)
+        {
+            var anioParameter = anio.HasValue ?
+                new ObjectParameter("anio", anio) :
+                new ObjectParameter("anio", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteCarteraVencida_Result>("spReporteCarteraVencida", anioParameter, periodoIdParameter, fechaInicialParameter, fechaFinalParameter);
+            var periodoIdParameter = periodoId.HasValue ?
+                new ObjectParameter("periodoId", periodoId) :
+                new ObjectParameter("periodoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteBecasDetalle>("spReporteBecasDetalle", anioParameter, periodoIdParameter);
         }
     }
 }

@@ -39,7 +39,7 @@
                         n++;
                     });
                     $("#slcCuatrimestre").val(n - 2);
-                    $("#slcCuatrimestre").change();
+                    //$("#slcCuatrimestre").change();
                 }
 
             }//success
@@ -63,13 +63,9 @@
                     return false;
                 }
                 var calculos1 = data.d.Calculos1;
+                var calculos2 = data.d.Calculos2;
                 var detalle = data.d.Detalle;
                 var concentrado = data.d.Concentrado;
-
-                $(calculos1).each(function (d,b)
-                {
-                    $("#th" + (d + 1)).text(b.valor);
-                });
 
                 tblBecaDetalle = $("#BecaDetalle").DataTable({
                     "aaData": detalle,
@@ -124,8 +120,19 @@
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'right';
-                    }
-                    , "fnDrawCallback": function (oSettings) {
+                    },
+                    "fnFooterCallback": function (tfoot, data, start, end, display)
+                    {
+                        tfoot.style.backgroundColor = "#3598dc";
+                        tfoot.style.color = "white";
+                        var nCells = tfoot.getElementsByTagName('th');
+
+                        $(calculos1).each(function (d, b) {
+                            nCells[d + 3].innerHTML = b.valor;
+                        });
+
+                    },
+                    "fnDrawCallback": function (oSettings) {
                         var registros = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros);
                     }
@@ -137,11 +144,9 @@
                     "aaData": concentrado,
                     "aoColumns": [
                         {
-                            "mRender": function (columna, Data, d) {
-                                if (d.Descripcion != "Total:"){
+                            "mRender": function ( Data) {
                                     n = n + 1
                                     return n;
-                                } else { return ""; }
                             }
                         },
                         { "mDataProp": "Descripcion" },
@@ -189,8 +194,18 @@
                     "createdRow": function (row, data, dataIndex) {
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'right';
-                    }
-                    , "fnDrawCallback": function (oSettings) {
+                    },
+                    "fnFooterCallback": function (tfoot, data, start, end, display) {
+                        tfoot.style.backgroundColor = "#3598dc";
+                        tfoot.style.color = "white";
+                        var nCells = tfoot.getElementsByTagName('th');
+
+                        $(calculos2).each(function (d, b) {
+                            nCells[d + 4].innerHTML = b.valor2;
+                        });
+
+                    },
+                    "fnDrawCallback": function (oSettings) {
                         var registros = oSettings.aiDisplay.length;
                         $('#lbBecas2').text(registros);
                     }
