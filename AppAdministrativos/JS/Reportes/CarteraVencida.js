@@ -103,65 +103,7 @@
                 }
             });
         },
-        TraerDatos2: function () {            
-            var datos = {
-                Anio: 2018,
-                PeriodoId: 1,
-                FechaInicial: $('#calInicial').val(),
-                FechaFinal: $('#calFinal').val()
-            };
-
-            datos = JSON.stringify(datos);
-            $.ajax({
-                url: 'WS/Reporte.asmx/CarteraVencida',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: datos,
-                dataType: 'json',
-                success: function (Respuesta) {
-                    if (Respuesta.d !== null) {
-                        Funciones.tblDatos2 = $('#tblDatos2').dataTable({
-                            "aaData": Respuesta.d,
-                            "aoColumns": [
-                                { "mDataProp": "Alumno" },
-                                { "mDataProp": "FechaPagoS" },
-                                { "mDataProp": "Tipo_de_pago" },
-                                { "mDataProp": "Concepto" },
-                                { "mDataProp": "Pago" },
-                                { "mDataProp": "Restante" },
-                            ],
-                            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
-                            "searching": true,
-                            "ordering": true,
-                            "async": true,
-                            "bDestroy": true,
-                            "bPaginate": true,
-                            "bLengthChange": false,
-                            "bFilter": true,
-                            "bInfo": true,
-                            "pageLength": 20,
-                            "bAutoWidth": true,
-                            "asStripClasses": null,
-                            "language": {
-                                "lengthMenu": "_MENU_  Registros",
-                                "paginate": {
-                                    "previous": "<",
-                                    "next": ">"
-                                },
-                                "search": "Buscar Alumno "
-                            },
-                            "order": [[1, "desc"]]
-                        });
-                        var fil = $('#tblDatos_filter label input');
-                        fil.removeClass('input-small').addClass('input-large');
-                    } else {
-                        alertify.alert("Intente nuevamente mas tarde");
-                    }
-                }
-            });
-        },
         TraerDatos: function () {
-            //Funciones.TraerDatos2();
             $('#Load').modal('show');
             var datos = {
                 Anio: $('#slcPeriodos option:selected').data("anio"),
@@ -226,19 +168,20 @@
                 },
                 "order": [[1, "desc"]]
             });
+
             var fil = $('#tblDatos_filter label input');
             fil.removeClass('input-small').addClass('input-large');
             $('#Load').modal('hide');
         },
         Exportar: function () {
-            var table = $('#tblDatos').dataTable().api();
-            var data = table.data();
-            //var table1 = $('#tblDatos2').dataTable().api();
-            //var data1 = table1.data();
+
+            //var data = Funciones.tblDatos.data();
+            var table1 = $('#tblDatos').dataTable().api();
+            var data1 = table1.data();
             var data2 = [];
             //var data3 = [];
 
-            $(data).each(function () {
+            $(data1).each(function () {
                 var ojb2 = {
                     "Alumno": this.Alumno,
                     "Fecha de Pago": this.FechaPagoS,

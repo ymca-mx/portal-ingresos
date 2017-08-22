@@ -40,7 +40,7 @@
                         n++;
                     });
                     $("#slcCuatrimestre").val(n - 2);
-                    //$("#slcCuatrimestre").change();
+                    $("#slcCuatrimestre").change();
                 }
 
             }//success
