@@ -81,8 +81,8 @@ namespace BLL
 
         public static List<DTOReporteCarteraVencida> CarteraVencida(int anio, int periodoId, string fechaInicial, string fechaFinal)
         {
-            DateTime fini = DateTime.ParseExact(fechaInicial, "yyyy/MM/dd", Cultura);
-            DateTime ffin = DateTime.ParseExact(fechaFinal, "yyyy/MM/dd", Cultura);
+            DateTime fini = DateTime.ParseExact(fechaInicial, "dd/MM/yyyy", Cultura);
+            DateTime ffin = DateTime.ParseExact(fechaFinal, "dd/MM/yyyy", Cultura);
 
             fechaInicial = (fini.Day < 10 ? "0" + fini.Day : "" + fini.Day) + "/" +
                 (fini.Month < 10 ? "0" + fini.Month : "" + fini.Month) + "/" + fini.Year;

@@ -8,27 +8,76 @@
         init: function () {
             Funciones.TraerPeriodos();
             Funciones.ArmarFechas();
+            $('#xportxlsx').hide();
         },
         tblDatos: null,
         tblDatos2: null,
         ArmarFechas: function () {
             var fecha = new Date();
-
+            var fechaLim = new Date();
+            fechaLim.setDate(fecha.getDate() - 1);
 
             var mes = fecha.getMonth();
+            var mes2 = fechaLim.getMonth();
+            
             var dia = fecha.getDate();
 
             mes = mes < 9 ? (mes + 1) : mes + 1;
             mes = mes < 10 ? '0' + mes : mes;
 
+            mes2 = mes2 < 9 ? (mes2 + 1) : mes2 + 1;
+            mes2 = mes2 < 10 ? '0' + mes2 : mes2;
+
             dia = dia < 10 ? '0' + dia : dia;
 
-            var fini = fecha.getFullYear() + '-01-01';
-            var ffin = fecha.getFullYear() + '-' + mes + '-' + dia;
+            var fini = '01/01/' + fecha.getFullYear() ;
+            var ffin = dia + '/' + mes + '/' + fecha.getFullYear();
 
+            var ffinEnd = fechaLim.getDate() + '/' + mes2 + '/' + fechaLim.getFullYear();
+
+            console.log(ffinEnd);
 
             $('#calInicial').val(fini);
             $('#calFinal').val(ffin);
+
+            $('.date-picker').each(function () {
+                if (this.id === 'calInicial') {
+                    $(this).datepicker({
+                        rtl: Metronic.isRTL(),
+                        orientation: "left",
+                        language: 'es',
+                        format: 'dd/mm/yyyy',
+                        autoclose: true,                                                
+                        endDate: ffinEnd
+                    });
+                } else {
+                    $(this).datepicker({
+                        rtl: Metronic.isRTL(),
+                        orientation: "left",
+                        language: 'es',
+                        format: 'dd/mm/yyyy',
+                        autoclose: true,    
+                    });
+                }
+            });
+
+            //$('#calInicial .date-picker').datepicker({
+            //    rtl: Metronic.isRTL(),
+            //    orientation: "left",
+            //    language: 'es',
+            //    format: "dd/mm/yyyy",
+            //    autoclose: true,
+            //    endDate: ffinEnd
+            //});
+
+            //$('#calFinal .date-picker').datepicker({
+            //    rtl: Metronic.isRTL(),
+            //    orientation: "left",
+            //    language: 'es',
+            //    format: "dd/mm/yyyy",
+            //    autoclose: true,
+            //});
+            
         },
         TraerPeriodos: function () {
             $('#Load').modal('show');
@@ -61,8 +110,6 @@
                 FechaInicial: $('#calInicial').val(),
                 FechaFinal: $('#calFinal').val()
             };
-            datos.FechaFinal = datos.FechaFinal.replace('-', '/').replace('-', '/');
-            datos.FechaInicial = datos.FechaInicial.replace('-', '/').replace('-', '/');
 
             datos = JSON.stringify(datos);
             $.ajax({
@@ -134,7 +181,11 @@
                 dataType: 'json',
                 success: function (Respuesta) {
                     if (Respuesta.d !== null) {
-                        Funciones.PintarTabla(Respuesta.d);
+                        if (Respuesta.d.length > 0) {
+                            $('#xportxlsx').show()
+                        } else { $('#xportxlsx').hide()}
+                            Funciones.PintarTabla(Respuesta.d);
+                        
                     } else {
                         $('#Load').modal('hide');
                         alertify.alert("Intente nuevamente mas tarde");
