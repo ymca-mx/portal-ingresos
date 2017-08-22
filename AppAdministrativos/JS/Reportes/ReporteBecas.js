@@ -3,16 +3,14 @@
 
     //inicializar
     CargarCuatrimestre();
-
-    $("#slcCuatrimestre").change(function () {
-
+    
+    
+    $('#btnBuscar').on('click', function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
         descripcion = $('#slcCuatrimestre option:selected').text();
         CargarReporteBecas(anio, periodo);
-
     });
-
 
     function CargarCuatrimestre() {
         $.ajax({
@@ -67,6 +65,10 @@
                 var calculos2 = data.d.Calculos2;
                 var detalle = data.d.Detalle;
                 var concentrado = data.d.Concentrado;
+
+                
+               
+                
 
                 tblBecaDetalle = $("#BecaDetalle").DataTable({
                     "aaData": detalle,
@@ -131,13 +133,14 @@
                         $(calculos1).each(function (d, b) {
                             nCells[d + 3].innerHTML = b.valor;
                         });
-
                     },
                     "fnDrawCallback": function (oSettings) {
                         var registros = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros);
                     }
                 });
+
+                
 
                 var n = 0;
 
@@ -225,44 +228,61 @@
         return false;
     });
 
-    function Exportar(NombreTabla) {
-        var tablabe = $('#' + NombreTabla)[0];
-        var instanse = new TableExport(tablabe, {
-            formats: ['xlsx'],
-            exportButtons: false
-        });
-        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
-        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename + " " + descripcion, ExpTable.fileExtension);
+    
+////exportar 2//////
 
+    $('#btnBecas3').on('click', function () {
+        exportarexcel();
+    });
+
+    function exportarexcel()
+    {
+
+        if ($("#tab_1").hasClass("active"))
+        { $("#tab_2").addClass("active"); }
+        else { $("#tab_1").addClass("active");}
+        
+        var tbl = document.getElementById('BecaDetalle');
+        var tbl2 = document.getElementById('BecaConcentrado');
+        
+        var ws = XLSX.utils.table_to_sheet(tbl);
+
+        var ws1 = XLSX.utils.table_to_sheet(tbl2);
+
+        var ws_name = "Detalle";
+        var ws_name1 = "Concentrado";
+
+        function Workbook() {
+            if (!(this instanceof Workbook)) return new Workbook();
+            this.SheetNames = [];
+            this.Sheets = {};
+        }
+
+        var wb = new Workbook();
+
+        /* add worksheet to workbook */
+        wb.SheetNames.push(ws_name);
+        wb.SheetNames.push(ws_name1);
+
+        wb.Sheets[ws_name] = ws;
+        wb.Sheets[ws_name1] = ws1;
+
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Reporte Becas " + descripcion + ".xlsx");
+
+        if ($("#tab_1").hasClass("active"))
+        { $("#tab_2").removeClass("active");  }
+        else { $("#tab_1").removeClass("active"); }
     }
-
-    //Botones
-    $('#btnBecas').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btnBecas').click());
-            $('#Load').modal('hide');
-        }
-    });
-
-    $('#btnBecas').on('click', function () {
-        setTimeout(
-            Exportar('BecaDetalle'), 1000);
-    });
-
-    $('#btnBecas2').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btnBecas2').click());
-            $('#Load').modal('hide');
-        }
-    });
-
-    $('#btnBecas2').on('click', function () {
-        setTimeout(
-            Exportar('BecaConcentrado'), 1000);
-    });
-
-
-
 
 
 });
