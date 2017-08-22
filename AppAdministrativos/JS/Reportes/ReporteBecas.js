@@ -64,6 +64,9 @@
                 var calculos2 = data.d.Calculos2;
                 var detalle = data.d.Detalle;
                 var concentrado = data.d.Concentrado;
+
+                
+               
                 
 
                 tblBecaDetalle = $("#BecaDetalle").DataTable({
