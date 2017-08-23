@@ -38,6 +38,7 @@
                         n++;
                     });
                     $("#slcCuatrimestre").val(n - 2);
+                    $("#slcCuatrimestre").change();
                 }
 
             }//success
