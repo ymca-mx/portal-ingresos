@@ -64,9 +64,6 @@
                 var calculos2 = data.d.Calculos2;
                 var detalle = data.d.Detalle;
                 var concentrado = data.d.Concentrado;
-
-                
-               
                 
 
                 tblBecaDetalle = $("#BecaDetalle").DataTable({
@@ -97,7 +94,7 @@
                         { "mDataProp": "TotalCol" },
                         { "mDataProp": "EsEmpresa" }
                     ],
-                    "lengthMenu": [[-1, 25, 50, 100], ['Todos',25, 50, 100]],
+                    "lengthMenu": [[-1, 20, 50, 100], ['Todos',20, 50, 100]],
                     "searching": true,
                     "ordering": true,
                     "async": false,
@@ -116,7 +113,7 @@
                             "previos": "<",
                             "next": ">"
                         },
-                        "search": "Buscar Alumno ",
+                        "search": "Buscar ",
                     },
                     "order": [[0, "asc"]],
                     "createdRow": function (row, data, dataIndex) {
@@ -133,14 +130,20 @@
                             nCells[d + 3].innerHTML = b.valor;
                         });
                     },
+                    
                     "fnDrawCallback": function (oSettings) {
                         var registros = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros);
                     }
                 });
 
-                
+                var fil = $('#BecaDetalle_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
 
+                
+                //var ads = "<tfoot><tr><th>azul</th></tr></tfoot>";
+
+                //$("#BecaDetalle").append(ads);
                 var n = 0;
 
                 tblBecaConcentrado = $("#BecaConcentrado").DataTable({
@@ -172,7 +175,7 @@
                         { "mDataProp": "PromoCasa_" },
                         { "mDataProp": "TotalDescuentoColegiatura" }
                     ],
-                    "lengthMenu": [[-1, 25, 50, 100], ['Todos', 25, 50, 100 ]],
+                    "lengthMenu": [[-1, 20, 50, 100], ['Todos', 20, 50, 100 ]],
                     "searching": true,
                     "ordering": true,
                     "async": false,
@@ -191,7 +194,7 @@
                             "previos": "<",
                             "next": ">"
                         },
-                        "search": "Buscar Alumno ",
+                        "search": "Buscar ",
                     },
                     "order": [[1, "asc"]],
                     "createdRow": function (row, data, dataIndex) {
@@ -213,6 +216,9 @@
                         $('#lbBecas2').text(registros);
                     }
                 });
+
+                var fil = $('#BecaConcentrado_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
 
                 $('#Load').modal('hide');
             }//success
