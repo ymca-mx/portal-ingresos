@@ -2316,13 +2316,13 @@ namespace BLL
                                                                                                         && P.Anio == PeriodoP.Anio).FirstOrDefault()?.Monto ?? 0,
                                 Promesa = Inscripcion,
                                 Restante = Inscripcion,
-                                EstatusId = DescuentoColegiaturaP == 100 ? 4 : 1,
+                                EstatusId = DescuentoInscripcionD == 100 ? 4 : 1,
                                 UsuarioId = usuarioId,
                                 UsuarioTipoId = 1,
                                 EsEmpresa = false,
                                 EsAnticipado = false,
                                 PeriodoAnticipadoId = 0,
-                                PagoDescuento = DescuentoColegiaturaP > 0 ?
+                                PagoDescuento = DescuentoInscripcionD > 0 ?
                                                     new List<PagoDescuento>
                                                     {
                                                     new PagoDescuento

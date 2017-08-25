@@ -136,6 +136,7 @@
             });
         },
         PintarTabla: function (tabla) {
+
             Funciones.tblDatos = $('#tblDatos').dataTable({
                 "aaData": tabla,
                 "aoColumns": [
@@ -169,8 +170,34 @@
                 "order": [[1, "desc"]]
             });
 
+            if ($('#tblDatos').find('tfoot').length > 0) {
+                $('#tblDatos').find('tfoot')[0].remove();
+            }
+
+            if (tabla.length > 0) {
+                var tabla2 = $('#tblDatos').DataTable();
+
+                var total1 = tabla2.column(4)
+                    .data()
+                    .reduce(function (a, b) {
+                        return a + b
+                    }, 0);
+                var total2 = tabla2.column(5)
+                    .data()
+                    .reduce(function (a, b) {
+                        return a + b;
+                    }, 0);
+                total1 = parseFloat(total1).toFixed(4);
+                total2 = parseFloat(total2).toFixed(4);
+
+                var tfoot = '<tfoot><tr><th></th><th></th><th></th><th>Totales: </th><th>' + total1 + ' </th><th>' + total2 + ' </th> </tr></tfoot>';
+                              
+                $('#tblDatos').append(tfoot);
+            }
+
             var fil = $('#tblDatos_filter label input');
             fil.removeClass('input-small').addClass('input-large');
+
             $('#Load').modal('hide');
         },
         Exportar: function () {
@@ -180,7 +207,8 @@
             var data1 = table1.data();
             var data2 = [];
             //var data3 = [];
-
+            var pagototal=0;
+            var restantetotal=0;
             $(data1).each(function () {
                 var ojb2 = {
                     "Alumno": this.Alumno,
@@ -190,9 +218,25 @@
                     "Pagado": this.Pago,
                     "Por Pagar": this.Restante
                 };
+                pagototal += this.Pago;
+                restantetotal += this.Restante;                
+
                 data2.push(ojb2);
             });
 
+            pagototal = parseFloat(pagototal).toFixed(4);
+            restantetotal = parseFloat(restantetotal).toFixed(4);
+
+            var ojb3 = {
+                "Alumno": "",
+                "Fecha de Pago": "",
+                "Tipo dePago": "",
+                "Concepto": "Total",
+                "Pagado": pagototal,
+                "Por Pagar": restantetotal
+            };
+
+            data2.push(ojb3);
             //$(data1).each(function () {
             //    var ojb2 = {
             //        "Alumno": this.Alumno,
@@ -232,7 +276,7 @@
             function s2ab(s) {
                 var buf = new ArrayBuffer(s.length);
                 var view = new Uint8Array(buf);
-                for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
                 return buf;
             }
 
