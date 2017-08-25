@@ -159,6 +159,7 @@
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
+    <Content Include="JS\Reportes\AntiguedadSaldos.js" />
     <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\CarteraVencida.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
@@ -4767,6 +4768,7 @@
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
+    <Content Include="Views\Reportes\AntiguedadSaldos.html" />
     <Content Include="Views\Reportes\CarteraVencida.html" />
     <Content Include="Views\EvaluacionDocente\ActualizacionDocente.html" />
     <Content Include="Views\EvaluacionDocente\VistoBuenoDocentes.html" />
