@@ -119,7 +119,7 @@
                         { "mDataProp": "esEmpresa", "sWidth": "10%" },
                         { "mDataProp": "usuarioAplico", "sWidth": "10%" }
                     ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": false,
@@ -150,6 +150,10 @@
                         $('#lbInscritos').text(registros);
                     }
                 });//$('#dtbecas').DataTable
+
+                var fil = $('#dtInscritos_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
+                
                 filtro();
                 $('#Load').modal('hide');
             }//success
@@ -165,27 +169,64 @@
         return false;
     });
 
-    function Exportar(NombreTabla) {
-        var tablabe = $('#' + NombreTabla)[0];
-        var instanse = new TableExport(tablabe, {
-            formats: ['xlsx'],
-            exportButtons: false
-        });
-        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
-        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
+    function exportarexcel(Tabla) {
 
+        var table1 = $('#' + Tabla).dataTable().api();
+        var data1 = table1.data();
+        var data2 = [];
+        var hd;
+
+        $(data1).each(function () {
+            var ojb2 = {
+                "Alumno Id": this.alumnoId,
+                "Nombre Alumno": this.nombreAlumno,
+                "Oferta Educativa": this.especialidad,
+                "Fecha de Inscripción": this.fechaInscripcion,
+                "Porcentaje beca | descuento": this.porcentajeDescuento,
+                "Tipo de Alumno": this.tipoAlumno,
+                "Es Empresa": this.esEmpresa,
+                "Usuario Aplico": this.usuarioAplico
+            };
+            data2.push(ojb2);
+        });
+        hd = ["Alumno Id", "Nombre Alumno", "Oferta Educativa", "Fecha de Inscripción", "Porcentaje beca | descuento", "Tipo de Alumno", "Es Empresa", "Usuario Aplico"];
+
+
+        var ws = XLSX.utils.json_to_sheet(data2, {
+            header: hd
+        });
+
+        var ws_name = Tabla;
+
+        function Workbook() {
+            if (!(this instanceof Workbook)) return new Workbook();
+            this.SheetNames = [];
+            this.Sheets = {};
+        }
+
+        var wb = new Workbook();
+
+        /* add worksheet to workbook */
+        wb.SheetNames.push(ws_name);
+
+        wb.Sheets[ws_name] = ws;
+
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
     }
     //Botones
-    $('#btnInscritos').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btnInscritos').click());
-            $('#Load').modal('hide');
-        }
-    });
 
     $('#btnInscritos').on('click', function () {
-        setTimeout(
-            Exportar('dtInscritos'), 1000);
+        exportarexcel('dtInscritos');
     });
 
 
