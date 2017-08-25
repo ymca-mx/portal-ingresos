@@ -190,7 +190,7 @@
                             },
 
                         ],
-                        "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                        "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
                         "ordering": true,
                         "async": true,
@@ -227,6 +227,8 @@
                     });//$('#dtbecas').DataTable
                     //filtros();
 
+                    var fil = $('#dtVoBo_filter label input');
+                    fil.removeClass('input-small').addClass('input-large');
 
                     $('#Load').modal('hide');
                 }//if(data.d != null )
@@ -236,31 +238,75 @@
 
 
     }//function CargarReporteBecas()
+    ///exportar
+    function exportarexcel(Tabla) {
 
-    $("#dtVoBo").on('click', 'a', function ()
-    {
-        var rowData = tblVoBo.row($(this).closest('tr')).data();
-            alumnoid = rowData.AlumnoId;
-            $("#lblNombre").text(rowData.Nombre);
-            $("#txtMail").val(rowData.Email);
-            $("#PopEnviar").modal("show");
-    });
-    $('#btndtVoBo').on('mausedown', function () {
-        $('#Load').modal('show');
-    });
-    $('#btndtVoBo').on('click', function () {
-        Exportar('dtVoBo');
-    });
-    function Exportar(NombreTabla) {        
-        var tablabe = $('#' + NombreTabla)[0];
-        var instanse = new TableExport(tablabe, {
-            formats: ['xlsx'],
-            exportButtons: false
+        var table1 = $('#' + Tabla).dataTable().api();
+        var data1 = table1.data();
+        var data2 = [];
+        var hd;
+
+        $(data1).each(function () {
+            var ojb2 = {
+                "Alumno Id | Nombre": this.AlumnoId + " | " + this.Nombre,
+                "Oferta Educativa": this.OfertaEducativa,
+                "Inscrito": this.Inscrito,
+                "Fecha Inscripción": this.FechaInscrito,
+                "Fecha VoBo": this.FechaVoBo,
+                "Inscripción Completa": this.InscripcionCompleta,
+                "Asesoría Especial": this.Asesorias,
+                "Adelanto Materia": this.Materias,
+                "Coordinador": this.UsuarioVoBo
+            };
+            data2.push(ojb2);
         });
-        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
-        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
-        $('#Load').modal('hide');
+        hd = ["Alumno Id | Nombre","Oferta Educativa","Inscrito","Fecha Inscripción","Fecha VoBo","Inscripción Completa","Asesoría Especial","Adelanto Materia","Coordinador"];
+
+
+        var ws = XLSX.utils.json_to_sheet(data2, {
+            header: hd
+        });
+
+        var ws_name = Tabla;
+
+        function Workbook() {
+            if (!(this instanceof Workbook)) return new Workbook();
+            this.SheetNames = [];
+            this.Sheets = {};
+        }
+
+        var wb = new Workbook();
+
+        /* add worksheet to workbook */
+        wb.SheetNames.push(ws_name);
+
+        wb.Sheets[ws_name] = ws;
+
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
     }
+
+    
+    $('#btndtVoBo').on('click', function () {
+        exportarexcel('dtVoBo');
+    });
+
+    $("#dtVoBo").on('click', 'a', function () {
+        var rowData = tblVoBo.row($(this).closest('tr')).data();
+        alumnoid = rowData.AlumnoId;
+        $("#lblNombre").text(rowData.Nombre);
+        $("#txtMail").val(rowData.Email);
+        $("#PopEnviar").modal("show");
+    });
 
     $("#btnEnviar").click(function ()
     {

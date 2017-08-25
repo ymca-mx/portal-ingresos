@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    var tblBecaDetalle, tblBecaConcentrado, anio, periodo,descripcion;
+    var tblBecaDetalle, tblBecaConcentrado, anio, periodo, descripcion;
 
     //inicializar
     CargarCuatrimestre();
-    
-    
+
+
     $('#btnBuscar').on('click', function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
@@ -65,7 +65,7 @@
                 var calculos2 = data.d.Calculos2;
                 var detalle = data.d.Detalle;
                 var concentrado = data.d.Concentrado;
-                
+
 
                 tblBecaDetalle = $("#BecaDetalle").DataTable({
                     "aaData": detalle,
@@ -75,27 +75,27 @@
                         { "mDataProp": "Descripcion" },
                         { "mDataProp": "CostoIns" },
                         { "mDataProp": "AnticipadoIns" },
-                        { "mDataProp": "AnticipadoInsPor"},
+                        { "mDataProp": "AnticipadoInsPor" },
                         { "mDataProp": "BecaIns" },
-                        { "mDataProp": "BecaInsPor"},
+                        { "mDataProp": "BecaInsPor" },
                         { "mDataProp": "DesTotalIns" },
-                        { "mDataProp": "DesTotalInsPor"},
+                        { "mDataProp": "DesTotalInsPor" },
                         { "mDataProp": "TotalIns" },
                         { "mDataProp": "CostoCol" },
                         { "mDataProp": "AnticipadoCol" },
-                        {"mDataProp": "AnticipadoColPor"},
+                        { "mDataProp": "AnticipadoColPor" },
                         { "mDataProp": "BecaCol" },
-                        { "mDataProp": "BecaColPor"},
+                        { "mDataProp": "BecaColPor" },
                         { "mDataProp": "BecaDeportiva" },
-                        { "mDataProp": "BecaDeportivaPor"},
+                        { "mDataProp": "BecaDeportivaPor" },
                         { "mDataProp": "PromoCasa" },
-                        { "mDataProp": "PromoCasaPor"},
+                        { "mDataProp": "PromoCasaPor" },
                         { "mDataProp": "DesTotalCol" },
-                        { "mDataProp": "DesTotalColPor"},
+                        { "mDataProp": "DesTotalColPor" },
                         { "mDataProp": "TotalCol" },
                         { "mDataProp": "EsEmpresa" }
                     ],
-                    "lengthMenu": [[-1, 20, 50, 100], ['Todos',20, 50, 100]],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": false,
@@ -121,8 +121,7 @@
                         row.childNodes[3].style.textAlign = 'center';
                         row.childNodes[4].style.textAlign = 'right';
                     },
-                    "fnFooterCallback": function (tfoot, data, start, end, display)
-                    {
+                    "fnFooterCallback": function (tfoot, data, start, end, display) {
                         tfoot.style.backgroundColor = "#3598dc";
                         tfoot.style.color = "white";
                         var nCells = tfoot.getElementsByTagName('th');
@@ -131,7 +130,7 @@
                             nCells[d + 3].innerHTML = b.valor;
                         });
                     },
-                    
+
                     "fnDrawCallback": function (oSettings) {
                         var registros = oSettings.aiDisplay.length;
                         $('#lbBecas').text(registros);
@@ -141,28 +140,24 @@
                 var fil = $('#BecaDetalle_filter label input');
                 fil.removeClass('input-small').addClass('input-large');
 
-                
-                //var ads = "<tfoot><tr><th>azul</th></tr></tfoot>";
-
-                //$("#BecaDetalle").append(ads);
                 var n = 0;
 
                 tblBecaConcentrado = $("#BecaConcentrado").DataTable({
                     "aaData": concentrado,
                     "aoColumns": [
                         {
-                            "mRender": function ( Data) {
-                                    n = n + 1
-                                    return n;
+                            "mRender": function (Data) {
+                                n = n + 1
+                                return n;
                             }
                         },
                         { "mDataProp": "Descripcion" },
                         { "mDataProp": "TotalAlumnos" },
                         { "mDataProp": "AlumnosConBeca" },
                         { "mDataProp": "CargosInscripcion" },
-                        { "mDataProp": "PromedioAnticipadoPor"},
+                        { "mDataProp": "PromedioAnticipadoPor" },
                         { "mDataProp": "PromedioAnticipado_" },
-                        { "mDataProp": "PromedioBecaInscripcionPor"},
+                        { "mDataProp": "PromedioBecaInscripcionPor" },
                         { "mDataProp": "PromedioBecaInscripcion_" },
                         { "mDataProp": "TotalDescuentoInscripcion" },
                         { "mDataProp": "CargosColegiatura" },
@@ -170,13 +165,13 @@
                         { "mDataProp": "PromedioAnticipado_Colegiatura" },
                         { "mDataProp": "BecaPromedioPor" },
                         { "mDataProp": "BecaPromedio_" },
-                        { "mDataProp": "BecaDeportivaPor"},
+                        { "mDataProp": "BecaDeportivaPor" },
                         { "mDataProp": "BecaDeportivaPromedio_" },
-                        { "mDataProp": "PromoCasaPor"},
+                        { "mDataProp": "PromoCasaPor" },
                         { "mDataProp": "PromoCasa_" },
                         { "mDataProp": "TotalDescuentoColegiatura" }
                     ],
-                    "lengthMenu": [[-1, 20, 50, 100], ['Todos', 20, 50, 100 ]],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": false,
@@ -229,34 +224,43 @@
 
     }//CargarAlumnosInscritos()
 
+
+
+
+
     $('#divContenido').submit(function () {
         //do your stuff
         return false;
     });
 
-    
-////exportar 2//////
+
+    ////exportar 2//////
 
     $('#btnBecas3').on('click', function () {
         exportarexcel();
     });
 
-    function exportarexcel()
-    {
+    function exportarexcel() {
+        var info = tblBecaConcentrado.page.info().length;
+        var info1 = tblBecaDetalle.page.info().length;
+        $('#BecaConcentrado').DataTable().page.len(-1).draw();
+        $('#BecaDetalle').DataTable().page.len(-1).draw();
+
 
         if ($("#tab_1").hasClass("active"))
         { $("#tab_2").addClass("active"); }
-        else { $("#tab_1").addClass("active");}
-        
-        var tbl = document.getElementById('BecaDetalle');
-        var tbl2 = document.getElementById('BecaConcentrado');
-        
+        else { $("#tab_1").addClass("active"); }
+
+
+        var tbl = document.getElementById('BecaConcentrado');
+        var tbl2 = document.getElementById('BecaDetalle');
+
         var ws = XLSX.utils.table_to_sheet(tbl);
 
         var ws1 = XLSX.utils.table_to_sheet(tbl2);
 
-        var ws_name = "Detalle";
-        var ws_name1 = "Concentrado";
+        var ws_name = "Concentrado";
+        var ws_name1 = "Detalle";
 
         function Workbook() {
             if (!(this instanceof Workbook)) return new Workbook();
@@ -286,8 +290,12 @@
         saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Reporte Becas " + descripcion + ".xlsx");
 
         if ($("#tab_1").hasClass("active"))
-        { $("#tab_2").removeClass("active");  }
+        { $("#tab_2").removeClass("active"); }
         else { $("#tab_1").removeClass("active"); }
+
+        $('#BecaConcentrado').DataTable().page.len(info).draw();
+        $('#BecaDetalle').DataTable().page.len(info1).draw();
+
     }
 
 

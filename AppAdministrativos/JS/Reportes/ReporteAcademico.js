@@ -139,7 +139,7 @@
                         tblBecas1.columns(2)
                             .search(regex, true, false, true)
                             .draw();
-                    }else {
+                    } else {
                         tblBecas.columns(2)
                             .search("^" + oferta1 + "$", true, false, true)
                             .draw();
@@ -155,17 +155,17 @@
                 break;
             case 1:
                 if (oferta1 != "--Todas--") {
-                    if (oferta1.includes('Derecho')  ) {
+                    if (oferta1.includes('Derecho')) {
                         tblBecas1.columns(2)
                             .search(oferta1)
                             .draw();
-                    } else if (oferta1.includes('Maestría en Educación') ){
-                        var selected = []; 
+                    } else if (oferta1.includes('Maestría en Educación')) {
+                        var selected = [];
                         selected.push("^" + oferta1 + "$");
                         selected.push("^" + oferta1 + " SAT$");
                         var regex = selected.join("|");
                         tblBecas1.columns(2)
-                            .search( regex, true, false, true)
+                            .search(regex, true, false, true)
                             .draw();
                     } else {
                         tblBecas1.columns(2)
@@ -193,7 +193,7 @@
                         tblBecas1.columns(2)
                             .search(regex, true, false, true)
                             .draw();
-                    }else {
+                    } else {
                         tblBecas2.columns(2)
                             .search("^" + oferta1 + "$", true, false, true)
                             .draw();
@@ -322,7 +322,7 @@
                         { "mDataProp": "usuarioAplico", "sWidth": "13%" },
 
                     ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": true,
@@ -354,6 +354,12 @@
                         $('#lbBecas').text(registros[reporte]);
                     }
                 });//$('#dtbecas').DataTable
+
+                var fil = $('#dtbecas_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
+                
+
+
                 filtros();
 
 
@@ -392,7 +398,7 @@
                         { "mDataProp": "esEmpresa", "sWidth": "10%" },
                         { "mDataProp": "usuarioAplico", "sWidth": "10%" }
                     ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": false,
@@ -423,6 +429,11 @@
                         $('#lbBecas').text(registros[reporte]);
                     }
                 });//$('#dtbecas').DataTable
+
+                var fil = $('#dtbecas2_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
+
+                
                 filtros();
                 $('#Load').modal('hide');
             }//success
@@ -460,7 +471,7 @@
                         { "mDataProp": "usuarioAplico", "sWidth": "15%" },
 
                     ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": true,
@@ -492,6 +503,10 @@
                         $('#lbBecas').text(registros[reporte]);
                     }
                 });//$('#dtbecas').DataTable
+                var fil = $('#dtbecas3_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
+                
+
                 filtros();
                 $('#Load').modal('hide');
             }//success
@@ -530,7 +545,7 @@
                         { "mDataProp": "lugarEstudio", "sWidth": "10%" },
 
                     ],
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, 'Todos']],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                     "searching": true,
                     "ordering": true,
                     "async": true,
@@ -564,6 +579,10 @@
                         $('#lbBecas').text(registros[reporte]);
                     }
                 });//$('#dtbecas').DataTable
+
+                var fil = $('#dtbecas4_filter label input');
+                fil.removeClass('input-small').addClass('input-large');
+
                 filtros();
                 $('#Load').modal('hide');
             }//success
@@ -630,56 +649,128 @@
         return false;
     });
 
-    function Exportar(NombreTabla) {
-        var tablabe = $('#' + NombreTabla)[0];
-        var instanse = new TableExport(tablabe, {
-            formats: ['xlsx'],
-            exportButtons: false
+    function exportarexcel(Tabla) {
+
+        var table1 = $('#' + Tabla).dataTable().api();
+        var data1 = table1.data();
+        var data2 = [];
+        var hd;
+
+        if (Tabla == "dtbecas") {
+            $(data1).each(function () {
+                var ojb2 = {
+                    "Alumno id": this.alumnoId,
+                    "Nombre Alumno": this.nombreAlumno,
+                    "Oferta Educativa": this.especialidad,
+                    "Tipo beca | Descuento": this.becaDescuento,
+                    "Porcentaje beca | descuento": this.porcentajeDescuento,
+                    "Observaciones": this.comentario,
+                    "Fecha Generacion": this.fechaGeneracion,
+                    "Hora Generacion": this.horaGeneracion,
+                    "Usuario Aplico": this.usuarioAplico
+                };
+                data2.push(ojb2);
+            });
+            hd = ["Alumno id", "Nombre Alumno", "Oferta Educativa", "Tipo beca | Descuento", "Porcentaje beca | descuento", "Observaciones", "Fecha Generacion", "Hora Generacion", "Usuario Aplico"];
+        }
+        if (Tabla == "dtbecas2") {
+            $(data1).each(function () {
+                var ojb2 = {
+                    "Alumno Id": this.alumnoId,
+                    "Nombre Alumno": this.nombreAlumno,
+                    "Oferta Educativa": this.especialidad,
+                    "Fecha de Inscripción": this.fechaInscripcion,
+                    "Porcentaje beca | descuento": this.porcentajeDescuento,
+                    "Tipo de Alumno": this.tipoAlumno,
+                    "Es Empresa": this.esEmpresa,
+                    "Usuario Aplico": this.usuarioAplico
+                };
+                data2.push(ojb2);
+            });
+            hd = ["Alumno Id", "Nombre Alumno", "Oferta Educativa", "Fecha de Inscripción", "Porcentaje beca | descuento", "Tipo de Alumno", "Es Empresa", "Usuario Aplico"];
+
+        }
+        if (Tabla == "dtbecas3") {
+            $(data1).each(function () {
+                var ojb2 = {
+                    "Alumno Id": this.alumnoId,
+                    "Nombre Alumno": this.nombreAlumno,
+                    "Oferta Educativa": this.especialidad,
+                    "Porcentaje beca | descuento": this.porcentajeDescuento,
+                    "Observaciones": this.comentario,
+                    "Fecha Generacion": this.fechaGeneracion,
+                    "Hora Generacion": this.horaGeneracion,
+                    "Usuario Aplico": this.usuarioAplico
+                };
+                data2.push(ojb2);
+            });
+            hd = ["Alumno Id", "Nombre Alumno","Oferta Educativa","Porcentaje beca | descuento","Observaciones","Fecha Generacion","Hora Generacion", "Usuario Aplico"];
+
+        }
+        if (Tabla == "dtbecas4") {
+            $(data1).each(function () {
+                var ojb2 = {
+                    "Alumno Id": this.alumnoId,
+                    "Nombre Alumno": this.nombreAlumno,
+                    "Oferta Educativa": this.especialidad,
+                    "Cuatrimestre": this.Cuatrimestre,
+                    "Sexo": this.sexo,
+                    "Edad": this.edad, 
+                    "Fecha de Nacimiento": this.fechaNacimiento,
+                    "Lugar de Nacimiento": this.lugarNacimiento,
+                    "Lugar de Ultimo Estudio": this.lugarEstudio
+                };
+                data2.push(ojb2);
+            });
+            hd = ["Alumno Id","Nombre Alumno","Oferta Educativa","Cuatrimestre","Sexo","Edad",   "Fecha de Nacimiento","Lugar de Nacimiento","Lugar de Ultimo Estudio"];
+
+        }
+
+        var ws = XLSX.utils.json_to_sheet(data2, {
+            header: hd
         });
-        var ExpTable = instanse.getExportData()[NombreTabla]['xlsx'];
-        instanse.export2file(ExpTable.data, ExpTable.mimeType, ExpTable.filename, ExpTable.fileExtension);
-        
+
+        var ws_name = Tabla;
+
+        function Workbook() {
+            if (!(this instanceof Workbook)) return new Workbook();
+            this.SheetNames = [];
+            this.Sheets = {};
+        }
+
+        var wb = new Workbook();
+
+        /* add worksheet to workbook */
+        wb.SheetNames.push(ws_name);
+
+        wb.Sheets[ws_name] = ws;
+
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
     }
-    //Botones
-    $('#btndtbecas').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btndtbecas').click());
-            $('#Load').modal('hide');
-        }
-    });
-    $('#btndtbecas2').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btndtbecas2').click());
-            $('#Load').modal('hide');
-        }
-    });
-    $('#btndtbecas3').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btndtbecas3').click());
-            $('#Load').modal('hide');
-        }
-    });
-    $('#btndtbecas4').mousedown(function () {
-        if (this.which === 1) {
-            $('#Load').modal('show', $('#btndtbecas4').click());
-            $('#Load').modal('hide');
-        }
-    });
+
 
     $('#btndtbecas').on('click', function () {
-        setTimeout(
-            Exportar('dtbecas'), 1000);
+        exportarexcel('dtbecas');
     });
     $('#btndtbecas2').on('click', function () {
-        Exportar('dtbecas2');        
+        exportarexcel('dtbecas2');
     });
     $('#btndtbecas3').on('click', function () {
-        Exportar('dtbecas3');        
+        exportarexcel('dtbecas3');
     });
     $('#btndtbecas4').on('click', function () {
-        Exportar('dtbecas4');        
+        exportarexcel('dtbecas4');
     });
-    
 
 
     $('#chkYo').change(function () {
