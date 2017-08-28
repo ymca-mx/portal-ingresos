@@ -128,13 +128,13 @@ namespace Pruebas
         {
             //7589 Sin ningun descuento
             DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
-            {    
+            {
                 alumnoId = 7544,
                 anio = 2017,
                 periodoId = 2,
                 ofertaEducativaId = 5,
                 porcentajeBeca = 61.14m, //70.15
-                porcentajeInscripcion =100m,
+                porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
@@ -1964,8 +1964,11 @@ namespace Pruebas
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<spReporteBecasDetalle> detalle = db.spReporteBecasDetalle(2017, 3).ToList();
-                List<spReporteBecasConcentrado> concentrado = db.spReporteBecasConcentrado(2017, 3).ToList();
+
+                List<SP_ReporteSaldoAlumno_Result> alumnoSaldo = db.SP_ReporteSaldoAlumno().ToList();
+
+                
+
             }
 
         }

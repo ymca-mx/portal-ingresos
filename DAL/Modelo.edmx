@@ -7109,6 +7109,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Parameter Name="moneda" Type="varchar" Mode="In" />
           <Parameter Name="centavo" Type="bit" Mode="In" />
         </Function>
+        <Function Name="SP_ReporteSaldoAlumno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spAlumnoInscritoCompleto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Anio" Type="int" Mode="In" />
           <Parameter Name="Periodo" Type="int" Mode="In" />
@@ -7135,6 +7136,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Parameter Name="periodoId" Type="int" Mode="In" />
           <Parameter Name="fechaInicial" Type="date" Mode="In" />
           <Parameter Name="fechaFinal" Type="date" Mode="In" />
+        </Function>
+        <Function Name="spSaldoAlumno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="alumnoId" Type="int" Mode="In" />
+          <Parameter Name="detalle" Type="bit" Mode="In" />
         </Function>
         <Function Name="SPU_Pagod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PagoId" Type="int" Mode="In" />
@@ -10452,6 +10457,11 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <Parameter Name="fechaInicial" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFinal" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="spSaldoAlumno" ReturnType="Collection(UniversidadModel.spSaldoAlumno_Result)">
+            <Parameter Name="alumnoId" Mode="In" Type="Int32" />
+            <Parameter Name="detalle" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ReporteSaldoAlumno" ReturnType="Collection(UniversidadModel.SP_ReporteSaldoAlumno_Result)" />
           </EntityContainer>
         <ComplexType Name="AlumnoInscritoCompleto">
           <Property Type="Int32" Name="AlumnoId" Nullable="false" />
@@ -18230,6 +18240,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Type="Decimal" Name="Pago" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="Restante" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
+        <ComplexType Name="spSaldoAlumno_Result">
+          <Property Type="Int32" Name="AlumnoId" Nullable="false" />
+          <Property Type="Decimal" Name="Saldo" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Int32" Name="Anio" Nullable="true" />
+          <Property Type="Int32" Name="PeriodoId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ReporteSaldoAlumno_Result">
+          <Property Type="Int32" Name="AlumnoId" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="400" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Saldo" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -21374,6 +21396,26 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="Concepto" ColumnName="Concepto" />
                 <ScalarProperty Name="Pago" ColumnName="Pago" />
                 <ScalarProperty Name="Restante" ColumnName="Restante" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spSaldoAlumno" FunctionName="UniversidadModel.Store.spSaldoAlumno">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spSaldoAlumno_Result">
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ReporteSaldoAlumno" FunctionName="UniversidadModel.Store.SP_ReporteSaldoAlumno">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.SP_ReporteSaldoAlumno_Result">
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

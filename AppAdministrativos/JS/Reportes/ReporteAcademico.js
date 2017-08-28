@@ -1,8 +1,6 @@
 ﻿$(document).ready(function () {
-    var tblBecas, tblBecas1, tblBecas2, tblBecas3, anio, periodo, reporte, of, oferta1, hoy;
+    var tblBecas, tblBecas1, tblBecas2, tblBecas3, anio, periodo,descripcion, reporte, of, oferta1, hoy;
     var cuatri = new Array("1", "1", "1", "1");
-    //var fechainicial = new Array(3);
-    //var fechafinal = new Array(3);
     var fecha1 = new Array("", "", "", "");
     var fecha2 = new Array("", "", "", "");
     var oferta = new Array("0", "0", "0", "0");
@@ -62,7 +60,7 @@
 
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
-
+        descripcion = $('#slcCuatrimestre option:selected').text();
         switch (reporte) {
             case 0:
                 CargarBecasCuatrimestre(anio, periodo);
@@ -649,7 +647,7 @@
         return false;
     });
 
-    function exportarexcel(Tabla) {
+    function exportarexcel(Tabla,nombre) {
 
         var table1 = $('#' + Tabla).dataTable().api();
         var data1 = table1.data();
@@ -730,7 +728,7 @@
             header: hd
         });
 
-        var ws_name = Tabla;
+        var ws_name = nombre;
 
         function Workbook() {
             if (!(this instanceof Workbook)) return new Workbook();
@@ -755,21 +753,20 @@
             return buf;
         }
 
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), nombre + " " + descripcion +  ".xlsx");
     }
 
-
     $('#btndtbecas').on('click', function () {
-        exportarexcel('dtbecas');
+        exportarexcel('dtbecas', "Becas");
     });
     $('#btndtbecas2').on('click', function () {
-        exportarexcel('dtbecas2');
+        exportarexcel('dtbecas2', "Alumnos Inscritos");
     });
     $('#btndtbecas3').on('click', function () {
-        exportarexcel('dtbecas3');
+        exportarexcel('dtbecas3', "Becas Sep");
     });
     $('#btndtbecas4').on('click', function () {
-        exportarexcel('dtbecas4');
+        exportarexcel('dtbecas4',"INEGI");
     });
 
 

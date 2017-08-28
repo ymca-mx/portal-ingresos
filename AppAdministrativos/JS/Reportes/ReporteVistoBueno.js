@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    var tblVoBo, anio, periodo, oferta, vobo, registros, usuarioid, alumnoid, Mostra;
-    //inicializar
+    var tblVoBo, anio, periodo,descripcion, oferta, vobo, registros, usuarioid, alumnoid, Mostra;
+
     CargarCuatrimestre();
 
     $('#divContenido').submit(function () {
@@ -11,6 +11,7 @@
     $("#slcCuatrimestre").change(function () {
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
+        descripcion = $('#slcCuatrimestre option:selected').text();
         usuarioid = $.cookie('userAdmin');
         CargarVistoBueno(anio, periodo, usuarioid);
 
@@ -37,8 +38,7 @@
                     .search("^" + oferta + "$", true, false, true)
                     .draw();
             }
-        } else
-        {
+        } else {
             oferta = "";
             tblVoBo.columns(1)
                 .search(oferta)
@@ -62,23 +62,22 @@
         if ($("#slcVisto").val() != -1) {
             if ($("#slcVisto").val() == 0) {
                 vobo = "/";
-                l= 4
+                l = 4
             } else if ($("#slcVisto").val() == 1) {
                 vobo = "-";
-                l= 4
-            } else
-            {
+                l = 4
+            } else {
                 vobo = "No";
                 l = 2
             }
-            
-        } 
+
+        }
 
         tblVoBo.columns(l)
             .search(vobo)
             .draw();
-            
-        
+
+
     });
 
     function CargarCuatrimestre() {
@@ -122,39 +121,37 @@
             }//success
         });// $.ajax
 
-    }//CargarCatrimestre
+    }
 
     function CargarVistoBueno(anio, periodo, usuarioid) {
         $('#Load').modal('show');
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargarReporteVoBo",
-            data: "{anio:" + anio + ",periodoid:" + periodo + ", usuarioid:"+ usuarioid +"}",
+            data: "{anio:" + anio + ",periodoid:" + periodo + ", usuarioid:" + usuarioid + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
             success: function (data) {
-                if(data.d != null )
-               {
+                if (data.d != null) {
                     Mostra = data.d.EsEscolares;
 
-                    var Mostra2 = true ;
-                    if (Mostra)
-                    {
+                    var Mostra2 = true;
+                    if (Mostra) {
                         Mostra2 = false;
                     }
                     tblVoBo = $("#dtVoBo").DataTable({
                         "aaData": data.d.AlumnoVoBo,
                         "aoColumns": [
-                             {
-                                 "mDataProp": "AlumnoId",
-                                 "mRender": function (data, f, d) {
-                                     var link;
-                                     link = d.AlumnoId + " | " + d.Nombre;
+                            {
+                                "mDataProp": "AlumnoId",
+                                "mRender": function (data, f, d) {
+                                    var link;
+                                    link = d.AlumnoId + " | " + d.Nombre;
 
-                                     return link;
-                                 }
-                             },
+                                    return link;
+                                }
+                            },
                             { "mDataProp": "OfertaEducativa" },
                             { "mDataProp": "Inscrito" },
                             { "mDataProp": "FechaInscrito" },
@@ -179,11 +176,11 @@
                         ],
                         "columnDefs": [
                             {
-                              "targets": [3],
-                              "visible": Mostra,
-                              "searchable": false
+                                "targets": [3],
+                                "visible": Mostra,
+                                "searchable": false
                             },
-                            { 
+                            {
                                 "targets": [9],
                                 "visible": Mostra2,
                                 "searchable": false
@@ -220,26 +217,26 @@
                             row.childNodes[7].style.textAlign = 'center';
                         }
                         , "fnDrawCallback": function (oSettings) {
-                            //filtosdatatable();
                             registros = oSettings.aiDisplay.length;
                             $('#lbRegistros').text(registros);
                         }
-                    });//$('#dtbecas').DataTable
+                    });
                     //filtros();
 
                     var fil = $('#dtVoBo_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
 
                     $('#Load').modal('hide');
-                }//if(data.d != null )
+                }
                 $('#Load').modal('hide');
             },//success
         });// end $.ajax
 
 
-    }//function CargarReporteBecas()
+    }
+
     ///exportar
-    function exportarexcel(Tabla) {
+    function exportarexcel(Tabla,nombre) {
 
         var table1 = $('#' + Tabla).dataTable().api();
         var data1 = table1.data();
@@ -267,7 +264,7 @@
             header: hd
         });
 
-        var ws_name = Tabla;
+        var ws_name = nombre;
 
         function Workbook() {
             if (!(this instanceof Workbook)) return new Workbook();
@@ -292,12 +289,12 @@
             return buf;
         }
 
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), nombre+" "+ descripcion+ ".xlsx");
     }
 
     
     $('#btndtVoBo').on('click', function () {
-        exportarexcel('dtVoBo');
+        exportarexcel('dtVoBo',"VoBo Academico");
     });
 
     $("#dtVoBo").on('click', 'a', function () {

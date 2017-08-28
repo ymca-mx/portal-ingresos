@@ -384,5 +384,23 @@ namespace DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReporteCarteraVencida_Result>("spReporteCarteraVencida", anioParameter, periodoIdParameter, fechaInicialParameter, fechaFinalParameter);
         }
+    
+        public virtual ObjectResult<spSaldoAlumno_Result> spSaldoAlumno(Nullable<int> alumnoId, Nullable<bool> detalle)
+        {
+            var alumnoIdParameter = alumnoId.HasValue ?
+                new ObjectParameter("alumnoId", alumnoId) :
+                new ObjectParameter("alumnoId", typeof(int));
+    
+            var detalleParameter = detalle.HasValue ?
+                new ObjectParameter("detalle", detalle) :
+                new ObjectParameter("detalle", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spSaldoAlumno_Result>("spSaldoAlumno", alumnoIdParameter, detalleParameter);
+        }
+    
+        public virtual ObjectResult<SP_ReporteSaldoAlumno_Result> SP_ReporteSaldoAlumno()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ReporteSaldoAlumno_Result>("SP_ReporteSaldoAlumno");
+        }
     }
 }

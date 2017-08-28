@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     var tblBecaDetalle, tblBecaConcentrado, anio, periodo, descripcion;
 
-    //inicializar
     CargarCuatrimestre();
 
 
@@ -10,6 +9,7 @@
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
         descripcion = $('#slcCuatrimestre option:selected').text();
         CargarReporteBecas(anio, periodo);
+        
     });
 
     function CargarCuatrimestre() {
@@ -44,7 +44,7 @@
             }//success
         });// $.ajax
 
-    }//CargarCatrimestre
+    }
 
     function CargarReporteBecas(anio, periodo) {
         $('#Load').modal('show');
@@ -216,13 +216,14 @@
                 var fil = $('#BecaConcentrado_filter label input');
                 fil.removeClass('input-small').addClass('input-large');
 
+                $("#btnBecas3").show();
                 $('#Load').modal('hide');
             }//success
 
         });//$.ajax
 
 
-    }//CargarAlumnosInscritos()
+    }
 
 
 
@@ -234,7 +235,7 @@
     });
 
 
-    ////exportar 2//////
+    ////exportar//////
 
     $('#btnBecas3').on('click', function () {
         exportarexcel();
@@ -287,7 +288,7 @@
             return buf;
         }
 
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Reporte Becas " + descripcion + ".xlsx");
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Becas " + descripcion + ".xlsx");
 
         if ($("#tab_1").hasClass("active"))
         { $("#tab_2").removeClass("active"); }
