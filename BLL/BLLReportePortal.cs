@@ -244,6 +244,39 @@ namespace BLL
             }
         }
 
+        public static List<DTOReporteSaldos> CargarReporteSaldos()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                List<DTOReporteSaldos> alumnoSaldo = db.SP_ReporteSaldoAlumno().Select(a=> new DTOReporteSaldos 
+                {
+                    AlumnoId = a.AlumnoId,
+                    Nombre = a.Nombre,
+                    Descripcion = a.Descripcion,
+                    Saldo = a.Saldo
+                }).ToList();
+                
+                return alumnoSaldo;
+            }
+        }
+
+        public static List<DTOReporteSaldosDetalle> CargarReporteSaldoDetalle(int alumnoId)
+        {
+            using (UniversidadEntities db= new UniversidadEntities())
+            {
+                List<DTOReporteSaldosDetalle> detalle = db.spSaldoAlumno(alumnoId, true).Select(a => new DTOReporteSaldosDetalle
+                {
+                    AlumnoId = a.AlumnoId,
+                    Periodo = db.Periodo.Where(c => c.Anio == a.Anio && c.PeriodoId == a.PeriodoId).FirstOrDefault().Descripcion,
+                    Saldo = a.Saldo
+                }).ToList();
+
+
+                
+                return detalle;
+            }
+        }
+
         public static List<DTOReporteBecasCuatrimestre> CargaReporteBecaCuatrimestre(int anio, int periodo)
         {
 

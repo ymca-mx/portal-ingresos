@@ -1,11 +1,12 @@
 ﻿$(document).ready(function () {
-    var tblReporte, anio, periodo;
+    var tblReporte, anio, periodo,descripcion;
     CargarCuatrimestre();
 
     $("#slcPeriodo").change(function () {
 
         anio = $('#slcPeriodo').find(':selected').data("anio");
         periodo = $('#slcPeriodo').find(':selected').data("periodoid");
+        descripcion = $('#slcPeriodo option:selected').text();
         CargarReporteReferencias(anio, periodo);
     });
 
@@ -42,7 +43,7 @@
             }//success
         });// $.ajax
 
-    }//CargarCatrimestre
+    }
 
     $('#divContenido').submit(function () {
         //do your stuff
@@ -128,7 +129,7 @@
                         row.childNodes[10].style.textAlign = 'left';
                     }
 
-                });//$('#dtbecas').DataTable
+                });
 
                 var fil = $('#dtReferencias_filter label input');
                 fil.removeClass('input-small').addClass('input-large');
@@ -139,12 +140,12 @@
         });// end $.ajax
 
 
-    }//function CargarReporteBecas()
+    }
 
 
 
     ///exportar
-    function exportarexcel(Tabla) {
+    function exportarexcel(Tabla,nombre) {
 
         var table1 = $('#' + Tabla).dataTable().api();
         var data1 = table1.data();
@@ -174,7 +175,7 @@
             header: hd
         });
 
-        var ws_name = Tabla;
+        var ws_name = nombre;
 
         function Workbook() {
             if (!(this instanceof Workbook)) return new Workbook();
@@ -199,12 +200,12 @@
             return buf;
         }
 
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), nombre +" " +descripcion+".xlsx");
     }
 
 
     $('#btnReferencias').on('click', function () {
-        exportarexcel('dtReferencias');
+        exportarexcel('dtReferencias',"Referencias");
     });
 
 

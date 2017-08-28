@@ -1,13 +1,13 @@
 ﻿$(document).ready(function () {
-    var tblInscritos, anio, periodo;
+    var tblInscritos, anio, periodo,descripcion;
     
-    //inicializar
     CargarCuatrimestre();
     
     $("#slcCuatrimestre").change(function () {
 
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
+        descripcion = $('#slcCuatrimestre option:selected').text();
         CargarAlumnosInscritos(anio, periodo);
     
     });
@@ -87,7 +87,7 @@
             }//success
         });// $.ajax
         
-    }//CargarCatrimestre
+    }
 
  
 
@@ -161,7 +161,7 @@
         });//$.ajax
 
 
-    }//CargarAlumnosInscritos()
+    }
 
  
     $('#divContenido').submit(function () {
@@ -169,7 +169,7 @@
         return false;
     });
 
-    function exportarexcel(Tabla) {
+    function exportarexcel(Tabla,nombre) {
 
         var table1 = $('#' + Tabla).dataTable().api();
         var data1 = table1.data();
@@ -196,7 +196,7 @@
             header: hd
         });
 
-        var ws_name = Tabla;
+        var ws_name = nombre;
 
         function Workbook() {
             if (!(this instanceof Workbook)) return new Workbook();
@@ -221,12 +221,11 @@
             return buf;
         }
 
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), Tabla + ".xlsx");
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), nombre + " " + descripcion + ".xlsx");
     }
-    //Botones
 
     $('#btnInscritos').on('click', function () {
-        exportarexcel('dtInscritos');
+        exportarexcel('dtInscritos',"Inscritos");
     });
 
 

@@ -22,6 +22,21 @@ namespace DTO
         public List<DTOBecasCalculos> Calculos2 { get; set; }
     }
 
+    public  class DTOReporteSaldos
+    {
+        public Nullable<int> AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public Nullable<decimal> Saldo { get; set; }
+    }
+
+    public class DTOReporteSaldosDetalle
+    {
+        public int AlumnoId { get; set; }
+        public string Periodo { get; set; }
+        public decimal Saldo { get; set; }
+    }
+
     public class DTOBecasCalculos
     {
         public decimal valor { get; set; }

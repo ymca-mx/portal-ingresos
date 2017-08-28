@@ -37,6 +37,19 @@ namespace AppAdministrativos.WS
             return BLLReportePortal.CargarCuatrimestreHistorico();
         }
 
+
+        [WebMethod]
+        public List<DTOReporteSaldos> CargarReporteSaldos()
+        {
+            return BLLReportePortal.CargarReporteSaldos();
+        }
+
+        [WebMethod]
+        public List<DTOReporteSaldosDetalle> CargarReporteSaldosDetalle(int alumnoId)
+        {
+            return BLLReportePortal.CargarReporteSaldoDetalle(alumnoId);
+        }
+
         [WebMethod]
         public DTOReporteBecas CargarReporteBecas(int anio, int periodo)
         {

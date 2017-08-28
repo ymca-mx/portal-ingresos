@@ -1,1 +1,141 @@
 ﻿
+    <div class="page-content">
+        <!-- BEGIN PAGE HEAD -->
+        <div class="container" id="divContenido">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light" >
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <h1 class="caption-subject font-blue bold uppercase">
+                                    Antigüedad de Saldos
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <form class="recovery-form" id="form_recovery">
+                                    
+                                    <div class="col-md-2">
+                                        <br />
+                                        <button id="btnBuscar" class="form-control btn bg-blue">Consultar</button>
+                                    </div>
+                                    <div class="col-md-10 col-md-push-8">
+                                        <br />
+                                        <button id="btnExportar" hidden>Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                    </div>
+
+                                    <div class="col-md-12 table-responsive"  >
+
+                                        <br />
+
+                                        <label class="control-label"># de Registros :  </label>
+                                        <label class="control-label" id="lbAntiguedadSaldos" name="lbAntiguedadSaldos"> </label>
+                                        <div>&nbsp;</div>
+
+                                        <table id="AntiguedadSaldos" name="AntiguedadSaldos" class="table table-striped table-bordered table-advance table-hover table-responsive">
+                                            <thead>
+
+                                                <tr role="row">
+                                                    <th style="text-align:center">
+                                                        Alumno Id
+                                                    </th>
+                                                    <th style="text-align:center" >
+                                                        Nombre
+                                                    </th>
+                                                    <th style="text-align:center">
+                                                        Perido
+                                                    </th>
+                                                    <th style="text-align:center" >
+                                                        Saldo
+                                                    </th>
+                                                    <th style="text-align:center">
+                                                    </th>
+                                                   
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--Popup ver detalle-->
+                    <div class="modal fade" tabindex="-1" data-width="600" data-height="400" id="PopSaldoDetalle">
+                        <div class="modal-dialog modal-dialog" style="width:550px">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                                <h3 class="modal-title">Detalle Saldo</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <label class="control-label">Alumno: </label>&nbsp;&nbsp;
+                                    <label class="bold" id="lblNombre"></label>
+                                </div>
+                                <div class="col-md-12 ">
+                                    <hr />
+                                    <table id="AntiguedadSaldosDetalle" name="AntiguedadSaldosDetalle" class="table table-striped table-bordered table-advance table-hover table-responsive">
+                                        <thead>
+
+                                            <tr role="row">
+                                                <th style="text-align:center">
+                                                    Perido
+                                                </th>
+                                                <th style="text-align:center">
+                                                    Saldo
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <!--<a href="#Monto" data-toggle="modal" id="btnPopup"></a>-->
+                        <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+                            <div class="modal-dialog modal-sm" style="height: 90px;">
+                                <!--<div class="modal-content" style="width:auto">-->
+                                <div class="form-group">
+                                    <h3 id="hCarga">Cargando</h3>
+                                </div>
+                                <div class="form-group">
+                                    <div class="bar" style="width:auto" id="divBar">
+                                        <p id="txtBar"></p>
+                                    </div>
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+
+    <script src="Scripts/js-xlsx/FileSaver.js"></script>
+    <script src="Scripts/js-xlsx/xlsx.full.min.js"></script>
+    <script src="JS/Reportes/AntiguedadSaldos.js"></script>
