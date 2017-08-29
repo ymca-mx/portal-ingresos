@@ -177,12 +177,12 @@
             var ojb2 = {
                 "Alumno Id": this.AlumnoId,
                 "Nombre": this.Nombre,
-                "Perido": this.Descripcion,
-                "Total": this.Saldo,
+                "Periodo": this.Descripcion,
+                "Saldo": this.Saldo,
             };
             data2.push(ojb2);
         });
-        hd = ["Alumno Id", "Nombre", "Perido", "Total"];
+        hd = ["Alumno Id", "Nombre", "Periodo", "Saldo"];
 
 
         var ws = XLSX.utils.json_to_sheet(data2, {
