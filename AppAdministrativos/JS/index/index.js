@@ -8,11 +8,7 @@
     //    return false;
     //});
     var Funciones ={        
-        btnSalir: function () {
-            $.removeCookie('userAdmin', { path: '/' });
-            var url = $(this).attr("href");
-            $(location).attr('href', url);
-        },
+       
         TraerImagen: function () {
             $.ajax({
                 url: 'WS/Usuario.asmx/Datos',
@@ -40,5 +36,5 @@
         }
     }
     Funciones.TraerImagen();
-    $('#btnSalir').on('click', btnSalir);
+
 });

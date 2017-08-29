@@ -1,20 +1,43 @@
 ﻿$(function init() {
-    var Funciones = {
-        router: function () {
-            AppRouter = Backbone.Router.extend({
-                routes: {
-                    "*actions": "defaultRoute"
-                },
-            });
-            // Initiate the router
-            var app_router = new AppRouter;
+    AppRouter = Backbone.Router.extend({
+        routes: {
+            "Views/:direccion": "Views",
+            "*actions": "defaultRoute",            
+        },
+    });
 
+    // Initiate the router
+    var app_router = new AppRouter;
+
+    var Funciones = {
+        btnSalir: function () {
+            $.removeCookie('userAdmin', { path: '/' });
+            Backbone.history.stop();
+            var url = "login.html";
+            $(location).attr('href', url);
+        },
+        router: function () {           
+            console.log(app_router);
             app_router.on('route:defaultRoute', function (actions) {
+                if (typeof $.cookie('userAdmin') === 'undefined') {
+                    Backbone.history.stop();
+                    $(location).attr('href', "login.html");
+                    return false;
+                }
                 $('#divDinamico').empty();
-                if (actions === null) { return false; }
+                if (actions === null) {
+                    actions = "#";
+                    return false;
+                }
+                if (actions === '#') { return false; }                
                 var url = actions;
                 //console.log('Perras');
                 $('#divDinamico').load(url);
+            });
+
+            app_router.on('router:Views', function (vista, page) {
+                console.log(vista);
+                console.log(page);
             });
 
             // Start Backbone history a necessary step for bookmarkable URL's
@@ -44,7 +67,7 @@
                     else {
                         $(Resultado.d).each(function () {
                             Menu += '<li class="menu-dropdown mega-menu-dropdown ">' +
-                                '<a class="dropdown-toggle"  data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#index.html" aria-haspopup="true" aria-expanded="false">' +
+                                '<a class="dropdown-toggle"  data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">' +
 
                                 this.Descripcion +
 
@@ -76,4 +99,5 @@
         }
     };
     Funciones.Menu();
+    $('#btnSalir').on('click', Funciones.btnSalir);
 });
