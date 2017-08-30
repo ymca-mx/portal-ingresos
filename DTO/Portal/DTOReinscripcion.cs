@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,20 +66,63 @@ namespace DTO
 {
     public class DTOReporteCarteraVencida
     {
+        static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
+
         public int Alumno { get; set; }
-        public DateTime FechaPago {
-            get { return new DateTime(); }
-            set { FechaPagoS = DateToString(value); } }
+        
+        public DateTime FechaPago
+        {
+            get
+            {
+                return new DateTime();
+            }
+            set
+            {
+                FechaPagoS = DateToString(value);
+            }
+        }
+
         public string FechaPagoS { get; set; }
         public string Tipo_de_pago { get; set; }
         public string Concepto { get; set; }
-        public decimal Pago { get; set; }
-        public decimal Restante { get; set; }
+
+        private decimal Pago_ { get; set; }
+        public decimal _Pago
+        {
+            get { return Pago_; }
+            set
+            {
+                Pago_ = Math.Round(value); ;
+                Pago = DecimalToString(Pago_);
+            }
+        }
+
+        public string Pago { get; set; }
+
+        private decimal Restante_ { get; set; }
+        public decimal _Restante
+        {
+            get
+            {
+                return Restante_;
+            }
+            set
+            {
+                Restante_ = Math.Round(value);
+                Restante = DecimalToString(Restante_);
+            }
+        }
+
+        public string Restante { get; set; }
 
         private string DateToString(DateTime fecha)
         {
             return (fecha.Day < 10 ? "0" + fecha.Day : "" + fecha.Day) + "/" +
                 (fecha.Month < 10 ? "0" + fecha.Month : "" + fecha.Month) + "/" + fecha.Year;
+        }
+        private string DecimalToString(decimal Cantidad)
+        {
+            return Cantidad.ToString("C", Cultura);
         }
     }
 }
