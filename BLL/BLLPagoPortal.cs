@@ -1726,7 +1726,14 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 int nPagos = 0;
-                Periodo objPerActual = db.Periodo.Where(d => DateTime.Now >= d.FechaInicial && DateTime.Now <= d.FechaFinal).FirstOrDefault();
+
+                DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                
+                Periodo objPerActual = db.Periodo.Where(d =>FechaActual >= d.FechaInicial
+                && FechaActual <= d.FechaFinal).FirstOrDefault();
+
+
+
                 DateTime dtPeriodo;
                 List<Pago> Pagolist = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.EstatusId == 1 && (P.Anio != 2016 || P.PeriodoId != 1) &&
                     (P.Cuota1.PagoConceptoId == 800 || P.Cuota1.PagoConceptoId == 802 || P.Cuota1.PagoConceptoId == 807 || P.Cuota1.PagoConceptoId == 306

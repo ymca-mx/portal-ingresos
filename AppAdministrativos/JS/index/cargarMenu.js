@@ -1,9 +1,9 @@
 ﻿$(function init() {
     //AppRouter = 
-
+    var bandera = 0;
     // Initiate the router
     //var app_router = new AppRouter;
-
+    var app_router;
     var Funciones = {
         btnSalir: function () {
             $.removeCookie('userAdmin', { path: '/' });
@@ -41,7 +41,7 @@
                                     SubMenu: []
                                 };
                             Menu += '<li class="menu-dropdown mega-menu-dropdown ">' +
-                                '<a class="dropdown-toggle"  data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">' +
+                                '<a class="dropdown-toggle"  data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
 
                                 this.Descripcion +
 
@@ -56,7 +56,7 @@
                                 };
                                 Menu +=
                                     '<li class="dropdown-submenu">' +
-                                    '<a href="#/Views/' + ele.SubmenuId + '" class="contenido">' +
+                                    '<a name="menu" href="Views/' + ele.SubmenuId + '" class="contenido">' +
                                     '<i class="fa fa-history"></i>'
                                     + ele.Descripcion +
                                     '</a>' +
@@ -67,8 +67,9 @@
                             Funciones.Menu.push(objmenu);
                         });
                         $('#Menu').append(Menu);
-                        var app_router = new AppRouter;
+                        app_router = new AppRouter;
                         Backbone.history.start();
+                        $('a[name=menu]').on('click', Funciones.ClickMenu);
                         $.unblockUI();                        
                     }
                 },
@@ -79,56 +80,90 @@
                 }
             });
         },
-        Menu: []
+        Menu: [],
+        ClickMenu: function () {
+            bandera = 0;
+            var url = $(this).attr('href');
+            if (url === undefined) { url = '#'; }
+
+           
+
+            app_router.navigate(url, { trigger: true });
+            if (bandera === 0) {
+                var arrurl = $(this).attr('href');
+                if (arrurl !== undefined) {
+                    arrurl = arrurl.split('/');
+                    var id = arrurl[(arrurl.length - 1)];
+                    id = parseInt(id);
+
+                    $(Funciones.Menu).each(function () {
+                        $(this.SubMenu).each(function () {
+                            if (id === this.SubMenuId) {
+                                url = this.Direccion;
+                            }
+                        });
+                    });
+                }
+                $('#divDinamico').empty();
+
+                if (url !== '#') {
+                    $('#divDinamico').load(url);
+                }
+            }
+            return false;
+        }
     };
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            "Views/:SubMenuId": "LoadPage",
+            "*actions": "defaultRoute",
+        },
+        LoadPage: function (SubMenuId) {
+            if (typeof $.cookie('userAdmin') === 'undefined') {
+                Backbone.history.stop();
+                $(location).attr('href', "login.html");
+                return false;
+            }
+            $('#divDinamico').empty();
+
+            var direccion = "";
+            var subInt = parseInt(SubMenuId);
+            $(Funciones.Menu).each(function () {
+                $(this.SubMenu).each(function () {
+                    if (subInt === this.SubMenuId) {
+                        direccion = this.Direccion;
+                    }
+                });
+            });
+            if (direccion.length > 0) {
+                $('#divDinamico').load(direccion);
+            }
+            bandera = 1;
+        },
+        defaultRoute: function (actions) {
+            if (typeof $.cookie('userAdmin') === 'undefined') {
+                Backbone.history.stop();
+                $(location).attr('href', "login.html");
+                return false;
+            }
+            $('#divDinamico').empty();
+            if (actions === null) {
+                actions = "#";
+                return false;
+            }
+            if (actions === '#') { return false; }
+            if (actions === 'Views/') { return false; }
+            var url = actions;
+            //console.log('Perras');
+            $('#divDinamico').load(url);
+            bandera = 1;
+        }
+    });   
+
     Funciones.CrearMenu();
     
     $('#btnSalir').on('click', Funciones.btnSalir);
 
-    var AppRouter = Backbone.Router.extend({
-            routes: {
-                "Views/:SubMenuId": "LoadPage",
-                "*actions": "defaultRoute",
-            },
-            LoadPage: function (SubMenuId) {
-                if (typeof $.cookie('userAdmin') === 'undefined') {
-                    Backbone.history.stop();
-                    $(location).attr('href', "login.html");
-                    return false;
-                }
-                $('#divDinamico').empty();
-
-                var direccion = "";
-                var subInt = parseInt(SubMenuId);
-                $(Funciones.Menu).each(function () {                    
-                    $(this.SubMenu).each(function () {
-                        if (subInt === this.SubMenuId) {
-                            direccion = this.Direccion;
-                        }
-                    });
-                });
-                if (direccion.length > 0) {
-                    $('#divDinamico').load(direccion);
-                }
-
-            },
-            defaultRoute: function (actions) {
-                if (typeof $.cookie('userAdmin') === 'undefined') {
-                    Backbone.history.stop();
-                    $(location).attr('href', "login.html");
-                    return false;
-                }
-                $('#divDinamico').empty();
-                if (actions === null) {
-                    actions = "#";
-                    return false;
-                }
-                if (actions === '#') { return false; }
-                if (actions === 'Views/') { return false; }
-                var url = actions;
-                //console.log('Perras');
-                $('#divDinamico').load(url);
-            }
-    });
+    
 
 });
