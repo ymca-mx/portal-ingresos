@@ -14,32 +14,119 @@ namespace DTO
         public string ultimoAnio { get; set; }
     }
 
+    public  class DTOReporteBecasDetalle
+    {
+        public Nullable<int> AlumnoId { get; set; }
+        public Nullable<int> OfertaEducativaId { get; set; }
+        public string Descripcion { get; set; }
+        public string CostoIns { get; set; }
+        public string AnticipadoIns { get; set; }
+        public string AnticipadoInsPor { get; set; }
+        public string BecaIns { get; set; }
+        public string BecaInsPor { get; set; }
+        public string DesTotalIns { get; set; }
+        public string DesTotalInsPor { get; set; }
+        public string TotalIns { get; set; }
+        public string CostoCol { get; set; }
+        public string AnticipadoCol { get; set; }
+        public string AnticipadoColPor { get; set; }
+        public string BecaCol { get; set; }
+        public string BecaColPor { get; set; }
+        public string BecaDeportiva { get; set; }
+        public string BecaDeportivaPor { get; set; }
+        public string PromoCasa { get; set; }
+        public string PromoCasaPor { get; set; }
+        public string DesTotalCol { get; set; }
+        public string DesTotalColPor { get; set; }
+        public string TotalCol { get; set; }
+        public string EsEmpresa { get; set; }
+    }
+
+    public class DTOReporteBecasConcentrado
+    {
+        public string Descripcion { get; set; }
+        public Nullable<int> TotalAlumnos { get; set; }
+        public Nullable<int> AlumnosConBeca { get; set; }
+        public string CargosInscripcion { get; set; }
+        public string PromedioAnticipadoPor { get; set; }
+        public string PromedioAnticipado_ { get; set; }
+        public string PromedioBecaInscripcionPor { get; set; }
+        public string PromedioBecaInscripcion_ { get; set; }
+        public string TotalDescuentoInscripcion { get; set; }
+        public string CargosColegiatura { get; set; }
+        public string PromedioAnticipadoPorColegiatura { get; set; }
+        public string PromedioAnticipado_Colegiatura { get; set; }
+        public string BecaPromedioPor { get; set; }
+        public string BecaPromedio_ { get; set; }
+        public string BecaDeportivaPor { get; set; }
+        public string BecaDeportivaPromedio_ { get; set; }
+        public string PromoCasaPor { get; set; }
+        public string PromoCasa_ { get; set; }
+        public string TotalDescuentoColegiatura { get; set; }
+    }
+
     public class DTOReporteBecas
     {
-        public List<spReporteBecasDetalle> Detalle { get; set; }
-        public List<spReporteBecasConcentrado> Concentrado { get; set;}
+        public List<DTOReporteBecasDetalle> Detalle { get; set; }
+        public List<DTOReporteBecasConcentrado> Concentrado { get; set;}
         public List< DTOBecasCalculos> Calculos1 { get; set; }
         public List<DTOBecasCalculos> Calculos2 { get; set; }
     }
 
     public  class DTOReporteSaldos
     {
-        public Nullable<int> AlumnoId { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public Nullable<decimal> Saldo { get; set; }
+        public List<DTOSaldoAlumno> Alumnos { get; set; }
+        public List<DTOSaldosOfertas> Ofertas { get; set; }
+        public List<DTOPeriodoSaldos> Periodos { get; set; }
     }
 
-    public class DTOReporteSaldosDetalle
+    public class DTOPeriodoSaldos
+    {
+        public string Descripcion { get; set; }
+        private string DescripcionCorta_ { get; set; }
+        public string DescripcionCorta
+        {
+            get {return DescripcionCorta_; }
+            set { DescripcionCorta_= value.Split(' ')[0].Substring(0, 3) + value.Split(' ')[1] + value.Split(' ')[2].Substring(0, 3) + " " + value.Split(' ')[3] ; }
+        }
+    }
+
+
+    public class DTOSaldoAlumno
+    {
+        public Nullable<int> AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public List<DTOSaldosDetalle> Detalle { get; set; }
+        public string SaldoTotal { get; set; }
+    }
+
+    public class DTOSaldosDetalle
     {
         public int AlumnoId { get; set; }
         public string Periodo { get; set; }
-        public decimal Saldo { get; set; }
+        public string Saldo { get; set; }
     }
+
+    public class DTOSaldosOfertas
+    {
+        public int OfertaEducativaId { get; set; }
+        public string Descripcion { get; set; }
+        public List<DTOSaldoPeriodos> Periodos { get; set; }
+        public string SaldoTotal { get; set; }
+    }
+
+    public class DTOSaldoPeriodos
+    {
+        public string Periodo { get; set; }
+        public string Saldo { get; set; }
+    }
+
+    
+
 
     public class DTOBecasCalculos
     {
-        public decimal valor { get; set; }
+        public string valor { get; set; }
         public string valor2 { get; set; }
     }
     

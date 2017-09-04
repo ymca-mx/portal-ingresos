@@ -18248,7 +18248,8 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
         </ComplexType>
         <ComplexType Name="SP_ReporteSaldoAlumno_Result">
           <Property Type="Int32" Name="AlumnoId" Nullable="true" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="400" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="152" />
+          <Property Type="Int32" Name="OfertaEducativaId" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
           <Property Type="Decimal" Name="Saldo" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
@@ -21414,6 +21415,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <ComplexTypeMapping TypeName="UniversidadModel.SP_ReporteSaldoAlumno_Result">
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Saldo" ColumnName="Saldo" />
               </ComplexTypeMapping>

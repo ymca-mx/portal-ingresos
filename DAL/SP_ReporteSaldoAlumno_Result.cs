@@ -15,6 +15,7 @@ namespace DAL
     {
         public Nullable<int> AlumnoId { get; set; }
         public string Nombre { get; set; }
+        public Nullable<int> OfertaEducativaId { get; set; }
         public string Descripcion { get; set; }
         public Nullable<decimal> Saldo { get; set; }
     }

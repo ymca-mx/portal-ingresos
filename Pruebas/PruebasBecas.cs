@@ -1965,9 +1965,15 @@ namespace Pruebas
             using (UniversidadEntities db = new UniversidadEntities())
             {
 
-                List<SP_ReporteSaldoAlumno_Result> alumnoSaldo = db.SP_ReporteSaldoAlumno().ToList();
+                List<SP_ReporteSaldoAlumno_Result> alumnoSaldo0 = db.SP_ReporteSaldoAlumno().ToList();
 
-                
+                var Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == 12 && e.Descripcion == "Septiembre - Diciembre 2016").FirstOrDefault()?.Saldo ?? 0);
+
+
+
+
+
+
 
             }
 

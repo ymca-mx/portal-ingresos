@@ -39,13 +39,13 @@ namespace AppAdministrativos.WS
 
 
         [WebMethod]
-        public List<DTOReporteSaldos> CargarReporteSaldos()
+        public DTOReporteSaldos CargarReporteSaldos()
         {
             return BLLReportePortal.CargarReporteSaldos();
         }
 
         [WebMethod]
-        public List<DTOReporteSaldosDetalle> CargarReporteSaldosDetalle(int alumnoId)
+        public List<DTOSaldosDetalle> CargarReporteSaldosDetalle(int alumnoId)
         {
             return BLLReportePortal.CargarReporteSaldoDetalle(alumnoId);
         }

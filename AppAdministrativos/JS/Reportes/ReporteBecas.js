@@ -247,10 +247,11 @@
         $('#BecaConcentrado').DataTable().page.len(-1).draw();
         $('#BecaDetalle').DataTable().page.len(-1).draw();
 
+        var active1 = 0;
 
         if ($("#tab_1").hasClass("active"))
-        { $("#tab_2").addClass("active"); }
-        else { $("#tab_1").addClass("active"); }
+        { $("#tab_2").addClass("active"); active1 = 1 }
+        else { $("#tab_1").addClass("active");  }
 
 
         var tbl = document.getElementById('BecaConcentrado');
@@ -290,7 +291,7 @@
 
         saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Becas " + descripcion + ".xlsx");
 
-        if ($("#tab_1").hasClass("active"))
+        if (active1 == 1)
         { $("#tab_2").removeClass("active"); }
         else { $("#tab_1").removeClass("active"); }
 

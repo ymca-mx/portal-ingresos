@@ -112,7 +112,7 @@ namespace BLL
                     return listaresult;
                 }
                 catch { return null; }
-            }            
+            }
         }
 
         public static DTOCuatrimestre CargarCuatrimestre()
@@ -183,96 +183,204 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 List<spReporteBecasDetalle> detalle = db.spReporteBecasDetalle(anio, periodo).ToList();
+
                 List<spReporteBecasConcentrado> concentrado = db.spReporteBecasConcentrado(anio, periodo).ToList();
+                
+                List<DTOReporteBecasDetalle> detalle1 = detalle.Select(a => new DTOReporteBecasDetalle
+                {
+                    AlumnoId = a.AlumnoId,
+                    OfertaEducativaId = a.OfertaEducativaId,
+                    Descripcion = a.Descripcion,
+                    CostoIns = String.Format("{0:C}",  a.CostoIns),
+                    AnticipadoIns = String.Format("{0:C}", a.AnticipadoIns),
+                    AnticipadoInsPor = String.Format("{0:P2}", a.AnticipadoInsPor),
+                    BecaIns = String.Format("{0:C}", a.BecaIns),
+                    BecaInsPor = String.Format("{0:P2}", a.BecaInsPor),
+                    DesTotalIns = String.Format("{0:C}", a.DesTotalIns),
+                    DesTotalInsPor = String.Format("{0:P2}", a.DesTotalInsPor),
+                    TotalIns = String.Format("{0:C}", a.TotalIns),
+                    CostoCol = String.Format("{0:C}", a.CostoCol),
+                    AnticipadoCol = String.Format("{0:C}", a.AnticipadoCol),
+                    AnticipadoColPor = String.Format("{0:P2}", a.AnticipadoColPor),
+                    BecaCol = String.Format("{0:C}", a.BecaCol),
+                    BecaColPor = String.Format("{0:P2}", a.BecaColPor),
+                    BecaDeportiva = String.Format("{0:C}", a.BecaDeportiva),
+                    BecaDeportivaPor = String.Format("{0:P2}", a.BecaDeportivaPor),
+                    PromoCasa = String.Format("{0:C}", a.PromoCasa),
+                    PromoCasaPor = String.Format("{0:P2}", a.PromoCasaPor),
+                    DesTotalCol = String.Format("{0:C}", a.DesTotalCol),
+                    DesTotalColPor = String.Format("{0:P2}", a.DesTotalColPor),
+                    TotalCol = String.Format("{0:C}", a.TotalCol),
+                    EsEmpresa = a.EsEmpresa
+                }).ToList();
+
+                List<DTOReporteBecasConcentrado> concentrado1 = concentrado.Select(a => new DTOReporteBecasConcentrado
+                {
+                    Descripcion = a.Descripcion,
+                    TotalAlumnos = a.TotalAlumnos,
+                    AlumnosConBeca = a.AlumnosConBeca,
+                    CargosInscripcion = String.Format("{0:C}", a.CargosInscripcion),
+                    PromedioAnticipadoPor = String.Format("{0:P2}", a.PromedioAnticipadoPor),
+                    PromedioAnticipado_ = String.Format("{0:C}", a.PromedioAnticipado_),
+                    PromedioBecaInscripcionPor = String.Format("{0:P2}", a.PromedioBecaInscripcionPor),
+                    PromedioBecaInscripcion_ = String.Format("{0:C}", a.PromedioBecaInscripcion_),
+                    TotalDescuentoInscripcion = String.Format("{0:C}", a.TotalDescuentoInscripcion),
+                    CargosColegiatura = String.Format("{0:C}", a.CargosColegiatura),
+                    PromedioAnticipadoPorColegiatura = String.Format("{0:P2}", a.PromedioAnticipadoPorColegiatura),
+                    PromedioAnticipado_Colegiatura = String.Format("{0:C}", a.PromedioAnticipado_Colegiatura),
+                    BecaPromedioPor = String.Format("{0:P2}", a.BecaPromedioPor),
+                    BecaPromedio_ = String.Format("{0:C}", a.BecaPromedio_),
+                    BecaDeportivaPor = String.Format("{0:P2}", a.BecaDeportivaPor),
+                    BecaDeportivaPromedio_ = String.Format("{0:C}", a.BecaDeportivaPromedio_),
+                    PromoCasaPor = String.Format("{0:P2}", a.PromoCasaPor),
+                    PromoCasa_ = String.Format("{0:C}", a.PromoCasa_),
+                    TotalDescuentoColegiatura = String.Format("{0:C}", a.TotalDescuentoColegiatura)
+
+                }).ToList();
+
+                #region CALCULOS
+
                 List<DTOBecasCalculos> calculos1 = new List<DTOBecasCalculos>();
                 List<DTOBecasCalculos> calculos2 = new List<DTOBecasCalculos>();
 
-                #region CALCULOS
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.CostoIns).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoIns).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoInsPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaIns).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaInsPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalIns).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalInsPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.TotalIns).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.CostoCol).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoCol).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.AnticipadoColPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaCol).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaColPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaDeportiva).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.BecaDeportivaPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.PromoCasa).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.PromoCasaPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalCol).Sum() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.DesTotalColPor).Average() });
-                calculos1.Add(new DTOBecasCalculos { valor = (decimal)detalle.Select(a => a.TotalCol).Sum() });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.CostoIns).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.AnticipadoIns).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.AnticipadoInsPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.BecaIns).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.BecaInsPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.DesTotalIns).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.DesTotalInsPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.TotalIns).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.CostoCol).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.AnticipadoCol).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.AnticipadoColPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.BecaCol).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.BecaColPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.BecaDeportiva).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.BecaDeportivaPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.PromoCasa).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.PromoCasaPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.DesTotalCol).Sum()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:P4}", detalle.Select(a => a.DesTotalColPor).Average()) });
+                calculos1.Add(new DTOBecasCalculos { valor = String.Format("{0:C}", detalle.Select(a => a.TotalCol).Sum()) });
 
                 ////////////////////////////////////
                 calculos2.Add(new DTOBecasCalculos { valor2 = "Total:" });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.TotalAlumnos).Sum()).ToString() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.AlumnosConBeca).Sum()).ToString() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.CargosInscripcion).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = concentrado.Select(a => a.TotalAlumnos).Sum().ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = concentrado.Select(a => a.AlumnosConBeca).Sum().ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.CargosInscripcion).Sum()) });
                 calculos2.Add(new DTOBecasCalculos { });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.PromedioAnticipado_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.PromedioAnticipado_).Sum()) });
                 calculos2.Add(new DTOBecasCalculos { });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.PromedioBecaInscripcion_).Sum()).ToString() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.TotalDescuentoInscripcion).Sum()).ToString() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.CargosColegiatura).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.PromedioBecaInscripcion_).Sum()) });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.TotalDescuentoInscripcion).Sum()) });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.CargosColegiatura).Sum()) });
                 calculos2.Add(new DTOBecasCalculos { });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.PromedioAnticipado_Colegiatura).Sum()) });
                 calculos2.Add(new DTOBecasCalculos { });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.BecaPromedio_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.BecaPromedio_).Sum()) });
                 calculos2.Add(new DTOBecasCalculos { });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((decimal)concentrado.Select(a => a.BecaDeportivaPromedio_).Sum()).ToString() });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.BecaDeportivaPromedio_).Sum()) });
                 calculos2.Add(new DTOBecasCalculos { });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((int)concentrado.Select(a => a.PromoCasa_).Sum()).ToString() });
-                calculos2.Add(new DTOBecasCalculos { valor2 = ((int)concentrado.Select(a => a.TotalDescuentoColegiatura).Sum()).ToString() });
-                
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.PromoCasa_).Sum()) });
+                calculos2.Add(new DTOBecasCalculos { valor2 = String.Format("{0:C}", concentrado.Select(a => a.TotalDescuentoColegiatura).Sum()) });
+
 
                 #endregion
-                
+
                 DTOReporteBecas reporteBecas = new DTOReporteBecas();
 
-                reporteBecas.Detalle = detalle;
-                reporteBecas.Concentrado = concentrado;
+                reporteBecas.Detalle = detalle1;
+                reporteBecas.Concentrado = concentrado1;
                 reporteBecas.Calculos1 = calculos1;
                 reporteBecas.Calculos2 = calculos2;
                 return reporteBecas;
-                
+
             }
         }
 
-        public static List<DTOReporteSaldos> CargarReporteSaldos()
+        public static DTOReporteSaldos CargarReporteSaldos()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOReporteSaldos> alumnoSaldo = db.SP_ReporteSaldoAlumno().Select(a=> new DTOReporteSaldos 
+
+                List<SP_ReporteSaldoAlumno_Result> alumnoSaldo0 = db.SP_ReporteSaldoAlumno().ToList();
+
+                var periodos0 = alumnoSaldo0.Select(a => a.Descripcion).Distinct().ToList();
+
+                List<DTOPeriodoSaldos> periodos = db.Periodo.Where(a => periodos0.Select(w => w).Contains(a.Descripcion))
+                                                  .OrderByDescending(b => b.Anio)
+                                                  .Select(c => new DTOPeriodoSaldos
+                                                  {
+                                                      Descripcion = c.Descripcion,
+                                                      DescripcionCorta = c.Descripcion
+                                                  }).ToList();
+
+                var alumnos = alumnoSaldo0.Select(a => new { a.AlumnoId,a.Nombre}).Distinct().ToList();
+                
+
+                List<DTOSaldoAlumno> SaldoAlumno = alumnos.Select(a => new DTOSaldoAlumno
                 {
                     AlumnoId = a.AlumnoId,
                     Nombre = a.Nombre,
-                    Descripcion = a.Descripcion,
-                    Saldo = a.Saldo
+                    Detalle = periodos.Select(c => new DTOSaldosDetalle
+                    {
+                        AlumnoId =(int) a.AlumnoId,
+                        Periodo = c.Descripcion,
+                        Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion ).FirstOrDefault()?.Saldo??0)
+                    }).ToList(),
+                    SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId).Select(f => f.Saldo).ToList().Sum())
                 }).ToList();
-                
-                return alumnoSaldo;
+
+                List<DTOSaldosOfertas> saldoOfertas = alumnoSaldo0.GroupBy(a => new { a.OfertaEducativaId })
+                                      .Select(b => new DTOSaldosOfertas
+                                      {
+                                          OfertaEducativaId = (int)b.Key.OfertaEducativaId,
+                                          Descripcion = db.OfertaEducativa.Where(c => c.OfertaEducativaId == b.Key.OfertaEducativaId).FirstOrDefault().Descripcion,
+                                          Periodos = periodos.Select(f => new DTOSaldoPeriodos
+                                                     {
+                                                         Periodo = f.Descripcion,
+                                                         Saldo = String.Format("{0:C}", (decimal)alumnoSaldo0.Where(g => g.OfertaEducativaId == b.Key.OfertaEducativaId
+                                                                                        && g.Descripcion == f.Descripcion)
+                                                                           .Select(h => h.Saldo).ToList().Sum())
+                                                     }).ToList(),
+                                          SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(p => p.OfertaEducativaId == b.Key.OfertaEducativaId).Select(l=> l.Saldo).Sum())
+
+                                      }).OrderBy(j => j.OfertaEducativaId).ToList();
+
+                saldoOfertas.Add(new DTOSaldosOfertas
+                {
+                    Descripcion = "Total",
+                    Periodos = alumnoSaldo0.GroupBy(e => new { e.Descripcion })
+                                                     .Select(f => new DTOSaldoPeriodos
+                                                     {
+                                                         Periodo = f.Key.Descripcion,
+                                                         Saldo = String.Format("{0:C}", (decimal)alumnoSaldo0.Where(g => g.Descripcion == f.Key.Descripcion)
+                                                                                                             .Select(h => h.Saldo).ToList().Sum())
+                                                     }).ToList(),
+                    SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Select(l => l.Saldo).Sum())
+                });
+
+                DTOReporteSaldos Reporte = new DTOReporteSaldos();
+                Reporte.Periodos = periodos;
+                Reporte.Alumnos = SaldoAlumno;
+                Reporte.Ofertas = saldoOfertas;
+
+                return Reporte;
             }
         }
 
-        public static List<DTOReporteSaldosDetalle> CargarReporteSaldoDetalle(int alumnoId)
+        public static List<DTOSaldosDetalle> CargarReporteSaldoDetalle(int alumnoId)
         {
-            using (UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOReporteSaldosDetalle> detalle = db.spSaldoAlumno(alumnoId, true).Select(a => new DTOReporteSaldosDetalle
+                List<DTOSaldosDetalle> detalle = db.spSaldoAlumno(alumnoId, true).Select(a => new DTOSaldosDetalle
                 {
                     AlumnoId = a.AlumnoId,
                     Periodo = db.Periodo.Where(c => c.Anio == a.Anio && c.PeriodoId == a.PeriodoId).FirstOrDefault().Descripcion,
-                    Saldo = a.Saldo
+                    Saldo = String.Format("{0:C}", a.Saldo)
                 }).ToList();
 
-
-                
                 return detalle;
             }
         }
@@ -342,7 +450,7 @@ namespace BLL
 
                     return null;
                 }
-                
+
 
             }
 
@@ -364,31 +472,31 @@ namespace BLL
                     List<AlumnoInscritoBitacora> alumnoInscritoBitacora = db.AlumnoInscritoBitacora.Where(k => anio == k.Anio && periodo == k.PeriodoId).ToList();
                     List<DTOReporteInscrito> inscritos = new List<DTOReporteInscrito>();
                     #region alumnoInscrito
-                    
-                        List<DTOReporteInscrito> alumnoInscrito2 = (from a in alumnoInscrito
-                                                                    join b in db.Usuario on a.UsuarioId equals b.UsuarioId
-                                                                    join c in db.Alumno on a.AlumnoId equals c.AlumnoId
-                                                                    join d in db.OfertaEducativa on a.OfertaEducativaId equals d.OfertaEducativaId
-                                                                    where a.Anio == anio
-                                                                    && a.PeriodoId == periodo
-                                                                    && a.EstatusId != 3
-                                                                    && d.OfertaEducativaTipoId != 4
-                                                                    select new DTOReporteInscrito
-                                                                    {
-                                                                        alumnoId = a.AlumnoId,
-                                                                        nombreAlumno = c.Paterno + " " + c.Materno + " " + c.Nombre,
-                                                                        especialidad = d.Descripcion,
-                                                                        especialidadId = a.OfertaEducativaId,
-                                                                        fechaInscripcion1 = alumnoInscritoBitacora.Where(w => w.AlumnoId == a.AlumnoId && w.OfertaEducativaId == a.OfertaEducativaId).OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? a.FechaInscripcion,
-                                                                        porcentajeDescuento = a.Descuento,
-                                                                        tipoAlumno = a.TipoAlumno,
-                                                                        esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
-                                                                        usuarioAplico = b.Paterno + " " + b.Materno + " " + b.Nombre
-                                                                    }
-                                                  ).ToList();
-                        
-                        inscritos.AddRange(alumnoInscrito2);
-                    
+
+                    List<DTOReporteInscrito> alumnoInscrito2 = (from a in alumnoInscrito
+                                                                join b in db.Usuario on a.UsuarioId equals b.UsuarioId
+                                                                join c in db.Alumno on a.AlumnoId equals c.AlumnoId
+                                                                join d in db.OfertaEducativa on a.OfertaEducativaId equals d.OfertaEducativaId
+                                                                where a.Anio == anio
+                                                                && a.PeriodoId == periodo
+                                                                && a.EstatusId != 3
+                                                                && d.OfertaEducativaTipoId != 4
+                                                                select new DTOReporteInscrito
+                                                                {
+                                                                    alumnoId = a.AlumnoId,
+                                                                    nombreAlumno = c.Paterno + " " + c.Materno + " " + c.Nombre,
+                                                                    especialidad = d.Descripcion,
+                                                                    especialidadId = a.OfertaEducativaId,
+                                                                    fechaInscripcion1 = alumnoInscritoBitacora.Where(w => w.AlumnoId == a.AlumnoId && w.OfertaEducativaId == a.OfertaEducativaId).OrderBy(k => k.FechaInscripcion).FirstOrDefault()?.FechaInscripcion ?? a.FechaInscripcion,
+                                                                    porcentajeDescuento = a.Descuento,
+                                                                    tipoAlumno = a.TipoAlumno,
+                                                                    esEmpresa = a.EsEmpresa == true ? "SI" : "NO",
+                                                                    usuarioAplico = b.Paterno + " " + b.Materno + " " + b.Nombre
+                                                                }
+                                              ).ToList();
+
+                    inscritos.AddRange(alumnoInscrito2);
+
                     #endregion
 
                     return (inscritos.GroupBy(c => c.alumnoId).Select(i => i.FirstOrDefault()).ToList().Select(a => new DTOReporteInscrito
@@ -410,7 +518,7 @@ namespace BLL
                     return null;
                 }
 
-                
+
 
             }//using
 
@@ -436,27 +544,6 @@ namespace BLL
                                                && a.EsComite
                                                && alumnosPagoPlanNull.Contains(a.AlumnoId)
                                                select new DTOReporteBecaSep
-                                              {
-                                                  alumnoId = a.AlumnoId,
-                                                  especialidadId = a.OfertaEducativaId,
-                                                  porcentajeDescuento = a.Monto + "%",
-                                                  comentario = a.Comentario,
-                                                  fechaGeneracion1 = a.FechaGeneracion,
-                                                  horaGeneracion = a.HoraGeneracion.ToString(),
-                                                  usuarioAplicoId = a.UsuarioId,
-                                                  alumnoDescuentoId = a.AlumnoDescuentoId,
-                                                  esSEP = a.EsSEP,
-                                                  esComite = a.EsComite
-                                              }).ToList();
-
-
-                List<DTOReporteBecaSep> Tres = (from a in db.AlumnoDescuentoBitacora
-                                                where a.Anio == anio
-                                               && a.PeriodoId == periodo
-                                               && a.PagoConceptoId == 800
-                                               && a.EsSEP
-                                               && !a.EsComite
-                                                select new DTOReporteBecaSep
                                                {
                                                    alumnoId = a.AlumnoId,
                                                    especialidadId = a.OfertaEducativaId,
@@ -469,6 +556,27 @@ namespace BLL
                                                    esSEP = a.EsSEP,
                                                    esComite = a.EsComite
                                                }).ToList();
+
+
+                List<DTOReporteBecaSep> Tres = (from a in db.AlumnoDescuentoBitacora
+                                                where a.Anio == anio
+                                               && a.PeriodoId == periodo
+                                               && a.PagoConceptoId == 800
+                                               && a.EsSEP
+                                               && !a.EsComite
+                                                select new DTOReporteBecaSep
+                                                {
+                                                    alumnoId = a.AlumnoId,
+                                                    especialidadId = a.OfertaEducativaId,
+                                                    porcentajeDescuento = a.Monto + "%",
+                                                    comentario = a.Comentario,
+                                                    fechaGeneracion1 = a.FechaGeneracion,
+                                                    horaGeneracion = a.HoraGeneracion.ToString(),
+                                                    usuarioAplicoId = a.UsuarioId,
+                                                    alumnoDescuentoId = a.AlumnoDescuentoId,
+                                                    esSEP = a.EsSEP,
+                                                    esComite = a.EsComite
+                                                }).ToList();
 
                 List<DTOReporteBecaSep> Dos = new List<DTOReporteBecaSep>();
 
@@ -547,18 +655,18 @@ namespace BLL
                                                   && a.EsSEP
                                                   && !a.EsComite
                                                   select new DTOReporteBecaSep
-                                                 {
-                                                     alumnoId = a.AlumnoId,
-                                                     especialidadId = a.OfertaEducativaId,
-                                                     porcentajeDescuento = a.Monto + "%",
-                                                     comentario = a.Comentario,
-                                                     fechaGeneracion1 = a.FechaGeneracion,
-                                                     horaGeneracion = a.HoraGeneracion.ToString(),
-                                                     usuarioAplicoId = a.UsuarioId,
-                                                     alumnoDescuentoId = a.AlumnoDescuentoId,
-                                                     esSEP = a.EsSEP,
-                                                     esComite = a.EsComite
-                                                 }).ToList();
+                                                  {
+                                                      alumnoId = a.AlumnoId,
+                                                      especialidadId = a.OfertaEducativaId,
+                                                      porcentajeDescuento = a.Monto + "%",
+                                                      comentario = a.Comentario,
+                                                      fechaGeneracion1 = a.FechaGeneracion,
+                                                      horaGeneracion = a.HoraGeneracion.ToString(),
+                                                      usuarioAplicoId = a.UsuarioId,
+                                                      alumnoDescuentoId = a.AlumnoDescuentoId,
+                                                      esSEP = a.EsSEP,
+                                                      esComite = a.EsComite
+                                                  }).ToList();
 
 
                 Aux.AddRange(Cuatro);
@@ -592,7 +700,7 @@ namespace BLL
         public static List<DTOReporteInegi> CargaReporteIneg(int anio, int periodo)
         {
 
-            
+
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
@@ -603,39 +711,39 @@ namespace BLL
                     int[] estatus = new int[] { 1, 4, 14 };
                     List<DTOReporteInegi> inscritoInegi = new List<DTOReporteInegi>();
                     //#region alumnoInscrito
-                  
-                        List<DTOReporteInegi> alumnoInegi = (from a in alumnoInscrito
-                                                             join b in db.Alumno on a.AlumnoId equals b.AlumnoId
-                                                             join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
-                                                             join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
-                                                             join e in db.AlumnoCuatrimestre on new { a.AlumnoId, a.OfertaEducativaId, a.Anio, a.PeriodoId } equals
-                                                                                               new { e.AlumnoId, e.OfertaEducativaId, e.Anio, e.PeriodoId }
-                                                             where a.Anio == anio
-                                                             && a.PeriodoId == periodo
-                                                             && a.EstatusId == 1
-                                                             && c.OfertaEducativaTipoId != 4
-                                                             select new DTOReporteInegi
-                                                             {
-                                                                 alumnoId = a.AlumnoId,
-                                                                 nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                                                 ciclo = a.Anio + "-" + a.PeriodoId,
-                                                                 especialidad = c.Descripcion,
-                                                                 especialidadId = a.OfertaEducativaId,
-                                                                 sexo = d.Genero.Descripcion,
-                                                                 fechaNacimiento1 = d.FechaNacimiento,
-                                                                 lugarNacimiento = d.EntidadFederativa.Descripcion,
-                                                                 lugarEstudio = d.Alumno.AlumnoAntecedente.FirstOrDefault()?.PaisId ==146?
-                                                                 d.Alumno.AlumnoAntecedente.FirstOrDefault()?.EntidadFederativa.Descripcion :
-                                                                 d.Alumno.AlumnoAntecedente.FirstOrDefault()?.Pais.Descripcion,
-                                                                 tipoAlumno = a.TipoAlumno,
-                                                                 Cuatrimestre = e.Cuatrimestre + " Cuatrimestre"
-                                                                 //Cuatrimestre = db.AlumnoCuatrimestre.Where(e=> a.AlumnoId == e.AlumnoId && a.OfertaEducativaId == e.OfertaEducativaId && a.Anio == e.Anio && a.PeriodoId == e.PeriodoId).FirstOrDefault()?.Cuatrimestre + " Cuatrimestre" ?? ""
-                                                             }
-                                                  ).ToList();
 
-                        inscritoInegi.AddRange(alumnoInegi);
+                    List<DTOReporteInegi> alumnoInegi = (from a in alumnoInscrito
+                                                         join b in db.Alumno on a.AlumnoId equals b.AlumnoId
+                                                         join c in db.OfertaEducativa on a.OfertaEducativaId equals c.OfertaEducativaId
+                                                         join d in db.AlumnoDetalle on a.AlumnoId equals d.AlumnoId
+                                                         join e in db.AlumnoCuatrimestre on new { a.AlumnoId, a.OfertaEducativaId, a.Anio, a.PeriodoId } equals
+                                                                                           new { e.AlumnoId, e.OfertaEducativaId, e.Anio, e.PeriodoId }
+                                                         where a.Anio == anio
+                                                         && a.PeriodoId == periodo
+                                                         && a.EstatusId == 1
+                                                         && c.OfertaEducativaTipoId != 4
+                                                         select new DTOReporteInegi
+                                                         {
+                                                             alumnoId = a.AlumnoId,
+                                                             nombreAlumno = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                             ciclo = a.Anio + "-" + a.PeriodoId,
+                                                             especialidad = c.Descripcion,
+                                                             especialidadId = a.OfertaEducativaId,
+                                                             sexo = d.Genero.Descripcion,
+                                                             fechaNacimiento1 = d.FechaNacimiento,
+                                                             lugarNacimiento = d.EntidadFederativa.Descripcion,
+                                                             lugarEstudio = d.Alumno.AlumnoAntecedente.FirstOrDefault()?.PaisId == 146 ?
+                                                             d.Alumno.AlumnoAntecedente.FirstOrDefault()?.EntidadFederativa.Descripcion :
+                                                             d.Alumno.AlumnoAntecedente.FirstOrDefault()?.Pais.Descripcion,
+                                                             tipoAlumno = a.TipoAlumno,
+                                                             Cuatrimestre = e.Cuatrimestre + " Cuatrimestre"
+                                                             //Cuatrimestre = db.AlumnoCuatrimestre.Where(e=> a.AlumnoId == e.AlumnoId && a.OfertaEducativaId == e.OfertaEducativaId && a.Anio == e.Anio && a.PeriodoId == e.PeriodoId).FirstOrDefault()?.Cuatrimestre + " Cuatrimestre" ?? ""
+                                                         }
+                                              ).ToList();
 
-                    
+                    inscritoInegi.AddRange(alumnoInegi);
+
+
 
                     DateTime ahora = DateTime.Now;
 
@@ -661,7 +769,7 @@ namespace BLL
                     return null;
                 }
 
-              
+
 
             }//using
 
@@ -834,13 +942,13 @@ namespace BLL
                         Email = td.Email
                     }).ToList();
 
-                    bool esEscolares = false;  
+                    bool esEscolares = false;
                     int usuarioTipo = db.Usuario.Where(a => a.UsuarioId == usuarioid).FirstOrDefault().UsuarioTipoId;
                     if (usuarioTipo == 12 || usuarioTipo == 10)
                     {
                         esEscolares = true;
                     }
-                    
+
                     return (new DTOVoBo { AlumnoVoBo = alumnoVoBo, EsEscolares = esEscolares });
                 }
                 catch (Exception)
@@ -851,10 +959,10 @@ namespace BLL
             }
         }
 
-        public static bool ReporteVoBoEnviarEmail(int  AlumnoId, string EmailAlumno)
+        public static bool ReporteVoBoEnviarEmail(int AlumnoId, string EmailAlumno)
         {
             DTOCuentaMail cuentaEmail = BLLCuentaMail.ConsultarCuentaMail();
-            
+
             try
             {
                 ProcessResult respuesta = new Utilities.ProcessResult();
@@ -1175,6 +1283,6 @@ namespace BLL
                 return false;
             }
         }
-        
+
     }
 }
