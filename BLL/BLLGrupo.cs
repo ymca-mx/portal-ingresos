@@ -1011,13 +1011,6 @@ namespace BLL
                                                && (c.PagoConceptoId == 800 || c.PagoConceptoId == 802)
                                                 && c.OfertaEducativaId == OfertaEducativaId).ToList();
 
-                decimal PorcentajeInscripcion = 0, PorcentajeColegiatura = 0;
-
-                PorcentajeInscripcion = 100 - ((CuotasIncrementos.Where(k => k.PagoConceptoId == 802).First().ImporteIncremento * 100) /
-                                            Cuotas.Where(c => c.PagoConceptoId == 802).FirstOrDefault().Monto);
-
-                PorcentajeColegiatura = 100 - ((CuotasIncrementos.Where(k => k.PagoConceptoId == 800).First().ImporteIncremento * 100) /
-                                            Cuotas.Where(c => c.PagoConceptoId == 800).FirstOrDefault().Monto);
 
                 var AlumnoConfiguracion = db
                                         .GrupoAlumnoConfiguracion
@@ -1044,18 +1037,25 @@ namespace BLL
                         HoraRegistro = AlumnoConfiguracion.First().HoraRegistro,
                         OfertaEducativaId = OfertaEducativaId,
                         PagoPlanId = AlumnoConfiguracion.First().PagoPlanId,
-                        UsuarioId = AlumnoConfiguracion.First().UsuarioId
+                        UsuarioId = AlumnoConfiguracion.First().UsuarioId,
+                        NumeroPagos=AlumnoConfiguracion.FirstOrDefault().NumeroPagos
                     });
                     #endregion
 
                     #region Calculos de Nuevas Cuotas
                     if (!AlumnoConfiguracion.First().EsCuotaCongelada)
                     {
-                        AlumnoConfiguracion.First().CuotaColegiatura = (AlumnoConfiguracion.First().CuotaColegiatura + AlumnoConfiguracion.First().CuotaColegiatura * PorcentajeColegiatura);
+                        decimal cuota = (AlumnoConfiguracion.First().CuotaColegiatura +
+                                         (CuotasIncrementos.Where(a => a.PagoConceptoId == 800).FirstOrDefault()?.ImporteIncremento ?? 0));
+
+                        AlumnoConfiguracion.First().CuotaColegiatura = cuota;
                     }
                     if (!AlumnoConfiguracion.First().EsInscripcionCongelada)
                     {
-                        AlumnoConfiguracion.First().CuotaInscripcion = (AlumnoConfiguracion.First().CuotaInscripcion + AlumnoConfiguracion.First().CuotaInscripcion * PorcentajeInscripcion);
+                        decimal cuota = (AlumnoConfiguracion.First().CuotaInscripcion +
+                             (CuotasIncrementos.Where(a => a.PagoConceptoId == 802).FirstOrDefault()?.ImporteIncremento ?? 0));
+
+                        AlumnoConfiguracion.First().CuotaInscripcion = cuota;
                     }
                     #endregion
 

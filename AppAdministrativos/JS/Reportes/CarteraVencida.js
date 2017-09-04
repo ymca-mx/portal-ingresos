@@ -175,20 +175,16 @@
             }
 
             if (tabla.length > 0) {
-                var tabla2 = $('#tblDatos').DataTable();
+                var total1 = 0;
+                var total2 = 0;
 
-                var total1 = tabla2.column(4)
-                    .data()
-                    .reduce(function (a, b) {
-                        return a + b
-                    }, 0);
-                var total2 = tabla2.column(5)
-                    .data()
-                    .reduce(function (a, b) {
-                        return a + b;
-                    }, 0);
-                total1 = parseFloat(total1).toFixed(4);
-                total2 = parseFloat(total2).toFixed(4);
+                $(tabla).each(function () {
+                    total1 += this._Pago;
+                    total2 += this._Restante;
+                });
+
+                total1 = "$" + parseFloat(total1).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                total2 = "$" + parseFloat(total2).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
                 var tfoot = '<tfoot><tr><th></th><th></th><th></th><th>Totales: </th><th>' + total1 + ' </th><th>' + total2 + ' </th> </tr></tfoot>';
                               
@@ -218,14 +214,14 @@
                     "Pagado": this.Pago,
                     "Por Pagar": this.Restante
                 };
-                pagototal += this.Pago;
-                restantetotal += this.Restante;                
+                pagototal += this._Pago;
+                restantetotal += this._Restante;                
 
                 data2.push(ojb2);
             });
 
-            pagototal = parseFloat(pagototal).toFixed(4);
-            restantetotal = parseFloat(restantetotal).toFixed(4);
+            pagototal = "$" + parseFloat(pagototal).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+            restantetotal = "$" + parseFloat(restantetotal).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
             var ojb3 = {
                 "Alumno": "",

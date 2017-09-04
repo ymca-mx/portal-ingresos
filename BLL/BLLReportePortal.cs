@@ -103,8 +103,8 @@ namespace BLL
                                         Alumno = a.Alumno,
                                         Concepto = a.Concepto,
                                         FechaPago = a.FechaPago,
-                                        Pago = a.Pago,
-                                        Restante = a.Restante,
+                                        _Pago = a.Pago,
+                                        _Restante = a.Restante, 
                                         Tipo_de_pago = a.Tipo_de_pago
                                     }).ToList();
 
