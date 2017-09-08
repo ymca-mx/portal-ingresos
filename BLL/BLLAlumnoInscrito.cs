@@ -313,6 +313,141 @@ namespace BLL
 
             }
         }
+
+        public static bool ActializarAlumnoInscrito(DTOAlumnoInscrito objinsc, int AnioN, int PeriodoIdN)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    string RVO = db.OfertaEducativa.Where(a => a.OfertaEducativaId == objinsc.OfertaEducativaId).FirstOrDefault()?.Rvoe ?? "";
+                    string Matricula = Herramientas.Matricula.GenerarMatricula(AnioN, PeriodoIdN, objinsc.AlumnoId, RVO, objinsc.TurnoId);
+
+                    Alumno AlumnoBase = db.Alumno.Where(a => a.AlumnoId == objinsc.AlumnoId).FirstOrDefault();
+                    #region Matricula
+                    db.Matricula.Add(new Matricula
+                    {
+                        AlumnoId = objinsc.AlumnoId,
+                        Anio = AnioN,
+                        MatriculaId = Matricula,
+                        FechaAsignacion = DateTime.Now,
+                        OfertaEducativaId = objinsc.OfertaEducativaId,
+                        PeriodoId = PeriodoIdN,
+                        UsuarioId = objinsc.UsuarioId
+                    });
+                    #endregion
+                    #region Alumno
+                    db.AlumnoBitacora.Add(new AlumnoBitacora
+                    {
+                        AlumnoId = AlumnoBase.AlumnoId,
+                        Anio = AlumnoBase.Anio,
+                        EstatusId = AlumnoBase.EstatusId,
+                        Fecha = DateTime.Now,
+                        FechaRegistro = AlumnoBase.FechaRegistro,
+                        Materno = AlumnoBase.Materno,
+                        MatriculaId = AlumnoBase.MatriculaId,
+                        Nombre = AlumnoBase.Nombre,
+                        Paterno = AlumnoBase.Paterno,
+                        PeriodoId = AlumnoBase.PeriodoId,
+                        UsuarioId = AlumnoBase.UsuarioId,
+                        UsuarioIdBitacora = objinsc.UsuarioId
+                    });
+
+                    db.Entry(AlumnoBase).State = System.Data.Entity.EntityState.Modified;
+
+                    AlumnoBase.MatriculaId = Matricula;
+                    AlumnoBase.Anio = AnioN;
+                    AlumnoBase.PeriodoId = PeriodoIdN;
+                    AlumnoBase.FechaRegistro = DateTime.Now;
+                    AlumnoBase.UsuarioId = objinsc.UsuarioId;
+                    #endregion
+                    #region AlumnoInscrito
+                    AlumnoInscrito AlumnoInscritoDB = db.AlumnoInscrito.Where(a =>
+                                                            a.AlumnoId == objinsc.AlumnoId
+                                                            && a.Anio == objinsc.Anio
+                                                            && a.PeriodoId == objinsc.PeriodoId
+                                                            && a.OfertaEducativaId == objinsc.OfertaEducativaId)
+                                                            .FirstOrDefault();
+                    if (AlumnoInscritoDB != null)
+                    {
+                        db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                        {
+                            AlumnoId = objinsc.AlumnoId,
+                            Anio = AlumnoInscritoDB.Anio,
+                            EsEmpresa = AlumnoInscritoDB.EsEmpresa,
+                            FechaInscripcion = AlumnoInscritoDB.FechaInscripcion,
+                            HoraInscripcion = AlumnoInscritoDB.HoraInscripcion,
+                            OfertaEducativaId = AlumnoInscritoDB.OfertaEducativaId,
+                            PagoPlanId = AlumnoInscritoDB.PagoPlanId,
+                            PeriodoId = AlumnoInscritoDB.PeriodoId,
+                            TurnoId = AlumnoInscritoDB.TurnoId,
+                            UsuarioId = objinsc.UsuarioId
+                        });
+                        db.AlumnoInscrito.Remove(AlumnoInscritoDB);
+                    }
+
+                    db.AlumnoInscrito.Add(new AlumnoInscrito
+                    {
+                        AlumnoId = objinsc.AlumnoId,
+                        Anio = AnioN,
+                        EsEmpresa = false,
+                        EstatusId = 1,
+                        FechaInscripcion = DateTime.Now,
+                        HoraInscripcion = DateTime.Now.TimeOfDay,
+                        OfertaEducativaId = objinsc.OfertaEducativaId,
+                        PagoPlanId = objinsc.PagoPlanId,
+                        PeriodoId = PeriodoIdN,
+                        TurnoId = objinsc.TurnoId,
+                        UsuarioId = objinsc.UsuarioId
+                    });
+
+                    #endregion
+                    #region Alumno Cuatrimestre
+                    AlumnoCuatrimestre alumnoCuatrimestre =
+                        db.AlumnoCuatrimestre.Where(a =>
+                            a.AlumnoId == objinsc.AlumnoId
+                            && a.OfertaEducativaId == objinsc.OfertaEducativaId)
+                            .FirstOrDefault();
+                    if (alumnoCuatrimestre != null)
+                    {
+                        db.AlumnoCuatrimestreBitacora.Add(new AlumnoCuatrimestreBitacora
+                        {
+                            AlumnoId = alumnoCuatrimestre.AlumnoId,
+                            Anio = alumnoCuatrimestre.Anio,
+                            Cuatrimestre = alumnoCuatrimestre.Cuatrimestre,
+                            esRegular = alumnoCuatrimestre.esRegular,
+                            FechaAsignacion = alumnoCuatrimestre.FechaAsignacion,
+                            HoraAsignacion = alumnoCuatrimestre.HoraAsignacion,
+                            OfertaEducativaId = alumnoCuatrimestre.OfertaEducativaId,
+                            PeriodoId = alumnoCuatrimestre.PeriodoId,
+                            UsuarioId = alumnoCuatrimestre.UsuarioId
+                        });
+                        db.AlumnoCuatrimestre.Remove(alumnoCuatrimestre);
+                    }
+                    db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                    {
+                        AlumnoId = objinsc.AlumnoId,
+                        OfertaEducativaId = objinsc.OfertaEducativaId,
+                        Cuatrimestre = 1,
+                        Anio = AnioN,
+                        PeriodoId = PeriodoIdN,
+                        esRegular = true,
+                        FechaAsignacion = DateTime.Now,
+                        HoraAsignacion = DateTime.Now.TimeOfDay,
+                        UsuarioId = objinsc.UsuarioId
+                    });
+
+
+
+                    #endregion
+
+                    db.SaveChanges();
+                    return true;
+                }
+                catch { return false; }
+            }
+        }
+
         public static string NombreCalendario(int Alumno)
         {
             using (UniversidadEntities db = new UniversidadEntities())

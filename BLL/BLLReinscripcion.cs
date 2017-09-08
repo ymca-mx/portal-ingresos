@@ -72,6 +72,9 @@ namespace BLL
                                                         && M.PeriodoId == MayoresB.FirstOrDefault().PeriodoId
                                                         && M.OfertaEducativaId != MayoresB.FirstOrDefault().OfertaEducativaId)
                                                  .ToList());
+
+                    Mayores = Mayores.Where(a => a != null).ToList();
+                    MayoresB = MayoresB.Where(a => a != null).ToList();
                     #endregion
 
                     // Ofertas

@@ -859,7 +859,9 @@
                 datatype: JSON,
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                 success: function (data) {
-                    if (data.d[0] == "Guardado") {
+                    var Respuesta = data.d[0];
+
+                    if (Respuesta == "Guardado") {
                         GuardarDocumentoIngles(fid, $('#slcOfertaEducativa').val());
                         Resultado = "guardado";
                     } else if (data.d != null) {

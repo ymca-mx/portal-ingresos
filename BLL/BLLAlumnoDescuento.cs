@@ -42,7 +42,9 @@ namespace BLL
                                                PlanPago = a.PlanPago
                                            }).FirstOrDefault();
                 string[] AlumnoID = null;
-                DTOAlumnoInscrito objOferta = OfertaEducativaId == 0 ? BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId) : BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId, OfertaEducativaId);
+                DTOAlumnoInscrito objOferta = OfertaEducativaId == 0 ?
+                    BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId) : 
+                    BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId, OfertaEducativaId);
 
                 DTODescuentos objDescuentoIn = BLLDescuentos.obtenerDescuentos(objOferta.OfertaEducativaId, 802);
 

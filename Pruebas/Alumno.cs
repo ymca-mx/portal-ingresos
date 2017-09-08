@@ -18,6 +18,26 @@ namespace Pruebas
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
 
         [TestMethod]
+        public void ActualizarOfertaMatricula()
+        {
+            DTOAlumnoInscrito objInscribir = new DTOAlumnoInscrito
+            {
+                AlumnoId = 8299,
+                PeriodoId = 3,
+                Anio = 2017,
+                OfertaEducativaId = 24,
+                PagoPlanId = 4,
+                EsEmpresa = false,
+                TurnoId = 3,
+                UsuarioId = 100000
+            };
+
+
+            BLLAlumnoInscrito.ActializarAlumnoInscrito(objInscribir, 2018, 1);
+
+        }
+
+        [TestMethod]
         public void BuscarAlumnoBeca()
         {
             var obj=
