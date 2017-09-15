@@ -865,8 +865,11 @@
                         GuardarDocumentoIngles(fid, $('#slcOfertaEducativa').val());
                         Resultado = "guardado";
                     } else if (data.d != null) {
-                        GuardarDocumentos(data.d[1], data.d[0], data.d[2]);
-                        Resultado = "guardado";
+                        var res2 = data.d[0];
+                        if (res2 !== undefined) {
+                            GuardarDocumentos(data.d[1], data.d[0], data.d[2]);
+                            Resultado = "guardado";
+                        } else { return "Fallo"; }
                     }
                     if (Resultado == "guardado") {
                         alertify.alert("Alumno Guardado", function () {

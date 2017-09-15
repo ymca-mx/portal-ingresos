@@ -43,7 +43,7 @@ namespace AppAdministrativos.WS
                      decimal.Parse(DescuentoBec), decimal.Parse(DescuentoIns),
                      JustificacionIns, JustificacionBec, decimal.Parse(DescuentoExamen),
                      JustificacionExam, decimal.Parse(Credencial), JustificacionCred,
-                     int.Parse(SistemaPago), Usuario, 0);
+                     int.Parse(SistemaPago), Usuario, 0,false);
 
                 decimal BecaAca = decimal.Parse(DescuentoBec);
 
@@ -201,7 +201,7 @@ namespace AppAdministrativos.WS
                 };
                 DTOAlumnoInscrito objinsc = BLLAlumnoInscrito.ConsultarAlumnoInscrito(objInscribir.AlumnoId, objInscribir.OfertaEducativaId);
 
-                if (objinsc.Anio == Anio || objinsc.PeriodoId == Periodoid)
+                if ((objinsc?.Anio ?? Anio) == Anio || (objinsc?.PeriodoId ?? Periodoid) == Periodoid)
                 {
                     if (bool.Parse(EsEmpresa) == false)
                     {
@@ -228,7 +228,7 @@ namespace AppAdministrativos.WS
                     objinsc.UsuarioId = objInscribir.UsuarioId;
                     objinsc.PagoPlanId = objInscribir.PagoPlanId;
 
-                    if(! BLLAlumnoInscrito.ActializarAlumnoInscrito(objinsc, Anio, Periodoid)) { objOfti = null; }
+                    if (!BLLAlumnoInscrito.ActializarAlumnoInscrito(objinsc, Anio, Periodoid)) { objOfti = null; }
                 }
                 if (objOfti.OfertaEducativaTipoId != 4)
                 {
@@ -239,7 +239,7 @@ namespace AppAdministrativos.WS
                             (JustificacionIns == "null" ? " " : JustificacionIns), (JustificacionBec == "null" ? " " : JustificacionBec),
                             decimal.Parse(DescuentoExamen), JustificacionExam == "null" ? " " : JustificacionExam,
                             decimal.Parse(Credencial), JustificacionCred == "null" ? " " : JustificacionCred,
-                            int.Parse(SistemaPago), usu, OfertaEducativa);
+                            int.Parse(SistemaPago), usu, OfertaEducativa,true);
                     }
                 }
                 else

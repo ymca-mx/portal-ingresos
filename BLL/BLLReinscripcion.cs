@@ -321,7 +321,18 @@ namespace BLL
                             TurnoId = AlumnoMaestria.TurnoId,
                             UsuarioId = usuarioId
                         });
+                     
+                        db.AlumnoInscrito.Remove(AlumnoMaestria);
+                    }
+                    #endregion
 
+                    #region Alumno Revision (Visto Bueno)
+                    if ((alumno.Alumno.AlumnoRevision?
+                                        .Where(a => a.OfertaEducativaId == maestriaId
+                                                    && a.Anio == anio
+                                                    && a.PeriodoId == periodoId)
+                                        ?.ToList()?.Count ?? 0) == 0)
+                    {
                         db.AlumnoRevision.Add(new AlumnoRevision
                         {
                             AlumnoId = alumnoId,
@@ -336,7 +347,6 @@ namespace BLL
                             AsesoriaEspecial = 0,
                             Observaciones = "Pase Automatico a Maestria"
                         });
-                        db.AlumnoInscrito.Remove(AlumnoMaestria);
                     }
                     #endregion
 
