@@ -13,7 +13,13 @@
                     { "mDataProp": "UsuarioNombre" },
                     {
                         "mDataProp": function (data) {
-                            return "<a href=''onclick='return false;' class='btn btn-success'> Autorizar </a> ";
+                            var link = "";
+                            if (data.AlumnoAutorizacion === null) {
+                                link = "<a href=''onclick='return false;' name='edit' class='btn btn-success'> Autorizar </a> ";
+                            } else {
+                                link = "<a href=''onclick='return false;' name='show' class='btn btn-info'> Ver detalles </a> ";
+                            }
+                            return link;
                         }
                     }
                 ],
@@ -59,9 +65,12 @@
         },
         DatosConsulta:[],
         CrearCombo: function (datos) {
+            $('#slcPeriodos').empty();
+            $('#slcEstatus').empty();
+
             Funciones.DatosConsulta = datos;
             var PeriodosC = [];
-
+            var EstatusArr = [-1];
             var listperiodos = [
                 {
                     PeriodoId: 1,
@@ -86,6 +95,9 @@
                 if (jQuery.inArray(periodo, PeriodosC) === -1) {
                     PeriodosC.push(periodo);
                 }
+                var Estatus = 1;
+                if (this.AlumnoAutorizacion !== null) { Estatus = 2; }
+                if (jQuery.inArray(Estatus, EstatusArr) === -1) { EstatusArr.push(Estatus); }
             });
             
             var option = $(document.createElement('option'));
@@ -97,9 +109,7 @@
             $(PeriodosC).each(function () {
                 var anio = this.substring(0, 4);
                 var periodo = this.substring(4, 5);
-
-                console.log(this);
-
+                
                 var option2 = $(document.createElement('option'));
 
                 $(listperiodos).each(function () {
@@ -113,34 +123,99 @@
                 option2.attr("data-PeriodoId", periodo);
 
                 $('#slcPeriodos').append(option2);              
-            });           
+            });
 
+            
+            $(EstatusArr).each(function (ind) {
+                var option3 = $(document.createElement('option'));                
+                var texto = "";
+
+                switch (EstatusArr[ind]) {
+                    case -1: texto = "--Todos--";
+                        break;
+                    case 1: texto = "Sin Autorizacion";
+                        break;
+                    case 2: texto = "Con Autorizacion";
+                }                
+
+                option3.val(EstatusArr[ind]);
+                option3.text(texto)
+                $('#slcEstatus').append(option3);      
+            });
+
+            $('#slcEstatus').val(-1);
             $('#slcPeriodos').val(-1);
             $('#slcPeriodos').on('change', Funciones.SeleccionarPeriodo);
+            $('#slcEstatus').on('change', Funciones.SeleccionarEstatus);
 
             Funciones.SeleccionarPeriodo();
             
         },
-        SeleccionarPeriodo: function () {
+        Condiciones: function () {
             var datos = [];
             var val = $('#slcPeriodos').val();
             var an = $('#slcPeriodos').find(':selected').data("anio");
             var per = $('#slcPeriodos').find(':selected').data("periodoid");
+            var estatus = $('#slcEstatus').val();
+            
+
             if (val !== "-1") {
                 $(Funciones.DatosConsulta).each(function () {
                     if (an === this.Anio && per === this.PeriodoId) {
-                        datos.push(this);
+                        if (estatus === "-1") {
+                            datos.push(this);
+                        } else if (estatus === "1") {
+                            if (this.AlumnoAutorizacion === null) {
+                                datos.push(this);
+                            }
+                        } else if (estatus === "2") {
+                            if (this.AlumnoAutorizacion !== null) {
+                                datos.push(this);
+                            }
+                        }
                     }
                 });
                 Funciones.PintarTabla(datos);
-            } else { Funciones.PintarTabla(Funciones.DatosConsulta);}
+            } else {
+                $(Funciones.DatosConsulta).each(function () {
+                    if (estatus === "-1") {
+                        datos.push(this);
+                    } else if (estatus === "1") {
+                        if (this.AlumnoAutorizacion === null) {
+                            datos.push(this);
+                        }
+                    } else if (estatus === "2") {
+                        if (this.AlumnoAutorizacion !== null) {
+                            datos.push(this);
+                        }
+                    }
+                });
+                Funciones.PintarTabla(datos);
+            }
+        },
+        SeleccionarEstatus: function () {
+            Funciones.Condiciones();
+        },
+        SeleccionarPeriodo: function () {
+            Funciones.Condiciones();
         },
         Autorizar: function () {
+
             var row = this.parentNode.parentNode;
             var rowadd = Funciones.tblAlumnos.fnGetData($(this).closest('tr'));
-            alertify.confirm("Se generaran los cargos para: " + rowadd.AlumnoId + " | " + rowadd.Nombre, function () {
-                Funciones.GenerarCargos(rowadd);
-            });
+
+            if (this.name === 'edit') {
+                alertify.confirm("Se generaran los cargos para: " + rowadd.AlumnoId + " | " + rowadd.Nombre, function () {
+                    Funciones.GenerarCargos(rowadd);
+                });
+            } else if (this.name === 'show') {
+                $('#frmModal')[0].reset();
+                $('#txtAlumno').val(rowadd.AlumnoId + " | " + rowadd.Nombre);
+                $('#txtUsuario').val(rowadd.AlumnoAutorizacion.UsuarioId + " | " + rowadd.AlumnoAutorizacion.NombreUsuario);
+                $('#txtFecha').val(rowadd.AlumnoAutorizacion._Fecha);
+                $('#txtHora').val(rowadd.AlumnoAutorizacion._Hora);
+                $('#MostrarDetalle').modal('show');
+            }
         },
         GenerarCargos: function (alumno) {
             alumno.UsuarioId = $.cookie('userAdmin');

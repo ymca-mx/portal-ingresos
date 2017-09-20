@@ -58,7 +58,40 @@ namespace DTO
         public DTOOfertaEducativa OfertaEducativa { get; set; }
         public int EstatusId { get; set; }
         public int Cuatrimestre { get; set; }
+        public AlumnoAutorizacion AlumnoAutorizacion { get; set; }
     }
+
+    public class AlumnoAutorizacion
+    {
+        public int AlumnoAutorizacionId { get; set; }
+        public int AlumnoId { get; set; }
+
+        private DateTime Fecha_ { get; set; }
+        public DateTime Fecha { get { return Fecha_; }
+            set
+            {
+                Fecha_ = value;
+                _Fecha= (value.Day < 10 ? "0" + value.Day : "" + value.Day) + "/" +
+                                    (value.Month < 10 ? "0" + value.Month : "" + value.Month) + "/" +
+                                    value.Year;
+            }
+        }
+        public string _Fecha { get; set; }
+
+        private TimeSpan Hora_ { get; set; }
+        public TimeSpan Hora { get { return Hora_; }
+            set
+            {
+                Hora_ = value;
+                _Hora= (value.Hours < 10 ? "0" + value.Hours : "" + value.Hours) + ":" +
+                                    (value.Minutes < 10 ? "0" + value.Minutes : "" + value.Minutes);
+            }
+        }
+        public string _Hora { get; set; }
+        public int UsuarioId { get; set; }
+        public string NombreUsuario { get; set; }
+    }
+
     public class DTOAlumnoInscrito2
     {
         public string Descripcion { get; set; }

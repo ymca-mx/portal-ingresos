@@ -397,7 +397,7 @@ namespace BLL
                         #endregion
 
                         #region Registros de Autorizacion 
-                        db.AlumnoAutorizacion.Add(new AlumnoAutorizacion
+                        db.AlumnoAutorizacion.Add(new DAL.AlumnoAutorizacion
                         {
                             AlumnoId = alumnodb.AlumnoId,
                             Fecha = DateTime.Now,
@@ -426,7 +426,8 @@ namespace BLL
             {
                 return
                 db.AlumnoInscrito
-                        .Where(a => a.EstatusId == 8)
+                        .Where(a => (a.EstatusId == 8
+                            || a.Alumno.AlumnoAutorizacion.ToList().Count>0))
                         .Select(a =>
                             new DTOAlumnoInscrito
                             {
@@ -442,6 +443,17 @@ namespace BLL
                                 OfertaEducativaId = a.OfertaEducativaId,
                                 PeriodoDescripcion = a.Periodo.Descripcion,
                                 UsuarioNombre = a.Usuario.Nombre,
+                                AlumnoAutorizacion = a.Alumno.AlumnoAutorizacion.ToList().Count > 0 ? new DTO.AlumnoAutorizacion
+                                {
+                                    AlumnoAutorizacionId = a.Alumno.AlumnoAutorizacion.FirstOrDefault().AlumnoAutorizacionId,
+                                    AlumnoId = a.Alumno.AlumnoAutorizacion.FirstOrDefault().AlumnoId,
+                                    Fecha = a.Alumno.AlumnoAutorizacion.FirstOrDefault().Fecha,
+                                    Hora = a.Alumno.AlumnoAutorizacion.FirstOrDefault().Hora,
+                                    UsuarioId = a.Alumno.AlumnoAutorizacion.FirstOrDefault().UsuarioId,
+                                    NombreUsuario = a.Alumno.AlumnoAutorizacion.FirstOrDefault().Usuario.Nombre + " " +
+                                        a.Alumno.AlumnoAutorizacion.FirstOrDefault().Usuario.Paterno + " " +
+                                        a.Alumno.AlumnoAutorizacion.FirstOrDefault().Usuario.Materno
+                                } : null
                             })
                             .ToList();
             }
