@@ -48,13 +48,92 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d.length > 0) {
-                        Funciones.PintarTabla(data.d);
+                        Funciones.CrearCombo(data.d);
+                        
                     } else {
                         alertify.alert("No hay registros que mostrar.")
                         $('#Load').modal('hide');
                     }
                 }
             });
+        },
+        DatosConsulta:[],
+        CrearCombo: function (datos) {
+            Funciones.DatosConsulta = datos;
+            var PeriodosC = [];
+
+            var listperiodos = [
+                {
+                    PeriodoId: 1,
+                    Inicial: 'Septiembre',
+                    Final: 'Diciembre'
+                },
+                {
+                    PeriodoId: 2,
+                    Inicial: 'Enero',
+                    Final: 'Abril'
+                },
+                {
+                    PeriodoId: 3,
+                    Inicial: 'Mayo',
+                    Final: 'Agosto'
+                },
+            ];
+            
+
+            $(datos).each(function () {
+                var periodo = this.Anio + '' + this.PeriodoId;
+                if (jQuery.inArray(periodo, PeriodosC) === -1) {
+                    PeriodosC.push(periodo);
+                }
+            });
+            
+            var option = $(document.createElement('option'));
+            option.text("--Todos--");
+            option.val(-1);
+
+            $('#slcPeriodos').append(option);
+
+            $(PeriodosC).each(function () {
+                var anio = this.substring(0, 4);
+                var periodo = this.substring(4, 5);
+
+                console.log(this);
+
+                var option2 = $(document.createElement('option'));
+
+                $(listperiodos).each(function () {
+                    if (this.PeriodoId == periodo) {
+                        option2.text(this.Inicial + " - " + this.Final + " " + anio);
+                    }
+                });
+
+                option2.val(this);
+                option2.attr("data-Anio", anio);
+                option2.attr("data-PeriodoId", periodo);
+
+                $('#slcPeriodos').append(option2);              
+            });           
+
+            $('#slcPeriodos').val(-1);
+            $('#slcPeriodos').on('change', Funciones.SeleccionarPeriodo);
+
+            Funciones.SeleccionarPeriodo();
+            
+        },
+        SeleccionarPeriodo: function () {
+            var datos = [];
+            var val = $('#slcPeriodos').val();
+            var an = $('#slcPeriodos').find(':selected').data("anio");
+            var per = $('#slcPeriodos').find(':selected').data("periodoid");
+            if (val !== "-1") {
+                $(Funciones.DatosConsulta).each(function () {
+                    if (an === this.Anio && per === this.PeriodoId) {
+                        datos.push(this);
+                    }
+                });
+                Funciones.PintarTabla(datos);
+            } else { Funciones.PintarTabla(Funciones.DatosConsulta);}
         },
         Autorizar: function () {
             var row = this.parentNode.parentNode;

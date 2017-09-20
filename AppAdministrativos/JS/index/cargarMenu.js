@@ -55,9 +55,9 @@
                                     Direccion: ele.Direccion
                                 };
                                 Menu +=
-                                    '<li class="dropdown-submenu">' +
+                                    '<li class="dropdown">' +
                                     '<a name="menu" href="Views/' + ele.SubmenuId + '" class="contenido">' +
-                                    '<i class="fa fa-history"></i>'
+                                    '<i></i>'
                                     + ele.Descripcion +
                                     '</a>' +
                                     '</li>';

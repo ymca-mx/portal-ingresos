@@ -396,6 +396,16 @@ namespace BLL
 
                         #endregion
 
+                        #region Registros de Autorizacion 
+                        db.AlumnoAutorizacion.Add(new AlumnoAutorizacion
+                        {
+                            AlumnoId = alumnodb.AlumnoId,
+                            Fecha = DateTime.Now,
+                            Hora = DateTime.Now.TimeOfDay,
+                            UsuarioId = objAlumno.UsuarioId
+                        });
+                        #endregion
+
                         db.SaveChanges();
 
                         db.Pago.Local.ToList().ForEach(pa => { pa.ReferenciaId = db.spGeneraReferencia(pa.PagoId).FirstOrDefault(); });

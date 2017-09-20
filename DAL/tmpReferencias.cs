@@ -12,11 +12,8 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class TempAdeudo
+    public partial class tmpReferencias
     {
-        public int AlumnoId { get; set; }
-        public decimal Adeudo { get; set; }
-        public int Tipo { get; set; }
-        public int OfertaEducativaId { get; set; }
+        public int ReferenciaId { get; set; }
     }
 }
