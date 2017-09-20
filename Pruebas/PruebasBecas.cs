@@ -1964,10 +1964,55 @@ namespace Pruebas
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
+                //int anio = 2018;
+                //int periodoid = 1;
 
-                List<SP_ReporteSaldoAlumno_Result> alumnoSaldo0 = db.SP_ReporteSaldoAlumno().ToList();
 
-                var Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == 12 && e.Descripcion == "Septiembre - Diciembre 2016").FirstOrDefault()?.Saldo ?? 0);
+                //List<DTOAlumnosVoBo> alumnoRevision = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
+                //                                                       && ar.PeriodoId == periodoid
+                //                                                       && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
+
+                //                             || a.AlumnoInscrito.Where(ai => ai.Anio == anio
+                //                                                       && ai.PeriodoId == periodoid
+                //                                                       && ai.OfertaEducativa.OfertaEducativaTipoId != 4
+                //                                                       && db.AlumnoInscritoBitacora.Where(aib => aib.AlumnoId == ai.AlumnoId
+                //                                                                                          && aib.OfertaEducativaId == ai.OfertaEducativaId
+                //                                                                                          && (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count() > 0
+                //                                                       ).Count() > 0)
+                //                    .Select(b => new DTOAlumnosVoBo
+                //                    {
+                //                        AlumnoId = b.AlumnoId,
+                //                        Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                //                        AlumnoInscrito = b.AlumnoInscrito.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                //                        AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                //                        AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                //                        Email = b.AlumnoDetalle.Email
+                //                    }).ToList();
+
+             
+                
+                //List<int> alumnoId = db.spAlumnoInscritoCompleto(anio, periodoid).Where(a => a.TipoAlumno == "Reinscrito").Select(b => b.AlumnoId).ToList();
+                //alumnoId.AddRange(db.AlumnoRevision.Where(a => a.Anio == anio && a.PeriodoId == periodoid && a.OfertaEducativa.OfertaEducativaTipoId != 4).Select(b => b.AlumnoId).ToList());
+                //alumnoId = alumnoId.Distinct().ToList();
+                
+
+                //List<DTOAlumnosVoBo1> alumnoRevision2 = db.Alumno.Where(a => alumnoId.Contains(a.AlumnoId))
+
+                //                                                 .Select(b => new DTOAlumnosVoBo1
+                //                                                 {
+                //                                                     AlumnoId = b.AlumnoId,
+                //                                                     Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                //                                                     AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                //                                                     AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                //                                                     Email = b.AlumnoDetalle.Email
+                //                                                 }).ToList();
+
+                //List<AlumnoInscritoCompleto> alumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodoid).Where(a => a.TipoAlumno == "Reinscrito").ToList();
+
+                //alumnoRevision2.ForEach(n=>
+                //{
+                //    n.AlumnoInscrito = alumnoInscrito.Where(c => c.AlumnoId == n.AlumnoId)?.FirstOrDefault();
+                //});
 
 
 

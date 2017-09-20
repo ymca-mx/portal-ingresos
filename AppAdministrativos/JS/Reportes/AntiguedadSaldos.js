@@ -188,7 +188,7 @@
     function exportarexcel(nombre) {
 
         var table1 = $('#AntiguedadSaldosPeriodos').dataTable().api();
-        var data01 = table1.data();
+        var data01 = table1.rows({ filter: 'applied' }).data();
         data01.push(total);
         var data1 = [];
         var hd1 = ["Carrera"];

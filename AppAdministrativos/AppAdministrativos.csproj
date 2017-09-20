@@ -141,9 +141,11 @@
     <Content Include="Documentos\Archivo.html" />
     <Content Include="Imagenes\actualizar.png" />
     <Content Include="Imagenes\export-to-excel.png" />
+    <Content Include="Imagenes\ver.png" />
     <Content Include="index.html" />
     <Content Include="JS\account\recovery.js" />
     <Content Include="JS\account\validacionRecovery.js" />
+    <Content Include="JS\Alumnos\AccesoPortal.js" />
     <Content Include="JS\Alumnos\AlumnoBaja.js" />
     <Content Include="JS\Alumnos\AlumnoCambioCarrera.js" />
     <Content Include="JS\Alumnos\AlumnoNuevoIngreso.js" />
@@ -158,6 +160,12 @@
     <Content Include="JS\login\animacion.js" />
     <Content Include="JS\login\valida.js" />
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
+    <Content Include="JS\Referencias\CancelarReferencias.js" />
+    <Content Include="JS\Referencias\GenerarReferenciasB.js" />
+    <Content Include="JS\Referencias\GenerarReferenciasIdiomas.js" />
+    <Content Include="JS\Referencias\SolicitudCancelacionReferencias.js" />
+    <Content Include="JS\Referencias\SolicitudesCancelacionReferencias.js" />
+    <Content Include="JS\Referencias\VoBoCancelacionReferencias.js" />
     <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="JS\Reportes\AntiguedadSaldos.js" />
     <Content Include="JS\Reportes\ReporteBecas.js" />
@@ -4764,6 +4772,7 @@
     <Content Include="Style\templates\admin3\ui_toastr.html" />
     <Content Include="Style\templates\admin3\ui_tree.html" />
     <Content Include="Style\templates\admin3\ui_typography.html" />
+    <Content Include="Views\Alumno\AccesoPortal.html" />
     <Content Include="Views\Alumno\AlumnoBaja.html" />
     <Content Include="Views\Alumno\AlumnoCambioCarrera.html" />
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />

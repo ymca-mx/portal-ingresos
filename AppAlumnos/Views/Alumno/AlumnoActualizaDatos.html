@@ -45,6 +45,26 @@
     <link href="JS/themes/alertify.default.css" rel="stylesheet" />
     <link href="JS/ProgresLoad/LoadPage.css" rel="stylesheet" />
 
+
+    <script src="JS/General/Genero.js"></script>
+    <script src="JS/General/EntidadFederativa.js"></script>
+    <script src="JS/General/EstadoCivil.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            // initiate layout and plugins
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            Demo.init(); // init demo features
+            ComponentsKnobDials.init();
+            ComponentsPickers.init();
+            Genero.init();
+            Estado.init();
+            EstadoCivil.init();
+        });
+
+    </script>
+
 </head>
 <body style="font-size: 10px !important">
     <div class="page-container">
@@ -369,23 +389,7 @@
     <script src="Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     <script src="Style/assets/admin/pages/scripts/table-advanced.js"></script>
     <script src="JS/alertify.js"></script>
-    <script src="JS/General/Genero.js"></script>
-    <script src="JS/General/EntidadFederativa.js"></script>
-    <script src="JS/General/EstadoCivil.js"></script>
+    
     <script src="JS/Alumno/AlumnoActualizaDatos.js"></script>
-    <script>
-        jQuery(document).ready(function () {
-            // initiate layout and plugins
-            Metronic.init(); // init metronic core components
-            Layout.init(); // init current layout
-            Demo.init(); // init demo features
-            ComponentsKnobDials.init();
-            ComponentsPickers.init();
-            Genero.init();
-            Estado.init();
-            EstadoCivil.init();
-        });
-
-    </script>
 </body>
 </html>

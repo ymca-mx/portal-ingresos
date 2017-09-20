@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DTO
 {
+    
+
     public class DTOAlumno
     {
         public int AlumnoId { get; set; }
@@ -60,7 +64,7 @@ namespace DTO
     {
         public string Dato { get; set; }
         public string Alumno { get; set; }
-        public string  Coordinador { get; set; }
+        public string Coordinador { get; set; }
         public string ServiciosEscolares { get; set; }
     }
 
@@ -81,7 +85,7 @@ namespace DTO
     }
 
     public class DTOAlumnoCambioCarrera
-    { 
+    {
         public int AlumnoId { get; set; }
         public string NombreC { get; set; }
         public List<DTOOfertaEducativa2> OfertaEducativa { get; set; }
@@ -137,12 +141,12 @@ namespace DTO
     public class DTOPeriodoPromocionCasa
     {
         public string Descripcion { get; set; }
-        public int  Anio { get; set; }
+        public int Anio { get; set; }
         public int PeriodoId { get; set; }
-        public List<DTOMes> Meses{ get; set; }
+        public List<DTOMes> Meses { get; set; }
     }
 
-  
+
     public class DTOAlumnoReferencias
     {
         public string Concepto { get; set; }
@@ -156,7 +160,7 @@ namespace DTO
         public string Pagado { get; set; }
         public string Estatus { get; set; }
         public int AlumnoId { get; set; }
-        public int EnProcesoSolicitud  { get; set; }
+        public int EnProcesoSolicitud { get; set; }
     }
     public class DTOAlumnoReferencias1
     {
@@ -169,7 +173,8 @@ namespace DTO
         public int AlumnoId { get; set; }
         public string Nombre { get; set; }
         public string FechaRegistro { get; set; }
-        public string Descripcion {
+        public string Descripcion
+        {
             get
             {
                 return string.Join(" / ", _OfertasEducativas2.ToArray());
@@ -179,7 +184,9 @@ namespace DTO
             }
         }
         private List<string> _OfertasEducativas2 = null;
-        public List<string> OfertasEducativas { get
+        public List<string> OfertasEducativas
+        {
+            get
             {
                 return null;
             }
@@ -217,7 +224,7 @@ namespace DTO
         public int AlumnoId { get; set; }
         public string Nombre { get; set; }
         public bool EsEmpresa { get; set; }
-        public List<PeridoBeca> PeriodosAlumno { get; set; }
+        public List<PeriodoBeca> PeriodosAlumno { get; set; }
         public List<DTOAlumnoOfertas> OfertasAlumnos { get; set; }
         public List<DTOAlumnoDescuento> lstDescuentos { get; set; }
     }
@@ -225,11 +232,11 @@ namespace DTO
     {
         public int AlumnoId { get; set; }
         public string Nombre { get; set; }
-        public List<PeridoBeca> PeriodosAlumno { get; set; }
+        public List<PeriodoBeca> PeriodosAlumno { get; set; }
         public List<DTOAlumnoOfertas> OfertasAlumnos { get; set; }
         public List<DTOAlumnoDescuento> lstDescuentos { get; set; }
     }
-    public class PeridoBeca
+    public class PeriodoBeca
     {
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
@@ -237,5 +244,41 @@ namespace DTO
         public int OfertaEducativaId { get; set; }
         public bool EsEmprea { get; set; }
     }
+
+    public class DTOBitacoraAccesoAlumno
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public string Password { get; set; }
+        public List<DTOBitacoraAcceso> BitacoraAcceso { get; set; }
+        public List<DTOBitacoraPassword> BitacoraPassword { get; set; }
+    }
+
+    public class DTOBitacoraAcceso
+    {
+        static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
+        public string FechaIngreso { get; set; }
+        private DateTime FechaIngreso2_ { get; set; }
+        public DateTime FechaIngreso2
+        {
+            get { return FechaIngreso2_; }
+            set { FechaIngreso = value.ToString("dd/MM/yyyy", Cultura); }
+        }
+        public string HoraIngreso { get; set; }
+    }
+
+    public class DTOBitacoraPassword
+    {
+        static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
+        public string FechaSolicitud { get; set; }
+        private DateTime FechaSolicitud2_ { get; set; }
+        public DateTime FechaSolicitud2
+        {
+            get { return FechaSolicitud2_; }
+            set { FechaSolicitud = value.ToString("dd/MM/yyyy", Cultura); }
+        }
+        public string HoraSolicitud { get; set; }
+    }
+
 }
 

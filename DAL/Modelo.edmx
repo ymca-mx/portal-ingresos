@@ -10477,6 +10477,8 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Type="Int32" Name="OfertaEducativaId" Nullable="false" />
           <Property Type="Int32" Name="PeriodoId" Nullable="false" />
           <Property Type="Boolean" Name="EsEmpresa" Nullable="false" />
+          <Property Type="String" Name="OfertaEducativa" Nullable="false" />
+          <Property Type="String" Name="Usuario" Nullable="false" />
         </ComplexType>
         <ComplexType Name="spUsuarioLogin_Result">
           <Property Type="Int32" Name="UsuarioId" Nullable="false" />

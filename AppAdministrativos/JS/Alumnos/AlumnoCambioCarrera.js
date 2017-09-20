@@ -10,10 +10,15 @@
         $.ajax({
             type: "POST",
             url: "WS/Alumno.asmx/ConsultaCambioCarrera",
-            data: "{AlumnoId:'" + AlumnoId + "'}",
+            data: "{AlumnoId:'" + AlumnoId + "', UsuarioId:" + $.cookie('userAdmin') + "}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
+                $('#lblNombre').text("");
+                $("#slcOfertaEducativa").empty();
+                $("#slcOfertaEducativa2").empty();
+                $("#slcPeriodo").empty();
+                $('#lblInscito').empty();
                 if (data.d === null) {
                     alertify.alert("Este alumno no existe.");
                     $('#Load').modal('hide');
@@ -22,10 +27,6 @@
                 lstop.length = 0;
                 lstop.push(data.d);
                 $('#lblNombre').text(lstop[0].NombreC);
-                $("#slcOfertaEducativa").empty();
-                $("#slcOfertaEducativa2").empty();
-                $("#slcPeriodo").empty();
-                $('#lblInscito').empty();
 
                 if (lstop[0].OfertaEducativaIdActual == 0) {
 
@@ -33,7 +34,7 @@
                     $('#Load').modal('hide');
                     return false;
                 }
-                if (lstop[0].EstatusId != 4 && lstop[0].EstatusId != 14) {
+                if (lstop[0].EstatusId != 4 && lstop[0].EstatusId != 14 && lstop[0].EstatusId != 0) {
 
                     $('#lblInscito').text("No ha realizado el pago para cambio de carrera.");
                     $('#Load').modal('hide');

@@ -26,5 +26,7 @@ namespace DAL
         public int OfertaEducativaId { get; set; }
         public int PeriodoId { get; set; }
         public bool EsEmpresa { get; set; }
+        public string OfertaEducativa { get; set; }
+        public string Usuario { get; set; }
     }
 }

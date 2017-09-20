@@ -165,12 +165,12 @@ namespace Pruebas
         {
             DTOAlumnoCambioCarrera Cambio = new DTOAlumnoCambioCarrera
             {
-                AlumnoId = 8301,
-                OfertaEducativaIdActual = 48,
-                OfertaEducativaIdNueva= 24,
+                AlumnoId = 7876,
+                OfertaEducativaIdActual = 2,
+                OfertaEducativaIdNueva= 4,
                 Anio=2017,
                 PeriodoId = 3,
-                Observaciones = "Por error relaciones publicas",
+                Observaciones = "Cuando se generó referencia de cambio de carrera aún no se liberaba el modulo.",
                 UsuarioId =  8289
             };
 

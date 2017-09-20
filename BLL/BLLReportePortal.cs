@@ -900,26 +900,28 @@ namespace BLL
             {
                 try
                 {
-                    List<DTOAlumnosVoBo> alumnoRevision = db.Alumno.Where(a => a.AlumnoRevision.Where(ar => ar.Anio == anio
-                                                                        && ar.PeriodoId == periodoid
-                                                                        && ar.OfertaEducativa.OfertaEducativaTipoId != 4).Count() > 0
+                    List<int> alumnoId = db.spAlumnoInscritoCompleto(anio, periodoid).Where(a => a.TipoAlumno == "Reinscrito").Select(b => b.AlumnoId).ToList();
+                    alumnoId.AddRange(db.AlumnoRevision.Where(a => a.Anio == anio && a.PeriodoId == periodoid && a.OfertaEducativa.OfertaEducativaTipoId != 4).Select(b => b.AlumnoId).ToList());
+                    alumnoId = alumnoId.Distinct().ToList();
 
-                                              || a.AlumnoInscrito.Where(ai => ai.Anio == anio
-                                                                        && ai.PeriodoId == periodoid
-                                                                        && ai.OfertaEducativa.OfertaEducativaTipoId != 4
-                                                                        && db.AlumnoInscritoBitacora.Where(aib => aib.AlumnoId == ai.AlumnoId
-                                                                                                           && aib.OfertaEducativaId == ai.OfertaEducativaId
-                                                                                                           && (aib.Anio != anio || (aib.Anio == anio && aib.PeriodoId != periodoid))).Count() > 0
-                                                                        ).Count() > 0)
-                                     .Select(b => new DTOAlumnosVoBo
-                                     {
-                                         AlumnoId = b.AlumnoId,
-                                         Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
-                                         AlumnoInscrito = b.AlumnoInscrito.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
-                                         AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
-                                         AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
-                                         Email = b.AlumnoDetalle.Email
-                                     }).ToList();
+
+                    List<DTOAlumnosVoBo1> alumnoRevision = db.Alumno.Where(a => alumnoId.Contains(a.AlumnoId))
+
+                                                                     .Select(b => new DTOAlumnosVoBo1
+                                                                     {
+                                                                         AlumnoId = b.AlumnoId,
+                                                                         Nombre = b.Paterno + " " + b.Materno + " " + b.Nombre,
+                                                                         AlumnoInscritoBitacora = b.AlumnoInscritoBitacora.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                                                                         AlumnoRevision = b.AlumnoRevision.Where(c => c.Anio == anio && c.PeriodoId == periodoid && c.OfertaEducativa.OfertaEducativaTipoId != 4).FirstOrDefault(),
+                                                                         Email = b.AlumnoDetalle.Email
+                                                                     }).ToList();
+
+                    List<AlumnoInscritoCompleto> alumnoInscrito = db.spAlumnoInscritoCompleto(anio, periodoid).Where(a => a.TipoAlumno == "Reinscrito").ToList();
+
+                    alumnoRevision.ForEach(n =>
+                    {
+                        n.AlumnoInscrito = alumnoInscrito.Where(c => c.AlumnoId == n.AlumnoId)?.FirstOrDefault();
+                    });
 
 
                     List<DTOReporteVoBo> alumnoVoBo = alumnoRevision.Select(td => new DTOReporteVoBo
@@ -927,12 +929,12 @@ namespace BLL
                         AlumnoId = td.AlumnoId,
                         Nombre = td.Nombre,
                         OfertaEducativaid = td.AlumnoInscrito?.OfertaEducativaId ?? td.AlumnoRevision.OfertaEducativaId,
-                        OfertaEducativa = td.AlumnoInscrito?.OfertaEducativa.Descripcion ?? td.AlumnoRevision.OfertaEducativa.Descripcion,
+                        OfertaEducativa = td.AlumnoInscrito?.OfertaEducativa ?? td.AlumnoRevision.OfertaEducativa.Descripcion,
                         Inscrito = td.AlumnoInscrito != null ? "Si" : "No",
                         FechaInscrito = td.AlumnoInscritoBitacora?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? td.AlumnoInscrito?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) ?? "-",
                         HoraInscrito = td.AlumnoInscritoBitacora?.HoraInscripcion.ToString() ?? td.AlumnoInscrito?.HoraInscripcion.ToString() ?? "-",
                         UsuarioInscribio = td.AlumnoInscritoBitacora != null ? td.AlumnoInscritoBitacora.Usuario.Paterno + " " + td.AlumnoInscritoBitacora.Usuario.Materno + " " + td.AlumnoInscritoBitacora.Usuario.Nombre
-                           : td.AlumnoInscrito != null ? td.AlumnoInscrito.Usuario.Paterno + " " + td.AlumnoInscrito.Usuario.Materno + " " + td.AlumnoInscrito.Usuario.Nombre : "-",
+                           : td.AlumnoInscrito != null ? td.AlumnoInscrito.Usuario : "-",
                         FechaVoBo = td.AlumnoRevision?.FechaRevision.ToString("dd/MM/yyyy", Cultura) ?? "-",
                         HoraVoBo = td.AlumnoRevision?.HoraRevision.ToString() ?? "-",
                         InscripcionCompleta = td.AlumnoRevision?.InscripcionCompleta == true ? "Si" : td.AlumnoRevision?.InscripcionCompleta == false ? "No" : "-",

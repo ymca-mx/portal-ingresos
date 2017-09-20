@@ -522,9 +522,9 @@ namespace AppAdministrativos.WS
 
         //Cambio carrera//
         [WebMethod]
-        public DTOAlumnoCambioCarrera ConsultaCambioCarrera(string AlumnoId)
+        public DTOAlumnoCambioCarrera ConsultaCambioCarrera(string AlumnoId, int UsuarioId)
         {
-            return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId));
+           return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId), UsuarioId);
         }
         [WebMethod]
         public bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
@@ -566,7 +566,7 @@ namespace AppAdministrativos.WS
                 HttpPostedFile httpFormato = httpFileCollection["Documento"];
                 Stream strFormato = httpFormato.InputStream;
                 byte[] FormatoFil = Herramientas.ConvertidorT.ConvertirStream(strFormato, httpFormato.ContentLength);
-                
+
                 return BLLAlumnoPortal.GuardarDocumentoBaja(AlumnoMovimientoId, FormatoFil);
             }
             catch
@@ -581,6 +581,12 @@ namespace AppAdministrativos.WS
         public bool AtualizarAlumno(int AlumnoId, string Nombre, string Paterno, string Materno, string Nacimiento, int GeneroId, string CURP, int UsuarioId)
         {
             return BLLAlumnoPortal.UpdateAlumnoRP(AlumnoId, Nombre, Paterno, Materno, Nacimiento, GeneroId, CURP, UsuarioId);
+        }
+
+        [WebMethod]
+        public DTOBitacoraAccesoAlumno BitacoraAccesoAlumno(int AlumnoId)
+        {
+            return BLLAlumnoPortal.BitacoraAccesoAlumno(AlumnoId);
         }
     }
     public class PantallaPago
