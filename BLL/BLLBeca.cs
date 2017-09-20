@@ -29,7 +29,7 @@ namespace BLL
                     Alumno.EsEmpresa = db.AlumnoInscrito.Where(l => l.AlumnoId == AlumnoId && l.EsEmpresa).ToList().Count > 0 ? true : false;
 
                     Alumno.lstDescuentos = new List<DTOAlumnoDescuento>();
-                    Alumno.PeriodosAlumno = new List<PeridoBeca>();
+                    Alumno.PeriodosAlumno = new List<PeriodoBeca>();
 
                     #region Group by Ofertas Alumnos
                    IEnumerable<DTOAlumnoOfertas> OfertasAlumno = db.Pago.Where(s => s.AlumnoId == AlumnoId
@@ -57,14 +57,14 @@ namespace BLL
                     #region Group By Periodo de Ofertas
                     s2.Descripcion = db.OfertaEducativa.Where(o => o.OfertaEducativaId == s2.OfertaEducativaId).FirstOrDefault().Descripcion;
 
-                    IEnumerable<PeridoBeca> OfertasAlumnoAnioPeriodo = db.Pago.Where(s => s.AlumnoId == AlumnoId
+                    IEnumerable<PeriodoBeca> OfertasAlumnoAnioPeriodo = db.Pago.Where(s => s.AlumnoId == AlumnoId
                                                 && (s.Cuota1.PagoConceptoId == 800
                                                 || s.Cuota1.PagoConceptoId == 802)
                                                 && s.EstatusId != 2
                                                 && s.OfertaEducativaId == s2.OfertaEducativaId)
                                                 .ToList()
                                                 .GroupBy(d => new { d.Anio, d.PeriodoId })
-                                                .Select(d => new PeridoBeca
+                                                .Select(d => new PeriodoBeca
                                                 {
                                                     Anio = d.Key.Anio,
                                                     OfertaEducativaId = s2.OfertaEducativaId,
@@ -73,7 +73,7 @@ namespace BLL
                                                 });
 
                         Alumno.PeriodosAlumno.AddRange((from a in OfertasAlumnoAnioPeriodo
-                                                        select new PeridoBeca
+                                                        select new PeriodoBeca
                                                         {
                                                             Anio = a.Anio,
                                                             Descripcion = a.Descripcion,
@@ -197,7 +197,7 @@ namespace BLL
             {
                 try
                 {
-                    PeridoBeca PeriodoActual = db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(1).Select(d => new PeridoBeca
+                    PeriodoBeca PeriodoActual = db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(1).Select(d => new PeriodoBeca
                     {
                         Anio = d.Anio,
                         PeriodoId = d.PeriodoId,
@@ -211,7 +211,7 @@ namespace BLL
                     }).FirstOrDefault();
 
                     AlumnoDeportiva.lstDescuentos = new List<DTOAlumnoDescuento>();
-                    AlumnoDeportiva.PeriodosAlumno = new List<PeridoBeca>();
+                    AlumnoDeportiva.PeriodosAlumno = new List<PeriodoBeca>();
 
                     AlumnoDeportiva.OfertasAlumnos = (db.Pago.Where(s => s.AlumnoId == AlumnoId
                                                     && (s.Cuota1.PagoConceptoId == 800
@@ -234,7 +234,7 @@ namespace BLL
 
 
 
-                    AlumnoDeportiva.PeriodosAlumno.Add(db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(2).Select(d => new PeridoBeca
+                    AlumnoDeportiva.PeriodosAlumno.Add(db.Periodo.Where(m => m.FechaFinal > DateTime.Today).Take(2).Select(d => new PeriodoBeca
                                                {
                                                    Anio = d.Anio,
                                                    PeriodoId = d.PeriodoId,
@@ -311,7 +311,7 @@ namespace BLL
                     }).FirstOrDefault();
 
                     objCom.lstDescuentos = new List<DTOAlumnoDescuento>();
-                    objCom.PeriodosAlumno = new List<PeridoBeca>();
+                    objCom.PeriodosAlumno = new List<PeriodoBeca>();
 
                     #region Group by Ofertas Alumnos
                     var oferaPa = db.Pago.Where(s => s.AlumnoId == AlumnoId
@@ -346,7 +346,7 @@ namespace BLL
                                                     && s.OfertaEducativaId == s2.OfertaEducativaId)
                                                     .ToList()
                                                     .GroupBy(d => new { d.Anio, d.PeriodoId })
-                                                    .Select(d => new PeridoBeca
+                                                    .Select(d => new PeriodoBeca
                                                     {
                                                         Anio = d.Key.Anio,
                                                         OfertaEducativaId = s2.OfertaEducativaId,
@@ -355,7 +355,7 @@ namespace BLL
                                                     });
 
                         objCom.PeriodosAlumno.AddRange((from a in oferaPaPeriod
-                                                        select new PeridoBeca
+                                                        select new PeriodoBeca
                                                         {
                                                             Anio = a.Anio,
                                                             Descripcion = a.Descripcion,

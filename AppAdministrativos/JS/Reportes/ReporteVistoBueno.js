@@ -199,6 +199,7 @@
                         "bAutoWidth": false,
                         "asStripClasses": null,
                         "colReorder": false,
+                        "stateSave":true,
                         "language": {
                             "lengthMenu": "_MENU_ Registro",
                             "paginate": {
@@ -221,7 +222,6 @@
                             $('#lbRegistros').text(registros);
                         }
                     });
-                    //filtros();
 
                     var fil = $('#dtVoBo_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
@@ -239,7 +239,7 @@
     function exportarexcel(Tabla,nombre) {
 
         var table1 = $('#' + Tabla).dataTable().api();
-        var data1 = table1.data();
+        var data1 = table1.rows({ filter: 'applied' }).data();
         var data2 = [];
         var hd;
 

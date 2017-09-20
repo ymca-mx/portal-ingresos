@@ -309,7 +309,7 @@ namespace DTO
         public string Nombre { get; set; }
         public string OfertaEducativa { get; set; }
         public string Inscrito { get; set; }
-        public int OfertaEducativaid { get; set; }
+        public int OfertaEducativaid{get;set; }
         public string FechaInscrito { get; set; }
         public string HoraInscrito { get; set; }
         public string UsuarioInscribio { get; set; }
@@ -331,6 +331,18 @@ namespace DTO
         public AlumnoRevision AlumnoRevision { get; set; }
         public string Email { get; set; }
     }
+
+    public class DTOAlumnosVoBo1
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public AlumnoInscritoCompleto AlumnoInscrito { get; set; }
+        public AlumnoInscritoBitacora AlumnoInscritoBitacora { get; set; }
+        public AlumnoRevision AlumnoRevision { get; set; }
+        public string Email { get; set; }
+    }
+
+
 
     public class DTOVoBo
     {

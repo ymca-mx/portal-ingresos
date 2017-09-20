@@ -172,7 +172,7 @@
     function exportarexcel(Tabla,nombre) {
 
         var table1 = $('#' + Tabla).dataTable().api();
-        var data1 = table1.data();
+        var data1 = table1.rows({ filter: 'applied' }).data();
         var data2 = [];
         var hd;
 
