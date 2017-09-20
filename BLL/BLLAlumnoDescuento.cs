@@ -25,9 +25,12 @@ namespace BLL
         /// <param name="DescCred">Porcentaje de Credencial</param>
         /// <param name="ComentarioCred">Comentario de Credencial</param>
         /// <param name="PagoPlan">Pago plan </param>
-        /// <returns></returns>
+        /// <param name="OfertaEducativaId">Oferta a la cual se legeraran los pagos</param>
+        /// <param name="UsuarioId">Usuario quien esta inscribiendo al alumno</param>
+        /// <param name="Pagos">Condicion para saber si generamos o no pagos</param>
+        /// <returns>Regresamos los ID de AlumnoDescuento para casar el Documento que suban.</returns>
         public static string[] InsertarDescuentoNormal(int AlumnoId, decimal DescBeca, decimal DescInsc, string ComentarioInsc, string ComentarioBeca,
-            decimal DescExam, string ComentarioExam, decimal DescCred, string ComentarioCred, int PagoPlan, int UsuarioId, int OfertaEducativaId)
+            decimal DescExam, string ComentarioExam, decimal DescCred, string ComentarioCred, int PagoPlan, int UsuarioId, int OfertaEducativaId, bool Pagos_)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -42,7 +45,9 @@ namespace BLL
                                                PlanPago = a.PlanPago
                                            }).FirstOrDefault();
                 string[] AlumnoID = null;
-                DTOAlumnoInscrito objOferta = OfertaEducativaId == 0 ? BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId) : BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId, OfertaEducativaId);
+                DTOAlumnoInscrito objOferta = OfertaEducativaId == 0 ?
+                    BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId) :
+                    BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId, OfertaEducativaId);
 
                 DTODescuentos objDescuentoIn = BLLDescuentos.obtenerDescuentos(objOferta.OfertaEducativaId, 802);
 
@@ -167,11 +172,39 @@ namespace BLL
                     }
                     db.SaveChanges();
 
-                    //SubPeriodo
-                    int subPeriodo = db.OfertaEducativa.Where(o => o.OfertaEducativaId == objOferta.OfertaEducativaId).ToList().Where(a => a.OfertaEducativaTipoId == 5).ToList().Count > 0 ? 2 : 1;
-                    //Pago Examen 
-                    if (DescExam != -1)
+                    if (Pagos_)
                     {
+                        #region Pagos 
+                        //SubPeriodo
+                        int subPeriodo = db.OfertaEducativa.Where(o => o.OfertaEducativaId == objOferta.OfertaEducativaId).ToList().Where(a => a.OfertaEducativaTipoId == 5).ToList().Count > 0 ? 2 : 1;
+                        //Pago Examen 
+                        if (DescExam != -1)
+                        {
+                            db.Pago.Add(new Pago
+                            {
+                                AlumnoId = AlumnoId,
+                                Anio = objOferta.Anio,
+                                PeriodoId = objOferta.PeriodoId,
+                                SubperiodoId = subPeriodo,
+                                OfertaEducativaId = objOferta.OfertaEducativaId,
+                                FechaGeneracion = DateTime.Now,
+                                HoraGeneracion = DateTime.Now.TimeOfDay,
+                                CuotaId = objCuotaExam.CuotaId,
+                                Cuota = objCuotaExam.Monto,
+                                Promesa = objCuotaExam.Monto - ((DescExam / 100) * objCuotaExam.Monto),
+                                Restante = objCuotaExam.Monto - ((DescExam / 100) * objCuotaExam.Monto),
+                                EstatusId = DescExam == 100 ? 4 : 1,
+                                ReferenciaId = "",
+                                EsEmpresa = false,
+                                UsuarioId = objUser.UsuarioId,
+                                UsuarioTipoId = objUser.UsuarioTipoId
+                                //PagoParcial =new List<PagoParcial>{ new PagoParcial
+                                //{
+
+                                //}}
+                            });
+                        }
+                        //Credencial
                         db.Pago.Add(new Pago
                         {
                             AlumnoId = AlumnoId,
@@ -181,157 +214,137 @@ namespace BLL
                             OfertaEducativaId = objOferta.OfertaEducativaId,
                             FechaGeneracion = DateTime.Now,
                             HoraGeneracion = DateTime.Now.TimeOfDay,
-                            CuotaId = objCuotaExam.CuotaId,
-                            Cuota = objCuotaExam.Monto,
-                            Promesa = objCuotaExam.Monto - ((DescExam / 100) * objCuotaExam.Monto),
-                            Restante = objCuotaExam.Monto - ((DescExam / 100) * objCuotaExam.Monto),
-                            EstatusId = DescExam == 100 ? 4 : 1,
+                            CuotaId = objCuotaCred.CuotaId,
+                            Cuota = objCuotaCred.Monto,
+                            Promesa = objCuotaCred.Monto - ((DescCred / 100) * objCuotaCred.Monto),
+                            Restante = objCuotaCred.Monto - ((DescCred / 100) * objCuotaCred.Monto),
+                            EstatusId = DescCred == 100 ? 4 : 1,
                             ReferenciaId = "",
                             EsEmpresa = false,
                             UsuarioId = objUser.UsuarioId,
                             UsuarioTipoId = objUser.UsuarioTipoId
-                            //PagoParcial =new List<PagoParcial>{ new PagoParcial
-                            //{
-
-                            //}}
                         });
-                    }
-                    //Credencial
-                    db.Pago.Add(new Pago
-                    {
-                        AlumnoId = AlumnoId,
-                        Anio = objOferta.Anio,
-                        PeriodoId = objOferta.PeriodoId,
-                        SubperiodoId = subPeriodo,
-                        OfertaEducativaId = objOferta.OfertaEducativaId,
-                        FechaGeneracion = DateTime.Now,
-                        HoraGeneracion = DateTime.Now.TimeOfDay,
-                        CuotaId = objCuotaCred.CuotaId,
-                        Cuota = objCuotaCred.Monto,
-                        Promesa = objCuotaCred.Monto - ((DescCred / 100) * objCuotaCred.Monto),
-                        Restante = objCuotaCred.Monto - ((DescCred / 100) * objCuotaCred.Monto),
-                        EstatusId = DescCred == 100 ? 4 : 1,
-                        ReferenciaId = "",
-                        EsEmpresa = false,
-                        UsuarioId = objUser.UsuarioId,
-                        UsuarioTipoId = objUser.UsuarioTipoId
-                    });
-                    //Pagos Inscr
-                    db.Pago.Add(new Pago
-                    {
-                        AlumnoId = AlumnoId,
-                        Anio = objOferta.Anio,
-                        PeriodoId = objOferta.PeriodoId,
-                        SubperiodoId = subPeriodo,
-                        OfertaEducativaId = objOferta.OfertaEducativaId,
-                        FechaGeneracion = DateTime.Now,
-                        HoraGeneracion = DateTime.Now.TimeOfDay,
-                        CuotaId = objCuotaIn.CuotaId,
-                        Cuota = objCuotaIn.Monto,
-                        Promesa = objCuotaIn.Monto - ((DescInsc / 100) * objCuotaIn.Monto),
-                        Restante = objCuotaIn.Monto - ((DescInsc / 100) * objCuotaIn.Monto),
-                        EstatusId = DescInsc == 100 ? 4 : 1,
-                        ReferenciaId = "",
-                        EsEmpresa = false,
-                        UsuarioId = objUser.UsuarioId,
-                        UsuarioTipoId = objUser.UsuarioTipoId
-                    });
-                    //Obtener Periodo
-                    int periodo =
-                        (from a in db.Periodo
-                         where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal
-                         select a.Meses).FirstOrDefault();
-                    objPlanpago.Pagos = objPlanpago.Pagos == 6 ? 3 : objPlanpago.Pagos;
-                    int subperiodo2 = subPeriodo == 2 ? 1 : 0;
-                    for (int i = 1; i <= objPlanpago.Pagos; i++)
-                    {
+                        //Pagos Inscr
                         db.Pago.Add(new Pago
                         {
                             AlumnoId = AlumnoId,
                             Anio = objOferta.Anio,
                             PeriodoId = objOferta.PeriodoId,
-                            SubperiodoId = subperiodo2 + i,
+                            SubperiodoId = subPeriodo,
                             OfertaEducativaId = objOferta.OfertaEducativaId,
                             FechaGeneracion = DateTime.Now,
                             HoraGeneracion = DateTime.Now.TimeOfDay,
-                            CuotaId = objCuotaBec.CuotaId,
-                            Cuota = objCuotaBec.Monto,
-                            Promesa = objCuotaBec.Monto - ((DescBeca / 100) * objCuotaBec.Monto),
-                            Restante = objCuotaBec.Monto - ((DescBeca / 100) * objCuotaBec.Monto),
-                            EstatusId = DescBeca == 100 ? 4 : 1,
+                            CuotaId = objCuotaIn.CuotaId,
+                            Cuota = objCuotaIn.Monto,
+                            Promesa = objCuotaIn.Monto - ((DescInsc / 100) * objCuotaIn.Monto),
+                            Restante = objCuotaIn.Monto - ((DescInsc / 100) * objCuotaIn.Monto),
+                            EstatusId = DescInsc == 100 ? 4 : 1,
                             ReferenciaId = "",
                             EsEmpresa = false,
                             UsuarioId = objUser.UsuarioId,
                             UsuarioTipoId = objUser.UsuarioTipoId
                         });
-                    }
-                    db.SaveChanges();
-                    List<DTOPagos> lstPagos = new List<DTOPagos>();
-                    foreach (Pago objPago in db.Pago.Local)
-                    {
-                        objPago.ReferenciaId = db.spGeneraReferencia(objPago.PagoId).FirstOrDefault();
-                        lstPagos.Add((from a in db.Pago
-                                      where a.PagoId == objPago.PagoId
-                                      select new DTOPagos
-                                      {
-                                          PagoId = a.PagoId,
-                                          DTOCuota = new DTOCuota
+                        //Obtener Periodo
+                        int periodo =
+                            (from a in db.Periodo
+                             where DateTime.Now >= a.FechaInicial && DateTime.Now <= a.FechaFinal
+                             select a.Meses).FirstOrDefault();
+                        objPlanpago.Pagos = objPlanpago.Pagos == 6 ? 3 : objPlanpago.Pagos;
+                        int subperiodo2 = subPeriodo == 2 ? 1 : 0;
+                        for (int i = 1; i <= objPlanpago.Pagos; i++)
+                        {
+                            db.Pago.Add(new Pago
+                            {
+                                AlumnoId = AlumnoId,
+                                Anio = objOferta.Anio,
+                                PeriodoId = objOferta.PeriodoId,
+                                SubperiodoId = subperiodo2 + i,
+                                OfertaEducativaId = objOferta.OfertaEducativaId,
+                                FechaGeneracion = DateTime.Now,
+                                HoraGeneracion = DateTime.Now.TimeOfDay,
+                                CuotaId = objCuotaBec.CuotaId,
+                                Cuota = objCuotaBec.Monto,
+                                Promesa = objCuotaBec.Monto - ((DescBeca / 100) * objCuotaBec.Monto),
+                                Restante = objCuotaBec.Monto - ((DescBeca / 100) * objCuotaBec.Monto),
+                                EstatusId = DescBeca == 100 ? 4 : 1,
+                                ReferenciaId = "",
+                                EsEmpresa = false,
+                                UsuarioId = objUser.UsuarioId,
+                                UsuarioTipoId = objUser.UsuarioTipoId
+                            });
+                        }
+
+                        db.SaveChanges();
+                        List<DTOPagos> lstPagos = new List<DTOPagos>();
+                        foreach (Pago objPago in db.Pago.Local)
+                        {
+                            objPago.ReferenciaId = db.spGeneraReferencia(objPago.PagoId).FirstOrDefault();
+                            lstPagos.Add((from a in db.Pago
+                                          where a.PagoId == objPago.PagoId
+                                          select new DTOPagos
                                           {
-                                              PagoConceptoId = a.Cuota1.PagoConceptoId
-                                          }
-                                      }).AsNoTracking().FirstOrDefault());
-                    }
+                                              PagoId = a.PagoId,
+                                              DTOCuota = new DTOCuota
+                                              {
+                                                  PagoConceptoId = a.Cuota1.PagoConceptoId
+                                              }
+                                          }).AsNoTracking().FirstOrDefault());
+                        }
 
-                    //Pago Descuento
-                    if (DescInsc > 0)
-                    {
-
-                        db.PagoDescuento.Add(new PagoDescuento
+                        //Pago Descuento
+                        if (DescInsc > 0)
                         {
-                            DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 802).FirstOrDefault().DescuentoId,
-                            PagoId = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 802).FirstOrDefault().PagoId,
-                            Monto = (DescInsc / 100) * objCuotaIn.Monto
 
-                        });
-                    }
-                    //PAgo Examen
-                    if (DescExam > 0)
-                    {
-                        db.PagoDescuento.Add(new PagoDescuento
-                        {
-                            DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 1).FirstOrDefault().DescuentoId,
-                            PagoId = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 1).FirstOrDefault().PagoId,
-                            Monto = (DescExam / 100) * objCuotaExam.Monto
+                            db.PagoDescuento.Add(new PagoDescuento
+                            {
+                                DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 802).FirstOrDefault().DescuentoId,
+                                PagoId = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 802).FirstOrDefault().PagoId,
+                                Monto = (DescInsc / 100) * objCuotaIn.Monto
 
-                        });
-                    }
-                    if (DescCred > 0)
-                    {
-                        //pago Credencial
-                        db.PagoDescuento.Add(new PagoDescuento
-                        {
-                            DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 1000).FirstOrDefault().DescuentoId,
-                            PagoId = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 1000).FirstOrDefault().PagoId,
-                            Monto = (DescCred / 100) * objCuotaCred.Monto
-                        });
-                    }
-                    if (DescBeca > 0)
-                    {
-                        List<DTOPagos> lsPagos2 = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 800).ToList();
-                        //Pagos Periodos
-                        lsPagos2.ForEach(delegate (DTOPagos objPago)
+                            });
+                        }
+                        //PAgo Examen
+                        if (DescExam > 0)
                         {
                             db.PagoDescuento.Add(new PagoDescuento
                             {
-                                DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 800).FirstOrDefault().DescuentoId,
-                                PagoId = objPago.PagoId,
-                                Monto = (DescBeca / 100) * objCuotaBec.Monto
+                                DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 1).FirstOrDefault().DescuentoId,
+                                PagoId = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 1).FirstOrDefault().PagoId,
+                                Monto = (DescExam / 100) * objCuotaExam.Monto
+
                             });
-                        });
+                        }
+                        if (DescCred > 0)
+                        {
+                            //pago Credencial
+                            db.PagoDescuento.Add(new PagoDescuento
+                            {
+                                DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 1000).FirstOrDefault().DescuentoId,
+                                PagoId = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 1000).FirstOrDefault().PagoId,
+                                Monto = (DescCred / 100) * objCuotaCred.Monto
+                            });
+                        }
+                        if (DescBeca > 0)
+                        {
+                            List<DTOPagos> lsPagos2 = lstPagos.Where(X => X.DTOCuota.PagoConceptoId == 800).ToList();
+                            //Pagos Periodos
+                            lsPagos2.ForEach(delegate (DTOPagos objPago)
+                            {
+                                db.PagoDescuento.Add(new PagoDescuento
+                                {
+                                    DescuentoId = db.AlumnoDescuento.Local.Where(A => A.PagoConceptoId == 800).FirstOrDefault().DescuentoId,
+                                    PagoId = objPago.PagoId,
+                                    Monto = (DescBeca / 100) * objCuotaBec.Monto
+                                });
+                            });
 
 
+                        }
+
+                        db.SaveChanges();
+                        #endregion
                     }
-                    db.SaveChanges();
+
                     List<string> lstAlDes = new List<string>();
                     foreach (AlumnoDescuento objAl in db.AlumnoDescuento.Local)
                     {

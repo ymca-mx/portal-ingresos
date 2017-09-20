@@ -589,21 +589,37 @@ namespace BLL
             {
                 try
                 {
-                    DTOPeriodo Periodo = BLL.BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-                    List<Pago> Pagos =
-                    db.Pago.Where(P =>
-                        P.AlumnoId == AlumnoId
-                        && P.EstatusId == 1
-                        && P.OfertaEducativaId == OfertaEducativaid
-                        && (P.Anio != 2016 || P.PeriodoId != 1)
-                        && (P.Cuota1.PagoConceptoId == 800
-                                || P.Cuota1.PagoConceptoId == 802)).ToList();
+                    int nPagos = 0;
 
-                    Pagos = Pagos.Where(P =>
-                    P.PeriodoId != Periodo.PeriodoId
-                    && P.Anio != Periodo.Anio
-                    ).ToList();
-                    return Pagos.Count > 0 ? "Debe" : "";
+                    DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+
+                    Periodo objPerActual = db.Periodo.Where(d => FechaActual >= d.FechaInicial
+                    && FechaActual <= d.FechaFinal).FirstOrDefault();
+
+
+
+                    DateTime dtPeriodo;
+                    List<Pago> Pagolist = db.Pago.Where(P => 
+                                P.AlumnoId == AlumnoId 
+                                && P.OfertaEducativaId == OfertaEducativaid
+                                && P.EstatusId == 1 
+                                && (P.Anio != 2016 || P.PeriodoId != 1) 
+                                && (P.Cuota1.PagoConceptoId == 800
+                                        || P.Cuota1.PagoConceptoId == 802 
+                                        || P.Cuota1.PagoConceptoId == 807 
+                                        || P.Cuota1.PagoConceptoId == 306
+                                        || P.Cuota1.PagoConceptoId == 304 
+                                        || P.Cuota1.PagoConceptoId == 320)).ToList();
+                    Pagolist.ForEach(delegate (Pago objP)
+                    {
+                        dtPeriodo = BLLPeriodoPortal.TraerPeriodoCompletoS(objP.Anio, objP.PeriodoId, objP.SubperiodoId);
+                        objP.FechaGeneracion = Fecha.Prorroga(dtPeriodo.Year, dtPeriodo.Month, true, 5);
+                        nPagos += objP.FechaGeneracion < DateTime.Now ? 1 : 0;
+                    });
+                    nPagos = db.AlumnoPermitido.Where(P => P.AlumnoId == AlumnoId
+                                                        && P.Anio == objPerActual.Anio
+                                                        && P.PeriodoId == objPerActual.PeriodoId).ToList().Count > 0 ? 0 : nPagos;
+                    return nPagos > 0 ? "Debe" : "";
                 }
                 catch (Exception a)
                 { return a.Message; }

@@ -339,6 +339,19 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
+        public bool GenerarCargos(DTOAlumnoInscrito objAlumno)
+        {
+            return BLLAlumnoPortal.GenerarCargos(objAlumno);
+        }
+
+        [WebMethod]
+        public List<DTOAlumnoInscrito> ListaPorAutorizar()
+        {
+            return
+            BLLAlumnoPortal.AlumnosPorAutorizar();
+        }
+
+        [WebMethod]
         public DTOAlumno ObenerDatosAlumno(string AlumnoId)
         {
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));

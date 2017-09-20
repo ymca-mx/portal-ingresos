@@ -43,7 +43,7 @@ namespace AppAdministrativos.WS
                      decimal.Parse(DescuentoBec), decimal.Parse(DescuentoIns),
                      JustificacionIns, JustificacionBec, decimal.Parse(DescuentoExamen),
                      JustificacionExam, decimal.Parse(Credencial), JustificacionCred,
-                     int.Parse(SistemaPago), Usuario, 0);
+                     int.Parse(SistemaPago), Usuario, 0,false);
 
                 decimal BecaAca = decimal.Parse(DescuentoBec);
 
@@ -177,14 +177,14 @@ namespace AppAdministrativos.WS
             { return null; }
         }
         [WebMethod]
-        public string[] GuardarIdioma(int AlumnoId,int OfertaEducativa, string Turno, string Periodo, string SistemaPago, string DescuentoBec,
-            string JustificacionBec, string Credencial , string JustificacionCred, string Material, string EsEmpresa, string DescuentoExamen,
+        public string[] GuardarIdioma(int AlumnoId, int OfertaEducativa, string Turno, string Periodo, string SistemaPago, string DescuentoBec,
+            string JustificacionBec, string Credencial, string JustificacionCred, string Material, string EsEmpresa, string DescuentoExamen,
             string JustificacionExam, string DescuentoIns, string JustificacionIns, int Usuario)
         {
             try
             {
-                Nullable<int> defaul = null;                
-                
+                Nullable<int> defaul = null;
+
                 DTOOfertaEducativaTipo objOfti = BLLOfertaEducativaTipo.ConsultarOferta(OfertaEducativa);
                 int Anio = BLLPeriodoPortal.ConsultarPeriodo(Periodo).Anio, Periodoid = int.Parse(Periodo.Substring(0, 1));
                 int usu = Usuario;
@@ -200,23 +200,35 @@ namespace AppAdministrativos.WS
                     UsuarioId = usu
                 };
                 DTOAlumnoInscrito objinsc = BLLAlumnoInscrito.ConsultarAlumnoInscrito(objInscribir.AlumnoId, objInscribir.OfertaEducativaId);
-                if (bool.Parse(EsEmpresa) == false)
-                {
-                    if (objinsc == null)
-                    {
 
-                        BLLAlumnoInscrito.InsertarAlumnoInscrito2(objInscribir);
+                if ((objinsc?.Anio ?? Anio) == Anio || (objinsc?.PeriodoId ?? Periodoid) == Periodoid)
+                {
+                    if (bool.Parse(EsEmpresa) == false)
+                    {
+                        if (objinsc == null)
+                        {
+
+                            BLLAlumnoInscrito.InsertarAlumnoInscrito2(objInscribir);
+                        }
+                        else { BLLAlumnoInscrito.ActializarAlumnoInscrito(AlumnoId, int.Parse(SistemaPago)); }
                     }
-                    else { BLLAlumnoInscrito.ActializarAlumnoInscrito(AlumnoId, int.Parse(SistemaPago)); }
+                    else
+                    {
+                        #region Empresa
+                        objInscribir.PagoPlanId = null;
+                        objInscribir.EsEmpresa = true;
+                        BLLAlumnoInscrito.InsertarAlumnoInscrito2(objInscribir);
+
+                        #endregion
+                    }
                 }
                 else
                 {
-                    #region Empresa
-                    objInscribir.PagoPlanId = null;
-                    objInscribir.EsEmpresa = true;
-                    BLLAlumnoInscrito.InsertarAlumnoInscrito2(objInscribir);
+                    objinsc.TurnoId = objInscribir.TurnoId;
+                    objinsc.UsuarioId = objInscribir.UsuarioId;
+                    objinsc.PagoPlanId = objInscribir.PagoPlanId;
 
-                    #endregion
+                    if (!BLLAlumnoInscrito.ActializarAlumnoInscrito(objinsc, Anio, Periodoid)) { objOfti = null; }
                 }
                 if (objOfti.OfertaEducativaTipoId != 4)
                 {
@@ -227,7 +239,7 @@ namespace AppAdministrativos.WS
                             (JustificacionIns == "null" ? " " : JustificacionIns), (JustificacionBec == "null" ? " " : JustificacionBec),
                             decimal.Parse(DescuentoExamen), JustificacionExam == "null" ? " " : JustificacionExam,
                             decimal.Parse(Credencial), JustificacionCred == "null" ? " " : JustificacionCred,
-                            int.Parse(SistemaPago), usu, OfertaEducativa);
+                            int.Parse(SistemaPago), usu, OfertaEducativa,true);
                     }
                 }
                 else

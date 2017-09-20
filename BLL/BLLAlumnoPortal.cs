@@ -23,6 +23,8 @@ namespace BLL
                             Where(kl => kl.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId).
                             FirstOrDefault().OfertaEducativaTipoId == 4 ? 5 : pagoplan;
 
+                OfertaEducativa OfertaEducativadb = db.OfertaEducativa.Where(of => of.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId).FirstOrDefault();
+
                 List<PersonaAutorizada> lstPersonas = new List<PersonaAutorizada>();
                 foreach (DTOPersonaAutorizada objPer in objPersonaAutorizada)
                 {
@@ -68,7 +70,7 @@ namespace BLL
                                 UsuarioId=objAlumno.UsuarioId,
                                 TurnoId = objAlumnoInscrito.TurnoId,
                                 HoraInscripcion=DateTime.Now.TimeOfDay,
-                                EstatusId=1,
+                                EstatusId= (objAlumnoInscrito.EsEmpresa || OfertaEducativadb.OfertaEducativaTipoId == 4)?1:8,
                                 PagoPlanId = pagoplan
                                 }
                             },
@@ -291,6 +293,155 @@ namespace BLL
                 {
                     return null;
                 }
+            }
+        }
+
+        public static bool GenerarCargos(DTOAlumnoInscrito objAlumno)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    AlumnoInscrito alumnodb = db.AlumnoInscrito.Where(a =>
+                                                a.AlumnoId == objAlumno.AlumnoId
+                                                && a.OfertaEducativaId == objAlumno.OfertaEducativaId
+                                                && a.Anio == objAlumno.Anio
+                                                && a.PeriodoId == objAlumno.PeriodoId
+                                                && a.EstatusId == 8).FirstOrDefault();
+
+                    if ((alumnodb?.AlumnoId ?? null) != null)
+                    {
+                        #region Mandar a Bitacora
+                        db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                        {
+                            AlumnoId = alumnodb.AlumnoId,
+                            Anio = alumnodb.Anio,
+                            EsEmpresa = alumnodb.EsEmpresa,
+                            FechaInscripcion = alumnodb.FechaInscripcion,
+                            HoraInscripcion = alumnodb.HoraInscripcion,
+                            OfertaEducativaId = alumnodb.OfertaEducativaId,
+                            PagoPlanId = alumnodb.PagoPlanId,
+                            PeriodoId = alumnodb.PeriodoId,
+                            TurnoId = alumnodb.TurnoId,
+                            UsuarioId = alumnodb.UsuarioId
+                        });
+                        #endregion
+
+                        #region Update Alumno Inscrito
+                        alumnodb.UsuarioId = objAlumno.UsuarioId;
+                        alumnodb.FechaInscripcion = DateTime.Now;
+                        alumnodb.HoraInscripcion = DateTime.Now.TimeOfDay;
+                        alumnodb.EstatusId = 1;
+                        #endregion
+
+                        #region Generar Cargos 
+                        List<AlumnoDescuento> Descuentos = db.AlumnoDescuento
+                                                            .Where(a => a.AlumnoId == objAlumno.AlumnoId
+                                                                && a.OfertaEducativaId == objAlumno.OfertaEducativaId
+                                                                && a.Anio == objAlumno.Anio
+                                                                && a.PeriodoId == objAlumno.PeriodoId)
+                                                                .ToList();
+
+                        int[] Conceptos = { 1, 800, 802, 1000 };
+                        List<Cuota> Cuotas = db.Cuota.Where(b =>
+                                                        b.OfertaEducativaId == objAlumno.OfertaEducativaId
+                                                        && b.Anio == objAlumno.Anio
+                                                        && b.PeriodoId == objAlumno.PeriodoId
+                                                        && Conceptos.Contains(b.PagoConceptoId)
+                                                    ).ToList();
+                        int tipouser = db.Usuario.Where(us => us.UsuarioId == objAlumno.UsuarioId).FirstOrDefault().UsuarioTipoId;
+
+                        Cuotas.ForEach(cuota =>
+                        {
+                            decimal DescuentoPorcentaje =
+                                Descuentos.Where(des => des.PagoConceptoId == cuota.PagoConceptoId)?.FirstOrDefault()?.Monto ?? 0;
+                            DescuentoPorcentaje = Math.Round((DescuentoPorcentaje * cuota.Monto) / 100);
+                            if (db.Pago.Local.Where(pa => pa.Cuota1.PagoConceptoId == cuota.PagoConceptoId).ToList().Count == 0)
+                            {
+                                int NumSubPer = (cuota.PagoConceptoId == 800 ) ? 4 : 1;
+
+                                for (int i = 1; i <= NumSubPer; i++)
+                                {
+                                    db.Pago.Add(new Pago
+                                    {
+                                        AlumnoId = objAlumno.AlumnoId,
+                                        Anio = objAlumno.Anio,
+                                        CuotaId = cuota.CuotaId,
+                                        EsAnticipado = false,
+                                        Cuota = cuota.Monto,
+                                        EsEmpresa = false,
+                                        EstatusId = (DescuentoPorcentaje == cuota.Monto) ? 4 : 1,
+                                        FechaGeneracion = DateTime.Now,
+                                        HoraGeneracion = DateTime.Now.TimeOfDay,
+                                        OfertaEducativaId = objAlumno.OfertaEducativaId,
+                                        PeriodoId = objAlumno.PeriodoId,
+                                        ReferenciaId = "",
+                                        UsuarioId = objAlumno.UsuarioId,
+                                        UsuarioTipoId = tipouser,
+                                        Promesa = (cuota.Monto - DescuentoPorcentaje),
+                                        Restante = (cuota.Monto - DescuentoPorcentaje),
+                                        SubperiodoId = 1,
+                                        PagoDescuento = (DescuentoPorcentaje > 0) ?
+                                                (new List<PagoDescuento>{ new PagoDescuento
+                                            {
+                                                DescuentoId = Descuentos.Where(des => des.PagoConceptoId == cuota.PagoConceptoId).FirstOrDefault().DescuentoId,
+                                                Monto = DescuentoPorcentaje
+                                            } }) : null
+                                    });
+                                }
+                            }
+                        });
+
+                        #endregion
+
+                        #region Registros de Autorizacion 
+                        db.AlumnoAutorizacion.Add(new AlumnoAutorizacion
+                        {
+                            AlumnoId = alumnodb.AlumnoId,
+                            Fecha = DateTime.Now,
+                            Hora = DateTime.Now.TimeOfDay,
+                            UsuarioId = objAlumno.UsuarioId
+                        });
+                        #endregion
+
+                        db.SaveChanges();
+
+                        db.Pago.Local.ToList().ForEach(pa => { pa.ReferenciaId = db.spGeneraReferencia(pa.PagoId).FirstOrDefault(); });
+
+                        db.SaveChanges();
+
+                        return true;
+                    }
+                    else { return false; }
+                }
+                catch { return false; }
+            }
+        }
+
+        public static List<DTOAlumnoInscrito> AlumnosPorAutorizar()
+        {
+            using(UniversidadEntities db = new UniversidadEntities())
+            {
+                return
+                db.AlumnoInscrito
+                        .Where(a => a.EstatusId == 8)
+                        .Select(a =>
+                            new DTOAlumnoInscrito
+                            {
+                                AlumnoId = a.AlumnoId,
+                                Nombre = a.Alumno.Nombre + " " + a.Alumno.Paterno + " " + a.Alumno.Materno,
+                                Anio = a.Anio,
+                                PeriodoId = a.PeriodoId,
+                                FechaInscripcion = a.FechaInscripcion,
+                                OfertaEducativa = new DTOOfertaEducativa
+                                {
+                                    Descripcion = a.OfertaEducativa.Descripcion
+                                },
+                                OfertaEducativaId = a.OfertaEducativaId,
+                                PeriodoDescripcion = a.Periodo.Descripcion,
+                                UsuarioNombre = a.Usuario.Nombre,
+                            })
+                            .ToList();
             }
         }
 

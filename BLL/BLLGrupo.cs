@@ -1045,6 +1045,8 @@ namespace BLL
                     #region Calculos de Nuevas Cuotas
                     if (!AlumnoConfiguracion.First().EsCuotaCongelada)
                     {
+                        //if(PeriodoId)
+
                         decimal cuota = (AlumnoConfiguracion.First().CuotaColegiatura +
                                          (CuotasIncrementos.Where(a => a.PagoConceptoId == 800).FirstOrDefault()?.ImporteIncremento ?? 0));
 

@@ -110,6 +110,16 @@
           <Property Name="FechaBitacora" Type="date" Nullable="false" />
           <Property Name="HoraBitacora" Type="time" Precision="0" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlumnoAutorizacion">
+          <Key>
+            <PropertyRef Name="AlumnoAutorizacionId" />
+          </Key>
+          <Property Name="AlumnoAutorizacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="AlumnoBajaDocumento">
           <Key>
             <PropertyRef Name="AlumnoMovimientoId" />
@@ -688,20 +698,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoMatricula' no tiene de
           <Property Name="HoraRegistro" Type="time" Precision="0" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="AlumnoPermitido20162">
-          <Key>
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="UsuarioId" />
-            <PropertyRef Name="FechaRegistro" />
-            <PropertyRef Name="HoraRegistro" />
-          </Key>
-          <Property Name="AlumnoId" Type="int" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
-          <Property Name="FechaRegistro" Type="date" Nullable="false" />
-          <Property Name="HoraRegistro" Type="time" Precision="0" Nullable="false" />
-        </EntityType>
         <EntityType Name="AlumnoReferenciaBitacora">
           <Key>
             <PropertyRef Name="BitacoraId" />
@@ -891,6 +887,20 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.BecaSEPBitacora' no tiene de
           <Property Name="HoraBitacora" Type="time" Precision="0" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad.dbo.BitacoraCancelacion' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="BitacoraCancelacion">
+          <Property Name="PagoId" Type="int" />
+          <Property Name="FechaProceso" Type="date" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad.dbo.BitacoraMatAdelanto' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="BitacoraMatAdelanto">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="FechaProceso" Type="date" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
         <EntityType Name="BitacoraReinscripcionAdeudo">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -2525,45 +2535,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="EntidadFederativaId" Type="int" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.Tabla2' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="Tabla2">
-          <Key>
-            <PropertyRef Name="ConsecutivoId" />
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="TipoAdeudoId" />
-            <PropertyRef Name="Valor" />
-            <PropertyRef Name="FechaOperacion" />
-            <PropertyRef Name="HoraOperacion" />
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="ConsecutivoId" Type="int" Nullable="false" />
-          <Property Name="AlumnoId" Type="int" Nullable="false" />
-          <Property Name="TipoAdeudoId" Type="int" Nullable="false" />
-          <Property Name="Valor" Type="int" Nullable="false" />
-          <Property Name="FechaOperacion" Type="date" Nullable="false" />
-          <Property Name="HoraOperacion" Type="time" Precision="0" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TempAdeudo">
-          <Key>
-            <PropertyRef Name="AlumnoId" />
-          </Key>
-          <Property Name="AlumnoId" Type="int" Nullable="false" />
-          <Property Name="Adeudo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Tipo" Type="int" Nullable="false" />
-          <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
             <PropertyRef Name="TipoDocumento" />
@@ -2593,6 +2564,68 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Tabla2' no tiene definida ni
           <Property Name="SubmenuId" Type="int" Nullable="false" />
           <Property Name="UsuarioTipoId" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Universidad.dbo.tmpPago' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tmpPago">
+          <Key>
+            <PropertyRef Name="PagoId" />
+            <PropertyRef Name="ReferenciaId" />
+            <PropertyRef Name="AlumnoId" />
+            <PropertyRef Name="Anio" />
+            <PropertyRef Name="PeriodoId" />
+            <PropertyRef Name="SubperiodoId" />
+            <PropertyRef Name="OfertaEducativaId" />
+            <PropertyRef Name="FechaGeneracion" />
+            <PropertyRef Name="CuotaId" />
+            <PropertyRef Name="Cuota" />
+            <PropertyRef Name="Promesa" />
+            <PropertyRef Name="EstatusId" />
+            <PropertyRef Name="EsReferencia" />
+            <PropertyRef Name="EsEmpresa" />
+          </Key>
+          <Property Name="PagoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenciaId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SucursalCajaId" Type="int" />
+          <Property Name="ReciboId" Type="int" />
+          <Property Name="Serie" Type="varchar" MaxLength="20" />
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="PeriodoId" Type="int" Nullable="false" />
+          <Property Name="SubperiodoId" Type="int" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
+          <Property Name="FechaGeneracion" Type="date" Nullable="false" />
+          <Property Name="CuotaId" Type="int" Nullable="false" />
+          <Property Name="Cuota" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Promesa" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Pago" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FechaPago" Type="date" />
+          <Property Name="HoraPago" Type="time" Precision="0" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
+          <Property Name="EsReferencia" Type="bit" Nullable="false" />
+          <Property Name="EsEmpresa" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Universidad.dbo.tmpReferencias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tmpReferencias">
+          <Key>
+            <PropertyRef Name="ReferenciaId" />
+          </Key>
+          <Property Name="ReferenciaId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad.dbo.tmpRelacionAlumno' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="tmpRelacionAlumno">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="Nombre1" Type="varchar" MaxLength="100" />
+          <Property Name="Pass" Type="varchar" MaxLength="50" />
+          <Property Name="Carrera" Type="varchar" MaxLength="100" />
+          <Property Name="Nombre2" Type="varchar" MaxLength="50" />
+          <Property Name="Estatus" Type="int" />
+          <Property Name="Sexo" Type="varchar" MaxLength="10" />
+          <Property Name="SexoId" Type="int" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+        </EntityType>-->
         <EntityType Name="Turno">
           <Key>
             <PropertyRef Name="TurnoId" />
@@ -2608,15 +2641,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </Key>
           <Property Name="AlumnoID" Type="int" Nullable="false" />
           <Property Name="UniversidadAdeudo" Type="decimal" Precision="20" Scale="2" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="UniversidadNewAdeudo">
-          <Key>
-            <PropertyRef Name="AlumnoID" />
-          </Key>
-          <Property Name="AlumnoID" Type="int" Nullable="false" />
-          <Property Name="UniversidadNewAdeudo" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
         <EntityType Name="UniversidadValidacion">
           <Key>
@@ -3295,6 +3319,30 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="AlumnoAntecedenteBitacora">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoAutorizacion_Alumno">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="AlumnoAutorizacion" Type="Self.AlumnoAutorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="AlumnoAutorizacion">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoAutorizacion_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="AlumnoAutorizacion" Type="Self.AlumnoAutorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="AlumnoAutorizacion">
               <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
@@ -7160,6 +7208,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoAccesoBitacora" EntityType="Self.AlumnoAccesoBitacora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoAntecedente" EntityType="Self.AlumnoAntecedente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoAntecedenteBitacora" EntityType="Self.AlumnoAntecedenteBitacora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlumnoAutorizacion" EntityType="Self.AlumnoAutorizacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoBajaDocumento" EntityType="Self.AlumnoBajaDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoBitacora" EntityType="Self.AlumnoBitacora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlumnoCuatrimestre" EntityType="Self.AlumnoCuatrimestre" Schema="dbo" store:Type="Tables" />
@@ -7324,8 +7373,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="Self.SucursalAnuncio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalCaja" EntityType="Self.SucursalCaja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalDetalle" EntityType="Self.SucursalDetalle" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TempAdeudo" EntityType="Self.TempAdeudo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="Self.TipoMovimientoCRUD" Schema="dbo" store:Type="Tables" />
@@ -7404,14 +7451,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
     [AlumnoMatricula].[TipoAlumno] AS [TipoAlumno], 
     [AlumnoMatricula].[Grupo] AS [Grupo]
     FROM [dbo].[AlumnoMatricula] AS [AlumnoMatricula]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="AlumnoPermitido20162" EntityType="Self.AlumnoPermitido20162" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AlumnoPermitido20162].[AlumnoId] AS [AlumnoId], 
-    [AlumnoPermitido20162].[UsuarioId] AS [UsuarioId], 
-    [AlumnoPermitido20162].[FechaRegistro] AS [FechaRegistro], 
-    [AlumnoPermitido20162].[HoraRegistro] AS [HoraRegistro]
-    FROM [dbo].[AlumnoPermitido20162] AS [AlumnoPermitido20162]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="BecaSEPBitacora" EntityType="Self.BecaSEPBitacora" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -7517,28 +7556,40 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
     [Saldos].[TipoAlumno] AS [TipoAlumno]
     FROM [dbo].[Saldos] AS [Saldos]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Tabla2" EntityType="Self.Tabla2" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="tmpPago" EntityType="Self.tmpPago" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Tabla2].[ConsecutivoId] AS [ConsecutivoId], 
-    [Tabla2].[AlumnoId] AS [AlumnoId], 
-    [Tabla2].[TipoAdeudoId] AS [TipoAdeudoId], 
-    [Tabla2].[Valor] AS [Valor], 
-    [Tabla2].[FechaOperacion] AS [FechaOperacion], 
-    [Tabla2].[HoraOperacion] AS [HoraOperacion], 
-    [Tabla2].[UsuarioId] AS [UsuarioId]
-    FROM [dbo].[Tabla2] AS [Tabla2]</DefiningQuery>
+    [tmpPago].[PagoId] AS [PagoId], 
+    [tmpPago].[ReferenciaId] AS [ReferenciaId], 
+    [tmpPago].[SucursalCajaId] AS [SucursalCajaId], 
+    [tmpPago].[ReciboId] AS [ReciboId], 
+    [tmpPago].[Serie] AS [Serie], 
+    [tmpPago].[AlumnoId] AS [AlumnoId], 
+    [tmpPago].[Anio] AS [Anio], 
+    [tmpPago].[PeriodoId] AS [PeriodoId], 
+    [tmpPago].[SubperiodoId] AS [SubperiodoId], 
+    [tmpPago].[OfertaEducativaId] AS [OfertaEducativaId], 
+    [tmpPago].[FechaGeneracion] AS [FechaGeneracion], 
+    [tmpPago].[CuotaId] AS [CuotaId], 
+    [tmpPago].[Cuota] AS [Cuota], 
+    [tmpPago].[Promesa] AS [Promesa], 
+    [tmpPago].[Pago] AS [Pago], 
+    [tmpPago].[FechaPago] AS [FechaPago], 
+    [tmpPago].[HoraPago] AS [HoraPago], 
+    [tmpPago].[EstatusId] AS [EstatusId], 
+    [tmpPago].[EsReferencia] AS [EsReferencia], 
+    [tmpPago].[EsEmpresa] AS [EsEmpresa]
+    FROM [dbo].[tmpPago] AS [tmpPago]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tmpReferencias" EntityType="Self.tmpReferencias" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tmpReferencias].[ReferenciaId] AS [ReferenciaId]
+    FROM [dbo].[tmpReferencias] AS [tmpReferencias]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UniversidadAdeudo" EntityType="Self.UniversidadAdeudo" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [UniversidadAdeudo].[AlumnoID] AS [AlumnoID], 
     [UniversidadAdeudo].[UniversidadAdeudo] AS [UniversidadAdeudo]
     FROM [dbo].[UniversidadAdeudo] AS [UniversidadAdeudo]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UniversidadNewAdeudo" EntityType="Self.UniversidadNewAdeudo" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UniversidadNewAdeudo].[AlumnoID] AS [AlumnoID], 
-    [UniversidadNewAdeudo].[UniversidadNewAdeudo] AS [UniversidadNewAdeudo]
-    FROM [dbo].[UniversidadNewAdeudo] AS [UniversidadNewAdeudo]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Adeudo_Alumno" Association="Self.FK_Adeudo_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
@@ -7615,6 +7666,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_AlumnoAntecedenteBitacora_Usuario" Association="Self.FK_AlumnoAntecedenteBitacora_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AlumnoAntecedenteBitacora" EntitySet="AlumnoAntecedenteBitacora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoAutorizacion_Alumno" Association="Self.FK_AlumnoAutorizacion_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="AlumnoAutorizacion" EntitySet="AlumnoAutorizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoAutorizacion_Usuario" Association="Self.FK_AlumnoAutorizacion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AlumnoAutorizacion" EntitySet="AlumnoAutorizacion" />
           </AssociationSet>
           <AssociationSet Name="FK_AlumnoBajaDocumento_AlumnoMovimientoBaja" Association="Self.FK_AlumnoBajaDocumento_AlumnoMovimientoBaja">
             <End Role="AlumnoMovimientoBaja" EntitySet="AlumnoMovimientoBaja" />
@@ -8888,6 +8947,31 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <Parameter Name="periodo" Mode="In" Type="Int32" />
             <Parameter Name="anio" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SPU_Pagod">
+            <Parameter Name="PagoId" Mode="In" Type="Int32" />
+            <Parameter Name="EstatusId" Mode="In" Type="Int32" />
+            <Parameter Name="FCUSUARIO" Mode="In" Type="Int32" />
+            <Parameter Name="FCOBSERVACIONES" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spReporteBecasConcentrado" ReturnType="Collection(UniversidadModel.spReporteBecasConcentrado)">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="periodoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spReporteBecasDetalle" ReturnType="Collection(UniversidadModel.spReporteBecasDetalle)">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="periodoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spReporteCarteraVencida" ReturnType="Collection(UniversidadModel.spReporteCarteraVencida_Result)">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="periodoId" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicial" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFinal" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spSaldoAlumno" ReturnType="Collection(UniversidadModel.spSaldoAlumno_Result)">
+            <Parameter Name="alumnoId" Mode="In" Type="Int32" />
+            <Parameter Name="detalle" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ReporteSaldoAlumno" ReturnType="Collection(UniversidadModel.SP_ReporteSaldoAlumno_Result)" />
           <EntitySet Name="Adeudo" EntityType="UniversidadModel.Adeudo" />
           <EntitySet Name="AdeudoBiblioteca" EntityType="UniversidadModel.AdeudoBiblioteca" />
           <EntitySet Name="AdeudoChocolates" EntityType="UniversidadModel.AdeudoChocolates" />
@@ -8895,6 +8979,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoAccesoBitacora" EntityType="UniversidadModel.AlumnoAccesoBitacora" />
           <EntitySet Name="AlumnoAntecedente" EntityType="UniversidadModel.AlumnoAntecedente" />
           <EntitySet Name="AlumnoAntecedenteBitacora" EntityType="UniversidadModel.AlumnoAntecedenteBitacora" />
+          <EntitySet Name="AlumnoAutorizacion" EntityType="UniversidadModel.AlumnoAutorizacion" />
           <EntitySet Name="AlumnoBajaDocumento" EntityType="UniversidadModel.AlumnoBajaDocumento" />
           <EntitySet Name="AlumnoBitacora" EntityType="UniversidadModel.AlumnoBitacora" />
           <EntitySet Name="AlumnoCuatrimestre" EntityType="UniversidadModel.AlumnoCuatrimestre" />
@@ -9059,8 +9144,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="UniversidadModel.SucursalAnuncio" />
           <EntitySet Name="SucursalCaja" EntityType="UniversidadModel.SucursalCaja" />
           <EntitySet Name="SucursalDetalle" EntityType="UniversidadModel.SucursalDetalle" />
-          <EntitySet Name="sysdiagrams" EntityType="UniversidadModel.sysdiagrams" />
-          <EntitySet Name="TempAdeudo" EntityType="UniversidadModel.TempAdeudo" />
           <EntitySet Name="TipoDocumento" EntityType="UniversidadModel.TipoDocumento" />
           <EntitySet Name="TipoMovimiento" EntityType="UniversidadModel.TipoMovimiento" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="UniversidadModel.TipoMovimientoCRUD" />
@@ -9106,7 +9189,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoBeca" EntityType="UniversidadModel.AlumnoBeca" />
           <EntitySet Name="AlumnoInscritoBitacoraBKSalome" EntityType="UniversidadModel.AlumnoInscritoBitacoraBKSalome" />
           <EntitySet Name="AlumnoMatricula" EntityType="UniversidadModel.AlumnoMatricula" />
-          <EntitySet Name="AlumnoPermitido20162" EntityType="UniversidadModel.AlumnoPermitido20162" />
           <EntitySet Name="BecaSEPBitacora" EntityType="UniversidadModel.BecaSEPBitacora" />
           <EntitySet Name="COLEGIATURA" EntityType="UniversidadModel.COLEGIATURA" />
           <EntitySet Name="IdiomasInscrito" EntityType="UniversidadModel.IdiomasInscrito" />
@@ -9114,9 +9196,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="ReporteEstadoCuentaDescuento" EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" />
           <EntitySet Name="ReporteEstadoCuentaPagosConcepto" EntityType="UniversidadModel.ReporteEstadoCuentaPagosConcepto" />
           <EntitySet Name="Saldos" EntityType="UniversidadModel.Saldos" />
-          <EntitySet Name="Tabla2" EntityType="UniversidadModel.Tabla2" />
+          <EntitySet Name="tmpPago" EntityType="UniversidadModel.tmpPago" />
+          <EntitySet Name="tmpReferencias" EntityType="UniversidadModel.tmpReferencias" />
           <EntitySet Name="UniversidadAdeudo" EntityType="UniversidadModel.UniversidadAdeudo" />
-          <EntitySet Name="UniversidadNewAdeudo" EntityType="UniversidadModel.UniversidadNewAdeudo" />
           <AssociationSet Name="FK_Adeudo_Alumno" Association="UniversidadModel.FK_Adeudo_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="Adeudo" EntitySet="Adeudo" />
@@ -9156,6 +9238,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_AlumnoAntecedente_Alumno" Association="UniversidadModel.FK_AlumnoAntecedente_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="AlumnoAntecedente" EntitySet="AlumnoAntecedente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoAutorizacion_Alumno" Association="UniversidadModel.FK_AlumnoAutorizacion_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="AlumnoAutorizacion" EntitySet="AlumnoAutorizacion" />
           </AssociationSet>
           <AssociationSet Name="FK_AlumnoCuatrimestre_Alumno" Association="UniversidadModel.FK_AlumnoCuatrimestre_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
@@ -9304,6 +9390,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_AlumnoAntecedenteBitacora_Usuario" Association="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AlumnoAntecedenteBitacora" EntitySet="AlumnoAntecedenteBitacora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoAutorizacion_Usuario" Association="UniversidadModel.FK_AlumnoAutorizacion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AlumnoAutorizacion" EntitySet="AlumnoAutorizacion" />
           </AssociationSet>
           <AssociationSet Name="FK_AlumnoBajaDocumento_AlumnoMovimientoBaja" Association="UniversidadModel.FK_AlumnoBajaDocumento_AlumnoMovimientoBaja">
             <End Role="AlumnoMovimientoBaja" EntitySet="AlumnoMovimientoBaja" />
@@ -10437,31 +10527,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="SucursalCaja" EntitySet="SucursalCaja" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <FunctionImport Name="SPU_Pagod">
-            <Parameter Name="PagoId" Mode="In" Type="Int32" />
-            <Parameter Name="EstatusId" Mode="In" Type="Int32" />
-            <Parameter Name="FCUSUARIO" Mode="In" Type="Int32" />
-            <Parameter Name="FCOBSERVACIONES" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="spReporteBecasConcentrado" ReturnType="Collection(UniversidadModel.spReporteBecasConcentrado)">
-            <Parameter Name="anio" Mode="In" Type="Int32" />
-            <Parameter Name="periodoId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spReporteBecasDetalle" ReturnType="Collection(UniversidadModel.spReporteBecasDetalle)">
-            <Parameter Name="anio" Mode="In" Type="Int32" />
-            <Parameter Name="periodoId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spReporteCarteraVencida" ReturnType="Collection(UniversidadModel.spReporteCarteraVencida_Result)">
-            <Parameter Name="anio" Mode="In" Type="Int32" />
-            <Parameter Name="periodoId" Mode="In" Type="Int32" />
-            <Parameter Name="fechaInicial" Mode="In" Type="DateTime" />
-            <Parameter Name="fechaFinal" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="spSaldoAlumno" ReturnType="Collection(UniversidadModel.spSaldoAlumno_Result)">
-            <Parameter Name="alumnoId" Mode="In" Type="Int32" />
-            <Parameter Name="detalle" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ReporteSaldoAlumno" ReturnType="Collection(UniversidadModel.SP_ReporteSaldoAlumno_Result)" />
           </EntityContainer>
         <ComplexType Name="AlumnoInscritoCompleto">
           <Property Type="Int32" Name="AlumnoId" Nullable="false" />
@@ -10486,6 +10551,74 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="SucursalCajaId" Nullable="false" />
           <Property Type="Int32" Name="UsuarioTipoId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spReporteBecasDetalle">
+          <Property Type="Int32" Name="AlumnoId" Nullable="true" />
+          <Property Type="Int32" Name="OfertaEducativaId" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="true" />
+          <Property Type="Decimal" Name="CostoIns" Nullable="true" />
+          <Property Type="Int32" Name="AnticipadoIns" Nullable="true" />
+          <Property Type="Decimal" Name="AnticipadoInsPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="BecaIns" Nullable="true" />
+          <Property Type="Decimal" Name="BecaInsPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DesTotalIns" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DesTotalInsPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalIns" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="CostoCol" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="AnticipadoCol" Nullable="true" />
+          <Property Type="Decimal" Name="AnticipadoColPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="BecaCol" Nullable="true" />
+          <Property Type="Decimal" Name="BecaColPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="BecaDeportiva" Nullable="true" />
+          <Property Type="Decimal" Name="BecaDeportivaPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="PromoCasa" Nullable="true" />
+          <Property Type="Decimal" Name="PromoCasaPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DesTotalCol" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DesTotalColPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalCol" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="EsEmpresa" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spReporteBecasConcentrado">
+          <Property Type="String" Name="Descripcion" Nullable="true" />
+          <Property Type="Int32" Name="TotalAlumnos" Nullable="true" />
+          <Property Type="Int32" Name="AlumnosConBeca" Nullable="true" />
+          <Property Type="Decimal" Name="CargosInscripcion" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PromedioAnticipadoPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="PromedioAnticipado_" Nullable="true" />
+          <Property Type="Decimal" Name="PromedioBecaInscripcionPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="PromedioBecaInscripcion_" Nullable="true" />
+          <Property Type="Decimal" Name="TotalDescuentoInscripcion" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="CargosColegiatura" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PromedioAnticipadoPorColegiatura" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="PromedioAnticipado_Colegiatura" Nullable="true" />
+          <Property Type="Decimal" Name="BecaPromedioPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="BecaPromedio_" Nullable="true" />
+          <Property Type="Decimal" Name="BecaDeportivaPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="BecaDeportivaPromedio_" Nullable="true" />
+          <Property Type="Decimal" Name="PromoCasaPor" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="PromoCasa_" Nullable="true" />
+          <Property Type="Decimal" Name="TotalDescuentoColegiatura" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="spReporteCarteraVencida_Result">
+          <Property Type="Int32" Name="Alumno" Nullable="false" />
+          <Property Type="DateTime" Name="FechaPago" Nullable="false" />
+          <Property Type="String" Name="Tipo_de_pago" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Concepto" Nullable="true" MaxLength="152" />
+          <Property Type="Decimal" Name="Pago" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Restante" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="spSaldoAlumno_Result">
+          <Property Type="Int32" Name="AlumnoId" Nullable="false" />
+          <Property Type="Decimal" Name="Saldo" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Int32" Name="Anio" Nullable="true" />
+          <Property Type="Int32" Name="PeriodoId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ReporteSaldoAlumno_Result">
+          <Property Type="Int32" Name="AlumnoId" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="152" />
+          <Property Type="Int32" Name="OfertaEducativaId" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Saldo" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <EntityType Name="Adeudo">
           <Key>
@@ -10544,6 +10677,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_Alumno_Estatus" FromRole="Alumno" ToRole="Estatus" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_Alumno_Usuario" FromRole="Alumno" ToRole="Usuario" />
           <NavigationProperty Name="AlumnoAntecedente" Relationship="UniversidadModel.FK_AlumnoAntecedente_Alumno" FromRole="Alumno" ToRole="AlumnoAntecedente" />
+          <NavigationProperty Name="AlumnoAutorizacion" Relationship="UniversidadModel.FK_AlumnoAutorizacion_Alumno" FromRole="Alumno" ToRole="AlumnoAutorizacion" />
           <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Alumno" FromRole="Alumno" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_Alumno" FromRole="Alumno" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoDetalle" Relationship="UniversidadModel.FK_AlumnoDetalle_Alumno" FromRole="Alumno" ToRole="AlumnoDetalle" />
@@ -10643,6 +10777,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="FechaBitacora" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="HoraBitacora" Type="Time" Nullable="false" Precision="0" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario" FromRole="AlumnoAntecedenteBitacora" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="AlumnoAutorizacion">
+          <Key>
+            <PropertyRef Name="AlumnoAutorizacionId" />
+          </Key>
+          <Property Name="AlumnoAutorizacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_AlumnoAutorizacion_Alumno" FromRole="AlumnoAutorizacion" ToRole="Alumno" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_AlumnoAutorizacion_Usuario" FromRole="AlumnoAutorizacion" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="AlumnoBajaDocumento">
           <Key>
@@ -13301,25 +13447,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="Pais" Relationship="UniversidadModel.FK_SucursalDetalle_Pais" FromRole="SucursalDetalle" ToRole="Pais" />
           <NavigationProperty Name="Sucursal" Relationship="UniversidadModel.FK_SucursalDetalle_Sucursal" FromRole="SucursalDetalle" ToRole="Sucursal" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TempAdeudo">
-          <Key>
-            <PropertyRef Name="AlumnoId" />
-          </Key>
-          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
-          <Property Name="Adeudo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Tipo" Type="Int32" Nullable="false" />
-          <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
             <PropertyRef Name="TipoDocumento1" />
@@ -13407,6 +13534,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="AdeudoChocolates" Relationship="UniversidadModel.FK_AdeudoChocolates_Usuario" FromRole="Usuario" ToRole="AdeudoChocolates" />
           <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_Alumno_Usuario" FromRole="Usuario" ToRole="Alumno" />
           <NavigationProperty Name="AlumnoAntecedenteBitacora" Relationship="UniversidadModel.FK_AlumnoAntecedenteBitacora_Usuario" FromRole="Usuario" ToRole="AlumnoAntecedenteBitacora" />
+          <NavigationProperty Name="AlumnoAutorizacion" Relationship="UniversidadModel.FK_AlumnoAutorizacion_Usuario" FromRole="Usuario" ToRole="AlumnoAutorizacion" />
           <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_Usuario" FromRole="Usuario" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_Usuario" FromRole="Usuario" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoDescuentoPendiente" Relationship="UniversidadModel.FK_AlumnoDescuentoPendiente_Usuario" FromRole="Usuario" ToRole="AlumnoDescuentoPendiente" />
@@ -13961,18 +14089,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="TipoAlumno" Type="Int32" />
           <Property Name="Grupo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="AlumnoPermitido20162">
-          <Key>
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="UsuarioId" />
-            <PropertyRef Name="FechaRegistro" />
-            <PropertyRef Name="HoraRegistro" />
-          </Key>
-          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HoraRegistro" Type="Time" Nullable="false" Precision="0" />
-        </EntityType>
         <EntityType Name="BecaSEPBitacora">
           <Key>
             <PropertyRef Name="PagoId" />
@@ -14143,23 +14259,49 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="AbonoReferenciado20162" Type="Decimal" Nullable="false" Precision="17" Scale="2" />
           <Property Name="TipoAlumno" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tabla2">
+        <EntityType Name="tmpPago">
           <Key>
-            <PropertyRef Name="ConsecutivoId" />
+            <PropertyRef Name="PagoId" />
+            <PropertyRef Name="ReferenciaId" />
             <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="TipoAdeudoId" />
-            <PropertyRef Name="Valor" />
-            <PropertyRef Name="FechaOperacion" />
-            <PropertyRef Name="HoraOperacion" />
-            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="Anio" />
+            <PropertyRef Name="PeriodoId" />
+            <PropertyRef Name="SubperiodoId" />
+            <PropertyRef Name="OfertaEducativaId" />
+            <PropertyRef Name="FechaGeneracion" />
+            <PropertyRef Name="CuotaId" />
+            <PropertyRef Name="Cuota" />
+            <PropertyRef Name="Promesa" />
+            <PropertyRef Name="EstatusId" />
+            <PropertyRef Name="EsReferencia" />
+            <PropertyRef Name="EsEmpresa" />
           </Key>
-          <Property Name="ConsecutivoId" Type="Int32" Nullable="false" />
+          <Property Name="PagoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenciaId" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SucursalCajaId" Type="Int32" />
+          <Property Name="ReciboId" Type="Int32" />
+          <Property Name="Serie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="AlumnoId" Type="Int32" Nullable="false" />
-          <Property Name="TipoAdeudoId" Type="Int32" Nullable="false" />
-          <Property Name="Valor" Type="Int32" Nullable="false" />
-          <Property Name="FechaOperacion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HoraOperacion" Type="Time" Nullable="false" Precision="0" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Anio" Type="Int32" Nullable="false" />
+          <Property Name="PeriodoId" Type="Int32" Nullable="false" />
+          <Property Name="SubperiodoId" Type="Int32" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
+          <Property Name="FechaGeneracion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CuotaId" Type="Int32" Nullable="false" />
+          <Property Name="Cuota" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Promesa" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Pago" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FechaPago" Type="DateTime" Precision="0" />
+          <Property Name="HoraPago" Type="Time" Precision="0" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <Property Name="EsReferencia" Type="Boolean" Nullable="false" />
+          <Property Name="EsEmpresa" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tmpReferencias">
+          <Key>
+            <PropertyRef Name="ReferenciaId" />
+          </Key>
+          <Property Name="ReferenciaId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UniversidadAdeudo">
           <Key>
@@ -14167,13 +14309,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           </Key>
           <Property Name="AlumnoID" Type="Int32" Nullable="false" />
           <Property Name="UniversidadAdeudo1" Type="Decimal" Precision="20" Scale="2" />
-        </EntityType>
-        <EntityType Name="UniversidadNewAdeudo">
-          <Key>
-            <PropertyRef Name="AlumnoID" />
-          </Key>
-          <Property Name="AlumnoID" Type="Int32" Nullable="false" />
-          <Property Name="UniversidadNewAdeudo1" Type="Decimal" Precision="20" Scale="2" />
         </EntityType>
         <Association Name="FK_Adeudo_Alumno">
           <End Type="UniversidadModel.Alumno" Role="Alumno" Multiplicity="1" />
@@ -14291,6 +14426,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <PropertyRef Name="AlumnoId" />
             </Principal>
             <Dependent Role="AlumnoAntecedente">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoAutorizacion_Alumno">
+          <End Type="UniversidadModel.Alumno" Role="Alumno" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoAutorizacion" Role="AlumnoAutorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="AlumnoAutorizacion">
               <PropertyRef Name="AlumnoId" />
             </Dependent>
           </ReferentialConstraint>
@@ -14735,6 +14882,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="AlumnoAntecedenteBitacora">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoAutorizacion_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoAutorizacion" Role="AlumnoAutorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="AlumnoAutorizacion">
               <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
@@ -18187,74 +18346,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <End Type="UniversidadModel.SucursalCaja" Role="SucursalCaja" Multiplicity="*" />
           <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="*" />
         </Association>
-        <ComplexType Name="spReporteBecasDetalle">
-          <Property Type="Int32" Name="AlumnoId" Nullable="true" />
-          <Property Type="Int32" Name="OfertaEducativaId" Nullable="true" />
-          <Property Type="String" Name="Descripcion" Nullable="true" />
-          <Property Type="Decimal" Name="CostoIns" Nullable="true" />
-          <Property Type="Int32" Name="AnticipadoIns" Nullable="true" />
-          <Property Type="Decimal" Name="AnticipadoInsPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="BecaIns" Nullable="true" />
-          <Property Type="Decimal" Name="BecaInsPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DesTotalIns" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DesTotalInsPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="TotalIns" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="CostoCol" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="AnticipadoCol" Nullable="true" />
-          <Property Type="Decimal" Name="AnticipadoColPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="BecaCol" Nullable="true" />
-          <Property Type="Decimal" Name="BecaColPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="BecaDeportiva" Nullable="true" />
-          <Property Type="Decimal" Name="BecaDeportivaPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="PromoCasa" Nullable="true" />
-          <Property Type="Decimal" Name="PromoCasaPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DesTotalCol" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DesTotalColPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="TotalCol" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="EsEmpresa" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="spReporteBecasConcentrado">
-          <Property Type="String" Name="Descripcion" Nullable="true" />
-          <Property Type="Int32" Name="TotalAlumnos" Nullable="true" />
-          <Property Type="Int32" Name="AlumnosConBeca" Nullable="true" />
-          <Property Type="Decimal" Name="CargosInscripcion" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="PromedioAnticipadoPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="PromedioAnticipado_" Nullable="true" />
-          <Property Type="Decimal" Name="PromedioBecaInscripcionPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="PromedioBecaInscripcion_" Nullable="true" />
-          <Property Type="Decimal" Name="TotalDescuentoInscripcion" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="CargosColegiatura" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="PromedioAnticipadoPorColegiatura" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="PromedioAnticipado_Colegiatura" Nullable="true" />
-          <Property Type="Decimal" Name="BecaPromedioPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="BecaPromedio_" Nullable="true" />
-          <Property Type="Decimal" Name="BecaDeportivaPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="BecaDeportivaPromedio_" Nullable="true" />
-          <Property Type="Decimal" Name="PromoCasaPor" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="PromoCasa_" Nullable="true" />
-          <Property Type="Decimal" Name="TotalDescuentoColegiatura" Nullable="true" Precision="18" Scale="0" />
-        </ComplexType>
-        <ComplexType Name="spReporteCarteraVencida_Result">
-          <Property Type="Int32" Name="Alumno" Nullable="false" />
-          <Property Type="DateTime" Name="FechaPago" Nullable="false" />
-          <Property Type="String" Name="Tipo_de_pago" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Concepto" Nullable="true" MaxLength="152" />
-          <Property Type="Decimal" Name="Pago" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Restante" Nullable="false" Precision="18" Scale="2" />
-        </ComplexType>
-        <ComplexType Name="spSaldoAlumno_Result">
-          <Property Type="Int32" Name="AlumnoId" Nullable="false" />
-          <Property Type="Decimal" Name="Saldo" Nullable="false" Precision="38" Scale="2" />
-          <Property Type="Int32" Name="Anio" Nullable="true" />
-          <Property Type="Int32" Name="PeriodoId" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_ReporteSaldoAlumno_Result">
-          <Property Type="Int32" Name="AlumnoId" Nullable="true" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="152" />
-          <Property Type="Int32" Name="OfertaEducativaId" Nullable="true" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
-          <Property Type="Decimal" Name="Saldo" Nullable="true" Precision="18" Scale="2" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -18274,6 +18365,114 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spConceptoDescuento" FunctionName="UniversidadModel.Store.spConceptoDescuento" />
+          <FunctionImportMapping FunctionImportName="SPU_Pagod" FunctionName="UniversidadModel.Store.SPU_Pagod" />
+          <FunctionImportMapping FunctionImportName="spAlumnoInscritoCompleto" FunctionName="UniversidadModel.Store.spAlumnoInscritoCompleto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.AlumnoInscritoCompleto">
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="HoraInscripcion" ColumnName="HoraInscripcion" />
+                <ScalarProperty Name="PagoPlanId" ColumnName="PagoPlanId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="TipoAlumno" ColumnName="TipoAlumno" />
+                <ScalarProperty Name="TurnoId" ColumnName="TurnoId" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
+                <ScalarProperty Name="EsEmpresa" ColumnName="EsEmpresa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spReporteBecasConcentrado" FunctionName="UniversidadModel.Store.spReporteBecasConcentrado" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spReporteBecasConcentrado">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="TotalAlumnos" ColumnName="TotalAlumnos" />
+                <ScalarProperty Name="AlumnosConBeca" ColumnName="AlumnosConBeca" />
+                <ScalarProperty Name="CargosInscripcion" ColumnName="CargosInscripcion" />
+                <ScalarProperty Name="PromedioAnticipadoPor" ColumnName="PromedioAnticipadoPor" />
+                <ScalarProperty Name="PromedioAnticipado_" ColumnName="PromedioAnticipado_" />
+                <ScalarProperty Name="PromedioBecaInscripcionPor" ColumnName="PromedioBecaInscripcionPor" />
+                <ScalarProperty Name="PromedioBecaInscripcion_" ColumnName="PromedioBecaInscripcion_" />
+                <ScalarProperty Name="TotalDescuentoInscripcion" ColumnName="TotalDescuentoInscripcion" />
+                <ScalarProperty Name="CargosColegiatura" ColumnName="CargosColegiatura" />
+                <ScalarProperty Name="PromedioAnticipadoPorColegiatura" ColumnName="PromedioAnticipadoPorColegiatura" />
+                <ScalarProperty Name="PromedioAnticipado_Colegiatura" ColumnName="PromedioAnticipado_Colegiatura" />
+                <ScalarProperty Name="BecaPromedioPor" ColumnName="BecaPromedioPor" />
+                <ScalarProperty Name="BecaPromedio_" ColumnName="BecaPromedio_" />
+                <ScalarProperty Name="BecaDeportivaPor" ColumnName="BecaDeportivaPor" />
+                <ScalarProperty Name="BecaDeportivaPromedio_" ColumnName="BecaDeportivaPromedio_" />
+                <ScalarProperty Name="PromoCasaPor" ColumnName="PromoCasaPor" />
+                <ScalarProperty Name="PromoCasa_" ColumnName="PromoCasa_" />
+                <ScalarProperty Name="TotalDescuentoColegiatura" ColumnName="TotalDescuentoColegiatura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spReporteBecasDetalle" FunctionName="UniversidadModel.Store.spReporteBecasDetalle" >
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spReporteBecasDetalle">
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CostoIns" ColumnName="CostoIns" />
+                <ScalarProperty Name="AnticipadoIns" ColumnName="AnticipadoIns" />
+                <ScalarProperty Name="AnticipadoInsPor" ColumnName="AnticipadoInsPor" />
+                <ScalarProperty Name="BecaIns" ColumnName="BecaIns" />
+                <ScalarProperty Name="BecaInsPor" ColumnName="BecaInsPor" />
+                <ScalarProperty Name="DesTotalIns" ColumnName="DesTotalIns" />
+                <ScalarProperty Name="DesTotalInsPor" ColumnName="DesTotalInsPor" />
+                <ScalarProperty Name="TotalIns" ColumnName="TotalIns" />
+                <ScalarProperty Name="CostoCol" ColumnName="CostoCol" />
+                <ScalarProperty Name="AnticipadoCol" ColumnName="AnticipadoCol" />
+                <ScalarProperty Name="AnticipadoColPor" ColumnName="AnticipadoColPor" />
+                <ScalarProperty Name="BecaCol" ColumnName="BecaCol" />
+                <ScalarProperty Name="BecaColPor" ColumnName="BecaColPor" />
+                <ScalarProperty Name="BecaDeportiva" ColumnName="BecaDeportiva" />
+                <ScalarProperty Name="BecaDeportivaPor" ColumnName="BecaDeportivaPor" />
+                <ScalarProperty Name="PromoCasa" ColumnName="PromoCasa" />
+                <ScalarProperty Name="PromoCasaPor" ColumnName="PromoCasaPor" />
+                <ScalarProperty Name="DesTotalCol" ColumnName="DesTotalCol" />
+                <ScalarProperty Name="DesTotalColPor" ColumnName="DesTotalColPor" />
+                <ScalarProperty Name="TotalCol" ColumnName="TotalCol" />
+                <ScalarProperty Name="EsEmpresa" ColumnName="EsEmpresa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spReporteCarteraVencida" FunctionName="UniversidadModel.Store.spReporteCarteraVencida">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spReporteCarteraVencida_Result">
+                <ScalarProperty Name="Alumno" ColumnName="Alumno" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="Tipo_de_pago" ColumnName="Tipo de pago" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="Pago" ColumnName="Pago" />
+                <ScalarProperty Name="Restante" ColumnName="Restante" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spSaldoAlumno" FunctionName="UniversidadModel.Store.spSaldoAlumno">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.spSaldoAlumno_Result">
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ReporteSaldoAlumno" FunctionName="UniversidadModel.Store.SP_ReporteSaldoAlumno">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UniversidadModel.SP_ReporteSaldoAlumno_Result">
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Adeudo">
             <EntityTypeMapping TypeName="UniversidadModel.Adeudo">
               <MappingFragment StoreEntitySet="Adeudo">
@@ -18376,6 +18575,17 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="AntecedenteTipoId" ColumnName="AntecedenteTipoId" />
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlumnoAutorizacion">
+            <EntityTypeMapping TypeName="UniversidadModel.AlumnoAutorizacion">
+              <MappingFragment StoreEntitySet="AlumnoAutorizacion">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="AlumnoAutorizacionId" ColumnName="AlumnoAutorizacionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -20578,27 +20788,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="UniversidadModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TempAdeudo">
-            <EntityTypeMapping TypeName="UniversidadModel.TempAdeudo">
-              <MappingFragment StoreEntitySet="TempAdeudo">
-                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Adeudo" ColumnName="Adeudo" />
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TipoDocumento">
             <EntityTypeMapping TypeName="UniversidadModel.TipoDocumento">
               <MappingFragment StoreEntitySet="TipoDocumento">
@@ -21150,16 +21339,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AlumnoPermitido20162">
-            <EntityTypeMapping TypeName="UniversidadModel.AlumnoPermitido20162">
-              <MappingFragment StoreEntitySet="AlumnoPermitido20162">
-                <ScalarProperty Name="HoraRegistro" ColumnName="HoraRegistro" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BecaSEPBitacora">
             <EntityTypeMapping TypeName="UniversidadModel.BecaSEPBitacora">
               <MappingFragment StoreEntitySet="BecaSEPBitacora">
@@ -21278,16 +21457,36 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tabla2">
-            <EntityTypeMapping TypeName="UniversidadModel.Tabla2">
-              <MappingFragment StoreEntitySet="Tabla2">
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="HoraOperacion" ColumnName="HoraOperacion" />
-                <ScalarProperty Name="FechaOperacion" ColumnName="FechaOperacion" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="TipoAdeudoId" ColumnName="TipoAdeudoId" />
+          <EntitySetMapping Name="tmpPago">
+            <EntityTypeMapping TypeName="UniversidadModel.tmpPago">
+              <MappingFragment StoreEntitySet="tmpPago">
+                <ScalarProperty Name="EsEmpresa" ColumnName="EsEmpresa" />
+                <ScalarProperty Name="EsReferencia" ColumnName="EsReferencia" />
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="HoraPago" ColumnName="HoraPago" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="Pago" ColumnName="Pago" />
+                <ScalarProperty Name="Promesa" ColumnName="Promesa" />
+                <ScalarProperty Name="Cuota" ColumnName="Cuota" />
+                <ScalarProperty Name="CuotaId" ColumnName="CuotaId" />
+                <ScalarProperty Name="FechaGeneracion" ColumnName="FechaGeneracion" />
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="SubperiodoId" ColumnName="SubperiodoId" />
+                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-                <ScalarProperty Name="ConsecutivoId" ColumnName="ConsecutivoId" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
+                <ScalarProperty Name="ReciboId" ColumnName="ReciboId" />
+                <ScalarProperty Name="SucursalCajaId" ColumnName="SucursalCajaId" />
+                <ScalarProperty Name="ReferenciaId" ColumnName="ReferenciaId" />
+                <ScalarProperty Name="PagoId" ColumnName="PagoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tmpReferencias">
+            <EntityTypeMapping TypeName="UniversidadModel.tmpReferencias">
+              <MappingFragment StoreEntitySet="tmpReferencias">
+                <ScalarProperty Name="ReferenciaId" ColumnName="ReferenciaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -21295,14 +21494,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <EntityTypeMapping TypeName="UniversidadModel.UniversidadAdeudo">
               <MappingFragment StoreEntitySet="UniversidadAdeudo">
                 <ScalarProperty Name="UniversidadAdeudo1" ColumnName="UniversidadAdeudo" />
-                <ScalarProperty Name="AlumnoID" ColumnName="AlumnoID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UniversidadNewAdeudo">
-            <EntityTypeMapping TypeName="UniversidadModel.UniversidadNewAdeudo">
-              <MappingFragment StoreEntitySet="UniversidadNewAdeudo">
-                <ScalarProperty Name="UniversidadNewAdeudo1" ColumnName="UniversidadNewAdeudo" />
                 <ScalarProperty Name="AlumnoID" ColumnName="AlumnoID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -21315,114 +21506,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <ScalarProperty Name="SucursalCajaId" ColumnName="SucursalCajaId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="SPU_Pagod" FunctionName="UniversidadModel.Store.SPU_Pagod" />
-          <FunctionImportMapping FunctionImportName="spAlumnoInscritoCompleto" FunctionName="UniversidadModel.Store.spAlumnoInscritoCompleto">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UniversidadModel.AlumnoInscritoCompleto">
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
-                <ScalarProperty Name="HoraInscripcion" ColumnName="HoraInscripcion" />
-                <ScalarProperty Name="PagoPlanId" ColumnName="PagoPlanId" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="TipoAlumno" ColumnName="TipoAlumno" />
-                <ScalarProperty Name="TurnoId" ColumnName="TurnoId" />
-                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
-                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
-                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
-                <ScalarProperty Name="EsEmpresa" ColumnName="EsEmpresa" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spReporteBecasConcentrado" FunctionName="UniversidadModel.Store.spReporteBecasConcentrado" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UniversidadModel.spReporteBecasConcentrado">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="TotalAlumnos" ColumnName="TotalAlumnos" />
-                <ScalarProperty Name="AlumnosConBeca" ColumnName="AlumnosConBeca" />
-                <ScalarProperty Name="CargosInscripcion" ColumnName="CargosInscripcion" />
-                <ScalarProperty Name="PromedioAnticipadoPor" ColumnName="PromedioAnticipadoPor" />
-                <ScalarProperty Name="PromedioAnticipado_" ColumnName="PromedioAnticipado_" />
-                <ScalarProperty Name="PromedioBecaInscripcionPor" ColumnName="PromedioBecaInscripcionPor" />
-                <ScalarProperty Name="PromedioBecaInscripcion_" ColumnName="PromedioBecaInscripcion_" />
-                <ScalarProperty Name="TotalDescuentoInscripcion" ColumnName="TotalDescuentoInscripcion" />
-                <ScalarProperty Name="CargosColegiatura" ColumnName="CargosColegiatura" />
-                <ScalarProperty Name="PromedioAnticipadoPorColegiatura" ColumnName="PromedioAnticipadoPorColegiatura" />
-                <ScalarProperty Name="PromedioAnticipado_Colegiatura" ColumnName="PromedioAnticipado_Colegiatura" />
-                <ScalarProperty Name="BecaPromedioPor" ColumnName="BecaPromedioPor" />
-                <ScalarProperty Name="BecaPromedio_" ColumnName="BecaPromedio_" />
-                <ScalarProperty Name="BecaDeportivaPor" ColumnName="BecaDeportivaPor" />
-                <ScalarProperty Name="BecaDeportivaPromedio_" ColumnName="BecaDeportivaPromedio_" />
-                <ScalarProperty Name="PromoCasaPor" ColumnName="PromoCasaPor" />
-                <ScalarProperty Name="PromoCasa_" ColumnName="PromoCasa_" />
-                <ScalarProperty Name="TotalDescuentoColegiatura" ColumnName="TotalDescuentoColegiatura" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spReporteBecasDetalle" FunctionName="UniversidadModel.Store.spReporteBecasDetalle" >
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="UniversidadModel.spReporteBecasDetalle">
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="CostoIns" ColumnName="CostoIns" />
-                <ScalarProperty Name="AnticipadoIns" ColumnName="AnticipadoIns" />
-                <ScalarProperty Name="AnticipadoInsPor" ColumnName="AnticipadoInsPor" />
-                <ScalarProperty Name="BecaIns" ColumnName="BecaIns" />
-                <ScalarProperty Name="BecaInsPor" ColumnName="BecaInsPor" />
-                <ScalarProperty Name="DesTotalIns" ColumnName="DesTotalIns" />
-                <ScalarProperty Name="DesTotalInsPor" ColumnName="DesTotalInsPor" />
-                <ScalarProperty Name="TotalIns" ColumnName="TotalIns" />
-                <ScalarProperty Name="CostoCol" ColumnName="CostoCol" />
-                <ScalarProperty Name="AnticipadoCol" ColumnName="AnticipadoCol" />
-                <ScalarProperty Name="AnticipadoColPor" ColumnName="AnticipadoColPor" />
-                <ScalarProperty Name="BecaCol" ColumnName="BecaCol" />
-                <ScalarProperty Name="BecaColPor" ColumnName="BecaColPor" />
-                <ScalarProperty Name="BecaDeportiva" ColumnName="BecaDeportiva" />
-                <ScalarProperty Name="BecaDeportivaPor" ColumnName="BecaDeportivaPor" />
-                <ScalarProperty Name="PromoCasa" ColumnName="PromoCasa" />
-                <ScalarProperty Name="PromoCasaPor" ColumnName="PromoCasaPor" />
-                <ScalarProperty Name="DesTotalCol" ColumnName="DesTotalCol" />
-                <ScalarProperty Name="DesTotalColPor" ColumnName="DesTotalColPor" />
-                <ScalarProperty Name="TotalCol" ColumnName="TotalCol" />
-                <ScalarProperty Name="EsEmpresa" ColumnName="EsEmpresa" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spReporteCarteraVencida" FunctionName="UniversidadModel.Store.spReporteCarteraVencida">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UniversidadModel.spReporteCarteraVencida_Result">
-                <ScalarProperty Name="Alumno" ColumnName="Alumno" />
-                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
-                <ScalarProperty Name="Tipo_de_pago" ColumnName="Tipo de pago" />
-                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
-                <ScalarProperty Name="Pago" ColumnName="Pago" />
-                <ScalarProperty Name="Restante" ColumnName="Restante" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spSaldoAlumno" FunctionName="UniversidadModel.Store.spSaldoAlumno">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UniversidadModel.spSaldoAlumno_Result">
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ReporteSaldoAlumno" FunctionName="UniversidadModel.Store.SP_ReporteSaldoAlumno">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UniversidadModel.SP_ReporteSaldoAlumno_Result">
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

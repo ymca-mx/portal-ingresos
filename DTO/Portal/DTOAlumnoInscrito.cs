@@ -9,21 +9,55 @@ namespace DTO
     public class DTOAlumnoInscrito
     {
         public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+
         public int OfertaEducativaId { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
-        public System.DateTime FechaInscripcion { get; set; }
+        public string PeriodoDescripcion { get; set; }
 
-        public System.TimeSpan HoraInscripcion { get; set; }
+        public string _FechaInscripcion { get; set; }
+        private DateTime FechaInscripcionP {get;set;}
+        public System.DateTime FechaInscripcion {
+            get
+            {
+                return FechaInscripcionP;
+            }
+            set
+            {
+                FechaInscripcionP = value;
+
+                _FechaInscripcion = (value.Day < 10 ? "0" + value.Day : "" + value.Day) + "/" +
+                                    (value.Month < 10 ? "0" + value.Month : "" + value.Month) + "/" +
+                                    value.Year;
+            }
+        }
+
+        public string _HoraInscripcion { get; set; }
+        private TimeSpan HoraInscripcionP { get; set; }
+        public System.TimeSpan HoraInscripcion
+        {
+            get
+            {
+                return HoraInscripcionP;
+            }
+            set
+            {
+                HoraInscripcionP = value;
+                _HoraInscripcion = (value.Hours < 10 ? "0" + value.Hours : "" + value.Hours) + ":" +
+                                    (value.Minutes < 10 ? "0" + value.Minutes : "" + value.Minutes);
+            }
+        }
+
         public Nullable<int> PagoPlanId { get; set; }
         public int TurnoId { get; set; }
         public int UsuarioId { get; set; }
+        public string UsuarioNombre { get; set; }
         public bool EsEmpresa { get; set; }
         public bool EsEspecial { get; set; }
         public DTOOfertaEducativa OfertaEducativa { get; set; }
         public int EstatusId { get; set; }
         public int Cuatrimestre { get; set; }
-        
     }
     public class DTOAlumnoInscrito2
     {
