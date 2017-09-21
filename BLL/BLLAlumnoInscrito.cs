@@ -363,6 +363,7 @@ namespace BLL
                     AlumnoBase.UsuarioId = objinsc.UsuarioId;
                     #endregion
                     #region AlumnoInscrito
+                    int estatus = 1;
                     AlumnoInscrito AlumnoInscritoDB = db.AlumnoInscrito.Where(a =>
                                                             a.AlumnoId == objinsc.AlumnoId
                                                             && a.Anio == objinsc.Anio
@@ -371,6 +372,8 @@ namespace BLL
                                                             .FirstOrDefault();
                     if (AlumnoInscritoDB != null)
                     {
+                        estatus = AlumnoInscritoDB.EstatusId;
+
                         db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
                         {
                             AlumnoId = objinsc.AlumnoId,
@@ -392,7 +395,7 @@ namespace BLL
                         AlumnoId = objinsc.AlumnoId,
                         Anio = AnioN,
                         EsEmpresa = false,
-                        EstatusId = 1,
+                        EstatusId = estatus,
                         FechaInscripcion = DateTime.Now,
                         HoraInscripcion = DateTime.Now.TimeOfDay,
                         OfertaEducativaId = objinsc.OfertaEducativaId,

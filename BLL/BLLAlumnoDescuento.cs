@@ -34,6 +34,8 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
+               //AlumnoInscrito AlumnoInscritoBD =  db.AlumnoInscrito
+
                 DTOPagoPlan objPlanpago = (from a in db.PagoPlan
                                            where a.PagoPlanId == PagoPlan
                                            select new DTOPagoPlan
