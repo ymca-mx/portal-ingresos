@@ -44,7 +44,8 @@ namespace BLL
                             PagoPlanId = a.PagoPlanId,
                             FechaInscripcion = a.FechaInscripcion,
                             TurnoId = a.TurnoId,
-                            UsuarioId = a.UsuarioId
+                            UsuarioId = a.UsuarioId,
+                            EstatusId=a.EstatusId
                         }).FirstOrDefault();
             }
         }
