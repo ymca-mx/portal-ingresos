@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 namespace AppAdministrativos.WS
@@ -87,6 +88,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json, UseHttpGet = false)]
         public DTOVoBo CargarReporteVoBo(int anio, int periodoid, int usuarioid)
         {
             return BLLReportePortal.CargarReporteVoBo(anio, periodoid,usuarioid);
