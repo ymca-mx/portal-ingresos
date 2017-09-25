@@ -37,7 +37,7 @@
                     },
                     "search": "Buscar Alumno ",
                 },
-                "order": [[0, "desc"]]
+                "order": [[2, "desc"]]
             });
             var fil = $('#tblAlumnos_filter label input');
             fil.removeClass('input-small').addClass('input-large');

@@ -140,9 +140,6 @@
     <Compile Include="AlumnoInscritoBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="AlumnoInscritoBitacoraBKSalome.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="AlumnoInscritoCompleto.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -716,12 +713,6 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoUsuarioSubmenu1.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tmpPago.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tmpReferencias.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Turno.cs">

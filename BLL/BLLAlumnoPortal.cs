@@ -400,7 +400,8 @@ namespace BLL
                             AlumnoId = alumnodb.AlumnoId,
                             Fecha = DateTime.Now,
                             Hora = DateTime.Now.TimeOfDay,
-                            UsuarioId = objAlumno.UsuarioId
+                            UsuarioId = objAlumno.UsuarioId,
+                            OfertaEducativaId=objAlumno.OfertaEducativaId
                         });
                         #endregion
 
@@ -422,10 +423,11 @@ namespace BLL
         {
             using(UniversidadEntities db = new UniversidadEntities())
             {
-                return
+                List<DTOAlumnoInscrito> Alumnos = new List<DTOAlumnoInscrito>();
+
+                Alumnos.AddRange(
                 db.AlumnoInscrito
-                        .Where(a => (a.EstatusId == 8
-                            || a.Alumno.AlumnoAutorizacion.ToList().Count>0))
+                        .Where(a => a.EstatusId == 8)
                         .Select(a =>
                             new DTOAlumnoInscrito
                             {
@@ -441,19 +443,37 @@ namespace BLL
                                 OfertaEducativaId = a.OfertaEducativaId,
                                 PeriodoDescripcion = a.Periodo.Descripcion,
                                 UsuarioNombre = a.Usuario.Nombre,
-                                AlumnoAutorizacion = a.Alumno.AlumnoAutorizacion.ToList().Count > 0 ? new DTO.AlumnoAutorizacion
-                                {
-                                    AlumnoAutorizacionId = a.Alumno.AlumnoAutorizacion.FirstOrDefault().AlumnoAutorizacionId,
-                                    AlumnoId = a.Alumno.AlumnoAutorizacion.FirstOrDefault().AlumnoId,
-                                    Fecha = a.Alumno.AlumnoAutorizacion.FirstOrDefault().Fecha,
-                                    Hora = a.Alumno.AlumnoAutorizacion.FirstOrDefault().Hora,
-                                    UsuarioId = a.Alumno.AlumnoAutorizacion.FirstOrDefault().UsuarioId,
-                                    NombreUsuario = a.Alumno.AlumnoAutorizacion.FirstOrDefault().Usuario.Nombre + " " +
-                                        a.Alumno.AlumnoAutorizacion.FirstOrDefault().Usuario.Paterno + " " +
-                                        a.Alumno.AlumnoAutorizacion.FirstOrDefault().Usuario.Materno
-                                } : null
                             })
-                            .ToList();
+                            .ToList());
+
+                Alumnos.AddRange(db.AlumnoAutorizacion.
+                                    Select(a => new DTOAlumnoInscrito
+                                    {
+                                        AlumnoId = a.AlumnoId,
+                                        Nombre = a.Alumno.Nombre + " " + a.Alumno.Paterno + " " + a.Alumno.Materno,
+                                        Anio = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().Anio,
+                                        PeriodoId = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().PeriodoId,
+                                        FechaInscripcion = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().FechaInscripcion,
+                                        OfertaEducativa = new DTOOfertaEducativa
+                                        {
+                                            Descripcion = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().OfertaEducativa.Descripcion
+                                        },
+                                        OfertaEducativaId = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().OfertaEducativaId,
+                                        PeriodoDescripcion = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().Periodo.Descripcion,
+                                        UsuarioNombre = a.Usuario.Nombre,
+                                        AlumnoAutorizacion = new DTO.AlumnoAutorizacion
+                                        {
+                                            AlumnoAutorizacionId = a.AlumnoAutorizacionId,
+                                            AlumnoId = a.AlumnoId,
+                                            Fecha = a.Fecha,
+                                            Hora = a.Hora,
+                                            UsuarioId = a.UsuarioId,
+                                            NombreUsuario = a.Usuario.Nombre + " " +
+                                        a.Usuario.Paterno + " " +
+                                        a.Usuario.Materno
+                                        }
+                                    }).ToList());
+                return Alumnos;
             }
         }
 
