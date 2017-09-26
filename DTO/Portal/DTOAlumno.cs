@@ -63,8 +63,6 @@ namespace DTO
     public class DTOAlumnoDatos2
     {
         public string Dato { get; set; }
-        public string Alumno { get; set; }
-        public string Coordinador { get; set; }
         public string ServiciosEscolares { get; set; }
     }
 

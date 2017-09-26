@@ -29,4 +29,13 @@ namespace DTO
 
     }
 
+    public class DTOCuotasEmpresa
+    {
+        public int AlumnoId { get; set; }
+        public int Nombre { get; set; }
+        public string RFC { get; set; }
+        public string RazonSocial { get; set; }
+        public List<DTOGrupoLigero> Grupo { get; set; }
+    }
+
 }

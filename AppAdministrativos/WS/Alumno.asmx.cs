@@ -359,25 +359,14 @@ namespace AppAdministrativos.WS
 
 
         //datos personales  generados por el coordinador
-        [WebMethod]
-        public DTOAlumno ObenerDatosAlumnoCordinador(string AlumnoId)
-        {
-            return BLLAlumnoPortal.ObenerDatosAlumnoCordinador(int.Parse(AlumnoId));
-        }
+        
         //datos personales  generados por el coordinador
         [WebMethod]
         public DTOAlumnoDatos ObenerDatosAlumnoTodos(string AlumnoId)
         {
             return BLLAlumnoPortal.ObenerDatosAlumnoTodos(int.Parse(AlumnoId));
         }
-
-        [WebMethod]
-        public bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
-        {
-
-            return BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos);
-        }
-
+        
 
         //datos personales  generados por el alumnos
         [WebMethod]

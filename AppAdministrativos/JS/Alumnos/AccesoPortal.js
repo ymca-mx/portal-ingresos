@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var AlumnoId, Alumno, tblBAcceso, tblBPassword;
+    var AlumnoId, Alumno, tblBAcceso, tblBPassword, cursor = 0;
 
     var funciones =
         {
@@ -61,14 +61,14 @@
                             "order": [[0, "desc"]]
 
                         });
-                        
+
                         tblBPassword = $('#tblBPassword').dataTable({
                             "aaData": bitpassword,
                             "aoColumns": [
                                 { "mDataProp": "FechaSolicitud" },
                                 { "mDataProp": "HoraSolicitud" }
                             ],
-                            "lengthMenu": [[10, 25,50, -1], [10,25, 50, 'Todos']],
+                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
                             "searching": false,
                             "ordering": false,
                             "async": true,
@@ -98,16 +98,19 @@
             }
         }
     
-    $("#imgVer").mousedown(function () {
+
+    $("#imgVer").mouseover(function () {
         var obj = document.getElementById('myPassword');
         obj.type = "text";
     });
-    
-    $("#imgVer").mouseup(function () {
+
+    $("#imgVer").mouseout(function () {
         var obj = document.getElementById('myPassword');
         obj.type = "password";
     });
-    
+
+
+
     $('#btnBuscar').click(funciones.BuscarAlumno);
 
     $('#txtClave').on('keydown', function (e) {
@@ -115,5 +118,5 @@
             funciones.BuscarAlumno();
         }
     });
-    
+
 });

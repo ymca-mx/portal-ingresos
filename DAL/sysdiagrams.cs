@@ -12,16 +12,12 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AlumnoAutorizacion
+    public partial class sysdiagrams
     {
-        public int AlumnoAutorizacionId { get; set; }
-        public int AlumnoId { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public System.TimeSpan Hora { get; set; }
-        public int UsuarioId { get; set; }
-    
-        public virtual Alumno Alumno { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

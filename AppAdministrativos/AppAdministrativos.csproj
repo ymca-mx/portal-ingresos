@@ -153,6 +153,7 @@
     <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
+    <Content Include="JS\Empresas\ReAjusteCuotas.js" />
     <Content Include="JS\EvaluacionDocente\ActualizacionDocente.js" />
     <Content Include="JS\EvaluacionDocente\VistoBuenoDocentes.js" />
     <Content Include="JS\index\bitacora.js" />
@@ -4781,6 +4782,7 @@
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
+    <Content Include="Views\Empresas\ReAjusteCuotas.html" />
     <Content Include="Views\Reportes\AntiguedadSaldos.html" />
     <Content Include="Views\Reportes\CarteraVencida.html" />
     <Content Include="Views\EvaluacionDocente\ActualizacionDocente.html" />
@@ -4791,6 +4793,7 @@
     <Content Include="Views\packages.config" />
     <Content Include="Views\Adeudos\Biblioteca.html" />
     <Content Include="Views\Adeudos\Chocolates.html" />
+    <Content Include="Views\Reportes\EnvioReporteVistoBueno.html" />
     <Content Include="Views\Reportes\ReporteBecas.html" />
     <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
     <Content Include="WS\Alumno.asmx" />
@@ -5303,7 +5306,6 @@
     <Content Include="Views\Alumno\Alumnos.html" />
     <Content Include="Views\Alumno\AlumnoDatos.html" />
     <Content Include="Views\Alumno\AlumnoDatosConsulta.html" />
-    <Content Include="Views\Alumno\AlumnoDatosCoordinador.html" />
     <Content Include="Views\Alumno\AlumnoMail.html" />
     <Content Include="Views\Alumno\AlumnoPermitido.html" />
     <Content Include="Views\Alumno\ExamenMedico.html" />
@@ -5333,7 +5335,6 @@
     <Content Include="JS\AlumnoDescuento.js" />
     <Content Include="JS\Alumnos\AlumnoDatos.js" />
     <Content Include="JS\Alumnos\AlumnoDatosConsulta.js" />
-    <Content Include="JS\Alumnos\AlumnoDatosCoordinador.js" />
     <Content Include="JS\Alumnos\AlumnoMail.js" />
     <Content Include="JS\Alumnos\AlumnoPermitido.js" />
     <Content Include="JS\Alumnos\ExamenMedico.js" />

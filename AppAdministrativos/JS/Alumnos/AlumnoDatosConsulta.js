@@ -51,8 +51,6 @@
                         "aaData": data.d.DatosContacto,
                         "aoColumns": [
                             { "mDataProp": "Dato" },
-                            { "mDataProp": "Alumno" },
-                            { "mDataProp": "Coordinador" },
                             { "mDataProp": "ServiciosEscolares" }
                         ],
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
@@ -75,7 +73,7 @@
                             },
                             "search": "Buscar Alumno "
                         },
-                        "order": [[2, "desc"]],
+                        "order": [[1, "desc"]],
                         "createdRow": function (row, data, dataIndex) {
                             row.childNodes[0].style.borderTopStyle = 'Solid';
                             row.childNodes[0].style.borderTopColor = '#3598dc';

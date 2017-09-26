@@ -12,8 +12,9 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class tmpReferencias
+    public partial class UniversidadNewAdeudo
     {
-        public int ReferenciaId { get; set; }
+        public int AlumnoID { get; set; }
+        public Nullable<decimal> UniversidadNewAdeudo1 { get; set; }
     }
 }
