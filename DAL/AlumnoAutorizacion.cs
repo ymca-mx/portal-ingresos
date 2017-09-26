@@ -16,7 +16,6 @@ namespace DAL
     {
         public int AlumnoAutorizacionId { get; set; }
         public int AlumnoId { get; set; }
-        public int OfertaEducativaId { get; set; }
         public System.DateTime Fecha { get; set; }
         public System.TimeSpan Hora { get; set; }
         public int UsuarioId { get; set; }

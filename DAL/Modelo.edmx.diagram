@@ -561,6 +561,7 @@
         <AssociationConnector Association="UniversidadModel.FK_SubMenu_Menu1" />
         <AssociationConnector Association="UniversidadModel.FK_TipoUsuarioSubmenu_SubMenu1" />
         <AssociationConnector Association="UniversidadModel.UsuarioSucursalCaja" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadNewAdeudo" Width="1.5" PointX="5.375" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
