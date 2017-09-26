@@ -412,12 +412,12 @@
                 return false;
             }
         });
-        $("#btnListado").on('click', function () {
-            $('#divDinamico').empty();
-            var url = $(this).attr("href");
-            $('#divDinamico').load(url);
-            return false;
-        });
+        //$("#btnListado").on('click', function () {
+        //    $('#divDinamico').empty();
+        //    var url = $(this).attr("href");
+        //    $('#divDinamico').load(url);
+        //    return false;
+        //});
         $('#Guardar').keydown(function () {
             keydown = 1;
             $('#Guardar').mousedown();
@@ -809,7 +809,7 @@
        + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
        "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
                     alertify.alert(extramail, function () {
-                        $("#btnListado").click();
+                        $(location).attr('href', '#Views/1');
                     });
                 }
             }
@@ -835,7 +835,7 @@
            + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
            "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
                         alertify.alert(extramail, function () {
-                            $("#btnListado").click();
+                            $(location).attr('href', '#Views/1');
                         });
                     }
                 }
@@ -862,7 +862,7 @@
         alertify.alert("Alumno Guardado </br> " + extramail, function (Respuesta) {
             var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcCarrera').val();
             window.open(url, "Credenciales");
-            $("#btnListado").click();
+            $(location).attr('href', '#Views/1');
         });
     }
 
@@ -893,7 +893,7 @@
         alertify.alert("Alumno Guardado </br> " + extramail, function (Respuesta) {
             var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcCarrera').val();
             window.open(url, "Credenciales");
-            $("#btnListado").click();
+            $(location).attr('href', '#Views/1');
         });
     }
 

@@ -5,6 +5,9 @@
     //var app_router = new AppRouter;
     var app_router;
     var Funciones = {
+        alertify3: function () {
+            return '<script src="Style/Complementos/Alertify/alertify.js"></script>'; 
+        },
         btnSalir: function () {
             $.removeCookie('userAdmin', { path: '/' });
             Backbone.history.stop();
@@ -56,7 +59,7 @@
                                 };
                                 Menu +=
                                     '<li class="dropdown">' +
-                                    '<a name="menu" href="Views/' + ele.SubmenuId + '" class="contenido">' +
+                                    '<a name="menu" href="#Views/' + ele.SubmenuId + '" class="contenido">' +
                                     '<i></i>'
                                     + ele.Descripcion +
                                     '</a>' +
@@ -66,6 +69,19 @@
                             Menu += '</ul>' + '</li>';
                             Funciones.Menu.push(objmenu);
                         });
+
+                        var MenuNuevoIngreso = {
+                            Descripcion: "",
+                            MenuId: 0,
+                            SubMenu: {
+                                SubMenuId: 0,
+                                MenuId: 0,
+                                Descripcion: "Inscripcion Nuevo Ingreso",
+                                Direccion: "Views/Alumno/InscripcionAlumno.html"
+                            }
+                        };
+                        Funciones.Menu.push(MenuNuevoIngreso);
+
                         $('#Menu').append(Menu);
                         app_router = new AppRouter;
                         Backbone.history.start();
@@ -108,6 +124,7 @@
 
                 if (url !== '#') {
                     $('#divDinamico').load(url);
+                    $('#divDinamico').append(Funciones.alertify3());
                 }
             }
             return false;
@@ -137,9 +154,10 @@
             });
             if (direccion.length > 0) {
                 $('#divDinamico').load(direccion);
+                $('#divDinamico').append(Funciones.alertify3());
             }
             bandera = 1;
-        },
+        },        
         defaultRoute: function (actions) {
             if (typeof $.cookie('userAdmin') === 'undefined') {
                 Backbone.history.stop();
@@ -154,8 +172,10 @@
             if (actions === '#') { return false; }
             if (actions === 'Views/') { return false; }
             var url = actions;
-            //console.log('Perras');
+
             $('#divDinamico').load(url);
+            $('#divDinamico').append(Funciones.alertify3());
+
             bandera = 1;
         }
     });   

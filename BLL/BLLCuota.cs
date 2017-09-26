@@ -113,21 +113,6 @@ namespace BLL
                         }).FirstOrDefault();
             }
         }
-        public static int CrearCuota(DTOCuota objCuota)
-        {
-            using (UniversidadEntities db = new UniversidadEntities())
-            {
-                db.Cuota.Add(new Cuota
-                {
-                    Anio = objCuota.Anio,
-                    PeriodoId = objCuota.PeriodoId,
-                    OfertaEducativaId = objCuota.OfertaEducativaId,
-                    PagoConceptoId = objCuota.PagoConceptoId,
-                    Monto = objCuota.Monto
-                });
-                return db.Cuota.Local[0].CuotaId;
-            }
-        }
         public static DTOCuota TraerCuota(int CuotaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

@@ -185,6 +185,7 @@
     <Content Include="Documentos\Calendarios\Posgrado.pdf" />
     <Content Include="Documentos\Manuales\Manual Baja Academica.pdf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
+    <Content Include="Scripts\Ajax-Cross-Origin\jquery.ajax-cross-origin.min.js" />
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />

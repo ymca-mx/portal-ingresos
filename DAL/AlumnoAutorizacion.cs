@@ -20,6 +20,7 @@ namespace DAL
         public System.DateTime Fecha { get; set; }
         public System.TimeSpan Hora { get; set; }
         public int UsuarioId { get; set; }
+        public int OfertaEducativaId { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual Usuario Usuario { get; set; }

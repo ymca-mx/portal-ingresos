@@ -639,12 +639,12 @@
             }
         });
     }
-    $('#btnNuevo').on('click', function () {
-        $('#divDinamico').empty();
-        var url = $(this).attr("href");
-        $('#divDinamico').load(url);
-        return false;
-    });
+    //$('#btnNuevo').on('click', function () {
+    //    $('#divDinamico').empty();
+    //    var url = $(this).attr("href");
+    //    $('#divDinamico').load(url);
+    //    return false;
+    //});
     function Platel() {
         $('#slcPlantel').empty();
         $.ajax({
