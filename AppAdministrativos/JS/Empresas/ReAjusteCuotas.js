@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
     var AlumnoId;
     var lstop = [];
-    
+
     $('#btnBuscar').click(function () {
         AlumnoId = $('#txtClave').val();
         if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
-        
+
         $('#Load').modal('show');
         $.ajax({
             type: "POST",
@@ -47,14 +47,13 @@
                 $("#slcOfertaEducativa").append(optionS);
                 //$("#slcOfertaEducativa").prop("disabled", true);
 
-                
+
                 var optionS2 = $(document.createElement('option'));
                 optionS2.text("--Seleccionar--");
                 optionS2.val(-1);
                 $("#slcOfertaEducativa2").append(optionS2);
 
-                $(lstop[0].OfertaEducativa).each(function (i, d)
-                {
+                $(lstop[0].OfertaEducativa).each(function (i, d) {
                     var option = $(document.createElement('option'));
                     option.text(this.descripcion);
                     option.val(this.ofertaEducativaId);
@@ -74,34 +73,23 @@
 
     });
     
-    
     $('#txtClave').on('keydown', function (e) {
         if (e.which == 13) {
             $('#btnBuscar').click();
         }
     });
 
-    $("#btnCambio").on('click',function () {
-        if ($("#slcOfertaEducativa2").val() == -1 || $("#slcOfertaEducativa2").val() == null)
-        {
-            alertify.alert("Debe seleccionar una  nueva oferta.");
-            return false;
-        }
-        $("#PopComentario").modal('show');
-    });
-
-    $("#btnGuardar").on( 'click', function () {
+    $("#btnGuardar").on('click', function () {
         var comentario = $('#txtComentario').val();
         comentario = $.trim(comentario);
-        if (comentario.length < 5)
-        {
+        if (comentario.length < 5) {
             alertify.alert("Inserte un comentario.");
             return false;
-        } 
+        }
 
         $("#PopComentario").modal("hide");
         $('#Load').modal('show');
-        
+
         lstop[0].OfertaEducativaIdNueva = $('#slcOfertaEducativa2').val();
         lstop[0].Observaciones = $("#txtComentario").val();
         lstop[0].UsuarioId = $.cookie('userAdmin');
@@ -134,6 +122,16 @@
             }
         });
 
+    });
+
+    $("#chkInAjustar").on('click', function () {
+        if (this.checked) {
+            $("#txtCuotaInscripcion").removeAttr("disabled");
+            $("#txtCuotaColegiatura").removeAttr("disabled");
+        } else {
+            $("#txtCuotaInscripcion").attr('disabled', 'disabled');
+            $("#txtCuotaColegiatura").attr('disabled', 'disabled');
+        }
     });
 
 });

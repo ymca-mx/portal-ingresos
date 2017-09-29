@@ -721,6 +721,9 @@
     <Compile Include="UniversidadAdeudo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="UniversidadNewAdeudo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="UniversidadValidacion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

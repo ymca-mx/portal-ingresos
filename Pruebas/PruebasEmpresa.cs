@@ -214,5 +214,15 @@ namespace Pruebas
 
             }
         }
+
+
+        [TestMethod]
+        public void AjusteCuotas()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                
+            }
+        }
     }
 }
