@@ -287,12 +287,11 @@ namespace AppAdministrativos.WS
 
 
         [WebMethod]
-        public PantallaPago ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
+        public PantallaPago ConsultaPagosDetalle(string AlumnoId)
         {
             try
             {
-                List<DTOPagoDetallado> ReferenciasPagadas = BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
-                return new PantallaPago { Pagos = ReferenciasPagadas, Estatus = ReferenciasPagadas.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false };
+                return BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId));                
             }
             catch
             {
@@ -601,10 +600,5 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.BitacoraAccesoAlumno(AlumnoId);
         }
-    }
-    public class PantallaPago
-    {
-        public List<DTOPagoDetallado> Pagos { get; set; }
-        public bool Estatus { get; set; }
     }
 }

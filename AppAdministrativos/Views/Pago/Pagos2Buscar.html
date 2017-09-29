@@ -32,9 +32,37 @@
                         <div class="portlet-body">
                             <div class="col-md-12 form-group" id="divBuscar">
                                 <div class="col-md-12">
-                                    <label class="control-label">Clave del Alumno</label>
-                                    <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                    <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
+                                    <label class="control-label">Clave y|o Nombre del Alumno</label>&nbsp;
+                                    <input type="text" id="txtClave" class="form-control-static font-md" style="text-align:right" />&nbsp;
+                                    <a class="btn blue" id="btnBuscar"  tabindex="2">Buscar</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="portlet-body form" id="frmVarios" hidden="hidden">
+                                        <div class="col-md-12">
+                                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
+                                                        </th>
+                                                        <th>
+                                                            <i class="fa fa-user"></i>&nbsp; Nombre
+                                                        </th>
+                                                        <th>
+                                                            <i class="fa fa-calendar"></i>&nbsp; Registro
+                                                        </th>
+                                                        <th>
+                                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                                        </th>
+                                                        <th>
+                                                            <i class="fa fa-edit"></i>&nbsp; Acción
+                                                        </th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <br />
@@ -43,7 +71,6 @@
                                 <div class="col-md-12">
                                     <label class="control-label ">Cuatrimestre:</label>
                                     <select class="form-control font-md col-md-6" id="sclPeriodo">
-                                        <option value="-1">--Seleccionar--</option>
                                     </select>
                                 </div>
                             </div>
