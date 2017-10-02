@@ -342,7 +342,7 @@
 
                     }
                 }
-                $('#Load').modal('hide');
+                $('#PopLoad').modal('hide');
                 }
         });
     }
@@ -378,7 +378,7 @@
                         option.attr("data-PeriodoId", this.PeriodoId);
                         $("#sclPeriodo").append(option);
                     });
-                    $('#Load').modal('hide');
+                    $('#PopLoad').modal('hide');
                 }
             }
         });
@@ -394,7 +394,7 @@
         if ($("#sclPeriodo").val() == -1) {           
             return false;
         }
-        var load = $('#Load').modal();
+        var load = $('#PopLoad').modal();
         $("#sclPeriodo option:selected").each(function () {
             Tipo = this;
         });

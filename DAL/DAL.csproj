@@ -140,6 +140,9 @@
     <Compile Include="AlumnoInscritoBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoInscritoBitacoraBKSalome.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoInscritoCompleto.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

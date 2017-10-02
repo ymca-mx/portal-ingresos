@@ -242,6 +242,7 @@ namespace DAL
         public virtual DbSet<VistoBuenoCurso> VistoBuenoCurso { get; set; }
         public virtual DbSet<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
+        public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }

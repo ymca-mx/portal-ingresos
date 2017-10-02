@@ -14,7 +14,7 @@
     DatosAlumno();
     
     function DatosAlumno() {
-        $('#Load').modal('show');
+        $('#PopLoad').modal('show');
         var AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
@@ -36,7 +36,7 @@
                     $('#slcOfertaEducativa').val(data.d.lstAlumnoInscrito[0].OfertaEducativaId);
                     $('#slcOfertaEducativa').change();
                 }
-                $('#Load').modal('hide');
+                $('#PopLoad').modal('hide');
             }
         });
     }
@@ -60,7 +60,7 @@
         });
     }
     $('#slcOfertaEducativa').change(function () {
-        $('#Load').modal('show');
+        $('#PopLoad').modal('show');
         $("#slcConceptos").empty();
         ConsutlarAdeudos($('#slcOfertaEducativa').val());
     });
@@ -97,11 +97,11 @@
                 ReferenciasTbl(Respuesta);
                 var fil = $('#tblReferencias label input');
                 fil.removeClass('input-small').addClass('input-large');
-                $('#Load').modal('hide');
+                $('#PopLoad').modal('hide');
             },
             error: function (Respuesta) {
                 alertify.alert('Error al cargar datos');
-                $('#Load').modal('hide');
+                $('#PopLoad').modal('hide');
             }
         });
     }
@@ -150,8 +150,8 @@
         });
     }
     $('#btnGenerar').on('click', function () {
-        $('#Load').modal('show');
-        var Variables;
+        $('#PopLoad').modal('show');
+        var Variables = "";
         var cFech;
         if ($('#slcConceptos').val() == '-1') { return false; }
         $(lstCuotas).each(function () {
@@ -172,14 +172,19 @@
                         success: function (data) {
                             if (data.d.EsMultireferencia == 1) {
                                 GenerarPago(Variables);
-                            } else { alertify.alert("El concepto que selecciono ya esta Generado"); }
+                            } else {
+                                alertify.alert("El concepto que selecciono ya esta Generado");
+                                $('#PopLoad').modal('hide');
+                            }
                         }
                     });
                 }
-                $('#Load').modal('hide');
-                return false;
+                
             }
         });
+        if (Variables.length === 0) {
+            $('#PopLoad').modal('hide');
+        }
     });
 
     function GenerarPago(Cuota) {
@@ -197,7 +202,7 @@
                 td += '<td>' + data.d.objNormal.FechaLimite + '</td>';//Fecha
                 td += '</tr>'
                 $('#tblReferencias').append(td);
-                $('#Load').modal('hide');
+                $('#PopLoad').modal('hide');
 
                 Alerta();
             }
@@ -207,17 +212,23 @@
     function Alerta() {
         
         var ahref = "<a class='btn blue' href=javascript:window.open('Views/Pago/ListaConceptos.html'," + "'Tramites'" + "," + "'width=800,height=450'" + ");>click aqui</a>";
-        $.notific8('zindex', 11500);
-        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas información " + ahref ), settings);
+        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas información " + ahref), {
+            life: 5000,
+            theme: 'ruby',
+            icon: 'info-circled',
+            sticky: false,
+            zindex: 11500,
+            horizontalEdge: "top",
+            verticalEdge: "right",
+            heading: "Importante",
+            closeText: "Cerrar"
+        });
 
         var not8 = $('.jquery-notific8-container').find('.jquery-notific8-heading');
         not8 = $(not8).parent().parent();
         //not8 = $(not8)[0];
         $(not8).addClass('col-lg-4 col-md-4 col-xs-3');
         //not8.style.
-        var $bodnot8 = $(not8[0].childNodes[0]);
-        $bodnot8 = $bodnot8[0];
-        $bodnot8.style.width = "initial !important";
     }
     function formato_numero(numero, decimales, separador_decimal, separador_miles) { // v2007-08-06
         numero = parseFloat(numero);

@@ -3106,6 +3106,9 @@ namespace BLL
                             {
                                 Cuota objCuotaRecargo = db.Cuota.Where(C => C.PagoConceptoId == 306
                                     && C.OfertaEducativaId == objPago.OfertaEducativaId && C.Anio == objPago.Anio && C.PeriodoId == objPago.PeriodoId).FirstOrDefault();
+                                decimal Cuota = objPago.Cuota * decimal.Parse("0.05");
+                                Cuota = Math.Round(Cuota);
+
                                 db.PagoRecargo.Add(new PagoRecargo
                                 {
                                     Pago1 = new Pago
@@ -3118,9 +3121,9 @@ namespace BLL
                                         OfertaEducativaId = objPago.OfertaEducativaId,
                                         FechaGeneracion = DateTime.Now,
                                         CuotaId = objCuotaRecargo.CuotaId,
-                                        Cuota = Math.Round(objPago.Cuota * decimal.Parse("0.05")),
-                                        Promesa = Math.Round(objPago.Cuota * decimal.Parse("0.05")),
-                                        Restante = Math.Round(objPago.Cuota * decimal.Parse("0.05")),
+                                        Cuota = Cuota,
+                                        Promesa = Cuota,
+                                        Restante = Cuota,
                                         EstatusId = 1,
                                         EsEmpresa = false,
                                         UsuarioId = AlumnoId,
