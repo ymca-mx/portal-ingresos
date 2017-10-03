@@ -126,27 +126,33 @@ namespace Pruebas
         [TestMethod]
         public void BecaAcademica()
         {
+            List<DTO.Alumno.Beca.DTOAlumnoBeca> Alumno = new List<DTO.Alumno.Beca.DTOAlumnoBeca>();
+
             //7589 Sin ningun descuento
-            DTO.Alumno.Beca.DTOAlumnoBeca Alumno = new DTO.Alumno.Beca.DTOAlumnoBeca
+             Alumno.Add( new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 4037,
-                anio = 2017,
-                periodoId = 3,
-                ofertaEducativaId = 11,
-                porcentajeBeca = 62.99m, //70.15
+                alumnoId = 5782,
+                anio = 2018,
+                periodoId = 1,
+                ofertaEducativaId = 2,
+                porcentajeBeca = 61.14m, //70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
-                usuarioId = 7878, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2017-05-30", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2017-09-08", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
-
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
-            };
+            });
 
-            BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(Alumno, false);
+
+            Alumno.ForEach(a=> 
+            {
+                BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, false);
+            });
+            
 
         }
 

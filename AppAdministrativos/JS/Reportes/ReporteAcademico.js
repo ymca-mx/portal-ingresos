@@ -626,9 +626,17 @@
     );
 
     if (jQuery().datepicker) {
-
         $('.date-picker').each(function () {
-            $(this).datepicker({
+            $("#data1").datepicker({
+                rtl: Metronic.isRTL(),
+                orientation: "left",
+                autoclose: true,
+                language: 'es',
+                dateFormat: 'dd/mm/yyyy',
+                firstDay: 1
+
+            });
+            $("#data2").datepicker({
                 rtl: Metronic.isRTL(),
                 orientation: "left",
                 autoclose: true,
@@ -780,6 +788,30 @@
             $("#to").prop('disabled', true);
             filtros();
         }
+    });
+
+
+    $("#btnSolicitar").click(function ()
+    {
+        $('#Load').modal('show');
+        $.ajax({
+            type: 'POST',
+            url: "WS/Reporte.asmx/EnviarSolicitudSep",
+            data: "{FechaInicial:'" + $("#from1").val() + "',FechaFinal:'" + $("#to1").val() + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (data) {
+                $('#Load').modal('hide');
+                if (data.d) {
+                    alertify.alert("Email enviado");
+                    
+                } else {
+                    alertify.alert("Email no pudo ser enviado");
+                }
+
+            }//success
+        });// $.ajax
     });
 });
 

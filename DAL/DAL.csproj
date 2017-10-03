@@ -110,9 +110,6 @@
     <Compile Include="AlumnoDetalleBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="AlumnoDetalleCoordinador.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="AlumnoExamenMedico.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -174,6 +171,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="AlumnoPermitido.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnoPermitido20162.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="AlumnoReferenciaBitacora.cs">
