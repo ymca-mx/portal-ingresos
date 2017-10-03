@@ -246,9 +246,27 @@ namespace BLL
             {
                 try
                 {
+                    
                     DateTime FechaActual = DateTime.Now;
                     Periodo PeriodoActual = db.Periodo.Where(P => FechaActual >= P.FechaInicial && FechaActual <= P.FechaFinal).FirstOrDefault();
                     int SubPeriodoId = db.Subperiodo.Where(S => S.PeriodoId == PeriodoActual.PeriodoId && S.MesId == FechaActual.Month).FirstOrDefault().SubperiodoId;
+
+                    if (Anio == 0 || PeriodoId == 0)
+                    {
+                        List<Pago> Pagos = db.Pago.Where(a => a.AlumnoId == AlumnoId
+                                                          && a.OfertaEducativa.OfertaEducativaTipoId != 4
+                                                          && a.SubperiodoId == 1
+                                                          && a.EstatusId != 2
+                                                          && (a.Cuota1.PagoConceptoId == 800 || a.Cuota1.PagoConceptoId == 802))
+                                                   .OrderByDescending(p => p.Anio).ThenBy(p => p.PeriodoId)
+                                                   .ToList();
+
+                        Anio = Pagos.FirstOrDefault().Anio;
+                        PeriodoId = Pagos.FirstOrDefault().PeriodoId;
+                    }
+
+
+
 
                    DTOPeriodo PeriodoSiguiente = new DTOPeriodo
                     {

@@ -2,7 +2,7 @@
     TraerAlumno();
     
     function TraerAlumno() {
-        $('#Load').modal('show');
+        $('#PopLoad').modal('show');
         var AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
@@ -22,6 +22,6 @@
     }
 
     $('#filepdf').load(function () {
-        $('#Load').modal('hide');
+        $('#PopLoad').modal('hide');
     });
 });

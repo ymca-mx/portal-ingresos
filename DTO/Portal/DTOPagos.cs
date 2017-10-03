@@ -81,6 +81,11 @@ namespace DTO
         public string estatusId { get; set; }
     }
 
-
+    public class PantallaPago
+    {
+        public List<DTOPagoDetallado> Pagos { get; set; }
+        public bool Estatus { get; set; }
+        public List<DTOPeriodoReferencias> Periodos { get; set; }
+    }
 }
 

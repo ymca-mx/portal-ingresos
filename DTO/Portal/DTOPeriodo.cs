@@ -21,4 +21,15 @@ namespace DTO
         public int SubPeriodoId { get; set; }
         public List<DTOSubPeriodo> lstSubPeriodo { get; set; }
     }
+
+    public class DTOPeriodoReferencias
+    {
+        public int Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public string Descripcion { get; set; }
+        public decimal Total { get; set; }
+        public int EsSep { get; set; }
+        public string BecaSEP { get; set; }
+        public bool EsEmpresa { get; set; }
+    }
 }

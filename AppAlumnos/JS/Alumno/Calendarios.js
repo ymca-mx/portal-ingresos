@@ -1,7 +1,7 @@
 ﻿$(function init() {
     CargarDocumento();
     function CargarDocumento() {
-        $('#Load').modal('show');
+        $('#PopLoad').modal('show');
         var Alumno = $.cookie('user');
         $.ajax({
             url: 'Services/General.asmx/NombreCalendario',
@@ -20,6 +20,6 @@
             .attr('src', Nombre);
     }
     $('#filepdf').load(function () {
-        $('#Load').modal('hide');
+        $('#PopLoad').modal('hide');
     });
 });

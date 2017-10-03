@@ -37,6 +37,8 @@ namespace DTO
         public string Pagado { get; set; }
         public string Usuario { get; set; }
         public string Estatus { get; set; }
-
+        public int Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public bool Titulo { get; set; }
     }
 }

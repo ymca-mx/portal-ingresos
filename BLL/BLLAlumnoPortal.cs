@@ -380,7 +380,7 @@ namespace BLL
                                         UsuarioTipoId = tipouser,
                                         Promesa = (cuota.Monto - DescuentoPorcentaje),
                                         Restante = (cuota.Monto - DescuentoPorcentaje),
-                                        SubperiodoId = 1,
+                                        SubperiodoId = i,
                                         PagoDescuento = (DescuentoPorcentaje > 0) ?
                                                 (new List<PagoDescuento>{ new PagoDescuento
                                             {

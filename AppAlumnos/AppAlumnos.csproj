@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -153,6 +154,9 @@
     <Content Include="JS\themes\alertify.core.css" />
     <Content Include="JS\themes\alertify.default.css" />
     <Content Include="packages.config" />
+    <None Include="Script\jquery-2.2.4.intellisense.js" />
+    <Content Include="Script\jquery-2.2.4.js" />
+    <Content Include="Script\jquery-2.2.4.min.js" />
     <Content Include="Services\Descuentos.asmx" />
     <Content Include="Services\General.asmx" />
     <Content Include="Services\Reinscripcion.asmx" />
@@ -672,6 +676,7 @@
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\fontawesome-stars.less" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\mixins.less" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\variables.less" />
+    <Content Include="Script\jquery-2.2.4.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

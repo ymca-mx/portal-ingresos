@@ -38,7 +38,7 @@ namespace AppAlumnos.Services
         public List<Universidad.DTO.EstadoCuenta.ReferenciaProcesada> EstadoDeCuenta(string AlumnoId, string FechaI, string FechaF)
         {
             return
-            BLL.BLLEstadoCuenta.ObtenerCargos(new DTO.DTOAlumno{ AlumnoId = int.Parse(AlumnoId) },
+            BLL.BLLEstadoCuenta.ObtenerCargos(new DTO.DTOAlumno { AlumnoId = int.Parse(AlumnoId) },
                             DateTime.ParseExact(FechaI, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             DateTime.ParseExact(FechaF, "dd/MM/yyyy", CultureInfo.InvariantCulture),
             BLL.BLLEstadoCuenta.ObtenerAbonos(new DTO.DTOAlumno { AlumnoId = int.Parse(AlumnoId) },
@@ -130,13 +130,13 @@ namespace AppAlumnos.Services
             public bool item2 { get; set; }
         }
 
+
         [WebMethod]
-        public PantallaPago ConsultaPagosDetalle(string AlumnoId, string Anio, string PeriodoId)
+        public DTO.PantallaPago ConsultaPagosDetalle(string AlumnoId)
         {
             try
             {
-                List<DTO.DTOPagoDetallado> ReferenciasPagadas = BLL.BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
-                return new PantallaPago { Pagos = ReferenciasPagadas, Estatus = ReferenciasPagadas.Where(l => l.OtroDescuento.Length > 0).ToList().Count > 0 ? true : false };
+                return BLL.BLLPagoPortal.ReferenciasPago(int.Parse(AlumnoId));
             }
             catch
             {
@@ -167,10 +167,5 @@ namespace AppAlumnos.Services
         {
             return BLL.BLLPagoPortal.ConsultarReferenciasConceptos(int.Parse(AlumnoId));
         }
-    }
-    public class PantallaPago
-    {
-        public List<DTO.DTOPagoDetallado> Pagos { get; set; }
-        public bool Estatus { get; set; }
     }
 }

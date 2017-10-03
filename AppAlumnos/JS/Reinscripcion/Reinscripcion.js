@@ -9,7 +9,7 @@
     $('#btnGenerar').prop("disabled", true);
     DatosAlumno();
     function DatosAlumno() {
-        $('#Load').modal('show');
+        $('#PopLoad').modal('show');
         AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
@@ -20,7 +20,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d == null) {
-                    $('#Load').modal('hide');
+                    $('#PopLoad').modal('hide');
                     return null;
                 }
                 $('#lblAlumno').text(data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno);
@@ -37,7 +37,7 @@
                     $('#slcOfertaEducativa').change();
                     $('#slcOfertaEducativa').prop("disabled", true);
                 } else {
-                    $('#Load').modal('hide');
+                    $('#PopLoad').modal('hide');
                 }
             }
         });
@@ -45,7 +45,7 @@
     $('#slcOfertaEducativa').change(function () {
         if ($('#slcOfertaEducativa').val() == -1) { return false; } else {
             $('#divpul').hide();
-            $('#Load').modal('show');
+            $('#PopLoad').modal('show');
             Adeudos();
         }
     });
@@ -67,12 +67,12 @@
                      $('#btnGenerar').prop("disabled", false);;
                      console.log(data.d);
                  }
-                 $('#Load').modal('hide');
+                 $('#PopLoad').modal('hide');
              }
          });
     }
     $('#btnGenerar').on('click', function () {
-        $('#Load').modal('show');
+        $('#PopLoad').modal('show');
         $('#btnGenerar').prop("disabled", true);
         OfertaEducativa = $('#slcOfertaEducativa').val();
         var TipoOferta = $(Tipo).data("tipo");
@@ -86,7 +86,7 @@
                 success: function (data) {
                     if (data.d == null) {
                         $('#btnGenerar').prop("disabled", false);
-                        $('#Load').modal('hide');
+                        $('#PopLoad').modal('hide');
                         return false;
                     }
                     if (data.d.length > 1) {
@@ -112,12 +112,12 @@
                 //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                 success: function (data) {
-                    $('#Load').modal('hide');
+                    $('#PopLoad').modal('hide');
                     if (data.d[0] == "Generar") {
                         var Descripcion = data.d[1];
                         alertify.confirm("<p>¿ Desea continuar generando las referencias de reinscripción para el periodo " + Descripcion + " ?<br><br><hr>", function (e) {
                             if (e) {
-                                $('#Load').modal('show');
+                                $('#PopLoad').modal('show');
                                 if (Bandera == 0) {
                                     Bandera = 1;
                                     Pagar(Descripcion);                                    
@@ -209,13 +209,13 @@
             data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + OfertaEducativa + '"}',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $('#Load').modal('hide');
+                $('#PopLoad').modal('hide');
                 //console.log(data);
                 if (data.d.length > 1) {
                     alertify.confirm("El alumno esta Inscrito pero no ha generado cargos" +
                         "¿Desea generar sus cargos del " + data.d[1] + "?", function (e) {
                             if (e) {
-                                $('#Load').modal('show');
+                                $('#PopLoad').modal('show');
                                 $.ajax({
                                     type: "POST",
                                     url: "Services/Reinscripcion.asmx/InscribirGenerar",
@@ -227,7 +227,7 @@
                                         } else {
                                             alertify.alert("Se a producido un error intente de nuevo mas tarde.");
                                         }
-                                        $('#Load').modal('hide');
+                                        $('#PopLoad').modal('hide');
                                     }
                                 });
                             }
@@ -248,7 +248,7 @@
                     alertify.alert('Tiene adeudos, favor de pasar a La Corordinación Administrativa para resolver su situación financiera.');
                     $('#slcOfertaEducativa').val(-1);
                     $('#btnGenerar').prop("disabled", true);
-                    $('#Load').modal('hide');
+                    $('#PopLoad').modal('hide');
                 } else {
                     $('#btnGenerar').prop("disabled", false);
                     Tipo = $('#slcOfertaEducativa').find('option:selected');
@@ -259,7 +259,7 @@
                         $('#divpul').show();
                         
                     }
-                    $('#Load').modal('hide');
+                    $('#PopLoad').modal('hide');
                 }
             }
         });
