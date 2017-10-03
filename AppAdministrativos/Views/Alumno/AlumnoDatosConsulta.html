@@ -174,21 +174,21 @@
 
                                             </div>
                                         </div>
-                                            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                                                <div class="modal-dialog modal-sm" style="height: 90px;">
-                                                    <!--<div class="modal-content" style="width:auto">-->
-                                                    <div class="form-group">
-                                                        <h3 id="hCarga">Cargando</h3>
+                                        <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+                                            <div class="modal-dialog modal-sm" style="height: 90px;">
+                                                <!--<div class="modal-content" style="width:auto">-->
+                                                <div class="form-group">
+                                                    <h3 id="hCarga">Cargando</h3>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="bar" style="width:auto" id="divBar">
+                                                        <p id="txtBar"></p>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <div class="bar" style="width:auto" id="divBar">
-                                                            <p id="txtBar"></p>
-                                                        </div>
-                                                        <!--</div>-->
-                                                    </div>
+                                                    <!--</div>-->
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 </form>
                             </div>
 
@@ -199,29 +199,10 @@
         </div>
     </div>
     <script src="JS/Genero.js"></script>
-    <script src="JS/Parentesco.js"></script>
-    <script src="JS/Turno.js"></script>
-    <script src="JS/Periodo.js"></script>
-    <script src="JS/EntidadFederativa.js"></script>
-    <script src="JS/EstadoCivil.js"></script>
-    <script src="JS/Posgrado.js"></script>
-    <script src="JS/AreaAcademica.js"></script>
-    <script src="JS/MedioDifusion.js"></script>
     <script src="JS/Alumnos/AlumnoDatosConsulta.js"></script>
     <script>
         jQuery(document).ready(function () {
-            // initiate layout and plugins
-            Metronic.init(); // init metronic core components
-            Layout.init(); // init current layout
-            Demo.init(); // init demo features
-            ComponentsKnobDials.init();
-            ComponentsPickers.init();
-            Genero.init();
-            Parentesco.init();
-            Turno.init();
-            Periodo.init();
-            Estado.init();
-            EstadoCivil.init();
+           Genero.init();
         });
 
     </script>

@@ -566,7 +566,8 @@
             txtCelular: {
                 //required: true,
                 digits: true,
-                maxlength: 10
+                minlength: 10,
+                maxlength: 13
             },
             txtFNacimiento: {
                 //required: true,

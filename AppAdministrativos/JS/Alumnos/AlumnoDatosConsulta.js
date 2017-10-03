@@ -46,7 +46,7 @@
                     $('#slcSexo').val(data.d.GeneroId);
                     CargarEstados1(data.d.EntidadFederativaId, data.d.MunicipioId);
 
-                    
+
                     tblDatos = $('#tblDatos').dataTable({
                         "aaData": data.d.DatosContacto,
                         "aoColumns": [

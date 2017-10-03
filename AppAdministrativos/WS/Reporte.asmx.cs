@@ -101,6 +101,12 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
+        public bool EnviarSolicitudSep(string FechaInicial,string FechaFinal)
+        {
+            return BLLReportePortal.EnviarSolicitudSep(FechaInicial, FechaFinal);
+        }
+
+        [WebMethod]
         public List<DTOReporteCarteraVencida> CarteraVencida(int Anio, int PeriodoId, string FechaInicial, string FechaFinal)
         {
             return
