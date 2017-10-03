@@ -18,7 +18,7 @@ namespace BLL
                 {
                     AlumnoInscrito objAlumnoIncrito = db.AlumnoInscrito.Where(X => X.AlumnoId == AlumnoId).FirstOrDefault();
                     objAlumnoIncrito.PagoPlanId = PagoPlanId;
-                    objAlumnoIncrito.EstatusId = 8;
+                    objAlumnoIncrito.EstatusId = objAlumnoIncrito.OfertaEducativa.OfertaEducativaTipoId != 4 ? 8 : 1;
                     db.SaveChanges();
                     return 1;
                 }

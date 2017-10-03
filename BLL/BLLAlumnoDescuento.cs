@@ -410,7 +410,7 @@ namespace BLL
                                     AlumnoId = AlumnoId,
                                     Anio = objOferta.Anio,
                                     PeriodoId = objOferta.PeriodoId,
-                                    SubperiodoId = subperiodo2 + i,
+                                    SubperiodoId = (subperiodo2 + i),
                                     OfertaEducativaId = objOferta.OfertaEducativaId,
                                     FechaGeneracion = DateTime.Now,
                                     HoraGeneracion = DateTime.Now.TimeOfDay,

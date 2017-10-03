@@ -517,11 +517,12 @@ namespace BLL
                         Anio = 2016,
                         PeriodoId = 1,
                         Concepto = "Septiembre - Diciembre 2015",
-                        Titulo = true
+                        Titulo = true,
+                        esEmpresa=true
                     });
                 }
 
-                if (Periodos.Where(per => per.Anio == 2016 && per.PeriodoId == 1).ToList().Count == 0)
+                if (Periodos.Where(per => per.Anio == 2016 && per.PeriodoId == 1).ToList().Count == 0 && PagosDetalles.Count > 0)
                 {
                     Periodos.Insert(0,new Periodo
                     {
@@ -537,7 +538,10 @@ namespace BLL
                                                                      Anio = per.Anio,
                                                                      PeriodoId = per.PeriodoId,
                                                                      Descripcion = per.Descripcion,
-                                                                     Total = per.Anio == 2016 && per.PeriodoId == 1 ? porpagar20161 : 0
+                                                                     Total = per.Anio == 2016 && per.PeriodoId == 1 ? porpagar20161 : 0,
+                                                                     EsSep = per.Anio == 2016 && per.PeriodoId == 1 ? 2 : 0,
+                                                                     BecaSEP= per.Anio == 2016 && per.PeriodoId == 1 ? "" : "",
+                                                                     EsEmpresa = per.Anio == 2016 && per.PeriodoId == 1 ? true: false,
                                                                  }).ToList();
 
                 Periodos.ForEach(Periodobd =>
@@ -556,12 +560,15 @@ namespace BLL
                     Pagos = Pagos.Where(p => p.EstatusId != 2).ToList();
                     if (Pagos.Count == 0)
                     {
-                        decimal Total = 0;
-                        PagosDetalles.ForEach(delegate (DTOPagoDetallado Pago)
+                        if (PagosDetalles.Count > 0)
                         {
-                            Total += Pago.SaldoAdeudo;
-                        });
-                        PagosDetalles[0].TotalPagado = Total.ToString("C", Cultura);
+                            decimal Total = 0;
+                            PagosDetalles.ForEach(delegate (DTOPagoDetallado Pago)
+                            {
+                                Total += Pago.SaldoAdeudo;
+                            });
+                            PagosDetalles[0].TotalPagado = Total.ToString("C", Cultura);
+                        }
                     }
 
                     #region Ciclo de Pagos
@@ -570,17 +577,18 @@ namespace BLL
                         try
                         {
                             #region Descripcion de Periodo 
-                            if(PagosDetalles.Where(pdt => pdt.Titulo == true
-                                                    && pdt.Anio == Periodobd.Anio
-                                                    && pdt.PeriodoId == Periodobd.PeriodoId)
+                            if (PagosDetalles.Where(pdt => pdt.Titulo == true
+                                                     && pdt.Anio == Periodobd.Anio
+                                                     && pdt.PeriodoId == Periodobd.PeriodoId)
                                                .ToList().Count == 0)
                             {
                                 PagosDetalles.Add(new DTOPagoDetallado
                                 {
                                     Anio = Periodobd.Anio,
                                     PeriodoId = Periodobd.PeriodoId,
-                                    Concepto = Periodobd.Descripcion,                                    
-                                    Titulo = true
+                                    Concepto = Periodobd.Descripcion,
+                                    Titulo = true,
+
                                 });
                             }
                             #endregion
@@ -658,6 +666,11 @@ namespace BLL
 
                                 PeriodosDTO.Where(a => a.Anio == Pago.Anio && a.PeriodoId == Pago.PeriodoId)
                                                 .Select(k => k.Total = (k.Total + Pago.Restante));
+                                PeriodosDTO.Where(a => a.Anio == Pago.Anio && a.PeriodoId == Pago.PeriodoId)
+                                                .FirstOrDefault().EsSep = 2;
+                                PeriodosDTO.Where(a => a.Anio == Pago.Anio && a.PeriodoId == Pago.PeriodoId)
+                                                .FirstOrDefault().BecaSEP = "";
+
 
                                 PagosDetalles.Add(objanterior);
                             }
@@ -710,7 +723,7 @@ namespace BLL
                                 decimal DescuentoBecaDeportiva = DescuentosBecaDeportiva.Count > 0 ?
                                                         Pago.PagoDescuento?.Where(P => P.DescuentoId == DescuentosBecaDeportiva.FirstOrDefault().DescuentoId)?.FirstOrDefault()?.Monto ?? 0
                                                     : 0;
-                                int DescuentoSepID = ListaDescuentosAP.Where(lda=> lda.Descripcion== "Beca SEP")?.FirstOrDefault()?.DescuentoId ?? 0;
+                                int DescuentoSepID = ListaDescuentosAP.Where(lda => lda.Descripcion == "Beca SEP")?.FirstOrDefault()?.DescuentoId ?? 0;
 
                                 int DescuentoAcdID = ListaDescuentosAP.Where(D => D.Descripcion == "Beca Académica")?.FirstOrDefault()?.DescuentoId ?? 0;
 
@@ -779,6 +792,7 @@ namespace BLL
                                                                             (PeriodosDTO.Where(a => a.Anio == Pago.Anio
                                                                                                 && a.PeriodoId == Pago.PeriodoId)
                                                                             .FirstOrDefault().Total + total);
+
                                 ///////////////////Corregir
                                 if (Pago.Cuota1.PagoConceptoId == 800 || Pago.Cuota1.PagoConceptoId == 802)
                                 {
@@ -790,6 +804,30 @@ namespace BLL
                                     PagosDetalles[0].EsSep = PagosDetallesAgregar.EsSep;
                                     PagosDetalles[0].BecaSEP = PagosDetalles[0].BecaSEP == null ? DescuentosBecaDeportiva.Count > 0 ? "Beca Deportiva" : null : PagosDetalles[0].BecaSEP;
 
+                                    PeriodosDTO.Where(a => a.Anio == Pago.Anio
+                                                      && a.PeriodoId == Pago.PeriodoId)
+                                              .FirstOrDefault().EsSep = Comite == 3
+                                                    ? Comite
+                                                    : DescuentosAlumno.Where(d => d.EsSEP).ToList().Count > 0 ? 1
+                                                    : 2;
+                                    PeriodosDTO.Where(a => a.Anio == Pago.Anio
+                                                                                          && a.PeriodoId == Pago.PeriodoId)
+                                                                                  .FirstOrDefault().BecaSEP = PagosDetalles[0].BecaSEP == null ? DescuentosBecaDeportiva.Count > 0 ? "Beca Deportiva" : null : PagosDetalles[0].BecaSEP;
+                                    PeriodosDTO.Where(a => a.Anio == Pago.Anio
+                                                        && a.PeriodoId == Pago.PeriodoId)
+                                                    .FirstOrDefault().EsEmpresa = (PeriodosDTO.Where(a => a.Anio == Pago.Anio
+                                                         && a.PeriodoId == Pago.PeriodoId)
+                                                    .FirstOrDefault().EsEmpresa == false ?
+                                                                                  (Pago.Alumno.AlumnoInscrito.Where(a =>
+                                                                                                                    a.OfertaEducativaId == Pago.OfertaEducativaId
+                                                                                                                    && a.EsEmpresa).ToList().Count > 0 ? true : false)
+                                                                                  : true);
+                                }
+                                if (Pago.OfertaEducativa.OfertaEducativaTipoId == 4)
+                                {
+                                    PeriodosDTO.Where(a => a.Anio == Pago.Anio
+                                                       && a.PeriodoId == Pago.PeriodoId)
+                                                   .FirstOrDefault().EsEmpresa = true;
                                 }
                             }
                             #endregion

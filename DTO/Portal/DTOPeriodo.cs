@@ -28,5 +28,8 @@ namespace DTO
         public int PeriodoId { get; set; }
         public string Descripcion { get; set; }
         public decimal Total { get; set; }
+        public int EsSep { get; set; }
+        public string BecaSEP { get; set; }
+        public bool EsEmpresa { get; set; }
     }
 }

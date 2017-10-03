@@ -516,15 +516,26 @@
             }
         },
         TraerPagosPeriodo: function (Anio, PeriodoId, Total) {
-            var lstp = [];
+            var lstp = [], EsSep, BecaSEP, EsEmpresa;
 
             $(Funciones.TablaMaster.d.Pagos).each(function () {
                 if (this.Anio === Anio && this.PeriodoId === PeriodoId && this.Titulo === false) {
                     lstp.push(this);
-                } 
+                }
+            });
+
+            $(Funciones.TablaMaster.d.Periodos).each(function () {
+                if (this.Anio === Anio && this.PeriodoId === PeriodoId) {
+                    EsSep = this.EsSep;
+                    BecaSEP = this.BecaSEP;
+                    EsEmpresa = this.EsEmpresa;
+                }
             });
 
             lstp[0].TotalPagado = "$" + parseFloat(Total).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+            lstp[0].EsSep = EsSep;
+            lstp[0].BecaSEP = BecaSEP;
+            lstp[0].esEmpresa = EsEmpresa;
             return lstp;
         }
     };
@@ -533,5 +544,4 @@
     $('#txtClave').on('keydown', Funciones.txtClaveKeydown);
     $("#sclPeriodo").on('change', Funciones.slcPeriodoChange);
     $('#tblAlumnos').on('click', 'a', Funciones.TablaAlumnoClick);
-    console.log("perra");
 });
