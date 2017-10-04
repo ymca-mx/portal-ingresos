@@ -1,9 +1,9 @@
 # Proyecto de universidad YMCA
 
 ## Proyectos
-### Se tienen 3 carpetas principales
+## Se tienen 3 carpetas principales
 
-####	*Portal Administrativo
+###	*Portal Administrativo
 	
 ###		*Portal con login y menu de Personal
 	
@@ -11,6 +11,6 @@
 	
 ###		*Portal para los Alumnos 
 		
-###	*Inscritos 
+###		*Inscritos 
 	
 ###		*Programacion de JS, WebServices, HTML y Codigo de Entity
