@@ -247,7 +247,10 @@ namespace BLL
                 if (db.AlumnoCuatrimestre.Where(ac => ac.AlumnoId == objAlumnoInscrito.AlumnoId
                                                      && ac.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId
                                                      && ac.Anio == objAlumnoInscrito.Anio
-                                                     && ac.PeriodoId == objAlumnoInscrito.PeriodoId).ToList().Count == 0)
+                                                     && ac.PeriodoId == objAlumnoInscrito.PeriodoId).ToList().Count == 0
+                                                     && db.OfertaEducativa.Where(of=> of.OfertaEducativaId==objAlumnoInscrito.OfertaEducativaId
+                                                                    && of.OfertaEducativaTipoId==4)                                                        
+                                                                .ToList().Count>0)
                 {
                     db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
                     {

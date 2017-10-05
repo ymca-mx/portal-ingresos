@@ -37,7 +37,25 @@ namespace BLL
                                                      Anio = a.Anio,
                                                      PeriodoId = a.PeriodoId,
                                                  }).ToList());
+                    #region PeriodoAnterior 
+                    int anioante = (objMAS.lstPeriodos.FirstOrDefault().PeriodoId == 1 ?
+                                                          objMAS.lstPeriodos.FirstOrDefault().Anio - 1 : objMAS.lstPeriodos.FirstOrDefault().Anio),
+                    periodoante = (objMAS.lstPeriodos.FirstOrDefault().PeriodoId == 1 ?
+                                                                  3 : objMAS.lstPeriodos.FirstOrDefault().PeriodoId - 1);
 
+                    DTOPeriodo PerAnterior = (from pa in db.Periodo
+                                              where
+                                             pa.Anio == anioante
+                                              && pa.PeriodoId == periodoante
+                                              select new DTOPeriodo
+                                              {
+                                                  Descripcion = pa.Descripcion,
+                                                  Anio = pa.Anio,
+                                                  PeriodoId = pa.PeriodoId,
+                                              }).FirstOrDefault();
+
+                    objMAS.lstPeriodos.Insert(0, PerAnterior);
+                    #endregion
                     objMAS.lstPeriodos
                             .ForEach(l => {
                                 l.Descripcion = db.Periodo.Where(k => k.Anio == l.Anio && k.PeriodoId == l.PeriodoId).FirstOrDefault().Descripcion;
@@ -844,38 +862,64 @@ namespace BLL
 
                 if (AlumnoCuatrimestre != null)
                 {
-                    db.AlumnoCuatrimestreBitacora.Add(new AlumnoCuatrimestreBitacora
+
+                    Periodo PeriodoGuardar = db.Periodo.Where(pe => pe.Anio == Alumno.anio 
+                                                        && pe.PeriodoId == Alumno.periodoId).FirstOrDefault();
+                    bool Mayor = (AlumnoCuatrimestre.Periodo.FechaInicial > PeriodoGuardar.FechaFinal) ? true : false;
+
+                    if (!Mayor)
                     {
-                        AlumnoId = AlumnoCuatrimestre.AlumnoId,
-                        OfertaEducativaId = AlumnoCuatrimestre.OfertaEducativaId,
-                        Cuatrimestre = AlumnoCuatrimestre.Cuatrimestre,
-                        Anio = AlumnoCuatrimestre.Anio,
-                        PeriodoId = AlumnoCuatrimestre.PeriodoId,
-                        esRegular = AlumnoCuatrimestre.esRegular,
-                        FechaAsignacion = AlumnoCuatrimestre.FechaAsignacion,
-                        HoraAsignacion = AlumnoCuatrimestre.HoraAsignacion,
-                        UsuarioId = AlumnoCuatrimestre.UsuarioId
-                    });
+                        db.AlumnoCuatrimestreBitacora.Add(new AlumnoCuatrimestreBitacora
+                        {
+                            AlumnoId = AlumnoCuatrimestre.AlumnoId,
+                            OfertaEducativaId = AlumnoCuatrimestre.OfertaEducativaId,
+                            Cuatrimestre = AlumnoCuatrimestre.Cuatrimestre,
+                            Anio = AlumnoCuatrimestre.Anio,
+                            PeriodoId = AlumnoCuatrimestre.PeriodoId,
+                            esRegular = AlumnoCuatrimestre.esRegular,
+                            FechaAsignacion = AlumnoCuatrimestre.FechaAsignacion,
+                            HoraAsignacion = AlumnoCuatrimestre.HoraAsignacion,
+                            UsuarioId = AlumnoCuatrimestre.UsuarioId
+                        });
 
-                    db.AlumnoCuatrimestre.Remove(AlumnoCuatrimestre);
+                        db.AlumnoCuatrimestre.Remove(AlumnoCuatrimestre);
 
-                    var Cuatrimestre = Alumno.esRegular == true  ? AlumnoCuatrimestre.Cuatrimestre + 1 : Alumno.Cuatrimestre ;
+                        var Cuatrimestre = Alumno.esRegular == true ? AlumnoCuatrimestre.Cuatrimestre + 1 : Alumno.Cuatrimestre;
 
-                   
 
-                    db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+
+                        db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                        {
+                            AlumnoId = Alumno.alumnoId,
+                            OfertaEducativaId = Alumno.ofertaEducativaId,
+                            Cuatrimestre = Cuatrimestre,
+                            Anio = Alumno.anio,
+                            PeriodoId = Alumno.periodoId,
+                            esRegular = Alumno.esRegular,
+                            FechaAsignacion = DateTime.Now,
+                            HoraAsignacion = DateTime.Now.TimeOfDay,
+                            UsuarioId = Alumno.usuarioId
+                        });
+                    }
+                    else
                     {
-                        AlumnoId = Alumno.alumnoId,
-                        OfertaEducativaId = Alumno.ofertaEducativaId,
-                        Cuatrimestre = Cuatrimestre,
-                        Anio = Alumno.anio,
-                        PeriodoId = Alumno.periodoId,
-                        esRegular = Alumno.esRegular,
-                        FechaAsignacion = DateTime.Now,
-                        HoraAsignacion = DateTime.Now.TimeOfDay,
-                        UsuarioId = Alumno.usuarioId
-                    });
+                        AlumnoCuatrimestre.Cuatrimestre = AlumnoCuatrimestre.Cuatrimestre + 1;
+                        int Cuatrimestre = Alumno.esRegular == true ? AlumnoCuatrimestre.Cuatrimestre - 1 : Alumno.Cuatrimestre;
 
+                        db.AlumnoCuatrimestreBitacora.Add(new AlumnoCuatrimestreBitacora
+                        {
+                            AlumnoId = Alumno.alumnoId,
+                            OfertaEducativaId = Alumno.ofertaEducativaId,
+                            Cuatrimestre = Cuatrimestre,
+                            Anio = Alumno.anio,
+                            PeriodoId = Alumno.periodoId,
+                            esRegular = Alumno.esRegular,
+                            UsuarioId = Alumno.usuarioId,
+                            FechaAsignacion=DateTime.Now,
+                            HoraAsignacion=DateTime.Now.TimeOfDay
+                        });
+
+                    }
                 }
                 else
                 {
