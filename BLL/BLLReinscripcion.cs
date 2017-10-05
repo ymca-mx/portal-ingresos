@@ -14,7 +14,7 @@ namespace BLL
     {
         public static DTOMateriasAsesorias TraerAlumno(int AlumnoId)
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
@@ -57,7 +57,8 @@ namespace BLL
                     objMAS.lstPeriodos.Insert(0, PerAnterior);
                     #endregion
                     objMAS.lstPeriodos
-                            .ForEach(l => {
+                            .ForEach(l =>
+                            {
                                 l.Descripcion = db.Periodo.Where(k => k.Anio == l.Anio && k.PeriodoId == l.PeriodoId).FirstOrDefault().Descripcion;
                             });
 
@@ -79,7 +80,7 @@ namespace BLL
                                                         && M.OfertaEducativaId != Mayores.FirstOrDefault().OfertaEducativaId)
                                                  .ToList());
 
-                    List<AlumnoInscritoBitacora> MayoresB= new List<AlumnoInscritoBitacora>{ objAlumno.AlumnoInscritoBitacora
+                    List<AlumnoInscritoBitacora> MayoresB = new List<AlumnoInscritoBitacora>{ objAlumno.AlumnoInscritoBitacora
                                                             .Where(o => o.OfertaEducativa.OfertaEducativaTipoId != 4)
                                                             .OrderByDescending(O => O.Anio)
                                                             .ThenByDescending(O => O.PeriodoId)
@@ -101,8 +102,8 @@ namespace BLL
                         OfertaEducativaId = i.OfertaEducativaId,
                         Descripcion = i.OfertaEducativa.Descripcion,
                         OfertaEducativaTipoId = i.OfertaEducativa.OfertaEducativaTipoId,
-                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f=> f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre??0,
-                        SucursalId=i.OfertaEducativa.SucursalId
+                        Cuatrimestre = i.Alumno.AlumnoCuatrimestre.Where(f => f.OfertaEducativaId == i.OfertaEducativaId).FirstOrDefault()?.Cuatrimestre ?? 0,
+                        SucursalId = i.OfertaEducativa.SucursalId
                     }));
                     objMAS.lstOfertas.AddRange(MayoresB.Select(i => new DTOOfertaEducativa
                     {
@@ -125,7 +126,7 @@ namespace BLL
                                                                 .GroupBy(alb => new { alb.Anio, alb.PeriodoId })
                                                                 .Select(alb => alb.FirstOrDefault())
                                                                 .ToList();
-                                                       
+
                                 List<AlumnoInscrito> listaactual = objAlumno
                                                                 .AlumnoInscrito
                                                                 .Where(al => al.OfertaEducativaId == o.OfertaEducativaId)
@@ -224,8 +225,12 @@ namespace BLL
                         i.Estado = "Ya se le dio el Visto Bueno";
                     });
 
-                        return objMAS;
-                }catch  {
+                    objMAS.lstPeriodos = objMAS.lstPeriodos.OrderByDescending(a => a.Anio).ThenByDescending(a => a.PeriodoId).ToList();
+
+                    return objMAS;
+                }
+                catch
+                {
                     return null;
                 }
             }
