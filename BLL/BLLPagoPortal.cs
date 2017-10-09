@@ -462,6 +462,8 @@ namespace BLL
                                             .Select(p => p.Periodo)
                                             .GroupBy(p => new { p.Anio, p.PeriodoId })
                                             .Select(p => p.FirstOrDefault())
+                                            .ToList()
+                                            .OrderBy(a=> a.Anio).ThenBy(a=> a.PeriodoId)
                                             .ToList();
                 List<AlumnoDescuento> ListaDescuentosAlumno = db.AlumnoDescuento
                                                        .Where(ad => ad.AlumnoId == AlumnoId

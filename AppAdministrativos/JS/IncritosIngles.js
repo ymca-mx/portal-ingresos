@@ -1,6 +1,7 @@
 ﻿$(function init() {
     //$.cookie('userAdmin', 6883, { expires: 1 });
     $('#Contenedor').hide();
+    var EsLenguas = false;
     var Usuario;
     var MesP = [];
     var MItable;
@@ -89,6 +90,7 @@
     });
     Cargar();
 
+
     $("#tbAlumnos").on("click", "a", function () {
         Mas = undefined;
         fid = MItable.fnGetData(this.parentNode.parentNode, 0);
@@ -100,10 +102,21 @@
             data: '{AlumnoId:"' + fid + '"}',
             dataType: 'json',
             success: function (data) {
+                EsLenguas = false;
+
+                if (data.d.lstAlumnoInscrito.length == 0) {
+                    if (data.d.lstAlumnoInscrito[0].OfertaEducativa.OfertaEducativaTipoId === 4) {
+                        EsLenguas = true;
+                    }
+                }
                 $(data.d.lstAlumnoInscrito).each(function () {
                     if (this.OfertaEducativa.OfertaEducativaTipoId != 4) { Mas = 1; }
                 });
-                if (Mas != 'undefined') { $('#divExamen').hide(); }
+
+                if (Mas != 'undefined') {
+                    $('#divExamen').hide();
+                    EsLenguas = true;
+                }
                 $('#txtAlumnoId').val(fid);
                 Fecha = new Date(parseInt(data.d.DTOAlumnoDetalle.FechaNacimiento.slice(6)));
                 Fecha = new Date(Fecha);
@@ -168,6 +181,7 @@
                 $('#divExamen').hide();
                 $('#divCredencial').hide();
                 $('#divMaterial').show();
+                EsLenguas = false;
             } else {
                 if (tipo === "1") {
                     $('#lblLugarP').text("Lugar donde estudio la preparatoria");
@@ -431,8 +445,42 @@
     });
 
     $('#btnGuardar').on('click', function () {
-        if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
-        $('#Antecedentes').modal('show');
+        if ($('#slcOfertaEducativa').val() == '-1') {
+            alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar", function () {
+                return true;
+            });
+            return false;
+        }
+        if (EsLenguas) {
+            $('#Antecedentes').modal('show');
+        }
+        else {
+            $('#Load').modal('show');
+            if (!form.valid()) { return false; }
+            Usuario = $.cookie('userAdmin');
+            if (jQuery.type(Usuario) === "undefined") {
+                return false;
+            }
+            var Campos = {
+                'AlumnoId': fid,//0
+                'OfertaEducativa': $('#slcOfertaEducativa').val(),//1
+                'Turno': $('#slcTurno').val(),//2
+                'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//3
+                'SistemaPago': $('#slcSistemaPago').val(),//4
+                'DescuentoBec': $('#txtDescuentoBec').val(),//5
+                'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),//6
+                'Credencial': $('#txtDescuentoCred').val(),//7
+                'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),//8
+                'Material': $('#chkMaterial')[0].checked,//9
+                'EsEmpresa': $('#chkEsEmpresa')[0].checked,//10
+                'DescuentoExamen': Mas == 1 ? '-1' : $('#txtDescuentoExa').val(),//11
+                'JustificacionExam': $('#txtJustificacionExa').val() == '' ? 'null' : $('#txtJustificacionExa').val(),//12
+                'DescuentoIns': $('#txtDescuentoIns').val(),//13
+                'JustificacionIns': $('#txtJustificacionIns').val() == '' ? 'null' : $('#txtJustificacionIns').val(),//14
+                'Usuario': Usuario//15
+            };
+            CargadInfoAntecedentes.GuardarDescuentos(Campos);
+        }
         //$('#btnGuardarAntecedente').click();
     });
     $('#btnGuardarAntecedente').on('click', function () {

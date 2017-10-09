@@ -314,8 +314,10 @@
                 option1.attr("data-Anio", objAlumnoC.lstPeriodos[0].Anio);
                 option1.attr("data-PeriodoId", objAlumnoC.lstPeriodos[0].PeriodoId);
                 $("#slcPeriodos").append(option1);
-                if ($("#slcOfertas").val() !== "-1") { $("#slcPeriodos").val(objAlumnoC.lstPeriodos[0].PeriodoId + " " + objAlumnoC.lstPeriodos[0].Anio); }
             }
+
+            $("#slcPeriodos").val(objAlumnoC.lstPeriodos[0].PeriodoId + " " + objAlumnoC.lstPeriodos[0].Anio);
+
             $("#slcPeriodos").change();
             $(window).scrollTop($('#slcPeriodos').offset().top);
             $('#Load').modal('hide');
@@ -449,36 +451,9 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d === true) {
-                        $('#Load').modal('hide');
                         alertify.alert("Datos Generados");
-                        //Cargar Alumno
-                        $.ajax({
-                            type: "POST",
-                            url: "WS/Reinscripcion.asmx/AlumnoReinscripcion",
-                            data: "{AlumnoId:'" + AlumnoNum + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: 'json',
-                            success: function (data) {
-                                if (data.d !== null) {
-                                    $('#lblNombre').text(data.d.Nombre);
-                                    $('#btnGuardar').prop("disabled", true);
-                                    $('#txtNAsesoria').val(0);
-                                    $('#txtNMateria').val(0);
-                                    $('#txtSTAsesoria').val('$0.00');
-                                    $('#txtSTMateria').val('$0.00');
-                                    $('#txtComentario').val("");
-                                    var spam = $('#rdbSi')[0].parentElement;
-                                    $(spam).removeClass('checked');
-                                    var spam1 = $('#rdbNo')[0].parentElement;
-                                    $(spam1).removeClass('checked');
-                                    $("input:radio")[0].checked = false;
-                                    $('#divCuatri').hide();
-                                    objAlumnoC = data.d;
-                                    Funciones.CargarEstatus(op1, anio, periodo);
-                                    Funciones.TablaReferencias(op1, anio, periodo);
-                                } else { $('#Load').modal('hide'); }
-                            }
-                        });
+                        $('#txtAlumno').val(txtAlumno);
+                        Eventos.btnBuscarAlumnoClick();
                     } else { alertify.alert("Error Al Guardar"); $('#Load').modal('hide'); }
                 }
             });
