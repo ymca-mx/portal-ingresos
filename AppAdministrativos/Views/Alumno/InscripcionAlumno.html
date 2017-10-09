@@ -24,6 +24,7 @@
     <script src="JS/MedioDifusion.js"></script>
     <script src="JS/AreaAcademica.js"></script>
     <script src="JS/Archivos.js"></script>
+    <link href="Style/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
 </head>
 <body>
     <!-- BEGIN PAGE CONTAINER -->
@@ -326,14 +327,6 @@
                                                     <h3 class="block">Persona de contacto</h3>
 
                                                     <div class="row">
-                                                        <div class="col-md-12">                                                            
-                                                            <div class="form-group col-md-10">
-                                                                <div class="checkbox">
-                                                                    <input type="checkbox" id="chkYo" class="checkbox" />
-                                                                    <label for="chkYo">Yo Mismo</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <div class="col-md-6">
                                                             <!--Apartado de Persona Autorizada-->
 
@@ -409,6 +402,15 @@
                                                     <hr />
                                                     <h3 class="block">Persona de contacto (opcional)</h3>
                                                     <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group col-md-10">
+
+                                                                <div class="checkbox"><br>
+                                                                    <input type="checkbox" id="chkYo" class="checkbox" />
+                                                                    <label for="chkYo">Yo Mismo</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-6">
                                                             <!--Apartado de Persona Autorizada-->
 
@@ -488,6 +490,32 @@
                                                     <div class="container">
 
                                                         <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group col-md-6">
+
+                                                                        <div class="icheck-list">
+                                                                            <label class="control-label bold" style="font-size:18px" for="chkEsEmpresa">
+                                                                             <input type="checkbox" id="chkEsEmpresa" class="checkbox"/>Es alumno de empresa.</label>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group col-md-12">
+                                                                        <label class="control-label bold " style="font-size:18px">Promoción en Casa</label>&nbsp;
+                                                                        <a class="btn btn-default yellow " id="btnPromocion">
+                                                                            Agregar <i class="fa fa-edit " style="color:white"></i>
+                                                                        </a>
+                                                                        <div>&nbsp;</div>
+                                                                        <div class="col-md-12 alert alert-info alert-dismissable" id="divAlumnoPormocion" hidden="hidden">
+                                                                            <button type="button" class="close" id="btnClosePromo"></button>
+                                                                            <strong>Alumno :</strong>
+                                                                            <label id="lbAlumnoPromocion"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="col-md-6">
                                                                 <h3 class="block">Oferta Educativa de Interés</h3>
                                                                 <div class="col-md-10 form-group">
@@ -523,24 +551,6 @@
                                                                         <option value="-1">--Seleccionar--</option>
                                                                     </select>
                                                                 </div>
-                                                                <div class="form-group col-md-10">
-                                                                    <label class="control-label" >Promoción en Casa  </label>&nbsp;
-                                                                    <a class="btn btn-xs red" id="btnPromocion" >
-                                                                        Agregar <i class="fa fa-edit"></i>
-                                                                    </a>
-                                                                    <div>&nbsp;</div>
-                                                                    <div class="col-md-12 alert alert-info alert-dismissable" id = "divAlumnoPormocion" hidden="hidden">
-                                                                        <button type="button" class="close" id="btnClosePromo"></button>
-                                                                        <strong>Alumno :</strong> 
-                                                                        <label id="lbAlumnoPromocion"></label>
-                                                                    </div>
-                                                                </div> 
-                                                                <div class="form-group col-md-10">
-                                                                    <div class="checkbox">
-                                                                        <input type="checkbox" id="chkEsEmpresa" class="checkbox" />
-                                                                        <label class="control-label" for="chkEsEmpresa">Es alumno de empresa.</label>
-                                                                    </div>
-                                                                </div> 
                                                                 <div class="form-group col-md-10" id="divUni">
                                                                     <div class="checkbox">
                                                                         <input type="checkbox" class="checkbox" id="chkUni" onclick="ActivarUni();" />Equivalencia<br>
@@ -554,6 +564,7 @@
                                                             </div>
 
                                                             <div class="col-md-6" id="divPrepa">
+
                                                                 <h3 class="block" id="h3Titulo">Preparatoria de Procedencia</h3>
                                                                 <div class="col-md-10 form-group">
                                                                     <label class="control-label" id="lblTituloProcedencia">Preparatoria de Procedencia</label>
@@ -937,6 +948,22 @@
                                 </div>
                                 <!--Popup de Agregar Alumno Promocion-->
 
+                                <!--modal es empres-->
+                                <div class="modal fade" id="ModalEsEmpresa" data-backdrop="static" data-keyboard="false">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Es Empresa</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Esta seguro no es  alumno empresa?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn blue" id="btnSi">Si</button>
+                                            <button type="button" class="btn default" data-dismiss="modal" id="btnNo">No</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
 
 
                                 <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
@@ -960,7 +987,8 @@
             </div>
         </div>
     </div>
-    <script src="JS/InscripcionAlumno.js"></script>
+    <script src="Style/assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="JS/Alumnos/InscripcionAlumno.js"></script>
     <script>
         jQuery(document).ready(function () {
             Genero.init();

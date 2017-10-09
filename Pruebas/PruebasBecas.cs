@@ -128,24 +128,43 @@ namespace Pruebas
         {
             List<DTO.Alumno.Beca.DTOAlumnoBeca> Alumno = new List<DTO.Alumno.Beca.DTOAlumnoBeca>();
 
-            //7589 Sin ningun descuento
-             Alumno.Add( new DTO.Alumno.Beca.DTOAlumnoBeca
+
+            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 5782,
-                anio = 2018,
-                periodoId = 1,
-                ofertaEducativaId = 2,
-                porcentajeBeca = 61.14m, //70.15
-                porcentajeInscripcion = 100m,
+                alumnoId = 7754,
+                anio = 2016,
+                periodoId = 3,
+                ofertaEducativaId = 3,
+                porcentajeBeca = 62.88m, //70.15
+                porcentajeInscripcion = 50m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
                 usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2017-09-08", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                fecha = "2016-05-30", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
             });
+
+            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
+            {
+                alumnoId = 7754,
+                anio = 2017,
+                periodoId = 1,
+                ofertaEducativaId = 3,
+                porcentajeBeca = 62.88m, //70.15
+                porcentajeInscripcion = 0m,
+                esSEP = false,
+                esComite = false,
+                esEmpresa = true,
+                usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2016-09-08", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                genera = true
+                //    //Colegiatura = decimal
+                //    //Inscripcion = decimal
+            });
+            
 
 
             Alumno.ForEach(a=> 
