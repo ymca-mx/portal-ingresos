@@ -580,4 +580,7 @@
     $('#FileComprobante a').click(Funciones.ClickArchivo);
     $('#btnGuardarFormacion').on('click', Funciones.btnGuardarFormacionClick);
     $('#btnGuardarCurso').on('click', Funciones.btnGuardarCursoExClick);
+    $('input').on('ifChanged', function () {
+        alert('Well done, Sir');
+    });
 });

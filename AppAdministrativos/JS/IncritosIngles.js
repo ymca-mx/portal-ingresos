@@ -181,6 +181,7 @@
                 $('#divExamen').hide();
                 $('#divCredencial').hide();
                 $('#divMaterial').show();
+                EsLenguas = false;
             } else {
                 if (tipo === "1") {
                     $('#lblLugarP').text("Lugar donde estudio la preparatoria");

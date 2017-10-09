@@ -321,21 +321,15 @@ namespace BLL
         {
             using(UniversidadEntities db =new UniversidadEntities())
             {
-                DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-                Subperiodo subActual = db.Subperiodo.Where(sp => sp.MesId == DateTime.Now.Month).FirstOrDefault();
-                DTOPeriodo PeriodoSiguiente = new DTOPeriodo
-                {
-                    Anio = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio,
-                    PeriodoId = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1,
-                };
-                if (subActual.SubperiodoId == 4)
-                { PeriodoActual = BLLPeriodoPortal.ConsultarPeriodo(PeriodoSiguiente.Anio, PeriodoSiguiente.PeriodoId); }
+                List<Periodo> listPeriodos = db.Periodo.Where(a =>
+                                                a.FechaInicial >= DateTime.Now && DateTime.Now <= a.FechaFinal)
+                                            .ToList();
 
+                int anio = listPeriodos.FirstOrDefault().Anio,
+                    periodo = listPeriodos.FirstOrDefault().PeriodoId;
+                anio=periodo==1?
 
-                return new List<DTOPeriodo>
-                {
-                    PeriodoActual
-                };
+                listPeriodos.Insert(0, db.Periodo.Where())
             }
         }
 
