@@ -319,17 +319,42 @@ namespace BLL
 
         public static List<DTOPeriodo> TraerPeriodoActSig()
         {
-            using(UniversidadEntities db =new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<Periodo> listPeriodos = db.Periodo.Where(a =>
-                                                a.FechaInicial >= DateTime.Now && DateTime.Now <= a.FechaFinal)
-                                            .ToList();
+                #region Actual 
+                List<Periodo> listPeriodos = new List<Periodo>();
+
+                listPeriodos.Add(db.Periodo.Where(a =>
+                                             a.FechaInicial <= DateTime.Now && a.FechaFinal >= DateTime.Now)
+                                            .FirstOrDefault());
 
                 int anio = listPeriodos.FirstOrDefault().Anio,
                     periodo = listPeriodos.FirstOrDefault().PeriodoId;
-                anio=periodo==1?
+                #endregion
+                #region Anterior 
+                anio = periodo == 1 ? anio - 1 : anio;
+                periodo = periodo == 1 ? 3 : periodo - 1;
 
-                listPeriodos.Insert(0, db.Periodo.Where())
+                listPeriodos.Insert(0, db.Periodo.Where(per => per.Anio == anio && periodo == per.PeriodoId).FirstOrDefault());
+
+                #endregion
+
+                #region Siguiente 
+                anio = listPeriodos[1].Anio;
+                periodo = listPeriodos[1].PeriodoId;
+
+                anio = periodo == 3 ? anio + 1 : anio;
+                periodo = periodo == 3 ? 1 : periodo + 1;
+
+                listPeriodos.Add(db.Periodo.Where(per => per.Anio == anio && periodo == per.PeriodoId).FirstOrDefault());
+                #endregion
+
+                return listPeriodos.Select(per => new DTOPeriodo
+                {
+                    Anio = per.Anio,
+                    PeriodoId = per.PeriodoId,
+                    Descripcion = per.Descripcion
+                }).ToList();
             }
         }
 

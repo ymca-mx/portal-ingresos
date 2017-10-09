@@ -66,9 +66,12 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d.length > 0) {
+
                         $(data.d).each(function () {
                             var opt = $(document.createElement('option'));
                             var opt2 = $(document.createElement('option'));
+
+                            //console.log(this.Anio + '' + this.PeriodoId);
 
                             opt.text(this.Descripcion);
                             opt.val(this.Anio + '' + this.PeriodoId);
@@ -82,8 +85,16 @@
 
                             $("#slcPeriodo").append(opt);
                             $('#slcPeriodoCurso').append(opt2);
-                        });
+                        });                    
                     }
+                    var PeriodoActual1 = data.d[1].Anio + '' + data.d[1].PeriodoId;
+                    var PeriodoActual2 = data.d[1].Anio + '' + data.d[1].PeriodoId;
+                    console.log(PeriodoActual1);
+
+                    $("#slcPeriodo").val(PeriodoActual1);
+                    $("#slcPeriodo").change();
+                    $('#slcPeriodoCurso').val(PeriodoActual2);
+                    $("#slcPeriodoCurso").change();
                 }
             });
         },
@@ -326,7 +337,7 @@
             $('#frmCurso')[0].reset();
             $('#frmCurso input').attr('readonly', 'readonly');
             $('#frmCurso input').attr('disabled', true);
-            $('#slcPeriodoCurso').attr('disabled', true);
+            
             $('#slcDuracion').attr('disabled', true);
             $('#tiutuloCurso')[0].innerHTML = esYmca ? "Curso YMCA" : "Curso Externo";
 
@@ -384,7 +395,7 @@
 
             $('#tiutuloCurso')[0].innerHTML = "Curso Externo";
             $('#slcPeriodoCurso').addClass('edited');
-            $('#slcPeriodoCurso').attr('disabled', true);
+            
             $('#slcPeriodoCurso').addClass('edited');
             $('#txtFechas').addClass('edited');
 
@@ -403,7 +414,7 @@
             $('#txtCursoNombreI').val("Unidad Ejercito");
             $('#txtCursoNombreI').addClass('edited');
             $('#slcPeriodoCurso').addClass('edited');
-            $('#slcPeriodoCurso').attr('disabled', true);
+            
             $('#txtFechas').addClass('edited');
 
             $('#btnGuardarCurso').prop("disabled", false);
@@ -580,7 +591,4 @@
     $('#FileComprobante a').click(Funciones.ClickArchivo);
     $('#btnGuardarFormacion').on('click', Funciones.btnGuardarFormacionClick);
     $('#btnGuardarCurso').on('click', Funciones.btnGuardarCursoExClick);
-    $('input').on('ifChanged', function () {
-        alert('Well done, Sir');
-    });
 });
