@@ -50,7 +50,7 @@
                     required: true,
                     digits: true,
                     minlength: 10,
-                    maxlength: 10
+                    maxlength: 13
                 },
                 txtFNacimiento: {
                     required: true,
@@ -133,9 +133,10 @@
                     minlength: 5
                 },
                 txtTelefonoPA: {
+                    required: true,
                     digits: true,
-                    minlength: 8,
-                    maxlength: 10
+                    minlength: 10,
+                    maxlength: 13
                 },
                 txtTelefonoPAT: {
                     digits: true,
@@ -199,13 +200,13 @@
                 txtPromedio: {
                     required: true,
                     number: true,
-                    minlength: 1,                    
+                    minlength: 1,
                 },
                 txtAñoT: {
                     required: true,
-                    number: true,                    
+                    number: true,
                     minlength: 4,
-                    maxlength: 4,                                        
+                    maxlength: 4,
                 },
                 txtMesT: {
                     required: true,
@@ -214,7 +215,7 @@
                     maxlength: 2,
                     min: 1,
                     max: 12
-                    
+
                 },
                 slcArea: {
                     min: 1
@@ -400,7 +401,7 @@
                     } else {
                         GuardarDescuentos();
                     }
-                } else { return false;}
+                } else { return false; }
             });
             //AbrirDocumento();
         }).hide();
@@ -424,6 +425,7 @@
             return false;
         });
         $('#Guardar').mousedown(function (event) {
+       
             var b_Valid2 = b_Valid;
             if (event.which == 1 || keydown == 1) {
                 keydown = 0;
@@ -436,12 +438,19 @@
                     var link = $('#form_wizard_1').find('.button-submit');
                     text = link.length == 0 ? 'NP' : link[0].innerText;
                     if (link.length > 0) {
-                        alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
-                            if (e) {
-                                Invocar();
-                                //$('#form_wizard_1').find('.button-submit').click();
-                            }
-                        });
+                        var next = false;
+                        if ($('#chkEsEmpresa')[0].checked == false) {
+                            $("#ModalEsEmpresa").modal("show"); return false;
+                        } else
+                        {
+                            alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
+                                if (e) {
+                                    Invocar();
+                                    //$('#form_wizard_1').find('.button-submit').click();
+                                }
+                            });
+                        }
+                        
                     } else {
                         $('#form_wizard_1').bootstrapWizard('next');
                         b_Valid = 1;
@@ -451,138 +460,140 @@
             return false;
         });
 
-        function Invocar() {
-            Usuario = $.cookie('userAdmin');
-            if (jQuery.type(Usuario) === "undefined") {
-                return false;
-            }
+        
+    }
 
-            /// Insertar Block al momento de Guardar
-            $('#hCarga').text("Guardando...");
-            $('#Load').modal('show');
+    function Invocar() {
+        Usuario = $.cookie('userAdmin');
+        if (jQuery.type(Usuario) === "undefined") {
+            return false;
+        }
 
-            var mesanio = $('#txtAñoT').val();
-            mesanio = mesanio + '-' + ($('#txtMesT').val().length == 1 ? '0' + $('#txtMesT').val() : $('#txtMesT').val());
-            //var Lista1="{"
-            var lista = {
-                Nombre: $('#txtnombre').val(),//0
-                Paterno: $('#txtApPaterno').val(),//1
-                Materno: $('#txtApMaterno').val(),//2
+        /// Insertar Block al momento de Guardar
+        $('#hCarga').text("Guardando...");
+        $('#Load').modal('show');
 
-                Sexo: $('#slcSexo').val(),//3
-                EstadoCivil: $('#slcEstadoCivil').val(),//4
-                FNacimiento: $('#txtFNacimiento').val(),//5
-                Curp: $('#txtCURP').val(),//6
-                Pais: $('#slcLugarN').val(),//7----->Pais|Estado
-                Entidad: $('#slcEstado').val(),//8
-                Delegacion: $('#slcMunicipio').val(),//9
-                CP: $('#txtCP').val(),//10
-                Colonia: $('#txtColonia').val(),//11
-                Calle: $('#txtCalle').val(),//12
-                NoExterior: $('#txtNumeroE').val(),//13
-                NoInterior: $('#txtNumeroI').val() == '' ? 'null' : $('#txtNumeroI').val(),//14
-                TCasa: $('#txtTelefonoCasa').val(),//15
-                TCelular: $('#txtCelular').val(),//16
-                Email: $('#txtEmail').val(),//17
+        var mesanio = $('#txtAñoT').val();
+        mesanio = mesanio + '-' + ($('#txtMesT').val().length == 1 ? '0' + $('#txtMesT').val() : $('#txtMesT').val());
+        //var Lista1="{"
+        var lista = {
+            Nombre: $('#txtnombre').val(),//0
+            Paterno: $('#txtApPaterno').val(),//1
+            Materno: $('#txtApMaterno').val(),//2
 
-                PANombre: $('#txtPAutorizada').val(),//18
-                PAPaterno: $('#txtAPPaterno').val(),//19
-                PAMaterno: $('#txtAPMaterno').val(),//20
-                PATCelular: $('#txtTelefonoPA').val(),//21
-                PAEmail: $('#txtPEmail').val(),//22
-                Parentesco: $('#slcParentesco').val(),//23
+            Sexo: $('#slcSexo').val(),//3
+            EstadoCivil: $('#slcEstadoCivil').val(),//4
+            FNacimiento: $('#txtFNacimiento').val(),//5
+            Curp: $('#txtCURP').val(),//6
+            Pais: $('#slcLugarN').val(),//7----->Pais|Estado
+            Entidad: $('#slcEstado').val(),//8
+            Delegacion: $('#slcMunicipio').val(),//9
+            CP: $('#txtCP').val(),//10
+            Colonia: $('#txtColonia').val(),//11
+            Calle: $('#txtCalle').val(),//12
+            NoExterior: $('#txtNumeroE').val(),//13
+            NoInterior: $('#txtNumeroI').val() == '' ? 'null' : $('#txtNumeroI').val(),//14
+            TCasa: $('#txtTelefonoCasa').val(),//15
+            TCelular: $('#txtCelular').val(),//16
+            Email: $('#txtEmail').val(),//17
 
-                OfertaEducativa: $('#slcCarrera').val(),//24
-                Turno: $('#slcTurno').val(),//25
-                Periodo: $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//26
-                Preparatoria: $('#txtNombrePrepa').val() == "" || $('#txtNombrePrepa').val() == " " ? 'null' : $('#txtNombrePrepa').val(),//27
-                Area: $('#slcArea').val(),//28
-                AñoPrepa: mesanio,//29
-                Promedio: $('#txtPromedio').val() == "" || $('#txtPromedio').val() == " " ? 'null' : $('#txtPromedio').val(), //30
-                Universidad: $('#chkUni')[0].checked == false ? 'null' : $('#txtUni').val(),//31
-                Plantel: $('#slcPlantel').val(),//32            
+            PANombre: $('#txtPAutorizada').val(),//18
+            PAPaterno: $('#txtAPPaterno').val(),//19
+            PAMaterno: $('#txtAPMaterno').val(),//20
+            PATCelular: $('#txtTelefonoPA').val(),//21
+            PAEmail: $('#txtPEmail').val(),//22
+            Parentesco: $('#slcParentesco').val(),//23
 
-                //Persona Aurtorizada 2
-                PANombre2: $('#txtPAutorizada2').val() == '' ? 'null' : $('#txtPAutorizada2').val(),//33
-                PAPaterno2: $('#txtAPPaterno2').val() == '' ? 'null' : $('#txtAPPaterno2').val(),//34
-                PAMaterno2: $('#txtAPMaterno2').val() == '' ? 'null' : $('#txtAPMaterno2').val(),//35
-                PATCelular2: $('#txtTelefonoPA2').val() == '' ? 'null' : $('#txtTelefonoPA2').val(),//36
-                PAEmail2: $('#txtPEmail2').val() == '' ? 'null' : $('#txtPEmail2').val(),//37
-                Parentesco2: $('#slcParentesco2').val() == '- 1' ? 'null' : $('#slcParentesco2').val(),//38
+            OfertaEducativa: $('#slcCarrera').val(),//24
+            Turno: $('#slcTurno').val(),//25
+            Periodo: $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//26
+            Preparatoria: $('#txtNombrePrepa').val() == "" || $('#txtNombrePrepa').val() == " " ? 'null' : $('#txtNombrePrepa').val(),//27
+            Area: $('#slcArea').val(),//28
+            AñoPrepa: mesanio,//29
+            Promedio: $('#txtPromedio').val() == "" || $('#txtPromedio').val() == " " ? 'null' : $('#txtPromedio').val(), //30
+            Universidad: $('#chkUni')[0].checked == false ? 'null' : $('#txtUni').val(),//31
+            Plantel: $('#slcPlantel').val(),//32            
 
-                //Nacionalidad Persona
-                Nacionalidad: $('#slcNacionalidad').val(), //39 NAcionalidad
+            //Persona Aurtorizada 2
+            PANombre2: $('#txtPAutorizada2').val() == '' ? 'null' : $('#txtPAutorizada2').val(),//33
+            PAPaterno2: $('#txtAPPaterno2').val() == '' ? 'null' : $('#txtAPPaterno2').val(),//34
+            PAMaterno2: $('#txtAPMaterno2').val() == '' ? 'null' : $('#txtAPMaterno2').val(),//35
+            PATCelular2: $('#txtTelefonoPA2').val() == '' ? 'null' : $('#txtTelefonoPA2').val(),//36
+            PAEmail2: $('#txtPEmail2').val() == '' ? 'null' : $('#txtPEmail2').val(),//37
+            Parentesco2: $('#slcParentesco2').val() == '- 1' ? 'null' : $('#slcParentesco2').val(),//38
 
-                //Pais|Nacionalidad Prepa
-                NacionalidadPre: $('#slcNacionalidadPrep').val() == '- 1' ? 'null' : $('#slcNacionalidadPrep').val(),//40 NAcionalidad PRepa
-                PaisEstadoPre: $('#slcEstadoPais').val() == '- 1' ? 'null' : $('#slcEstadoPais').val(),//41 PAis Estado Prepa
+            //Nacionalidad Persona
+            Nacionalidad: $('#slcNacionalidad').val(), //39 NAcionalidad
 
-                //Pais|Nacionalidad Prepa
-                NacionalidadUni: 'null',//42NAcionalidad Uni
-                PaisEstadoUni: 'null',//43PAis Estado Uni
-                Titulado: $('#chkUniSi')[0].checked,//44
-                Motivo: $('#chkUniSi')[0].checked == true ? $('#txtUniMotivo').val() : 'null',//45
+            //Pais|Nacionalidad Prepa
+            NacionalidadPre: $('#slcNacionalidadPrep').val() == '- 1' ? 'null' : $('#slcNacionalidadPrep').val(),//40 NAcionalidad PRepa
+            PaisEstadoPre: $('#slcEstadoPais').val() == '- 1' ? 'null' : $('#slcEstadoPais').val(),//41 PAis Estado Prepa
 
-                //Check de autorizacion
-                Autoriza1: $('#chkAuotiza1')[0].checked,//46
-                Autoriza2: $('#chkAuotiza2')[0].checked,//47
-                TelefonoCasaP: $('#txtTelefonoPAT').val() == '' ? 'null' : $('#txtTelefonoPAT').val(),//48
-                TelefonoCasaP2: $('#txtTelefonoPAT2').val() == '' ? 'null' : $('#txtTelefonoPAT2').val(),//49
-                EsEmpresa: $('#chkEsEmpresa')[0].checked ,//50
-                MedioDifusion: $("#slcMedio").val(),//51
-                Usuario: Usuario //52
-            }
+            //Pais|Nacionalidad Prepa
+            NacionalidadUni: 'null',//42NAcionalidad Uni
+            PaisEstadoUni: 'null',//43PAis Estado Uni
+            Titulado: $('#chkUniSi')[0].checked,//44
+            Motivo: $('#chkUniSi')[0].checked == true ? $('#txtUniMotivo').val() : 'null',//45
 
-            var objetos = JSON.stringify(lista);
+            //Check de autorizacion
+            Autoriza1: $('#chkAuotiza1')[0].checked,//46
+            Autoriza2: $('#chkAuotiza2')[0].checked,//47
+            TelefonoCasaP: $('#txtTelefonoPAT').val() == '' ? 'null' : $('#txtTelefonoPAT').val(),//48
+            TelefonoCasaP2: $('#txtTelefonoPAT2').val() == '' ? 'null' : $('#txtTelefonoPAT2').val(),//49
+            EsEmpresa: $('#chkEsEmpresa')[0].checked,//50
+            MedioDifusion: $("#slcMedio").val(),//51
+            Usuario: Usuario //52
+        }
 
-            var Periodo = $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html();
-            $.ajax({
-                type: "POST",
-                url: "WS/Alumno.asmx/InsertarAlumno",
-                data: objetos, // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                datatype: JSON,
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                success: function (data) {
-                    if (!isNaN(data.d)) {
-                        var Alumno = parseInt(data.d);
-                        if (Alumno > 0) {
-                            esEmpresa = $('#chkEsEmpresa')[0].checked 
-                            if (esEmpresa === true) {
+        var objetos = JSON.stringify(lista);
 
-                                if (hayPromocion) { GuardarPromocion(Alumno); }
-                                
-                                
-                                alertify.alert("El numero del Alumno Inscrito es: " + Alumno, function () { 
-                                    //$("#btnListado").click();
-                                    MandarEMail(Alumno);
-                                });
-                               
-                            }
-                            else {
-                                if ($('#slcOferta').val() == '4') {
-                                    $('#tab5').hide();
-                                    //    GuardarIngles(data.d);
-                                    MandarEMail(Alumno); 
-                                } else {
-                                    $('#divTablaDescuento').hide();
-                                    CargarTiposPagos(data.d);
-                                    CargarDescuentos(data.d);
-                                    $('#form_wizard_1').bootstrapWizard('next');
-                                    if (hayPromocion) { GuardarPromocion(Alumno); } else { $('#Load').modal('hide'); }
-                                }
+        var Periodo = $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html();
+        $.ajax({
+            type: "POST",
+            url: "WS/Alumno.asmx/InsertarAlumno",
+            data: objetos, // the data in form-encoded format, ie as it would appear on a querystring
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            datatype: JSON,
+            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+            success: function (data) {
+                if (!isNaN(data.d)) {
+                    var Alumno = parseInt(data.d);
+                    if (Alumno > 0) {
+                        esEmpresa = $('#chkEsEmpresa')[0].checked
+                        if (esEmpresa === true) {
+
+                            if (hayPromocion) { GuardarPromocion(Alumno); }
+
+
+                            alertify.alert("El numero del Alumno Inscrito es: " + Alumno, function () {
+                                //$("#btnListado").click();
+                                MandarEMail(Alumno);
+                            });
+
+                        }
+                        else {
+                            if ($('#slcOferta').val() == '4') {
+                                $('#tab5').hide();
+                                //    GuardarIngles(data.d);
+                                MandarEMail(Alumno);
+                            } else {
+                                $('#divTablaDescuento').hide();
+                                CargarTiposPagos(data.d);
+                                CargarDescuentos(data.d);
+                                $('#form_wizard_1').bootstrapWizard('next');
+                                if (hayPromocion) { GuardarPromocion(Alumno); } else { $('#Load').modal('hide'); }
                             }
                         }
-                        else { $('#Load').modal('hide'); return false; }
                     }
-                    else {
-                        $('#Load').modal('hide');
-                        console.log(data.d);
-                    }
+                    else { $('#Load').modal('hide'); return false; }
                 }
-            });
+                else {
+                    $('#Load').modal('hide');
+                    console.log(data.d);
+                }
+            }
+        });
 
-        }
     }
 
     function CrearTabla(Periodo) {
@@ -760,7 +771,7 @@
         $.ajax({
             type: "POST",
             url: "WS/Descuentos.asmx/GuardarDescuentos",
-            data:JSON.stringify(lsDatos), // the data in form-encoded format, ie as it would appear on a querystring
+            data: JSON.stringify(lsDatos), // the data in form-encoded format, ie as it would appear on a querystring
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             datatype: JSON,
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -806,8 +817,8 @@
                 } else {
                     $('#Load').modal('hide');
                     var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
-       + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
-       "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
+                        + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
+                        "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
                     alertify.alert(extramail, function () {
                         $(location).attr('href', '#Views/1');
                     });
@@ -824,7 +835,7 @@
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
-                if (data.d.length>1) {
+                if (data.d.length > 1) {
                     MandarMail(Alumnoid);
                 } else {
                     jQuery('li', $('#form_wizard_1')).removeClass("done");
@@ -832,8 +843,8 @@
                     if (esEmpresa) {
                         $('#Load').modal('hide');
                         var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
-           + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
-           "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
+                            + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
+                            "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
                         alertify.alert(extramail, function () {
                             $(location).attr('href', '#Views/1');
                         });
@@ -844,9 +855,9 @@
     }
 
     function GuardarDocumentoIngles(AlumnoId, OfertaEducativa) {
-        var extramail="<p>"+"Se ha enviado un mail a "+$('#txtEmail').val()+" con el usuario y password del alumno."
-        +"Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados."+
-        "Si lo encuentra ahí, por favor que lo marque como 'No Spam'."+"</p>";
+        var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
+            + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
+            "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
 
         var data = new FormData();
         var flIns = $('#BecArchivo');
@@ -867,9 +878,9 @@
     }
 
     function GuardarDocumentos(Beca, Insc, Exam) {
-        var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno." 
-       +"Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
-       "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
+        var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
+            + "Si no puede visualizarlo en su bandeja de entrada en los próximos 15 minutos;  que lo busque en su carpeta de elementos no deseados." +
+            "Si lo encuentra ahí, por favor que lo marque como 'No Spam'." + "</p>";
         var data = new FormData();
         var flIns = $('#BecArchivo'); // FileList object
 
@@ -912,8 +923,8 @@
             'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),
             'Credencial': $('#txtDescuentoCred').val(),
             'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),
-            'Material': $('#chkMaterial')[0].checked ,
-            'EsEmpresa': $('#chkEsEmpresa')[0].checked ,
+            'Material': $('#chkMaterial')[0].checked,
+            'EsEmpresa': $('#chkEsEmpresa')[0].checked,
             'DescuentoExamen': null,
             'JustificacionExam': null,
             'DescuentoIns': null,
@@ -925,7 +936,7 @@
                 $.ajax({
                     type: "POST",
                     url: "WS/Descuentos.asmx/GuardarIdioma",
-                    data: JSON.stringify(Campos) , // the data in form-encoded format, ie as it would appear on a querystring
+                    data: JSON.stringify(Campos), // the data in form-encoded format, ie as it would appear on a querystring
                     //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
                     datatype: JSON,
                     contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
@@ -1006,46 +1017,70 @@
             }
         });
     }
+    
 
     $('#chkYo').click(function () {
+        
         if ($(this).is(':checked')) {
-            $('#txtPAutorizada').val($('#txtnombre').val());
-            $('#txtAPPaterno').val($('#txtApPaterno').val());
-            $('#txtAPMaterno').val($('#txtApMaterno').val());
-            $('#txtTelefonoPA').val($('#txtCelular').val());
-            $('#txtPEmail').val($('#txtEmail').val());
-            $('#txtTelefonoPAT').val($('#txtTelefonoCasa').val());
-            $('#slcParentesco').val('7');
-            $('#txtPAutorizada').attr('readonly', true);
-            $('#txtAPPaterno').attr('readonly', true);
-            $('#txtAPMaterno').attr('readonly', true);
-            $('#txtTelefonoPA').attr('readonly', true);
-            $('#txtPEmail').attr('readonly', true);
-            $('#txtTelefonoPAT').attr('readonly', true);
-            $('#slcParentesco').attr('disabled', true);
+            $('#txtPAutorizada2').val($('#txtnombre').val());
+            $('#txtAPPaterno2').val($('#txtApPaterno').val());
+            $('#txtAPMaterno2').val($('#txtApMaterno').val());
+            $('#txtTelefonoPA2').val($('#txtCelular').val());
+            $('#txtPEmail2').val($('#txtEmail').val());
+            $('#txtTelefonoPAT2').val($('#txtTelefonoCasa').val());
+            $('#slcParentesco2').val('7');
+            $('#txtPAutorizada2').attr('readonly', true);
+            $('#txtAPPaterno2').attr('readonly', true);
+            $('#txtAPMaterno2').attr('readonly', true);
+            $('#txtTelefonoPA2').attr('readonly', true);
+            $('#txtPEmail2').attr('readonly', true);
+            $('#txtTelefonoPAT2').attr('readonly', true);
+            $('#slcParentesco2').attr('disabled', true);
         } else {
-            $('#txtPAutorizada').val('');
-            $('#txtAPPaterno').val('');
-            $('#txtAPMaterno').val('');
-            $('#txtTelefonoPA').val('');
-            $('#txtPEmail').val('');
-            $('#txtTelefonoPAT').val('');
-            $('#slcParentesco').val('-1');
-            $('#txtPAutorizada').attr('readonly', false);
-            $('#txtAPPaterno').attr('readonly', false);
-            $('#txtAPMaterno').attr('readonly', false);
-            $('#txtTelefonoPA').attr('readonly', false);
-            $('#txtPEmail').attr('readonly', false);
-            $('#txtTelefonoPAT').attr('readonly', false);
-            $('#slcParentesco').attr('disabled', false);
+            $('#txtPAutorizada2').val('');
+            $('#txtAPPaterno2').val('');
+            $('#txtAPMaterno2').val('');
+            $('#txtTelefonoPA2').val('');
+            $('#txtPEmail2').val('');
+            $('#txtTelefonoPAT2').val('');
+            $('#slcParentesco2').val('-1');
+            $('#txtPAutorizada2').attr('readonly', false);
+            $('#txtAPPaterno2').attr('readonly', false);
+            $('#txtAPMaterno2').attr('readonly', false);
+            $('#txtTelefonoPA2').attr('readonly', false);
+            $('#txtPEmail2').attr('readonly', false);
+            $('#txtTelefonoPAT2').attr('readonly', false);
+            $('#slcParentesco2').attr('disabled', false);
         }
     });
 
+    $("#slcTurno").on('change', function () {
+        if ($(this).val() == 5)
+            $('#chkEsEmpresa').iCheck('check'); 
+    });
+    
+    $('#chkEsEmpresa').iCheck({
+        checkboxClass: 'icheckbox_square-grey',
+        radioClass: 'iradio_square-grey',
+        increaseArea: '20%' // optional
+    });
+
+    $("#btnSi").click(function () {
+        $("#ModalEsEmpresa").modal("hide");
+        alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
+            if (e) {
+                Invocar();
+                //$('#form_wizard_1').find('.button-submit').click();
+            }
+        });
+    });
+
+    $("#btnNo").click(function () { $("#chkEsEmpresa").focus();});
+    
     // Promocion en casa//
     var AlumnoPromocion, tblAlumno2, dataAlumno = [], hayPromocion = false;
 
-    $("#btnPromocion").click(function ()
-    {
+    $("#btnPromocion").click(function () {
         $("#PopAlumnoPromocion").modal('show');
     });
 
@@ -1057,8 +1092,7 @@
         $("#PopAlumnoPromocion").modal('hide');
     });
 
-    $("#btnClosePromo").click(function ()
-    {
+    $("#btnClosePromo").click(function () {
         $("#txtClave1").val("");
         if (tblAlumno2 != undefined) {
             tblAlumno2.fnClearTable();
@@ -1075,8 +1109,8 @@
     });
 
     $("#btnBuscar1").click(function () {
-       
-         AlumnoPromocion = $('#txtClave1').val();
+
+        AlumnoPromocion = $('#txtClave1').val();
         if (AlumnoPromocion.length == 0) { return false; }
         if (tblAlumno2 != undefined) {
             tblAlumno2.fnClearTable();
@@ -1153,7 +1187,7 @@
     });
 
     function GuardarPromocion(AlumnoProspecto) {
-        
+
         dataAlumno[0].AlumnoIdProspecto = AlumnoProspecto;
         dataAlumno[0].Anio = $('#slcPeriodo').val().substring(2);
         dataAlumno[0].PeriodoId = $('#slcPeriodo').val().substring(0, 1);
@@ -1173,7 +1207,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d) {
-                 
+
                 }
             }
         });

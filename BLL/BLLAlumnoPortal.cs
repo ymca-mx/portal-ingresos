@@ -12273,7 +12273,7 @@ namespace BLL
 
                     AlumnoInscrito AlumnoInscrito = db.AlumnoInscrito.Where(a => a.AlumnoId == Cambio.AlumnoId
                                                             && a.OfertaEducativaId == Cambio.OfertaEducativaIdActual
-                                                            && a.EstatusId == 1
+                                                            && (a.EstatusId == 1 || a.EstatusId == 8)
                                                             && a.Anio == Cambio.Anio
                                                             && a.PeriodoId == Cambio.PeriodoId)?.FirstOrDefault();
 
