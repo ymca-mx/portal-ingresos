@@ -10,255 +10,259 @@
     <meta content="" name="author" />
     <meta http-equiv="pragma" content="no-cache" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="Content/bootstrap-switch/bootstrap3/bootstrap-switch.css" rel="stylesheet" />
-    <link href="Content/bootstrap-switch/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+    
 </head>
 <body>
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
-            <form id="frmBecas" action="javascript:;">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4 class="caption-subject font-blue bold uppercase">
+                    Reinscripción, Actualización de BECAS
+                </h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="table" id="dvBecaBuscar">
+                <div class="row col-md-12">
+                    <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
+                    <input type="text" id="txtAlumno" class="form-control-static font-md" style="text-align:right" />&nbsp;
+                    <a class="btn blue " id="btnBuscarAlumno">Buscar Alumno</a>
+                </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="portlet light" id="dvCargos" hidden="hidden">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <h1 class="caption-subject font-blue bold uppercase">
-                                        Reinscripción, Actualización de BECAS
-                                    </h1>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="portlet-body form">
-                                    <div class="table">
-                                        <div class="row">
-                                            <div id="dvBecaBuscar">
-                                                <div class="col-md-12">
-                                                    <div class="form-group col-md-12">
-                                                        <label class="control-label">Clave Alumno</label>&nbsp;
-                                                        <input type="number" id="txtAlumno" class="form-control-static font-md" style="text-align:right" />&nbsp;
-                                                        <a class="btn blue " id="btnBuscarAlumno">Buscar Alumno</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group col-md-4">
-                                                        <label class="control-label">Alumno</label>&nbsp;&nbsp;
-                                                        <label class="bold" id="lblNombre"></label>
-                                                    </div>                                                    
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="col-md-6" id="divInscrito" hidden="hidden">
-                                                        <div id="pulsate-regular" class="col-md-12" style="padding:5px;">
-                                                            <label class="control-label bold font-red-flamingo" id="lblInscito">Alumno Inscrito</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6" id="divInscrito2" hidden="hidden">
-                                                        <div id="pulsate-regular2" class="center col-md-6" style="padding:5px;">
-                                                            <label id="lblPagos" class="control-label bold font-green">Pagos sin generar</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6" id="divInscrito3" hidden="hidden">
-                                                        <div id="pulsate-regular3" class="col-md-12" style="padding:5px;">
-                                                            <label class="control-label bold font-red-flamingo">Alumno en Grupo Especial</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <hr style="margin:5px" />
-                                                    <div class="form-group col-md-6">
-                                                        <label class="control-label">Oferta Educativa</label>&nbsp;&nbsp;
-                                                        <input type="text" class="form-control font-md" id="txtOfertaEducativa" readonly="readonly" />
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label class="control-label">Periodo</label>
-                                                        <input type="text" class="form-control font-md" id="txtPeriodo" readonly="readonly" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" id="divGenerar">
-                                                <div class="portlet-body form">
-                                                    <table class="table table-striped table-bordered table-advance table-hover" id="tblBecas">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Periodo
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Descripción
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp;Acádemica
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp;Deportiva
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Otros
-                                                                    <br> &nbsp;Descuentos
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp;SEP
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp; COMITE
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Usuario
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Fecha
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" id="divGenerar2">
-                                                <hr style="margin:5px" />
-                                                <div class="portlet-body form">
-                                                    <table id="tblBeca" class="table-striped " style="width:100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    Periodo
-                                                                </th>
-                                                                <th>
-                                                                    Descripción
-                                                                </th>
-                                                                <th>
-                                                                    BECA Acádemica
-                                                                </th>
-                                                                <th>
-                                                                    BECA SEP
-                                                                </th>
-                                                                <th>
-                                                                    Documento Beca
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="background-color:white; text-align:center;">
-                                                                    <label id="lblPeriodoBeca"> 2016 3</label>
-                                                                </td>
-                                                                <td style="background-color:white; ">
-                                                                    <label id="lblDescripcionBeca">Mayo - Agosto 2016</label>
-                                                                </td>
-                                                                <td style="background-color:white;border: solid 1px;text-align:center;">
-                                                                    <input type="text" id="txtBecaMonto" name="txtBecaMonto" class="form-control" style="text-align:center" value="0" pattern="[0-9]" />
-                                                                </td>
-                                                                <td style="background-color:white;border: solid 1px;text-align:center;">
+                    <div class="portlet-body form" id="frmVarios" hidden="hidden">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; Nombre
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-calendar"></i>&nbsp; Registro
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-edit"></i>&nbsp; Acción
+                                        </th>
 
-                                                                    <input type="checkbox" class="switch-state" id="chkSEP" data-checkbox="chkSEP" name="chkSEP" data-on-label="Si" data-off-label="No" />
-                                                                </td>
-                                                                <td style="background-color:white;border: solid 1px;text-align:center;">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="fileinput-new " data-provides="fileinput" id="FileCarta">
-                                                                            <!-- The fileinput-button span is used to style the file input field as button -->
-                                                                            <span class="btn blue  fileinput-button">
-                                                                                <i class="fa fa-plus"></i>
-                                                                                <span>
-                                                                                    Seleccionar Archivo...
-                                                                                </span>
-                                                                                <input type="file" id="CartaArchivo" name="CartaArchivo" accept=".PDF, .pdf" />
-                                                                            </span>
-                                                                            <span id="txtCartaArchivo" class="fileinput-filename col-lg-10"></span>
-                                                                            <a href="javascript:;" class="close fileinput-exists" data-dissmiss="fileinput"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr></tr>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td>
-                                                                    <label class="control-label bold">
-                                                                        Materias Sueltas
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="control-label bold">
-                                                                        Asesorias
-                                                                    </label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td>
-                                                                    <input type="number" class="form-control" id="txtMateria" max="10" min="0" readonly="readonly"/>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" class="form-control" id="txtAsesoria" max="10" min="0" readonly="readonly"/>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <hr style="margin:5px" />
-                                                <!--<a class="btn blue " id="btnRegresar"><i class="fa  fa-arrow-left"></i>  Regresar</a>-->
-                                                <a class="btn green " id="btnGenerarCargos" href="javascript:return 0;">Reinscribir</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--<a href="#Monto" data-toggle="modal" id="btnPopup"></a>-->
-                            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                                <div class="modal-dialog modal-sm" style="height: 90px;">
-                                    <!--<div class="modal-content" style="width:auto">-->
-                                    <div class="form-group">
-                                        <h3 id="hCarga">Cargando</h3>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="bar" style="width:auto" id="divBar">
-                                            <p id="txtBar"></p>
-                                        </div>
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="divOfertas" data-keyboard="false">
-                                <div class="modal-dialog modal-sm" style="width:700px">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" id="btnClosedivOfertas" aria-hidden="true"></button>
-                                        <h3 class="modal-title">Ofertas del Alumno</h3>
-                                    </div>
-                                    <table class="table table-striped table-bordered table-advance table-hover" style="width:auto" id="divOfertaAlumno">
-                                        <thead>
-                                            <tr>
-                                                <th>Id Oferta</th>
-                                                <th>Descripción</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    <!--</div>-->
-                                </div>
-                            </div>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div id="divContainer">
+                <div class="row col-md-12">
+                    <label class="control-label">Alumno</label>&nbsp;&nbsp;
+                    <label class="bold" id="lblNombre"></label>
+                </div>
+                <div class="row col-md-12">
+                    <div class="col-md-6" id="divInscrito" hidden="hidden">
+                        <div id="pulsate-regular" class="col-md-12" style="padding:5px;">
+                            <label class="control-label bold font-red-flamingo" id="lblInscito">Alumno Inscrito</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="divInscrito2" hidden="hidden">
+                        <div id="pulsate-regular2" class="center col-md-6" style="padding:5px;">
+                            <label id="lblPagos" class="control-label bold font-green">Pagos sin generar</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="divInscrito3" hidden="hidden">
+                        <div id="pulsate-regular3" class="col-md-12" style="padding:5px;">
+                            <label class="control-label bold font-red-flamingo">Alumno en Grupo Especial</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table">
+                    <div class="row col-md-12">
+                        <hr style="margin:5px" />
+                    </div>
+                </div>
+
+                <div class="row">                    
+                    <div class="col-md-6">
+                        <label class="control-label">Oferta Educativa</label>&nbsp;&nbsp;
+                        <input type="text" class="form-control font-md" id="txtOfertaEducativa" readonly="readonly" />
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Periodo</label>
+                        <input type="text" class="form-control font-md" id="txtPeriodo" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="table" id="divGenerar">
+                <div class="portlet-body form">
+                    <table class="table table-striped table-bordered table-advance table-hover" id="tblBecas">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">
+                                    &nbsp; Periodo
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; Descripción
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; BECA
+                                    <br> &nbsp;Acádemica
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; BECA
+                                    <br> &nbsp;Deportiva
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; Otros
+                                    <br> &nbsp;Descuentos
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; BECA
+                                    <br> &nbsp;SEP
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; BECA
+                                    <br> &nbsp; COMITE
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; Usuario
+                                </th>
+                                <th style="text-align:center">
+                                    &nbsp; Fecha
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="table" id="divGenerar2">
+                <hr style="margin:5px" />
+                <div class="row col-md-12">
+                    <table id="tblBeca" class="table-striped " style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Periodo
+                                </th>
+                                <th>
+                                    Descripción
+                                </th>
+                                <th>
+                                    BECA Acádemica
+                                </th>
+                                <th style="text-align:center; ">
+                                   &nbsp;&nbsp;&nbsp; BECA SEP &nbsp;&nbsp;&nbsp;
+                                </th>
+                                <th>
+                                    Documento Beca
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="background-color:white; text-align:center;">
+                                    <label id="lblPeriodoBeca"> </label>
+                                </td>
+                                <td style="background-color:white; ">
+                                    <select class="form-control" id="slcDescripcionBeca" disabled></select>
+                                </td>
+                                <td style="background-color:white;border: solid 1px;text-align:center;">
+                                    <input type="text" id="txtBecaMonto" name="txtBecaMonto" class="form-control" style="text-align:center" value="0" pattern="[0-9]" />
+                                </td>
+                                <td style="background-color:white;border: solid 1px;text-align:center;width:150px">
+                                    <input type="checkbox" class="switch-state" id="chkSEP" data-checkbox="chkSEP" name="chkSEP" data-on-label="Si" data-off-label="No" />
+                                </td>
+                                <td style="background-color:white;border: solid 1px;text-align:center;">
+                                    <div class="col-lg-12">
+                                        <div class="fileinput-new " data-provides="fileinput" id="FileCarta" >
+                                            <!-- The fileinput-button span is used to style the file input field as button -->
+                                            <span class="btn blue  fileinput-button">
+                                                <i class="fa fa-plus"></i>
+                                                <span>
+                                                    Seleccionar Archivo...
+                                                </span>
+                                                <input type="file" id="CartaArchivo" name="CartaArchivo" accept=".PDF, .pdf"  />
+                                            </span>
+                                            <span id="txtCartaArchivo" class="fileinput-filename col-lg-10"></span>
+                                            <a href="javascript:;" class="close fileinput-exists" data-dissmiss="fileinput"></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <label class="control-label bold">
+                                        Materias Sueltas
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="control-label bold">
+                                        Asesorias
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input type="number" class="form-control" id="txtMateria" max="10" min="0" readonly="readonly" />
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" id="txtAsesoria" max="10" min="0" readonly="readonly" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
-            </form>
+            </div>
         </div>
-
+        <div class="panel-footer">
+            <button type="button" class="btn green " id="btnGenerarCargos">Reinscribir</button>
+        </div>
     </div>
-    <script src="Scripts/bootstrap-switch.js"></script>
-    <script src="Scripts/bootstrap-switch.min.js"></script>    
+
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="height: 90px;">
+            <!--<div class="modal-content" style="width:auto">-->
+            <div class="form-group">
+                <h3 id="hCarga">Cargando</h3>
+            </div>
+            <div class="form-group">
+                <div class="bar" style="width:auto" id="divBar">
+                    <p id="txtBar"></p>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="divOfertas" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="width:700px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnClosedivOfertas" aria-hidden="true"></button>
+                <h3 class="modal-title">Ofertas del Alumno</h3>
+            </div>
+            <table class="table table-striped table-bordered table-advance table-hover" style="width:auto" id="divOfertaAlumno">
+                <thead>
+                    <tr>
+                        <th>Id Oferta</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+            </table>
+            <!--</div>-->
+        </div>
+    </div>
+
     <script src="JS/Becas/AlumnosBeca.js"></script>
 </body>
 </html>

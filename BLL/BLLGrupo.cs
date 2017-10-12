@@ -1043,16 +1043,15 @@ namespace BLL
                     #endregion
 
                     #region Calculos de Nuevas Cuotas
-                    if (!AlumnoConfiguracion.First().EsCuotaCongelada)
+                    if (!AlumnoConfiguracion.First().EsCuotaCongelada && PeriodoId == 2 )
                     {
-                        //if(PeriodoId)
-
+                        
                         decimal cuota = (AlumnoConfiguracion.First().CuotaColegiatura +
                                          (CuotasIncrementos.Where(a => a.PagoConceptoId == 800).FirstOrDefault()?.ImporteIncremento ?? 0));
 
                         AlumnoConfiguracion.First().CuotaColegiatura = cuota;
                     }
-                    if (!AlumnoConfiguracion.First().EsInscripcionCongelada)
+                    if (!AlumnoConfiguracion.First().EsInscripcionCongelada && PeriodoId == 2)
                     {
                         decimal cuota = (AlumnoConfiguracion.First().CuotaInscripcion +
                              (CuotasIncrementos.Where(a => a.PagoConceptoId == 802).FirstOrDefault()?.ImporteIncremento ?? 0));

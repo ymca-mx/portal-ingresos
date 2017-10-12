@@ -5474,8 +5474,8 @@
     <Content Include="Views\Mantenimiento\R_.html" />
     <Content Include="Scripts\base64.js" />
     <Content Include="Scripts\base64.min.js" />
-    <Content Include="Scripts\bootstrap-switch.js" />
-    <Content Include="Scripts\bootstrap-switch.min.js" />
+    <Content Include="Scripts\Bootstrap-Switch\bootstrap-switch.js" />
+    <Content Include="Scripts\Bootstrap-Switch\bootstrap-switch.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.scss" />

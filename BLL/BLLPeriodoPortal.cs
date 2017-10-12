@@ -238,6 +238,38 @@ namespace BLL
                 return objPeriodo;
             }
         }
+
+        public static List<DTOPeriodo> ListaPeriodoAnteriorActual()
+        {
+            using(UniversidadEntities db = new UniversidadEntities())
+            {
+                DateTime fecha = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+
+                List<Periodo> ListaPeriodo = new List<Periodo>
+                {
+                    db.Periodo
+                        .Where(b => b.FechaInicial <= fecha && b.FechaFinal >= fecha)
+                        .FirstOrDefault()
+                };
+
+                int Anioa, PeriodoIda;
+                Anioa = ListaPeriodo.FirstOrDefault().PeriodoId == 1 ? ListaPeriodo.FirstOrDefault().Anio - 1 : ListaPeriodo.FirstOrDefault().Anio;
+                PeriodoIda = ListaPeriodo.FirstOrDefault().PeriodoId == 1 ? 3 : ListaPeriodo.FirstOrDefault().PeriodoId - 1;
+
+                ListaPeriodo.Insert(0, db.Periodo
+                                            .Where(a => a.Anio == Anioa && a.PeriodoId == PeriodoIda)
+                                            .FirstOrDefault()
+                                        );
+
+                return ListaPeriodo.Select(a => new DTOPeriodo
+                {
+                    Anio = a.Anio,
+                    PeriodoId = a.PeriodoId,
+                    Descripcion = a.Descripcion
+                }).ToList();
+            }
+        }
+
         public static DTOPeriodo TraerPeriodoEntreFechas(DateTime FechaActual)
         {
             using(UniversidadEntities db= new UniversidadEntities())
