@@ -14,6 +14,7 @@
             Funciones.starDate();
         },
         EsCursoYMCA: false,
+        PeriodoActual:'',
         TraerDocentes: function () {
             $.ajax({
                 type: "POST",
@@ -86,15 +87,10 @@
                             $("#slcPeriodo").append(opt);
                             $('#slcPeriodoCurso').append(opt2);
                         });                    
+                        Funciones.PeriodoActual = data.d[1].Anio + '' + data.d[1].PeriodoId;
                     }
-                    var PeriodoActual1 = data.d[1].Anio + '' + data.d[1].PeriodoId;
-                    var PeriodoActual2 = data.d[1].Anio + '' + data.d[1].PeriodoId;
-                    console.log(PeriodoActual1);
-
-                    $("#slcPeriodo").val(PeriodoActual1);
-                    $("#slcPeriodo").change();
-                    $('#slcPeriodoCurso').val(PeriodoActual2);
-                    $("#slcPeriodoCurso").change();
+                    
+                    
                 }
             });
         },
@@ -216,7 +212,7 @@
             fil.removeClass('input-small').addClass('input-large');
             $('#Load').modal('hide');
         },
-        IdentificarBoton: function () {
+        IdentificarBoton: function () {            
             var row = this.parentNode.parentNode;
             var DTODocente = tblDocentes.fnGetData($(this).closest('tr'));
             if ($(this)[0].name === "OFertaTipo") { Funciones.PopFormacionAcademica(DTODocente); }
@@ -365,7 +361,7 @@
             $('#chkCedula').attr('disabled', false);
             $('#slcOFertaTipo').attr('disabled', false);
             $('#frmFormacion input').removeAttr('readonly');
-            
+            $('#slcPeriodo').val(Funciones.PeriodoActual);
             $("#FileComprobante").show();
 
             $('input').iCheck({
@@ -397,6 +393,8 @@
             $('#slcPeriodoCurso').addClass('edited');
             
             $('#slcPeriodoCurso').addClass('edited');
+            $('#slcPeriodoCurso').val(Funciones.PeriodoActual);
+
             $('#txtFechas').addClass('edited');
 
             $('#btnGuardarCurso').prop("disabled", false);
@@ -414,6 +412,7 @@
             $('#txtCursoNombreI').val("Unidad Ejercito");
             $('#txtCursoNombreI').addClass('edited');
             $('#slcPeriodoCurso').addClass('edited');
+            $('#slcPeriodoCurso').val(Funciones.PeriodoActual);
             
             $('#txtFechas').addClass('edited');
 
@@ -579,7 +578,7 @@
                 });
             }
         },
-        DocenteSeleccionado: 0,        
+        DocenteSeleccionado: 0,
     };
     
     Funciones.init();
@@ -591,4 +590,5 @@
     $('#FileComprobante a').click(Funciones.ClickArchivo);
     $('#btnGuardarFormacion').on('click', Funciones.btnGuardarFormacionClick);
     $('#btnGuardarCurso').on('click', Funciones.btnGuardarCursoExClick);
+    
 });

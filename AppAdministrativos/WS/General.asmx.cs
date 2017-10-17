@@ -21,7 +21,7 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public string ActivarPago(string PagoId)
         {
-           return BLLPagoPortal.ActivarPago(int.Parse(PagoId));
+            return BLLPagoPortal.ActivarPago(int.Parse(PagoId));
         }
 
         [WebMethod]
@@ -157,7 +157,7 @@ namespace AppAdministrativos.WS
         {
             return BLLPagoConcepto.ListaPagoConceptos2(int.Parse(AlumnoId), int.Parse(OfertaEducativa), int.Parse(UsuarioId));
         }
-       
+
         [WebMethod]
         public string GenerarPagoZS()
         {
@@ -205,7 +205,7 @@ namespace AppAdministrativos.WS
             }
             else
             {
-                try { BLLCargo.CancelarTotal(int.Parse(PagoId), int.Parse(UsuarioId), Comentario);  return "Guardado"; }
+                try { BLLCargo.CancelarTotal(int.Parse(PagoId), int.Parse(UsuarioId), Comentario); return "Guardado"; }
                 catch (Exception d) { return d.Message; }
             }
         }
@@ -222,7 +222,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public List<DTOPagoCancelacionSolicitud> ConsultarPagoCancelacionSolicitud( string UsuarioId,string Tipo)
+        public List<DTOPagoCancelacionSolicitud> ConsultarPagoCancelacionSolicitud(string UsuarioId, string Tipo)
         {
             return BLLPagoPortal.ConsultarPagoCancelacionSolicitud(int.Parse(UsuarioId), int.Parse(Tipo));
         }
@@ -252,6 +252,12 @@ namespace AppAdministrativos.WS
         public DTOPeriodo GetPeriodoActual()
         {
             return BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+        }
+
+        [WebMethod]
+        public List<DTOPeriodo> PeriodoAnteriorActual()
+        {
+            return BLLPeriodoPortal.ListaPeriodoAnteriorActual();
         }
 
         [WebMethod]
