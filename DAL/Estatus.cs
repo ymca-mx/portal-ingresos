@@ -42,6 +42,7 @@ namespace DAL
             this.Recibo = new HashSet<Recibo>();
             this.ReclasificacionTipo = new HashSet<ReclasificacionTipo>();
             this.ReferenciaProcesada = new HashSet<ReferenciaProcesada>();
+            this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
             this.UniversidadValidacion = new HashSet<UniversidadValidacion>();
             this.Usuario = new HashSet<Usuario>();
             this.UsuarioPasswordRecovery = new HashSet<UsuarioPasswordRecovery>();
@@ -100,6 +101,8 @@ namespace DAL
         public virtual ICollection<ReclasificacionTipo> ReclasificacionTipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciaProcesada> ReferenciaProcesada { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UniversidadValidacion> UniversidadValidacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

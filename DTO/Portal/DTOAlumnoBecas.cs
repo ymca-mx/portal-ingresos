@@ -25,12 +25,10 @@ namespace DTO
         public string AlumnoId { get; set; }
         public string Nombre { get; set; }
         public List<DTOOfertaEducativa> OfertasEducativas { get; set; }
-        public string PeriodoId { get; set; }
-        public string Anio { get; set; }
-        public string PeriodoD { get; set; }
-        public List<PagosAlumnos> lstPagos { get; set; }
+        public List<DTOPeriodosReinscipcion> ListPeriodos { get; set; }
+        public List<PagosAlumnos> LstPagos { get; set; }
         public Boolean Inscrito { get; set; }
-        public int estatusid { get; set; }
+        public int Estatusid { get; set; }
         public bool NuevoIngreso { get; set; }
         public bool SEP { get; set; }
         public bool Academica { get; set; }
@@ -56,5 +54,24 @@ namespace DTO
         public decimal BecaAcademicaD { get; set; }
         public string TotalPagar { get; set; }
         public int SubPeriodo { get; set; }
+    }
+    public class DTOSolicitudInscripcion
+    {
+        public int AlumnoId { get; set; }
+        public int OfertaEducativaId { get; set; }
+        public int Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public int SolicitudUsuarioId { get; set; }
+        public string SolicitudNombreUsuario { get; set; }
+        public string Observaciones { get; set; }
+        public int AutorizoUsuarioId { get; set; }
+    }
+    public class DTOPeriodosReinscipcion
+    {
+        public string PeriodoId { get; set; }
+        public string Anio { get; set; }
+        public string PeriodoD { get; set; }
+        public string Descripcion { get; set; }
+        public DTOSolicitudInscripcion SolicitudInscripcion { get; set; }
     }
 }

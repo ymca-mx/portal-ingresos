@@ -667,6 +667,9 @@
     <Compile Include="SistemaConfiguracion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="SolicitudInscripcion.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="spReporteBecasConcentrado.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

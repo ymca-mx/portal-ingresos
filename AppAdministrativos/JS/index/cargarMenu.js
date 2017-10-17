@@ -5,6 +5,14 @@
     //var app_router = new AppRouter;
     var app_router;
     var Funciones = {
+        clearAlert: function () {
+            try { alertify.confirm().destroy(); }
+            catch (err) { }
+            try { alertify.alert().destroy(); }
+            catch (arr) { }
+            try { alertify.prompt().destroy(); }
+            catch (arr3) { }
+        },
         alertify3: function () {
             return '<script src="Style/Complementos/Alertify/alertify.js"></script>'; 
         },
@@ -123,6 +131,7 @@
                 $('#divDinamico').empty();
 
                 if (url !== '#') {
+                    Funciones.clearAlert();
                     $('#divDinamico').load(url);
                     $('#divDinamico').append(Funciones.alertify3());
                 }
@@ -153,6 +162,7 @@
                 });
             });
             if (direccion.length > 0) {
+                Funciones.clearAlert();
                 $('#divDinamico').load(direccion);
                 $('#divDinamico').append(Funciones.alertify3());
             }
@@ -172,7 +182,8 @@
             if (actions === '#') { return false; }
             if (actions === 'Views/') { return false; }
             var url = actions;
-
+            
+            Funciones.clearAlert();
             $('#divDinamico').load(url);
             $('#divDinamico').append(Funciones.alertify3());
 

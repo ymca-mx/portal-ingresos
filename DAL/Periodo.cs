@@ -31,6 +31,7 @@ namespace DAL
             this.DocenteEstudioPeriodo = new HashSet<DocenteEstudioPeriodo>();
             this.PeriodoAnticipado = new HashSet<PeriodoAnticipado>();
             this.PromocionCasa = new HashSet<PromocionCasa>();
+            this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
         }
     
         public int Anio { get; set; }
@@ -68,5 +69,7 @@ namespace DAL
         public virtual ICollection<PeriodoAnticipado> PeriodoAnticipado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PromocionCasa> PromocionCasa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion { get; set; }
     }
 }
