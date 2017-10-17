@@ -131,39 +131,39 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7754,
-                anio = 2016,
+                alumnoId = 6160,
+                anio = 2017,
                 periodoId = 3,
-                ofertaEducativaId = 3,
-                porcentajeBeca = 62.88m, //70.15
-                porcentajeInscripcion = 50m,
+                ofertaEducativaId = 18,
+                porcentajeBeca = 86.57m, //70.15
+                porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
                 usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2016-05-30", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                fecha = "2017-05-01", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
             });
 
-            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
-            {
-                alumnoId = 7754,
-                anio = 2017,
-                periodoId = 1,
-                ofertaEducativaId = 3,
-                porcentajeBeca = 62.88m, //70.15
-                porcentajeInscripcion = 0m,
-                esSEP = false,
-                esComite = false,
-                esEmpresa = true,
-                usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2016-09-08", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
-                genera = true
-                //    //Colegiatura = decimal
-                //    //Inscripcion = decimal
-            });
+            //Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
+            //{
+            //    alumnoId = 7754,
+            //    anio = 2017,
+            //    periodoId = 1,
+            //    ofertaEducativaId = 3,
+            //    porcentajeBeca = 62.88m, //70.15
+            //    porcentajeInscripcion = 0m,
+            //    esSEP = false,
+            //    esComite = false,
+            //    esEmpresa = true,
+            //    usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
+            //    fecha = "2016-09-08", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+            //    genera = true
+            //    //    //Colegiatura = decimal
+            //    //    //Inscripcion = decimal
+            //});
             
 
 

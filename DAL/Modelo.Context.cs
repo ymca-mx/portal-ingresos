@@ -62,6 +62,7 @@ namespace DAL
         public virtual DbSet<AlumnoMovimiento> AlumnoMovimiento { get; set; }
         public virtual DbSet<AlumnoMovimientoBaja> AlumnoMovimientoBaja { get; set; }
         public virtual DbSet<AlumnoMovimientoCarrera> AlumnoMovimientoCarrera { get; set; }
+        public virtual DbSet<AlumnoMovimientoTurno> AlumnoMovimientoTurno { get; set; }
         public virtual DbSet<AlumnoPassword> AlumnoPassword { get; set; }
         public virtual DbSet<AlumnoPasswordRecovery> AlumnoPasswordRecovery { get; set; }
         public virtual DbSet<AlumnoPermitido> AlumnoPermitido { get; set; }
@@ -193,6 +194,7 @@ namespace DAL
         public virtual DbSet<ReferenciaTipo> ReferenciaTipo { get; set; }
         public virtual DbSet<Respuesta> Respuesta { get; set; }
         public virtual DbSet<SistemaConfiguracion> SistemaConfiguracion { get; set; }
+        public virtual DbSet<SolicitudInscripcion> SolicitudInscripcion { get; set; }
         public virtual DbSet<SubMenu> SubMenu { get; set; }
         public virtual DbSet<Subperiodo> Subperiodo { get; set; }
         public virtual DbSet<Sucursal> Sucursal { get; set; }

@@ -53,6 +53,8 @@ namespace DAL
             this.ReferenciadoDetalleBitacora = new HashSet<ReferenciadoDetalleBitacora>();
             this.ReferenciaGeneradaBitacora = new HashSet<ReferenciaGeneradaBitacora>();
             this.SistemaConfiguracion = new HashSet<SistemaConfiguracion>();
+            this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
+            this.SolicitudInscripcion1 = new HashSet<SolicitudInscripcion>();
             this.BecaSEPBitacora = new HashSet<BecaSEPBitacora>();
             this.UsuarioBitacora = new HashSet<UsuarioBitacora>();
             this.UsuarioIngresosBitacora = new HashSet<UsuarioIngresosBitacora>();
@@ -145,6 +147,10 @@ namespace DAL
         public virtual ICollection<ReferenciaGeneradaBitacora> ReferenciaGeneradaBitacora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SistemaConfiguracion> SistemaConfiguracion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual UsuarioTipo UsuarioTipo { get; set; }

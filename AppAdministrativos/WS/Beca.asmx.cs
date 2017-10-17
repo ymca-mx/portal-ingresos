@@ -152,29 +152,36 @@ namespace AppAdministrativos.WS
 
 
         [WebMethod]
-        public string InsertarBeca(string AlumnoId, string OfertaEducativaId, string Monto, string SEP,
-            string Anio, string PeriodoId, string Usuario, string EsComite, string EsEmpresa, string Materias,
-            string Asesorias)
+        public string InsertarBeca(int AlumnoId, int OfertaEducativaId, string Monto, bool SEP,
+            int Anio,  int PeriodoId, int Usuario, bool EsComite, bool EsEmpresa, int Materias,
+            int Asesorias)
         {
             DTO.Alumno.Beca.DTOAlumnoBeca objBeca;
             try
             {
-                var obbjetos = bool.Parse(EsEmpresa) ? BLLGrupo.TraerInscripcion(int.Parse(AlumnoId), int.Parse(OfertaEducativaId), int.Parse(Anio), int.Parse(PeriodoId), int.Parse(Usuario), decimal.Parse(Monto)) : null;
+                var obbjetos = EsEmpresa ? BLLGrupo.TraerInscripcion(AlumnoId,
+                                                                OfertaEducativaId,
+                                                                Anio,
+                                                                PeriodoId,
+                                                                Usuario,
+                                                                decimal.Parse(Monto)) : null;
 
                 objBeca = new DTO.Alumno.Beca.DTOAlumnoBeca
                 {
-                    alumnoId = int.Parse(AlumnoId),
-                    anio = int.Parse(Anio),
-                    esSEP = bool.Parse(SEP),
-                    ofertaEducativaId = int.Parse(OfertaEducativaId),
-                    periodoId = int.Parse(PeriodoId),
-                    porcentajeBeca = bool.Parse(EsEmpresa) ? obbjetos?.Where(l => l.DTOPagoConcepto.PagoConceptoId == 800)?.FirstOrDefault()?.Monto ?? 0 : decimal.Parse(Monto),
+                    alumnoId = AlumnoId,
+                    anio = Anio,
+                    esSEP = SEP,
+                    ofertaEducativaId = OfertaEducativaId,
+                    periodoId = PeriodoId,
+                    porcentajeBeca = EsEmpresa ? obbjetos?.Where(l => l.DTOPagoConcepto.PagoConceptoId == 800)?.FirstOrDefault()?.Monto ?? 0 : decimal.Parse(Monto),
                     porcentajeInscripcion = obbjetos?.Where(l => l.DTOPagoConcepto.PagoConceptoId == 802)?.FirstOrDefault()?.Monto ?? 0,
-                    usuarioId = int.Parse(Usuario),
-                    esComite = bool.Parse(EsComite),
-                    esEmpresa = bool.Parse(EsEmpresa),
+                    usuarioId = Usuario,
+                    esComite = EsComite,
+                    esEmpresa = EsEmpresa,
                     fecha = ""
                 };
+
+                BLLAlumnoPortal.SolicitudInscripcion(AlumnoId, OfertaEducativaId, Anio, PeriodoId, Usuario);
             }
             catch { return "fallo"; }
             try
@@ -211,11 +218,11 @@ namespace AppAdministrativos.WS
                 int UsuarioId = int.Parse(Datos["UsuarioId"]);
 
                 HttpPostedFile httpBeca = httpFileCollection["DocumentoBeca"];
-                Stream strBeca = httpBeca == null ? null : httpBeca.InputStream;
+                Stream strBeca = httpBeca.InputStream ?? null;
                 HttpPostedFile httpComite = httpFileCollection["DocumentoComite"];
-                Stream strComite = httpComite == null ? null : httpComite.InputStream;
+                Stream strComite = httpComite.InputStream ?? null;
                 HttpPostedFile httpDeportiva = httpFileCollection["DocumentoDeportiva"];
-                Stream strDeportiva = httpDeportiva == null ? null : httpDeportiva.InputStream;
+                Stream strDeportiva = httpDeportiva.InputStream ?? null;
                 if (httpBeca != null)
                 {
                     lstDocuemtos.Add(new DTOAlumnInscritoDocumento

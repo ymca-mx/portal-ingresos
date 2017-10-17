@@ -42,6 +42,7 @@ namespace DAL
             this.PromocionCasa = new HashSet<PromocionCasa>();
             this.ProspectoDetalle = new HashSet<ProspectoDetalle>();
             this.Recibo = new HashSet<Recibo>();
+            this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
             this.UniversidadValidacion = new HashSet<UniversidadValidacion>();
         }
     
@@ -108,6 +109,8 @@ namespace DAL
         public virtual ICollection<ProspectoDetalle> ProspectoDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recibo> Recibo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UniversidadValidacion> UniversidadValidacion { get; set; }
     }
