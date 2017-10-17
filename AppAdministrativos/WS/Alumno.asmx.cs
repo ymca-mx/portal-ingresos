@@ -521,6 +521,20 @@ namespace AppAdministrativos.WS
             BLLEstadoCuenta.ObtenerAbonos(new DTOAlumno { AlumnoId = int.Parse(AlumnoId) }, DateTime.Parse(FechaI), DateTime.Parse(FechaF)));
         }
 
+
+        //Cambio turno//
+        [WebMethod]
+        public DTOAlumnoCambioTurno ConsultaCambioTurno(string AlumnoId, int UsuarioId)
+        {
+            return BLLAlumnoPortal.ConsultaCambioTurno(int.Parse(AlumnoId),UsuarioId);
+        }
+        [WebMethod]
+        public bool AplicarCambioTurno(DTOAlumnoCambioTurno Cambio)
+        {
+            return BLLAlumnoPortal.AplicarCambioTurno(Cambio);
+        }
+        //Cambio turno//
+
         //Cambio carrera//
         [WebMethod]
         public DTOAlumnoCambioCarrera ConsultaCambioCarrera(string AlumnoId, int UsuarioId)

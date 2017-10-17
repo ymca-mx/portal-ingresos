@@ -253,6 +253,7 @@ namespace DAL
         public virtual DbSet<Saldos> Saldos { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
         public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
+        public virtual DbSet<AlumnoMovimientoTurno> AlumnoMovimientoTurno { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {

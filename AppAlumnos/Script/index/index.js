@@ -59,7 +59,10 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d) {
-                        $('#popDatos').load('Views/Alumno/EncuestaPortal.html');
+                        $('#divDinamico').load('Views/Alumno/EncuestaPortal.html',function () {
+                            console.log("termine");
+                            //Mostrar.show();
+                        });
                     }
                 }
             });
@@ -141,7 +144,7 @@
                 }]
         }
     };    
-    $('#PopDatosAlumno').on('hidden.bs.modal', Funciones.PopDatosAlumnoClick);
+    $('#popDatos').on('hidden.bs.modal', Funciones.PopDatosAlumnoClick);
     Funciones.TraerAlumno();     
    
 });

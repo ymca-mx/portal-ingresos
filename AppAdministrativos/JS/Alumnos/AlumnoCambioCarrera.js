@@ -30,7 +30,13 @@
 
                 if (lstop[0].OfertaEducativaIdActual == 0) {
 
-                    $('#lblInscito').text("No ha iniciado proceso de cambio de carrera.");
+                    if (lstop[0].EstatusId == 7)
+                    {
+                        $('#lblInscito').text("Ya se aplico cambio de carrera.");
+                    } else {
+                        $('#lblInscito').text("No ha iniciado proceso de cambio de carrera.");
+                    }
+
                     $('#Load').modal('hide');
                     return false;
                 }
@@ -73,7 +79,6 @@
 
 
     });
-    
     
     $('#txtClave').on('keydown', function (e) {
         if (e.which == 13) {

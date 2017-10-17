@@ -32,5 +32,6 @@ namespace DAL
         public virtual Usuario Usuario { get; set; }
         public virtual AlumnoMovimientoBaja AlumnoMovimientoBaja { get; set; }
         public virtual AlumnoMovimientoCarrera AlumnoMovimientoCarrera { get; set; }
+        public virtual AlumnoMovimientoTurno AlumnoMovimientoTurno { get; set; }
     }
 }

@@ -540,19 +540,20 @@ namespace BLL
                     {
                         if (alumno.UsuarioId != 6070)
                         {
-                            db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
-                            {
-                                AlumnoId = alumno.AlumnoId,
-                                OfertaEducativaId = alumno.OfertaEducativaId,
-                                Anio = alumno.Anio,
-                                PeriodoId = alumno.PeriodoId,
-                                FechaInscripcion = alumno.FechaInscripcion,
-                                HoraInscripcion = alumno.HoraInscripcion,
-                                PagoPlanId = alumno.PagoPlanId,
-                                TurnoId = alumno.TurnoId,
-                                EsEmpresa = alumno.EsEmpresa,
-                                UsuarioId = alumno.UsuarioId
-                            });
+                                db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                                {
+                                    AlumnoId = alumno.AlumnoId,
+                                    OfertaEducativaId = alumno.OfertaEducativaId,
+                                    Anio = alumno.Anio,
+                                    PeriodoId = alumno.PeriodoId,
+                                    FechaInscripcion = alumno.FechaInscripcion,
+                                    HoraInscripcion = alumno.HoraInscripcion,
+                                    PagoPlanId = alumno.PagoPlanId,
+                                    TurnoId = alumno.TurnoId,
+                                    EsEmpresa = alumno.EsEmpresa,
+                                    UsuarioId = alumno.UsuarioId
+                                });
+                            
 
                             db.AlumnoInscrito.Add(new AlumnoInscrito
                             {
@@ -701,8 +702,9 @@ namespace BLL
 
                     return true;
                 }
-                catch
+                catch(Exception e)
                 {
+                    var a = e.InnerException.Message;
                     return false;
                 }
             }

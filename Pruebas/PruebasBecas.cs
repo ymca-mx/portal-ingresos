@@ -131,35 +131,17 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7754,
-                anio = 2016,
-                periodoId = 3,
-                ofertaEducativaId = 3,
-                porcentajeBeca = 62.88m, //70.15
-                porcentajeInscripcion = 50m,
-                esSEP = false,
-                esComite = false,
-                esEmpresa = true,
-                usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2016-05-30", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
-                genera = true
-                //    //Colegiatura = decimal
-                //    //Inscripcion = decimal
-            });
-
-            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
-            {
-                alumnoId = 7754,
-                anio = 2017,
+                alumnoId = 7876,
+                anio = 2018,
                 periodoId = 1,
-                ofertaEducativaId = 3,
-                porcentajeBeca = 62.88m, //70.15
-                porcentajeInscripcion = 0m,
+                ofertaEducativaId = 4,
+                porcentajeBeca = 61.14m, //70.15
+                porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
                 usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2016-09-08", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                fecha = "2017-09-13", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
@@ -167,11 +149,11 @@ namespace Pruebas
             
 
 
-            Alumno.ForEach(a=> 
+            Alumno.ForEach(a =>
             {
                 BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, false);
             });
-            
+
 
         }
 
@@ -2014,12 +1996,12 @@ namespace Pruebas
                 //                        Email = b.AlumnoDetalle.Email
                 //                    }).ToList();
 
-             
-                
+
+
                 //List<int> alumnoId = db.spAlumnoInscritoCompleto(anio, periodoid).Where(a => a.TipoAlumno == "Reinscrito").Select(b => b.AlumnoId).ToList();
                 //alumnoId.AddRange(db.AlumnoRevision.Where(a => a.Anio == anio && a.PeriodoId == periodoid && a.OfertaEducativa.OfertaEducativaTipoId != 4).Select(b => b.AlumnoId).ToList());
                 //alumnoId = alumnoId.Distinct().ToList();
-                
+
 
                 //List<DTOAlumnosVoBo1> alumnoRevision2 = db.Alumno.Where(a => alumnoId.Contains(a.AlumnoId))
 
