@@ -115,5 +115,8 @@ namespace AppAdministrativos.WS
             }
             catch { return false; }
         }
+
+        [WebMethod]
+        public void ObtenerAlumno(int AlumnoId) => BLLReinscripcion.TraerSolicitud(AlumnoId);
     }
 }

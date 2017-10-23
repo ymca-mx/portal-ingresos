@@ -236,6 +236,14 @@ namespace BLL
             }
         }
 
+        public static void TraerSolicitud(int alumnoId)
+        {
+            using(UniversidadEntities db = new UniversidadEntities())
+            {
+
+            }
+        }
+
         public static string Pasar_a_Maestria(int alumnoId, int anio, int periodoId, int especialidadId, int maestriaId, int usuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

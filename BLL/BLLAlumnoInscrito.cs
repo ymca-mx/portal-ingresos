@@ -228,6 +228,26 @@ namespace BLL
 
                 }
 
+                /////Si en alumno inscrito hay un registro con la misma oferta la mandamos a bitacora y la eliminamos de la tabla
+                AlumnoInscrito AlumnoInscritoOferta = db.AlumnoInscrito.Where(a => a.AlumnoId == objAlumnoInscrito.AlumnoId
+                                            && a.OfertaEducativaId == objAlumnoInscrito.OfertaEducativaId).FirstOrDefault() ?? null;
+                if (AlumnoInscritoOferta != null)
+                {
+                    db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                    {
+                        AlumnoId = AlumnoInscritoOferta.AlumnoId,
+                        Anio = AlumnoInscritoOferta.Anio,
+                        EsEmpresa = AlumnoInscritoOferta.EsEmpresa,
+                        FechaInscripcion = AlumnoInscritoOferta.FechaInscripcion,
+                        HoraInscripcion = AlumnoInscritoOferta.HoraInscripcion,
+                        OfertaEducativaId = AlumnoInscritoOferta.OfertaEducativaId,
+                        PagoPlanId = AlumnoInscritoOferta.PagoPlanId,
+                        PeriodoId = AlumnoInscritoOferta.PeriodoId,
+                        TurnoId = AlumnoInscritoOferta.TurnoId,
+                        UsuarioId = AlumnoInscritoOferta.UsuarioId
+                    });
+                    db.AlumnoInscrito.Remove(AlumnoInscritoOferta);
+                }
 
                 db.AlumnoInscrito.Add(new AlumnoInscrito
                 {
@@ -241,7 +261,7 @@ namespace BLL
                     UsuarioId = objAlumnoInscrito.UsuarioId,
                     TurnoId = objAlumnoInscrito.TurnoId,
                     EsEmpresa = objAlumnoInscrito.EsEmpresa,
-                    EstatusId = 8
+                    EstatusId = objAlumnoInscrito.EsEmpresa ? 1 : 8
                 });
 
                 if (db.AlumnoCuatrimestre.Where(ac => ac.AlumnoId == objAlumnoInscrito.AlumnoId

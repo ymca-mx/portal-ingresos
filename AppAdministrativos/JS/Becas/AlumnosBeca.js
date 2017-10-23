@@ -560,12 +560,13 @@
             });
         },
         Guardar: function () {
-            
+            var ObjBecaAlumno = Funciones.AlumnoBeca();
+
             $.ajax({
                 url: 'WS/Beca.asmx/InsertarBeca',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(Funciones.AlumnoBeca),
+                data: JSON.stringify(ObjBecaAlumno),
                 dataType: 'json',
                 success: function (data) {
                     if (data.d === "Guardado" || data.d === "Insertado") {
