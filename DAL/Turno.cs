@@ -22,7 +22,6 @@ namespace DAL
             this.AlumnoMovimientoTurno = new HashSet<AlumnoMovimientoTurno>();
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
             this.ProspectoDetalle = new HashSet<ProspectoDetalle>();
-            this.AlumnoMovimientoTurno = new HashSet<AlumnoMovimientoTurno>();
         }
     
         public int TurnoId { get; set; }
@@ -38,7 +37,5 @@ namespace DAL
         public virtual ICollection<OfertaEducativaAntecedente> OfertaEducativaAntecedente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProspectoDetalle> ProspectoDetalle { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlumnoMovimientoTurno> AlumnoMovimientoTurno { get; set; }
     }
 }

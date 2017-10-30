@@ -20,6 +20,8 @@ namespace DAL
             this.AlumnoSaldoDetalle = new HashSet<AlumnoSaldoDetalle>();
             this.PagoParcial = new HashSet<PagoParcial>();
             this.ReferenciadoDetalle = new HashSet<ReferenciadoDetalle>();
+            this.ReferenciaDonativo = new HashSet<ReferenciaDonativo>();
+            this.ReferenciaDonativo1 = new HashSet<ReferenciaDonativo>();
         }
     
         public int ReferenciaProcesadaId { get; set; }
@@ -43,5 +45,9 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciadoDetalle> ReferenciadoDetalle { get; set; }
         public virtual ReferenciaTipo ReferenciaTipo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo1 { get; set; }
     }
 }

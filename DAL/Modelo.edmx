@@ -2301,6 +2301,17 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="PosicionFinal" Type="int" Nullable="false" />
           <Property Name="Banco" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="ReferenciaDonativo">
+          <Key>
+            <PropertyRef Name="ReferenciaDonativoId" />
+          </Key>
+          <Property Name="ReferenciaDonativoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenciaProcesadaIdOrigen" Type="int" Nullable="false" />
+          <Property Name="ReferenciaProcesadaIdDestino" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ReferenciaEspecial">
           <Key>
             <PropertyRef Name="ConsecutivoId" />
@@ -2461,6 +2472,26 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Valor" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SolicitudInscripcion">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+            <PropertyRef Name="OfertaEducativaId" />
+            <PropertyRef Name="Anio" />
+            <PropertyRef Name="PeriodoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="PeriodoId" Type="int" Nullable="false" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FechaSolicitud" Type="date" Nullable="false" />
+          <Property Name="HoraSolicitud" Type="time" Precision="7" Nullable="false" />
+          <Property Name="SolicitudUsuarioId" Type="int" Nullable="false" />
+          <Property Name="FechaAutorizacion" Type="date" />
+          <Property Name="HoraAutorizacion" Type="time" Precision="7" />
+          <Property Name="AutorizoUsuarioId" Type="int" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SubMenu">
           <Key>
@@ -6554,6 +6585,42 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReferenciaDonativo_ReferenciaProcesada">
+          <End Role="ReferenciaProcesada" Type="Self.ReferenciaProcesada" Multiplicity="1" />
+          <End Role="ReferenciaDonativo" Type="Self.ReferenciaDonativo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReferenciaProcesada">
+              <PropertyRef Name="ReferenciaProcesadaId" />
+            </Principal>
+            <Dependent Role="ReferenciaDonativo">
+              <PropertyRef Name="ReferenciaProcesadaIdOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaDonativo_ReferenciaProcesada1">
+          <End Role="ReferenciaProcesada" Type="Self.ReferenciaProcesada" Multiplicity="1" />
+          <End Role="ReferenciaDonativo" Type="Self.ReferenciaDonativo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReferenciaProcesada">
+              <PropertyRef Name="ReferenciaProcesadaId" />
+            </Principal>
+            <Dependent Role="ReferenciaDonativo">
+              <PropertyRef Name="ReferenciaProcesadaIdDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaDonativo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="ReferenciaDonativo" Type="Self.ReferenciaDonativo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="ReferenciaDonativo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReferenciaGeneradaBitacora_Pago">
           <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
           <End Role="ReferenciaGeneradaBitacora" Type="Self.ReferenciaGeneradaBitacora" Multiplicity="0..1" />
@@ -6671,6 +6738,80 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="SistemaConfiguracion">
               <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_Alumno">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="SolicitudInscripcion" Type="Self.SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="SolicitudInscripcion" Type="Self.SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_OfertaEducativa">
+          <End Role="OfertaEducativa" Type="Self.OfertaEducativa" Multiplicity="1" />
+          <End Role="SolicitudInscripcion" Type="Self.SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfertaEducativa">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_Periodo">
+          <End Role="Periodo" Type="Self.Periodo" Multiplicity="1" />
+          <End Role="SolicitudInscripcion" Type="Self.SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodo">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="SolicitudInscripcion" Type="Self.SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="SolicitudUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="SolicitudInscripcion" Type="Self.SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="AutorizoUsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7284,12 +7425,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="ReferenciadoDetalle" EntityType="Self.ReferenciadoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenciadoDetalleBitacora" EntityType="Self.ReferenciadoDetalleBitacora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenciadoLayout" EntityType="Self.ReferenciadoLayout" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferenciaDonativo" EntityType="Self.ReferenciaDonativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenciaEspecial" EntityType="Self.ReferenciaEspecial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenciaGeneradaBitacora" EntityType="Self.ReferenciaGeneradaBitacora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenciaProcesada" EntityType="Self.ReferenciaProcesada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenciaTipo" EntityType="Self.ReferenciaTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Respuesta" EntityType="Self.Respuesta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SistemaConfiguracion" EntityType="Self.SistemaConfiguracion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SolicitudInscripcion" EntityType="Self.SolicitudInscripcion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubMenu" EntityType="Self.SubMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subperiodo" EntityType="Self.Subperiodo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sucursal" EntityType="Self.Sucursal" Schema="dbo" store:Type="Tables" />
@@ -8655,6 +8798,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="ReferenciadoDetalleBitacora" EntitySet="ReferenciadoDetalleBitacora" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaDonativo_ReferenciaProcesada" Association="Self.FK_ReferenciaDonativo_ReferenciaProcesada">
+            <End Role="ReferenciaProcesada" EntitySet="ReferenciaProcesada" />
+            <End Role="ReferenciaDonativo" EntitySet="ReferenciaDonativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaDonativo_ReferenciaProcesada1" Association="Self.FK_ReferenciaDonativo_ReferenciaProcesada1">
+            <End Role="ReferenciaProcesada" EntitySet="ReferenciaProcesada" />
+            <End Role="ReferenciaDonativo" EntitySet="ReferenciaDonativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaDonativo_Usuario" Association="Self.FK_ReferenciaDonativo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="ReferenciaDonativo" EntitySet="ReferenciaDonativo" />
+          </AssociationSet>
           <AssociationSet Name="FK_ReferenciaGeneradaBitacora_Pago" Association="Self.FK_ReferenciaGeneradaBitacora_Pago">
             <End Role="Pago" EntitySet="Pago" />
             <End Role="ReferenciaGeneradaBitacora" EntitySet="ReferenciaGeneradaBitacora" />
@@ -8694,6 +8849,30 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_SistemaConfiguracion_Usuario" Association="Self.FK_SistemaConfiguracion_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="SistemaConfiguracion" EntitySet="SistemaConfiguracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Alumno" Association="Self.FK_SolicitudInscripcion_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Estatus" Association="Self.FK_SolicitudInscripcion_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_OfertaEducativa" Association="Self.FK_SolicitudInscripcion_OfertaEducativa">
+            <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Periodo" Association="Self.FK_SolicitudInscripcion_Periodo">
+            <End Role="Periodo" EntitySet="Periodo" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Usuario" Association="Self.FK_SolicitudInscripcion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Usuario1" Association="Self.FK_SolicitudInscripcion_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
           </AssociationSet>
           <AssociationSet Name="FK_SubMenu_Menu" Association="Self.FK_SubMenu_Menu">
             <End Role="Menu" EntitySet="Menu" />
@@ -8911,6 +9090,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoMovimiento" EntityType="UniversidadModel.AlumnoMovimiento" />
           <EntitySet Name="AlumnoMovimientoBaja" EntityType="UniversidadModel.AlumnoMovimientoBaja" />
           <EntitySet Name="AlumnoMovimientoCarrera" EntityType="UniversidadModel.AlumnoMovimientoCarrera" />
+          <EntitySet Name="AlumnoMovimientoTurno" EntityType="UniversidadModel.AlumnoMovimientoTurno" />
           <EntitySet Name="AlumnoPassword" EntityType="UniversidadModel.AlumnoPassword" />
           <EntitySet Name="AlumnoPasswordRecovery" EntityType="UniversidadModel.AlumnoPasswordRecovery" />
           <EntitySet Name="AlumnoPermitido" EntityType="UniversidadModel.AlumnoPermitido" />
@@ -9042,6 +9222,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="ReferenciaTipo" EntityType="UniversidadModel.ReferenciaTipo" />
           <EntitySet Name="Respuesta" EntityType="UniversidadModel.Respuesta" />
           <EntitySet Name="SistemaConfiguracion" EntityType="UniversidadModel.SistemaConfiguracion" />
+          <EntitySet Name="SolicitudInscripcion" EntityType="UniversidadModel.SolicitudInscripcion" />
           <EntitySet Name="SubMenu" EntityType="UniversidadModel.SubMenu" />
           <EntitySet Name="Subperiodo" EntityType="UniversidadModel.Subperiodo" />
           <EntitySet Name="Sucursal" EntityType="UniversidadModel.Sucursal" />
@@ -9266,6 +9447,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="Respuesta" EntitySet="Respuesta" />
           </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Alumno" Association="UniversidadModel.FK_SolicitudInscripcion_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlumnoAntecedente_AntecedenteTipo" Association="UniversidadModel.FK_AlumnoAntecedente_AntecedenteTipo">
             <End Role="AntecedenteTipo" EntitySet="AntecedenteTipo" />
             <End Role="AlumnoAntecedente" EntitySet="AlumnoAntecedente" />
@@ -9466,9 +9651,17 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="AlumnoMovimiento" EntitySet="AlumnoMovimiento" />
             <End Role="AlumnoMovimientoCarrera" EntitySet="AlumnoMovimientoCarrera" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlumnoMovimientoTurno_AlumnoMovimiento" Association="UniversidadModel.FK_AlumnoMovimientoTurno_AlumnoMovimiento">
+            <End Role="AlumnoMovimiento" EntitySet="AlumnoMovimiento" />
+            <End Role="AlumnoMovimientoTurno" EntitySet="AlumnoMovimientoTurno" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlumnoMovimientoBaja_BajaMotivo" Association="UniversidadModel.FK_AlumnoMovimientoBaja_BajaMotivo">
             <End Role="BajaMotivo" EntitySet="BajaMotivo" />
             <End Role="AlumnoMovimientoBaja" EntitySet="AlumnoMovimientoBaja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoMovimientoTurno_Turno" Association="UniversidadModel.FK_AlumnoMovimientoTurno_Turno">
+            <End Role="Turno" EntitySet="Turno" />
+            <End Role="AlumnoMovimientoTurno" EntitySet="AlumnoMovimientoTurno" />
           </AssociationSet>
           <AssociationSet Name="FK_AlumnoPasswordRecovery_Estatus" Association="UniversidadModel.FK_AlumnoPasswordRecovery_Estatus">
             <End Role="Estatus" EntitySet="Estatus" />
@@ -9778,6 +9971,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="Estatus" EntitySet="Estatus" />
             <End Role="ReferenciaProcesada" EntitySet="ReferenciaProcesada" />
           </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Estatus" Association="UniversidadModel.FK_SolicitudInscripcion_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
           <AssociationSet Name="FK_UniversidadValidacion_Estatus" Association="UniversidadModel.FK_UniversidadValidacion_Estatus">
             <End Role="Estatus" EntitySet="Estatus" />
             <End Role="UniversidadValidacion" EntitySet="UniversidadValidacion" />
@@ -9929,6 +10126,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_Recibo_OfertaEducativa" Association="UniversidadModel.FK_Recibo_OfertaEducativa">
             <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
             <End Role="Recibo" EntitySet="Recibo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_OfertaEducativa" Association="UniversidadModel.FK_SolicitudInscripcion_OfertaEducativa">
+            <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
           </AssociationSet>
           <AssociationSet Name="FK_UniversidadValidacion_OfertaEducativa" Association="UniversidadModel.FK_UniversidadValidacion_OfertaEducativa">
             <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
@@ -10114,6 +10315,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="Periodo" EntitySet="Periodo" />
             <End Role="PromocionCasa" EntitySet="PromocionCasa" />
           </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Periodo" Association="UniversidadModel.FK_SolicitudInscripcion_Periodo">
+            <End Role="Periodo" EntitySet="Periodo" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
           <AssociationSet Name="FK_PolizaCabeceroLayout_PolizaTipo" Association="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo">
             <End Role="PolizaTipo" EntitySet="PolizaTipo" />
             <End Role="PolizaCabeceroLayout" EntitySet="PolizaCabeceroLayout" />
@@ -10294,6 +10499,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="SistemaConfiguracion" EntitySet="SistemaConfiguracion" />
           </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Usuario" Association="UniversidadModel.FK_SolicitudInscripcion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudInscripcion_Usuario1" Association="UniversidadModel.FK_SolicitudInscripcion_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
+          </AssociationSet>
           <AssociationSet Name="FK_TipoUsuarioSubmenu_SubMenu" Association="UniversidadModel.FK_TipoUsuarioSubmenu_SubMenu">
             <End Role="SubMenu" EntitySet="SubMenu" />
             <End Role="TipoUsuarioSubmenu" EntitySet="TipoUsuarioSubmenu" />
@@ -10418,14 +10631,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="SucursalCaja" EntitySet="SucursalCaja" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <EntitySet Name="AlumnoMovimientoTurno" EntityType="UniversidadModel.AlumnoMovimientoTurno" />
-          <AssociationSet Name="FK_AlumnoMovimientoTurno_Turno" Association="UniversidadModel.FK_AlumnoMovimientoTurno_Turno">
-            <End Role="Turno" EntitySet="Turno" />
-            <End Role="AlumnoMovimientoTurno" EntitySet="AlumnoMovimientoTurno" />
+          <EntitySet Name="ReferenciaDonativo" EntityType="UniversidadModel.ReferenciaDonativo" />
+          <AssociationSet Name="FK_ReferenciaDonativo_ReferenciaProcesada" Association="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada">
+            <End Role="ReferenciaProcesada" EntitySet="ReferenciaProcesada" />
+            <End Role="ReferenciaDonativo" EntitySet="ReferenciaDonativo" />
           </AssociationSet>
-          <AssociationSet Name="FK_AlumnoMovimientoTurno_AlumnoMovimiento" Association="UniversidadModel.FK_AlumnoMovimientoTurno_AlumnoMovimiento">
-            <End Role="AlumnoMovimiento" EntitySet="AlumnoMovimiento" />
-            <End Role="AlumnoMovimientoTurno" EntitySet="AlumnoMovimientoTurno" />
+          <AssociationSet Name="FK_ReferenciaDonativo_ReferenciaProcesada1" Association="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada1">
+            <End Role="ReferenciaProcesada" EntitySet="ReferenciaProcesada" />
+            <End Role="ReferenciaDonativo" EntitySet="ReferenciaDonativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferenciaDonativo_Usuario" Association="UniversidadModel.FK_ReferenciaDonativo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="ReferenciaDonativo" EntitySet="ReferenciaDonativo" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AlumnoInscritoCompleto">
@@ -10620,6 +10837,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="Recibo" Relationship="UniversidadModel.FK_Recibo_Alumno" FromRole="Alumno" ToRole="Recibo" />
           <NavigationProperty Name="ReferenciaProcesada" Relationship="UniversidadModel.FK_ReferenciaProcesada_Alumno" FromRole="Alumno" ToRole="ReferenciaProcesada" />
           <NavigationProperty Name="Respuesta" Relationship="UniversidadModel.FK_Respuesta_Alumno" FromRole="Alumno" ToRole="Respuesta" />
+          <NavigationProperty Name="SolicitudInscripcion" Relationship="UniversidadModel.FK_SolicitudInscripcion_Alumno" FromRole="Alumno" ToRole="SolicitudInscripcion" />
         </EntityType>
         <EntityType Name="AlumnoAccesoBitacora">
           <Key>
@@ -11224,6 +11442,16 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlumnoMovimiento" Relationship="UniversidadModel.FK_AlumnoMovimientoCarrera_AlumnoMovimiento" FromRole="AlumnoMovimientoCarrera" ToRole="AlumnoMovimiento" />
         </EntityType>
+        <EntityType Name="AlumnoMovimientoTurno">
+          <Key>
+            <PropertyRef Name="AlumnoMovimientoId" />
+          </Key>
+          <Property Name="AlumnoMovimientoId" Type="Int32" Nullable="false" />
+          <Property Name="TurnoId" Type="Int32" />
+          <Property Name="Observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AlumnoMovimiento" Relationship="UniversidadModel.FK_AlumnoMovimientoTurno_AlumnoMovimiento" FromRole="AlumnoMovimientoTurno" ToRole="AlumnoMovimiento" />
+          <NavigationProperty Name="Turno" Relationship="UniversidadModel.FK_AlumnoMovimientoTurno_Turno" FromRole="AlumnoMovimientoTurno" ToRole="Turno" />
+        </EntityType>
         <EntityType Name="AlumnoPassword">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -11763,6 +11991,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="Recibo" Relationship="UniversidadModel.FK_Recibo_Estatus" FromRole="Estatus" ToRole="Recibo" />
           <NavigationProperty Name="ReclasificacionTipo" Relationship="UniversidadModel.FK_ReclasificacionTipo_Estatus" FromRole="Estatus" ToRole="ReclasificacionTipo" />
           <NavigationProperty Name="ReferenciaProcesada" Relationship="UniversidadModel.FK_ReferenciaProcesada_Estatus" FromRole="Estatus" ToRole="ReferenciaProcesada" />
+          <NavigationProperty Name="SolicitudInscripcion" Relationship="UniversidadModel.FK_SolicitudInscripcion_Estatus" FromRole="Estatus" ToRole="SolicitudInscripcion" />
           <NavigationProperty Name="UniversidadValidacion" Relationship="UniversidadModel.FK_UniversidadValidacion_Estatus" FromRole="Estatus" ToRole="UniversidadValidacion" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_Usuario_Estatus" FromRole="Estatus" ToRole="Usuario" />
           <NavigationProperty Name="UsuarioPasswordRecovery" Relationship="UniversidadModel.FK_UsuarioPasswordRecovery_Estatus" FromRole="Estatus" ToRole="UsuarioPasswordRecovery" />
@@ -12116,6 +12345,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="PromocionCasa" Relationship="UniversidadModel.FK_PromocionCasa_OfertaEducativa" FromRole="OfertaEducativa" ToRole="PromocionCasa" />
           <NavigationProperty Name="ProspectoDetalle" Relationship="UniversidadModel.FK_ProspectoDetalle_OfertaEducativa" FromRole="OfertaEducativa" ToRole="ProspectoDetalle" />
           <NavigationProperty Name="Recibo" Relationship="UniversidadModel.FK_Recibo_OfertaEducativa" FromRole="OfertaEducativa" ToRole="Recibo" />
+          <NavigationProperty Name="SolicitudInscripcion" Relationship="UniversidadModel.FK_SolicitudInscripcion_OfertaEducativa" FromRole="OfertaEducativa" ToRole="SolicitudInscripcion" />
           <NavigationProperty Name="UniversidadValidacion" Relationship="UniversidadModel.FK_UniversidadValidacion_OfertaEducativa" FromRole="OfertaEducativa" ToRole="UniversidadValidacion" />
         </EntityType>
         <EntityType Name="OfertaEducativaAntecedente">
@@ -12542,6 +12772,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="DocenteEstudioPeriodo" Relationship="UniversidadModel.FK_DocenteEstudioPeriodo_Periodo" FromRole="Periodo" ToRole="DocenteEstudioPeriodo" />
           <NavigationProperty Name="PeriodoAnticipado" Relationship="UniversidadModel.FK_PeriodoAnticipado_Periodo" FromRole="Periodo" ToRole="PeriodoAnticipado" />
           <NavigationProperty Name="PromocionCasa" Relationship="UniversidadModel.FK_PromocionCasa_Periodo" FromRole="Periodo" ToRole="PromocionCasa" />
+          <NavigationProperty Name="SolicitudInscripcion" Relationship="UniversidadModel.FK_SolicitudInscripcion_Periodo" FromRole="Periodo" ToRole="SolicitudInscripcion" />
         </EntityType>
         <EntityType Name="PeriodoAnticipado">
           <Key>
@@ -13218,6 +13449,8 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="PagoParcial" Relationship="UniversidadModel.FK_PagoParcial_ReferenciaProcesada" FromRole="ReferenciaProcesada" ToRole="PagoParcial" />
           <NavigationProperty Name="ReferenciadoDetalle" Relationship="UniversidadModel.FK_ReferenciadoDetalle_ReferenciaProcesada" FromRole="ReferenciaProcesada" ToRole="ReferenciadoDetalle" />
           <NavigationProperty Name="ReferenciaTipo" Relationship="UniversidadModel.FK_ReferenciaProcesada_ReferenciaTipo" FromRole="ReferenciaProcesada" ToRole="ReferenciaTipo" />
+          <NavigationProperty Name="ReferenciaDonativo" Relationship="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada" FromRole="ReferenciaProcesada" ToRole="ReferenciaDonativo" />
+          <NavigationProperty Name="ReferenciaDonativo1" Relationship="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada1" FromRole="ReferenciaProcesada" ToRole="ReferenciaDonativo" />
         </EntityType>
         <EntityType Name="ReferenciaTipo">
           <Key>
@@ -13254,6 +13487,32 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Valor" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_SistemaConfiguracion_Usuario" FromRole="SistemaConfiguracion" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="SolicitudInscripcion">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+            <PropertyRef Name="OfertaEducativaId" />
+            <PropertyRef Name="Anio" />
+            <PropertyRef Name="PeriodoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
+          <Property Name="Anio" Type="Int32" Nullable="false" />
+          <Property Name="PeriodoId" Type="Int32" Nullable="false" />
+          <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FechaSolicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HoraSolicitud" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="SolicitudUsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="FechaAutorizacion" Type="DateTime" Precision="0" />
+          <Property Name="HoraAutorizacion" Type="Time" Precision="7" />
+          <Property Name="AutorizoUsuarioId" Type="Int32" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_SolicitudInscripcion_Alumno" FromRole="SolicitudInscripcion" ToRole="Alumno" />
+          <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_SolicitudInscripcion_Estatus" FromRole="SolicitudInscripcion" ToRole="Estatus" />
+          <NavigationProperty Name="OfertaEducativa" Relationship="UniversidadModel.FK_SolicitudInscripcion_OfertaEducativa" FromRole="SolicitudInscripcion" ToRole="OfertaEducativa" />
+          <NavigationProperty Name="Periodo" Relationship="UniversidadModel.FK_SolicitudInscripcion_Periodo" FromRole="SolicitudInscripcion" ToRole="Periodo" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_SolicitudInscripcion_Usuario" FromRole="SolicitudInscripcion" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="UniversidadModel.FK_SolicitudInscripcion_Usuario1" FromRole="SolicitudInscripcion" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="SubMenu">
           <Key>
@@ -13376,9 +13635,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlumnoInscrito" Relationship="UniversidadModel.FK_AlumnoInscrito_Turno" FromRole="Turno" ToRole="AlumnoInscrito" />
           <NavigationProperty Name="AlumnoInscritoBitacora" Relationship="UniversidadModel.FK_AlumnoInscritoBitacora_Turno" FromRole="Turno" ToRole="AlumnoInscritoBitacora" />
+          <NavigationProperty Name="AlumnoMovimientoTurno" Relationship="UniversidadModel.FK_AlumnoMovimientoTurno_Turno" FromRole="Turno" ToRole="AlumnoMovimientoTurno" />
           <NavigationProperty Name="OfertaEducativaAntecedente" Relationship="UniversidadModel.FK_OfertaEducativaAntecedente_Turno" FromRole="Turno" ToRole="OfertaEducativaAntecedente" />
           <NavigationProperty Name="ProspectoDetalle" Relationship="UniversidadModel.FK_ProspectoDetalle_Turno" FromRole="Turno" ToRole="ProspectoDetalle" />
-          <NavigationProperty Name="AlumnoMovimientoTurno" Relationship="UniversidadModel.FK_AlumnoMovimientoTurno_Turno" FromRole="Turno" ToRole="AlumnoMovimientoTurno" />
         </EntityType>
         <EntityType Name="UniversidadValidacion">
           <Key>
@@ -13458,6 +13717,8 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="ReferenciadoDetalleBitacora" Relationship="UniversidadModel.FK_ReferenciadoDetalleBitacora_Usuario" FromRole="Usuario" ToRole="ReferenciadoDetalleBitacora" />
           <NavigationProperty Name="ReferenciaGeneradaBitacora" Relationship="UniversidadModel.FK_ReferenciaGeneradaBitacora_Usuario" FromRole="Usuario" ToRole="ReferenciaGeneradaBitacora" />
           <NavigationProperty Name="SistemaConfiguracion" Relationship="UniversidadModel.FK_SistemaConfiguracion_Usuario" FromRole="Usuario" ToRole="SistemaConfiguracion" />
+          <NavigationProperty Name="SolicitudInscripcion" Relationship="UniversidadModel.FK_SolicitudInscripcion_Usuario" FromRole="Usuario" ToRole="SolicitudInscripcion" />
+          <NavigationProperty Name="SolicitudInscripcion1" Relationship="UniversidadModel.FK_SolicitudInscripcion_Usuario1" FromRole="Usuario" ToRole="SolicitudInscripcion" />
           <NavigationProperty Name="BecaSEPBitacora" Relationship="UniversidadModel.FK_BecaSEPBitacora_Usuario" FromRole="Usuario" ToRole="BecaSEPBitacora" />
           <NavigationProperty Name="UsuarioTipo" Relationship="UniversidadModel.FK_Usuario_UsuarioTipo" FromRole="Usuario" ToRole="UsuarioTipo" />
           <NavigationProperty Name="UsuarioBitacora" Relationship="UniversidadModel.FK_UsuarioBitacora_Usuario" FromRole="Usuario" ToRole="UsuarioBitacora" />
@@ -13469,6 +13730,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="UsuarioPermiso1" Relationship="UniversidadModel.FK_UsuarioPermiso_Usuario1" FromRole="Usuario" ToRole="UsuarioPermiso" />
           <NavigationProperty Name="UsuarioTipoPagoConcepto" Relationship="UniversidadModel.FK_UsuarioTipoPagoConcepto_Usuario" FromRole="Usuario" ToRole="UsuarioTipoPagoConcepto" />
           <NavigationProperty Name="SucursalCaja" Relationship="UniversidadModel.UsuarioSucursalCaja" FromRole="Usuario" ToRole="SucursalCaja" />
+          <NavigationProperty Name="ReferenciaDonativo" Relationship="UniversidadModel.FK_ReferenciaDonativo_Usuario" FromRole="Usuario" ToRole="ReferenciaDonativo" />
         </EntityType>
         <EntityType Name="UsuarioBitacora">
           <Key>
@@ -14655,6 +14917,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SolicitudInscripcion_Alumno">
+          <End Type="UniversidadModel.Alumno" Role="Alumno" Multiplicity="1" />
+          <End Type="UniversidadModel.SolicitudInscripcion" Role="SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlumnoAntecedente_AntecedenteTipo">
           <End Type="UniversidadModel.AntecedenteTipo" Role="AntecedenteTipo" Multiplicity="1" />
           <End Type="UniversidadModel.AlumnoAntecedente" Role="AlumnoAntecedente" Multiplicity="*" />
@@ -15269,6 +15543,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlumnoMovimientoTurno_AlumnoMovimiento">
+          <End Type="UniversidadModel.AlumnoMovimiento" Role="AlumnoMovimiento" Multiplicity="1" />
+          <End Type="UniversidadModel.AlumnoMovimientoTurno" Role="AlumnoMovimientoTurno" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlumnoMovimiento">
+              <PropertyRef Name="AlumnoMovimientoId" />
+            </Principal>
+            <Dependent Role="AlumnoMovimientoTurno">
+              <PropertyRef Name="AlumnoMovimientoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlumnoMovimientoBaja_BajaMotivo">
           <End Type="UniversidadModel.BajaMotivo" Role="BajaMotivo" Multiplicity="1" />
           <End Type="UniversidadModel.AlumnoMovimientoBaja" Role="AlumnoMovimientoBaja" Multiplicity="*" />
@@ -15278,6 +15564,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="AlumnoMovimientoBaja">
               <PropertyRef Name="BajaMotivoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoMovimientoTurno_Turno">
+          <End Type="UniversidadModel.Turno" Role="Turno" Multiplicity="0..1" />
+          <End Type="UniversidadModel.AlumnoMovimientoTurno" Role="AlumnoMovimientoTurno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turno">
+              <PropertyRef Name="TurnoId" />
+            </Principal>
+            <Dependent Role="AlumnoMovimientoTurno">
+              <PropertyRef Name="TurnoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16221,6 +16519,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SolicitudInscripcion_Estatus">
+          <End Type="UniversidadModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="UniversidadModel.SolicitudInscripcion" Role="SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UniversidadValidacion_Estatus">
           <End Type="UniversidadModel.Estatus" Role="Estatus" Multiplicity="1" />
           <End Type="UniversidadModel.UniversidadValidacion" Role="UniversidadValidacion" Multiplicity="*" />
@@ -16677,6 +16987,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <PropertyRef Name="OfertaEducativaId" />
             </Principal>
             <Dependent Role="Recibo">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_OfertaEducativa">
+          <End Type="UniversidadModel.OfertaEducativa" Role="OfertaEducativa" Multiplicity="1" />
+          <End Type="UniversidadModel.SolicitudInscripcion" Role="SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfertaEducativa">
+              <PropertyRef Name="OfertaEducativaId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
               <PropertyRef Name="OfertaEducativaId" />
             </Dependent>
           </ReferentialConstraint>
@@ -17251,6 +17573,20 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SolicitudInscripcion_Periodo">
+          <End Type="UniversidadModel.Periodo" Role="Periodo" Multiplicity="1" />
+          <End Type="UniversidadModel.SolicitudInscripcion" Role="SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodo">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PolizaCabeceroLayout_PolizaTipo">
           <End Type="UniversidadModel.PolizaTipo" Role="PolizaTipo" Multiplicity="1" />
           <End Type="UniversidadModel.PolizaCabeceroLayout" Role="PolizaCabeceroLayout" Multiplicity="*" />
@@ -17797,6 +18133,30 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SolicitudInscripcion_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="UniversidadModel.SolicitudInscripcion" Role="SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="SolicitudUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudInscripcion_Usuario1">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="UniversidadModel.SolicitudInscripcion" Role="SolicitudInscripcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="SolicitudInscripcion">
+              <PropertyRef Name="AutorizoUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TipoUsuarioSubmenu_SubMenu">
           <End Type="UniversidadModel.SubMenu" Role="SubMenu" Multiplicity="1" />
           <End Type="UniversidadModel.TipoUsuarioSubmenu" Role="TipoUsuarioSubmenu" Multiplicity="*" />
@@ -18161,37 +18521,53 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <End Type="UniversidadModel.SucursalCaja" Role="SucursalCaja" Multiplicity="*" />
           <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="*" />
         </Association>
-        <EntityType Name="AlumnoMovimientoTurno">
+        <EntityType Name="ReferenciaDonativo">
           <Key>
-            <PropertyRef Name="AlumnoMovimientoId" />
+            <PropertyRef Name="ReferenciaDonativoId" />
           </Key>
-          <Property Name="AlumnoMovimientoId" Type="Int32" Nullable="false" />
-          <Property Name="TurnoId" Type="Int32" />
-          <Property Name="Observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Turno" Relationship="UniversidadModel.FK_AlumnoMovimientoTurno_Turno" FromRole="AlumnoMovimientoTurno" ToRole="Turno" />
-          <NavigationProperty Name="AlumnoMovimiento" Relationship="UniversidadModel.FK_AlumnoMovimientoTurno_AlumnoMovimiento" FromRole="AlumnoMovimientoTurno" ToRole="AlumnoMovimiento" />
+          <Property Name="ReferenciaDonativoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenciaProcesadaIdOrigen" Type="Int32" Nullable="false" />
+          <Property Name="ReferenciaProcesadaIdDestino" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReferenciaProcesada" Relationship="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada" FromRole="ReferenciaDonativo" ToRole="ReferenciaProcesada" />
+          <NavigationProperty Name="ReferenciaProcesada1" Relationship="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada1" FromRole="ReferenciaDonativo" ToRole="ReferenciaProcesada" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_ReferenciaDonativo_Usuario" FromRole="ReferenciaDonativo" ToRole="Usuario" />
         </EntityType>
-        <Association Name="FK_AlumnoMovimientoTurno_Turno">
-          <End Type="UniversidadModel.Turno" Role="Turno" Multiplicity="0..1" />
-          <End Type="UniversidadModel.AlumnoMovimientoTurno" Role="AlumnoMovimientoTurno" Multiplicity="*" />
+        <Association Name="FK_ReferenciaDonativo_ReferenciaProcesada">
+          <End Type="UniversidadModel.ReferenciaProcesada" Role="ReferenciaProcesada" Multiplicity="1" />
+          <End Type="UniversidadModel.ReferenciaDonativo" Role="ReferenciaDonativo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Turno">
-              <PropertyRef Name="TurnoId" />
+            <Principal Role="ReferenciaProcesada">
+              <PropertyRef Name="ReferenciaProcesadaId" />
             </Principal>
-            <Dependent Role="AlumnoMovimientoTurno">
-              <PropertyRef Name="TurnoId" />
+            <Dependent Role="ReferenciaDonativo">
+              <PropertyRef Name="ReferenciaProcesadaIdOrigen" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AlumnoMovimientoTurno_AlumnoMovimiento">
-          <End Type="UniversidadModel.AlumnoMovimiento" Role="AlumnoMovimiento" Multiplicity="1" />
-          <End Type="UniversidadModel.AlumnoMovimientoTurno" Role="AlumnoMovimientoTurno" Multiplicity="0..1" />
+        <Association Name="FK_ReferenciaDonativo_ReferenciaProcesada1">
+          <End Type="UniversidadModel.ReferenciaProcesada" Role="ReferenciaProcesada" Multiplicity="1" />
+          <End Type="UniversidadModel.ReferenciaDonativo" Role="ReferenciaDonativo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AlumnoMovimiento">
-              <PropertyRef Name="AlumnoMovimientoId" />
+            <Principal Role="ReferenciaProcesada">
+              <PropertyRef Name="ReferenciaProcesadaId" />
             </Principal>
-            <Dependent Role="AlumnoMovimientoTurno">
-              <PropertyRef Name="AlumnoMovimientoId" />
+            <Dependent Role="ReferenciaDonativo">
+              <PropertyRef Name="ReferenciaProcesadaIdDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferenciaDonativo_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="UniversidadModel.ReferenciaDonativo" Role="ReferenciaDonativo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="ReferenciaDonativo">
+              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18896,6 +19272,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <MappingFragment StoreEntitySet="AlumnoMovimientoCarrera">
                 <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
                 <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="AlumnoMovimientoId" ColumnName="AlumnoMovimientoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlumnoMovimientoTurno">
+            <EntityTypeMapping TypeName="UniversidadModel.AlumnoMovimientoTurno">
+              <MappingFragment StoreEntitySet="AlumnoMovimientoTurno">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="TurnoId" ColumnName="TurnoId" />
                 <ScalarProperty Name="AlumnoMovimientoId" ColumnName="AlumnoMovimientoId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -20560,6 +20945,24 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SolicitudInscripcion">
+            <EntityTypeMapping TypeName="UniversidadModel.SolicitudInscripcion">
+              <MappingFragment StoreEntitySet="SolicitudInscripcion">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="AutorizoUsuarioId" ColumnName="AutorizoUsuarioId" />
+                <ScalarProperty Name="HoraAutorizacion" ColumnName="HoraAutorizacion" />
+                <ScalarProperty Name="FechaAutorizacion" ColumnName="FechaAutorizacion" />
+                <ScalarProperty Name="SolicitudUsuarioId" ColumnName="SolicitudUsuarioId" />
+                <ScalarProperty Name="HoraSolicitud" ColumnName="HoraSolicitud" />
+                <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SubMenu">
             <EntityTypeMapping TypeName="UniversidadModel.SubMenu">
               <MappingFragment StoreEntitySet="SubMenu">
@@ -21321,12 +21724,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <ScalarProperty Name="SucursalCajaId" ColumnName="SucursalCajaId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="AlumnoMovimientoTurno">
-            <EntityTypeMapping TypeName="UniversidadModel.AlumnoMovimientoTurno">
-              <MappingFragment StoreEntitySet="AlumnoMovimientoTurno">
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-                <ScalarProperty Name="TurnoId" ColumnName="TurnoId" />
-                <ScalarProperty Name="AlumnoMovimientoId" ColumnName="AlumnoMovimientoId" />
+          <EntitySetMapping Name="ReferenciaDonativo">
+            <EntityTypeMapping TypeName="UniversidadModel.ReferenciaDonativo">
+              <MappingFragment StoreEntitySet="ReferenciaDonativo">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ReferenciaProcesadaIdDestino" ColumnName="ReferenciaProcesadaIdDestino" />
+                <ScalarProperty Name="ReferenciaProcesadaIdOrigen" ColumnName="ReferenciaProcesadaIdOrigen" />
+                <ScalarProperty Name="ReferenciaDonativoId" ColumnName="ReferenciaDonativoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

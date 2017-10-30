@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,5 +40,30 @@ namespace Universidad.DTO
         [System.ComponentModel.Browsable(false)]
         public int periodoId { get; set; }
         public bool esVariable { get; set; }
+    }
+
+
+    public class DTOAlumnoDonativo
+    {
+        public int AlumnoId { get; set; }
+        public string Nombre { get; set; }
+        public decimal Monto { get; set; }
+    }
+
+    public class DTODonativo
+    {
+        public List<DTOAlumnoDonativo> Alumnos { get; set; }
+        public string ReferenciaId { get; set; }
+        public int UsuarioId { get; set; }
+    }
+
+    public class DTOReferenciaDonativo
+    {
+        static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
+
+        public DateTime fechaPago_ { get {return DateTime.Now; } set { fechaPago = value.ToString("dd/MM/yyyy", Cultura); } }
+        public string fechaPago { get; set; }
+        public string referenciaId { get; set; }
+        public decimal importe { get; set; }
     }
 }

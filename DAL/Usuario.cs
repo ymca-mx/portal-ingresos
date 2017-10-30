@@ -63,6 +63,7 @@ namespace DAL
             this.UsuarioPermiso1 = new HashSet<UsuarioPermiso>();
             this.UsuarioTipoPagoConcepto = new HashSet<UsuarioTipoPagoConcepto>();
             this.SucursalCaja = new HashSet<SucursalCaja>();
+            this.ReferenciaDonativo = new HashSet<ReferenciaDonativo>();
         }
     
         public int UsuarioId { get; set; }
@@ -170,5 +171,7 @@ namespace DAL
         public virtual ICollection<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SucursalCaja> SucursalCaja { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo { get; set; }
     }
 }

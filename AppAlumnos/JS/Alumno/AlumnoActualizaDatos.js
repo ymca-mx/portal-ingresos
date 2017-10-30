@@ -1,29 +1,11 @@
-﻿var Mostrar = {
-    show: function () {
-        console.log('Soy modal');
-        $('#popDatos').modal('show');
-    }
-};
-
+﻿
 $(document).ready(function init() {
     var AlumnoNum;
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
     AlumnoNum = $.cookie('user');
-    getUrlVars();
     Load();
-
-    function getUrlVars() {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
     
     function Load() {
         

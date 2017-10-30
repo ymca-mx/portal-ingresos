@@ -603,5 +603,18 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.BitacoraAccesoAlumno(AlumnoId);
         }
+
+        //Aplicacion de donativos//
+        [WebMethod]
+        public Universidad.DTO.DTOReferenciaDonativo BuscarReferencia(string Dato,int Buscar)
+        {
+            return BLL.BLLDonativo.BuscarReferencia(Dato,Buscar);
+        }
+
+        [WebMethod]
+        public bool AplicarDonativo(Universidad.DTO.DTODonativo AlumnoDonativo)
+        {
+            return BLL.BLLDonativo.AplicarDonativo(AlumnoDonativo);
+        }
     }
 }

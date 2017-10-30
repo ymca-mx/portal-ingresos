@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" type="text/css">
+  <link rel='stylesheet' href='http://fonts.googleapis.com/icon?family=Material+Icons' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/sidenav.css" type="text/css" />
+  <link href="css/index.css" rel="stylesheet" />
+
+  <title>Menu</title>
+</head>
+<body>
+  <nav class="sidenav " data-sidenav data-sidenav-toggle="#sidenav-toggle">
+    <div class="sidenav-brand">
+      Menu
+    </div>
+
+    <div class="sidenav-header">
+      Sección 1
+    </div>
+
+    <ul class="sidenav-menu" >
+      <li>
+        <a href="javascript:;" data-sidenav-dropdown-toggle >
+          <span class="sidenav-link-icon">
+            <i class="material-icons">store</i>
+          </span>
+          <span class="sidenav-link-title">Menu 1</span>
+          <span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_down</i>
+          </span>
+          <span class="sidenav-dropdown-icon" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_up</i>
+          </span>
+        </a>
+
+        <ul class="sidenav-dropdown" data-sidenav-dropdown>
+          <li><a href="javascript:;" data-sidenav-submenu>Sub Menu 1</a></li>
+          <li><a href="javascript:;" data-sidenav-submenu>Sub menu 1</a></li>
+          <li><a href="javascript:;" data-sidenav-submenu>Sub menu 3</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-sidenav-dropdown-toggle>
+          <span class="sidenav-link-icon">
+            <i class="material-icons">store</i>
+          </span>
+          <span class="sidenav-link-title">Menu 2</span>
+          <span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_down</i>
+          </span>
+          <span class="sidenav-dropdown-icon" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_up</i>
+          </span>
+        </a>
+
+        <ul class="sidenav-dropdown" data-sidenav-dropdown>
+          <li><a href="javascript:;" data-sidenav-submenu>sub menu 1</a></li>
+          <li><a href="javascript:;" data-sidenav-submenu>sub menu 2</a></li>
+          <li><a href="javascript:;" data-sidenav-submenu>sub menu 3</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-sidenav-dropdown-toggle>
+          <span class="sidenav-link-icon">
+            <i class="material-icons">assignment_ind</i>
+          </span>
+          <span class="sidenav-link-title">Menu 3</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-header">
+      Sección 2
+    </div>
+
+    <ul class="sidenav-menu">
+      <li>
+        <a href="javascript:;" data-sidenav-dropdown-toggle>
+          <span class="sidenav-link-icon">
+            <i class="material-icons">date_range</i>
+          </span>
+          <span class="sidenav-link-title">Menu 4</span>
+          <span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_down</i>
+          </span>
+          <span class="sidenav-dropdown-icon" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_up</i>
+          </span>
+        </a>
+
+        <ul class="sidenav-dropdown" data-sidenav-dropdown>
+          <li><a href="javascript:;" data-sidenav-submenu >sub menu 1</a></li>
+          <li><a href="javascript:;" data-sidenav-submenu >sub menu 2</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-sidenav-dropdown-toggle>
+          <span class="sidenav-link-icon">
+            <i class="material-icons">backup</i>
+          </span>
+          <span class="sidenav-link-title">Menu 5</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <a href="javascript:;" class="toggle" id="sidenav-toggle">
+    <i class="material-icons">menu</i>
+  </a>
+
+    <div class="page-content col-md-12" style="border: 1px solid blue; padding:0px">
+      <div class="container" id="divDinamico">
+        <h1>contenido</h1>
+      </div>
+    </div>
+
+
+
+
+  <!--<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>-->
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <script src="js/sidenav.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

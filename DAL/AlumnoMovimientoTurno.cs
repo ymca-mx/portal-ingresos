@@ -18,7 +18,7 @@ namespace DAL
         public Nullable<int> TurnoId { get; set; }
         public string Observaciones { get; set; }
     
-        public virtual Turno Turno { get; set; }
         public virtual AlumnoMovimiento AlumnoMovimiento { get; set; }
+        public virtual Turno Turno { get; set; }
     }
 }

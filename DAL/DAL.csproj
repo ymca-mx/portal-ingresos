@@ -631,6 +631,9 @@
     <Compile Include="ReferenciadoLayout.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReferenciaDonativo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReferenciaEspecial.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

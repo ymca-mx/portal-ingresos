@@ -162,6 +162,7 @@
     <Content Include="JS\index\index.js" />
     <Content Include="JS\login\animacion.js" />
     <Content Include="JS\login\valida.js" />
+    <Content Include="JS\Pagos\Donativos.js" />
     <Content Include="JS\Pagos\ReferenciasSemestrales.js" />
     <Content Include="JS\Referencias\CancelarReferencias.js" />
     <Content Include="JS\Referencias\GenerarReferenciasB.js" />
@@ -4786,6 +4787,19 @@
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
     <Content Include="Views\Empresas\ReAjusteCuotas.html" />
+    <Content Include="Views\Menu\menu 1\css\menu.css" />
+    <Content Include="Views\Menu\menu 1\css\bg.png" />
+    <Content Include="Views\Menu\menu 1\js\menu-min.js" />
+    <Content Include="Views\Menu\menu 1\js\menu.js" />
+    <Content Include="Views\Menu\menu 1\index.html" />
+    <Content Include="Views\Menu\menu 1\index.css" />
+    <Content Include="Views\Menu\menu 1\index.js" />
+    <Content Include="Views\Menu\menu 2\css\sidenav.css" />
+    <Content Include="Views\Menu\menu 2\js\sidenav.js" />
+    <Content Include="Views\Menu\menu 2\index.html" />
+    <Content Include="Views\Menu\menu 2\js\index.js" />
+    <Content Include="Views\Menu\menu 2\css\index.css" />
+    <Content Include="Views\Pago\Donativos.html" />
     <Content Include="Views\Reportes\AntiguedadSaldos.html" />
     <Content Include="Views\Reportes\CarteraVencida.html" />
     <Content Include="Views\EvaluacionDocente\ActualizacionDocente.html" />

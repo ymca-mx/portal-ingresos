@@ -9,233 +9,239 @@
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalleCoordinador_EntidadFederativa" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalleCoordinador_EstadoCivil" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoDetalleCoordinador_Municipio" />
-        <EntityTypeShape EntityType="UniversidadModel.Adeudo" Width="1.5" PointX="19.25" PointY="172.625" />
-        <EntityTypeShape EntityType="UniversidadModel.AdeudoBiblioteca" Width="1.5" PointX="10.5" PointY="165.875" />
-        <EntityTypeShape EntityType="UniversidadModel.AdeudoChocolates" Width="1.5" PointX="13.5" PointY="176.875" />
-        <EntityTypeShape EntityType="UniversidadModel.Alumno" Width="1.5" PointX="5.25" PointY="168.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoAccesoBitacora" Width="1.5" PointX="7.5" PointY="310.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoAntecedente" Width="1.5" PointX="10.5" PointY="179.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoAntecedenteBitacora" Width="1.5" PointX="5.25" PointY="196.5" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoAutorizacion" Width="1.5" PointX="7.5" PointY="180.625" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoBajaDocumento" Width="1.5" PointX="29.75" PointY="183.125" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoBitacora" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoCuatrimestre" Width="1.5" PointX="19.25" PointY="176.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoCuatrimestreBitacora" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuento" Width="1.5" PointX="16.25" PointY="177" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoBitacora" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoDocumento" Width="1.5" PointX="18.5" PointY="191.125" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoPendiente" Width="1.5" PointX="30.5" PointY="161.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalle" Width="1.5" PointX="16.5" PointY="164.875" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalleAlumno" Width="1.5" PointX="27.5" PointY="156.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalleBitacora" Width="1.5" PointX="7.5" PointY="280.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoExamenMedico" Width="1.5" PointX="26.75" PointY="179.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoGrupoCuota" Width="1.5" PointX="8.75" PointY="6.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoImagen" Width="1.5" PointX="7.5" PointY="324.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoImagenDetalle" Width="1.5" PointX="9.75" PointY="324.125" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscrito" Width="1.5" PointX="13.25" PointY="198.5" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBeca" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBecaDeportiva" Width="1.5" PointX="10.75" PointY="4.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBecaDocumento" Width="1.5" PointX="10.75" PointY="8.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBitacora" Width="1.5" PointX="16.25" PointY="200.625" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDetalle" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDetalleBitacora" Width="1.5" PointX="8.75" PointY="12.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDocumento" Width="1.5" PointX="12.75" PointY="9.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimiento" Width="1.5" PointX="22.25" PointY="171.875" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoBaja" Width="1.5" PointX="27.5" PointY="175.625" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoCarrera" Width="1.5" PointX="24.5" PointY="179.375" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoTurno" Width="1.5" PointX="13.25" PointY="210.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoPassword" Width="1.5" PointX="7.5" PointY="313.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoPasswordRecovery" Width="1.5" PointX="13.5" PointY="164.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoPermitido" Width="1.5" PointX="13.5" PointY="168.625" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoReferenciaBitacora" Width="1.5" PointX="18.5" PointY="181.25" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoReingresoBitacora" Width="1.5" PointX="19.25" PointY="164.375" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoRevision" Width="1.5" PointX="16.25" PointY="172" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldo" Width="1.5" PointX="7.5" PointY="316" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldoDetalle" Width="1.5" PointX="15.75" PointY="247" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldoGasto" Width="1.5" PointX="9.75" PointY="320" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnosEmpresa" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AntecedenteTipo" Width="1.5" PointX="6.5" PointY="157" />
-        <EntityTypeShape EntityType="UniversidadModel.AreaAcademica" Width="1.5" PointX="8.25" PointY="196.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Asignatura" Width="1.5" PointX="8" PointY="168.625" />
-        <EntityTypeShape EntityType="UniversidadModel.Asociacion" Width="1.5" PointX="3.75" PointY="3.125" />
-        <EntityTypeShape EntityType="UniversidadModel.AsociacionDetalle" Width="1.5" PointX="6" PointY="3.5" />
-        <EntityTypeShape EntityType="UniversidadModel.BajaMotivo" Width="1.5" PointX="25.25" PointY="190.125" />
-        <EntityTypeShape EntityType="UniversidadModel.BancoTerminal" Width="1.5" PointX="8" PointY="176.625" />
-        <EntityTypeShape EntityType="UniversidadModel.BecaDeportiva" Width="1.5" PointX="22.25" PointY="167.375" />
-        <EntityTypeShape EntityType="UniversidadModel.BitacoraReinscripcionAdeudo" Width="1.5" PointX="7.5" PointY="307.25" />
-        <EntityTypeShape EntityType="UniversidadModel.Caja" Width="1.5" PointX="1.5" PointY="183.375" />
-        <EntityTypeShape EntityType="UniversidadModel.CajaConfiguracion" Width="1.5" PointX="3" PointY="186.375" />
-        <EntityTypeShape EntityType="UniversidadModel.CalendarioEscolar" Width="1.5" PointX="8.25" PointY="172.5" />
-        <EntityTypeShape EntityType="UniversidadModel.CalificacionesAntecedente" Width="1.5" PointX="10.75" PointY="13.75" />
-        <EntityTypeShape EntityType="UniversidadModel.CuentaMail" Width="1.5" PointX="12.75" PointY="13.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Cuota" Width="1.5" PointX="24.25" PointY="182.125" />
-        <EntityTypeShape EntityType="UniversidadModel.CuotaIncremento" Width="1.5" PointX="19.25" PointY="160.25" />
-        <EntityTypeShape EntityType="UniversidadModel.DatosFiscales" Width="1.5" PointX="7.5" PointY="208.625" />
-        <EntityTypeShape EntityType="UniversidadModel.Defectos" Width="1.5" PointX="14.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Descuento" Width="1.5" PointX="16.25" PointY="160.125" />
-        <EntityTypeShape EntityType="UniversidadModel.DescuentoTipo" Width="1.5" PointX="14" PointY="138.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Dia" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Empresa" Width="1.5" PointX="5.25" PointY="209.125" />
-        <EntityTypeShape EntityType="UniversidadModel.EmpresaDetalle" Width="1.5" PointX="10.5" PointY="208.125" />
-        <EntityTypeShape EntityType="UniversidadModel.EntidadFederativa" Width="1.5" PointX="14.25" PointY="191.875" />
-        <EntityTypeShape EntityType="UniversidadModel.EspecialidadMaestriaRelacion" Width="1.5" PointX="13.25" PointY="203.625" />
-        <EntityTypeShape EntityType="UniversidadModel.EstadoCivil" Width="1.5" PointX="14.25" PointY="152.875" />
-        <EntityTypeShape EntityType="UniversidadModel.Estatus" Width="1.5" PointX="0.75" PointY="170.5" />
-        <EntityTypeShape EntityType="UniversidadModel.Financiamiento" Width="1.5" PointX="7.5" PointY="184.25" />
-        <EntityTypeShape EntityType="UniversidadModel.Genero" Width="1.5" PointX="14.25" PointY="149.625" />
-        <EntityTypeShape EntityType="UniversidadModel.Grupo" Width="1.5" PointX="7.5" PointY="189.125" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumno" Width="1.5" PointX="14.75" PointY="4.75" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoBitacora" Width="1.5" PointX="14.75" PointY="7.75" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoConfiguracion" Width="1.5" PointX="19.25" PointY="197" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoConfiguracionBitacora" Width="1.5" PointX="5.25" PointY="203.5" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoBitacora" Width="1.5" PointX="14.75" PointY="10.75" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoComprobante" Width="1.5" PointX="9.75" PointY="190" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoComprobanteDocumento" Width="1.5" PointX="12" PointY="191.5" />
-        <EntityTypeShape EntityType="UniversidadModel.GrupoDetalle" Width="1.5" PointX="30.5" PointY="190.125" />
-        <EntityTypeShape EntityType="UniversidadModel.IdiomaGrupo" Width="1.5" PointX="20" PointY="203.625" />
-        <EntityTypeShape EntityType="UniversidadModel.IdiomaGrupoAlumno" Width="1.5" PointX="22.25" PointY="177.375" />
-        <EntityTypeShape EntityType="UniversidadModel.IngresosPermiso" Width="1.5" PointX="6" PointY="141" />
-        <EntityTypeShape EntityType="UniversidadModel.LenguasRelacion" Width="1.5" PointX="26.5" PointY="186.5" />
-        <EntityTypeShape EntityType="UniversidadModel.Matricula" Width="1.5" PointX="19.25" PointY="168.375" />
-        <EntityTypeShape EntityType="UniversidadModel.MedioDifusion" Width="1.5" PointX="8.25" PointY="199.375" />
-        <EntityTypeShape EntityType="UniversidadModel.Menu" Width="1.5" PointX="1.5" PointY="155.375" />
-        <EntityTypeShape EntityType="UniversidadModel.Mes" Width="1.5" PointX="20.75" PointY="157.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Municipio" Width="1.5" PointX="14.25" PointY="145.375" />
-        <EntityTypeShape EntityType="UniversidadModel.NivelAcademico" Width="1.5" PointX="3" PointY="244.25" />
-        <EntityTypeShape EntityType="UniversidadModel.OfertaCalendario" Width="1.5" PointX="13.25" PointY="162" />
-        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativa" Width="1.5" PointX="11" PointY="169.75" />
-        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaAntecedente" Width="1.5" PointX="16.25" PointY="205.5" />
-        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaPlan" Width="1.5" PointX="5.25" PointY="240.875" />
-        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaRequerimiento" Width="1.5" PointX="13.25" PointY="206.875" />
-        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaTipo" Width="1.5" PointX="8.75" PointY="156.5" />
-        <EntityTypeShape EntityType="UniversidadModel.Pagare" Width="1.5" PointX="10.5" PointY="161.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PagareDocumento" Width="1.5" PointX="12.75" PointY="156.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Pago" Width="1.5" PointX="25.25" PointY="169.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoBitacora" Width="1.5" PointX="14.75" PointY="15.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacion" Width="1.5" PointX="27.5" PointY="201.375" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionDetalle" Width="1.5" PointX="32.75" PointY="185.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionSolicitud" Width="1.5" PointX="16.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoConcepto" Width="1.5" PointX="16.25" PointY="184.375" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoConceptoCarrera" Width="1.5" PointX="16.75" PointY="4.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoConceptoMaestro" Width="1.5" PointX="3" PointY="247" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoDescripcion" Width="1.5" PointX="27.5" PointY="199.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoDescuento" Width="1.5" PointX="30.5" PointY="166.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoDetalle" Width="1.5" PointX="35.75" PointY="171.875" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoMetodo" Width="1.5" PointX="5.75" PointY="153.625" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoPagare" Width="1.5" PointX="27.5" PointY="168.625" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoParcial" Width="1.5" PointX="33.5" PointY="170.625" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoParcialBitacora" Width="1.5" PointX="5.25" PointY="189" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoPlan" Width="1.5" PointX="3" PointY="240.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoRecargo" Width="1.5" PointX="27.5" PointY="196.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoTipo" Width="1.5" PointX="31.25" PointY="158.875" />
-        <EntityTypeShape EntityType="UniversidadModel.Pais" Width="1.5" PointX="14.25" PointY="140.875" />
-        <EntityTypeShape EntityType="UniversidadModel.Parentesco" Width="1.5" PointX="5.25" PointY="151.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Periodo" Width="1.5" PointX="22" PointY="191.375" />
-        <EntityTypeShape EntityType="UniversidadModel.PeriodoAnticipado" Width="1.5" PointX="33.25" PointY="180" />
-        <EntityTypeShape EntityType="UniversidadModel.PersonaAutorizada" Width="1.5" PointX="7.5" PointY="164.25" />
-        <EntityTypeShape EntityType="UniversidadModel.PersonaAutorizadaBitacora" Width="1.5" PointX="16.75" PointY="7.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaAjuste" Width="1.5" PointX="33.5" PointY="176.625" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaCabeceroLayout" Width="1.5" PointX="3" PointY="15.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaConfiguracion" Width="1.5" PointX="6" PointY="8.625" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaConsecutivo" Width="1.5" PointX="23" PointY="84.375" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaCuadre" Width="1.5" PointX="6" PointY="16.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaDetalleLayout" Width="1.5" PointX="3" PointY="29.125" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaMovimiento" Width="1.5" PointX="16.75" PointY="12.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaNumeracion" Width="1.5" PointX="3" PointY="10.375" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaSubtipo" Width="1.5" PointX="3.75" PointY="7" />
-        <EntityTypeShape EntityType="UniversidadModel.PolizaTipo" Width="1.5" PointX="0.75" PointY="12.625" />
-        <EntityTypeShape EntityType="UniversidadModel.Pregunta" Width="1.5" PointX="11.25" PointY="145.625" />
-        <EntityTypeShape EntityType="UniversidadModel.PreguntaCompuesta" Width="1.5" PointX="6.75" PointY="145.875" />
-        <EntityTypeShape EntityType="UniversidadModel.PreguntaConfiguracion" Width="1.5" PointX="9" PointY="145.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PreguntaTipo" Width="1.5" PointX="4.5" PointY="147.375" />
-        <EntityTypeShape EntityType="UniversidadModel.PreguntaTipoValores" Width="1.5" PointX="4.5" PointY="144.25" />
-        <EntityTypeShape EntityType="UniversidadModel.PreguntaValor" Width="1.5" PointX="2.25" PointY="147.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PromocionCasa" Width="1.5" PointX="30.5" PointY="176.375" />
-        <EntityTypeShape EntityType="UniversidadModel.Prospecto" Width="1.5" PointX="23" PointY="153.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ProspectoBitacora" Width="1.5" PointX="16.75" PointY="15.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ProspectoDetalle" Width="1.5" PointX="25.25" PointY="157.5" />
-        <EntityTypeShape EntityType="UniversidadModel.ProspectoDetalleBitacora" Width="1.5" PointX="10.75" PointY="17.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ProspectoSeguimiento" Width="1.5" PointX="13.25" PointY="158.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Recibo" Width="1.5" PointX="22.25" PointY="161.625" />
-        <EntityTypeShape EntityType="UniversidadModel.ReciboArchivo" Width="1.5" PointX="27.5" PointY="162" />
-        <EntityTypeShape EntityType="UniversidadModel.ReciboDetalle" Width="1.5" PointX="27.5" PointY="171.625" />
-        <EntityTypeShape EntityType="UniversidadModel.ReciboMSI" Width="1.5" PointX="27.5" PointY="165.25" />
-        <EntityTypeShape EntityType="UniversidadModel.Reclasificacion" Width="1.5" PointX="35.75" PointY="202.125" />
-        <EntityTypeShape EntityType="UniversidadModel.ReclasificacionTipo" Width="1.5" PointX="3" PointY="237.25" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoArchivoBitacora" Width="1.5" PointX="6" PointY="12.375" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoBitacora" Width="1.5" PointX="18.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoCabecero" Width="1.5" PointX="27.5" PointY="192.875" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoCabeceroBitacora" Width="1.5" PointX="30.5" PointY="172.25" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoDetalle" Width="1.5" PointX="29.75" PointY="186.125" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoDetalleBitacora" Width="1.5" PointX="35.75" PointY="175.375" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoLayout" Width="1.5" PointX="0.75" PointY="18.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciaEspecial" Width="1.5" PointX="2.75" PointY="18.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciaGeneradaBitacora" Width="1.5" PointX="30.5" PointY="168.875" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciaProcesada" Width="1.5" PointX="13.5" PointY="179.875" />
-        <EntityTypeShape EntityType="UniversidadModel.ReferenciaTipo" Width="1.5" PointX="11.25" PointY="194.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Respuesta" Width="1.5" PointX="13.5" PointY="172.25" />
-        <EntityTypeShape EntityType="UniversidadModel.SistemaConfiguracion" Width="1.5" PointX="5.25" PointY="165.25" />
         <EntityTypeShape EntityType="UniversidadModel.SolicitudInscripcion" Width="1.5" PointX="21.25" PointY="181.75" />
-        <EntityTypeShape EntityType="UniversidadModel.SubMenu" Width="1.5" PointX="0.75" PointY="164.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Subperiodo" Width="1.5" PointX="23" PointY="157.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Sucursal" Width="1.5" PointX="8.75" PointY="152.125" />
-        <EntityTypeShape EntityType="UniversidadModel.SucursalAnuncio" Width="1.5" PointX="11" PointY="152.625" />
-        <EntityTypeShape EntityType="UniversidadModel.SucursalCaja" Width="1.5" PointX="0.75" PointY="179" />
-        <EntityTypeShape EntityType="UniversidadModel.SucursalDetalle" Width="1.5" PointX="16.5" PointY="146.625" />
-        <EntityTypeShape EntityType="UniversidadModel.TipoDocumento" Width="1.5" PointX="18.75" PointY="4.75" />
-        <EntityTypeShape EntityType="UniversidadModel.TipoMovimiento" Width="1.5" PointX="20" PointY="154.125" />
-        <EntityTypeShape EntityType="UniversidadModel.TipoMovimientoCRUD" Width="1.5" PointX="18.75" PointY="7.75" />
-        <EntityTypeShape EntityType="UniversidadModel.TipoUsuarioSubmenu" Width="1.5" PointX="3" PointY="164.25" />
-        <EntityTypeShape EntityType="UniversidadModel.Turno" Width="1.5" PointX="11" PointY="199.5" />
-        <EntityTypeShape EntityType="UniversidadModel.UniversidadValidacion" Width="1.5" PointX="13.25" PointY="185.125" />
-        <EntityTypeShape EntityType="UniversidadModel.Usuario" Width="1.5" PointX="3" PointY="167.875" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioBitacora" Width="1.5" PointX="5.25" PointY="180.375" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioDetalle" Width="1.5" PointX="10.25" PointY="185.5" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioImagen" Width="1.5" PointX="5.25" PointY="193.75" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioImagenDetalle" Width="1.5" PointX="7.5" PointY="193.625" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioIngresosBitacora" Width="1.5" PointX="5.25" PointY="186" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioOrigen" Width="1.5" PointX="18.75" PointY="10.75" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioPasswordRecovery" Width="1.5" PointX="19.25" PointY="187.75" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioPermiso" Width="1.5" PointX="8.25" PointY="160.625" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioTipo" Width="1.5" PointX="0.75" PointY="167.125" />
-        <EntityTypeShape EntityType="UniversidadModel.UsuarioTipoPagoConcepto" Width="1.5" PointX="21.5" PointY="187.25" />
-        <EntityTypeShape EntityType="UniversidadModel.CancelacionCursoDocente" Width="1.5" PointX="26.5" PointY="211.25" />
-        <EntityTypeShape EntityType="UniversidadModel.CancelacionDocenteEstudio" Width="1.5" PointX="26.5" PointY="183.375" />
-        <EntityTypeShape EntityType="UniversidadModel.Docente" Width="1.5" PointX="22" PointY="207.75" />
-        <EntityTypeShape EntityType="UniversidadModel.DocenteCurso" Width="1.5" PointX="24.25" PointY="197.875" />
-        <EntityTypeShape EntityType="UniversidadModel.DocenteDetalle" Width="1.5" PointX="18.75" PointY="13.75" />
-        <EntityTypeShape EntityType="UniversidadModel.DocenteEstudio" Width="1.5" PointX="22" PointY="198.125" />
-        <EntityTypeShape EntityType="UniversidadModel.DocenteEstudioDocumento" Width="1.5" PointX="24.25" PointY="203" />
-        <EntityTypeShape EntityType="UniversidadModel.DocenteEstudioPeriodo" Width="1.5" PointX="24.25" PointY="193.375" />
-        <EntityTypeShape EntityType="UniversidadModel.DocentePublicacion" Width="1.5" PointX="20.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.DocumentoTipo" Width="1.5" PointX="22" PointY="212.25" />
-        <EntityTypeShape EntityType="UniversidadModel.Grupo1" Width="1.5" PointX="4.75" PointY="20.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Hora" Width="1.5" PointX="20.75" PointY="5.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Materia" Width="1.5" PointX="20.75" PointY="8.75" />
-        <EntityTypeShape EntityType="UniversidadModel.MateriaApertura" Width="1.5" PointX="20.75" PointY="12.75" />
-        <EntityTypeShape EntityType="UniversidadModel.MateriaCompartida" Width="1.5" PointX="16.75" PointY="20.75" />
-        <EntityTypeShape EntityType="UniversidadModel.MateriaCompartidaDetalle" Width="1.5" PointX="20.75" PointY="17.75" />
-        <EntityTypeShape EntityType="UniversidadModel.MateriaTipo" Width="1.5" PointX="18.75" PointY="20.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Menu1" Width="1.5" PointX="1.5" PointY="158.375" />
-        <EntityTypeShape EntityType="UniversidadModel.Salon" Width="1.5" PointX="20.75" PointY="20.75" />
-        <EntityTypeShape EntityType="UniversidadModel.SalonAsignacion" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Sede" Width="1.5" PointX="12.75" PointY="21.75" />
-        <EntityTypeShape EntityType="UniversidadModel.SubMenu1" Width="1.5" PointX="0.75" PointY="161.125" />
-        <EntityTypeShape EntityType="UniversidadModel.TipoUsuarioSubmenu1" Width="1.5" PointX="3" PointY="161.25" />
-        <EntityTypeShape EntityType="UniversidadModel.VistoBuenoCurso" Width="1.5" PointX="26.5" PointY="208.375" />
-        <EntityTypeShape EntityType="UniversidadModel.VistoBuenoEstudio" Width="1.5" PointX="26.5" PointY="204.375" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoBeca" Width="1.5" PointX="22.75" PointY="0.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBitacoraBKSalome" Width="1.5" PointX="22.75" PointY="3.75" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoMatricula" Width="1.5" PointX="6.75" PointY="22.75" />
-        <EntityTypeShape EntityType="UniversidadModel.BecaSEPBitacora" Width="1.5" PointX="5.25" PointY="160.125" />
-        <EntityTypeShape EntityType="UniversidadModel.COLEGIATURA" Width="1.5" PointX="22.75" PointY="7.75" />
-        <EntityTypeShape EntityType="UniversidadModel.IdiomasInscrito" Width="1.5" PointX="22.75" PointY="12.75" />
-        <EntityTypeShape EntityType="UniversidadModel.PagoDescuentoBitacora" Width="1.5" PointX="22.75" PointY="16.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" Width="1.5" PointX="22.75" PointY="19.75" />
-        <EntityTypeShape EntityType="UniversidadModel.ReporteEstadoCuentaPagosConcepto" Width="1.5" PointX="22.75" PointY="22.75" />
-        <EntityTypeShape EntityType="UniversidadModel.Saldos" Width="1.5" PointX="18.75" PointY="23.75" />
-        <EntityTypeShape EntityType="UniversidadModel.UniversidadAdeudo" Width="1.5" PointX="2.75" PointY="23.75" />
-        <EntityTypeShape EntityType="UniversidadModel.UniversidadNewAdeudo" Width="1.5" PointX="24.75" PointY="0.75" />
+        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Alumno" />
+        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Estatus" />
+        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_OfertaEducativa" />
+        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Periodo" />
+        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Usuario" />
+        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Usuario1" />
+        <EntityTypeShape EntityType="UniversidadModel.Adeudo" Width="1.5" PointX="19.5" PointY="186.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AdeudoBiblioteca" Width="1.5" PointX="19.5" PointY="166.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AdeudoChocolates" Width="1.5" PointX="19.5" PointY="163.5" />
+        <EntityTypeShape EntityType="UniversidadModel.Alumno" Width="1.5" PointX="8.25" PointY="167.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAccesoBitacora" Width="1.5" PointX="10.5" PointY="255" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAntecedente" Width="1.5" PointX="13.5" PointY="169.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAntecedenteBitacora" Width="1.5" PointX="8.25" PointY="160.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoAutorizacion" Width="1.5" PointX="16.5" PointY="162.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoBajaDocumento" Width="1.5" PointX="27" PointY="165.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoBitacora" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoCuatrimestre" Width="1.5" PointX="22.5" PointY="164.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoCuatrimestreBitacora" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuento" Width="1.5" PointX="19.5" PointY="179.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoBitacora" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoDocumento" Width="1.5" PointX="21.75" PointY="188.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDescuentoPendiente" Width="1.5" PointX="30.75" PointY="174.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalle" Width="1.5" PointX="16.5" PointY="175.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalleAlumno" Width="1.5" PointX="16.5" PointY="144.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoDetalleBitacora" Width="1.5" PointX="10.5" PointY="303" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoExamenMedico" Width="1.5" PointX="24.75" PointY="178.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoGrupoCuota" Width="1.5" PointX="5.75" PointY="6.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoImagen" Width="1.5" PointX="10.5" PointY="317.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoImagenDetalle" Width="1.5" PointX="12.75" PointY="317.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscrito" Width="1.5" PointX="13.5" PointY="197.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBeca" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBecaDeportiva" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBecaDocumento" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBitacora" Width="1.5" PointX="10.5" PointY="200.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDetalle" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDetalleBitacora" Width="1.5" PointX="9.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoDocumento" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimiento" Width="1.5" PointX="22.5" PointY="168.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoBaja" Width="1.5" PointX="24.75" PointY="166.875" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoCarrera" Width="1.5" PointX="24.75" PointY="176.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoTurno" Width="1.5" PointX="24.75" PointY="170.125" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPassword" Width="1.5" PointX="10.5" PointY="300.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPasswordRecovery" Width="1.5" PointX="10.5" PointY="175.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoPermitido" Width="1.5" PointX="10.5" PointY="163.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoReferenciaBitacora" Width="1.5" PointX="18.75" PointY="174.375" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoReingresoBitacora" Width="1.5" PointX="10.5" PointY="182.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoRevision" Width="1.5" PointX="16.5" PointY="183.25" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldo" Width="1.5" PointX="10.5" PointY="309.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldoDetalle" Width="1.5" PointX="15.75" PointY="236.125" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoSaldoGasto" Width="1.5" PointX="12.75" PointY="313.625" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnosEmpresa" Width="1.5" PointX="11.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AntecedenteTipo" Width="1.5" PointX="1.5" PointY="185.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AreaAcademica" Width="1.5" PointX="11.25" PointY="140.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Asignatura" Width="1.5" PointX="3" PointY="167.25" />
+        <EntityTypeShape EntityType="UniversidadModel.Asociacion" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="UniversidadModel.AsociacionDetalle" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="UniversidadModel.BajaMotivo" Width="1.5" PointX="22.5" PointY="155.375" />
+        <EntityTypeShape EntityType="UniversidadModel.BancoTerminal" Width="1.5" PointX="3" PointY="171.25" />
+        <EntityTypeShape EntityType="UniversidadModel.BecaDeportiva" Width="1.5" PointX="10.5" PointY="178.625" />
+        <EntityTypeShape EntityType="UniversidadModel.BitacoraReinscripcionAdeudo" Width="1.5" PointX="10.5" PointY="281.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Caja" Width="1.5" PointX="1.5" PointY="156.125" />
+        <EntityTypeShape EntityType="UniversidadModel.CajaConfiguracion" Width="1.5" PointX="6" PointY="156.125" />
+        <EntityTypeShape EntityType="UniversidadModel.CalendarioEscolar" Width="1.5" PointX="11.25" PointY="171.125" />
+        <EntityTypeShape EntityType="UniversidadModel.CalificacionesAntecedente" Width="1.5" PointX="11.75" PointY="7.75" />
+        <EntityTypeShape EntityType="UniversidadModel.CuentaMail" Width="1.5" PointX="11.75" PointY="11.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Cuota" Width="1.5" PointX="13.25" PointY="189.75" />
+        <EntityTypeShape EntityType="UniversidadModel.CuotaIncremento" Width="1.5" PointX="13.25" PointY="159.875" />
+        <EntityTypeShape EntityType="UniversidadModel.DatosFiscales" Width="1.5" PointX="16.5" PointY="205.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Defectos" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Descuento" Width="1.5" PointX="16.25" PointY="188.75" />
+        <EntityTypeShape EntityType="UniversidadModel.DescuentoTipo" Width="1.5" PointX="14" PointY="218.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Dia" Width="1.5" PointX="13.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Empresa" Width="1.5" PointX="8.25" PointY="205.875" />
+        <EntityTypeShape EntityType="UniversidadModel.EmpresaDetalle" Width="1.5" PointX="13.5" PointY="208.875" />
+        <EntityTypeShape EntityType="UniversidadModel.EntidadFederativa" Width="1.5" PointX="11.25" PointY="136.625" />
+        <EntityTypeShape EntityType="UniversidadModel.EspecialidadMaestriaRelacion" Width="1.5" PointX="5.25" PointY="189.375" />
+        <EntityTypeShape EntityType="UniversidadModel.EstadoCivil" Width="1.5" PointX="14.25" PointY="143.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Estatus" Width="1.5" PointX="0.75" PointY="169.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Financiamiento" Width="1.5" PointX="16.5" PointY="170.875" />
+        <EntityTypeShape EntityType="UniversidadModel.Genero" Width="1.5" PointX="14.25" PointY="151" />
+        <EntityTypeShape EntityType="UniversidadModel.Grupo" Width="1.5" PointX="10.5" PointY="186.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumno" Width="1.5" PointX="13.75" PointY="7.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoBitacora" Width="1.5" PointX="13.75" PointY="10.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoConfiguracion" Width="1.5" PointX="10.5" PointY="194.25" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoAlumnoConfiguracionBitacora" Width="1.5" PointX="8.25" PointY="200.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoBitacora" Width="1.5" PointX="13.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoComprobante" Width="1.5" PointX="26.75" PointY="190.125" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoComprobanteDocumento" Width="1.5" PointX="29" PointY="190.75" />
+        <EntityTypeShape EntityType="UniversidadModel.GrupoDetalle" Width="1.5" PointX="21.5" PointY="194.75" />
+        <EntityTypeShape EntityType="UniversidadModel.IdiomaGrupo" Width="1.5" PointX="19.25" PointY="202.375" />
+        <EntityTypeShape EntityType="UniversidadModel.IdiomaGrupoAlumno" Width="1.5" PointX="21.5" PointY="175" />
+        <EntityTypeShape EntityType="UniversidadModel.IngresosPermiso" Width="1.5" PointX="17" PointY="155.625" />
+        <EntityTypeShape EntityType="UniversidadModel.LenguasRelacion" Width="1.5" PointX="15.5" PointY="215.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Matricula" Width="1.5" PointX="13.5" PointY="185.625" />
+        <EntityTypeShape EntityType="UniversidadModel.MedioDifusion" Width="1.5" PointX="11.25" PointY="144.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Menu" Width="1.5" PointX="1.5" PointY="192.5" />
+        <EntityTypeShape EntityType="UniversidadModel.Mes" Width="1.5" PointX="9" PointY="212.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Municipio" Width="1.5" PointX="14.25" PointY="154.5" />
+        <EntityTypeShape EntityType="UniversidadModel.NivelAcademico" Width="1.5" PointX="3" PointY="246" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaCalendario" Width="1.5" PointX="22.5" PointY="185.5" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativa" Width="1.5" PointX="3" PointY="175.375" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaAntecedente" Width="1.5" PointX="13.5" PointY="203.75" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaPlan" Width="1.5" PointX="5.25" PointY="236.5" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaRequerimiento" Width="1.5" PointX="5.25" PointY="210.5" />
+        <EntityTypeShape EntityType="UniversidadModel.OfertaEducativaTipo" Width="1.5" PointX="0.75" PointY="181.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Pagare" Width="1.5" PointX="19.5" PointY="169.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagareDocumento" Width="1.5" PointX="21.75" PointY="157.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Pago" Width="1.5" PointX="13.5" PointY="176.5" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoBitacora" Width="1.5" PointX="15.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacion" Width="1.5" PointX="15.75" PointY="210.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionDetalle" Width="1.5" PointX="22" PointY="190.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoCancelacionSolicitud" Width="1.5" PointX="15.75" PointY="6.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConcepto" Width="1.5" PointX="5.25" PointY="160" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConceptoCarrera" Width="1.5" PointX="15.75" PointY="10.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoConceptoMaestro" Width="1.5" PointX="3" PointY="240" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDescripcion" Width="1.5" PointX="15.75" PointY="202.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDescuento" Width="1.5" PointX="24.5" PointY="188.5" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDetalle" Width="1.5" PointX="33" PointY="179.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoMetodo" Width="1.5" PointX="30.75" PointY="166.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoPagare" Width="1.5" PointX="24.75" PointY="173.25" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoParcial" Width="1.5" PointX="27.75" PointY="178.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoParcialBitacora" Width="1.5" PointX="8.25" PointY="178.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoPlan" Width="1.5" PointX="3" PointY="235.875" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoRecargo" Width="1.5" PointX="15.75" PointY="196.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoTipo" Width="1.5" PointX="25.5" PointY="193.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Pais" Width="1.5" PointX="11.25" PointY="215.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Parentesco" Width="1.5" PointX="8.25" PointY="153.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Periodo" Width="1.5" PointX="20.25" PointY="151.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PeriodoAnticipado" Width="1.5" PointX="27.5" PointY="161.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PersonaAutorizada" Width="1.5" PointX="10.5" PointY="166.875" />
+        <EntityTypeShape EntityType="UniversidadModel.PersonaAutorizadaBitacora" Width="1.5" PointX="15.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaAjuste" Width="1.5" PointX="26.75" PointY="186.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaCabeceroLayout" Width="1.5" PointX="3" PointY="29.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaConfiguracion" Width="1.5" PointX="3" PointY="12.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaConsecutivo" Width="1.5" PointX="11.25" PointY="112.125" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaCuadre" Width="1.5" PointX="3" PointY="8.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaDetalleLayout" Width="1.5" PointX="3" PointY="22" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaMovimiento" Width="1.5" PointX="5.75" PointY="16.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaNumeracion" Width="1.5" PointX="6" PointY="12.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaSubtipo" Width="1.5" PointX="0.75" PointY="16.625" />
+        <EntityTypeShape EntityType="UniversidadModel.PolizaTipo" Width="1.5" PointX="0.75" PointY="12.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Pregunta" Width="1.5" PointX="14.25" PointY="147.25" />
+        <EntityTypeShape EntityType="UniversidadModel.PreguntaCompuesta" Width="1.5" PointX="9.75" PointY="147.5" />
+        <EntityTypeShape EntityType="UniversidadModel.PreguntaConfiguracion" Width="1.5" PointX="12" PointY="147.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PreguntaTipo" Width="1.5" PointX="7.5" PointY="149" />
+        <EntityTypeShape EntityType="UniversidadModel.PreguntaTipoValores" Width="1.5" PointX="7.5" PointY="145.875" />
+        <EntityTypeShape EntityType="UniversidadModel.PreguntaValor" Width="1.5" PointX="5.25" PointY="149.375" />
+        <EntityTypeShape EntityType="UniversidadModel.PromocionCasa" Width="1.5" PointX="27.75" PointY="168.125" />
+        <EntityTypeShape EntityType="UniversidadModel.Prospecto" Width="1.5" PointX="20" PointY="144.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoBitacora" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoDetalle" Width="1.5" PointX="19.25" PointY="190.125" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoDetalleBitacora" Width="1.5" PointX="17.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ProspectoSeguimiento" Width="1.5" PointX="22.25" PointY="160.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Recibo" Width="1.5" PointX="22.5" PointY="179.875" />
+        <EntityTypeShape EntityType="UniversidadModel.ReciboArchivo" Width="1.5" PointX="29.75" PointY="185.125" />
+        <EntityTypeShape EntityType="UniversidadModel.ReciboDetalle" Width="1.5" PointX="30.75" PointY="178.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReciboMSI" Width="1.5" PointX="30.75" PointY="181.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Reclasificacion" Width="1.5" PointX="30" PointY="204.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReclasificacionTipo" Width="1.5" PointX="3" PointY="243.125" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoArchivoBitacora" Width="1.5" PointX="3" PointY="16.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoBitacora" Width="1.5" PointX="17.75" PointY="14.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoCabecero" Width="1.5" PointX="15.75" PointY="193.375" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoCabeceroBitacora" Width="1.5" PointX="27.75" PointY="174" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoDetalle" Width="1.5" PointX="25" PointY="182.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoDetalleBitacora" Width="1.5" PointX="30" PointY="170" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciadoLayout" Width="1.5" PointX="11.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaEspecial" Width="1.5" PointX="13.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaGeneradaBitacora" Width="1.5" PointX="24.75" PointY="163.5" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaProcesada" Width="1.5" PointX="13.5" PointY="164.5" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaTipo" Width="1.5" PointX="11.25" PointY="152.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Respuesta" Width="1.5" PointX="16.5" PointY="165.875" />
+        <EntityTypeShape EntityType="UniversidadModel.SistemaConfiguracion" Width="1.5" PointX="8.25" PointY="184.25" />
+        <EntityTypeShape EntityType="UniversidadModel.SubMenu" Width="1.5" PointX="3.75" PointY="192.25" />
+        <EntityTypeShape EntityType="UniversidadModel.Subperiodo" Width="1.5" PointX="11.25" PointY="212.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Sucursal" Width="1.5" PointX="0.75" PointY="177.125" />
+        <EntityTypeShape EntityType="UniversidadModel.SucursalAnuncio" Width="1.5" PointX="3" PointY="163.5" />
+        <EntityTypeShape EntityType="UniversidadModel.SucursalCaja" Width="1.5" PointX="3.75" PointY="155.75" />
+        <EntityTypeShape EntityType="UniversidadModel.SucursalDetalle" Width="1.5" PointX="21.5" PointY="198.375" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoDocumento" Width="1.5" PointX="15.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoMovimiento" Width="1.5" PointX="20.25" PointY="148.375" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoMovimientoCRUD" Width="1.5" PointX="17.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoUsuarioSubmenu" Width="1.5" PointX="6" PointY="186.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Turno" Width="1.5" PointX="22.5" PointY="152" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadValidacion" Width="1.5" PointX="5.25" PointY="179.625" />
+        <EntityTypeShape EntityType="UniversidadModel.Usuario" Width="1.5" PointX="6" PointY="166.5" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioBitacora" Width="1.5" PointX="8.25" PointY="187.125" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioDetalle" Width="1.5" PointX="8.25" PointY="157.125" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioImagen" Width="1.5" PointX="8.25" PointY="209.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioImagenDetalle" Width="1.5" PointX="10.5" PointY="209.5" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioIngresosBitacora" Width="1.5" PointX="8.25" PointY="194.875" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioOrigen" Width="1.5" PointX="19.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioPasswordRecovery" Width="1.5" PointX="16.25" PointY="158.375" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioPermiso" Width="1.5" PointX="19.25" PointY="159.25" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioTipo" Width="1.5" PointX="3.75" PointY="186.25" />
+        <EntityTypeShape EntityType="UniversidadModel.UsuarioTipoPagoConcepto" Width="1.5" PointX="11.25" PointY="155.875" />
+        <EntityTypeShape EntityType="UniversidadModel.CancelacionCursoDocente" Width="1.5" PointX="27.75" PointY="154.5" />
+        <EntityTypeShape EntityType="UniversidadModel.CancelacionDocenteEstudio" Width="1.5" PointX="24.75" PointY="142.5" />
+        <EntityTypeShape EntityType="UniversidadModel.Docente" Width="1.5" PointX="20.25" PointY="140.25" />
+        <EntityTypeShape EntityType="UniversidadModel.DocenteCurso" Width="1.5" PointX="25.5" PointY="152" />
+        <EntityTypeShape EntityType="UniversidadModel.DocenteDetalle" Width="1.5" PointX="19.75" PointY="3.75" />
+        <EntityTypeShape EntityType="UniversidadModel.DocenteEstudio" Width="1.5" PointX="20.25" PointY="135.125" />
+        <EntityTypeShape EntityType="UniversidadModel.DocenteEstudioDocumento" Width="1.5" PointX="22.5" PointY="136.125" />
+        <EntityTypeShape EntityType="UniversidadModel.DocenteEstudioPeriodo" Width="1.5" PointX="22.5" PointY="147.625" />
+        <EntityTypeShape EntityType="UniversidadModel.DocentePublicacion" Width="1.5" PointX="5.75" PointY="19.75" />
+        <EntityTypeShape EntityType="UniversidadModel.DocumentoTipo" Width="1.5" PointX="20.25" PointY="132.375" />
+        <EntityTypeShape EntityType="UniversidadModel.Grupo1" Width="1.5" PointX="7.75" PointY="19.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Hora" Width="1.5" PointX="19.75" PointY="10.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Materia" Width="1.5" PointX="19.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UniversidadModel.MateriaApertura" Width="1.5" PointX="19.75" PointY="17.75" />
+        <EntityTypeShape EntityType="UniversidadModel.MateriaCompartida" Width="1.5" PointX="21.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.MateriaCompartidaDetalle" Width="1.5" PointX="21.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UniversidadModel.MateriaTipo" Width="1.5" PointX="21.75" PointY="7.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Menu1" Width="1.5" PointX="6.5" PointY="216.5" />
+        <EntityTypeShape EntityType="UniversidadModel.Salon" Width="1.5" PointX="9.75" PointY="21.75" />
+        <EntityTypeShape EntityType="UniversidadModel.SalonAsignacion" Width="1.5" PointX="21.75" PointY="10.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Sede" Width="1.5" PointX="11.75" PointY="21.75" />
+        <EntityTypeShape EntityType="UniversidadModel.SubMenu1" Width="1.5" PointX="8.75" PointY="216.25" />
+        <EntityTypeShape EntityType="UniversidadModel.TipoUsuarioSubmenu1" Width="1.5" PointX="11" PointY="191.375" />
+        <EntityTypeShape EntityType="UniversidadModel.VistoBuenoCurso" Width="1.5" PointX="27.75" PointY="151.5" />
+        <EntityTypeShape EntityType="UniversidadModel.VistoBuenoEstudio" Width="1.5" PointX="24.75" PointY="146.5" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoBeca" Width="1.5" PointX="13.75" PointY="21.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoInscritoBitacoraBKSalome" Width="1.5" PointX="21.75" PointY="14.75" />
+        <EntityTypeShape EntityType="UniversidadModel.AlumnoMatricula" Width="1.5" PointX="15.75" PointY="21.75" />
+        <EntityTypeShape EntityType="UniversidadModel.BecaSEPBitacora" Width="1.5" PointX="8.25" PointY="189.625" />
+        <EntityTypeShape EntityType="UniversidadModel.COLEGIATURA" Width="1.5" PointX="21.75" PointY="18.75" />
+        <EntityTypeShape EntityType="UniversidadModel.IdiomasInscrito" Width="1.5" PointX="17.75" PointY="22.75" />
+        <EntityTypeShape EntityType="UniversidadModel.PagoDescuentoBitacora" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" Width="1.5" PointX="23.75" PointY="3.75" />
+        <EntityTypeShape EntityType="UniversidadModel.ReporteEstadoCuentaPagosConcepto" Width="1.5" PointX="23.75" PointY="6.75" />
+        <EntityTypeShape EntityType="UniversidadModel.Saldos" Width="1.5" PointX="23.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadAdeudo" Width="1.5" PointX="23.75" PointY="17.75" />
+        <EntityTypeShape EntityType="UniversidadModel.UniversidadNewAdeudo" Width="1.5" PointX="19.75" PointY="23.75" />
         <AssociationConnector Association="UniversidadModel.FK_Adeudo_Alumno" />
         <AssociationConnector Association="UniversidadModel.FK_Adeudo_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_AdeudoBiblioteca_Alumno" />
@@ -277,7 +283,6 @@
         <AssociationConnector Association="UniversidadModel.FK_Recibo_Alumno" />
         <AssociationConnector Association="UniversidadModel.FK_ReferenciaProcesada_Alumno" />
         <AssociationConnector Association="UniversidadModel.FK_Respuesta_Alumno" />
-        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Alumno" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_AntecedenteTipo" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_AreaAcademica" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoAntecedente_EntidadFederativa" />
@@ -328,6 +333,7 @@
         <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimiento_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoBaja_AlumnoMovimiento" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoCarrera_AlumnoMovimiento" />
+        <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoTurno_AlumnoMovimiento" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoBaja_BajaMotivo" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoTurno_Turno" />
         <AssociationConnector Association="UniversidadModel.FK_AlumnoPasswordRecovery_Estatus" />
@@ -407,7 +413,6 @@
         <AssociationConnector Association="UniversidadModel.FK_Recibo_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_ReclasificacionTipo_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_ReferenciaProcesada_Estatus" />
-        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_UniversidadValidacion_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_Usuario_Estatus" />
         <AssociationConnector Association="UniversidadModel.FK_UsuarioPasswordRecovery_Estatus" />
@@ -446,7 +451,6 @@
         <AssociationConnector Association="UniversidadModel.FK_PromocionCasa_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_ProspectoDetalle_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_Recibo_OfertaEducativa" />
-        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_UniversidadValidacion_OfertaEducativa" />
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_PagoPlan" />
         <AssociationConnector Association="UniversidadModel.FK_OfertaEducativaAntecedente_Periodo" />
@@ -493,7 +497,6 @@
         <AssociationConnector Association="UniversidadModel.FK_DocenteEstudioPeriodo_Periodo" />
         <AssociationConnector Association="UniversidadModel.FK_PeriodoAnticipado_Periodo" />
         <AssociationConnector Association="UniversidadModel.FK_PromocionCasa_Periodo" />
-        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Periodo" />
         <AssociationConnector Association="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo" />
         <AssociationConnector Association="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo" />
         <AssociationConnector Association="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo" />
@@ -539,8 +542,6 @@
         <AssociationConnector Association="UniversidadModel.FK_ReferenciaGeneradaBitacora_Usuario" />
         <AssociationConnector Association="UniversidadModel.FK_ReferenciaProcesada_ReferenciaTipo" />
         <AssociationConnector Association="UniversidadModel.FK_SistemaConfiguracion_Usuario" />
-        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Usuario" />
-        <AssociationConnector Association="UniversidadModel.FK_SolicitudInscripcion_Usuario1" />
         <AssociationConnector Association="UniversidadModel.FK_TipoUsuarioSubmenu_SubMenu" />
         <AssociationConnector Association="UniversidadModel.FK_Anuncio_Sucursal" />
         <AssociationConnector Association="UniversidadModel.FK_SucursalCaja_Sucursal" />
@@ -572,9 +573,10 @@
         <AssociationConnector Association="UniversidadModel.FK_SubMenu_Menu1" />
         <AssociationConnector Association="UniversidadModel.FK_TipoUsuarioSubmenu_SubMenu1" />
         <AssociationConnector Association="UniversidadModel.UsuarioSucursalCaja" />
-        <EntityTypeShape EntityType="UniversidadModel.AlumnoMovimientoTurno" Width="1.5" PointX="13.5" PointY="194.625" />
-        <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoTurno_Turno" />
-        <AssociationConnector Association="UniversidadModel.FK_AlumnoMovimientoTurno_AlumnoMovimiento" />
+        <EntityTypeShape EntityType="UniversidadModel.ReferenciaDonativo" Width="1.5" PointX="24.75" PointY="159.25" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaDonativo_ReferenciaProcesada1" />
+        <AssociationConnector Association="UniversidadModel.FK_ReferenciaDonativo_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

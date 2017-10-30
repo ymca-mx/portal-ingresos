@@ -39,7 +39,9 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d) {
-                        $('#popDatos').load('Views/Alumno/AlumnoActualizaDatos.html');
+                        $('#popDatos').load('Views/Alumno/AlumnoActualizaDatos.html' , function () {
+                            $('#popDatos').modal('show');
+                        });
                     }
                     //else
                     //{
@@ -59,10 +61,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d) {
-                        $('#divDinamico').load('Views/Alumno/EncuestaPortal.html',function () {
-                            console.log("termine");
-                            //Mostrar.show();
-                        });
+                        $('#divDinamico').load('Views/Alumno/EncuestaPortal.html');
                     }
                 }
             });
