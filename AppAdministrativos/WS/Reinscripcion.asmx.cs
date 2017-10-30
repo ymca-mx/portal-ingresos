@@ -117,6 +117,10 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public void ObtenerAlumno(int AlumnoId) => BLLReinscripcion.TraerSolicitud(AlumnoId);
+        public DTOSolicitudInscripcion ObtenerAlumno(int AlumnoId) => BLLReinscripcion.TraerSolicitud(AlumnoId);
+
+        [WebMethod]
+        public bool SolicitarInscripcion(int AlumnoId, int OfertaEducativaId, int Anio, int PeriodoId, string Comentario, int UsuarioId) 
+            => BLLReinscripcion.SolicitarInscripcion(AlumnoId, OfertaEducativaId, Anio, PeriodoId, Comentario, UsuarioId);
     }
 }

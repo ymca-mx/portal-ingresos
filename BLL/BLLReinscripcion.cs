@@ -7,11 +7,13 @@ using DAL;
 using DTO;
 using System.Data.Entity;
 using DTO.Reinscripcion;
+using System.Globalization;
 
 namespace BLL
 {
     public class BLLReinscripcion
     {
+        static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
         public static DTOMateriasAsesorias TraerAlumno(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -236,11 +238,143 @@ namespace BLL
             }
         }
 
-        public static void TraerSolicitud(int alumnoId)
+        public static bool SolicitarInscripcion(int alumnoId, int oFertaEducativaId, int anio, int periodoId, string cometario, int usuarioId)
         {
-            using(UniversidadEntities db = new UniversidadEntities())
+            using(UniversidadEntities db= new UniversidadEntities())
             {
+                try
+                {
+                    db.SolicitudInscripcion.Add(new SolicitudInscripcion
+                    {
+                        AlumnoId = alumnoId,
+                        Anio = anio,
+                        EstatusId = 1,
+                        FechaSolicitud = DateTime.Now,
+                        HoraSolicitud = DateTime.Now.TimeOfDay,
+                        Observaciones = cometario,
+                        OfertaEducativaId = oFertaEducativaId,
+                        PeriodoId = periodoId,
+                        SolicitudUsuarioId = usuarioId
+                    });
 
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static DTOSolicitudInscripcion TraerSolicitud(int alumnoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                DateTime Fecha_Hoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+
+                List<Periodo> ListaPeriodo = new List<Periodo>
+                {
+                    db.Periodo
+                        .Where(b => b.FechaInicial <= Fecha_Hoy && b.FechaFinal >= Fecha_Hoy)
+                        .FirstOrDefault()
+                };
+
+                int Anio1 = (ListaPeriodo[0].PeriodoId == 1 ?
+                                   ListaPeriodo[0].Anio - 1 :
+                                   ListaPeriodo[0].Anio),
+                                   Anio2 = (ListaPeriodo[0].PeriodoId == 1 ?
+                                    ListaPeriodo[0].Anio - 1 :
+                                    ListaPeriodo[0].Anio == 2 ? ListaPeriodo[0].Anio - 2 :
+                                    ListaPeriodo[0].Anio),
+                                    PeriodoId1 = (ListaPeriodo[0].PeriodoId == 1 ?
+                                    3 :
+                                    ListaPeriodo[0].PeriodoId - 1),
+                                    PeriodoId2 = (ListaPeriodo[0].PeriodoId == 1 ?
+                                   2 : ListaPeriodo[0].PeriodoId == 2 ? 3 :
+                                    ListaPeriodo[0].PeriodoId - 2);
+
+                ListaPeriodo.AddRange(db.Periodo.Where(
+                pe => (Anio1 == pe.Anio && PeriodoId1 == pe.PeriodoId)
+                                    ||
+                        (Anio2 == pe.Anio && PeriodoId2 == pe.PeriodoId)));
+
+                ListaPeriodo = ListaPeriodo.OrderByDescending(a => a.Anio).ThenByDescending(a => a.PeriodoId).ToList();
+
+
+                DTOSolicitudInscripcion DTOSolicitudInscripcion = db.Alumno
+                                                    .Where(a => a.AlumnoId == alumnoId)
+                                                    .Select(a => new DTOSolicitudInscripcion
+                                                    {
+                                                        AlumnoId = a.AlumnoId,
+                                                        Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                                                    }).FirstOrDefault();
+
+                DTOSolicitudInscripcion.ListaOfertas = db.AlumnoInscrito.Where(a => a.AlumnoId == alumnoId
+                                                          && a.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                                        .Select(a => new DTOOFertaEducativaSolicitud
+                                                        {
+                                                            Descripcion = a.OfertaEducativa.Descripcion,
+                                                            OfertaEducativaId = a.OfertaEducativaId                                                            
+                                                        })
+                                                     .ToList();
+
+                ListaPeriodo.ForEach(per =>
+                {
+                    DTOSolicitudInscripcion.ListaOfertas.ForEach(oferta =>
+                    {
+                        List<AlumnoInscrito> lstInscripcion = db.AlumnoInscrito.Where(a => a.AlumnoId == alumnoId
+                                                                      && a.Anio == per.Anio
+                                                                      && a.PeriodoId == per.PeriodoId
+                                                                      && a.OfertaEducativaId == oferta.OfertaEducativaId)
+                                                                    .ToList();
+
+                        List<AlumnoInscritoBitacora> lstInscripcionBitacora = db.AlumnoInscritoBitacora.Where(a => a.AlumnoId == alumnoId
+                                                                      && a.Anio == per.Anio
+                                                                      && a.PeriodoId == per.PeriodoId
+                                                                      && a.OfertaEducativaId == oferta.OfertaEducativaId)
+                                                                    .ToList();
+
+                        List<AlumnoRevision> listAlumnoRevision = db.AlumnoRevision.Where(a => a.AlumnoId == alumnoId
+                                                                        && a.Anio == per.Anio
+                                                                        && a.PeriodoId == per.PeriodoId
+                                                                        && a.OfertaEducativaId == oferta.OfertaEducativaId)
+                                                                    .ToList();
+                        oferta.ListaPeriodos = oferta.ListaPeriodos == null ? new List<DTOPeriodo2>() : oferta.ListaPeriodos;
+
+                        oferta.ListaPeriodos.Add(new DTOPeriodo2
+                        {
+                            anio = per.Anio,
+                            descripcion = per.Descripcion,
+                            periodoId = per.PeriodoId,
+                            Inscripcion = lstInscripcion.Count > 0 || lstInscripcionBitacora.Count > 0 ? new DTOInscripcionDetalle
+                            {
+                                Fecha = lstInscripcion.Count > 0 ?
+                                            lstInscripcion.FirstOrDefault()?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura) :
+                                            lstInscripcionBitacora.LastOrDefault()?.FechaInscripcion.ToString("dd/MM/yyyy", Cultura),
+                                Usuario = lstInscripcion.Count > 0 ?
+                                            lstInscripcion.FirstOrDefault()?.Usuario?.Nombre :
+                                            lstInscripcionBitacora.LastOrDefault()?.Usuario?.Nombre,
+                            } : null,
+                            VistoBueno = listAlumnoRevision.Count > 0 ? new DTOVistoBuenoDetalle
+                            {
+                                Fecha = listAlumnoRevision.FirstOrDefault()?.FechaRevision.ToString("dd/MM/yyyy", Cultura),
+                                Usuario = listAlumnoRevision.FirstOrDefault()?.Usuario.Nombre
+                            } : null,
+                            Solicitud = db.SolicitudInscripcion.Where(sol =>
+                                             sol.AlumnoId == alumnoId
+                                             && sol.OfertaEducativaId == oferta.OfertaEducativaId
+                                             && sol.Anio == per.Anio
+                                             && sol.PeriodoId == per.PeriodoId)?.Select(soli => new DTOSolicitudInscripcion
+                                             {
+                                                 Observaciones = soli.Observaciones
+                                             }).FirstOrDefault()??null
+                        });
+                    });
+                });
+
+                return DTOSolicitudInscripcion;
             }
         }
 

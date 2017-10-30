@@ -44,12 +44,34 @@
                 <label class="bold" id="lblNombre"></label>
             </div>
         </div>
-        <div class="table col-md-12">
-            <hr />
+        <div class="table">
+            <div class="row col-md-12">
+                <hr />
+                <div class="col-md-5">
+                    <label class="control-label">OfertaEducativa</label>
+                    <select id="slcOFertaEducativa" class="form-control"></select>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-5">
+                    <label class="control-label">Periodo</label>
+                    <select id="slcPeriodo" class="form-control"></select>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="row col-md-12">
+
+                </div>
+                <div class="row col-md-12 form-group">
+                    <label class="control-label">Comentario</label>
+                    <textarea id="txtDetalle" class="form-control" readonly></textarea>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="panel-footer">
-
+    <div class="panel-footer" id="divfooter">
+        <button id="btnGuardar" class="btn btn-success">Guardar</button>
     </div>
 </div>
 <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">

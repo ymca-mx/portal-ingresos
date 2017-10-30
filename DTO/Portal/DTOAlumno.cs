@@ -297,5 +297,25 @@ namespace DTO
         public string HoraSolicitud { get; set; }
     }
 
+    public class DTOSolicitudInscripcion
+    {
+        public int AlumnoId { get; set; }
+        public int OfertaEducativaId { get; set; }
+        public int Anio { get; set; }
+        public int PeriodoId { get; set; }
+        public int SolicitudUsuarioId { get; set; }
+        public string SolicitudNombreUsuario { get; set; }
+        public string Observaciones { get; set; }
+        public int AutorizoUsuarioId { get; set; }
+        public string Nombre { get; set; }
+        public List<DTOOFertaEducativaSolicitud> ListaOfertas { get; set; }
+    }
+
+    public class DTOOFertaEducativaSolicitud
+    {
+        public int OfertaEducativaId { get; set; }
+        public string Descripcion { get; set; }
+        public List<DTOPeriodo2> ListaPeriodos { get; set; }
+    }
 }
 

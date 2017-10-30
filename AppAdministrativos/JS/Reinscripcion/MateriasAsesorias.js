@@ -452,7 +452,7 @@
                 success: function (data) {
                     if (data.d === true) {
                         alertify.alert("Datos Generados");
-                        $('#txtAlumno').val(txtAlumno);
+                        $('#txtAlumno').val(AlumnoNum);
                         Eventos.btnBuscarAlumnoClick();
                     } else { alertify.alert("Error Al Guardar"); $('#Load').modal('hide'); }
                 }
