@@ -84,6 +84,7 @@
     <Content Include="JS\Alumno\Calendarios.js" />
     <Content Include="JS\Alumno\EncuestaPortal.js" />
     <Content Include="JS\Alumno\Reglamento.js" />
+    <Content Include="JS\Alumno\SolicitarInscripcion.js" />
     <Content Include="JS\Reinscripcion\Reinscripcion.js" />
     <Content Include="JS\alertify.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.css" />

@@ -20,11 +20,19 @@ $(function init() {
         //$("#tblContenido *").prop('disabled', false);
         $('#divBar').modal('hide');
     }
+
+    $('#txtClave').on('keydown', function (e) {
+        if (e.which === 13) {
+            $('#btnBuscar').click();
+        }
+    });
+
     $('#btnBuscar').click(function () {
         if (Bandera == 1) { return false;}
-        Bloquear("Buscando Alumno");
+        
         var clave = $('#txtClave').val();
         if (clave != "") {
+            Bloquear("Buscando Alumno");
             $('#slcOfertaEducativa').empty();
             $('#slcConceptos').empty();
             DatosAlumno(clave);
@@ -140,7 +148,7 @@ $(function init() {
                     option.val(this.DTOPagoConcepto.PagoConceptoId);
                     option.attr("data-EsVariable", this.DTOPagoConcepto.EsVairable);
                     $('#slcConceptos').append(option);
-                    $('#slcConceptos').change();
+                    //$('#slcConceptos').change();
                 });
                 CargarPagosConceptos(AlumnoId, OfertaEducativa);
             }
@@ -269,7 +277,7 @@ $(function init() {
         var Anio,PeriodoId;
         var slcConcepto = $('#slcConceptos');
         slcConcepto = slcConcepto[0].value;
-        if (slcConcepto == '-1') { return false; }
+        if (slcConcepto == '-1' || slcConcepto != "") { return false; }
         if (slcConcepto == 18 && $("#slcPeriodo").val() == -1) {
             alertify.alert("Debe seleccionar el periodo.");
             return false;

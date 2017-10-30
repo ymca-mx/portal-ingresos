@@ -2446,7 +2446,25 @@ namespace BLL
                                          PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                         PeriodoId = "" + PeriodoActual.PeriodoId,
                                         Anio = "" + PeriodoActual.Anio,
-                                        Descripcion=PeriodoActual.Descripcion
+                                        Descripcion=PeriodoActual.Descripcion,
+                                         SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                     }
                                 },
                                 Inscrito = true,
@@ -2510,7 +2528,25 @@ namespace BLL
                                          PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                         PeriodoId = "" + PeriodoActual.PeriodoId,
                                         Anio = "" + PeriodoActual.Anio,
-                                        Descripcion=PeriodoActual.Descripcion
+                                        Descripcion=PeriodoActual.Descripcion,
+                                        SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                     }
                                 },
                                 Inscrito = true,
@@ -2586,7 +2622,25 @@ namespace BLL
                                              PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                             PeriodoId = "" + PeriodoActual.PeriodoId,
                                             Anio = "" + PeriodoActual.Anio,
-                                            Descripcion=PeriodoActual.Descripcion
+                                            Descripcion=PeriodoActual.Descripcion,
+                                             SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                         }
                                     },
                                     Inscrito = false,
@@ -2641,7 +2695,25 @@ namespace BLL
                                             PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                             PeriodoId = "" + PeriodoActual.PeriodoId,
                                             Anio = "" + PeriodoActual.Anio,
-                                            Descripcion=PeriodoActual.Descripcion
+                                            Descripcion=PeriodoActual.Descripcion,
+                                             SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                         }
                                     },
                                     Inscrito = false,
@@ -2712,7 +2784,25 @@ namespace BLL
                                             PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                             PeriodoId = "" + PeriodoActual.PeriodoId,
                                             Anio = "" + PeriodoActual.Anio,
-                                            Descripcion=PeriodoActual.Descripcion
+                                            Descripcion=PeriodoActual.Descripcion,
+                                             SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                         }
                                     },
                                     Inscrito = false,
@@ -2763,7 +2853,25 @@ namespace BLL
                                             PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                             PeriodoId = "" + PeriodoActual.PeriodoId,
                                             Anio = "" + PeriodoActual.Anio,
-                                            Descripcion=PeriodoActual.Descripcion
+                                            Descripcion=PeriodoActual.Descripcion,
+                                             SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                         }
                                     },
                                     Inscrito = false,
@@ -2815,7 +2923,25 @@ namespace BLL
                                         PeriodoD = PeriodoActual.Anio + " " + PeriodoActual.PeriodoId,
                                         PeriodoId = "" + PeriodoActual.PeriodoId,
                                         Anio = "" + PeriodoActual.Anio,
-                                        Descripcion=PeriodoActual.Descripcion
+                                        Descripcion=PeriodoActual.Descripcion,
+                                         SolicitudInscripcion=  db.SolicitudInscripcion
+                                        .Where(si => si.AlumnoId == AlumnoId
+                                                    && si.OfertaEducativaId == OfertaEducativaId
+                                                    && si.EstatusId == 1
+                                                    && si.Anio==PeriodoActual.Anio
+                                                    && si.PeriodoId==PeriodoActual.PeriodoId)
+                                        .Select(si =>
+                                        new DTOSolicitudInscripcion
+                                            {
+                                                AlumnoId = si.AlumnoId,
+                                                Anio = si.Anio,
+                                                PeriodoId = si.PeriodoId,
+                                                Observaciones = si.Observaciones,
+                                                OfertaEducativaId = si.OfertaEducativaId,
+                                                SolicitudUsuarioId = si.SolicitudUsuarioId,
+                                                SolicitudNombreUsuario = si.Usuario.Nombre + " " + si.Usuario.Paterno
+                                            }
+                                        ).FirstOrDefault()
                                     }
                                 },
                                 Inscrito = false,
@@ -2977,6 +3103,12 @@ namespace BLL
                         );
 
                     Alumno.ListPeriodos = Alumno.ListPeriodos.Where(a => a != null).ToList();
+                    Alumno.ListPeriodos = Alumno.ListPeriodos
+                                            .GroupBy(lper => new { lper.Anio, lper.PeriodoId })
+                                            .Select(lper => lper.FirstOrDefault())
+                                            .ToList();
+
+
                     return Alumno;
                 }
                 catch (Exception e)
@@ -12220,9 +12352,10 @@ namespace BLL
                                                           (a.AlumnoDetalle.FechaNacimiento.Month.ToString().Length < 2 ? "0" + a.AlumnoDetalle.FechaNacimiento.Month.ToString() : a.AlumnoDetalle.FechaNacimiento.Month.ToString()) + "/" +
                                                           a.AlumnoDetalle.FechaNacimiento.Year.ToString(),
                                                    },
-                                                   AlumnoInscrito = (from b in db.AlumnoInscrito
-                                                                     where a.AlumnoId == b.AlumnoId
-                                                                     select new DTOAlumnoInscrito
+                                                   AlumnoInscrito = (from b in a.AlumnoInscrito
+                                                                     orderby b.Anio descending,b.PeriodoId descending 
+                                                                     select
+                                                                     new DTOAlumnoInscrito
                                                                      {
                                                                          AlumnoId = b.AlumnoId,
                                                                          OfertaEducativaId = b.OfertaEducativaId,
@@ -12232,13 +12365,11 @@ namespace BLL
                                                                              Descripcion = b.OfertaEducativa.Descripcion
                                                                          }
                                                                      }).FirstOrDefault(),
-                                                   Usuario = (from f in db.Usuario
-                                                              where f.UsuarioId == a.UsuarioId
-                                                              select new DTOUsuario
+                                                   Usuario = new DTOUsuario
                                                               {
-                                                                  UsuarioId = f.UsuarioId,
-                                                                  Nombre = f.Nombre
-                                                              }).FirstOrDefault()
+                                                                  UsuarioId = a.Usuario.UsuarioId,
+                                                                  Nombre = a.Usuario.Nombre
+                                                              }
                                                }).ToList();
                     alumnos.ForEach(delegate (DTOAlumno alumno)
                     {

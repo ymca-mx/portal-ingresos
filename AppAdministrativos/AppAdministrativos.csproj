@@ -152,6 +152,7 @@
     <Content Include="JS\Alumnos\AutorizarInscripcion.js" />
     <Content Include="JS\Alumnos\CambioTurno.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
+    <Content Include="JS\Alumnos\SolicitarInscripcion.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
     <Content Include="JS\Empresas\ReAjusteCuotas.js" />
@@ -4784,6 +4785,7 @@
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\AutorizarInscripcion.html" />
     <Content Include="Views\Alumno\PromociónCasa.html" />
+    <Content Include="Views\Alumno\SolicitarInscripcion.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
     <Content Include="Views\Empresas\ReAjusteCuotas.html" />

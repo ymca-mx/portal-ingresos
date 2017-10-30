@@ -196,8 +196,22 @@ namespace DTO
         public string fechaInicial { get; set; }
         public string fechaFinal { get; set; }
         public string descripcion { get; set; }
-
+        public DTOInscripcionDetalle Inscripcion { get; set; }
+        public DTOVistoBuenoDetalle VistoBueno { get; set; }
+        public DTOSolicitudInscripcion Solicitud { get; set; }
     }
+
+    public class DTOInscripcionDetalle
+    {
+        public string Usuario { get; set; }
+        public string Fecha { get; set; }
+    }
+    public class DTOVistoBuenoDetalle
+    {
+        public string Usuario { get; set; }
+        public string Fecha { get; set; }
+    }
+
 
     public class DTOOfertaEducativa2
     {

@@ -55,17 +55,6 @@ namespace DTO
         public string TotalPagar { get; set; }
         public int SubPeriodo { get; set; }
     }
-    public class DTOSolicitudInscripcion
-    {
-        public int AlumnoId { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public int Anio { get; set; }
-        public int PeriodoId { get; set; }
-        public int SolicitudUsuarioId { get; set; }
-        public string SolicitudNombreUsuario { get; set; }
-        public string Observaciones { get; set; }
-        public int AutorizoUsuarioId { get; set; }
-    }
     public class DTOPeriodosReinscipcion
     {
         public string PeriodoId { get; set; }

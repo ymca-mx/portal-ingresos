@@ -2554,10 +2554,25 @@ namespace BLL
             {
                 try
                 {
-                    List<Subperiodo> ListaSubPeriodos = db.Subperiodo
-                                                        .Where(s => s.MesId >= SubPeriodoInicial
-                                                                && s.MesId <= SubPeriodoFinal)
-                                                         .ToList();
+                    List<Subperiodo> ListaSubPeriodos = new List<Subperiodo>();
+                    if (SubPeriodoInicial <= 7)
+                    {
+                        ListaSubPeriodos.AddRange(db.Subperiodo
+                                                            .Where(s => s.MesId >= SubPeriodoInicial
+                                                                    && s.MesId <= SubPeriodoFinal)
+                                                             .ToList());
+                    }
+                    else
+                    {
+                        ListaSubPeriodos.AddRange(db.Subperiodo
+                                                            .Where(s => s.MesId >= SubPeriodoInicial
+                                                                    && s.MesId <= 12)
+                                                             .ToList());
+                        ListaSubPeriodos.AddRange(db.Subperiodo
+                                                            .Where(s => s.MesId >= 1
+                                                                    && s.MesId <= SubPeriodoFinal)
+                                                             .ToList());
+                    }
 
                     ListaSubPeriodos = ListaSubPeriodos.OrderBy(m => m.MesId).ToList();
 
