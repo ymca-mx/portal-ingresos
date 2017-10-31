@@ -44,10 +44,10 @@ namespace DAL
         public virtual ICollection<PagoParcial> PagoParcial { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciadoDetalle> ReferenciadoDetalle { get; set; }
-        public virtual ReferenciaTipo ReferenciaTipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo1 { get; set; }
+        public virtual ReferenciaTipo ReferenciaTipo { get; set; }
     }
 }

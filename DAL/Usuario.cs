@@ -51,6 +51,7 @@ namespace DAL
             this.Reclasificacion = new HashSet<Reclasificacion>();
             this.ReferenciadoCabeceroBitacora = new HashSet<ReferenciadoCabeceroBitacora>();
             this.ReferenciadoDetalleBitacora = new HashSet<ReferenciadoDetalleBitacora>();
+            this.ReferenciaDonativo = new HashSet<ReferenciaDonativo>();
             this.ReferenciaGeneradaBitacora = new HashSet<ReferenciaGeneradaBitacora>();
             this.SistemaConfiguracion = new HashSet<SistemaConfiguracion>();
             this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
@@ -63,7 +64,6 @@ namespace DAL
             this.UsuarioPermiso1 = new HashSet<UsuarioPermiso>();
             this.UsuarioTipoPagoConcepto = new HashSet<UsuarioTipoPagoConcepto>();
             this.SucursalCaja = new HashSet<SucursalCaja>();
-            this.ReferenciaDonativo = new HashSet<ReferenciaDonativo>();
         }
     
         public int UsuarioId { get; set; }
@@ -145,6 +145,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciadoDetalleBitacora> ReferenciadoDetalleBitacora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciaGeneradaBitacora> ReferenciaGeneradaBitacora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SistemaConfiguracion> SistemaConfiguracion { get; set; }
@@ -171,7 +173,5 @@ namespace DAL
         public virtual ICollection<UsuarioTipoPagoConcepto> UsuarioTipoPagoConcepto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SucursalCaja> SucursalCaja { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReferenciaDonativo> ReferenciaDonativo { get; set; }
     }
 }

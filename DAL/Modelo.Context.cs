@@ -188,6 +188,7 @@ namespace DAL
         public virtual DbSet<ReferenciadoDetalle> ReferenciadoDetalle { get; set; }
         public virtual DbSet<ReferenciadoDetalleBitacora> ReferenciadoDetalleBitacora { get; set; }
         public virtual DbSet<ReferenciadoLayout> ReferenciadoLayout { get; set; }
+        public virtual DbSet<ReferenciaDonativo> ReferenciaDonativo { get; set; }
         public virtual DbSet<ReferenciaEspecial> ReferenciaEspecial { get; set; }
         public virtual DbSet<ReferenciaGeneradaBitacora> ReferenciaGeneradaBitacora { get; set; }
         public virtual DbSet<ReferenciaProcesada> ReferenciaProcesada { get; set; }
@@ -253,9 +254,9 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
+        public virtual DbSet<Tabla2> Tabla2 { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
         public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
-        public virtual DbSet<ReferenciaDonativo> ReferenciaDonativo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {
