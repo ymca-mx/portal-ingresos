@@ -18,7 +18,7 @@ namespace BLL
             {
                 try
                 {
-                    DTOPeriodo PeriodoActual = TraerPeriodoActSig().FirstOrDefault();
+                    DTOPeriodo PeriodoActual = TraerPeriodoActSig()[1];
                     return db.Docente
                                                             .Select(a =>
                                                                 new DTODocenteActualizar
@@ -104,7 +104,7 @@ namespace BLL
             {
                 try
                 {
-                    DTOPeriodo PeriodoActual = TraerPeriodoActSig().FirstOrDefault();
+                    DTOPeriodo PeriodoActual = TraerPeriodoActSig()[1];
                     return db.Docente
                         .Where(a => (a.DocenteEstudioPeriodo.Where(b => b.EstatusId == true).ToList().Count > 0)
                         || (a.DocenteCurso.Where(b => b.EstatusId == true).ToList().Count > 0))
