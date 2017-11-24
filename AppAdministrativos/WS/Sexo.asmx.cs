@@ -71,5 +71,17 @@ namespace AppAdministrativos.WS
         {
             return DateTime.Now.ToString();
         }
+
+        [WebMethod]
+        public ObejtoC ExampleObject()
+        {
+            ObejtoC listaAlumnos = new ObejtoC { lstAlumnos = BLLAlumnoPortal.ListarAlumnos() };
+
+            return listaAlumnos;
+        }         
+    }
+    public class ObejtoC
+    {
+        public List<DTOAlumnoLigero> lstAlumnos { get; set; }
     }
 }
