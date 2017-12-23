@@ -220,7 +220,7 @@ namespace BLL
                         }, objAlumnoInscrito.AlumnoId);
                     objAlumnoDb.Anio = objAlumnoInscrito.Anio;
                     objAlumnoDb.PeriodoId = objAlumnoInscrito.PeriodoId;
-                    objAlumnoDb.EstatusId = 8;
+                    objAlumnoDb.EstatusId = ofertaN.OfertaEducativaTipoId != 4 ? 8 : 1;
                     objAlumnoDb.FechaRegistro = DateTime.Now;
                     objAlumnoDb.UsuarioId = objAlumnoInscrito.UsuarioId;
                     
@@ -420,7 +420,8 @@ namespace BLL
                         AlumnoId = objinsc.AlumnoId,
                         Anio = AnioN,
                         EsEmpresa = false,
-                        EstatusId = 8,
+                        EstatusId = db.OfertaEducativa.Where(of => of.OfertaEducativaId == objinsc.OfertaEducativaId
+                                   && of.OfertaEducativaTipoId == 4).ToList().Count > 0 ? 1 : 8,
                         FechaInscripcion = DateTime.Now,
                         HoraInscripcion = DateTime.Now.TimeOfDay,
                         OfertaEducativaId = objinsc.OfertaEducativaId,

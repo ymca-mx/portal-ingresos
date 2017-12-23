@@ -695,7 +695,7 @@
         tblBecasonClicka: function () {
             var a = this;
             a = $(a).data("file");
-            Funciones.AbrirArchivo(a);
+            Funciones.CrearPDF(a);
 
         },
         tbAlumnosonClicka: function () {

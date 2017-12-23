@@ -462,9 +462,11 @@
                             Genera = 1;
                         }
                     });
-                    if (Genera == 1) {
-                        $('#divAnticipado').show();
-                    } else { $('#divAnticipado').hide(); }
+
+                    ///Se tiene que regresar a valor anterior
+                    //if (Genera == 1) {
+                    //    $('#divAnticipado').show();
+                    //} else { $('#divAnticipado').hide(); }
                     //AlumnoId = "";
                 }
             });
