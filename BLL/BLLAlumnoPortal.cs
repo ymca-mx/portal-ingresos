@@ -5875,7 +5875,7 @@ namespace BLL
                                         UsuarioId = Usuario.usuarioId,
                                         UsuarioTipoId = Usuario.usuarioTipoId,
                                         PeriodoAnticipadoId = 0,
-                                        Cuota1 = CuotaColegiatura
+                                        
                                     });
                         }
 
@@ -5900,7 +5900,7 @@ namespace BLL
                                 UsuarioId = Usuario.usuarioId,
                                 UsuarioTipoId = Usuario.usuarioTipoId,
                                 PeriodoAnticipadoId = 0,
-                                Cuota1 = CuotaInscripcion
+                                
                             });
 
                         #endregion Cargos
@@ -8704,7 +8704,7 @@ namespace BLL
                                         UsuarioId = Usuario.usuarioId,
                                         UsuarioTipoId = Usuario.usuarioTipoId,
                                         PeriodoAnticipadoId = 0,
-                                        Cuota1 = CuotaColegiatura
+                                        
                                     });
                         }
 
@@ -8729,7 +8729,7 @@ namespace BLL
                                 UsuarioId = Usuario.usuarioId,
                                 UsuarioTipoId = Usuario.usuarioTipoId,
                                 PeriodoAnticipadoId = 0,
-                                Cuota1 = CuotaInscripcion
+                                
                             });
 
                         #endregion Cargos
