@@ -222,7 +222,7 @@ namespace BLL
                                            {
                                                ofertaEducativaId = b.OfertaEducativaId,
                                                descripcion = b.OfertaEducativa.Descripcion,
-                                               RVO = b.OfertaEducativa.Rvoe
+                                               RVOE = b.OfertaEducativa.Rvoe
                                            }).FirstOrDefault()
                    }).ToList();
             }
@@ -247,7 +247,7 @@ namespace BLL
                                             {
                                                 ofertaEducativaId = b.OfertaEducativaId,
                                                 descripcion = b.OfertaEducativa.Descripcion,
-                                                RVO = b.OfertaEducativa.Rvoe
+                                                RVOE = b.OfertaEducativa.Rvoe
                                             }).FirstOrDefault()
                     }).FirstOrDefault();
             }
