@@ -202,6 +202,57 @@ namespace BLL
             }
         }
 
+        public static object GetAlumnos(string alumno)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                return
+               db.Alumno
+                   .Where(a=> (a.Nombre.Trim() + " " + a.Paterno.Trim() + " " + a.Materno.Trim()).Contains(alumno)
+                    || (a.Paterno.Trim() + " " + a.Materno.Trim() + " " + a.Nombre.Trim()).Contains(alumno))
+                   .Select(a => new
+                   {
+                       alumnoId = a.AlumnoId,
+                       nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                       curp = a.AlumnoDetalle.CURP,
+                       ofertaEducativa = a.AlumnoInscrito
+                                           .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                           .OrderByDescending(k => k.FechaInscripcion)
+                                           .Select(b => new
+                                           {
+                                               ofertaEducativaId = b.OfertaEducativaId,
+                                               descripcion = b.OfertaEducativa.Descripcion,
+                                               RVO = b.OfertaEducativa.Rvoe
+                                           }).FirstOrDefault()
+                   }).ToList();
+            }
+        }
+
+        public static object GetAlumno(int alumnoId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                return
+                db.Alumno
+                    .Where(a => a.AlumnoId == alumnoId)
+                    .Select(a => new
+                    {
+                        alumnoId = a.AlumnoId,
+                        nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                        curp = a.AlumnoDetalle.CURP,
+                        ofertaEducativa = a.AlumnoInscrito
+                                            .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                            .OrderByDescending(k => k.FechaInscripcion)
+                                            .Select(b => new
+                                            {
+                                                ofertaEducativaId = b.OfertaEducativaId,
+                                                descripcion = b.OfertaEducativa.Descripcion,
+                                                RVO = b.OfertaEducativa.Rvoe
+                                            }).FirstOrDefault()
+                    }).FirstOrDefault();
+            }
+        }
+
         public static void SolicitudInscripcion(int alumnoId, int ofertaEducativaId, int anio, int periodoId, int usuario)
         {
             using(UniversidadEntities db= new UniversidadEntities())

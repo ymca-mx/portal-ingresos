@@ -26,6 +26,7 @@
                 },
                 error: function (Resultado) {
                     alert('Se presento un error en la validación de las credenciales');
+                    $(location).attr('href', 'login.html');
                 }
             });
         },

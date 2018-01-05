@@ -12,6 +12,6 @@
     }).done(function (resultado) {
         
     }).fail(function (jqXHR, textStatus) {
-       
+        $(location).attr('href', 'login.html');
     });
 });
