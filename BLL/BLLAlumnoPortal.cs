@@ -202,6 +202,57 @@ namespace BLL
             }
         }
 
+        public static object GetAlumnos(string alumno)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                return
+               db.Alumno
+                   .Where(a=> (a.Nombre.Trim() + " " + a.Paterno.Trim() + " " + a.Materno.Trim()).Contains(alumno)
+                    || (a.Paterno.Trim() + " " + a.Materno.Trim() + " " + a.Nombre.Trim()).Contains(alumno))
+                   .Select(a => new
+                   {
+                       alumnoId = a.AlumnoId,
+                       nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                       curp = a.AlumnoDetalle.CURP,
+                       ofertaEducativa = a.AlumnoInscrito
+                                           .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                           .OrderByDescending(k => k.FechaInscripcion)
+                                           .Select(b => new
+                                           {
+                                               ofertaEducativaId = b.OfertaEducativaId,
+                                               descripcion = b.OfertaEducativa.Descripcion,
+                                               RVO = b.OfertaEducativa.Rvoe
+                                           }).FirstOrDefault()
+                   }).ToList();
+            }
+        }
+
+        public static object GetAlumno(int alumnoId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                return
+                db.Alumno
+                    .Where(a => a.AlumnoId == alumnoId)
+                    .Select(a => new
+                    {
+                        alumnoId = a.AlumnoId,
+                        nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                        curp = a.AlumnoDetalle.CURP,
+                        ofertaEducativa = a.AlumnoInscrito
+                                            .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
+                                            .OrderByDescending(k => k.FechaInscripcion)
+                                            .Select(b => new
+                                            {
+                                                ofertaEducativaId = b.OfertaEducativaId,
+                                                descripcion = b.OfertaEducativa.Descripcion,
+                                                RVO = b.OfertaEducativa.Rvoe
+                                            }).FirstOrDefault()
+                    }).FirstOrDefault();
+            }
+        }
+
         public static void SolicitudInscripcion(int alumnoId, int ofertaEducativaId, int anio, int periodoId, int usuario)
         {
             using(UniversidadEntities db= new UniversidadEntities())
@@ -451,7 +502,8 @@ namespace BLL
 
                 Alumnos.AddRange(
                 db.AlumnoInscrito
-                        .Where(a => a.EstatusId == 8)
+                        .Where(a => a.EstatusId == 8 &&
+                                a.OfertaEducativa.OfertaEducativaTipoId != 4)
                         .Select(a =>
                             new DTOAlumnoInscrito
                             {
@@ -469,34 +521,7 @@ namespace BLL
                                 UsuarioNombre = a.Usuario.Nombre,
                             })
                             .ToList());
-
-                Alumnos.AddRange(db.AlumnoAutorizacion.
-                                    Select(a => new DTOAlumnoInscrito
-                                    {
-                                        AlumnoId = a.AlumnoId,
-                                        Nombre = a.Alumno.Nombre + " " + a.Alumno.Paterno + " " + a.Alumno.Materno,
-                                        Anio = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().Anio,
-                                        PeriodoId = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().PeriodoId,
-                                        FechaInscripcion = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().FechaInscripcion,
-                                        OfertaEducativa = new DTOOfertaEducativa
-                                        {
-                                            Descripcion = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().OfertaEducativa.Descripcion
-                                        },
-                                        OfertaEducativaId = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().OfertaEducativaId,
-                                        PeriodoDescripcion = a.Alumno.AlumnoInscrito.Where(ai => ai.OfertaEducativaId == a.OfertaEducativaId).FirstOrDefault().Periodo.Descripcion,
-                                        UsuarioNombre = a.Usuario.Nombre,
-                                        AlumnoAutorizacion = new DTO.AlumnoAutorizacion
-                                        {
-                                            AlumnoAutorizacionId = a.AlumnoAutorizacionId,
-                                            AlumnoId = a.AlumnoId,
-                                            Fecha = a.Fecha,
-                                            Hora = a.Hora,
-                                            UsuarioId = a.UsuarioId,
-                                            NombreUsuario = a.Usuario.Nombre + " " +
-                                        a.Usuario.Paterno + " " +
-                                        a.Usuario.Materno
-                                        }
-                                    }).ToList());
+                
                 return Alumnos;
             }
         }
@@ -5901,7 +5926,7 @@ namespace BLL
                                         UsuarioId = Usuario.usuarioId,
                                         UsuarioTipoId = Usuario.usuarioTipoId,
                                         PeriodoAnticipadoId = 0,
-                                        Cuota1 = CuotaColegiatura
+                                        
                                     });
                         }
 
@@ -5926,7 +5951,7 @@ namespace BLL
                                 UsuarioId = Usuario.usuarioId,
                                 UsuarioTipoId = Usuario.usuarioTipoId,
                                 PeriodoAnticipadoId = 0,
-                                Cuota1 = CuotaInscripcion
+                                
                             });
 
                         #endregion Cargos
@@ -8730,7 +8755,7 @@ namespace BLL
                                         UsuarioId = Usuario.usuarioId,
                                         UsuarioTipoId = Usuario.usuarioTipoId,
                                         PeriodoAnticipadoId = 0,
-                                        Cuota1 = CuotaColegiatura
+                                        
                                     });
                         }
 
@@ -8755,7 +8780,7 @@ namespace BLL
                                 UsuarioId = Usuario.usuarioId,
                                 UsuarioTipoId = Usuario.usuarioTipoId,
                                 PeriodoAnticipadoId = 0,
-                                Cuota1 = CuotaInscripcion
+                                
                             });
 
                         #endregion Cargos

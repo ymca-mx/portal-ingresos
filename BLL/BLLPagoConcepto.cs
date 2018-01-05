@@ -32,7 +32,7 @@ namespace BLL
                                                 && c.PeriodoId == PeriodoActual.PeriodoId 
                                                 && c.Anio == PeriodoActual.Anio 
                                                 && c.OfertaEducativaId == OfertaEducativaId
-                                                && a.PagoConceptoId != 807
+                                                //|| a.PagoConceptoId == 807 
                                         orderby a.Descripcion ascending
                                         select new DTOCuota
                                         {
@@ -48,7 +48,16 @@ namespace BLL
                                             OfertaEducativaId = c.OfertaEducativaId,
                                             PagoConceptoId = c.PagoConceptoId,
                                             PeriodoId = c.PeriodoId
-                                        }).ToList();                    
+                                        }).ToList();             
+                    if(Conceptos.Where(co=> co.PagoConceptoId == 807).ToList().Count > 0)
+                    {
+                        List<DTOCuota> listCuotas = Conceptos.Where(co => co.PagoConceptoId == 807).ToList();
+                        listCuotas = listCuotas.OrderByDescending(a => a.Monto).ToList();
+
+                        Conceptos = Conceptos.Where(co => co.PagoConceptoId != 807).ToList();
+                        Conceptos.Add(listCuotas.FirstOrDefault());
+                    }
+
                     return Conceptos;
 
 

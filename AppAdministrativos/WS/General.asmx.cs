@@ -148,21 +148,17 @@ namespace AppAdministrativos.WS
             return BLLMedioDifusion.ConsultarListadeMedios();
         }
         [WebMethod]
-        public List<DTOCuota> Conceptos(string AlumnoId, string OfertaEducativa)
-        {
-            return BLLPagoConcepto.ListaPagoConceptos(int.Parse(AlumnoId), int.Parse(OfertaEducativa));
-        }
+        public List<DTOCuota> Conceptos(string AlumnoId, string OfertaEducativa) 
+            => BLLPagoConcepto.ListaPagoConceptos(int.Parse(AlumnoId), int.Parse(OfertaEducativa));
+
         [WebMethod]
-        public List<DTOCuota> Conceptos2(string AlumnoId, string OfertaEducativa, string UsuarioId)
-        {
-            return BLLPagoConcepto.ListaPagoConceptos2(int.Parse(AlumnoId), int.Parse(OfertaEducativa), int.Parse(UsuarioId));
-        }
+        public List<DTOCuota> Conceptos2(string AlumnoId, string OfertaEducativa, string UsuarioId) 
+            => BLLPagoConcepto.ListaPagoConceptos2(int.Parse(AlumnoId), int.Parse(OfertaEducativa), int.Parse(UsuarioId));
 
         [WebMethod]
         public string GenerarPagoZS()
-        {
-            return BLLAlumnoDescuento.GenerarReferenciasPagos();
-        }
+            => BLLAlumnoDescuento.GenerarReferenciasPagos();
+
         [WebMethod]
         public DTOPagoConcepto ConsultarPagoConcepto(string OfertaEducativaId, string PagoConceptoId)
         {
