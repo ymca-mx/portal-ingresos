@@ -37,6 +37,8 @@ namespace DAL
         public bool TieneDescripcion { get; set; }
         public string ClaveContable { get; set; }
         public bool EsOtrosIngresos { get; set; }
+        public bool EsFacturable { get; set; }
+        public decimal PorcentajeIVA { get; set; }
         public int EstatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

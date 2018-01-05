@@ -1676,8 +1676,10 @@ advertencia 6013: La tabla o vista 'Universidad.dbo.Licenciatura_20162' no tiene
           <Property Name="EsIVA" Type="bit" Nullable="false" />
           <Property Name="EsCancelable" Type="bit" Nullable="false" />
           <Property Name="TieneDescripcion" Type="bit" Nullable="false" />
-          <Property Name="ClaveContable" Type="varchar" MaxLength="5" />
+          <Property Name="ClaveContable" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="EsOtrosIngresos" Type="bit" Nullable="false" />
+          <Property Name="EsFacturable" Type="bit" Nullable="false" />
+          <Property Name="PorcentajeIVA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PagoConceptoCarrera">
@@ -2640,26 +2642,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="PaisId" Type="int" Nullable="false" />
           <Property Name="EntidadFederativaId" Type="int" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.Tabla2' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="Tabla2">
-          <Key>
-            <PropertyRef Name="ConsecutivoId" />
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="TipoAdeudoId" />
-            <PropertyRef Name="Valor" />
-            <PropertyRef Name="FechaOperacion" />
-            <PropertyRef Name="HoraOperacion" />
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="ConsecutivoId" Type="int" Nullable="false" />
-          <Property Name="AlumnoId" Type="int" Nullable="false" />
-          <Property Name="TipoAdeudoId" Type="int" Nullable="false" />
-          <Property Name="Valor" Type="int" Nullable="false" />
-          <Property Name="FechaOperacion" Type="date" Nullable="false" />
-          <Property Name="HoraOperacion" Type="time" Precision="0" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
@@ -7741,17 +7723,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
     [Saldos].[TipoAlumno] AS [TipoAlumno]
     FROM [dbo].[Saldos] AS [Saldos]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Tabla2" EntityType="Self.Tabla2" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Tabla2].[ConsecutivoId] AS [ConsecutivoId], 
-    [Tabla2].[AlumnoId] AS [AlumnoId], 
-    [Tabla2].[TipoAdeudoId] AS [TipoAdeudoId], 
-    [Tabla2].[Valor] AS [Valor], 
-    [Tabla2].[FechaOperacion] AS [FechaOperacion], 
-    [Tabla2].[HoraOperacion] AS [HoraOperacion], 
-    [Tabla2].[UsuarioId] AS [UsuarioId]
-    FROM [dbo].[Tabla2] AS [Tabla2]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="UniversidadAdeudo" EntityType="Self.UniversidadAdeudo" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [UniversidadAdeudo].[AlumnoID] AS [AlumnoID], 
@@ -9404,7 +9375,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="ReporteEstadoCuentaDescuento" EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" />
           <EntitySet Name="ReporteEstadoCuentaPagosConcepto" EntityType="UniversidadModel.ReporteEstadoCuentaPagosConcepto" />
           <EntitySet Name="Saldos" EntityType="UniversidadModel.Saldos" />
-          <EntitySet Name="Tabla2" EntityType="UniversidadModel.Tabla2" />
           <EntitySet Name="UniversidadAdeudo" EntityType="UniversidadModel.UniversidadAdeudo" />
           <EntitySet Name="UniversidadNewAdeudo" EntityType="UniversidadModel.UniversidadNewAdeudo" />
           <AssociationSet Name="FK_Adeudo_Alumno" Association="UniversidadModel.FK_Adeudo_Alumno">
@@ -12678,8 +12648,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="EsIVA" Type="Boolean" Nullable="false" />
           <Property Name="EsCancelable" Type="Boolean" Nullable="false" />
           <Property Name="TieneDescripcion" Type="Boolean" Nullable="false" />
-          <Property Name="ClaveContable" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ClaveContable" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="EsOtrosIngresos" Type="Boolean" Nullable="false" />
+          <Property Name="EsFacturable" Type="Boolean" Nullable="false" />
+          <Property Name="PorcentajeIVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_PagoConcepto" FromRole="PagoConcepto" ToRole="AlumnoDescuento" />
           <NavigationProperty Name="AlumnoReferenciaBitacora" Relationship="UniversidadModel.FK_AdeudosBitacora_PagoConcepto" FromRole="PagoConcepto" ToRole="AlumnoReferenciaBitacora" />
@@ -14547,24 +14519,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="AbonoReferenciado20161" Type="Decimal" Nullable="false" Precision="17" Scale="2" />
           <Property Name="AbonoReferenciado20162" Type="Decimal" Nullable="false" Precision="17" Scale="2" />
           <Property Name="TipoAlumno" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tabla2">
-          <Key>
-            <PropertyRef Name="ConsecutivoId" />
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="TipoAdeudoId" />
-            <PropertyRef Name="Valor" />
-            <PropertyRef Name="FechaOperacion" />
-            <PropertyRef Name="HoraOperacion" />
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="ConsecutivoId" Type="Int32" Nullable="false" />
-          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
-          <Property Name="TipoAdeudoId" Type="Int32" Nullable="false" />
-          <Property Name="Valor" Type="Int32" Nullable="false" />
-          <Property Name="FechaOperacion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HoraOperacion" Type="Time" Nullable="false" Precision="0" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UniversidadAdeudo">
           <Key>
@@ -20314,6 +20268,8 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <EntityTypeMapping TypeName="UniversidadModel.PagoConcepto">
               <MappingFragment StoreEntitySet="PagoConcepto">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="PorcentajeIVA" ColumnName="PorcentajeIVA" />
+                <ScalarProperty Name="EsFacturable" ColumnName="EsFacturable" />
                 <ScalarProperty Name="EsOtrosIngresos" ColumnName="EsOtrosIngresos" />
                 <ScalarProperty Name="ClaveContable" ColumnName="ClaveContable" />
                 <ScalarProperty Name="TieneDescripcion" ColumnName="TieneDescripcion" />
@@ -21850,19 +21806,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="Paterno" ColumnName="Paterno" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tabla2">
-            <EntityTypeMapping TypeName="UniversidadModel.Tabla2">
-              <MappingFragment StoreEntitySet="Tabla2">
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="HoraOperacion" ColumnName="HoraOperacion" />
-                <ScalarProperty Name="FechaOperacion" ColumnName="FechaOperacion" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="TipoAdeudoId" ColumnName="TipoAdeudoId" />
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
-                <ScalarProperty Name="ConsecutivoId" ColumnName="ConsecutivoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

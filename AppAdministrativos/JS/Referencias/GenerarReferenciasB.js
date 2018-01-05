@@ -277,7 +277,7 @@ $(function init() {
         var Anio,PeriodoId;
         var slcConcepto = $('#slcConceptos');
         slcConcepto = slcConcepto[0].value;
-        if (slcConcepto == '-1' || slcConcepto != "") { return false; }
+        if (slcConcepto == '-1' || slcConcepto == "") { return false; }
         if (slcConcepto == 18 && $("#slcPeriodo").val() == -1) {
             alertify.alert("Debe seleccionar el periodo.");
             return false;

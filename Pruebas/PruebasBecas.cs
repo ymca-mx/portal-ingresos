@@ -131,36 +131,34 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7110,
-                anio = 2016,
+                alumnoId = 7546,
+                anio = 2017,
+                periodoId = 1,
+                ofertaEducativaId = 3,
+                porcentajeBeca = 59.55m, //70.15
+                porcentajeInscripcion = 100m,
+                esSEP = false,
+                esComite = false,
+                esEmpresa = true,
+                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2016-09-22", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                genera = true
+                //    //Colegiatura = decimal
+                //    //Inscripcion = decimal
+            });
+            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
+            {
+                alumnoId = 7546,
+                anio = 2017,
                 periodoId = 2,
-                ofertaEducativaId = 5,
+                ofertaEducativaId = 3,
                 porcentajeBeca = 61.14m, //70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
-                usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2017-09-13", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
-                genera = true
-                //    //Colegiatura = decimal
-                //    //Inscripcion = decimal
-            });
-
-
-            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
-            {
-                alumnoId = 7110,
-                anio = 2017,
-                periodoId = 7,
-                ofertaEducativaId = 5,
-                porcentajeBeca = 79.33m, //70.15
-                porcentajeInscripcion = 0m,
-                esSEP = false,
-                esComite = false,
-                esEmpresa = true,
-                usuarioId = 8263, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2016-09-12", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2017-02-03", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
