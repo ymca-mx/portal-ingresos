@@ -209,12 +209,13 @@ namespace BLL
                 return
                db.Alumno
                    .Where(a=> (a.Nombre.Trim() + " " + a.Paterno.Trim() + " " + a.Materno.Trim()).Contains(alumno)
-                    || (a.Paterno.Trim() + " " + a.Materno.Trim() + " " + a.Nombre.Trim()).Contains(alumno))
+                    || (a.Paterno.Trim() + " " + a.Materno.Trim() + " " + a.Nombre.Trim()).Contains(alumno)
+                    && a.AlumnoInscrito.Where(b=> b.OfertaEducativaId==43).ToList().Count==0)
                    .Select(a => new
                    {
                        alumnoId = a.AlumnoId,
                        nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
-                       curp = a.AlumnoDetalle.CURP,
+                       curp = a.AlumnoDetalle.CURP == null ? "" : a.AlumnoDetalle.CURP.Trim(),
                        ofertaEducativa = a.AlumnoInscrito
                                            .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
                                            .OrderByDescending(k => k.FechaInscripcion)
@@ -222,7 +223,7 @@ namespace BLL
                                            {
                                                ofertaEducativaId = b.OfertaEducativaId,
                                                descripcion = b.OfertaEducativa.Descripcion,
-                                               RVOE = b.OfertaEducativa.Rvoe
+                                               RVOE = b.OfertaEducativa.Rvoe == null ? "" : b.OfertaEducativa.Rvoe
                                            }).FirstOrDefault()
                    }).ToList();
             }
@@ -234,12 +235,13 @@ namespace BLL
             {
                 return
                 db.Alumno
-                    .Where(a => a.AlumnoId == alumnoId)
+                    .Where(a => a.AlumnoId == alumnoId
+                        && a.AlumnoInscrito.Where(b => b.OfertaEducativaId == 43).ToList().Count == 0)
                     .Select(a => new
                     {
                         alumnoId = a.AlumnoId,
                         nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
-                        curp = a.AlumnoDetalle.CURP,
+                        curp = a.AlumnoDetalle.CURP == null ? "" : a.AlumnoDetalle.CURP.Trim(),
                         ofertaEducativa = a.AlumnoInscrito
                                             .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
                                             .OrderByDescending(k => k.FechaInscripcion)
@@ -247,9 +249,11 @@ namespace BLL
                                             {
                                                 ofertaEducativaId = b.OfertaEducativaId,
                                                 descripcion = b.OfertaEducativa.Descripcion,
-                                                RVOE = b.OfertaEducativa.Rvoe
+                                                RVOE = b.OfertaEducativa.Rvoe == null ? "" : b.OfertaEducativa.Rvoe
                                             }).FirstOrDefault()
                     }).FirstOrDefault();
+
+                
             }
         }
 
