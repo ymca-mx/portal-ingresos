@@ -2,7 +2,7 @@
     var tblReferencias;
     var Alumnoid = 0;
     var GenerarSemestrales = {
-        Funciones: {            
+        Funciones: {
             Combo2: function (Mes) {
                 $('#sclMesFinal').val(Mes);
             },
@@ -54,54 +54,61 @@
                 $('#Load').modal('hide');
             },
             TraerReferencias: function (OFerta) {
+                $($('#ModalMontos')[0].parentNode).show();
                 $.ajax({
-                    type: "POST",
-                    url: "WS/Descuentos.asmx/ReferenciasSemestrales",
-                    data: JSON.stringify({ AlumnoId: Alumnoid, OfertaEducativaId: OFerta }),
+                    type: "GET",
+                    url: "api/pago/ReferenciasSemestrales/" + Alumnoid + "/" + OFerta,
+                    data: "",
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (data) {
-                        tblReferencias = $('#tblReferencias').dataTable({
-                            "aaData": data.d,
-                            "bSort": false,
-                            "aoColumns": [
-                                { "mDataProp": "DTOCuota.DTOPagoConcepto.Descripcion" },
-                                { "mDataProp": "Referencia" },
-                                { "mDataProp": "objNormal.Monto" },
-                                { "mDataProp": "objNormal.Restante", }
-                            ],
-                            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
-                            "searching": false,
-                            "ordering": false,
-                            "async": true,
-                            "bDestroy": true,
-                            "bPaginate": false,
-                            "bLengthChange": false,
-                            "bFilter": false,
-                            "bInfo": false,
-                            "bAutoWidth": false,
-                            "asStripClasses": null,
-                            "language": {
-                                "lengthMenu": "_MENU_  Registros",
-                                "paginate": {
-                                    "previous": "<",
-                                    "next": ">"
-                                },
-                                "search": "Buscar Referencia "
-                            },
-                            "createdRow": function (row, data, dataIndex) {
-                                try {
-                                    row.childNodes[0].style.textAlign = 'left';
-                                    row.childNodes[1].style.textAlign = 'center';
-                                    row.childNodes[2].style.textAlign = 'right';
-                                    row.childNodes[3].style.textAlign = 'center';
-                                } catch (err) {
-                                    console.log(err.message);
-                                }
-                            }
-                        });
-
                         $('#Load').modal('hide');
+                        if (data.Code != undefined) {
+                            $($('#ModalMontos')[0].parentNode).hide();
+                            alertify.alert("Universidad YMCA", data.Message);
+                            return false;
+                        }
+                        else {
+                            tblReferencias = $('#tblReferencias').dataTable({
+                                "aaData": data,
+                                "bSort": false,
+                                "aoColumns": [
+                                    { "mDataProp": "DTOCuota.DTOPagoConcepto.Descripcion" },
+                                    { "mDataProp": "Referencia" },
+                                    { "mDataProp": "objNormal.Monto" },
+                                    { "mDataProp": "objNormal.Restante", }
+                                ],
+                                "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
+                                "searching": false,
+                                "ordering": false,
+                                "async": true,
+                                "bDestroy": true,
+                                "bPaginate": false,
+                                "bLengthChange": false,
+                                "bFilter": false,
+                                "bInfo": false,
+                                "bAutoWidth": false,
+                                "asStripClasses": null,
+                                "language": {
+                                    "lengthMenu": "_MENU_  Registros",
+                                    "paginate": {
+                                        "previous": "<",
+                                        "next": ">"
+                                    },
+                                    "search": "Buscar Referencia "
+                                },
+                                "createdRow": function (row, data, dataIndex) {
+                                    try {
+                                        row.childNodes[0].style.textAlign = 'left';
+                                        row.childNodes[1].style.textAlign = 'center';
+                                        row.childNodes[2].style.textAlign = 'right';
+                                        row.childNodes[3].style.textAlign = 'center';
+                                    } catch (err) {
+                                        console.log(err.message);
+                                    }
+                                }
+                            });
+                        }                        
                     }
                 });
             }
@@ -128,12 +135,14 @@
                 GenerarSemestrales.Funciones.Combo2(mes === '-1' ? GenerarSemestrales.Funciones.Combo2(mes) : mes < 8 ? (parseInt(mes) + 5) : (parseInt(mes) - 7));
             },
             slcOfertaEducativachange: function () {
-                $('#Load').modal('show');
-                var oferta = $("#slcOfertaEducativa").val();
-                GenerarSemestrales.Funciones.TraerReferencias(oferta);
+                if ($(this).val() !== "-1") {
+                    $('#Load').modal('show');
+                    var oferta = $("#slcOfertaEducativa").val();
+                    GenerarSemestrales.Funciones.TraerReferencias(oferta);
+                }
             },
             ModalMontosclick: function () {
-                if (Alumnoid !== 0 && $("#slcOfertaEducativa").val() !== -1 && $('#sclMesinicial').val() !== "-1") {
+                if (Alumnoid !== 0 && $("#slcOfertaEducativa").val() !== "-1" && $('#sclMesinicial').val() !== "-1") {
                     $('#Montos').modal('show');
                 } else {
                     alertify.alert("Favor de insertar todos los datos.")
@@ -142,7 +151,7 @@
             btnGuardarclick: function () {
                 var $frm = $('#frmCuota');
                 if ($frm[0].checkValidity()) {
-                    $('#Load').modal('show');
+                    
                     var OFerta = $("#slcOfertaEducativa").val();
                     var MesIni = $('#sclMesinicial').val();
                     var MesFin = $('#sclMesFinal').val();
@@ -158,7 +167,9 @@
                         UsuarioId: Usuario,
                         Inscripcion: MInscripcion,
                         Colegiatura: MColegiatura
-                    });
+                    });                    
+
+                    $('#Load').modal('show');
 
                     $.ajax({
                         type: "POST",

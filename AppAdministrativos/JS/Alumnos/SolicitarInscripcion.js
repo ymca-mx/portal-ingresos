@@ -125,14 +125,14 @@
                         option.val(-1);
                         $('#slcPeriodo').append(option);
                         $(this.ListaPeriodos).each(function () {
-                            if (this.Inscripcion !== null || this.VistoBueno !== null) {
+                            //if (this.Inscripcion !== null || this.VistoBueno !== null) {
                                 var option1 = $(document.createElement('option'));
                                 option1.text(this.descripcion);
                                 option1.val(this.anio + '' + this.periodoId);
                                 option1.attr("data-Anio", this.anio);
                                 option1.attr("data-Periodoid", this.periodoId);
                                 $('#slcPeriodo').append(option1);
-                            }
+                            //}
                         });
                     }
                 });

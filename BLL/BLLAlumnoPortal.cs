@@ -206,11 +206,12 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                return
+                int num = 0;
+                var lstAlumnos=
                db.Alumno
                    .Where(a=> (a.Nombre.Trim() + " " + a.Paterno.Trim() + " " + a.Materno.Trim()).Contains(alumno)
                     || (a.Paterno.Trim() + " " + a.Materno.Trim() + " " + a.Nombre.Trim()).Contains(alumno)
-                    && a.AlumnoInscrito.Where(b=> b.OfertaEducativaId==43).ToList().Count==0)
+                    && a.AlumnoInscrito.Where(b=> b.OfertaEducativaId==43).ToList().Count==0)                    
                    .Select(a => new
                    {
                        alumnoId = a.AlumnoId,
@@ -226,6 +227,11 @@ namespace BLL
                                                RVOE = b.OfertaEducativa.Rvoe == null ? "" : b.OfertaEducativa.Rvoe
                                            }).FirstOrDefault()
                    }).ToList();
+
+                lstAlumnos = lstAlumnos.Where(a => a.ofertaEducativa != null
+                                            && a.curp.Length > 2 ? int.TryParse(a.curp.Substring(a.curp.Length - 2, 2), out num) : true).ToList();
+
+                return lstAlumnos;
             }
         }
 
@@ -233,7 +239,7 @@ namespace BLL
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
-                return
+                var Alumnobd=
                 db.Alumno
                     .Where(a => a.AlumnoId == alumnoId
                         && a.AlumnoInscrito.Where(b => b.OfertaEducativaId == 43).ToList().Count == 0)
@@ -253,7 +259,9 @@ namespace BLL
                                             }).FirstOrDefault()
                     }).FirstOrDefault();
 
-                
+                int num = 0;
+                return Alumnobd.ofertaEducativa == null ? null : Alumnobd.curp.Length>2?
+                     int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 2), out num) ? Alumnobd : null: Alumnobd;
             }
         }
 
@@ -5992,6 +6000,13 @@ namespace BLL
 
                     PagosPendientes.ForEach(n =>
                     {
+                        #region chkCuota
+                        if (n.Cuota1 == null)
+                        {
+                            n.Cuota1 = db.Cuota.Where(c => c.CuotaId == n.CuotaId).FirstOrDefault();
+                        }
+                        #endregion 
+
                         #region Colegiatura
 
                         if (n.Cuota1.PagoConceptoId == 800)

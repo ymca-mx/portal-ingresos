@@ -450,7 +450,7 @@ namespace AppAdministrativos.WS
                 });
             }
 
-
+            //Implementar codigo para llamar asmx
 
             return BLLAlumnoPortal.UpdateAlumno(Alumno, int.Parse(UsuarioId));
         }
