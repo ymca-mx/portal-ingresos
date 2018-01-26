@@ -3,16 +3,14 @@
     
     function TraerAlumno() {
         $('#PopLoad').modal('show');
-        var AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
-            url: 'Services/Alumno.asmx/TraerSede',
-            type: 'POST',
+            url: 'Api/Alumno/TraerSede/' + localStorage.getItem("user"),
+            type: 'Get',
             contentType: 'application/json; charset=utf-8',
-            data: '{AlumnoId:"' + AlumnoId + '"}',
             dataType: 'json',
             success: function (data) {
-                OpenFile(data.d);
+                OpenFile(data);
             }
         });
     }

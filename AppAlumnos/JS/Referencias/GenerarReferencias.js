@@ -1,39 +1,29 @@
 ﻿$(document).ready(function () {
-    // $.cookie('user', 7493, { expires: 1 });
-    var settings = {
-        theme: "ruby col-md-12",
-        sticky: false,
-        horizontalEdge: "bottom",
-        verticalEdge: "right",
-        heading: "Alerta",
-        life: 30000,
-        icon: "cog-gear"
-    };
+    
     var lstCuotas;
     //DatosAlumno();
     DatosAlumno();
     
     function DatosAlumno() {
         $('#PopLoad').modal('show');
-        var AlumnoId = $.cookie('user');
+
         //var AlumnoId = '9579';
         $.ajax({
-            url: 'Services/Alumno.asmx/ConsultarAlumno',
-            type: 'POST',
+            url: 'Api/Alumno/ConsultarAlumno/'+localStorage.getItem("user"),
+            type: 'Get',
             contentType: 'application/json; charset=utf-8',
-            data: '{AlumnoId:"' + AlumnoId + '"}',
             dataType: 'json',
             success: function (data) {
-                if (data.d == null) { return null; }
-                $('#lblAlumno').text(data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno);
-                $(data.d.lstAlumnoInscrito).each(function () {
+                if (data == null) { return null; }
+                $('#lblAlumno').text(data.Nombre + " " + data.Paterno + " " + data.Materno);
+                $(data.lstAlumnoInscrito).each(function () {
                     var option = $(document.createElement('option'));
                     option.text(this.OfertaEducativa.Descripcion);
                     option.val(this.OfertaEducativa.OfertaEducativaId);
                     $('#slcOfertaEducativa').append(option);
                 });
-                if (data.d.lstAlumnoInscrito.length == 1) {
-                    $('#slcOfertaEducativa').val(data.d.lstAlumnoInscrito[0].OfertaEducativaId);
+                if (data.lstAlumnoInscrito.length == 1) {
+                    $('#slcOfertaEducativa').val(data.lstAlumnoInscrito[0].OfertaEducativaId);
                     $('#slcOfertaEducativa').change();
                 }
                 $('#PopLoad').modal('hide');
@@ -41,19 +31,18 @@
         });
     }
     function ConsutlarAdeudos(ofertaEducativa) {
-        var AlumnoId = $.cookie('user');
+        var AlumnoId = localStorage.getItem("user");
         $.ajax({
-            url: 'Services/Alumno.asmx/ConsultarAdeudo',
-            type: 'POST',
+            url: 'Api/Alumno/ConsultarAdeudo/' + localStorage.getItem("user") + "/" + ofertaEducativa,
+            type: 'Get',
             contentType: 'application/json; charset=utf-8',
-            data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + ofertaEducativa + '"}',
             dataType: 'json',
             success: function (data) {
-                if (data.d == "Debe") {
+                if (data == "Debe") {
                     alertify.alert('Tiene adeudos, favor de pasar a La Corordinación Administrativa para resolver su situación financiera.');
-                    CargarPagosConceptos(AlumnoId);
+                    CargarPagosConceptos(localStorage.getItem("user"));
                 } else {
-                    CargarConceptos(ofertaEducativa );
+                    CargarConceptos(ofertaEducativa);
 
                 }
             }
@@ -65,16 +54,13 @@
         ConsutlarAdeudos($('#slcOfertaEducativa').val());
     });
     function CargarConceptos(OfertaEducativa) {
-        var AlumnoId = $.cookie('user');
         $("#slcConceptos").empty();
         $.ajax({
-            type: "POST",
-            url: "Services/General.asmx/Conceptos",
-            data: "{AlumnoId:"+AlumnoId+",OfertaEducativa:"+OfertaEducativa+"}", // the data in form-encoded format, ie as it would appear on a querystring
-            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            type: "Get",
+            url: "Api/General/Conceptos/" + localStorage.getItem("user") + "/" + OfertaEducativa,
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
-                var datos = data.d;
+                var datos = data;
                 lstCuotas = datos;
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));
@@ -82,16 +68,15 @@
                     option.val(this.DTOPagoConcepto.PagoConceptoId);
                     $('#slcConceptos').append(option);
                 });
-                CargarPagosConceptos(AlumnoId);
+                CargarPagosConceptos(localStorage.getItem("user"));
             }
         });
     }
     function CargarPagosConceptos(Alumno) {
         $.ajax({
-            url: 'Services/Alumno.asmx/ConsultarReferenciasCP',
+            url: 'Api/Alumno/ConsultarReferenciasCP/' + Alumno,
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: '{AlumnoId:' + Alumno + '}',
             dataType: 'json',
             success: function (Respuesta) {
                 ReferenciasTbl(Respuesta);
@@ -107,7 +92,7 @@
     }
     function ReferenciasTbl(R) {
         tblReferencias = $('#tblReferencias').dataTable({
-            "aaData": R.d,
+            "aaData": R,
             "bSort": false,
             "aoColumns": [
                 { "mDataProp": "DTOCuota.DTOPagoConcepto.Descripcion" },
@@ -157,20 +142,28 @@
         $(lstCuotas).each(function () {
             if (this.DTOPagoConcepto.PagoConceptoId == $('#slcConceptos').val()) {
                 if (!BuscarTabla(this.DTOPagoConcepto.Descripcion)) {
-                    Variables = "{AlumnoId:'" + $.cookie('user') + "',OfertaEducativaId:'" + this.OfertaEducativaId + "',PagoConceptoId:'" + this.PagoConceptoId + "',CuotaId:'" + this.CuotaId + "'}";
+                    Variables = {
+                        AlumnoId: localStorage.getItem("user"),
+                        OfertaEducativaId: this.OfertaEducativaId,
+                        PagoConceptoId: this.PagoConceptoId,
+                        CuotaId: this.CuotaId
+                    };
                     GenerarPago(Variables);
                 }
                 else {
-                    Variables = "{AlumnoId:'" + $.cookie('user') + "',OfertaEducativaId:'" + this.OfertaEducativaId + "',PagoConceptoId:'" + this.PagoConceptoId + "',CuotaId:'" + this.CuotaId + "'}";
-                    var Variables2 = "{OfertaEducativaId:'" + this.OfertaEducativaId + "',PagoConceptoId:'" + this.PagoConceptoId + "'}";
+                    Variables = {
+                        AlumnoId: localStorage.getItem("user"),
+                        OfertaEducativaId: this.OfertaEducativaId,
+                        PagoConceptoId: this.PagoConceptoId,
+                        CuotaId: this.CuotaId
+                    };
+
                     $.ajax({
-                        type: "POST",
-                        url: "Services/General.asmx/ConsultarPagoConcepto",
-                        data: Variables2, // the data in form-encoded format, ie as it would appear on a querystring
-                        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+                        type: "Get",
+                        url: "Api/General/ConsultarPagoConcepto/" + this.OfertaEducativaId + "/"+ PagoConceptoId,
                         contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                         success: function (data) {
-                            if (data.d.EsMultireferencia == 1) {
+                            if (data.EsMultireferencia == 1) {
                                 GenerarPago(Variables);
                             } else {
                                 alertify.alert("El concepto que selecciono ya esta Generado");
@@ -186,20 +179,18 @@
             $('#PopLoad').modal('hide');
         }
     });
-
     function GenerarPago(Cuota) {
         $.ajax({
             type: "POST",
-            url: "Services/Descuentos.asmx/GenerarPago",
-            data: Cuota, // the data in form-encoded format, ie as it would appear on a querystring
-            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+            url: "Api/Descuentos/GenerarPago",
+            data: JSON.stringify(Cuota), 
             contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
             success: function (data) {
                 var td = '<tr>';
-                td += '<td>' + data.d.DTOCuota.DTOPagoConcepto.Descripcion + '</td>';
-                td += '<td>' + data.d.Referencia + '</td>';//Referencia               
-                td += '<td>' + '$' + formato_numero(data.d.Promesa, 2, '.', ',') + '</td>';//Monto
-                td += '<td>' + data.d.objNormal.FechaLimite + '</td>';//Fecha
+                td += '<td>' + data.DTOCuota.DTOPagoConcepto.Descripcion + '</td>';
+                td += '<td>' + data.Referencia + '</td>';//Referencia               
+                td += '<td>' + '$' + formato_numero(data.Promesa, 2, '.', ',') + '</td>';//Monto
+                td += '<td>' + data.objNormal.FechaLimite + '</td>';//Fecha
                 td += '</tr>'
                 $('#tblReferencias').append(td);
                 $('#PopLoad').modal('hide');
@@ -208,27 +199,16 @@
             }
         });
     }
-
     function Alerta() {
         
-        var ahref = "<a class='btn blue' href=javascript:window.open('Views/Pago/ListaConceptos.html'," + "'Tramites'" + "," + "'width=800,height=450'" + ");>click aqui</a>";
-        $.notific8($.trim("Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas información " + ahref), {
-            life: 5000,
-            theme: 'ruby',
-            icon: 'info-circled',
-            sticky: false,
-            zindex: 11500,
-            horizontalEdge: "top",
-            verticalEdge: "right",
-            heading: "Importante",
-            closeText: "Cerrar"
-        });
-
-        var not8 = $('.jquery-notific8-container').find('.jquery-notific8-heading');
-        not8 = $(not8).parent().parent();
-        //not8 = $(not8)[0];
-        $(not8).addClass('col-lg-4 col-md-4 col-xs-3');
-        //not8.style.
+        var ahref = "Los pagos se cancelaran automáticamente después de 15 días. </hr> Para mas información " +
+            "<a class='btn blue' href=javascript:window.open('Views/Pago/ListaConceptos.html'," +
+            "'Tramites'" + "," +
+            "'width=800,height=450'" + ");>click aqui</a>";
+        var delay = alertify.get('notifier', 'delay');
+        alertify.set('notifier', 'delay', 100);
+        alertify.warning(ahref);
+        alertify.set('notifier', 'delay', delay);
     }
     function formato_numero(numero, decimales, separador_decimal, separador_miles) { // v2007-08-06
         numero = parseFloat(numero);

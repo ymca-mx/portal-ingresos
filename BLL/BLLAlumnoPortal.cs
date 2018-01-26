@@ -2534,11 +2534,12 @@ namespace BLL
 
                                 EsEspecial = ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
-                                Grupo = (ListaAlumnoInscritoDB.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
-                                //ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion.Count>0 ?
-                                // ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion.Where(k => k.OfertaEducativaId == OfertaEducativaId).ToList().Count > 0 ?
-                                //                ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion.Where(k => k.OfertaEducativaId == OfertaEducativaId).ToList().First().Grupo?.Descripcion ?? ""
-                                //                : "" : ""
+                                Grupo = ListaAlumnoInscritoDB
+                                                .FirstOrDefault()
+                                                .Alumno?
+                                                .GrupoAlumnoConfiguracion?
+                                                .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                                .FirstOrDefault()?.Grupo?.Descripcion ?? ""
                             };
                         }
                         //No es EMpresa
@@ -2616,7 +2617,12 @@ namespace BLL
                                                       && p.Cuota1.PagoConceptoId == 800).ToList().Count == 5 ? true : false,
                                 EsEspecial = ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
-                                Grupo = (ListaAlumnoInscritoDB.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
+                                Grupo = ListaAlumnoInscritoDB
+                                                .FirstOrDefault()
+                                                .Alumno?
+                                                .GrupoAlumnoConfiguracion?
+                                                .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                                .FirstOrDefault()?.Grupo?.Descripcion ?? ""
                             };
                         }
                     }
@@ -2700,8 +2706,13 @@ namespace BLL
                                                             .ToList().Count,
                                     EsEspecial = ListaAlumnoInscrito.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
-                                    Grupo = (ListaAlumnoInscrito.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
-                                };
+                                    Grupo = ListaAlumnoInscrito
+                                            .FirstOrDefault()
+                                            .Alumno?
+                                            .GrupoAlumnoConfiguracion?
+                                            .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                            .FirstOrDefault()?.Grupo?.Descripcion ?? ""
+                            };
                             }
                             #endregion
                             #region No Empresa
@@ -2772,7 +2783,12 @@ namespace BLL
                                                         .ToList().Count,
                                     EsEspecial = ListaAlumnoInscrito.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
-                                    Grupo = (ListaAlumnoInscrito.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
+                                    Grupo = ListaAlumnoInscrito
+                                            .FirstOrDefault()
+                                            .Alumno?
+                                            .GrupoAlumnoConfiguracion?
+                                            .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                            .FirstOrDefault()?.Grupo?.Descripcion ?? ""
                                 };
 
                             }
@@ -2800,21 +2816,21 @@ namespace BLL
                             //Empresa
                             if (ListaAlumnoInscritoDB.Where(s => s.EsEmpresa == true).ToList().Count > 0)
                             {
-                                Alumno = new AlumnoPagos
-                                {
-                                    AlumnoId = PagosAlumno.Where(o => o.Cuota1.PagoConceptoId == 15
+                                Alumno = new AlumnoPagos();
+
+                                Alumno.AlumnoId = PagosAlumno.Where(o => o.Cuota1.PagoConceptoId == 15
                                                        || o.Cuota1.PagoConceptoId == 304
-                                                       || o.Cuota1.PagoConceptoId == 320).ToList().Count > 0 ? "-5" : "-21",
-                                    Nombre = AlumnoInscrito.Nombre + " " + AlumnoInscrito.Paterno + " " + AlumnoInscrito.Materno,
-                                    OfertasEducativas = (from b in db.OfertaEducativa
-                                                         where b.OfertaEducativaId == OfertaEducativaId
-                                                         select new DTOOfertaEducativa
-                                                         {
-                                                             OfertaEducativaId = b.OfertaEducativaId,
-                                                             OfertaEducativaTipoId = b.OfertaEducativaTipoId,
-                                                             Descripcion = b.Descripcion
-                                                         }).ToList(),
-                                    ListPeriodos = new List<DTOPeriodosReinscipcion>
+                                                       || o.Cuota1.PagoConceptoId == 320).ToList().Count > 0 ? "-5" : "-21";
+                                    Alumno.Nombre = AlumnoInscrito.Nombre + " " + AlumnoInscrito.Paterno + " " + AlumnoInscrito.Materno;
+                                    Alumno.OfertasEducativas = (from b in db.OfertaEducativa
+                                                                where b.OfertaEducativaId == OfertaEducativaId
+                                                                select new DTOOfertaEducativa
+                                                                {
+                                                                    OfertaEducativaId = b.OfertaEducativaId,
+                                                                    OfertaEducativaTipoId = b.OfertaEducativaTipoId,
+                                                                    Descripcion = b.Descripcion
+                                                                }).ToList();
+                                    Alumno.ListPeriodos = new List<DTOPeriodosReinscipcion>
                                     {
                                         new DTOPeriodosReinscipcion
                                         {
@@ -2841,29 +2857,35 @@ namespace BLL
                                             }
                                         ).FirstOrDefault()
                                         }
-                                    },
-                                    Inscrito = false,
-                                    Academica = false,
-                                    Comite = false,
-                                    SEP = false,
-                                    EsEmpresa = true,
-                                    LstPagos = (from a in PagosAlumno2
-                                                select new PagosAlumnos
-                                                {
-                                                    SubPeriodo = a.SubperiodoId,
-                                                    Concepto = a.Cuota1.PagoConcepto.Descripcion,
-                                                    PagoId = "" + a.PagoId,
-                                                    ReferenciaId = "" + int.Parse(a.ReferenciaId)
-                                                }).ToList(),
-                                    Materias = PagosAlumno.Where(I => I.Cuota1.PagoConceptoId == 304
-                                                          || I.Cuota1.PagoConceptoId == 320).ToList().Count,
-                                    NuevoIngreso = (AlumnoInscrito.Anio == PeriodoActual.Anio && AlumnoInscrito.PeriodoId == PeriodoActual.PeriodoId) ? true : false,
-                                    Asesorias = PagosAlumno.Where(I => I.Cuota1.PagoConceptoId == 15)
-                                                            .ToList().Count,
-                                    EsEspecial = ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
+                                    };
+                                    Alumno.Inscrito = false;
+                                    Alumno.Academica = false;
+                                    Alumno.Comite = false;
+                                    Alumno.SEP = false;
+                                    Alumno.EsEmpresa = true;
+                                    Alumno.LstPagos = (from a in PagosAlumno2
+                                                       select new PagosAlumnos
+                                                       {
+                                                           SubPeriodo = a.SubperiodoId,
+                                                           Concepto = a.Cuota1.PagoConcepto.Descripcion,
+                                                           PagoId = "" + a.PagoId,
+                                                           ReferenciaId = "" + int.Parse(a.ReferenciaId)
+                                                       }).ToList();
+                                    Alumno.Materias = PagosAlumno.Where(I => I.Cuota1.PagoConceptoId == 304
+                                                          || I.Cuota1.PagoConceptoId == 320).ToList().Count;
+                                    Alumno.NuevoIngreso = (AlumnoInscrito.Anio == PeriodoActual.Anio && AlumnoInscrito.PeriodoId == PeriodoActual.PeriodoId) ? true : false;
+                                    Alumno.Asesorias = PagosAlumno.Where(I => I.Cuota1.PagoConceptoId == 15)
+                                                            .ToList().Count;
+                                    Alumno.EsEspecial = ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false;
 
-                                    Grupo = (ListaAlumnoInscritoDB.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
-                                };
+                                Alumno.Grupo = ListaAlumnoInscritoDB
+                                            .FirstOrDefault()
+                                            .Alumno?
+                                            .GrupoAlumnoConfiguracion?
+                                            .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                            .FirstOrDefault()?.Grupo?.Descripcion ?? "";
+
+
                             }
                             //Normal 
                             else
@@ -2930,7 +2952,12 @@ namespace BLL
                                     NuevoIngreso = (AlumnoInscrito.Anio == PeriodoActual.Anio && AlumnoInscrito.PeriodoId == PeriodoActual.PeriodoId) ? true : false,
                                     EsEspecial = ListaAlumnoInscritoDB.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
-                                    Grupo = (ListaAlumnoInscritoDB.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
+                                    Grupo = ListaAlumnoInscritoDB
+                                                .FirstOrDefault()
+                                                .Alumno?
+                                                .GrupoAlumnoConfiguracion?
+                                                .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                                .FirstOrDefault()?.Grupo?.Descripcion ?? ""
                                 };
                             }
                         }
@@ -3004,7 +3031,12 @@ namespace BLL
                                 EsEmpresa = ListaAlumnoInscrito.FirstOrDefault()?.EsEmpresa ?? false,
                                 EsEspecial = ListaAlumnoInscrito.FirstOrDefault().Alumno.GrupoAlumnoConfiguracion?.FirstOrDefault()?.EsEspecial ?? false,
 
-                                Grupo = (ListaAlumnoInscrito.FirstOrDefault().Alumno?.GrupoAlumnoConfiguracion).Where(o => o.OfertaEducativaId == OfertaEducativaId).FirstOrDefault()?.Grupo.Descripcion ?? ""
+                                Grupo = ListaAlumnoInscrito
+                                                .FirstOrDefault()
+                                                .Alumno?
+                                                .GrupoAlumnoConfiguracion?
+                                                .Where(o => o.OfertaEducativaId == OfertaEducativaId)
+                                                .FirstOrDefault()?.Grupo?.Descripcion ?? ""
                             };
                         }
                         #endregion

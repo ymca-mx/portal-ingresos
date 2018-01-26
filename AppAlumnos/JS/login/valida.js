@@ -7,24 +7,23 @@
         };
 
         $.ajax({
-            url: 'Services/Alumno.asmx/Valida',
+            url: 'api/login/Valida',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(credenciales),
             dataType: 'json',
             success: function (Resultado) {
-                Datos = Resultado.d;
+                Datos = Resultado;
                 if (Datos == null)
-                    alert('Favor de verificar las credenciales');
+                    alertify.alert("Universidad YMCA", 'Favor de verificar las credenciales');
                 else {
-                    $.cookie('user', credenciales['alumnoId'], { expires: 1 });
-                    $('#username').append($.cookie('user'));
+                    localStorage.setItem("user", Datos.alumnoId);
                     $(location).attr('href', 'index.html');
                 }
                 //alert('El sitio está en reparación , Por favor, vuelva despues de las 9 de la mañana.')
             },
             error: function (Resultado) {
-                alert('Se presento un error en la validación de las credenciales');
+                alertify.alert("Universidad YMCA", 'Se presento un error en la validación de las credenciales');
             }
         });
     }
@@ -33,10 +32,10 @@
       
 
         $.ajax({
-            url: 'Services/Alumno.asmx/RecuperaPassword',
-            type: 'POST',
+            url: 'api/login/RecuperaPassword',
+            type: 'post',
             contentType: 'application/json; charset=utf-8',
-            data: "{'email': '" + $('#email').val() + "'}",
+            data: JSON.stringify({ email: $('#email').val() }),
             dataType: 'json',
             success: function (Resultado) {
                 //$(location).attr('href', 'login.html');
@@ -56,7 +55,7 @@
                 jQuery('.forget-form').hide();
             },
             error: function (Resultado) {
-                alert('Se presento un error en la validación de las credenciales');
+                alertify.alert("Universidad YMCA", 'Se presento un error en la validación de las credenciales');
             }
         });
     }

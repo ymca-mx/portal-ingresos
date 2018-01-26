@@ -1,13 +1,9 @@
 ﻿$(document).ready(function () {
-    var datos;
-
-    datos = "{'alumnoId':'" + $.cookie('user') + "'}";
 
     $.ajax({
-        url: 'Services/Alumno.asmx/InsertaBitacora',
-        type: 'POST',
+        url: 'Api/Alumno/InsertaBitacora/' + localStorage.getItem('user'),
+        type: 'Get',
         contentType: 'application/json; charset=utf-8',
-        data: datos,
         dataType: 'json'
     }).done(function (resultado) {
         

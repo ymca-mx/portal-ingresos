@@ -5332,6 +5332,7 @@
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\less\bootstrap-multiselect.less" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\LICENSE.md" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\README.md" />
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

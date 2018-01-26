@@ -1,5 +1,5 @@
 ﻿$(function init() {
-    // $.cookie('user', 7493, { expires: 1 });
+
     var lstCuotas;
     var AlumnoId;
     var OfertaEducativa;
@@ -10,7 +10,7 @@
     DatosAlumno();
     function DatosAlumno() {
         $('#PopLoad').modal('show');
-        AlumnoId = $.cookie('user');
+        AlumnoId = localStorage.getItem("user");
         //var AlumnoId = '9579';
         $.ajax({
             url: 'Services/Alumno.asmx/ConsultarAlumnoReinscripcion',

@@ -2,15 +2,13 @@
     var Funciones = {
         TraerAlumno: function () {
             $.ajax({
-                url: 'Services/Alumno.asmx/Datos',
-                type: 'POST',
+                url: 'api/Alumno/Datos/' + localStorage.getItem("user"),
+                type: 'Get',
                 contentType: 'application/json; charset=utf-8',
-                data: "{'alumnoId':'" + $.cookie('user') + "'}",
                 dataType: 'json',
-                success: function (Resultado) {
-                    Datos = Resultado.d;
+                success: function (Datos) {
                     if (Datos == null) {
-                        alert('Error en la carga de datos generales');
+                        alertify.alert("Universidad YMCA",'Error en la carga de datos generales');
                         $(location).attr('href', 'login.html');
                     }
                     else {
@@ -25,21 +23,20 @@
                     }
                 },
                 error: function (Resultado) {
-                    alert('Se presento un error en la validación de las credenciales');
+                    alertify.alert("Universidad YMCA",'Se presento un error en la validación de las credenciales');
                     $(location).attr('href', 'login.html');
                 }
             });
         },
         VerificarDatos: function () {
-            var AlumnoNum = $.cookie('user');
+
             $.ajax({
-                type: "POST",
-                url: "Services/Alumno.asmx/VerificaAlumnoDatos",
-                data: "{AlumnoId:'" + AlumnoNum + "'}",
+                type: "get",
+                url: "Api/Alumno/VerificaAlumnoDatos/" + localStorage.getItem("user"),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (data) {
-                    if (data.d) {
+                    if (data) {
                         $('#popDatos').load('Views/Alumno/AlumnoActualizaDatos.html' , function () {
                             $('#popDatos').modal('show');
                         });
@@ -53,15 +50,13 @@
             });
         },
         VerificarEncuesta: function () {
-            var AlumnoNum = $.cookie('user');
             $.ajax({
-                type: "POST",
-                url: "Services/Alumno.asmx/VerificaAlumnoEncuesta",
-                data: "{AlumnoId:'" + AlumnoNum + "'}",
+                type: "get",
+                url: "Api/Alumno/VerificaAlumnoEncuesta/" + localStorage.getItem("user"),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (data) {
-                    if (data.d) {
+                    if (data) {
                         $('#divDinamico').load('Views/Alumno/EncuestaPortal.html');
                     }
                 }
@@ -69,16 +64,15 @@
         },
         RevisaAnticipado: function () {
             $.ajax({
-                url: 'Services/Alumno.asmx/CalcularAnticipado',
-                type: 'POST',
+                url: 'Api/Alumno/CalcularAnticipado/' + localStorage.getItem("user"),
+                type: 'get',
                 contentType: 'application/json; charset=utf-8',
-                data: "{'alumnoId':'" + $.cookie('user') + "'}",
                 dataType: 'json',
                 success: function (Resultado) {
 
-                    if (Resultado.d.length > 1) {
+                    if (Resultado.length > 1) {
                         var text = $('#lblFecha');
-                        text[0].innerText = Resultado.d[1];
+                        text[0].innerText = Resultado[1];
                         $('#btnPop').click();
                     }
                 }
