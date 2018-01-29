@@ -75,7 +75,7 @@
     function CargarPagosConceptos(Alumno) {
         $.ajax({
             url: 'Api/Alumno/ConsultarReferenciasCP/' + Alumno,
-            type: 'POST',
+            type: 'Get',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (Respuesta) {

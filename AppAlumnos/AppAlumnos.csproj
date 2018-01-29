@@ -5011,6 +5011,7 @@
     <Compile Include="Controllers\DescuentosController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ReinscripcionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

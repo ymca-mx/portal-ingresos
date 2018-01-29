@@ -54,9 +54,9 @@ namespace AppAlumnos.Controllers
 
         [Route("Api/Alumno/ConsultarAlumnoReinscripcion/{AlumnoId}")]
         [HttpGet]
-        public IHttpActionResult ConsultarAlumnoReinscripcion(string AlumnoId)
+        public IHttpActionResult ConsultarAlumnoReinscripcion(int AlumnoId)
         {
-            return Ok(BLL.BLLAlumnoPortal.ObtenerAlumnoR(int.Parse(AlumnoId)));
+            return Ok(BLL.BLLAlumnoPortal.ObtenerAlumnoR(AlumnoId));
         }
 
 
@@ -144,6 +144,7 @@ namespace AppAlumnos.Controllers
         }
 
         [Route("Api/Alumno/ConsultarReferenciasCP/{AlumnoId:int}")]
+        [HttpGet]
         public IHttpActionResult ConsultarReferenciasCP(int AlumnoId)
         {
             return Ok(BLL.BLLPagoPortal.ConsultarReferenciasConceptos(AlumnoId));
