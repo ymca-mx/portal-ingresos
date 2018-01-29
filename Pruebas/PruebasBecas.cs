@@ -15,9 +15,7 @@ namespace Pruebas
     public class PruebasBecas
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
-
-
-
+        
         [TestMethod]
         public void AlumnoDatos()
         {
@@ -131,34 +129,17 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7546,
-                anio = 2017,
+                alumnoId = 8316,
+                anio = 2018,
                 periodoId = 1,
-                ofertaEducativaId = 3,
-                porcentajeBeca = 59.55m, //70.15
+                ofertaEducativaId = 44,
+                porcentajeBeca = 73.29m, //70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
                 usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2016-09-22", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
-                genera = true
-                //    //Colegiatura = decimal
-                //    //Inscripcion = decimal
-            });
-            Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
-            {
-                alumnoId = 7546,
-                anio = 2017,
-                periodoId = 2,
-                ofertaEducativaId = 3,
-                porcentajeBeca = 61.14m, //70.15
-                porcentajeInscripcion = 100m,
-                esSEP = false,
-                esComite = false,
-                esEmpresa = true,
-                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2017-02-03", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                fecha = "2017-11-07", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
@@ -2046,6 +2027,14 @@ namespace Pruebas
 
             }
 
+        }
+
+
+
+        [TestMethod]
+        public void generarReferenciasDoctorado()
+        {
+            BLL.BLLPagoPortal.GenerarSemestre(8316, 44, 11, 4, 8358, decimal.Parse("0"), decimal.Parse("2500"));
         }
     }
 
