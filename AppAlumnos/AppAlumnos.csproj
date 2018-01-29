@@ -55,6 +55,14 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -64,6 +72,12 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -73,6 +87,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="Imagenes\Cancelar1.png" />
     <Content Include="Imagenes\img_under-construction.png" />
     <Content Include="Imagenes\Impresora.png" />
@@ -86,7 +101,7 @@
     <Content Include="JS\Alumno\Reglamento.js" />
     <Content Include="JS\Alumno\SolicitarInscripcion.js" />
     <Content Include="JS\Reinscripcion\Reinscripcion.js" />
-    <Content Include="JS\alertify.js" />
+    <Content Include="Script\alertify\alertify.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.css" />
     <Content Include="JS\DatePickerRange\daterangepicker.js" />
     <Content Include="JS\DatePickerRange\moment-with-locales.js" />
@@ -391,6 +406,22 @@
     <Content Include="Style\assets\global\plugins\typeahead\README.md" />
     <Content Include="Style\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Style\assets\global\plugins\uniform\README.md" />
+    <Content Include="Style\Complementos\alertify\css\alertify.css" />
+    <Content Include="Style\Complementos\alertify\css\alertify.min.css" />
+    <Content Include="Style\Complementos\alertify\css\alertify.rtl.css" />
+    <Content Include="Style\Complementos\alertify\css\alertify.rtl.min.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\bootstrap.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\bootstrap.min.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\bootstrap.rtl.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\bootstrap.rtl.min.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\default.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\default.min.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\default.rtl.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\default.rtl.min.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\semantic.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\semantic.min.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\semantic.rtl.css" />
+    <Content Include="Style\Complementos\alertify\css\themes\semantic.rtl.min.css" />
     <Content Include="Style\Complementos\Blob.js-master\.gitignore" />
     <Content Include="Style\Complementos\Blob.js-master\Blob.js" />
     <Content Include="Style\Complementos\Blob.js-master\Blob.min.js" />
@@ -678,6 +709,7 @@
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\mixins.less" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\variables.less" />
     <Content Include="Script\jquery-2.2.4.min.map" />
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -691,13 +723,13 @@
     <Content Include="Inscritos.html" />
     <Content Include="login.html" />
     <Content Include="Pagos\todos.html" />
-    <Content Include="Script\account\recovery.js" />
-    <Content Include="Script\account\validacionRecovery.js" />
-    <Content Include="Script\index\bitacora.js" />
-    <Content Include="Script\index\index.js" />
-    <Content Include="Script\login\animacion.js" />
-    <Content Include="Script\login\valida.js" />
-    <Content Include="Script\pagos\listaPagos.js" />
+    <Content Include="JS\account\recovery.js" />
+    <Content Include="JS\account\validacionRecovery.js" />
+    <Content Include="JS\index\bitacora.js" />
+    <Content Include="JS\index\index.js" />
+    <Content Include="JS\login\animacion.js" />
+    <Content Include="JS\login\valida.js" />
+    <Content Include="JS\Pagos\listaPagos.js" />
     <Content Include="Services\Alumno.asmx" />
     <Content Include="Services\Login.asmx" />
     <Content Include="Style\assets\admin\layout2\css\custom.css" />
@@ -4974,6 +5006,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\DescuentosController.cs" />
+    <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Alumno.asmx.cs">
       <DependentUpon>Alumno.asmx</DependentUpon>
@@ -4997,6 +5037,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="JS\themes\Switch\" />
     <Folder Include="Style\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Style\engato\login\imagenes\recovery\" />

@@ -1,12 +1,10 @@
 ﻿var EstadoCivil = function () {
     var cargarEstadoCivil = function () {
         $.ajax({
-            type: "POST",
-            url: "Services/General.asmx/ConsultarEstadoCivil",
-            data: "{}",
+            type: "get",
+            url: "Api/General/ConsultarEstadoCivil",
             contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var datos = data.d;
+            success: function (datos) {
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));
 

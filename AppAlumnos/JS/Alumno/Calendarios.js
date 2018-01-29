@@ -2,16 +2,17 @@
     CargarDocumento();
     function CargarDocumento() {
         $('#PopLoad').modal('show');
-        var Alumno = $.cookie('user');
         $.ajax({
-            url: 'Services/General.asmx/NombreCalendario',
-            type: 'POST',
+            url: 'Api/General/NombreCalendario/' + localStorage.getItem("user"),
+            type: 'Get',
             contentType: 'application/json; charset=utf-8',
-            data: '{Alumno:"' + Alumno + '"}',
             dataType: 'json',
             success: function (data) {
-                if (data.d == null) { return null; }
-                CargarPDF(data.d);
+                if (data == null) {
+                    $('#PopLoad').modal('hide');
+                    return null;
+                }
+                CargarPDF(data);
             }
         });
     }

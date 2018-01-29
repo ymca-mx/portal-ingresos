@@ -2574,16 +2574,19 @@ namespace BLL
                                                              .ToList());
                     }
 
-                    ListaSubPeriodos = ListaSubPeriodos.OrderBy(m => m.MesId).ToList();
+                    //ListaSubPeriodos = ListaSubPeriodos.OrderBy(m => m.MesId).ToList();
 
                     List<Periodo> Periodos = new List<Periodo>();
                     ListaSubPeriodos.ForEach(sbp =>
                     {
+                        int anioc = SubPeriodoInicial >= 9 ? (DateTime.Now.Year + 1) : (sbp.MesId < 9 ? DateTime.Now.Year : DateTime.Now.Year + 1);
+
                         if (Periodos.Where(pe => pe.PeriodoId == sbp.PeriodoId
-                                                                && pe.Anio == (sbp.MesId < 9 ? DateTime.Now.Year : DateTime.Now.Year + 1)).ToList().Count == 0)
+                                                                && pe.Anio ==anioc ).ToList().Count == 0)
                         {
-                            Periodos.Add(db.Periodo.Where(pe => pe.PeriodoId == sbp.PeriodoId
-                                                                && pe.Anio == (sbp.MesId < 9 ? DateTime.Now.Year : DateTime.Now.Year + 1)).FirstOrDefault());
+                            var periodoadd = db.Periodo.Where(pe => pe.PeriodoId == sbp.PeriodoId
+                                                                  && pe.Anio == anioc).FirstOrDefault();
+                            Periodos.Add(periodoadd);
                         }
                     });
 
@@ -2854,11 +2857,7 @@ namespace BLL
                         //    }
                         //}
                         #endregion
-
-                        if (PagosAlumno.Where(pa => pa.Cuota1.PagoConceptoId == 800
-                                                        && pa.Anio == PeriodoP.Anio
-                                                        && pa.PeriodoId == PeriodoP.PeriodoId).ToList().Count == 0)
-                        {
+                        
                             ListaSubPeriodos.Where(k => k.PeriodoId == PeriodoP.PeriodoId)
                             .ToList().ForEach(subp =>
                             {
@@ -2902,7 +2901,7 @@ namespace BLL
                                     });
                                 }
                             });
-                        }
+                        
 
                         #endregion
                     });
@@ -2926,52 +2925,68 @@ namespace BLL
             }
         }
 
-        public static List<DTOPagos> BuscarPagosActuales(int alumnoId, int ofertaEducativaId)
+        public static object BuscarPagosActuales(int alumnoId, int ofertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                int SubPeriodoActual = BLLPeriodoPortal.TraerSubPeriodoEntreFechas(DateTime.Now);
-                DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
-                List<Pago> Pagos = db.Pago
-                                    .Where(p => p.AlumnoId == alumnoId
-                                            && p.OfertaEducativaId == ofertaEducativaId
-                                            && ((p.Anio == PeriodoActual.Anio
-                                                && p.PeriodoId == PeriodoActual.PeriodoId && p.SubperiodoId >= SubPeriodoActual) || (
-                                                (PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId) == p.PeriodoId &&
-                                                (PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio) == p.Anio))
-                                            && (p.Cuota1.PagoConceptoId == 800 || p.Cuota1.PagoConceptoId == 802))
-                                    .Take(7)
-                                    .ToList();
-                Pagos = Pagos.OrderBy(p => p.Subperiodo.MesId).ToList();
-                return Pagos.Select(p =>
-                            new DTOPagos
-                            {
-                                Anio = p.Anio,
-                                PeriodoId = p.PeriodoId,
-                                EstatusId = p.EstatusId,
-                                PagoId = p.PagoId,
-                                Referencia = p.ReferenciaId,
-                                objNormal = new Pagos_Detalles
-                                {
-                                    Monto = "$" + p.Promesa,
-                                    Restante = "$" + p.Restante
-                                },
-                                FechaGeneracionS = (p.FechaGeneracion.Day < 10 ? "0" + p.FechaGeneracion.Day : "" + p.FechaGeneracion.Day) +
-                                                (p.FechaGeneracion.Month < 10 ? "0" + p.FechaGeneracion.Month : "" + p.FechaGeneracion.Month) +
-                                                "" + p.FechaGeneracion.Year,
-                                DTOCuota = new DTOCuota
-                                {
-                                    CuotaId = p.Cuota1.CuotaId,
-                                    DTOPagoConcepto = new DTOPagoConcepto
-                                    {
-                                        PagoConceptoId = p.Cuota1.PagoConceptoId,
-                                        Descripcion = p.Cuota1.PagoConceptoId == 800 ?
-                                                    p.Cuota1.PagoConcepto.Descripcion + " " + p.Subperiodo.Mes.Descripcion + " " + p.Periodo.Anio + " - " + p.Periodo.PeriodoId :
-                                                    p.Cuota1.PagoConcepto.Descripcion
-                                    }
-                                }
 
-                            }).ToList();
+                if (db.OfertaEducativa
+                        .Where(ofe => ofe.OfertaEducativaId == ofertaEducativaId)
+                        .FirstOrDefault().OfertaEducativaTipoId == 5)
+                {
+
+                    int SubPeriodoActual = BLLPeriodoPortal.TraerSubPeriodoEntreFechas(DateTime.Now);
+                    DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+                    List<Pago> Pagos = db.Pago
+                                        .Where(p => p.AlumnoId == alumnoId
+                                                && p.OfertaEducativaId == ofertaEducativaId
+                                                && ((p.Anio == PeriodoActual.Anio
+                                                    && p.PeriodoId == PeriodoActual.PeriodoId && p.SubperiodoId >= SubPeriodoActual) || (
+                                                    (PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId) == p.PeriodoId &&
+                                                    (PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio) == p.Anio))
+                                                && (p.Cuota1.PagoConceptoId == 800 || p.Cuota1.PagoConceptoId == 802))
+                                        .Take(7)
+                                        .ToList();
+                    Pagos = Pagos.OrderBy(p => p.Subperiodo.MesId).ToList(); 
+
+                    return Pagos.Select(p =>
+                                new DTOPagos
+                                {
+                                    Anio = p.Anio,
+                                    PeriodoId = p.PeriodoId,
+                                    EstatusId = p.EstatusId,
+                                    PagoId = p.PagoId,
+                                    Referencia = p.ReferenciaId,
+                                    objNormal = new Pagos_Detalles
+                                    {
+                                        Monto = "$" + p.Promesa,
+                                        Restante = "$" + p.Restante
+                                    },
+                                    FechaGeneracionS = (p.FechaGeneracion.Day < 10 ? "0" + p.FechaGeneracion.Day : "" + p.FechaGeneracion.Day) +
+                                                    (p.FechaGeneracion.Month < 10 ? "0" + p.FechaGeneracion.Month : "" + p.FechaGeneracion.Month) +
+                                                    "" + p.FechaGeneracion.Year,
+                                    DTOCuota = new DTOCuota
+                                    {
+                                        CuotaId = p.Cuota1.CuotaId,
+                                        DTOPagoConcepto = new DTOPagoConcepto
+                                        {
+                                            PagoConceptoId = p.Cuota1.PagoConceptoId,
+                                            Descripcion = p.Cuota1.PagoConceptoId == 800 ?
+                                                        p.Cuota1.PagoConcepto.Descripcion + " " + p.Subperiodo.Mes.Descripcion + " " + p.Periodo.Anio + " - " + p.Periodo.PeriodoId :
+                                                        p.Cuota1.PagoConcepto.Descripcion
+                                        }
+                                    }
+
+                                }).ToList();
+                }
+                else
+                {
+                    return new
+                    {
+                        Code="500",
+                        Message = "La ofertaEducativa no corresponde a plan Semestral."
+                    };
+                }
 
             }
         }

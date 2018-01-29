@@ -3,7 +3,7 @@
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
-    AlumnoNum = $.cookie('user');
+    AlumnoNum = localStorage.getItem("user");
 
     Load();
     var raiting = '';
@@ -55,14 +55,13 @@
 
     function Preguntas() {
         $.ajax({
-            type: "POST",
-            url: "Services/Alumno.asmx/PreguntasPortal",
-            data: "{}",
+            type: "get",
+            url: "Api/Alumno/PreguntasPortal",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
-                if (data.d != null) {
-                    datos = data.d;
+                if (data != null) {
+                    datos = data;
                     html = '';
                     $(datos).each(function (i0, d0) {
                         if (d0.Preguntas[0].PreguntaTipoId == 1 )
@@ -277,12 +276,12 @@
 
         $.ajax({
             type: "POST",
-            url: "Services/Alumno.asmx/GuardarRespuestas",
+            url: "Api/Alumno/GuardarRespuestas",
             data: obj2,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
-                if (data.d) {
+                if (data) {
                     $('#Load').modal('hide');
                     alertify.alert("Encuesta Guardada", function ()
                     {

@@ -177,6 +177,7 @@
     <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
     <Content Include="JS\Empresas\ReAjusteCuotas.js" />
+    <Content Include="JS\EnvioReporteVistoBueno.js" />
     <Content Include="JS\EvaluacionDocente\ActualizacionDocente.js" />
     <Content Include="JS\EvaluacionDocente\VistoBuenoDocentes.js" />
     <Content Include="JS\index\bitacora.js" />
@@ -5331,6 +5332,7 @@
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\less\bootstrap-multiselect.less" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\LICENSE.md" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\README.md" />
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -5529,6 +5531,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\PagoController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

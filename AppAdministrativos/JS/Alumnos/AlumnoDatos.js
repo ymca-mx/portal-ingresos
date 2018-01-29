@@ -11,6 +11,7 @@
     var tblAlumnos;
     var Antecendentes;
     var OfertaEducativaTipoId = -1;
+    var AlumnoOrigin = undefined;
     BloquearTodo();
 
     function LimpiarCampos() {
@@ -27,6 +28,7 @@
         OfertaEducativaTipoId = -1;
     }
     $('#btnBuscarAlumno').click(function () {
+        AlumnoOrigin = undefined;
         $('#frmVarios').hide();
         if (tblAlumnos != undefined) {
             tblAlumnos.fnClearTable();
@@ -63,6 +65,14 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d != null) {
+                    AlumnoOrigin = {
+                        alumnoId: data.d.AlumnoId,
+                        nombre: data.d.Nombre,
+                        paterno: data.d.Paterno,
+                        materno: data.d.Materno,
+                        curp: data.d.DTOAlumnoDetalle.CURP
+                    };
+
                     Antecendentes = data.d.Antecendentes;
                     OfertasAlumnoIni(data.d.lstOfertas);
                     $('#divEditar').show();
@@ -293,53 +303,83 @@
         if (count == 4)
         { return true; } else { return false; }
     }
+    function UpdateComplemento() {
+        if (AlumnoOrigin.nombre !== $('#txtnombre').val()
+            || AlumnoOrigin.paterno !== $('#txtApPaterno').val()
+            || AlumnoOrigin.materno !== $('#txtApMaterno').val()
+            || AlumnoOrigin.curp !== $('#txtCURP').val()) {
+
+            AlumnoOrigin.nombre = $('#txtnombre').val().trim() + " " + $('#txtApPaterno').val().trim() + " " + $('#txtApMaterno').val().trim();
+            AlumnoOrigin.curp = $('#txtCURP').val();
+            AlumnoOrigin.curp = AlumnoOrigin.curp.replace(/\s/g, "");
+            if (AlumnoOrigin.curp.length === 18) {
+                $.ajax({
+                    url: 'http://108.163.172.122/YPlatform/ResourceComprobante/api/Universal/EditComplementoEducativo',
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(AlumnoOrigin),
+                    dataType: 'json',
+                }).done(function (data) {
+                    console.log(data);
+                }).fail(function (data) {
+                    console.log(data.responseJSON);
+                }).always(function (data) {
+                    console.log(data.responseJSON);
+                });
+            }
+        }
+    }
     function GuardarTodo() {
+
+        UpdateComplemento();
+
         var usuario = $.cookie('userAdmin');
-        var Variables = "{";
-        Variables += "AlumnoId:'" + AlumnoNum + "',";
-        Variables += "UsuarioId:'" + usuario + "',";
-        Variables += "Nombre:'" + $('#txtnombre').val() + "',";
-        Variables += "Paterno:'" + $('#txtApPaterno').val() + "',";
-        Variables += "Materno:'" + $('#txtApMaterno').val() + "',";
-        Variables += "Celular:'" + $('#txtCelular').val() + "',";
-        Variables += "FNacimiento:'" + $('#txtFNacimiento').val() + "',";
+        var Variables = {
+            AlumnoId: AlumnoNum,
+            UsuarioId: usuario,
+            Nombre: $('#txtnombre').val(),
+            Paterno: $('#txtApPaterno').val(),
+            Materno: $('#txtApMaterno').val(),
+            Celular: $('#txtCelular').val(),
+            FNacimiento: $('#txtFNacimiento').val(),
 
-        Variables += "CURP:'" + $('#txtCURP').val() + "',";
-        Variables += "Email:'" + $('#txtEmail').val() + "',";
-        Variables += "TelCasa:'" + $('#txtTelefonoCasa').val() + "',";
+            CURP: $('#txtCURP').val(),
+            Email: $('#txtEmail').val(),
+            TelCasa: $('#txtTelefonoCasa').val(),
 
-        Variables += "Calle:'" + $('#txtCalle').val() + "',";
-        Variables += "NumeroE:'" + $('#txtNumeroE').val() + "',";
-        Variables += "NumeroI:'" + $('#txtNumeroI').val() + "',";
-        Variables += "CP:'" + $('#txtCP').val() + "',";
-        Variables += "Colonia:'" + $('#txtColonia').val() + "',";
+            Calle: $('#txtCalle').val(),
+            NumeroE: $('#txtNumeroE').val(),
+            NumeroI: $('#txtNumeroI').val(),
+            CP: $('#txtCP').val(),
+            Colonia: $('#txtColonia').val(),
 
-        Variables += "EstadoCivil:'" + $('#slcEstadoCivil').val() + "',";
-        Variables += "Sexo:'" + $('#slcSexo').val() + "',";
-        Variables += "Estado:'" + $('#slcEstado').val() + "',";
-        Variables += "Municipio:'" + $('#slcMunicipio').val() + "',";
-        Variables += "Nacionalidad:'" + $('#slcNacionalidad').val() + "',";
+            EstadoCivil: $('#slcEstadoCivil').val(),
+            Sexo: $('#slcSexo').val(),
+            Estado: $('#slcEstado').val(),
+            Municipio: $('#slcMunicipio').val(),
+            Nacionalidad: $('#slcNacionalidad').val(),
 
-        Variables += "LugarN:'" + $('#slcLugarN').val() + "',";
-        ////////////////////
-        Variables += "NombrePA1:'" + $('#txtPAutorizada').val() + "',";
-        Variables += "PaternoPA1:'" + $('#txtAPPaterno').val() + "',";
-        Variables += "MaternoPA1:'" + $('#txtAPMaterno').val() + "',";
-        Variables += "PArentescoPA1:'" + $('#slcParentesco').val() + "',";
-        Variables += "EmailPA1:'" + $('#txtPEmail').val() + "',";
-        Variables += "TelefonoPA1:'" + $('#txtTelefonoPA').val() + "',";
-        Variables += "Telefono2PA1:'" + $('#txtTelefonoPAT').val() + "',";
-        Variables += "Autoriza1:'" + ($('#chkAuotiza1').prop("checked") ? 'true' : 'false') + "',";
+            LugarN: $('#slcLugarN').val(),
+            ////////////////////
+            NombrePA1: $('#txtPAutorizada').val(),
+            PaternoPA1: $('#txtAPPaterno').val(),
+            MaternoPA1: $('#txtAPMaterno').val(),
+            PArentescoPA1: $('#slcParentesco').val(),
+            EmailPA1: $('#txtPEmail').val(),
+            TelefonoPA1: $('#txtTelefonoPA').val(),
+            Telefono2PA1: $('#txtTelefonoPAT').val(),
+            Autoriza1: ($('#chkAuotiza1').prop("checked") ? 'true' : 'false'),
 
-        //////////////////
-        Variables += "NombrePA2:'" + $('#txtPAutorizada2').val() + "',";
-        Variables += "PaternoPA2:'" + $('#txtAPPaterno2').val() + "',";
-        Variables += "MaternoPA2:'" + $('#txtAPMaterno2').val() + "',";
-        Variables += "PArentescoPA2:'" + $('#slcParentesco2').val() + "',";
-        Variables += "EmailPA2:'" + $('#txtPEmail2').val() + "',";
-        Variables += "TelefonoPA2:'" + $('#txtTelefonoPA2').val() + "',";
-        Variables += "Telefono2PA2:'" + $('#txtTelefonoPAT2').val() + "',";
-        Variables += "Autoriza2:'" + ($('#chkAuotiza2').prop("checked") ? 'true' : 'false') + "'}";
+            //////////////////
+            NombrePA2: $('#txtPAutorizada2').val(),
+            PaternoPA2: $('#txtAPPaterno2').val(),
+            MaternoPA2: $('#txtAPMaterno2').val(),
+            PArentescoPA2: $('#slcParentesco2').val(),
+            EmailPA2: $('#txtPEmail2').val(),
+            TelefonoPA2: $('#txtTelefonoPA2').val(),
+            Telefono2PA2: $('#txtTelefonoPAT2').val(),
+            Autoriza2: ($('#chkAuotiza2').prop("checked") ? 'true' : 'false')
+        };
 
         GuardarAntecedentesTmp();
         ///////////////////////////
@@ -347,7 +387,7 @@
             url: 'WS/Alumno.asmx/UpdateAlumno',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: Variables,
+            data: JSON.stringify(Variables),
             dataType: 'json',
             success: function (data) {
                 try {

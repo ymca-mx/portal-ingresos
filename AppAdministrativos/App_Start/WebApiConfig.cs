@@ -10,11 +10,10 @@ namespace AppAdministrativos
     {
         public static void Register(HttpConfiguration config)
         {
+            config.MapHttpAttributeRoutes();
             var cors = new EnableCorsAttribute("*", "*", "*");
 
             config.EnableCors(cors);
-            
-            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

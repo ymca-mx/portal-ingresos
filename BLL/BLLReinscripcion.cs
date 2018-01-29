@@ -286,7 +286,7 @@ namespace BLL
                                    ListaPeriodo[0].Anio),
                                    Anio2 = (ListaPeriodo[0].PeriodoId == 1 ?
                                     ListaPeriodo[0].Anio - 1 :
-                                    ListaPeriodo[0].Anio == 2 ? ListaPeriodo[0].Anio - 2 :
+                                    ListaPeriodo[0].PeriodoId == 2 ? ListaPeriodo[0].Anio - 1 :
                                     ListaPeriodo[0].Anio),
                                     PeriodoId1 = (ListaPeriodo[0].PeriodoId == 1 ?
                                     3 :

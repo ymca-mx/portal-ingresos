@@ -8,6 +8,10 @@ using BLL;
 using System.Globalization;
 using System.Web.Script.Services;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Net;
 
 namespace AppAdministrativos.WS
 {
@@ -389,6 +393,7 @@ namespace AppAdministrativos.WS
             string NombrePA2, string PaternoPA2, string MaternoPA2, string PArentescoPA2, string EmailPA2, string TelefonoPA2,
             string Telefono2PA2, string Autoriza2)
         {
+
             int? defaul = null;
             DTOAlumno Alumno = new DTOAlumno
             {
@@ -449,11 +454,11 @@ namespace AppAdministrativos.WS
                     Telefono = Telefono2PA2
                 });
             }
-
-
-
+            
             return BLLAlumnoPortal.UpdateAlumno(Alumno, int.Parse(UsuarioId));
+            
         }
+
         [WebMethod]
         public bool UpdateMail(string AlumnoId, string Email, string UsuarId)
         {
