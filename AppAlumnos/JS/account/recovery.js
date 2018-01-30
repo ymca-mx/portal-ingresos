@@ -24,14 +24,14 @@
 
     function RPass() {
         $.ajax({
-            url: '../Services/Alumno.asmx/ActualizaPassword',
+            url: 'Api/Alumno/ActualizaPassword',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: datos,
             dataType: 'json'
         }).done(function (resultado) {
             alert('La contraseña de tu cuenta ha sido actualizada correctamente.');
-            $(location).attr('href', 'http://108.163.172.122/portalalumno/login.html');
+            location.reload();
         }).fail(function (jqXHR, textStatus) {
             alert('Ocurrio un error...' + textStatus);
         });

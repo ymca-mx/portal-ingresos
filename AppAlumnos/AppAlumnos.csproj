@@ -171,6 +171,8 @@
     <Content Include="JS\themes\alertify.default.css" />
     <Content Include="packages.config" />
     <None Include="Script\jquery-2.2.4.intellisense.js" />
+    <Content Include="Script\BackBone\backbone-min.js" />
+    <Content Include="Script\BackBone\underscore-min.js" />
     <Content Include="Script\jquery-2.2.4.js" />
     <Content Include="Script\jquery-2.2.4.min.js" />
     <Content Include="Services\Descuentos.asmx" />

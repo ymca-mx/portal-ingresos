@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -32,10 +33,21 @@ namespace AppAlumnos.Controllers
                             DateTime.ParseExact(FechaF, "dd/MM/yyyy", CultureInfo.InvariantCulture))));
         }
 
-        [Route("Api/Alumno/")]
-        public void ActualizaPassword(string password, string token)
+        [Route("Api/Alumno/ActualizaPassword")]
+        [HttpPost]
+        public IHttpActionResult ActualizaPassword([FromBody]JObject jObject)
         {
-            Universidad.BLL.BLLAlumno.ActualizaPassword(password, token);
+            try
+            {
+                Universidad.BLL.BLLAlumno.ActualizaPassword(
+                   (string)jObject["password"],
+                   (string)jObject["token"]);
+
+                return Ok("Acutalizado Correctamente");
+            }catch(Exception err)
+            {
+                return BadRequest("Fallo " + err.Message);
+            }
         }
 
         [Route("Api/Alumno/InsertaBitacora/{alumnoId:int}")]

@@ -1,5 +1,7 @@
 ﻿var Login = function () {
 
+    localStorage.clear();
+
     function Validar() {
         var credenciales = {
             alumnoId: $('#username').val(),
