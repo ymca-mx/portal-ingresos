@@ -11,9 +11,8 @@
     var Funciones = {
         init: function () {
             AlumnoId = localStorage.getItem("user");
-            console.log("hola");
             if (AlumnoId.length == 0) { return false; }
-            $('#PopLoad').modal('show');
+            IndexFn.Block(true);
             if (!isNaN(AlumnoId)) { Funciones.CargarPagos(); }
         },
         TablaMaster: {},
@@ -307,7 +306,7 @@
                     if (dat1a != null) {
                         Funciones.TablaMaster = dat1a;
                         Funciones.CrearCombo();
-                    } else { $('#PopLoad').modal('hide'); }
+                    } else { IndexFn.Block(false); }
                 }
             });
         },
@@ -342,7 +341,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (data) {
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                     if (data == null) { return null; }
                     var Genera = 0;
                     $(data).each(function () {

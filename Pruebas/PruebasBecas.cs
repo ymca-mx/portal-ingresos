@@ -2034,7 +2034,7 @@ namespace Pruebas
         [TestMethod]
         public void generarReferenciasDoctorado()
         {
-            BLL.BLLPagoPortal.GenerarSemestre(8316, 44, 11, 4, 8358, decimal.Parse("0"), decimal.Parse("2500"));
+            BLL.BLLPagoPortal.GenerarSemestre(8316, 44,2017, 11,2018, 4, 8358, decimal.Parse("0"), decimal.Parse("2500"));
         }
     }
 

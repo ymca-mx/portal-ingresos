@@ -17,7 +17,7 @@ namespace Pruebas
         [TestMethod]
         public void PagosSemestrales()
         {
-            BLL.BLLPagoPortal.GenerarSemestre(803, 44, 11, 6, 100000, 0, 2000);
+            BLL.BLLPagoPortal.GenerarSemestre(6704, 44, 2017, 11, 2018, 4, 8358, 0, 3600);
         }
     }
 }

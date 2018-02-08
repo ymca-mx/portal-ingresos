@@ -5,7 +5,7 @@
     DatosAlumno();
     
     function DatosAlumno() {
-        $('#PopLoad').modal('show');
+        IndexFn.Block(true);
 
         //var AlumnoId = '9579';
         $.ajax({
@@ -26,7 +26,7 @@
                     $('#slcOfertaEducativa').val(data.lstAlumnoInscrito[0].OfertaEducativaId);
                     $('#slcOfertaEducativa').change();
                 }
-                $('#PopLoad').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }
@@ -49,7 +49,7 @@
         });
     }
     $('#slcOfertaEducativa').change(function () {
-        $('#PopLoad').modal('show');
+        IndexFn.Block(true);
         $("#slcConceptos").empty();
         ConsutlarAdeudos($('#slcOfertaEducativa').val());
     });
@@ -82,11 +82,11 @@
                 ReferenciasTbl(Respuesta);
                 var fil = $('#tblReferencias label input');
                 fil.removeClass('input-small').addClass('input-large');
-                $('#PopLoad').modal('hide');
+                IndexFn.Block(false);
             },
             error: function (Respuesta) {
                 alertify.alert('Error al cargar datos');
-                $('#PopLoad').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }
@@ -135,7 +135,7 @@
         });
     }
     $('#btnGenerar').on('click', function () {
-        $('#PopLoad').modal('show');
+        IndexFn.Block(true);
         var Variables = "";
         var cFech;
         if ($('#slcConceptos').val() == '-1') { return false; }
@@ -167,7 +167,7 @@
                                 GenerarPago(Variables);
                             } else {
                                 alertify.alert("El concepto que selecciono ya esta Generado");
-                                $('#PopLoad').modal('hide');
+                                IndexFn.Block(false);
                             }
                         }
                     });
@@ -176,7 +176,7 @@
             }
         });
         if (Variables.length === 0) {
-            $('#PopLoad').modal('hide');
+            IndexFn.Block(false);
         }
     });
     function GenerarPago(Cuota) {
@@ -193,7 +193,7 @@
                 td += '<td>' + data.objNormal.FechaLimite + '</td>';//Fecha
                 td += '</tr>'
                 $('#tblReferencias').append(td);
-                $('#PopLoad').modal('hide');
+                IndexFn.Block(false);
 
                 Alerta();
             }

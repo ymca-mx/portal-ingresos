@@ -2548,7 +2548,7 @@ namespace BLL
             }
         }
 
-        public static bool GenerarSemestre(int alumnoId, int ofertaEducativaId, int SubPeriodoFinal, int SubPeriodoInicial, int usuarioId, decimal Inscripcion, decimal Colegiatura)
+        public static bool GenerarSemestre(int alumnoId, int ofertaEducativaId,int AnioInicial, int SubPeriodoInicial, int AnioFinal, int SubPeriodoFinal, int usuarioId, decimal Inscripcion, decimal Colegiatura)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -2579,7 +2579,7 @@ namespace BLL
                     List<Periodo> Periodos = new List<Periodo>();
                     ListaSubPeriodos.ForEach(sbp =>
                     {
-                        int anioc = SubPeriodoInicial >= 9 ? (DateTime.Now.Year + 1) : (sbp.MesId < 9 ? DateTime.Now.Year : DateTime.Now.Year + 1);
+                        int anioc = SubPeriodoInicial >= 9 ? AnioFinal : (sbp.MesId < 9 ?AnioInicial : AnioFinal);
 
                         if (Periodos.Where(pe => pe.PeriodoId == sbp.PeriodoId
                                                                 && pe.Anio ==anioc ).ToList().Count == 0)
@@ -2632,7 +2632,8 @@ namespace BLL
                             {
                                 PagosAlumno.Add(PagosAlumnoTotales.Where(p => p.Anio == PeriodoP.Anio
                                                                                && p.PeriodoId == PeriodoP.PeriodoId
-                                                                               && p.SubperiodoId == sb.SubperiodoId)
+                                                                               && (p.SubperiodoId == sb.SubperiodoId
+                                                                               || p.Cuota1.PagoConceptoId==802))
                                                                     .FirstOrDefault());
                             });
                     });
@@ -2762,7 +2763,8 @@ namespace BLL
                         #region Pagos
                         if (PagosAlumno.Where(pa => pa.Cuota1.PagoConceptoId == 802
                                                          && pa.Anio == PeriodoP.Anio
-                                                         && pa.PeriodoId == PeriodoP.PeriodoId).ToList().Count == 0 && !PagoAlumnInsc)
+                                                         && pa.PeriodoId == PeriodoP.PeriodoId)
+                                            .ToList().Count == 0 && !PagoAlumnInsc)
                         {
 
                             db.Pago.Add(new Pago

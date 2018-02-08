@@ -1,8 +1,21 @@
 ﻿var Login = function () {
 
+    function Block(option) {
+        if (option) {
+            $.blockUI({
+                message: $('#Load'),
+                css: { backgroundColor: '#48525e', color: '#fff', border: 'none' }
+            });
+        }
+        else {
+            $.unblockUI({ onUnblock: function () { } });
+        }
+    };
+
     localStorage.clear();
 
     function Validar() {
+        Block(true);
         var credenciales = {
             alumnoId: $('#username').val(),
             password: $('#password').val()
@@ -15,6 +28,7 @@
             data: JSON.stringify(credenciales),
             dataType: 'json',
             success: function (Resultado) {
+                Block(false);
                 Datos = Resultado;
                 if (Datos == null)
                     alertify.alert("Universidad YMCA", 'Favor de verificar las credenciales');
@@ -25,6 +39,7 @@
                 //alert('El sitio está en reparación , Por favor, vuelva despues de las 9 de la mañana.')
             },
             error: function (Resultado) {
+                Block(false);
                 alertify.alert("Universidad YMCA", 'Se presento un error en la validación de las credenciales');
             }
         });

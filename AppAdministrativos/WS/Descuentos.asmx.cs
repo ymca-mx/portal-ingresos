@@ -2186,6 +2186,7 @@ namespace AppAdministrativos.WS
             return BLLPagoPortal.GenerarRecargo(int.Parse(PagoId), FechaD, 100000);
         }
         [WebMethod]
-        public bool GenerarSemestre(int AlumnoId, int OfertaEducativaId, int MesFinal, int MesInicial, int UsuarioId, string Inscripcion, string Colegiatura) => BLL.BLLPagoPortal.GenerarSemestre(AlumnoId, OfertaEducativaId, MesFinal, MesInicial, UsuarioId, decimal.Parse(Inscripcion), decimal.Parse(Colegiatura));
+        public bool GenerarSemestre(int AlumnoId, int OfertaEducativaId, int AnioInicial, int MesInicial, int AnioFinal, int MesFinal, int UsuarioId, string Inscripcion, string Colegiatura)
+            => BLL.BLLPagoPortal.GenerarSemestre(AlumnoId, OfertaEducativaId, AnioInicial, MesInicial, AnioFinal, MesFinal, UsuarioId, decimal.Parse(Inscripcion), decimal.Parse(Colegiatura));
     }
 }

@@ -1,200 +1,207 @@
-﻿<div class="container" id="divContenido">
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="col-md-12">
+                    <div class="col-md-1">
+                        <img src="Imagenes/UYMCA-100px.png" width="70" />
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="caption title">Generar Referencias Semestrales</h4>
+                    </div>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light">
-                <div class="portlet-title">
+            <div class="portlet-body">
+                <div class="row form-group" id="divBuscar">
+                    <div class="table">
+                        <div class="col-md-8">
+                            <label class="control-label">Clave del Alumno</label>
+                            <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                            <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
+                        </div>
+                        <div class="col-md-4">
+                            <label>¿Necesitas Ayuda?</label>
+                            <a target="_blank" href="Documentos/Manuales/Manual Generacion Semestres.pdf" class="btn btn-danger">Descargar Manual</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <hr />
+                        <span style="font-weight:bold">Nombre:</span>
+                        <b><label class="control-label black" style="font-weight:bold; font-size:14px" id="lblNombre"></label></b>
+                    </div>
                     <div class="col-md-12">
-                        <div class="col-md-1">
-                            <img src="Imagenes/UYMCA-100px.png" width="70" />
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label ">Oferta Educativa:</label>
+                                <select class="form-control select2-arrow" id="slcOfertaEducativa"></select>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h4 class="caption title">Generar Referencias Semestrales</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <label class="control-label ">Selecciona el año y mes inicial:</label>
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label class="control-label">Año Inicial</label>
+                                <select class="form-control font-md col-md-8" id="slcAnioInicial"></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class="control-label">Mes inicial:</label>
+                                <select class="form-control font-md col-md-8" id="sclMesinicial">
+                                    <option value="-1">--Seleccionar--</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class="control-label">Año Final</label>
+                                <select class="form-control font-md col-md-8" id="slcAnioFinal" disabled></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class="control-label">Mes Final:</label>
+                                <select class="form-control font-md col-md-8" id="sclMesFinal" disabled>
+                                    <option value="-1">--Seleccionar--</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
                         </div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">&nbsp;</label>
+                            <a class="btn bg-blue form-control col-md-8" id="ModalMontos">
+                                Guardar
+                                <span class="glyphicon glyphicon-floppy-save"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
                     </div>
                 </div>
 
-                <div class="portlet-body">
-                    <div class="row form-group" id="divBuscar">
-                        <div class="table">
-                            <div class="col-md-8">
-                                <label class="control-label">Clave del Alumno</label>
-                                <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered1 dataTables" id="tblReferencias">
+                            <thead>
+                                <tr>
+                                    <th class="Titulo-Tabla">
+                                        Concepto
+                                    </th>
+                                    <th class="Titulo-Tabla">
+                                        Referencia
+                                    </th>
+                                    <th class="Titulo-Tabla">
+                                        Monto
+                                    </th>
+                                    <th class="Titulo-Tabla">Saldo por pagar</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <p style="font-size:12px">
+                            Para un mayor detalle de tus pagos, consulta tu estado de cuenta.
+                        </p>
+                    </div>
+                    <div class="col-md-7  form-body">
+                        <div class="col-md-10" style="border-width: 1px; border-style: dashed; border-color: black;">
+                            <div class="col-md-12">
+                                <label class="control-label bold" style="font-size: 10px">Banco Scotiabank</label>
                             </div>
-                            <div class="col-md-4">
-                                <label>¿Neceistas Ayuda?</label>
-                                <a target="_blank" href="Documentos/Manuales/Manual Generacion Semestres.pdf" class="btn btn-danger">Descargar Manual</a>
+                            <div class="col-md-12">
+                                <label class="control-label" style="font-size: 10px">No. de Cuenta: 00105771894</label>
                             </div>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <hr />
-                            <span style="font-weight:bold">Nombre:</span>
-                            <b><label class="control-label black" style="font-weight:bold; font-size:14px" id="lblNombre"></label></b>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="control-label ">Oferta Educativa:</label>
-                                    <select class="form-control select2-arrow" id="slcOfertaEducativa"></select>
-                                </div>
+                            <div class="col-md-12">
+                                <label class="control-label" style="font-size: 10px">Nombre del Cliente: Universidad YMCA A.C.</label>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <hr />
-                            <label class="control-label ">Selecciona el mes inicial:</label>
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label class="control-label">Mes inicial:</label>
-                                    <select class="form-control font-md col-md-6" id="sclMesinicial">
-                                        <option value="-1">--Seleccionar--</option>
-                                        <option value="1">Enero</option>
-                                        <option value="2">Febrero</option>
-                                        <option value="3">Marzo</option>
-                                        <option value="4">Abril</option>
-                                        <option value="5">Mayo</option>
-                                        <option value="6">Junio</option>
-                                        <option value="7">Julio</option>
-                                        <option value="8">Agosto</option>
-                                        <option value="9">Septiembre</option>
-                                        <option value="10">Octubre</option>
-                                        <option value="11">Noviembre</option>
-                                        <option value="12">Diciembre</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label class="control-label">Mes Final:</label>
-                                    <select class="form-control font-md col-md-6" id="sclMesFinal" disabled>
-                                        <option value="-1">--Seleccionar--</option>
-                                        <option value="1">Enero</option>
-                                        <option value="2">Febrero</option>
-                                        <option value="3">Marzo</option>
-                                        <option value="4">Abril</option>
-                                        <option value="5">Mayo</option>
-                                        <option value="6">Junio</option>
-                                        <option value="7">Julio</option>
-                                        <option value="8">Agosto</option>
-                                        <option value="9">Septiembre</option>
-                                        <option value="10">Octubre</option>
-                                        <option value="11">Noviembre</option>
-                                        <option value="12">Diciembre</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label class="control-label">&nbsp;</label>
-                                    <a class="btn bg-blue form-control col-md-8" id="ModalMontos">
-                                        Guardar
-                                        <span class="glyphicon glyphicon-floppy-save"></span>
-                                    </a>
-                                </div>
+                            <div class="col-md-12">
+                                <label class="control-label" style="font-size: 10px">Moneda: MXN</label>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <hr />
                         </div>
                     </div>
+                    <div class="col-md-12 form-body">
+                        <br />
+                        <p>
+                            <strong>Puntos muy importantes que debes recordar y tomar en cuenta:	 </strong>
+                        </p>
+                        <strong>• Nuevas referencias bancarias de pago.</strong><p>Todas tus referencias de pago son nuevas, esto es, ya no uses las referencias de pago que se venían manejando, por favor toma las que dice este portal.													</p>
+                        <strong>• Paga la cantidad exacta.</strong><p>La cantidad exacta de tu inscripción y colegiaturas estará publicada en el portal, las becas se estarán reflejando en tiempo y forma a partir de la segunda colegiatura.													</p>
+                        <strong>• Pagos anticipados se pagan al 100%.</strong><p>La inscripción y la primera colegiatura siempre se pagan al 100%.													</p>
+                        <strong>• Beca.</strong><p>De acuerdo al reglamento debes mantener tu promedio mínimo de 8.5, no haber reprobado ninguna materia y tampoco haber dado de baja ninguna materia, si sigues manteniendo tu buen promedio, las cuotas de pago de la segunda colegiatura en adelante se actualizarán y se harán los ajustes de tu beca.													</p>
+                        <strong>• Presenta esta hoja en el banco.</strong><p>Para garantizar tu correcto estado de cuenta y no tengas contratiempos con tus tramites,  Imprime esta pantalla de pagos y preséntala al cajero de scotiabank.													</p>
+                        <strong>• Conserva tu comprobante de pago. </strong>
+                        <p>Para cualquier aclaración ante la Universidad YMCA, debes presentar el comprobante de pago que te entrega el banco.													</p>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table class="table table-hover table-bordered1 dataTables" id="tblReferencias">
-                                <thead>
-                                    <tr>
-                                        <th class="Titulo-Tabla">
-                                            Concepto
-                                        </th>
-                                        <th class="Titulo-Tabla">
-                                            Referencia
-                                        </th>
-                                        <th class="Titulo-Tabla">
-                                            Monto
-                                        </th>
-                                        <th class="Titulo-Tabla">Saldo por pagar</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="col-md-12">
-                            <p style="font-size:12px">
-                                Para un mayor detalle de tus pagos, consulta tu estado de cuenta.
-                            </p>
-                        </div>
-                        <div class="col-md-7  form-body">
-                            <div class="col-md-10" style="border-width: 1px; border-style: dashed; border-color: black;">
-                                <div class="col-md-12">
-                                    <label class="control-label bold" style="font-size: 10px">Banco Scotiabank</label>
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="control-label" style="font-size: 10px">No. de Cuenta: 00105771894</label>
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="control-label" style="font-size: 10px">Nombre del Cliente: Universidad YMCA A.C.</label>
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="control-label" style="font-size: 10px">Moneda: MXN</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-body">
-                            <br />
-                            <p>
-                                <strong>Puntos muy importantes que debes recordar y tomar en cuenta:	 </strong>
-                            </p>
-                            <strong>• Nuevas referencias bancarias de pago.</strong><p>Todas tus referencias de pago son nuevas, esto es, ya no uses las referencias de pago que se venían manejando, por favor toma las que dice este portal.													</p>
-                            <strong>• Paga la cantidad exacta.</strong><p>La cantidad exacta de tu inscripción y colegiaturas estará publicada en el portal, las becas se estarán reflejando en tiempo y forma a partir de la segunda colegiatura.													</p>
-                            <strong>• Pagos anticipados se pagan al 100%.</strong><p>La inscripción y la primera colegiatura siempre se pagan al 100%.													</p>
-                            <strong>• Beca.</strong><p>De acuerdo al reglamento debes mantener tu promedio mínimo de 8.5, no haber reprobado ninguna materia y tampoco haber dado de baja ninguna materia, si sigues manteniendo tu buen promedio, las cuotas de pago de la segunda colegiatura en adelante se actualizarán y se harán los ajustes de tu beca.													</p>
-                            <strong>• Presenta esta hoja en el banco.</strong><p>Para garantizar tu correcto estado de cuenta y no tengas contratiempos con tus tramites,  Imprime esta pantalla de pagos y preséntala al cajero de scotiabank.													</p>
-                            <strong>• Conserva tu comprobante de pago. </strong>
-                            <p>Para cualquier aclaración ante la Universidad YMCA, debes presentar el comprobante de pago que te entrega el banco.													</p>
-
-                        </div>
                     </div>
                 </div>
-                <div class="modal fade" tabindex="-1" data-backdrop="static" id="Montos" data-keyboard="false" style="width: 650px !important;">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <form id="frmCuota"  method="post" action="javascript:;">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Montos Colegiatura & Inscripción</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="form-group col-md-12">
-                                                <label class="control-label">Monto Inscripción</label>
-                                                <input type="number" class="form-control" id="txtMontoInscripcion" min="0" max="99999" title="Este campo no puede ir vacio" required />
-                                            </div>
+            </div>
+            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Montos" data-keyboard="false" style="width: 650px !important;">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <form id="frmCuota" method="post" action="javascript:;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Montos Colegiatura & Inscripción</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label">Monto Inscripción</label>
+                                            <input type="number" class="form-control" id="txtMontoInscripcion" min="0" max="99999" title="Este campo no puede ir vacio" required />
                                         </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group col-md-12">
-                                                <label class="control-label">Monto Colegiatura</label>
-                                                <input type="number" class="form-control" id="txtMontoColegiatura" min="0" max="99999" title="Este campo no puede ir vacio"/>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label">Monto Colegiatura</label>
+                                            <input type="number" class="form-control" id="txtMontoColegiatura" min="0" max="99999" title="Este campo no puede ir vacio" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" id="btnGuardar">Generar Cuotas</button>
-                                </div>
-                            </form>
-                        </div>                        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="btnGuardar">Generar Cuotas</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                    <div class="modal-dialog modal-sm" style="height: 90px;">
-                        <!--<div class="modal-content" style="width:auto">-->
-                        <div class="form-group">
-                            <h3 id="hCarga">Cargando</h3>
+            </div>
+            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+                <div class="modal-dialog modal-sm" style="height: 90px;">
+                    <!--<div class="modal-content" style="width:auto">-->
+                    <div class="form-group">
+                        <h3 id="hCarga">Cargando</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="bar" style="width:auto" id="divBar">
+                            <p id="txtBar"></p>
                         </div>
-                        <div class="form-group">
-                            <div class="bar" style="width:auto" id="divBar">
-                                <p id="txtBar"></p>
-                            </div>
-                            <!--</div>-->
-                        </div>
+                        <!--</div>-->
                     </div>
                 </div>
             </div>

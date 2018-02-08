@@ -2,9 +2,22 @@
     var tblReferencias;
     var Alumnoid = 0;
     var GenerarSemestrales = {
-        Funciones: {
+        Funciones: {            
             Combo2: function (Mes) {
-                $('#sclMesFinal').val(Mes);
+                $('#sclMesFinal').val(Mes);                
+            },
+            CalculaAnioFinal: function (Mes) {
+                $('#slcAnioFinal').empty();
+                var AnioActual = $('#slcAnioInicial').val();
+                AnioActual = parseInt(AnioActual);
+                var AnioSig = Mes == -1 ? AnioActual :
+                    (Mes >= 8 ? AnioActual + 1 : AnioActual);
+
+                var option = $(document.createElement('option'));
+                option.text(AnioSig);
+                option.val(AnioSig);
+
+                $('#slcAnioFinal').append(option);
             },
             BuscarAlumno: function (idAlumno) {
                 $('#sclMesinicial').val('-1');
@@ -111,9 +124,45 @@
                         }                        
                     }
                 });
+            },
+            CargarAnios: function () {
+                var Fecha = new Date();
+
+                Fecha.getFullYear();
+
+                var Anios = [
+                    { Id: Fecha.getFullYear() - 1, Text: Fecha.getFullYear() - 1 },
+                    { Id: Fecha.getFullYear(), Text: Fecha.getFullYear() }
+                ];
+
+                $(Anios).each(function () {
+                    var option = $(document.createElement('option'));
+                    option.text(this.Id);
+                    option.val(this.Text);
+                    $("#slcAnioInicial").append(option);
+                });
+                $("#slcAnioInicial").change();
+
             }
         },
         Eventos: {
+            init: function () {
+                $('#btnBuscar').on('click', this.btnBuscarClick);
+
+                $('#txtClave').on('keydown', this.txtClavekeydown);
+
+                $('#sclMesinicial').on('change', this.sclMesinicialchange);
+
+                $("#slcOfertaEducativa").on('change', this.slcOfertaEducativachange);
+
+                $('#ModalMontos').on('click', this.ModalMontosclick);
+
+                $('#btnGuardar').on('click', this.btnGuardarclick);
+
+                $('#slcAnioInicial').on('change', this.slcAnioInicialChange);
+
+                GenerarSemestrales.Funciones.CargarAnios();
+            },
             btnBuscarClick: function () {
                 $('#txtMontoInscripcion').val("");
                 $('#txtMontoColegiatura').val("");
@@ -133,6 +182,7 @@
             sclMesinicialchange: function () {
                 var mes = $(this).val();
                 GenerarSemestrales.Funciones.Combo2(mes === '-1' ? GenerarSemestrales.Funciones.Combo2(mes) : mes < 8 ? (parseInt(mes) + 5) : (parseInt(mes) - 7));
+                GenerarSemestrales.Funciones.CalculaAnioFinal(parseInt(mes));
             },
             slcOfertaEducativachange: function () {
                 if ($(this).val() !== "-1") {
@@ -152,21 +202,17 @@
                 var $frm = $('#frmCuota');
                 if ($frm[0].checkValidity()) {
                     
-                    var OFerta = $("#slcOfertaEducativa").val();
-                    var MesIni = $('#sclMesinicial').val();
-                    var MesFin = $('#sclMesFinal').val();
-                    var Usuario = $.cookie('userAdmin');
-                    var MInscripcion = $('#txtMontoInscripcion').val();
-                    var MColegiatura = $('#txtMontoColegiatura').val();
 
                     var json = JSON.stringify({
                         AlumnoId: Alumnoid,
-                        OfertaEducativaId: OFerta,
-                        MesFinal: MesFin,
-                        MesInicial: MesIni,
-                        UsuarioId: Usuario,
-                        Inscripcion: MInscripcion,
-                        Colegiatura: MColegiatura
+                        OfertaEducativaId: $("#slcOfertaEducativa").val(),
+                        AnioInicial: $("#slcAnioInicial").val(),
+                        MesFinal: $('#sclMesFinal').val(),
+                        MesInicial: $('#sclMesinicial').val(),
+                        AnioFinal: $("#slcAnioFinal").val(),
+                        UsuarioId: $.cookie('userAdmin'),
+                        Inscripcion: $('#txtMontoInscripcion').val(),
+                        Colegiatura: $('#txtMontoColegiatura').val()
                     });                    
 
                     $('#Load').modal('show');
@@ -181,7 +227,7 @@
                             if (data.d) {
                                 $('#Montos').modal('hide');
                                 alertify.alert("Se generaron las referencias", function () {                                    
-                                    GenerarSemestrales.Funciones.TraerReferencias(OFerta)
+                                    GenerarSemestrales.Funciones.TraerReferencias($("#slcOfertaEducativa").val())
                                 });
                             } else {
                                 $('#Load').modal('hide');
@@ -198,19 +244,12 @@
                     $('#Montos').modal('hide');
                     alertify.alert('Datos invalidos, favor de verificar.', function () { $('#Montos').modal('show'); });
                 }
-            }
+            },
+            slcAnioInicialChange: function () {
+                $('#sclMesinicial').change();
+            },
         }
     };
-    $('#btnBuscar').on('click', GenerarSemestrales.Eventos.btnBuscarClick);
 
-    $('#txtClave').on('keydown', GenerarSemestrales.Eventos.txtClavekeydown);
-
-    $('#sclMesinicial').on('change', GenerarSemestrales.Eventos.sclMesinicialchange);    
-
-    $("#slcOfertaEducativa").on('change', GenerarSemestrales.Eventos.slcOfertaEducativachange);
-
-    $('#ModalMontos').on('click', GenerarSemestrales.Eventos.ModalMontosclick);
-
-    $('#btnGuardar').on('click', GenerarSemestrales.Eventos.btnGuardarclick);
-
+    GenerarSemestrales.Eventos.init();
 });

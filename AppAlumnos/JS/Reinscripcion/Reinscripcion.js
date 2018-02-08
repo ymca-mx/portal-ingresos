@@ -9,7 +9,7 @@
     $('#btnGenerar').prop("disabled", true);
     DatosAlumno();
     function DatosAlumno() {
-        $('#PopLoad').modal('show');
+        IndexFn.Block(true);
         AlumnoId = localStorage.getItem("user");
         $.ajax({
             url: 'Api/Alumno/ConsultarAlumnoReinscripcion/' + AlumnoId,
@@ -18,7 +18,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data == null) {
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                     return null;
                 }
                 $('#lblAlumno').text(data.Nombre + " " + data.Paterno + " " + data.Materno);
@@ -35,7 +35,7 @@
                     $('#slcOfertaEducativa').change();
                     $('#slcOfertaEducativa').prop("disabled", true);
                 } else {
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         });
@@ -43,7 +43,7 @@
     $('#slcOfertaEducativa').change(function () {
         if ($('#slcOfertaEducativa').val() == -1) { return false; } else {
             $('#divpul').hide();
-            $('#PopLoad').modal('show');
+            IndexFn.Block(true);
             Adeudos();
         }
     });
@@ -64,12 +64,12 @@
                      $('#btnGenerar').prop("disabled", false);;
                      console.log(data);
                  }
-                 $('#PopLoad').modal('hide');
+                 IndexFn.Block(false);
              }
          });
     }
     $('#btnGenerar').on('click', function () {
-        $('#PopLoad').modal('show');
+        IndexFn.Block(true);
         $('#btnGenerar').prop("disabled", true);
         OfertaEducativa = $('#slcOfertaEducativa').val();
         var TipoOferta = $(Tipo).data("tipo");
@@ -81,7 +81,7 @@
                 success: function (data) {
                     if (data == null) {
                         $('#btnGenerar').prop("disabled", false);
-                        $('#PopLoad').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
                     if (data.length > 1) {
@@ -105,12 +105,12 @@
                 url: "Api/Reinscripcion/ConsultarPagosPeriodo/" + AlumnoId + "/"+OfertaEducativa,
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                     if (data[0] == "Generar") {
                         var Descripcion = data[1];
                         alertify.confirm("<p>¿ Desea continuar generando las referencias de reinscripción para el periodo " + Descripcion + " ?<br><br><hr>", function (e) {
                             if (e) {
-                                $('#PopLoad').modal('show');
+                                IndexFn.Block(true);
                                 if (Bandera == 0) {
                                     Bandera = 1;
                                     Pagar(Descripcion);                                    
@@ -191,13 +191,13 @@
             url: "Api/Reinscripcion/Pendiente/" + AlumnoId + "/" + OfertaEducativa,
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $('#PopLoad').modal('hide');
+                IndexFn.Block(false);
                 //console.log(data);
                 if (data.length > 1) {
                     alertify.confirm("El alumno esta Inscrito pero no ha generado cargos" +
                         "¿Desea generar sus cargos del " + data[1] + "?", function (e) {
                             if (e) {
-                                $('#PopLoad').modal('show');
+                                IndexFn.Block(true);
                                 $.ajax({
                                     type: "POST",
                                     url: "Api/Reinscripcion/InscribirGenerar",
@@ -209,7 +209,7 @@
                                         } else {
                                             alertify.alert("Universidad YMCA", "Se a producido un error intente de nuevo mas tarde.");
                                         }
-                                        $('#PopLoad').modal('hide');
+                                        IndexFn.Block(false);
                                     }
                                 });
                             }
@@ -229,7 +229,7 @@
                     alertify.alert("Universidad YMCA",'Tiene adeudos, favor de pasar a La Corordinación Administrativa para resolver su situación financiera.');
                     $('#slcOfertaEducativa').val(-1);
                     $('#btnGenerar').prop("disabled", true);
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                 } else {
                     $('#btnGenerar').prop("disabled", false);
                     Tipo = $('#slcOfertaEducativa').find('option:selected');
@@ -240,7 +240,7 @@
                         $('#divpul').show();
                         
                     }
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         });

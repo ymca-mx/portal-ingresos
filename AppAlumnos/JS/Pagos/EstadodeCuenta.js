@@ -85,7 +85,7 @@
             if (tblEstadoDeCuenta != undefined) {
                 $('#tblEstado').empty();
             }
-            $('#PopLoad').modal('show');
+            IndexFn.Block(true);
             EdoCuenta.BuscarAlumno(AlumnoId);
         },
         BuscarAlumno: function (idAlumno) {
@@ -122,12 +122,12 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data === null) {
-                        $('#PopLoad').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Error");
                         return false;
                     }
                     EdoCuenta.CrearLista(data);
-                    $('#PopLoad').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },
