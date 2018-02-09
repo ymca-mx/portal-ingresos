@@ -259,7 +259,7 @@ $(function () {
 
         app_router = new AppRouter;
         Backbone.history.start();
-        IndexFn.LifeSesion();
+        IndexFn.SetTime();
         $(".contenido").click(IndexFn.contenidoClick);
 
         IndexFn.VerificarDatos();
