@@ -15,7 +15,7 @@ namespace AppAlumnos.Controllers
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
 
-        [Route("Api/Reinscripcion/GenerarInscrCole/{AlumnoId:int}/{OfertaEducativaId:int}/{PeriodoD}")]
+        [Route("Api/Reinscripcion/GenerarInscrCole")]
         [HttpPost]
         public IHttpActionResult GenerarInscrCole([FromBody] JObject jObjectAlumno)
         {
