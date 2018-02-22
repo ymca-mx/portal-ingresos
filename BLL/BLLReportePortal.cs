@@ -951,7 +951,7 @@ namespace BLL
                         esEscolares = true;
                     }
 
-                    return (new DTOVoBo { AlumnoVoBo = alumnoVoBo, EsEscolares = esEscolares });
+                    return (new DTOVoBo { AlumnoVoBo = alumnoVoBo.Where(q=> q.OfertaEducativaid != 44 ).ToList(), EsEscolares = esEscolares });
                 }
                 catch (Exception)
                 {
