@@ -538,7 +538,7 @@ namespace BLL
                     }
                     else
                     {
-                        if (alumno.UsuarioId != 6070)
+                        if (alumno.Usuario.UsuarioTipoId != 12)
                         {
                                 db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
                                 {

@@ -5344,7 +5344,6 @@
   <ItemGroup>
     <Content Include="Views\Pago\ActualPagos.html" />
     <Content Include="Views\Pago\ActualPagosBuscar.html" />
-    <Content Include="Views\Alumno\AlumnoDescuento.html" />
     <Content Include="Views\Alumno\Alumnos.html" />
     <Content Include="Views\Alumno\AlumnoDatos.html" />
     <Content Include="Views\Alumno\AlumnoDatosConsulta.html" />
@@ -5374,7 +5373,6 @@
     <Content Include="Imagenes\Solicitud1.png" />
     <Content Include="Imagenes\UYMCA-100px.png" />
     <Content Include="Imagenes\UYMCA-500px.png" />
-    <Content Include="JS\AlumnoDescuento.js" />
     <Content Include="JS\Alumnos\AlumnoDatos.js" />
     <Content Include="JS\Alumnos\AlumnoDatosConsulta.js" />
     <Content Include="JS\Alumnos\AlumnoMail.js" />
