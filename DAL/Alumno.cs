@@ -32,6 +32,7 @@ namespace DAL
             this.BecaDeportiva = new HashSet<BecaDeportiva>();
             this.AlumnoAccesoBitacora = new HashSet<AlumnoAccesoBitacora>();
             this.BitacoraReinscripcionAdeudo = new HashSet<BitacoraReinscripcionAdeudo>();
+            this.ComunicadoUsuario = new HashSet<ComunicadoUsuario>();
             this.Financiamiento = new HashSet<Financiamiento>();
             this.GrupoAlumnoConfiguracion = new HashSet<GrupoAlumnoConfiguracion>();
             this.IdiomaGrupoAlumno = new HashSet<IdiomaGrupoAlumno>();
@@ -99,6 +100,8 @@ namespace DAL
         public virtual ICollection<AlumnoAccesoBitacora> AlumnoAccesoBitacora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BitacoraReinscripcionAdeudo> BitacoraReinscripcionAdeudo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComunicadoUsuario> ComunicadoUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Financiamiento> Financiamiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

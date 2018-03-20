@@ -5,20 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UniversidadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.AdelantoLic_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="AdelantoLic_20162">
-          <Property Name="ALUMNOID" Type="float" />
-          <Property Name="OFERTAEDUCATIVAID" Type="float" />
-          <Property Name="INSCRITAS" Type="float" />
-        </EntityType>-->
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.AdelantoPos_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="AdelantoPos_20162">
-          <Property Name="ALUMNOID" Type="float" />
-          <Property Name="OFERTAEDUCATIVAID" Type="float" />
-          <Property Name="INSCRITAS" Type="float" />
-        </EntityType>-->
         <EntityType Name="Adeudo">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -31,17 +17,6 @@ advertencia 6013: La tabla o vista 'Universidad.dbo.AdelantoPos_20162' no tiene 
           <Property Name="Pagare" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="OfertaEducativaId" Type="int" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.Adeudo29ABR2016' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Adeudo29ABR2016">
-          <Property Name="AlumnoId" Type="int" />
-          <Property Name="OfertaEducativaId" Type="int" />
-          <Property Name="ColegiaturaIdiomas" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Colegiatura" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Inscripcion" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Financiamiento" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Pagare" Type="decimal" Precision="18" Scale="2" />
-        </EntityType>-->
         <EntityType Name="AdeudoBiblioteca">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -773,19 +748,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tie
           <Property Name="AdelantoMateria" Type="int" Nullable="false" />
           <Property Name="Observaciones" Type="varchar" MaxLength="300" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.Alumnos2016_2_sueltas' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Alumnos2016_2_sueltas">
-          <Property Name="AlumnoId" Type="int" />
-          <Property Name="OfertaEducativaId" Type="int" />
-        </EntityType>-->
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.Alumnos2016-2' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Alumnos2016-2">
-          <Property Name="AlumnoId" Type="int" />
-          <Property Name="Inscritas" Type="int" />
-          <Property Name="OfertaEducativaId" Type="int" />
-        </EntityType>-->
         <EntityType Name="AlumnoSaldo">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -831,23 +793,6 @@ advertencia 6013: La tabla o vista 'Universidad.dbo.Alumnos2016-2' no tiene defi
           <Property Name="Inscripcion" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Colegiatura" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.AlumnosLE20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="AlumnosLE20162">
-          <Property Name="PagoId" Type="int" />
-          <Property Name="AlumnoId" Type="int" />
-          <Property Name="CuotaId" Type="int" />
-          <Property Name="Promesa" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Estatus" Type="int" />
-        </EntityType>-->
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.AlumnosLEAgregar20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="AlumnosLEAgregar20162">
-          <Property Name="AlumnoId" Type="int" />
-          <Property Name="CuotaId" Type="int" />
-          <Property Name="Promesa" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Estatus" Type="int" />
-        </EntityType>-->
         <EntityType Name="AntecedenteTipo">
           <Key>
             <PropertyRef Name="AntecedenteTipoId" />
@@ -1046,6 +991,32 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.COLEGIATURA' no tiene defini
           <Property Name="InscripcionDeuda" Type="numeric" Precision="12" Scale="2" />
           <Property Name="Inscrito" Type="int" />
           <Property Name="EsEmpresa" Type="int" />
+        </EntityType>
+        <EntityType Name="Comunicado">
+          <Key>
+            <PropertyRef Name="ComunicadoId" />
+          </Key>
+          <Property Name="ComunicadoId" Type="int" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="PeriodoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Asunto" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Documento" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Universidad.dbo.ComunicadoUsuario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ComunicadoUsuario">
+          <Key>
+            <PropertyRef Name="ComunicadoId" />
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="UsuarioTipoId" />
+            <PropertyRef Name="Fallido" />
+          </Key>
+          <Property Name="ComunicadoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="UsuarioTipoId" Type="int" Nullable="false" />
+          <Property Name="Fallido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CuentaMail">
           <Key>
@@ -2020,14 +1991,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="PolizaTipoId" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.Posgrado_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Posgrado_20162">
-          <Property Name="FiClave" Type="float" />
-          <Property Name="Inscritas" Type="float" />
-          <Property Name="FiCarrera" Type="float" />
-          <Property Name="Cuatrimestre" Type="float" />
-        </EntityType>-->
         <EntityType Name="Pregunta">
           <Key>
             <PropertyRef Name="PreguntaId" />
@@ -2688,12 +2651,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="AlumnoID" Type="int" Nullable="false" />
           <Property Name="UniversidadAdeudo" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Universidad.dbo.UniversidadAdeudo29ABR2016' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="UniversidadAdeudo29ABR2016">
-          <Property Name="AlumnoID" Type="int" />
-          <Property Name="UniversidadAdeudo29ABR2016" Type="decimal" Precision="20" Scale="2" />
-        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="UniversidadNewAdeudo">
@@ -4443,6 +4400,80 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="CancelacionDocenteEstudio">
               <PropertyRef Name="DocenteEstudioPeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comunicado_Periodo">
+          <End Role="Periodo" Type="Self.Periodo" Multiplicity="1" />
+          <End Role="Comunicado" Type="Self.Comunicado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodo">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Principal>
+            <Dependent Role="Comunicado">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comunicado_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Comunicado" Type="Self.Comunicado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comunicado">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_Alumno">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="ComunicadoUsuario" Type="Self.ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="ComunicadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_Comunicado">
+          <End Role="Comunicado" Type="Self.Comunicado" Multiplicity="1" />
+          <End Role="ComunicadoUsuario" Type="Self.ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comunicado">
+              <PropertyRef Name="ComunicadoId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="ComunicadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_Docente">
+          <End Role="Docente" Type="Self.Docente" Multiplicity="1" />
+          <End Role="ComunicadoUsuario" Type="Self.ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Docente">
+              <PropertyRef Name="DocenteId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_UsuarioTipo">
+          <End Role="UsuarioTipo" Type="Self.UsuarioTipo" Multiplicity="1" />
+          <End Role="ComunicadoUsuario" Type="Self.ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioTipo">
+              <PropertyRef Name="UsuarioTipoId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="UsuarioTipoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7416,6 +7447,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="CajaConfiguracion" EntityType="Self.CajaConfiguracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CalendarioEscolar" EntityType="Self.CalendarioEscolar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CalificacionesAntecedente" EntityType="Self.CalificacionesAntecedente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comunicado" EntityType="Self.Comunicado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CuentaMail" EntityType="Self.CuentaMail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cuota" EntityType="Self.Cuota" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CuotaIncremento" EntityType="Self.CuotaIncremento" Schema="dbo" store:Type="Tables" />
@@ -7647,6 +7679,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
     [COLEGIATURA].[Inscrito] AS [Inscrito], 
     [COLEGIATURA].[EsEmpresa] AS [EsEmpresa]
     FROM [dbo].[COLEGIATURA] AS [COLEGIATURA]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ComunicadoUsuario" EntityType="Self.ComunicadoUsuario" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ComunicadoUsuario].[ComunicadoId] AS [ComunicadoId], 
+    [ComunicadoUsuario].[UsuarioId] AS [UsuarioId], 
+    [ComunicadoUsuario].[UsuarioTipoId] AS [UsuarioTipoId], 
+    [ComunicadoUsuario].[Fallido] AS [Fallido]
+    FROM [dbo].[ComunicadoUsuario] AS [ComunicadoUsuario]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="IdiomasInscrito" EntityType="Self.IdiomasInscrito" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -8158,6 +8198,30 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_CancelacionDocenteEstudio_DocenteEstudioPeriodo" Association="Self.FK_CancelacionDocenteEstudio_DocenteEstudioPeriodo">
             <End Role="DocenteEstudioPeriodo" EntitySet="DocenteEstudioPeriodo" />
             <End Role="CancelacionDocenteEstudio" EntitySet="CancelacionDocenteEstudio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunicado_Periodo" Association="Self.FK_Comunicado_Periodo">
+            <End Role="Periodo" EntitySet="Periodo" />
+            <End Role="Comunicado" EntitySet="Comunicado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunicado_Usuario" Association="Self.FK_Comunicado_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Comunicado" EntitySet="Comunicado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_Alumno" Association="Self.FK_ComunicadoUsuario_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_Comunicado" Association="Self.FK_ComunicadoUsuario_Comunicado">
+            <End Role="Comunicado" EntitySet="Comunicado" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_Docente" Association="Self.FK_ComunicadoUsuario_Docente">
+            <End Role="Docente" EntitySet="Docente" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_UsuarioTipo" Association="Self.FK_ComunicadoUsuario_UsuarioTipo">
+            <End Role="UsuarioTipo" EntitySet="UsuarioTipo" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_ConceptoPago_OfertaEducativa" Association="Self.FK_ConceptoPago_OfertaEducativa">
             <End Role="OfertaEducativa" EntitySet="OfertaEducativa" />
@@ -9207,6 +9271,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="CajaConfiguracion" EntityType="UniversidadModel.CajaConfiguracion" />
           <EntitySet Name="CalendarioEscolar" EntityType="UniversidadModel.CalendarioEscolar" />
           <EntitySet Name="CalificacionesAntecedente" EntityType="UniversidadModel.CalificacionesAntecedente" />
+          <EntitySet Name="Comunicado" EntityType="UniversidadModel.Comunicado" />
           <EntitySet Name="CuentaMail" EntityType="UniversidadModel.CuentaMail" />
           <EntitySet Name="Cuota" EntityType="UniversidadModel.Cuota" />
           <EntitySet Name="CuotaIncremento" EntityType="UniversidadModel.CuotaIncremento" />
@@ -9370,6 +9435,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="AlumnoMatricula" EntityType="UniversidadModel.AlumnoMatricula" />
           <EntitySet Name="BecaSEPBitacora" EntityType="UniversidadModel.BecaSEPBitacora" />
           <EntitySet Name="COLEGIATURA" EntityType="UniversidadModel.COLEGIATURA" />
+          <EntitySet Name="ComunicadoUsuario" EntityType="UniversidadModel.ComunicadoUsuario" />
           <EntitySet Name="IdiomasInscrito" EntityType="UniversidadModel.IdiomasInscrito" />
           <EntitySet Name="PagoDescuentoBitacora" EntityType="UniversidadModel.PagoDescuentoBitacora" />
           <EntitySet Name="ReporteEstadoCuentaDescuento" EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" />
@@ -9484,6 +9550,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_BitacoraReinscripcionAdeudo_Alumno" Association="UniversidadModel.FK_BitacoraReinscripcionAdeudo_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="BitacoraReinscripcionAdeudo" EntitySet="BitacoraReinscripcionAdeudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_Alumno" Association="UniversidadModel.FK_ComunicadoUsuario_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Financiamiento_Alumno" Association="UniversidadModel.FK_Financiamiento_Alumno">
             <End Role="Alumno" EntitySet="Alumno" />
@@ -9884,6 +9954,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_OfertaCalendario_CalendarioEscolar" Association="UniversidadModel.FK_OfertaCalendario_CalendarioEscolar">
             <End Role="CalendarioEscolar" EntitySet="CalendarioEscolar" />
             <End Role="OfertaCalendario" EntitySet="OfertaCalendario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunicado_Periodo" Association="UniversidadModel.FK_Comunicado_Periodo">
+            <End Role="Periodo" EntitySet="Periodo" />
+            <End Role="Comunicado" EntitySet="Comunicado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunicado_Usuario" Association="UniversidadModel.FK_Comunicado_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Comunicado" EntitySet="Comunicado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_Comunicado" Association="UniversidadModel.FK_ComunicadoUsuario_Comunicado">
+            <End Role="Comunicado" EntitySet="Comunicado" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Cuota_ConceptoPago" Association="UniversidadModel.FK_Cuota_ConceptoPago">
             <End Role="PagoConcepto" EntitySet="PagoConcepto" />
@@ -10677,6 +10759,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             <End Role="UsuarioImagen" EntitySet="UsuarioImagen" />
             <End Role="UsuarioImagenDetalle" EntitySet="UsuarioImagenDetalle" />
           </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_UsuarioTipo" Association="UniversidadModel.FK_ComunicadoUsuario_UsuarioTipo">
+            <End Role="UsuarioTipo" EntitySet="UsuarioTipo" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
+          </AssociationSet>
           <AssociationSet Name="FK_TipoUsuarioSubmenu_UsuarioTipo1" Association="UniversidadModel.FK_TipoUsuarioSubmenu_UsuarioTipo1">
             <End Role="UsuarioTipo" EntitySet="UsuarioTipo" />
             <End Role="TipoUsuarioSubmenu1" EntitySet="TipoUsuarioSubmenu1" />
@@ -10692,6 +10778,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <AssociationSet Name="FK_CancelacionDocenteEstudio_DocenteEstudioPeriodo" Association="UniversidadModel.FK_CancelacionDocenteEstudio_DocenteEstudioPeriodo">
             <End Role="DocenteEstudioPeriodo" EntitySet="DocenteEstudioPeriodo" />
             <End Role="CancelacionDocenteEstudio" EntitySet="CancelacionDocenteEstudio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComunicadoUsuario_Docente" Association="UniversidadModel.FK_ComunicadoUsuario_Docente">
+            <End Role="Docente" EntitySet="Docente" />
+            <End Role="ComunicadoUsuario" EntitySet="ComunicadoUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_DocenteCurso_Docente" Association="UniversidadModel.FK_DocenteCurso_Docente">
             <End Role="Docente" EntitySet="Docente" />
@@ -10916,6 +11006,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="BecaDeportiva" Relationship="UniversidadModel.FK_BecaDeportiva_Alumno" FromRole="Alumno" ToRole="BecaDeportiva" />
           <NavigationProperty Name="AlumnoAccesoBitacora" Relationship="UniversidadModel.FK_BitacoraAlumno_Alumno" FromRole="Alumno" ToRole="AlumnoAccesoBitacora" />
           <NavigationProperty Name="BitacoraReinscripcionAdeudo" Relationship="UniversidadModel.FK_BitacoraReinscripcionAdeudo_Alumno" FromRole="Alumno" ToRole="BitacoraReinscripcionAdeudo" />
+          <NavigationProperty Name="ComunicadoUsuario" Relationship="UniversidadModel.FK_ComunicadoUsuario_Alumno" FromRole="Alumno" ToRole="ComunicadoUsuario" />
           <NavigationProperty Name="Financiamiento" Relationship="UniversidadModel.FK_Financiamiento_Alumno" FromRole="Alumno" ToRole="Financiamiento" />
           <NavigationProperty Name="GrupoAlumnoConfiguracion" Relationship="UniversidadModel.FK_GrupoAlumnoCuota_Alumno" FromRole="Alumno" ToRole="GrupoAlumnoConfiguracion" />
           <NavigationProperty Name="IdiomaGrupoAlumno" Relationship="UniversidadModel.FK_GrupoIdiomaAlumno_Alumno" FromRole="Alumno" ToRole="IdiomaGrupoAlumno" />
@@ -11854,6 +11945,21 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="CalificacionMaterias" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="NoBajas" Type="Int32" />
           <Property Name="BajaMaterias" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Comunicado">
+          <Key>
+            <PropertyRef Name="ComunicadoId" />
+          </Key>
+          <Property Name="ComunicadoId" Type="Int32" Nullable="false" />
+          <Property Name="Anio" Type="Int32" Nullable="false" />
+          <Property Name="PeriodoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Asunto" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Documento" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Periodo" Relationship="UniversidadModel.FK_Comunicado_Periodo" FromRole="Comunicado" ToRole="Periodo" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_Comunicado_Usuario" FromRole="Comunicado" ToRole="Usuario" />
+          <NavigationProperty Name="ComunicadoUsuario" Relationship="UniversidadModel.FK_ComunicadoUsuario_Comunicado" FromRole="Comunicado" ToRole="ComunicadoUsuario" />
         </EntityType>
         <EntityType Name="CuentaMail">
           <Key>
@@ -12858,6 +12964,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="AlumnoInscrito" Relationship="UniversidadModel.FK_AlumnoInscrito_Periodo" FromRole="Periodo" ToRole="AlumnoInscrito" />
           <NavigationProperty Name="AlumnoInscritoBitacora" Relationship="UniversidadModel.FK_AlumnoInscritoBitacora_Periodo" FromRole="Periodo" ToRole="AlumnoInscritoBitacora" />
           <NavigationProperty Name="AlumnoRevision" Relationship="UniversidadModel.FK_AlumnoRevision_Periodo" FromRole="Periodo" ToRole="AlumnoRevision" />
+          <NavigationProperty Name="Comunicado" Relationship="UniversidadModel.FK_Comunicado_Periodo" FromRole="Periodo" ToRole="Comunicado" />
           <NavigationProperty Name="Cuota" Relationship="UniversidadModel.FK_Cuota_Periodo" FromRole="Periodo" ToRole="Cuota" />
           <NavigationProperty Name="CuotaIncremento" Relationship="UniversidadModel.FK_CuotaIncremento_Periodo" FromRole="Periodo" ToRole="CuotaIncremento" />
           <NavigationProperty Name="Matricula" Relationship="UniversidadModel.FK_AlumnoMatricula_Periodo" FromRole="Periodo" ToRole="Matricula" />
@@ -13805,6 +13912,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="AlumnoRevision" Relationship="UniversidadModel.FK_AlumnoRevision_Usuario" FromRole="Usuario" ToRole="AlumnoRevision" />
           <NavigationProperty Name="BecaDeportiva" Relationship="UniversidadModel.FK_BecaDeportiva_Usuario" FromRole="Usuario" ToRole="BecaDeportiva" />
           <NavigationProperty Name="CalendarioEscolar" Relationship="UniversidadModel.FK_CalendarioEscolar_Usuario" FromRole="Usuario" ToRole="CalendarioEscolar" />
+          <NavigationProperty Name="Comunicado" Relationship="UniversidadModel.FK_Comunicado_Usuario" FromRole="Usuario" ToRole="Comunicado" />
           <NavigationProperty Name="CuotaIncremento" Relationship="UniversidadModel.FK_CuotaIncremento_Usuario" FromRole="Usuario" ToRole="CuotaIncremento" />
           <NavigationProperty Name="Empresa" Relationship="UniversidadModel.FK_Empresa_Usuario" FromRole="Usuario" ToRole="Empresa" />
           <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_Usuario_Estatus" FromRole="Usuario" ToRole="Estatus" />
@@ -13943,6 +14051,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TipoUsuarioSubmenu" Relationship="UniversidadModel.FK_TipoUsuarioSubmenu_UsuarioTipo" FromRole="UsuarioTipo" ToRole="TipoUsuarioSubmenu" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_Usuario_UsuarioTipo" FromRole="UsuarioTipo" ToRole="Usuario" />
+          <NavigationProperty Name="ComunicadoUsuario" Relationship="UniversidadModel.FK_ComunicadoUsuario_UsuarioTipo" FromRole="UsuarioTipo" ToRole="ComunicadoUsuario" />
           <NavigationProperty Name="TipoUsuarioSubmenu1" Relationship="UniversidadModel.FK_TipoUsuarioSubmenu_UsuarioTipo1" FromRole="UsuarioTipo" ToRole="TipoUsuarioSubmenu1" />
           <NavigationProperty Name="UsuarioTipoPagoConcepto" Relationship="UniversidadModel.FK_UsuarioTipoPagoConcepto_UsuarioTipo" FromRole="UsuarioTipo" ToRole="UsuarioTipoPagoConcepto" />
         </EntityType>
@@ -13998,6 +14107,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="HoraAlta" Type="Time" Precision="0" />
           <Property Name="UsuarioId" Type="Int32" />
           <Property Name="EstatusId" Type="Int32" />
+          <NavigationProperty Name="ComunicadoUsuario" Relationship="UniversidadModel.FK_ComunicadoUsuario_Docente" FromRole="Docente" ToRole="ComunicadoUsuario" />
           <NavigationProperty Name="DocenteCurso" Relationship="UniversidadModel.FK_DocenteCurso_Docente" FromRole="Docente" ToRole="DocenteCurso" />
           <NavigationProperty Name="DocenteEstudio" Relationship="UniversidadModel.FK_DocenteEstudio_Docente" FromRole="Docente" ToRole="DocenteEstudio" />
           <NavigationProperty Name="DocenteEstudioPeriodo" Relationship="UniversidadModel.FK_DocenteEstudioPeriodo_Docente" FromRole="Docente" ToRole="DocenteEstudioPeriodo" />
@@ -14392,6 +14502,22 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="InscripcionDeuda" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="Inscrito" Type="Int32" />
           <Property Name="EsEmpresa" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ComunicadoUsuario">
+          <Key>
+            <PropertyRef Name="ComunicadoId" />
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="UsuarioTipoId" />
+            <PropertyRef Name="Fallido" />
+          </Key>
+          <Property Name="ComunicadoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioTipoId" Type="Int32" Nullable="false" />
+          <Property Name="Fallido" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_ComunicadoUsuario_Alumno" FromRole="ComunicadoUsuario" ToRole="Alumno" />
+          <NavigationProperty Name="Comunicado" Relationship="UniversidadModel.FK_ComunicadoUsuario_Comunicado" FromRole="ComunicadoUsuario" ToRole="Comunicado" />
+          <NavigationProperty Name="UsuarioTipo" Relationship="UniversidadModel.FK_ComunicadoUsuario_UsuarioTipo" FromRole="ComunicadoUsuario" ToRole="UsuarioTipo" />
+          <NavigationProperty Name="Docente" Relationship="UniversidadModel.FK_ComunicadoUsuario_Docente" FromRole="ComunicadoUsuario" ToRole="Docente" />
         </EntityType>
         <EntityType Name="IdiomasInscrito">
           <Key>
@@ -14855,6 +14981,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="BitacoraReinscripcionAdeudo">
               <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_Alumno">
+          <End Type="UniversidadModel.Alumno" Role="Alumno" Multiplicity="1" />
+          <End Type="UniversidadModel.ComunicadoUsuario" Role="ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="AlumnoId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="ComunicadoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16073,6 +16211,44 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="OfertaCalendario">
               <PropertyRef Name="CalendarioEscolarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comunicado_Periodo">
+          <End Type="UniversidadModel.Periodo" Role="Periodo" Multiplicity="1" />
+          <End Type="UniversidadModel.Comunicado" Role="Comunicado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodo">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Principal>
+            <Dependent Role="Comunicado">
+              <PropertyRef Name="Anio" />
+              <PropertyRef Name="PeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comunicado_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="UniversidadModel.Comunicado" Role="Comunicado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comunicado">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_Comunicado">
+          <End Type="UniversidadModel.Comunicado" Role="Comunicado" Multiplicity="1" />
+          <End Type="UniversidadModel.ComunicadoUsuario" Role="ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comunicado">
+              <PropertyRef Name="ComunicadoId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="ComunicadoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18494,6 +18670,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ComunicadoUsuario_UsuarioTipo">
+          <End Type="UniversidadModel.UsuarioTipo" Role="UsuarioTipo" Multiplicity="1" />
+          <End Type="UniversidadModel.ComunicadoUsuario" Role="ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioTipo">
+              <PropertyRef Name="UsuarioTipoId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="UsuarioTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TipoUsuarioSubmenu_UsuarioTipo1">
           <End Type="UniversidadModel.UsuarioTipo" Role="UsuarioTipo" Multiplicity="1" />
           <End Type="UniversidadModel.TipoUsuarioSubmenu1" Role="TipoUsuarioSubmenu1" Multiplicity="*" />
@@ -18539,6 +18727,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
             </Principal>
             <Dependent Role="CancelacionDocenteEstudio">
               <PropertyRef Name="DocenteEstudioPeriodoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComunicadoUsuario_Docente">
+          <End Type="UniversidadModel.Docente" Role="Docente" Multiplicity="1" />
+          <End Type="UniversidadModel.ComunicadoUsuario" Role="ComunicadoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Docente">
+              <PropertyRef Name="DocenteId" />
+            </Principal>
+            <Dependent Role="ComunicadoUsuario">
+              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19649,6 +19849,19 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comunicado">
+            <EntityTypeMapping TypeName="UniversidadModel.Comunicado">
+              <MappingFragment StoreEntitySet="Comunicado">
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="ComunicadoId" ColumnName="ComunicadoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -21721,6 +21934,16 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
                 <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComunicadoUsuario">
+            <EntityTypeMapping TypeName="UniversidadModel.ComunicadoUsuario">
+              <MappingFragment StoreEntitySet="ComunicadoUsuario">
+                <ScalarProperty Name="Fallido" ColumnName="Fallido" />
+                <ScalarProperty Name="UsuarioTipoId" ColumnName="UsuarioTipoId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="ComunicadoId" ColumnName="ComunicadoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

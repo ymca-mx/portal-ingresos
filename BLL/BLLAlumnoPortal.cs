@@ -248,6 +248,7 @@ namespace BLL
                         alumnoId = a.AlumnoId,
                         nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
                         curp = a.AlumnoDetalle.CURP == null ? "" : a.AlumnoDetalle.CURP.Trim(),
+                        invalido= a.AlumnoDetalle.CURP == null ? "" : a.AlumnoDetalle.CURP.Trim(),
                         ofertaEducativa = a.AlumnoInscrito
                                             .Where(k => k.OfertaEducativa.OfertaEducativaTipoId != 4)
                                             .OrderByDescending(k => k.FechaInscripcion)
@@ -260,8 +261,16 @@ namespace BLL
                     }).FirstOrDefault();
 
                 int num = 0;
-                return Alumnobd.ofertaEducativa == null ? null : Alumnobd.curp.Length>2?
-                     int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 2), out num) ? Alumnobd : null: Alumnobd;
+                return Alumnobd.ofertaEducativa == null ? null : (Alumnobd.curp.Length > 2 || Alumnobd.curp.Length==18) ?
+                     int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 2), out num) ? Alumnobd :
+                     (new
+                     {
+                         Alumnobd.alumnoId,
+                         Alumnobd.nombre,
+                         curp = "",
+                         Alumnobd.invalido,
+                         Alumnobd.ofertaEducativa,
+                     }) : Alumnobd;
             }
         }
 

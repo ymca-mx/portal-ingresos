@@ -33,6 +33,7 @@ namespace DAL
             this.AlumnoRevision = new HashSet<AlumnoRevision>();
             this.BecaDeportiva = new HashSet<BecaDeportiva>();
             this.CalendarioEscolar = new HashSet<CalendarioEscolar>();
+            this.Comunicado = new HashSet<Comunicado>();
             this.CuotaIncremento = new HashSet<CuotaIncremento>();
             this.Empresa = new HashSet<Empresa>();
             this.Grupo = new HashSet<Grupo>();
@@ -107,6 +108,8 @@ namespace DAL
         public virtual ICollection<BecaDeportiva> BecaDeportiva { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CalendarioEscolar> CalendarioEscolar { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comunicado> Comunicado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuotaIncremento> CuotaIncremento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

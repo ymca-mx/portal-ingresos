@@ -251,6 +251,12 @@
     <Compile Include="COLEGIATURA.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Comunicado.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComunicadoUsuario.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="CuentaMail.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
