@@ -625,7 +625,7 @@
             txtTelefonoCasa: {
                 digits: true,
                 //required: true,
-                maxlength: 10
+                maxlength: 12
             },
             txtCalle: {
                 //required: true,
@@ -691,12 +691,12 @@
             txtTelefonoPA: {
                 digits: true,
                 minlength: 8,
-                maxlength: 10
+                maxlength: 12
             },
             txtTelefonoPAT: {
                 digits: true,
                 minlength: 8,
-                maxlength: 10
+                maxlength: 12
             },
             //Autoriza 2
             txtPAutorizada2: {
@@ -721,12 +721,12 @@
             txtTelefonoPA2: {
                 digits: true,
                 minlength: 8,
-                maxlength: 10
+                maxlength: 12
             },
             txtTelefonoPAT2: {
                 digits: true,
                 minlength: 8,
-                maxlength: 10
+                maxlength: 12
             },
             //Oferta Educativa
             slcPlantel: {

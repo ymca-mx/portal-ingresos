@@ -14,14 +14,14 @@ namespace DAL
     
     public partial class ComunicadoUsuario
     {
+        public int ComunicadoUsuarioId { get; set; }
         public int ComunicadoId { get; set; }
         public int UsuarioId { get; set; }
         public int UsuarioTipoId { get; set; }
         public bool Fallido { get; set; }
+        public string Mensaje { get; set; }
     
-        public virtual Alumno Alumno { get; set; }
         public virtual Comunicado Comunicado { get; set; }
         public virtual UsuarioTipo UsuarioTipo { get; set; }
-        public virtual Docente Docente { get; set; }
     }
 }

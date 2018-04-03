@@ -17,9 +17,9 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UsuarioTipo()
         {
+            this.ComunicadoUsuario = new HashSet<ComunicadoUsuario>();
             this.TipoUsuarioSubmenu = new HashSet<TipoUsuarioSubmenu>();
             this.Usuario = new HashSet<Usuario>();
-            this.ComunicadoUsuario = new HashSet<ComunicadoUsuario>();
             this.TipoUsuarioSubmenu1 = new HashSet<TipoUsuarioSubmenu1>();
             this.UsuarioTipoPagoConcepto = new HashSet<UsuarioTipoPagoConcepto>();
         }
@@ -28,11 +28,11 @@ namespace DAL
         public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComunicadoUsuario> ComunicadoUsuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TipoUsuarioSubmenu> TipoUsuarioSubmenu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ComunicadoUsuario> ComunicadoUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

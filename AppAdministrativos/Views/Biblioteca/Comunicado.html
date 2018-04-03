@@ -1,0 +1,102 @@
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Comunicado de Biblioteca</h2>
+        </div>
+        <div class="panel-body">
+            <div class="portlet-title">
+                <div class="col-md-12">
+                    <div class="col-md-1">
+                        <img src="Imagenes/UYMCA-100px.png" width="70" />
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="caption title">Datos de comunicado</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-12"><hr /></div>
+            <form id="frmComunicado">
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <label class="control-label">Titulo del comunicado:</label>
+                        <input class="form-control" type="text" id="txtAsunto" required placeholder="Comunicado del Mes de Enero." />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <span class="btn btn-default btn-file"><span id="statusfile">Seleccionar Archivo</span><input type="file" accept="application/pdf" id="fileComunicado" required /></span>
+                            <span class="fileinput-filename"></span><span class="fileinput-new" id="nameFile">No hay archivo seleccionado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12 col-md-offset-10">
+                        <button class="btn btn-primary" type="button" id="btnEnviar">Enviar Comunicado</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tblComunicados" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Periodo</td>
+                                <td>Fecha</td>
+                                <td>Asunto</td>
+                                <td>Usuario</td>
+                                <td>Fallidos</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="modal fade" tabindex="-1" id="modalFallidos" role="dialog" data-width="950">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Fallo al enviar el correo</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tblFallidos" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Nombre</td>
+                                    <td>Tipo Usuario</td>
+                                    <td>Mensaje</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnReenviar">Reenviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+    <div class="modal-dialog modal-sm" style="height: 90px;">
+        <!--<div class="modal-content" style="width:auto">-->
+        <div class="form-group">
+            <h3 id="hCarga">Cargando</h3>
+        </div>
+        <div class="form-group">
+            <div class="bar" style="width:auto" id="divBar">
+                <p id="txtBar"></p>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<script>$.getScript("JS/Biblioteca/Comunicado.js");</script>

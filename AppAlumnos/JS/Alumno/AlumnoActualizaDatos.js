@@ -309,13 +309,13 @@ $(document).ready(function init() {
                 required: true,
                 digits: true,
                 minlength: 10,
-                maxlength: 10
+                maxlength: 12
             },
             txtTelefonoCasa: {
                 digits: true,
                 //required: true,
                 minlength: 8,
-                maxlength: 10
+                maxlength: 12
             },
             txtCalle: {
                 //required: true,

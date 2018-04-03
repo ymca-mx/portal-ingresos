@@ -17,7 +17,6 @@ namespace DAL
         public int UsuarioId { get; set; }
         public byte[] Imagen { get; set; }
     
-        public virtual Usuario Usuario { get; set; }
         public virtual UsuarioImagenDetalle UsuarioImagenDetalle { get; set; }
     }
 }

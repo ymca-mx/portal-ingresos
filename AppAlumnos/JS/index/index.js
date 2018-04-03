@@ -190,7 +190,7 @@ $(function () {
         var url = $(this).attr('href');
         if (url === undefined) { url = '#'; }
 
-        var menuid = (url.search('perfil') > 0 ? 0 : 1);
+        var menuid = (url.toLowerCase().search('perfil') > 0 ? 0 : 1);
         app_router.navigate(url, { trigger: true });
 
         if (bandera === 0) {

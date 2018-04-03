@@ -129,17 +129,17 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7283,
+                alumnoId = 8113,
                 anio = 2018,
-                periodoId = 1,
-                ofertaEducativaId = 28,
-                porcentajeBeca = 56.77m,//70.15
+                periodoId = 3,
+                ofertaEducativaId = 29,
+                porcentajeBeca = 55m,//70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
-                esEmpresa = true,
-                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2017-09-07", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                esEmpresa = false,
+                usuarioId = 6157, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2018-03-26", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal

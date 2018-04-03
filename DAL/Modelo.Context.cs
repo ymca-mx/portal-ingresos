@@ -87,6 +87,7 @@ namespace DAL
         public virtual DbSet<CalendarioEscolar> CalendarioEscolar { get; set; }
         public virtual DbSet<CalificacionesAntecedente> CalificacionesAntecedente { get; set; }
         public virtual DbSet<Comunicado> Comunicado { get; set; }
+        public virtual DbSet<ComunicadoUsuario> ComunicadoUsuario { get; set; }
         public virtual DbSet<CuentaMail> CuentaMail { get; set; }
         public virtual DbSet<Cuota> Cuota { get; set; }
         public virtual DbSet<CuotaIncremento> CuotaIncremento { get; set; }
@@ -250,7 +251,6 @@ namespace DAL
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
-        public virtual DbSet<ComunicadoUsuario> ComunicadoUsuario { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }
         public virtual DbSet<PagoDescuentoBitacora> PagoDescuentoBitacora { get; set; }
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }

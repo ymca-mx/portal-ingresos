@@ -69,7 +69,7 @@
             data: '{AlumnoId:"' + fid + '"}',
             dataType: 'json',
             success: function (data) {
-                if (data.d != null) {
+                if (data.d !== null) {
                     objGuardar.AlumnoId = data.d.AlumnoId;
                     $('#ModalDatos').modal('show');
                     $('#txtNombre').val('');
