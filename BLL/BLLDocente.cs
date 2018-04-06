@@ -18,7 +18,6 @@ namespace BLL
             {
                 try
                 {
-                    DTOPeriodo PeriodoActual = TraerPeriodoActSig()[1];
                     return db.Docente
                                                             .Select(a =>
                                                                 new DTODocenteActualizar
@@ -28,9 +27,7 @@ namespace BLL
                                                                     Nombre = a.Nombre,
                                                                     Paterno = a.Paterno,
                                                                     ListaEstudios = a.DocenteEstudioPeriodo
-                                                                                    .Where(le =>
-                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId)
-                                                                                            && le.EstatusId == true)
+                                                                                    .Where(le => le.EstatusId == true)
                                                                                             .Select(b => new DTODocenteEstudioPeriodo
                                                                                             {
                                                                                                 DocenteEstudioPeriodoId = b.DocenteEstudioPeriodoId,
@@ -65,10 +62,13 @@ namespace BLL
                                                                                                     }
                                                                                                 }
                                                                                             })
+                                                                                            .ToList()
+                                                                                            .OrderByDescending(b => b.Anio)
+                                                                                            .ThenBy(b => b.PeriodoId)
                                                                                             .ToList(),
                                                                     CursosDocente = a.DocenteCurso
                                                                                         .Where(le =>
-                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId) && le.EstatusId == true)
+                                                                                            le.EstatusId == true)
                                                                                             .Select(b => new DTODocenteCurso
                                                                                             {
                                                                                                 Descripcion = b.Descripcion,
@@ -91,12 +91,17 @@ namespace BLL
                                                                                                 {
                                                                                                     Descripcion = b.Periodo.Descripcion
                                                                                                 }
-                                                                                            }).ToList()
+                                                                                            })
+                                                                                            .ToList()
+                                                                                            .OrderByDescending(b=> b.Anio)
+                                                                                            .ThenBy(b=> b.PeriodoId)
+                                                                                            .ToList()
                                                                 }).ToList();
                 }
                 catch { return null; }
             }
         }
+
 
         public static List<DTODocenteActualizar> ListaDocentesActualizarVbo()
         {
