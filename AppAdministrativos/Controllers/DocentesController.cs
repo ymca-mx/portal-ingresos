@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DTO;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,30 @@ namespace AppAdministrativos.Controllers
         {
             return
                 Ok(BLL.BLLDocente.TraerPeriodoActSig());
+        }
+
+        [Route("TipoDocumentos")]
+        [HttpGet]
+        public IHttpActionResult TraerDocumentosTipo()
+        {
+            return Ok(BLL.BLLDocente.GetDocumentoTipo());
+        }
+
+        [Route("GuardarFormacion")]
+        [HttpPost]
+        public IHttpActionResult GuardarFormacion([FromBody] DTODocenteEstudioPeriodo DocenteEstudio)
+        {
+            return Ok(BLL.BLLDocente
+                        .GuardarFormacionAcademica(
+                            DocenteEstudio.DocenteId,
+                            DocenteEstudio.EstudioDocente.Institucion,
+                            DocenteEstudio.EstudioDocente.OfertaEducativaTipoId ?? 0,
+                            DocenteEstudio.EstudioDocente.Carrera,
+                            DocenteEstudio.EstudioDocente.Documento.DocumentoTipoId,
+                            DocenteEstudio.EstudioDocente.UsuarioId ?? 0,
+                            DocenteEstudio.Anio,
+                            DocenteEstudio.PeriodoId)
+                );
         }
     }
 }

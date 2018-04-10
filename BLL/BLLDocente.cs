@@ -42,7 +42,6 @@ namespace BLL
                                                                                                 EstudioDocente = new DTODocenteEstudio
                                                                                                 {
                                                                                                     Carrera = b.DocenteEstudio.Carrera,
-                                                                                                    Cedula = b.DocenteEstudio.Cedula,
                                                                                                     DocenteId = b.DocenteId,
                                                                                                     EstatusId = b.DocenteEstudio.EstatusId,
                                                                                                     EstudioId = b.DocenteEstudio.EstudioId,
@@ -54,11 +53,11 @@ namespace BLL
                                                                                                 (b.DocenteEstudio.Hora.Value.Minutes < 10 ? "0" + b.DocenteEstudio.Hora.Value.Minutes : "" + b.DocenteEstudio.Hora.Value.Minutes),
                                                                                                     Institucion = b.DocenteEstudio.Institucion,
                                                                                                     OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,
-                                                                                                    Titulo = b.DocenteEstudio.Titulo,
                                                                                                     UsuarioId = b.DocenteEstudio.UsuarioId,
                                                                                                     Documento = new DTODocenteEstudioDocumento
                                                                                                     {
-                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl
+                                                                                                        DocumentoTipoId = b.DocenteEstudio.DocumentoTipoId,
+                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl,
                                                                                                     }
                                                                                                 }
                                                                                             })
@@ -102,6 +101,17 @@ namespace BLL
             }
         }
 
+        public static object GetDocumentoTipo()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                return db.DocumentoTipo.Select(doc => new
+                {
+                    doc.DocumentoTipoId,
+                    doc.Descripcion
+                }).ToList();
+            }
+        }
 
         public static List<DTODocenteActualizar> ListaDocentesActualizarVbo()
         {
@@ -138,7 +148,6 @@ namespace BLL
                                                                                                 EstudioDocente = new DTODocenteEstudio
                                                                                                 {
                                                                                                     Carrera = b.DocenteEstudio.Carrera,
-                                                                                                    Cedula = b.DocenteEstudio.Cedula,
                                                                                                     DocenteId = b.DocenteId,
                                                                                                     EstatusId = b.DocenteEstudio.EstatusId,
                                                                                                     EstudioId = b.DocenteEstudio.EstudioId,
@@ -149,12 +158,12 @@ namespace BLL
                                                                                                     Hora = (b.DocenteEstudio.Hora.Value.Hours < 10 ? "0" + b.DocenteEstudio.Hora.Value.Hours : "" + b.DocenteEstudio.Hora.Value.Hours) + ":" +
                                                                                                 (b.DocenteEstudio.Hora.Value.Minutes < 10 ? "0" + b.DocenteEstudio.Hora.Value.Minutes : "" + b.DocenteEstudio.Hora.Value.Minutes),
                                                                                                     Institucion = b.DocenteEstudio.Institucion,
-                                                                                                    OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,
-                                                                                                    Titulo = b.DocenteEstudio.Titulo,
+                                                                                                    OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,                                                                                                    
                                                                                                     UsuarioId = b.DocenteEstudio.UsuarioId,
                                                                                                     Documento = new DTODocenteEstudioDocumento
                                                                                                     {
-                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl
+                                                                                                        DocumentoTipoId = b.DocenteEstudio.DocumentoTipoId,
+                                                                                                        DocumentoUrl= b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl,                                                                                                        
                                                                                                     }
                                                                                                 }
                                                                                             })
@@ -386,7 +395,7 @@ namespace BLL
             }
         }
 
-        public static int GuardarFormacionAcademica(int docenteId, string institucion, int oFertaTipo, string carrera, bool cedula, bool titulo, int UsuarioId, int anio, int periodoId)
+        public static int GuardarFormacionAcademica(int docenteId, string institucion, int oFertaTipo, string carrera, int DocumentoTipoId, int UsuarioId, int anio, int periodoId)
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
@@ -401,15 +410,14 @@ namespace BLL
                         DocenteEstudio = new DocenteEstudio
                         {
                             Carrera = carrera,
-                            Cedula = cedula,
                             DocenteId = docenteId,
                             EstatusId = 1,
                             Fecha = DateTime.Now,
                             Hora = DateTime.Now.TimeOfDay,
                             Institucion = institucion,
-                            OfertaEducativaTipoId = oFertaTipo,
-                            Titulo = titulo,
+                            OfertaEducativaTipoId = oFertaTipo,                            
                             UsuarioId = UsuarioId,
+                            DocumentoTipoId=DocumentoTipoId
                         }
                     });
 

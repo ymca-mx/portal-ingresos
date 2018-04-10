@@ -194,7 +194,7 @@
                 IndexFn.Block(false);
                 //console.log(data);
                 if (data.length > 1) {
-                    alertify.confirm("El alumno esta Inscrito pero no ha generado cargos" +
+                    alertify.confirm("Universidad YMCA","El alumno esta Inscrito pero no ha generado cargos" +
                         "¿Desea generar sus cargos del " + data[1] + "?", function (e) {
                             if (e) {
                                 IndexFn.Block(true);

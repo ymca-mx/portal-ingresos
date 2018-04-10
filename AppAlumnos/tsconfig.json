@@ -9,10 +9,11 @@
     "sourceMap": true
   },
   "include": [
-    "scripts"
+    "script",
+    "JS"
   ],
   "exclude": [
-
+    "Style"
   ],
   "typeAcquisition": {
     "enable": true

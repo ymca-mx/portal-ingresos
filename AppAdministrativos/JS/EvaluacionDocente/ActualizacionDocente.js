@@ -2,12 +2,9 @@
     var tblDocentes;
     var Funciones = {
         init() {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-grey',
-                radioClass: 'iradio_square-grey',
-                increaseArea: '20%' // optional
-            });
+
             $('#Load').modal('show');
+            this.DocumentoTipo();
             this.TraerTiposOfertas();
             this.TraerDocentes();
             this.starDate();
@@ -31,10 +28,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (data) {
-                    if (data.d !== null) {
+                    if (data !== null) {
                         if (tblDocentes !== undefined) { $('#tblDocentes').empty(); }
                         Funciones.TraerPeriodos();
-                        Funciones.ListDocentes = data.d;
+                        Funciones.ListDocentes = data;
                     } else { $('#Load').modal('hide'); }
                 },
                 error: function () {
@@ -72,15 +69,15 @@
             $('#slcPeriodoGrl').empty();
 
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: "Api/Docentes/TraerPeriodos",
                 data: "",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (data) {
-                    if (data.d.length > 0) {
+                    if (data.length > 0) {
 
-                        $(data.d).each(function () {
+                        $(data).each(function () {
                             var opt = $(document.createElement('option'));
                             var opt2 = $(document.createElement('option'));
                             var opt3 = $(document.createElement('option'));
@@ -108,7 +105,7 @@
 
                         });
 
-                        $('#slcPeriodoGrl').val(data.d[1].Anio + '' + data.d[1].PeriodoId);
+                        $('#slcPeriodoGrl').val(data[1].Anio + '' + data[1].PeriodoId);
                         $('#slcPeriodoGrl').change();
                     }
 
@@ -131,18 +128,17 @@
                     {
                         "mDataProp": function (d) {
                             if (d.ListaEstudios.length > 0) {
-                                var bot = '';
+                                var bot = '<button name="OFertaTipo" class="btn bg-blue">Agregar Formación</button>';
                                 $(d.ListaEstudios).each(function () {
                                     if (this.Anio === Anio && this.PeriodoId === PeriodoId) {
                                         var col = 'bg-success';
-                                        var a = '<a name="OFertaTipoVer" class="' + col + '">' + this.Anio + "-" + this.PeriodoId + "  " + this.EstudioDocente.Carrera + ' </a>'
+                                        bot = '<a name="OFertaTipoVer" class="' + col + '">' + this.Anio + "-" + this.PeriodoId + "  " + this.EstudioDocente.Carrera + ' </a>'
                                     }
-                                    bot += a;
                                 });
                                 return bot;
                             } else {
                                 var bot1;
-                                bot1 = '<button name="OFertaTipo" class="btn bg-blue">Agregar Formación</button>'
+                                bot1 = '<button name="OFertaTipo" class="btn bg-blue">Agregar Formación</button>';
                                 return bot1;
                             }
                         }
@@ -331,28 +327,27 @@
 
             $('#frmFormacion input').attr('readonly', 'readonly');
             $('#slcOFertaTipo').attr('disabled', true);
+            $('#slcDocumentoTipo').attr('disabled', true);
             $('#slcPeriodo').attr('disabled', true);
 
             var idselc = $('#slcPeriodoGrl').val();
             $('#slcPeriodo').val(parseInt(idselc));
 
+            var anio_s = $("#slcPeriodoGrl :selected").data("anio"),
+                periodo_s = $("#slcPeriodoGrl :selected").data("periodoid");
+
+            $(DTODocente.ListaEstudios).each(function () {
+                if (this.Anio === anio_s && this.PeriodoId === periodo_s) {
+                    $('#slcOFertaTipo').val(this.EstudioDocente.OfertaEducativaTipoId);
+                    $('#txtCarrera').val(this.EstudioDocente.Carrera);
+                    $('#slcDocumentoTipo').val(this.EstudioDocente.Documento.DocumentoTipoId);
+                }
+            });
+
             $('#txtInstitucion').val(DTODocente.Nombre + " " + DTODocente.Paterno + " " + DTODocente.Materno);
-            $('#slcOFertaTipo').val(DTODocente.ListaEstudios[0].EstudioDocente.OfertaEducativaTipoId);
-            $('#txtCarrera').val(DTODocente.ListaEstudios[0].EstudioDocente.Carrera);
-
-            $('#chkCedula')[0].checked = DTODocente.ListaEstudios[0].EstudioDocente.Cedula;
-            $('#chkCedula').attr('disabled', true);
-
-            $('#chkTitulo')[0].checked = DTODocente.ListaEstudios[0].EstudioDocente.Titulo;
-            $('#chkTitulo').attr('disabled', true);
 
             $("#FileComprobante").hide();
 
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-grey',
-                radioClass: 'iradio_square-grey',
-                increaseArea: '20%' // optional
-            });
             $('#btnGuardarFormacion').prop("disabled", true);
             $('#ModalFormacion').modal('show');
 
@@ -370,6 +365,9 @@
             var idselc = $('#slcPeriodoGrl').val();
             $('#slcPeriodoCurso').val(parseInt(idselc));
 
+            var anio_s = $("#slcPeriodoGrl :selected").data("anio"),
+                periodo_s = $("#slcPeriodoGrl :selected").data("periodoid");
+
             $('#txtCursoNombreI').addClass('edited');
             $('#txtTituloCurso').addClass('edited');
             $('#slcPeriodoCurso').addClass('edited');
@@ -377,7 +375,7 @@
             $('#txtFechas').addClass('edited');
 
             $(DTODocente.CursosDocente).each(function () {
-                if (this.EsCursoYMCA === esYmca) {
+                if (this.EsCursoYMCA === esYmca && this.Anio === anio_s && this.PeriodoId === periodo_s) {
                     $('#txtCursoNombreI').val(this.Institucion);
                     $('#txtTituloCurso').val(this.Descripcion);
                     $('#slcDuracion').val(this.Duracion);
@@ -393,8 +391,7 @@
         PopFormacionAcademica(DTODocente) {
             Funciones.DocenteSeleccionado = DTODocente.DocenteId;
             $('#frmFormacion')[0].reset();
-            $('#chkTitulo').attr('disabled', false);
-            $('#chkCedula').attr('disabled', false);
+            $('#slcDocumentoTipo').attr('disabled', false);
             $('#slcOFertaTipo').attr('disabled', false);
             $('#slcPeriodo').attr('disabled', true);
             $('#frmFormacion input').removeAttr('readonly');
@@ -404,11 +401,6 @@
 
             $("#FileComprobante").show();
 
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-grey',
-                radioClass: 'iradio_square-grey',
-                increaseArea: '20%' // optional
-            });
             $('#txtComprobante').text('');
             var file = $('#FileComprobante');
             file.removeClass('fileinput-exists').addClass('fileinput-new');
@@ -494,7 +486,7 @@
         btnGuardarFormacionClick() {
             var $frm = $('#frmFormacion');
             if ($frm[0].checkValidity()) {
-                if ($('#slcOFertaTipo').val() === "-1" || ($('#chkCedula')[0].checked === false && $('#chkTitulo')[0].checked === false)) {
+                if ($('#slcOFertaTipo').val() === "-1") {
                     alertify.alert("Favor de Seleccionar una opción.");
                     $('#slcOFertaTipo').focus();
                     $('#slcOFertaTipo').select();
@@ -558,32 +550,54 @@
         GuardarFormacionAcademica() {
             var objFomacion = {
                 DocenteId: Funciones.DocenteSeleccionado,
-                Institucion: $('#txtInstitucion').val(),
-                OFertaTipo: $('#slcOFertaTipo').val(),
-                Carrera: $('#txtCarrera').val(),
-                Cedula: $('#chkCedula')[0].checked,
-                Titulo: $('#chkTitulo')[0].checked,
-                UsuarioId: $.cookie('userAdmin'),
                 Anio: $("#slcPeriodo :selected").data("anio"),
                 PeriodoId: $("#slcPeriodo :selected").data("periodoid"),
+                EstudioDocente: {
+                    Institucion: $('#txtInstitucion').val(),
+                    OfertaEducativaTipoId: $('#slcOFertaTipo').val(),
+                    Carrera: $('#txtCarrera').val(),
+                    Documento: {
+                        DocumentoTipoId: $('#slcDocumentoTipo').val()
+                    },
+                    UsuarioId: $.cookie('userAdmin'),
+                }
             };
             objFomacion = JSON.stringify(objFomacion);
+
+
             $.ajax({
                 type: "POST",
-                url: "WS/Docentes.asmx/GuardarFormacion",
+                url: "Api/Docentes/GuardarFormacion",
                 data: objFomacion,
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
-                success: function (data) {
-                    if (data.d !== -1) {
-                        Funciones.GuardarFormacionAcademicaDocumento(data.d, $('#chkCedula')[0].checked ? 1 : $('#chkTitulo')[0].checked ? 2 : 0);
+            })
+                .done(function (data) {
+                    if (data !== -1) {
+                        Funciones.GuardarFormacionAcademicaDocumento(data, $('#slcDocumentoTipo').val());
                     } else {
                         $('#Load').modal('hide');
                         alertify.alert("Fallo el guardado del docente, Intente nuevamente");
                         $('#ModalFormacion').modal('show');
                     }
-                }
-            });
+                });
+        },
+        DocumentoTipo() {
+            $('#slcDocumentoTipo').empty();
+            $.get("Api/Docentes/TipoDocumentos")
+                .done(function (data) {
+                    $(data).each(function () {
+                        var opt = $(document.createElement('option'));
+
+                        opt.val(this.DocumentoTipoId);
+                        opt.text(this.Descripcion);
+
+                        $('#slcDocumentoTipo').append(opt);
+                    });
+                })
+                .fail(function (data) {
+                    alertify.alert("Fallo");
+                });
         },
         GuardarFormacionAcademicaDocumento(EstudioId, Tipo) {
             var data = new FormData();
