@@ -10,17 +10,16 @@ namespace BLL
 {
     public class BLLGenero
     {
-        public static List<DTOGenero> ConsultaTodosGenero()
+        public static object ConsultaTodosGenero()
         {
-            //List<DTO.DTOGenero> lstGenero=new List<DTO.DTOGenero>;
             using(UniversidadEntities db= new UniversidadEntities())
             {
                 return (from a in db.Genero
-                                                 select new DTOGenero
-                                                 {
-                                                     GeneroId = a.GeneroId,
-                                                     Descripcion=a.Descripcion
-                                                 }).ToList();
+                        select new
+                        {
+                            a.GeneroId,
+                            a.Descripcion
+                        }).ToList();
             }
         }
     }

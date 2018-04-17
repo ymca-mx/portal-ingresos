@@ -39,7 +39,10 @@
                                 <i class="fa fa-user-md"></i>&nbsp; Usuario
                             </th>
                             <th>
-                                <i class="fa fa-edit"></i>&nbsp; 
+                                <i class="fa fa-edit"></i>&nbsp; Personales
+                            </th>
+                            <th>
+                                <i class="fa fa-edit"></i>&nbsp; Academicos
                             </th>
                         </tr>
                     </thead>
@@ -56,7 +59,7 @@
                 <div class="modal-header">
                     <h3 class="modal-title">Datos del Alumno</h3>
                 </div>
-                <form id="frmDatos" onSubmit="return false;" >
+                <form id="frmDatos" onSubmit="return false;">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -97,6 +100,57 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalEducativa" data-keyboard="false">
+        <div class="modal-absolute">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Datos Academicos</h3>
+                </div>
+                <form id="frmAcademicos" onSubmit="return false;">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Plantel</label>
+                                    <select class="form-control"  id="slcPlantel"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Tipo Oferta Educativa</label>
+                                    <select class="form-control"  id="slcTipoOferta"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Oferta Educativa</label>
+                                    <select class="form-control" id="slcOFertaEducativa"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Periodo</label>
+                                    <select class="form-control"  id="slcPeriodo"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Turno</label>
+                                    <select class="form-control"  id="slcTurno"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">
+                                        Es Empresa
+                                        <input type="checkbox" class="checkbox" id="chkEmpresa"/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-default" data-dismiss="modal" id="btnCancelarEducativa">Cancelar</a>
+                        <button class="btn btn-primary" id="btnGuardarDatosEdu">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
         <div class="modal-dialog modal-sm" style="height: 90px;">
             <!--<div class="modal-content" style="width:auto">-->
@@ -111,10 +165,6 @@
             </div>
         </div>
     </div>
-    <script src="JS/Genero.js"></script>
-    <script src="JS/Alumnos/AlumnoNuevoIngreso.js"></script>    
-    <script>
-        Genero.init();
-    </script>
+    <script src="JS/Alumnos/AlumnoNuevoIngreso.js"></script>
 </body>
 </html>

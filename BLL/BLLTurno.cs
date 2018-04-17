@@ -10,15 +10,16 @@ namespace BLL
 {
     public class BLLTurno
     {
-        public static List<DTOTurno> ConsultarTurno()
+        public static object ConsultarTurno()
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
                 return (from a in db.Turno
-                                               select new DTOTurno { 
-                                               TurnoId=a.TurnoId,
-                                               Descripcion=a.Descripcion
-                                               }).ToList();
+                        select new
+                        {
+                            a.TurnoId,
+                            a.Descripcion
+                        }).ToList();
             }
         }
     }

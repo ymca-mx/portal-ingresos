@@ -53,14 +53,7 @@ namespace AppAdministrativos.WS
             return
             BLL.BLLDocente.TraerPeriodoActSig();
         }
-
-        [WebMethod]
-        public List<DTO.DTODocenteActualizar> TraerDocentes()
-        {
-            return
-            BLL.BLLDocente.ListaDocentesActualizar();
-        }
-
+        
         [WebMethod]
         public List<DTO.DTODocenteActualizar> TraerDocentesConDatos()
         {
@@ -69,17 +62,11 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public int GuardarFormacion(int DocenteId, string Institucion, int OFertaTipo, string Carrera, bool Cedula, bool Titulo, int UsuarioId, int Anio, int PeriodoId)
+        public int GuardarFormacion(int DocenteId, string Institucion, int OFertaTipo, string Carrera, int DocumentoTipoId, int UsuarioId, int Anio, int PeriodoId)
         {
-            return BLL.BLLDocente.GuardarFormacionAcademica(DocenteId, Institucion, OFertaTipo, Carrera, Cedula, Titulo, UsuarioId, Anio, PeriodoId);
+            return BLL.BLLDocente.GuardarFormacionAcademica(DocenteId, Institucion, OFertaTipo, Carrera, DocumentoTipoId, UsuarioId, Anio, PeriodoId);
         }
-
-        [WebMethod]
-        public int GuardarCurso(string NombreInstitucion, string TituloCurso,int Anio, int PeriodoId, int Duracion, string FechaInicial, string FechaFinal,bool EsCursoYmca,int DocenteId, int UsuarioId)
-        {
-            return BLL.BLLDocente.GuardarCurso(NombreInstitucion, TituloCurso, Anio, PeriodoId, Duracion, FechaFinal, FechaInicial, EsCursoYmca, DocenteId, UsuarioId);
-        }
-
+        
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public bool GuardarFormacionDocumento()

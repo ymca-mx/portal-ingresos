@@ -9,8 +9,6 @@ namespace DTO
         public string Institucion { get; set; }
         public Nullable<int> OfertaEducativaTipoId { get; set; }
         public string Carrera { get; set; }
-        public Nullable<bool> Cedula { get; set; }
-        public Nullable<bool> Titulo { get; set; }
         public string Fecha { get; set; }
         public string Hora { get; set; }
         public Nullable<int> UsuarioId { get; set; }
@@ -20,7 +18,7 @@ namespace DTO
     public class DTODocenteEstudioDocumento
     {
         public int EstudioId { get; set; }
-        public int DocuentoTipoId { get; set; }
+        public int DocumentoTipoId { get; set; }
         public string DocumentoUrl { get; set; }
         public DTODocumentoTipo TipoDocumento { get; set; }
     }

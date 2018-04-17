@@ -59,7 +59,7 @@ $(document).ready(function init() {
                     $('#slcSexo').val(data.DTOAlumnoDetalle.GeneroId);
                     $('#slcEstado').val(data.DTOAlumnoDetalle.EntidadFederativaId);
                     CargarEstados1(data.DTOAlumnoDetalle.EntidadFederativaId, data.DTOAlumnoDetalle.MunicipioId);
-                    
+
                     IndexFn.Block(false);
                 }
                 else {
@@ -119,7 +119,9 @@ $(document).ready(function init() {
 
     $('#Guardar').on('click',function () {
         if (form.valid() == false) { return false; }
-        IndexFn.Block(true);
+        var nombre = $('#hCarga');
+        nombre[0].innerText = "Guardando";
+        $('#Load').modal('show');
         GuardarTodo();
     });
 
@@ -141,6 +143,8 @@ $(document).ready(function init() {
                 "MunicipioId": $('#slcMunicipio').val()
         };
         obj = JSON.stringify(obj);
+        IndexFn.Block(true);
+
         $.ajax({
             type: "POST",
             url: "Api/Alumno/UpdateAlumnoDatos",

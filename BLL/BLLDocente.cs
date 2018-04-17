@@ -18,7 +18,6 @@ namespace BLL
             {
                 try
                 {
-                    DTOPeriodo PeriodoActual = TraerPeriodoActSig()[1];
                     return db.Docente
                                                             .Select(a =>
                                                                 new DTODocenteActualizar
@@ -28,9 +27,7 @@ namespace BLL
                                                                     Nombre = a.Nombre,
                                                                     Paterno = a.Paterno,
                                                                     ListaEstudios = a.DocenteEstudioPeriodo
-                                                                                    .Where(le =>
-                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId)
-                                                                                            && le.EstatusId == true)
+                                                                                    .Where(le => le.EstatusId == true)
                                                                                             .Select(b => new DTODocenteEstudioPeriodo
                                                                                             {
                                                                                                 DocenteEstudioPeriodoId = b.DocenteEstudioPeriodoId,
@@ -45,7 +42,6 @@ namespace BLL
                                                                                                 EstudioDocente = new DTODocenteEstudio
                                                                                                 {
                                                                                                     Carrera = b.DocenteEstudio.Carrera,
-                                                                                                    Cedula = b.DocenteEstudio.Cedula,
                                                                                                     DocenteId = b.DocenteId,
                                                                                                     EstatusId = b.DocenteEstudio.EstatusId,
                                                                                                     EstudioId = b.DocenteEstudio.EstudioId,
@@ -57,18 +53,21 @@ namespace BLL
                                                                                                 (b.DocenteEstudio.Hora.Value.Minutes < 10 ? "0" + b.DocenteEstudio.Hora.Value.Minutes : "" + b.DocenteEstudio.Hora.Value.Minutes),
                                                                                                     Institucion = b.DocenteEstudio.Institucion,
                                                                                                     OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,
-                                                                                                    Titulo = b.DocenteEstudio.Titulo,
                                                                                                     UsuarioId = b.DocenteEstudio.UsuarioId,
                                                                                                     Documento = new DTODocenteEstudioDocumento
                                                                                                     {
-                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl
+                                                                                                        DocumentoTipoId = b.DocenteEstudio.DocumentoTipoId,
+                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl,
                                                                                                     }
                                                                                                 }
                                                                                             })
+                                                                                            .ToList()
+                                                                                            .OrderByDescending(b => b.Anio)
+                                                                                            .ThenBy(b => b.PeriodoId)
                                                                                             .ToList(),
                                                                     CursosDocente = a.DocenteCurso
                                                                                         .Where(le =>
-                                                                                            (le.Anio == PeriodoActual.Anio && le.PeriodoId == PeriodoActual.PeriodoId) && le.EstatusId == true)
+                                                                                            le.EstatusId == true)
                                                                                             .Select(b => new DTODocenteCurso
                                                                                             {
                                                                                                 Descripcion = b.Descripcion,
@@ -91,10 +90,68 @@ namespace BLL
                                                                                                 {
                                                                                                     Descripcion = b.Periodo.Descripcion
                                                                                                 }
-                                                                                            }).ToList()
+                                                                                            })
+                                                                                            .ToList()
+                                                                                            .OrderByDescending(b=> b.Anio)
+                                                                                            .ThenBy(b=> b.PeriodoId)
+                                                                                            .ToList()
                                                                 }).ToList();
                 }
                 catch { return null; }
+            }
+        }
+
+        public static bool ModificarFormacionAcademica(DTODocenteEstudioPeriodo DocenteEstudio)
+        {
+            try
+            {
+                using(UniversidadEntities db = new UniversidadEntities())
+                {
+                    DAL.DocenteEstudioPeriodo objDocente =
+                            db.DocenteEstudioPeriodo
+                                .Where(doc => doc.DocenteEstudioPeriodoId == DocenteEstudio.DocenteEstudioPeriodoId
+                                        && doc.Anio == DocenteEstudio.Anio
+                                        && doc.PeriodoId == DocenteEstudio.PeriodoId
+                                        && doc.EstudioId == DocenteEstudio.EstudioId)
+                                .FirstOrDefault();
+
+                    if (objDocente != null)
+                    {
+
+                        objDocente.Anio = DocenteEstudio.Anio;
+                        objDocente.PeriodoId = DocenteEstudio.PeriodoId;
+
+                        objDocente.DocenteEstudio.Institucion = DocenteEstudio.EstudioDocente.Institucion;
+                        objDocente.DocenteEstudio.OfertaEducativaTipoId = DocenteEstudio.EstudioDocente.OfertaEducativaTipoId;
+                        objDocente.DocenteEstudio.Carrera = DocenteEstudio.EstudioDocente.Carrera;
+                        objDocente.DocenteEstudio.DocumentoTipoId = DocenteEstudio.EstudioDocente.Documento.DocumentoTipoId;
+                        objDocente.DocenteEstudio.Fecha = DateTime.Now;
+                        objDocente.DocenteEstudio.Hora = DateTime.Now.TimeOfDay;
+                        objDocente.DocenteEstudio.UsuarioId = DocenteEstudio.EstudioDocente.UsuarioId;
+
+                        db.SaveChanges();
+
+                    }
+
+                    return true;
+
+                }                
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static object GetDocumentoTipo()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                return db.DocumentoTipo.Select(doc => new
+                {
+                    doc.DocumentoTipoId,
+                    doc.Descripcion
+                }).ToList();
             }
         }
 
@@ -133,7 +190,6 @@ namespace BLL
                                                                                                 EstudioDocente = new DTODocenteEstudio
                                                                                                 {
                                                                                                     Carrera = b.DocenteEstudio.Carrera,
-                                                                                                    Cedula = b.DocenteEstudio.Cedula,
                                                                                                     DocenteId = b.DocenteId,
                                                                                                     EstatusId = b.DocenteEstudio.EstatusId,
                                                                                                     EstudioId = b.DocenteEstudio.EstudioId,
@@ -144,12 +200,12 @@ namespace BLL
                                                                                                     Hora = (b.DocenteEstudio.Hora.Value.Hours < 10 ? "0" + b.DocenteEstudio.Hora.Value.Hours : "" + b.DocenteEstudio.Hora.Value.Hours) + ":" +
                                                                                                 (b.DocenteEstudio.Hora.Value.Minutes < 10 ? "0" + b.DocenteEstudio.Hora.Value.Minutes : "" + b.DocenteEstudio.Hora.Value.Minutes),
                                                                                                     Institucion = b.DocenteEstudio.Institucion,
-                                                                                                    OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,
-                                                                                                    Titulo = b.DocenteEstudio.Titulo,
+                                                                                                    OfertaEducativaTipoId = b.DocenteEstudio.OfertaEducativaTipoId,                                                                                                    
                                                                                                     UsuarioId = b.DocenteEstudio.UsuarioId,
                                                                                                     Documento = new DTODocenteEstudioDocumento
                                                                                                     {
-                                                                                                        DocumentoUrl = b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl
+                                                                                                        DocumentoTipoId = b.DocenteEstudio.DocumentoTipoId,
+                                                                                                        DocumentoUrl= b.DocenteEstudio.DocenteEstudioDocumento.FirstOrDefault().DocumentoUrl,                                                                                                        
                                                                                                     }
                                                                                                 }
                                                                                             })
@@ -283,29 +339,53 @@ namespace BLL
             }
         }
 
-        public static int GuardarCurso(string NombreInstitucion, string tituloCurso, int anio, int periodoId, int duracion, string fechaFinal, string fechaInicial, bool esCursoYmca, int docenteId, int usuarioId)
+        public static int GuardarCurso(DTODocenteCurso objCurso)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    DateTime FechaInicial = DateTime.ParseExact(fechaInicial, "dd/MM/yyyy", Cultura);
-                    DateTime FechaFinal = DateTime.ParseExact(fechaFinal, "dd/MM/yyyy", Cultura);
-                    db.DocenteCurso.Add(new DocenteCurso
+                    DateTime FechaInicial = DateTime.ParseExact(objCurso.FechaInicial, "dd/MM/yyyy", Cultura);
+                    DateTime FechaFinal = DateTime.ParseExact(objCurso.FechaFinal, "dd/MM/yyyy", Cultura);
+
+                    if ((objCurso?.DocenteCursoId ?? 0) > 0)
                     {
-                        Anio = anio,
-                        Descripcion = tituloCurso,
-                        DocenteId = docenteId,
-                        Duracion = duracion,
-                        EsCursoYMCA = esCursoYmca,
-                        FechaFinal = FechaFinal,
-                        FechaInicial = FechaInicial,
-                        Institucion = NombreInstitucion,
-                        PeriodoId = periodoId,
-                        VoBo = false,
-                        UsuarioId = usuarioId,
-                        EstatusId = true,
-                    });
+                        DAL.DocenteCurso DocenteCursodb =
+                                db.DocenteCurso
+                                .Where(a => a.DocenteCursoId == objCurso.DocenteCursoId)
+                                .Select(a => a)
+                                .FirstOrDefault();
+
+                        if ((DocenteCursodb?.DocenteCursoId ?? 0) > 0)
+                        {
+                            DocenteCursodb.Anio = objCurso.Anio;
+                            DocenteCursodb.Descripcion = objCurso.Descripcion;
+                            DocenteCursodb.Duracion= objCurso.Duracion;
+                            DocenteCursodb.FechaFinal = FechaFinal;
+                            DocenteCursodb.FechaInicial = FechaInicial;
+                            DocenteCursodb.Institucion = objCurso.Institucion;
+                            DocenteCursodb.PeriodoId = objCurso.PeriodoId;
+                            DocenteCursodb.UsuarioId = objCurso.UsuarioId;
+                        }
+                    }
+                    else
+                    {
+                        db.DocenteCurso.Add(new DocenteCurso
+                        {
+                            Anio = objCurso.Anio,
+                            Descripcion = objCurso.Descripcion,
+                            DocenteId = objCurso.DocenteId,
+                            Duracion = objCurso.Duracion,
+                            EsCursoYMCA = objCurso.EsCursoYMCA,
+                            FechaFinal = FechaFinal,
+                            FechaInicial = FechaInicial,
+                            Institucion = objCurso.Institucion,
+                            PeriodoId = objCurso.PeriodoId,
+                            VoBo = false,
+                            UsuarioId = objCurso.UsuarioId,
+                            EstatusId = true,
+                        });
+                    }
                     db.SaveChanges();
 
                     return db.DocenteCurso.Local.FirstOrDefault().DocenteCursoId;
@@ -360,10 +440,20 @@ namespace BLL
 
         public static bool GuardarRelacionDocumento(int estudioId, int tipoDocumentoId, string rutaServe)
         {
-            using(UniversidadEntities db=new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
+                    DAL.DocenteEstudioDocumento docenteEstudio = db.DocenteEstudioDocumento
+                                                    .Where(a => a.EstudioId == estudioId)
+                                                    .Select(a => a)
+                                                    .FirstOrDefault();
+                    if ((docenteEstudio?.EstudioId ?? 0) > 0)
+                    {
+                        db.DocenteEstudioDocumento.Remove(docenteEstudio);
+                        db.SaveChanges();
+                    }
+
                     db.DocenteEstudioDocumento.Add(
                         new DocenteEstudioDocumento
                         {
@@ -371,6 +461,7 @@ namespace BLL
                             DocuentoTipoId = tipoDocumentoId,
                             DocumentoUrl = rutaServe
                         });
+
                     db.SaveChanges();
                     return true;
                 }
@@ -381,7 +472,7 @@ namespace BLL
             }
         }
 
-        public static int GuardarFormacionAcademica(int docenteId, string institucion, int oFertaTipo, string carrera, bool cedula, bool titulo, int UsuarioId, int anio, int periodoId)
+        public static int GuardarFormacionAcademica(int docenteId, string institucion, int oFertaTipo, string carrera, int DocumentoTipoId, int UsuarioId, int anio, int periodoId)
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
@@ -396,15 +487,14 @@ namespace BLL
                         DocenteEstudio = new DocenteEstudio
                         {
                             Carrera = carrera,
-                            Cedula = cedula,
                             DocenteId = docenteId,
                             EstatusId = 1,
                             Fecha = DateTime.Now,
                             Hora = DateTime.Now.TimeOfDay,
                             Institucion = institucion,
-                            OfertaEducativaTipoId = oFertaTipo,
-                            Titulo = titulo,
+                            OfertaEducativaTipoId = oFertaTipo,                            
                             UsuarioId = UsuarioId,
+                            DocumentoTipoId=DocumentoTipoId
                         }
                     });
 

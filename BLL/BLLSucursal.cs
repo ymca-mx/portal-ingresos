@@ -10,18 +10,17 @@ namespace BLL
 {
     public class BLLSucursal
     {
-        public static List<DTOSucursal> ConsultarSucursales()
+        public static object ConsultarSucursales()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                List<DTOSucursal> lstSucursales = (from a in db.Sucursal
-                                                   where a.EsSucursal == true
-                                                   select new DTOSucursal
-                                                   {
-                                                       SucursalId = a.SucursalId,
-                                                       DescripcionId = a.DescripcionId
-                                                   }).ToList();
-                return lstSucursales;
+                return (from a in db.Sucursal
+                        where a.EsSucursal == true
+                        select new
+                        {
+                            a.SucursalId,
+                            Descripcion= a.DescripcionId
+                        }).ToList();
             }
         }
         public static DTOSucursal TraerSucursal(int SucursalId)

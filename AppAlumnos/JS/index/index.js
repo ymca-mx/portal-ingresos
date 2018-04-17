@@ -150,7 +150,7 @@ $(function () {
                         $('#popDatos').modal('show');
                     });
                 }
-                IndexFn.SetTime;
+                IndexFn.SetTime();
             }
         });
     };
@@ -333,7 +333,8 @@ $(function () {
                 var e = document.getElementById('Load');
                 if (e != null) { e.removeChild('body'); }
 
-                document.body.innerHTML += IndexFn.Message;
+                $('#divDinamico').after(IndexFn.Message);
+                
                 Message = $('#Load');
             }
             $.blockUI({
@@ -404,7 +405,7 @@ $(function () {
                 }
             });
             if (direccion.length > 0) {
-                if (direccion.search("login.html") > 0) {
+                if (direccion.search("login.html") != -1) {
                     Backbone.history.stop();
                     localStorage.clear();
                     $(location).attr('href', 'login.html');

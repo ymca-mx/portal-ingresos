@@ -11,7 +11,7 @@ namespace BLL
 {
     public class BLLOfertaEducativaPortal
     {
-        public static List<DTOOfertaEducativa> ConsultarOfertasEducativas(int TipoOferta,int Plantel)
+        public static object ConsultarOfertasEducativas(int TipoOferta,int Plantel)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -21,16 +21,27 @@ namespace BLL
                 if (Sucursal == true)
                 {
                     return (from a in db.OfertaEducativa
-                            where a.OfertaEducativaTipoId == TipoOferta 
-                                    && a.SucursalId == Plantel && a.EstatusId==1
-                            select a).ToList().ConvertAll(new Converter<OfertaEducativa, DTOOfertaEducativa>(Convertidor.ToDTOOfertaEducativa));
+                            where a.OfertaEducativaTipoId == TipoOferta
+                                    && a.SucursalId == Plantel 
+                                    && a.EstatusId == 1
+                                    && a.OfertaEducativaId != 43
+                            select new
+                            {
+                                a.OfertaEducativaId,
+                                a.Descripcion
+                            }).ToList();
                 }
                 else
                 {
                     return (from a in db.OfertaEducativa
                             where a.OfertaEducativaTipoId == TipoOferta
                                     && a.EstatusId==1
-                            select a).ToList().ConvertAll(new Converter<OfertaEducativa, DTOOfertaEducativa>(Convertidor.ToDTOOfertaEducativa));
+                                    && a.OfertaEducativaId != 43
+                            select new
+                            {
+                                a.OfertaEducativaId,
+                                a.Descripcion
+                            }).ToList();
                 }
             }
         }

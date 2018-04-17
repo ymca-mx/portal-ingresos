@@ -28,31 +28,48 @@ namespace AppAdministrativos.Views.Alumno
         }
         public async Task CrearReporteAsync()
         {
-            Tuple<List<CString_Alumno>, List<CString_OfertaEducativa>, List<CString_Cuota>> ObjetoCompuesto = 
-                await BLLCuota.CuotaCredencial(AlumnoId, OfertaEducativaid);
-            EntregaCredenciales ReporteCredenciales = new EntregaCredenciales();
+            try
+            {
+                Tuple<List<CString_Alumno>, List<CString_OfertaEducativa>, List<CString_Cuota>> ObjetoCompuesto =
+                    await BLLCuota.CuotaCredencial(AlumnoId, OfertaEducativaid);
 
-            ReporteCredenciales.Database.Tables["Alumno"].SetDataSource(ObjetoCompuesto.Item1);
-            ReporteCredenciales.Database.Tables["OfertaEducativa"].SetDataSource(ObjetoCompuesto.Item2);
-            ReporteCredenciales.Database.Tables["Cuota"].SetDataSource(ObjetoCompuesto.Item3);
-            string ruta = Path.GetTempPath();
-            ruta += "Credencial.pdf";
+                string rutarpt = "/Reportes/Reportes/EntregaCredenciales.rpt";
+                EntregaCredenciales ReporteCredenciales = new EntregaCredenciales();
 
-            //CrystalReportViewer1.ReportSource = rptCredenciales;
-            Stream pdf;
-            ReporteCredenciales.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, ruta);
+                ReporteCredenciales.Load(rutarpt);
 
-            pdf = ReporteCredenciales.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            var MemoryStream = new MemoryStream();
-            pdf.CopyTo(MemoryStream);
+                ReporteCredenciales.Database.Tables["Alumno"].SetDataSource(ObjetoCompuesto.Item1);
+                ReporteCredenciales.Database.Tables["OfertaEducativa"].SetDataSource(ObjetoCompuesto.Item2);
+                ReporteCredenciales.Database.Tables["Cuota"].SetDataSource(ObjetoCompuesto.Item3);
+                string ruta = Path.GetTempPath();
+                ruta += "Credencial.pdf";
 
-            Response.Expires = 0;
-            Response.Buffer = true;
-            Response.ClearContent();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-length", MemoryStream.Length.ToString());
-            Response.BinaryWrite(MemoryStream.ToArray());
-            MemoryStream.Close();
+                //CrystalReportViewer1.ReportSource = rptCredenciales;
+                Stream pdf;
+                ReporteCredenciales.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, ruta);
+
+                pdf = ReporteCredenciales.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                var MemoryStream = new MemoryStream();
+                pdf.CopyTo(MemoryStream);
+
+                Response.Expires = 0;
+                Response.Buffer = true;
+                Response.ClearContent();
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-length", MemoryStream.Length.ToString());
+                Response.BinaryWrite(MemoryStream.ToArray());
+                MemoryStream.Close();
+            }
+            catch(Exception error)
+            {
+                //Label lblerror = new Label
+                //{
+                //    Text = "Error: " + error.InnerException.Message
+                //};
+                
+                //Header.Controls.Add(lblerror);
+                Response.Write(error);
+            }
         }
     }
 }

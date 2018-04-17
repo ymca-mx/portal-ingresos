@@ -14,17 +14,28 @@ namespace BLL
     public class BLLPeriodoPortal
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
-        public static List<DTOPeriodo> ConsultarPeriodos()
+        public static object ConsultarPeriodos()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 DateTime fhoy = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00); 
-                List<DTOPeriodo> lstPeriodo = (from a in db.Periodo
+                var lstPeriodo = (from a in db.Periodo
                                                where a.FechaInicial >= fhoy 
-                                               select a).Take(2).ToList().ConvertAll(new Converter<Periodo, DTOPeriodo>(Convertidor.ToDTOPeriodo));
+                                               select new
+                                               {
+                                                   a.Anio,
+                                                   a.Descripcion,
+                                                   a.PeriodoId
+                                               }).Take(2).ToList();
+
                 lstPeriodo.InsertRange(0, (from a in db.Periodo
                                            where a.FechaInicial <= fhoy && fhoy <= a.FechaFinal
-                                           select a).ToList().ConvertAll(new Converter<Periodo, DTOPeriodo>(Convertidor.ToDTOPeriodo)));
+                                           select new
+                                           {
+                                               a.Anio,
+                                               a.Descripcion,
+                                               a.PeriodoId
+                                           }).ToList());
                 
                 return lstPeriodo;
             }

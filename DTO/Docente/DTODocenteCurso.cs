@@ -14,5 +14,6 @@
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public DTOPeriodo Periodo { get; set; }
+        public int UsuarioId { get; set; }
     }
 }

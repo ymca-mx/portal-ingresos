@@ -26,8 +26,7 @@ namespace DAL
         public string Institucion { get; set; }
         public Nullable<int> OfertaEducativaTipoId { get; set; }
         public string Carrera { get; set; }
-        public Nullable<bool> Cedula { get; set; }
-        public Nullable<bool> Titulo { get; set; }
+        public int DocumentoTipoId { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public Nullable<System.TimeSpan> Hora { get; set; }
         public Nullable<int> UsuarioId { get; set; }
@@ -35,6 +34,7 @@ namespace DAL
     
         public virtual OfertaEducativaTipo OfertaEducativaTipo { get; set; }
         public virtual Docente Docente { get; set; }
+        public virtual DocumentoTipo DocumentoTipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocenteEstudioDocumento> DocenteEstudioDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
