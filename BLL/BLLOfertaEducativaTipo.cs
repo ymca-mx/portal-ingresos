@@ -10,33 +10,36 @@ namespace BLL
 {
     public class BLLOfertaEducativaTipo
     {
-        public static List<DTOOfertaEducativaTipo> ConsultaOfertaTipo(int plantel)
+        public static object ConsultaOfertaTipo(int plantel)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                bool Sucursal = (from s in db.Sucursal
-                                where s.SucursalId == plantel
-                                select s.EsSucursal).FirstOrDefault();
-                if (Sucursal == true)
+                var sucursal = db.Sucursal.Where(a => a.SucursalId == plantel).FirstOrDefault();
+                if (sucursal != null)
                 {
-                    return (from a in db.OfertaEducativaTipo
-                            join b in db.OfertaEducativa on a.OfertaEducativaTipoId equals b.OfertaEducativaTipoId
-                            where b.SucursalId == plantel
-                            select new DTOOfertaEducativaTipo
+                    if (sucursal.EsSucursal)
+                    {
+                        return
+                        db.OfertaEducativaTipo
+                            .Where(oft => oft.OfertaEducativa.Where(of => of.SucursalId == plantel).ToList().Count > 0)
+                            .Select(oft => new
                             {
-                                OfertaEducativaTipoId = a.OfertaEducativaTipoId,
-                                Descripcion = a.Descripcion,
-                            }).Distinct().ToList();
+                                oft.OfertaEducativaTipoId,
+                                oft.Descripcion
+                            }).ToList();
+                    }
+                    else
+                    {
+                        return (db.OfertaEducativaTipo
+                                    .Select(a => new
+                                    {
+                                        a.OfertaEducativaTipoId,
+                                        a.Descripcion,
+                                    })
+                                .ToList());
+                    }
                 }
-                else
-                {
-                    return (from a in db.OfertaEducativaTipo
-                            select new DTOOfertaEducativaTipo
-                            {
-                                OfertaEducativaTipoId = a.OfertaEducativaTipoId,
-                                Descripcion = a.Descripcion,
-                            }).Distinct().ToList();
-                }
+                else { return null; }
             }
         }
 

@@ -1,10 +1,12 @@
-﻿$(function init() {
+﻿var IndexFn;
+
+$(function () {
     //AppRouter = 
     var bandera = 0;
     // Initiate the router
     //var app_router = new AppRouter;
     var app_router;
-    var Funciones = {
+    IndexFn = {
         clearAlert: function () {
             try { alertify.confirm().destroy(); }
             catch (err) { }
@@ -15,6 +17,25 @@
         },
         alertify3: function () {
             return '<script src="Style/Complementos/Alertify/alertify.js"></script>'; 
+        },
+        Api(url, type, data) {
+            var dfd = $.Deferred();
+
+            var Api = $.ajax({
+                url: "Api/" + url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: type,
+                data: data,
+            });
+
+            Api.done(function (data) {
+                dfd.resolve(data);
+            }).fail(function (data) {
+                dfd.reject(data);
+            });
+
+            return dfd.promise();
         },
         btnSalir: function () {
             $.removeCookie('userAdmin', { path: '/' });
@@ -43,7 +64,7 @@
                         $.unblockUI();
                     }
                     else {
-                        Funciones.Menu = [];
+                        IndexFn.Menu = [];
                         $(Resultado.d).each(function () {
                             var objmenu =
                                 {
@@ -75,7 +96,7 @@
                                 objmenu.SubMenu.push(objSubmneu);
                             });
                             Menu += '</ul>' + '</li>';
-                            Funciones.Menu.push(objmenu);
+                            IndexFn.Menu.push(objmenu);
                         });
 
                         var MenuNuevoIngreso = {
@@ -88,13 +109,14 @@
                                 Direccion: "Views/Alumno/InscripcionAlumno.html"
                             }
                         };
-                        Funciones.Menu.push(MenuNuevoIngreso);
+                        IndexFn.Menu.push(MenuNuevoIngreso);
 
                         $('#Menu').append(Menu);
                         app_router = new AppRouter;
                         Backbone.history.start();
-                        $('a[name=menu]').on('click', Funciones.ClickMenu);
-                        $.unblockUI();                        
+                        $('a[name=menu]').on('click', IndexFn.ClickMenu);
+                        $.unblockUI();
+
                     }
                 },
                 error: function (Resultado) {
@@ -120,7 +142,7 @@
                     var id = arrurl[(arrurl.length - 1)];
                     id = parseInt(id);
 
-                    $(Funciones.Menu).each(function () {
+                    $(IndexFn.Menu).each(function () {
                         $(this.SubMenu).each(function () {
                             if (id === this.SubMenuId) {
                                 url = this.Direccion;
@@ -131,13 +153,13 @@
                 $('#divDinamico').empty();
 
                 if (url !== '#') {
-                    Funciones.clearAlert();
+                    IndexFn.clearAlert();
                     $('#divDinamico').load(url);
-                    $('#divDinamico').append(Funciones.alertify3());
+                    $('#divDinamico').append(IndexFn.alertify3());
                 }
             }
             return false;
-        }
+        }        
     };
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -154,7 +176,7 @@
 
             var direccion = "";
             var subInt = parseInt(SubMenuId);
-            $(Funciones.Menu).each(function () {
+            $(IndexFn.Menu).each(function () {
                 $(this.SubMenu).each(function () {
                     if (subInt === this.SubMenuId) {
                         direccion = this.Direccion;
@@ -162,9 +184,9 @@
                 });
             });
             if (direccion.length > 0) {
-                Funciones.clearAlert();
+                IndexFn.clearAlert();
                 $('#divDinamico').load(direccion);
-                $('#divDinamico').append(Funciones.alertify3());
+                $('#divDinamico').append(IndexFn.alertify3());
             }
             bandera = 1;
         },        
@@ -183,17 +205,17 @@
             if (actions === 'Views/') { return false; }
             var url = actions;
             
-            Funciones.clearAlert();
+            IndexFn.clearAlert();
             $('#divDinamico').load(url);
-            $('#divDinamico').append(Funciones.alertify3());
+            $('#divDinamico').append(IndexFn.alertify3());
 
             bandera = 1;
         }
     });   
 
-    Funciones.CrearMenu();
+    IndexFn.CrearMenu();
     
-    $('#btnSalir').on('click', Funciones.btnSalir);
+    $('#btnSalir').on('click', IndexFn.btnSalir);
 
     
 

@@ -25,7 +25,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public List<DTOGenero> ConsultarGenero()
+        public object ConsultarGenero()
         {
             return BLLGenero.ConsultaTodosGenero();
         }
@@ -47,12 +47,12 @@ namespace AppAdministrativos.WS
             return BLLPais.TraerPaisesT();
         }
         [WebMethod]
-        public List<DTOOfertaEducativaTipo> ConsultarOfertaEducativaTipo(string Plantel)
+        public object ConsultarOfertaEducativaTipo(string Plantel)
         {
             return BLLOfertaEducativaTipo.ConsultaOfertaTipo(int.Parse(Plantel));
         }
         [WebMethod]
-        public List<DTOOfertaEducativa> ConsultarOfertaEducativa(string tipoOferta, string Plantel)
+        public object ConsultarOfertaEducativa(string tipoOferta, string Plantel)
         {
             return BLLOfertaEducativaPortal.ConsultarOfertasEducativas(int.Parse(tipoOferta), int.Parse(Plantel));
         }
@@ -62,12 +62,12 @@ namespace AppAdministrativos.WS
             return BLLOfertaEducativaPortal.OfertaEducativaAlumno(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public List<DTOTurno> ConsultarTurnos()
+        public object ConsultarTurnos()
         {
             return BLLTurno.ConsultarTurno();
         }
         [WebMethod]
-        public List<DTOPeriodo> ConsultarPeriodos()
+        public object ConsultarPeriodos()
         {
             return BLLPeriodoPortal.ConsultarPeriodos();
         }
@@ -89,7 +89,7 @@ namespace AppAdministrativos.WS
             return BLLEntidadFederativa.ConsultarEstadosCiviles();
         }
         [WebMethod]
-        public List<DTOSucursal> ConsultarPlantel()
+        public object ConsultarPlantel()
         {
             return BLLSucursal.ConsultarSucursales();
         }

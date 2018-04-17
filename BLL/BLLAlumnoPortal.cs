@@ -202,6 +202,48 @@ namespace BLL
             }
         }
 
+        public static object AlumnoDatosAcademicos(int AlumnoId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                int[] Conceptos = { 1, 800, 802, 1000 };
+
+                return
+                db.AlumnoInscrito
+                    .Where(al => al.AlumnoId == AlumnoId)
+                    .Select(al => new
+                    {
+                        al.AlumnoId,
+                        al.Anio,
+                        al.PeriodoId,
+                        al.OfertaEducativaId,
+                        al.OfertaEducativa.SucursalId,
+                        al.OfertaEducativa.OfertaEducativaTipoId,
+                        al.TurnoId,
+                        al.EsEmpresa,
+                        Cuotas= db.Cuota
+                                    .Where(cu => Conceptos.Contains(cu.PagoConceptoId)
+                                                                && cu.OfertaEducativaId == al.OfertaEducativaId
+                                                                && cu.Anio == al.Anio
+                                                                && cu.PeriodoId == al.PeriodoId)
+                                    .Select(cu=> new
+                                    {
+                                       Porcentaje = db.AlumnoDescuento
+                                        .Where(ald => ald.AlumnoId == al.AlumnoId
+                                                    && ald.OfertaEducativaId == al.OfertaEducativaId
+                                                    && ald.Anio == al.Anio
+                                                    && ald.PeriodoId == al.PeriodoId
+                                                    && ald.PagoConceptoId== cu.PagoConceptoId)
+                                        .Select(a=> a.Monto)
+                                        .FirstOrDefault(),
+                                        cu.PagoConcepto.Descripcion,
+                                        
+                                    }).ToList()
+                    })
+                    .FirstOrDefault();
+            }
+        }
+
         public static object GetAlumnos(string alumno)
         {
             using (UniversidadEntities db = new UniversidadEntities())

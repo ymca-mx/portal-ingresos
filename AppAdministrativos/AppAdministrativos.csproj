@@ -131,6 +131,7 @@
     <Content Include="JS\EvaluacionDocente\VistoBuenoDocentes.js" />
     <Content Include="JS\index\bitacora.js" />
     <Content Include="JS\index\cargarMenu.js" />
+    <Content Include="JS\index\FuncionesGlobales.js" />
     <Content Include="JS\index\index.js" />
     <Content Include="JS\login\animacion.js" />
     <Content Include="JS\login\valida.js" />
@@ -5483,6 +5484,7 @@
     <Compile Include="Controllers\AlumnoController.cs" />
     <Compile Include="Controllers\BibliotecaController.cs" />
     <Compile Include="Controllers\DocentesController.cs" />
+    <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Global.asax.cs">
