@@ -129,23 +129,22 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 8113,
+                alumnoId = 7082,
                 anio = 2018,
-                periodoId = 3,
-                ofertaEducativaId = 29,
-                porcentajeBeca = 55m,//70.15
-                porcentajeInscripcion = 100m,
+                periodoId = 2,
+                ofertaEducativaId = 2,
+                porcentajeBeca = 62.81m,//70.15
+                porcentajeInscripcion = 0m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = false,
-                usuarioId = 6157, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2018-03-26", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2018-01-16", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
             });
             
-
             Alumno.ForEach(a =>
             {
                 BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, false);

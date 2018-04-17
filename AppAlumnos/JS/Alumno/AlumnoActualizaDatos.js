@@ -10,7 +10,7 @@ $(document).ready(function init() {
     function Load() {
         
         LimpiarCampos();
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         EsNumero(AlumnoNum);
     }
 
@@ -59,12 +59,12 @@ $(document).ready(function init() {
                     $('#slcSexo').val(data.DTOAlumnoDetalle.GeneroId);
                     $('#slcEstado').val(data.DTOAlumnoDetalle.EntidadFederativaId);
                     CargarEstados1(data.DTOAlumnoDetalle.EntidadFederativaId, data.DTOAlumnoDetalle.MunicipioId);
-
-                    $('#Load').modal('hide');
+                    
+                    IndexFn.Block(false);
                 }
                 else {
                     $('#popDatos').modal('hide');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Universidad YMCA","Error, El Alumno no Existe.");
 
                 }
@@ -119,9 +119,7 @@ $(document).ready(function init() {
 
     $('#Guardar').on('click',function () {
         if (form.valid() == false) { return false; }
-        var nombre = $('#hCarga');
-        nombre[0].innerText = "Guardando";
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         GuardarTodo();
     });
 
@@ -151,13 +149,13 @@ $(document).ready(function init() {
             dataType: 'json',
             success: function (data) {
                 if (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     $('#popDatos').modal('hide');
                     alertify.alert("Universidad YMCA","Datos del Alumno Modificados",function(){
                         //VerificarEncuesta();
                     });
                 } else {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     $('#popDatos').modal('hide');
                     alertify.alert("Universidad YMCA","Error, Revisar datos capturados.", function ()
                     {

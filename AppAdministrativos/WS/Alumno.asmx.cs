@@ -360,10 +360,6 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));
         }
 
-
-        //datos personales  generados por el coordinador
-        
-        //datos personales  generados por el coordinador
         [WebMethod]
         public DTOAlumnoDatos ObenerDatosAlumnoTodos(string AlumnoId)
         {
@@ -538,7 +534,6 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.AplicarCambioTurno(Cambio);
         }
-        //Cambio turno//
 
         //Cambio carrera//
         [WebMethod]
@@ -551,7 +546,6 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
         }
-        //Cambio carrera//
 
         //Baja Academica//
 
@@ -594,15 +588,14 @@ namespace AppAdministrativos.WS
                 return false;
             }
         }
-
-        //Baja Academica//
+        //actualizar alumno
 
         [WebMethod]
         public bool AtualizarAlumno(int AlumnoId, string Nombre, string Paterno, string Materno, string Nacimiento, int GeneroId, string CURP, int UsuarioId)
         {
             return BLLAlumnoPortal.UpdateAlumnoRP(AlumnoId, Nombre, Paterno, Materno, Nacimiento, GeneroId, CURP, UsuarioId);
         }
-
+        //con consultar bitacora de acceso del alumno
         [WebMethod]
         public DTOBitacoraAccesoAlumno BitacoraAccesoAlumno(int AlumnoId)
         {
@@ -621,5 +614,22 @@ namespace AppAdministrativos.WS
         {
             return BLL.BLLDonativo.AplicarDonativo(AlumnoDonativo);
         }
+
+
+        //  actualizar datos personales por el coordinador
+        [WebMethod]
+        public DTOAlumno ObenerDatosAlumnoCordinador(string AlumnoId)
+        {
+            return BLLAlumnoPortal.ObenerDatosAlumnoCordinador(int.Parse(AlumnoId));
+        }
+
+        [WebMethod]
+        public bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
+        {
+            return BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos);
+        }
+
+
+
     }
 }

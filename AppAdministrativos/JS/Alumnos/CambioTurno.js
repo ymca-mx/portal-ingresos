@@ -1,8 +1,20 @@
-﻿$(document).ready(function init() {
+﻿$(function ()
+{
     var AlumnoId;
     var lstop = [];
 
-    var eventos = {
+    var fnCambio = {
+        init: function ()
+        {
+            $('#btnBuscar').click(fnCambio.buscarAlumno);
+            $("#btnCambio").click(fnCambio.validar);
+            $("#btnGuardar").click(fnCambio.guardar);
+            $('#txtClave').on('keydown', function (e) {
+                if (e.which == 13) {
+                    fnCambio.buscarAlumno();
+                }
+            });
+        },
         buscarAlumno: function () {
             AlumnoId = $('#txtClave').val();
             if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
@@ -115,11 +127,7 @@
                         $('#slcTurno').empty();
                         $("#btnCambio").attr('disabled', 'disabled');
                         $('#lblInscito').text("Ya se aplicó cambio de carrera.");
-                        if (lstop[0].TurnoIdNueva == 5) {
-                            alertify.alert("El cambio se realizó correctamente, favor de enviar al alumno a relaciones publicas para la configuracion de cuotas correspondientes de turno nocturno.");
-                        } else {
                             alertify.alert("El cambio se realizó correctamente.");
-                        }
                     } else {
                         $("#txtComentario").empty();
                         alertify.alert("Error al  realizar cambio.");
@@ -130,15 +138,8 @@
         }
     };
 
-    $('#txtClave').on('keydown', function (e) {
-        if (e.which == 13) {
-            eventos.buscarAlumno();
-        }
-    });
+    fnCambio.init();
+}); 
+   
 
-    $('#btnBuscar').click(eventos.buscarAlumno);
-
-    $("#btnCambio").click(eventos.validar);
-
-    $("#btnGuardar").click(eventos.guardar);
-});
+   
