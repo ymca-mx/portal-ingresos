@@ -8,6 +8,13 @@
     var fnDatos =
         {
             init: function () {
+                ComponentsKnobDials.init();
+                ComponentsPickers.init();
+                GlobalFn.init()
+                GlobalFn.GetGenero();
+                GlobalFn.GetEstado("slcEstado", 9);
+                GlobalFn.GetEstadoCivil();
+
                 $("#btnBuscarAlumno").on("click", fnDatos.buscarAlumno);
                 $('#tblAlumnos').on('click', 'a', fnDatos.seleccionarAlumno);
                 $('#Guardar').on('click', fnDatos.guardarTodo);
@@ -103,8 +110,7 @@
                     }
                 });
             },
-            buscarAlumno: function ()
-            {
+            buscarAlumno: function () {
                 $("#divGuardar").hide();
                 $('#frmVarios').hide();
                 if (tblAlumnos != undefined) {
@@ -122,8 +128,7 @@
                     fnDatos.esString(AlumnoNum);
                 }
             },
-            seleccionarAlumno: function ()
-            {
+            seleccionarAlumno: function () {
                 $('#frmVarios').hide();
                 $('#frmTabs').show();
                 $('#Load').modal('show');
@@ -131,8 +136,7 @@
                 AlumnoNum = rowadd.AlumnoId;
                 fnDatos.esNumero(AlumnoNum);
             },
-            nacionalidadChange: function ()
-            {
+            nacionalidadChange: function () {
                 $("#slcLugarN").empty();
                 var optionP = $(document.createElement('option'));
                 optionP.text('--Seleccionar--');
@@ -142,137 +146,45 @@
                 var tipo = $("#slcNacionalidad");
                 tipo = tipo[0].value;
                 if (tipo == 2) {
-                    CargarPaises($("#slcLugarN"), -1);
+                    GlobalFn.GetPais($("#slcLugarN"), -1);
                 }
                 else if (tipo == 1) {
-                    CargarEstados($("#slcLugarN"), -1);
+                    GlobalFn.GetEstado($("#slcLugarN"), -1);
                 }
                 else { $("#slcLugarN").append(optionP); }
             },
-            cargarPaises: function (combo, PaisId) {
-                combo.empty();
-                $.ajax({
-                    type: "POST",
-                    url: "WS/General.asmx/ConsultarPaises",
-                    data: "{}",
-                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                    success: function (data) {
-                        var datos = data.d;
-                        $(datos).each(function () {
-                            var option = $(document.createElement('option'));
-                            option.text(this.Descripcion);
-                            option.val(this.PaisId);
-
-                            combo.append(option);
-                        });
-                        combo.val(PaisId);
-
-                    }
-                });
-            },
-            cargarEstados: function (combo, EstadoId) {
-
-                combo.empty();
-                $.ajax({
-                    type: "POST",
-                    url: "WS/General.asmx/ConsultarEntidadFederativa",
-                    data: "{}",
-                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                    success: function (data) {
-                        var datos = data.d;
-                        $(datos).each(function () {
-                            var option = $(document.createElement('option'));
-
-                            option.text(this.Descripcion);
-                            option.val(this.EntidadFederativaId);
-
-                            combo.append(option);
-                        });
-                        combo.val(EstadoId);
-
-                    }
-                });
-            },
-            cargarEstados1: function (EstadoId, MunicipioId) {
-                $('#slcEstado').empty();
-                $.ajax({
-                    type: "POST",
-                    url: "WS/General.asmx/ConsultarEntidadFederativa",
-                    data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
-                    //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                    contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                    success: function (data) {
-                        var datos = data.d;
-                        $(datos).each(function () {
-                            var option = $(document.createElement('option'));
-
-                            option.text(this.Descripcion);
-                            option.val(this.EntidadFederativaId);
-
-                            $("#slcEstado").append(option);
-                        });
-
-                        $('#slcEstado').val(EstadoId);
-                        $("#slcMunicipio").empty();
-
-                        $.ajax({
-                            type: "POST",
-                            url: "WS/General.asmx/ConsultarMunicipios",
-                            data: "{EntidadFederativaId:'" + EstadoId + "'}",
-                            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                            success: function (data) {
-                                var datos = data.d;
-                                $(datos).each(function () {
-                                    var option = $(document.createElement('option'));
-
-                                    option.text(this.Descripcion);
-                                    option.val(this.EntidadFederativaId);
-
-                                    $("#slcMunicipio").append(option);
-                                });
-                                $("#slcMunicipio").val(MunicipioId);
-
-                            }
-                        });
-                    }
-                });
-
-            },
             esNumero: function (Alumno) {
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Alumno.asmx/ObenerDatosAlumnoCordinador",
-                    data: "{AlumnoId:'" + Alumno + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.d != null) {
-                            $('#slcNacionalidad').val(data.d.DTOAlumnoDetalle.PaisId == 146 ? 1 : 2);
-                            if (data.d.DTOAlumnoDetalle.PaisId == 146) {
-                                fnDatos.cargarEstados($('#slcLugarN'), data.d.DTOAlumnoDetalle.EntidadNacimientoId);
+                IndexFn.Api('Alumno/ObenerDatosAlumnoCordinador/' + Alumno, "GET", "")
+                    .done(function (data) {
+                        if (data != null) {
+                            $('#slcNacionalidad').val(data.DTOAlumnoDetalle.PaisId == 146 ? 1 : 2);
+                            if (data.DTOAlumnoDetalle.PaisId == 146) {
+                                GlobalFn.GetEstado('slcLugarN', data.DTOAlumnoDetalle.EntidadNacimientoId);
                             } else {
-                                fnDatos.cargarPaises($('#slcLugarN'), data.d.DTOAlumnoDetalle.PaisId);
+                                GlobalFn.GetPais('slcLugarN', data.DTOAlumnoDetalle.PaisId);
                             }
                             ///Personales 
-                            $('#txtnombre').val(data.d.Nombre);
-                            $('#txtApPaterno').val(data.d.Paterno);
-                            $('#txtApMaterno').val(data.d.Materno);
-                            $('#txtCelular').val(data.d.DTOAlumnoDetalle.Celular);
-                            $('#txtFNacimiento').val(data.d.DTOAlumnoDetalle.FechaNacimientoC);
-                            $('#txtCURP').val(data.d.DTOAlumnoDetalle.CURP);
-                            $('#txtEmail').val(data.d.DTOAlumnoDetalle.Email);
-                            $('#txtTelefonoCasa').val(data.d.DTOAlumnoDetalle.TelefonoCasa);
+                            $('#txtnombre').val(data.Nombre);
+                            $('#txtApPaterno').val(data.Paterno);
+                            $('#txtApMaterno').val(data.Materno);
+                            $('#txtCelular').val(data.DTOAlumnoDetalle.Celular);
+                            $('#txtFNacimiento').val(data.DTOAlumnoDetalle.FechaNacimientoC);
+                            $('#txtCURP').val(data.DTOAlumnoDetalle.CURP);
+                            $('#txtEmail').val(data.DTOAlumnoDetalle.Email);
+                            $('#txtTelefonoCasa').val(data.DTOAlumnoDetalle.TelefonoCasa);
 
-                            $('#txtCalle').val(data.d.DTOAlumnoDetalle.Calle);
-                            $('#txtNumeroE').val(data.d.DTOAlumnoDetalle.NoExterior);
-                            $('#txtNumeroI').val(data.d.DTOAlumnoDetalle.NoInterior);
-                            $('#txtCP').val(data.d.DTOAlumnoDetalle.Cp);
-                            $('#txtColonia').val(data.d.DTOAlumnoDetalle.Colonia);
+                            $('#txtCalle').val(data.DTOAlumnoDetalle.Calle);
+                            $('#txtNumeroE').val(data.DTOAlumnoDetalle.NoExterior);
+                            $('#txtNumeroI').val(data.DTOAlumnoDetalle.NoInterior);
+                            $('#txtCP').val(data.DTOAlumnoDetalle.Cp);
+                            $('#txtColonia').val(data.DTOAlumnoDetalle.Colonia);
 
-                            $('#slcEstadoCivil').val(data.d.DTOAlumnoDetalle.EstadoCivilId);
-                            $('#slcSexo').val(data.d.DTOAlumnoDetalle.GeneroId);
-                            $('#slcEstado').val(data.d.DTOAlumnoDetalle.EntidadFederativaId);
-                            fnDatos.cargarEstados1(data.d.DTOAlumnoDetalle.EntidadFederativaId, data.d.DTOAlumnoDetalle.MunicipioId);
+                            $('#slcEstadoCivil').val(data.DTOAlumnoDetalle.EstadoCivilId);
+                            $('#slcSexo').val(data.DTOAlumnoDetalle.GeneroId);
+                            $('#slcEstado').val(data.DTOAlumnoDetalle.EntidadFederativaId);
+                            GlobalFn.EstadoChange().done(function () {
+                                $("#slcMunicipio").val(data.DTOAlumnoDetalle.MunicipioId);
+                            });
 
                             $("#divGuardar").show();
                             $('#Load').modal('hide');
@@ -281,25 +193,21 @@
                             $('#PopDatosAlumno').modal('hide');
                             $('#Load').modal('hide');
                             alertify.alert("Error, El Alumno no Existe.");
-
                         }
+                    })
+                    .fail(function (data) {
+                        alertify.alert('Error al cargar datos');
+                    });
 
-                    }
-                });
             },
             esString: function (Alumno) {
                 $('#frmTabs').hide();
-                $.ajax({
-                    url: 'WS/Alumno.asmx/BuscarAlumnoString',
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    data: '{Filtro:"' + Alumno + '"}',
-                    dataType: 'json',
-                    success: function (data) {
+                IndexFn.Api("Alumno/BuscarAlumnoString/" + Alumno, "GET", "")
+                    .done(function (data) {
                         if (data != null) {
                             $('#frmVarios').show();
                             tblAlumnos = $('#tblAlumnos').dataTable({
-                                "aaData": data.d,
+                                "aaData": data,
                                 "aoColumns": [
                                     { "mDataProp": "AlumnoId" },
                                     { "mDataProp": "Nombre" },
@@ -336,9 +244,11 @@
                             });
                         }
                         $('#Load').modal('hide');
+                    })
+                    .fail(function (data) {
+                        alertify.alert('Error al cargar datos');
+                    });
 
-                    }
-                });
             },
             guardarTodo: function () {
                 if (form.valid() == false) { return false; }

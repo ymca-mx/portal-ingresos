@@ -52,5 +52,33 @@ namespace AppAdministrativos.Controllers
         {
             return Ok(BLLPeriodoPortal.ConsultarPeriodos());
         }
+
+        [Route("ConsultarPais")]
+        [HttpGet]
+        public IHttpActionResult GetPais()
+        {
+            return Ok(BLLPeriodoPortal.ConsultarPeriodos());
+        }
+
+        [Route("ConsultarEntidadFederativa")]
+        [HttpGet]
+        public IHttpActionResult GetEntidadFederativa()
+        {
+            return Ok(BLLEntidadFederativa.ConsultarEntidadFederativa());
+        }
+
+        [Route("ConsultarMunicipios/{EntidadFederativaId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetMunicipios(int EntidadFederativaId)
+        {
+            return Ok(BLLMunicipio.ConsultarMunicipios(EntidadFederativaId));
+        }
+
+        [Route("ConsultarEstadoCivil")]
+        [HttpGet]
+        public IHttpActionResult GetEstadoCivil()
+        {
+            return Ok(BLLEstadoCivil.ConsultarEstadosCiviles());
+        }
     }
 }

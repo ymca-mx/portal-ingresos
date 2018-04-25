@@ -44,5 +44,44 @@ namespace AppAdministrativos.Controllers
         {
             return Ok(alumno);
         }
+
+        [Route("BuscarAlumnoString/{Filtro}")]
+        [HttpGet]
+        public IHttpActionResult BuscarAlumnoString(string Filtro)
+        {
+            return Ok(BLLAlumnoPortal.BuscarAlumnoTexto(Filtro));
+        }
+
+        //Cambio turno
+        [Route("ConsultaCambioTurno/{AlumnoId:int}/{UsuarioId:int}")]
+        [HttpGet]
+        public IHttpActionResult ConsultaCambioTurno(int AlumnoId, int UsuarioId)
+        {
+            return Ok(BLLAlumnoPortal.ConsultaCambioTurno(AlumnoId, UsuarioId));
+        }
+
+        [Route("AplicarCambioTurno")]
+        [HttpPost]
+        public IHttpActionResult AplicarCambioTurno(DTO.DTOAlumnoCambioTurno Cambio)
+        {
+            return Ok(BLLAlumnoPortal.AplicarCambioTurno(Cambio));
+        }
+
+        //  actualizar datos personales por el coordinador
+
+        [Route("ObenerDatosAlumnoCordinador/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult ObenerDatosAlumnoCordinador(int AlumnoId)
+        {
+            return Ok(BLLAlumnoPortal.ObenerDatosAlumnoCordinador(AlumnoId));
+        }
+
+        [Route("UpdateAlumnoDatosCoordinador")]
+        [HttpPost]
+        public IHttpActionResult UpdateAlumnoDatosCoordinador(DTO.DTOAlumnoDetalle AlumnoDatos)
+        {
+            return Ok(BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos));
+        }
+
     }
 }

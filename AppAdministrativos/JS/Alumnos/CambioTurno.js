@@ -20,26 +20,23 @@
             if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
 
             $('#Load').modal('show');
-            $.ajax({
-                type: "POST",
-                url: "WS/Alumno.asmx/ConsultaCambioTurno",
-                data: "{AlumnoId:'" + AlumnoId + "', UsuarioId:" + $.cookie('userAdmin') + "}",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
+
+
+            IndexFn.Api('Alumno/ConsultaCambioTurno/' + AlumnoId +"/ " + $.cookie('userAdmin'), "GET", "")
+                .done(function (data) {
                     $('#lblNombre').text("");
                     $("#txtOfertaEducativa").val("");
                     $("#txtPeriodo").val("");
                     $("#txtTurno").val("");
                     $('#slcTurno').empty();
                     $('#lblInscito').empty();
-                    if (data.d === null) {
+                    if (data === null) {
                         alertify.alert("Este alumno no existe.");
                         $('#Load').modal('hide');
                         return false;
                     }
                     lstop.length = 0;
-                    lstop.push(data.d);
+                    lstop.push(data);
                     $('#lblNombre').text(lstop[0].NombreC);
 
                     if (lstop[0].OfertaEducativaId == 0) {
@@ -81,8 +78,12 @@
 
                     $("#btnCambio").removeAttr("disabled");
                     $('#Load').modal('hide');
-                }
-            });
+                })
+                .fail(function (data) {
+                    alertify.alert('Error al cargar datos');
+                });
+
+
         },
         validar: function () {
             if ($("#slcTurno").val() == -1 || $("#slcTurno").val() == null) {
@@ -106,20 +107,13 @@
             lstop[0].Observaciones = $("#txtComentario").val();
             lstop[0].UsuarioId = $.cookie('userAdmin');
 
-            var obj = {
-                "Cambio": lstop[0]
-            };
+            var obj =  lstop[0];
             obj = JSON.stringify(obj);
 
 
-            $.ajax({
-                type: "POST",
-                url: "WS/Alumno.asmx/AplicarCambioTurno",
-                data: obj,
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
-                    if (data.d == true) {
+            IndexFn.Api('Alumno/AplicarCambioTurno', "POST", obj )
+                .done(function (data) {
+                    if (data == true) {
                         $("#txtComentario").empty();
                         $("#txtOfertaEducativa").val("");
                         $("#txtPeriodo").val("");
@@ -127,14 +121,17 @@
                         $('#slcTurno').empty();
                         $("#btnCambio").attr('disabled', 'disabled');
                         $('#lblInscito').text("Ya se aplicó cambio de carrera.");
-                            alertify.alert("El cambio se realizó correctamente.");
+                        alertify.alert("El cambio se realizó correctamente.");
                     } else {
                         $("#txtComentario").empty();
                         alertify.alert("Error al  realizar cambio.");
                     }
                     $('#Load').modal('hide');
-                }
-            });
+                })
+                .fail(function (data) {
+                    alertify.alert('Error al cargar datos');
+                });
+            
         }
     };
 
