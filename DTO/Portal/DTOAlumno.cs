@@ -318,5 +318,23 @@ namespace DTO
         public string Descripcion { get; set; }
         public List<DTOPeriodo2> ListaPeriodos { get; set; }
     }
+
+    public class DTOAlumnoOfertaCuotas
+    {
+        public int AlumnoId { get; set; }
+        public int Anio { get; set; }
+        public int AnioAnterior { get; set; }
+        public int PeriodoId { get; set; }
+        public int PeriodoIdAnterior { get; set; }
+        public int OfertaEducativaIdNueva { get; set; }
+        public int OfertaEducativaIdActual { get; set; }
+        public int TurnoId { get; set; }
+        public bool EsEmpresa { get; set; }
+        public int UsuarioId { get; set; }
+        public decimal MontoColegiatura { get; set; }
+        public decimal MontoInscripcion { get; set; }
+        public decimal MontoCredencial { get; set; }
+        public decimal MontoExamen { get; set; }
+    }
 }
 

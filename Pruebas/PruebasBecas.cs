@@ -129,8 +129,8 @@ namespace Pruebas
 
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 8113,
-                anio = 2018,
+                alumnoId = 8490,
+                anio = 2017,
                 periodoId = 3,
                 ofertaEducativaId = 29,
                 porcentajeBeca = 55m,//70.15

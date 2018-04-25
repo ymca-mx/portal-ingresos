@@ -293,7 +293,9 @@
 
                 }
             }
-            Funciones.Anticipado();
+            if (parseInt($('#sclPeriodo').val()) !== -1){
+                Funciones.Anticipado();
+            } else { IndexFn.Block(false);}
 
         },
         CargarPagos: function () {
@@ -401,9 +403,9 @@
                         }
                     });
                     ///Se tiene que regresar a valor anterior
-                    //if (Genera == 1) {
-                    //    $('#divAnticipado').show();
-                    //} else { $('#divAnticipado').hide(); }
+                    if (Genera == 1) {
+                        $('#divAnticipado').show();
+                    } else { $('#divAnticipado').hide(); }
                     //AlumnoId = "";
                 }
             });

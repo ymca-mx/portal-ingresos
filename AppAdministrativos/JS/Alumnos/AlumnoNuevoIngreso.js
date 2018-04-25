@@ -124,6 +124,7 @@
                     NuevoIngreFn.ChangeCombos(data);
                     NuevoIngreFn.objGuardar = {};
                     NuevoIngreFn.objGuardar.AlumnoId = AlumnoId;
+                    NuevoIngreFn.objGuardar.OfertaEducativaId = data.OfertaEducativaId;
                     $("#slcPeriodo").val(data.PeriodoId + " " + data.Anio).change();
                     $("#slcTurno").val(data.TurnoId).change();
                     $('#chkEmpresa').prop('checked', data.EsEmpresa);
@@ -183,7 +184,8 @@
                 AlumnoId: NuevoIngreFn.objGuardar.AlumnoId,
                 Anio: $('#slcPeriodo :selected').data("anio"),
                 PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
-                OfertaEducativaId: $('#slcOFertaEducativa').val(),
+                OfertaEducativaIdActual: NuevoIngreFn.objGuardar.OfertaEducativaId,
+                OfertaEducativaIdNueva: $('#slcOFertaEducativa').val(),
                 TurnoId: $('#slcTurno').val(),
                 EsEmpresa: $('#chkEmpresa').prop('checked'),
                 UsuarioId: $.cookie('userAdmin')

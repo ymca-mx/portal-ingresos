@@ -52,5 +52,6 @@ namespace AppAdministrativos.Controllers
         {
             return Ok(BLLPeriodoPortal.ConsultarPeriodos());
         }
+        
     }
 }

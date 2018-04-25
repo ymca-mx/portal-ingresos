@@ -40,9 +40,9 @@ namespace AppAdministrativos.Controllers
 
         [Route("ChageOffer")]
         [HttpPost]
-        public IHttpActionResult CambiarOfertaEducativa(DTO.DTOAlumnoInscrito alumno)
+        public IHttpActionResult CambiarOfertaEducativa(DTO.DTOAlumnoOfertaCuotas alumno)
         {
-            return Ok(alumno);
+            return Ok(BLL.BLLAlumnoCambio.CambioGnral(alumno));
         }
     }
 }

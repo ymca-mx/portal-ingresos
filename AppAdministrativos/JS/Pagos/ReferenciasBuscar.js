@@ -353,7 +353,9 @@
 
                 }
             }
-            Funciones.Anticipado();
+            if (parseInt($('#sclPeriodo').val()) != -1) {
+                Funciones.Anticipado();
+            } else { $('#Load').modal('hide');}
             
         },
         CargarPagos: function () {
@@ -404,8 +406,13 @@
                 dataType: 'json',
                 success: function (data) {
                     $('#Load').modal('hide');
+                    var Descripcion = "";
                     if (data.d == null) { return null; }
                     var Genera = 0;
+                    $('#divtablas').empty();
+
+                    //Descripcion = " Si vas hacer tu pago anticipado tienes hasta el "+1+" para pagar los siguientes montos con las referencias indicadas:";
+
                     $(data.d).each(function () {
                         var tabla1 = '<br />' +
                             '<table>' +
@@ -464,9 +471,10 @@
                     });
 
                     ///Se tiene que regresar a valor anterior
-                    //if (Genera == 1) {
-                    //    $('#divAnticipado').show();
-                    //} else { $('#divAnticipado').hide(); }
+                    if (Genera == 1) {
+                        $('#divAnticipado').show();
+                        //$('#pdescription').text(Descripcion);
+                    } else { $('#divAnticipado').hide(); }
                     //AlumnoId = "";
                 }
             });

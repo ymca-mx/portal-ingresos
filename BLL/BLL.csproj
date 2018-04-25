@@ -56,6 +56,7 @@
     <Compile Include="Anticipado.cs" />
     <Compile Include="BLLAdeudoBitacora.cs" />
     <Compile Include="BLLAlumno.cs" />
+    <Compile Include="BLLAlumnoCambio.cs" />
     <Compile Include="BLLAlumnoPortal.cs" />
     <Compile Include="BLLAlumnoBeca.cs" />
     <Compile Include="BLLAlumnoDescuento.cs" />
