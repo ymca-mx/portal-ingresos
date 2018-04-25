@@ -15,7 +15,7 @@ namespace AppAlumnos.Controllers
         [HttpGet]
         public IHttpActionResult ConsultarEntidadFederativa()
         {
-            return Ok(BLLEntidadFederativa.ConsultarEstadosCiviles());
+            return Ok(BLLEntidadFederativa.ConsultarEntidadFederativa());
         }
 
         [Route("Api/General/NombreCalendario/{Alumno}")]

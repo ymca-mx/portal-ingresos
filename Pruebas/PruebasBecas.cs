@@ -137,15 +137,14 @@ namespace Pruebas
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
-                esEmpresa = false,
-                usuarioId = 6157, //Usua4rio que inscribio  -> Alejandra 6070
-                fecha = "2018-03-26", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
+                esEmpresa = true,
+                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
+                fecha = "2016-09-12", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
                 //    //Inscripcion = decimal
             });
             
-
             Alumno.ForEach(a =>
             {
                 BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, false);

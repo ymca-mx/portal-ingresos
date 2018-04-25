@@ -10,7 +10,7 @@ namespace BLL
 {
     public class BLLEntidadFederativa
     {
-        public static List<DTOEntidadFederativa> ConsultarEstadosCiviles()
+        public static List<DTOEntidadFederativa> ConsultarEntidadFederativa()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {

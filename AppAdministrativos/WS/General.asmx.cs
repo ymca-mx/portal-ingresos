@@ -86,8 +86,9 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public List<DTOEntidadFederativa> ConsultarEntidadFederativa()
         {
-            return BLLEntidadFederativa.ConsultarEstadosCiviles();
+            return BLLEntidadFederativa.ConsultarEntidadFederativa();
         }
+
         [WebMethod]
         public object ConsultarPlantel()
         {
@@ -113,6 +114,8 @@ namespace AppAdministrativos.WS
         {
             return BLLMunicipio.ConsultarMunicipios(EntidadFederativaId);
         }
+
+
         [WebMethod]
         public List<DTOPagoPlan> ConsultarPagosPlanLenguas(int Oferta)
         {

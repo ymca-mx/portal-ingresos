@@ -154,6 +154,7 @@ namespace AppAdministrativos.WS
             catch (Exception ex)
             { return ex.Message + " " + AñoPrepa; }
         }
+
         [WebMethod]
         public List<DTOAlumnoLigero> ConsultarAlumnosNuevos()
         {
@@ -278,11 +279,13 @@ namespace AppAdministrativos.WS
         {
             return BLLPagoPortal.ReferenciasPagadasC(int.Parse(AlumnoId));
         }
+
         [WebMethod]
         public List<DTOAlumno> BuscarAlumnoFiltro(string filtro)
         {
             return BLLAlumnoPortal.BuscarAlumno(filtro);
         }
+
         [WebMethod]
         public List<DTOAlumno> BuscarAlumnoString(string Filtro)
         {
@@ -330,6 +333,7 @@ namespace AppAdministrativos.WS
             public List<DTOPagoDetallado> item1 { get; set; }
             public bool item2 { get; set; }
         }
+
         [WebMethod]
         public List<DTOPeriodo> ConsultarPeriodosAlumno(string AlumnoId)
         {
@@ -360,10 +364,6 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));
         }
 
-
-        //datos personales  generados por el coordinador
-        
-        //datos personales  generados por el coordinador
         [WebMethod]
         public DTOAlumnoDatos ObenerDatosAlumnoTodos(string AlumnoId)
         {
@@ -525,20 +525,7 @@ namespace AppAdministrativos.WS
             BLLEstadoCuenta.ObtenerCargos(new DTOAlumno { AlumnoId = int.Parse(AlumnoId) }, DateTime.Parse(FechaI), DateTime.Parse(FechaF),
             BLLEstadoCuenta.ObtenerAbonos(new DTOAlumno { AlumnoId = int.Parse(AlumnoId) }, DateTime.Parse(FechaI), DateTime.Parse(FechaF)));
         }
-
-
-        //Cambio turno//
-        [WebMethod]
-        public DTOAlumnoCambioTurno ConsultaCambioTurno(string AlumnoId, int UsuarioId)
-        {
-            return BLLAlumnoPortal.ConsultaCambioTurno(int.Parse(AlumnoId),UsuarioId);
-        }
-        [WebMethod]
-        public bool AplicarCambioTurno(DTOAlumnoCambioTurno Cambio)
-        {
-            return BLLAlumnoPortal.AplicarCambioTurno(Cambio);
-        }
-        //Cambio turno//
+        
 
         //Cambio carrera//
         [WebMethod]
@@ -551,7 +538,6 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
         }
-        //Cambio carrera//
 
         //Baja Academica//
 
@@ -594,15 +580,14 @@ namespace AppAdministrativos.WS
                 return false;
             }
         }
-
-        //Baja Academica//
+        //actualizar alumno
 
         [WebMethod]
         public bool AtualizarAlumno(int AlumnoId, string Nombre, string Paterno, string Materno, string Nacimiento, int GeneroId, string CURP, int UsuarioId)
         {
             return BLLAlumnoPortal.UpdateAlumnoRP(AlumnoId, Nombre, Paterno, Materno, Nacimiento, GeneroId, CURP, UsuarioId);
         }
-
+        //con consultar bitacora de acceso del alumno
         [WebMethod]
         public DTOBitacoraAccesoAlumno BitacoraAccesoAlumno(int AlumnoId)
         {
@@ -621,5 +606,22 @@ namespace AppAdministrativos.WS
         {
             return BLL.BLLDonativo.AplicarDonativo(AlumnoDonativo);
         }
+
+
+        //  actualizar datos personales por el coordinador
+        [WebMethod]
+        public DTOAlumno ObenerDatosAlumnoCordinador(string AlumnoId)
+        {
+            return BLLAlumnoPortal.ObenerDatosAlumnoCordinador(int.Parse(AlumnoId));
+        }
+
+        [WebMethod]
+        public bool UpdateAlumnoDatosCoordinador(DTOAlumnoDetalle AlumnoDatos)
+        {
+            return BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos);
+        }
+
+
+
     }
 }
