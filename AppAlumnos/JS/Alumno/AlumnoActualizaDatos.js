@@ -160,8 +160,7 @@ $(document).ready(function init() {
                     $('#popDatos').modal('hide');
                     alertify.alert("Universidad YMCA","Error, Revisar datos capturados.", function ()
                     {
-                        $('#popDatos').modal('hide');
-                        $('#popDatos').empty();
+                        $('#popDatos').modal('show');
                     });
                 }
             }
