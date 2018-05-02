@@ -1,6 +1,7 @@
 ﻿using BLL;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -83,5 +84,19 @@ namespace AppAdministrativos.Controllers
             return Ok(BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos));
         }
 
+        [Route("UpdateAlumno")]
+        [HttpPost]
+        public IHttpActionResult UpdateAlumno(DTO.DTOAlumno Alumno)
+        {
+            Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact((Alumno.DTOAlumnoDetalle.FechaNacimientoC.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return Ok(BLLAlumnoPortal.UpdateAlumno(Alumno, Alumno.UsuarioId));
+        }
+
+        [Route("ObtenerDatosAlumno/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult ObtenerDatosAlumno(int AlumnoId)
+        {
+            return Ok(BLLAlumnoPortal.ObtenerAlumnoCompleto(AlumnoId));
+        }
     }
 }

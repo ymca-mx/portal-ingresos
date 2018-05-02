@@ -43,6 +43,7 @@ namespace BLL
                         TelefonoCasa = AlumnoDetalleAnterior.TelefonoCasa,
                         TelefonoOficina = AlumnoDetalleAnterior.TelefonoOficina,
                         UsuarioId = UsuarioId,
+                        Observaciones=AlumnoDetalleAnterior.Observaciones,
                     });
 
                     db.SaveChanges();

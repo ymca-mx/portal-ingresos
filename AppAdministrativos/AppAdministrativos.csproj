@@ -121,6 +121,7 @@
     <Content Include="JS\Alumnos\AlumnoNuevoIngreso.js" />
     <Content Include="JS\Alumnos\AutorizarInscripcion.js" />
     <Content Include="JS\Alumnos\CambioTurno.js" />
+    <Content Include="JS\Alumnos\DatosAcademicos.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Alumnos\SolicitarInscripcion.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
@@ -4758,6 +4759,7 @@
     <Content Include="Views\Alumno\CambioTurno.html" />
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\AutorizarInscripcion.html" />
+    <Content Include="Views\Alumno\DatosAcademicos.html" />
     <Content Include="Views\Alumno\PromociónCasa.html" />
     <Content Include="Views\Alumno\SolicitarInscripcion.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />

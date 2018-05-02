@@ -31,7 +31,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public List<DTOParentesco> ConsultarParentesco()
+        public object ConsultarParentesco()
         {
             return BLLParentesco.ConsultarTodosParentesco();
         }
@@ -136,7 +136,7 @@ namespace AppAdministrativos.WS
             return BLLPeriodoPortal.TraerPeriodoCompleto(BLLPeriodoPortal.ConsultarPeriodo(Periodo).Anio, int.Parse(Periodo.Substring(0, 1)), int.Parse(ofertaId));
         }
         [WebMethod]
-        public List<DTOAreaAcademica> ObtenerAreas()
+        public object ObtenerAreas()
         {
             return BLLAreaAcademica.AreasAcademicas();
         }
@@ -146,7 +146,7 @@ namespace AppAdministrativos.WS
             return BLLCuota.CuotaUnPago(int.Parse(OfertaEducativa), int.Parse(PagoPlan), Periodo);
         }
         [WebMethod]
-        public List<DTOMedioDifusion> TraerListaMedios()
+        public object TraerListaMedios()
         {
             return BLLMedioDifusion.ConsultarListadeMedios();
         }

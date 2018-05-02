@@ -236,7 +236,8 @@ namespace BLL
                                                     && ald.PagoConceptoId== cu.PagoConceptoId)
                                         .Select(a=> a.Monto)
                                         .FirstOrDefault(),
-                                        cu.PagoConcepto.Descripcion,
+                                        cu.PagoConceptoId,
+                                        cu.Monto
                                         
                                     }).ToList()
                     })
@@ -1395,7 +1396,7 @@ namespace BLL
                             FechaNacimiento = AlumnoBase.AlumnoDetalle.FechaNacimiento,
                             FechaNacimientoC = AlumnoBase.AlumnoDetalle.FechaNacimiento.ToString("dd-MM-yyyy", Cultura),
                             GeneroId = AlumnoBase.AlumnoDetalle.GeneroId,
-                            CURP = AlumnoBase.AlumnoDetalle.CURP,
+                            CURP = AlumnoBase.AlumnoDetalle.CURP.Trim(),
                             Email = AlumnoBase.AlumnoDetalle.Email.Trim(),
                             Calle = AlumnoBase.AlumnoDetalle.Calle.Trim(),
                             NoExterior = AlumnoBase.AlumnoDetalle.NoExterior,
@@ -1405,7 +1406,8 @@ namespace BLL
                             EntidadFederativaId = AlumnoBase.AlumnoDetalle.EntidadFederativaId,
                             MunicipioId = AlumnoBase.AlumnoDetalle.MunicipioId,
                             PaisId = AlumnoBase.AlumnoDetalle.PaisId,
-                            EntidadNacimientoId = AlumnoBase.AlumnoDetalle.EntidadNacimientoId
+                            EntidadNacimientoId = AlumnoBase.AlumnoDetalle.EntidadNacimientoId,
+                            Observaciones=AlumnoBase.AlumnoDetalle?.Observaciones ?? ""
                         },
                         lstOfertas = AlumnoBase.AlumnoInscrito
                         .Select(s =>
@@ -12306,8 +12308,10 @@ namespace BLL
                         NoInterior = AlumnoOriginal.AlumnoDetalle.NoInterior,
                         PaisId = AlumnoOriginal.AlumnoDetalle.PaisId,
                         TelefonoCasa = AlumnoOriginal.AlumnoDetalle.TelefonoCasa,
-                        TelefonoOficina = AlumnoOriginal.AlumnoDetalle.TelefonoOficina
+                        TelefonoOficina = AlumnoOriginal.AlumnoDetalle.TelefonoOficina,
+                        Observaciones=AlumnoOriginal.AlumnoDetalle.Observaciones
                     });
+
                     AlumnoOriginal.AlumnoDetalle.Calle = AlumnoActualizacion.DTOAlumnoDetalle.Calle;
                     AlumnoOriginal.AlumnoDetalle.Celular = AlumnoActualizacion.DTOAlumnoDetalle.Celular;
                     AlumnoOriginal.AlumnoDetalle.Colonia = AlumnoActualizacion.DTOAlumnoDetalle.Colonia;
@@ -12323,6 +12327,8 @@ namespace BLL
                     AlumnoOriginal.AlumnoDetalle.NoExterior = AlumnoActualizacion.DTOAlumnoDetalle.NoExterior;
                     AlumnoOriginal.AlumnoDetalle.NoInterior = AlumnoActualizacion.DTOAlumnoDetalle.NoInterior;
                     AlumnoOriginal.AlumnoDetalle.PaisId = AlumnoActualizacion.DTOAlumnoDetalle.PaisId;
+                    AlumnoOriginal.AlumnoDetalle.Observaciones = AlumnoActualizacion.DTOAlumnoDetalle.Observaciones;
+
                     //AlumnoOriginal.AlumnoDetalle.ProspectoId = AlumnoActualizacion.DTOAlumnoDetalle.AlumnoId;
                     AlumnoOriginal.AlumnoDetalle.TelefonoCasa = AlumnoActualizacion.DTOAlumnoDetalle.TelefonoCasa;
                     AlumnoOriginal.AlumnoDetalle.TelefonoOficina = AlumnoActualizacion.DTOAlumnoDetalle.TelefonoOficina;

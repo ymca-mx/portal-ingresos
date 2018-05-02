@@ -1,11 +1,4 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <title>Alumnos Nuevo Ingreso</title>
-</head>
-<body>
+﻿<main>
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
@@ -14,10 +7,6 @@
         </div>
         <div class="panel-body">
             <div class="table">
-                <div class="form-group col-md-4 col-md-offset-9">
-                    <label>¿Neceistas Ayuda?</label>
-                    <a target="_blank" href="Documentos/Manuales/ManualModificacionNuevoIngreso.pdf" class="btn btn-danger">Descargar Manual</a>
-                </div>
             </div>
             <div class="table">
                 <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
@@ -39,7 +28,7 @@
                                 <i class="fa fa-user-md"></i>&nbsp; Usuario
                             </th>
                             <th>
-                                <i class="fa fa-edit"></i>&nbsp; Personales
+                                <i class="fa fa-edit"></i>&nbsp; Cuotas
                             </th>
                         </tr>
                     </thead>
@@ -50,54 +39,6 @@
 
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalDatos" data-keyboard="false">
-        <div class="modal-absolute">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Datos del Alumno</h3>
-                </div>
-                <form id="frmDatos" onSubmit="return false;">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-12 form-group">
-                                    <label class="control-label">Nombre:</label>
-                                    <input class="form-control" id="txtNombre" required pattern=".{2,300}" title="2 letras minimo" type="text" />
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <label class="control-label">Paterno:</label>
-                                    <input class="form-control" id="txtPaterno" required type="text" pattern=".{2,300}" title="2 letras minimo" />
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <label class="control-label">Materno:</label>
-                                    <input class="form-control" id="txtMaterno" type="text" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-12 form-group">
-                                    <label class="control-label">Fecha de Nacimiento:</label>
-                                    <input class="form-control datetimepicker" id="txtFecha" type="date" required />
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <label class="control-label">Genero:</label>
-                                    <select class="form-control" id="slcSexo"></select>
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <label class="control-label">CURP:</label>
-                                    <input class="form-control" id="txtCURP" required type="text" pattern=".{18,20}" title="18 letras minimo" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-default" id="btnCancelar">Cancelar</a>
-                        <button class="btn btn-primary" id="btnGuardarDatos">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalEducativa" data-keyboard="false" data-width="655">
         <div class="modal-dialog modal-dialog" style="width:650px">
             <div class="modal-content">
@@ -265,6 +206,7 @@
             </div>
         </div>
     </div>
-    <script src="JS/Alumnos/AlumnoNuevoIngreso.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript('JS/Alumnos/DatosAcademicos.js');
+</script>

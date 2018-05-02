@@ -10,15 +10,15 @@ namespace BLL
 {
     public class BLLParentesco
     {
-        public static List<DTOParentesco> ConsultarTodosParentesco()
+        public static object ConsultarTodosParentesco()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 return (from a in db.Parentesco
-                                                         select new DTOParentesco
+                                                         select new 
                                                          {
-                                                             ParentescoId=a.ParentescoId,
-                                                             Descripcion=a.Descripcion
+                                                             a.ParentescoId,
+                                                             a.Descripcion
                                                          }).ToList();
             }
         }

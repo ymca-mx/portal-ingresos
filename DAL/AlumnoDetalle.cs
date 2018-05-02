@@ -33,6 +33,7 @@ namespace DAL
         public string Celular { get; set; }
         public string Email { get; set; }
         public bool TieneExamenMedico { get; set; }
+        public string Observaciones { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual EntidadFederativa EntidadFederativa { get; set; }

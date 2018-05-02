@@ -80,5 +80,33 @@ namespace AppAdministrativos.Controllers
         {
             return Ok(BLLEstadoCivil.ConsultarEstadosCiviles());
         }
+
+        [Route("GetDirectory")]
+        [HttpGet]
+        public IHttpActionResult GetDiractorios()
+        {
+            return Ok(BLLAlumnoCambio.GetRoot());
+        }
+
+        [Route("TraerListaMedios")]
+        [HttpGet]
+        public IHttpActionResult MediosDifucion()
+        {
+            return Ok(BLLMedioDifusion.ConsultarListadeMedios());
+        }
+
+        [Route("ConsultarParentesco")]
+        [HttpGet]
+        public IHttpActionResult GetParentesco()
+        {
+            return Ok(BLLParentesco.ConsultarTodosParentesco());
+        }
+
+        [Route("ObtenerAreas")]
+        [HttpGet]
+        public IHttpActionResult GetAreas()
+        {
+            return Ok(BLLAreaAcademica.AreasAcademicas());
+        }
     }
 }

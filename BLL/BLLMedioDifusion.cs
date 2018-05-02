@@ -12,15 +12,15 @@ namespace BLL
 {
     public class BLLMedioDifusion
     {
-        public static List<DTOMedioDifusion> ConsultarListadeMedios()
+        public static object ConsultarListadeMedios()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 return (from a in db.MedioDifusion
-                        select new DTOMedioDifusion
+                        select new 
                         {
-                            Descripcion=a.Descripcion,
-                            MedioDifusionId=a.MedioDifusionId
+                            a.Descripcion,
+                            a.MedioDifusionId
                         }).ToList();
             }
         }

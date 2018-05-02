@@ -6,14 +6,12 @@
             $('#tblAlumnos').on('click', 'a', this.tblAlumnosClickA);
             $('#btnCancelar').on('click', this.btnCancelarClick);
             $('#btnGuardarDatos').on('click', this.btnGuardarDatosClick);
-            $('#btnGuardarDatosEdu').on('click', this.btnCambioCarreraClick);
+            
             GlobalFn.init();
             GlobalFn.GetGenero();
-            GlobalFn.GetTurno();
-            GlobalFn.GetPlantel();
-            GlobalFn.GetPeriodo_N_I();
             this.TraerAlumnos();
         },
+        objGuardar: { AlumnoId: -1 },
         TraerAlumnos() {
             $('#Load').modal('show');
             IndexFn.Api('Alumno/ConsultarAlumnosNuevos/', "GET", "")
@@ -31,11 +29,6 @@
                                     return "<a name='Personales' href=''onclick='return false;' class='btn btn-success'> Editar </a> ";
                                 }
                             },
-                            {
-                                "mDataProp": function (data) {
-                                    return "<a name='Academicos' href=''onclick='return false;' class='btn btn-success'> Editar </a> ";
-                                }
-                            }
                         ],
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
@@ -89,12 +82,8 @@
         tblAlumnosClickA() {
             $('#Load').modal('show');
             var fid = tblAlumnos.fnGetData(this.parentNode.parentNode, 0);
-
-            if (this.name === "Personales") {
+            
                 NuevoIngreFn.TraerDatosPersonales(fid);
-            } else {
-                NuevoIngreFn.TraerDatosAcademicos(fid);
-            }
         },
         TraerDatosPersonales(AlumnoId) {
             IndexFn.Api('Alumno/ConsultarAlumno/' + AlumnoId, "GET", "")
@@ -117,26 +106,7 @@
                     }
                     $('#Load').modal('hide');
                 });
-        },
-        TraerDatosAcademicos(AlumnoId) {
-            IndexFn.Api("Alumno/Academicos/" + AlumnoId, "GET", "")
-                .done(function (data) {
-                    NuevoIngreFn.ChangeCombos(data);
-                    NuevoIngreFn.objGuardar = {};
-                    NuevoIngreFn.objGuardar.AlumnoId = AlumnoId;
-                    NuevoIngreFn.objGuardar.OfertaEducativaId = data.OfertaEducativaId;
-                    $("#slcPeriodo").val(data.PeriodoId + " " + data.Anio).change();
-                    $("#slcTurno").val(data.TurnoId).change();
-                    $('#chkEmpresa').prop('checked', data.EsEmpresa);
-
-                    $('#ModalEducativa').modal('show');
-                    $('#Load').modal('hide');
-                })
-                .fail(function (data) {
-                    $('#Load').modal('hide');
-                    alertify.alert("Error al consultar la información");
-                });
-        },
+        },        
         btnCancelarClick() {
             $('#ModalDatos').modal('hide');
         },
@@ -157,53 +127,7 @@
                 NuevoIngreFn.Guardar(JSON.stringify(objGuardar));
             }
         },
-        objGuardar: { AlumnoId: -1 },
-        ChangeCombos(data) {
-            GlobalFn.DatosOferta.PlantelId = -1;
-            GlobalFn.DatosOferta.OfertaEducativaTipoId = -1;
-            GlobalFn.DatosOferta.OFertaEducativa = -1;
-
-            GlobalFn.DatosOferta.PlantelId = data.SucursalId;
-            GlobalFn.DatosOferta.OfertaEducativaTipoId = data.OfertaEducativaTipoId;
-            GlobalFn.DatosOferta.OFertaEducativa = data.OfertaEducativaId;
-
-            if (parseInt($("#slcPlantel").val()) !== data.SucursalId) {
-                $("#slcPlantel").val(data.SucursalId);
-                $("#slcPlantel").change();
-            } else if (parseInt($("#slcTipoOferta").val()) !== data.OfertaEducativaTipoId) {
-                $("#slcTipoOferta").val(data.OfertaEducativaTipoId);
-                $("#slcTipoOferta").change();
-            } else if (parseInt($("#slcOFertaEducativa").val()) !== data.OfertaEducativaId) {
-                $("#slcOFertaEducativa").val(data.OfertaEducativaId);
-                $("#slcOFertaEducativa").change();
-            }
-        },
-        btnCambioCarreraClick() {
-            $('#Load').modal('show');
-            var objGuardar = {
-                AlumnoId: NuevoIngreFn.objGuardar.AlumnoId,
-                Anio: $('#slcPeriodo :selected').data("anio"),
-                PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
-                OfertaEducativaIdActual: NuevoIngreFn.objGuardar.OfertaEducativaId,
-                OfertaEducativaIdNueva: $('#slcOFertaEducativa').val(),
-                TurnoId: $('#slcTurno').val(),
-                EsEmpresa: $('#chkEmpresa').prop('checked'),
-                UsuarioId: $.cookie('userAdmin')
-            };
-
-            IndexFn.Api("Alumno/ChageOffer", "POST", JSON.stringify(objGuardar))
-                .done(function (data) {
-                    $('#ModalEducativa').modal('hide');
-                    $('#Load').modal('hide');
-                    alertify.alert("Se guardo correctamente", function () {
-                        NuevoIngreFn.TraerAlumnos();
-                    });
-                })
-                .fail(function (data) {
-                    $('#Load').modal('hide');
-                    alertify.alert("Error al consultar la información");
-                });
-        }
+       
     };
 
     NuevoIngreFn.init();
