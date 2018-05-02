@@ -83,5 +83,11 @@ namespace AppAdministrativos.Controllers
             return Ok(BLLAlumnoPortal.UpdateAlumnoDatosCoordinador(AlumnoDatos));
         }
 
+        [Route("ObenerDatosAlumnoTodos/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetDatosAlumnoTodos(int AlumnoId)
+        {
+            return Ok(BLLAlumnoPortal.ObenerDatosAlumnoTodos(AlumnoId));
+        }
     }
 }

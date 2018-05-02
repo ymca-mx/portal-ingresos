@@ -59,6 +59,7 @@ namespace DTO
         public int EntidadFederativaId { get; set; }
         public Nullable<int> EntidadNacimientoId { get; set; }
         public List<DTOAlumnoDatos2> DatosContacto { get; set; }
+        public string fotoBase64 { get; set; } 
     }
 
     public class DTOAlumnoDatos2

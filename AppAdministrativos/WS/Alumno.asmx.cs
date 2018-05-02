@@ -363,14 +363,7 @@ namespace AppAdministrativos.WS
         {
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));
         }
-
-        [WebMethod]
-        public DTOAlumnoDatos ObenerDatosAlumnoTodos(string AlumnoId)
-        {
-            return BLLAlumnoPortal.ObenerDatosAlumnoTodos(int.Parse(AlumnoId));
-        }
         
-
         //datos personales  generados por el alumnos
         [WebMethod]
         public List<ReferenciasPagadas> ReferenciasConsulta(string Dato, string TipoBusqueda)

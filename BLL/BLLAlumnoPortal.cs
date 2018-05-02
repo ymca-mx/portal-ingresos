@@ -204,7 +204,7 @@ namespace BLL
 
         public static object AlumnoDatosAcademicos(int AlumnoId)
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 int[] Conceptos = { 1, 800, 802, 1000 };
 
@@ -221,23 +221,23 @@ namespace BLL
                         al.OfertaEducativa.OfertaEducativaTipoId,
                         al.TurnoId,
                         al.EsEmpresa,
-                        Cuotas= db.Cuota
+                        Cuotas = db.Cuota
                                     .Where(cu => Conceptos.Contains(cu.PagoConceptoId)
                                                                 && cu.OfertaEducativaId == al.OfertaEducativaId
                                                                 && cu.Anio == al.Anio
                                                                 && cu.PeriodoId == al.PeriodoId)
-                                    .Select(cu=> new
+                                    .Select(cu => new
                                     {
-                                       Porcentaje = db.AlumnoDescuento
+                                        Porcentaje = db.AlumnoDescuento
                                         .Where(ald => ald.AlumnoId == al.AlumnoId
                                                     && ald.OfertaEducativaId == al.OfertaEducativaId
                                                     && ald.Anio == al.Anio
                                                     && ald.PeriodoId == al.PeriodoId
-                                                    && ald.PagoConceptoId== cu.PagoConceptoId)
-                                        .Select(a=> a.Monto)
+                                                    && ald.PagoConceptoId == cu.PagoConceptoId)
+                                        .Select(a => a.Monto)
                                         .FirstOrDefault(),
                                         cu.PagoConcepto.Descripcion,
-                                        
+
                                     }).ToList()
                     })
                     .FirstOrDefault();
@@ -1530,6 +1530,8 @@ namespace BLL
                 try
                 {
 
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+
                     DTOAlumnoDatos alumnoDatos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
                                         .Select(b => new DTOAlumnoDatos
                                         {
@@ -1542,6 +1544,7 @@ namespace BLL
                                             CURP = b.AlumnoDetalle.CURP,
                                             PaisId = b.AlumnoDetalle.PaisId,
                                             EntidadNacimientoId = b.AlumnoDetalle.EntidadNacimientoId,
+                                            fotoBase64 = fotoAlumno
                                         }).FirstOrDefault();
 
                     alumnoDatos.FechaNacimientoC = alumnoDatos.FechaNacimiento.ToString("dd/MM/yyyy", Cultura);
@@ -1617,9 +1620,9 @@ namespace BLL
 
                     return alumnoDatos;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    var a = ex;
                     return null;
                 }
             }
@@ -12694,7 +12697,7 @@ namespace BLL
                         #endregion
                     }
 
-                    
+
 
                     db.AlumnoMovimiento.Add(new AlumnoMovimiento
                     {
@@ -12751,7 +12754,7 @@ namespace BLL
 
                     }
 
-                    
+
                     return true;
                 }
                 catch (Exception e)
@@ -13330,7 +13333,7 @@ namespace BLL
                 {
                     Alumno alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
-                    DTOAlumno objAlumno =  new DTOAlumno
+                    DTOAlumno objAlumno = new DTOAlumno
                     {
                         AlumnoId = alumno.AlumnoId,
                         Nombre = alumno.Nombre,
@@ -13342,7 +13345,7 @@ namespace BLL
                             Celular = alumno.AlumnoDetalle.Celular,
                             TelefonoCasa = alumno.AlumnoDetalle.TelefonoCasa,
                             FechaNacimiento = alumno.AlumnoDetalle.FechaNacimiento,
-                            FechaNacimientoC = alumno.AlumnoDetalle.FechaNacimiento.ToString("dd/MM/yyyy",Cultura),
+                            FechaNacimientoC = alumno.AlumnoDetalle.FechaNacimiento.ToString("dd/MM/yyyy", Cultura),
                             GeneroId = alumno.AlumnoDetalle.GeneroId,
                             CURP = alumno.AlumnoDetalle.CURP,
                             Email = alumno.AlumnoDetalle.Email,
