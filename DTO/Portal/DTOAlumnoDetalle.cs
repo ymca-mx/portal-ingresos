@@ -30,5 +30,6 @@ namespace DTO
         public int ProspectoId { get; set; }
         public DTOProspectoDetalle ProspectoO { get; set; }
         public int UsuarioId { get; set; }
+        public string Observaciones { get; set; }
     }
 }

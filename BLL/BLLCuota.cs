@@ -246,8 +246,9 @@ namespace BLL
             {
                 try
                 {
-                    
-                    DateTime FechaActual = DateTime.Now;
+
+                    DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+
                     Periodo PeriodoActual = db.Periodo.Where(P => FechaActual >= P.FechaInicial && FechaActual <= P.FechaFinal).FirstOrDefault();
                     int SubPeriodoId = db.Subperiodo.Where(S => S.PeriodoId == PeriodoActual.PeriodoId && S.MesId == FechaActual.Month).FirstOrDefault().SubperiodoId;
 

@@ -36,6 +36,7 @@ namespace DAL
         public int ProspectoId { get; set; }
         public int UsuarioId { get; set; }
         public System.DateTime Fecha { get; set; }
+        public string Observaciones { get; set; }
     
         public virtual Alumno Alumno { get; set; }
     }

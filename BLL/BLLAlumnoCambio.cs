@@ -5,11 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using DAL;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.IO;
 
 namespace BLL
 {
     public class BLLAlumnoCambio
     {
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern bool LogonUser(string lpszUsername, string lpszDomain, string lpszPassword,
+    int dwLogonType, int dwLogonProvider, ref IntPtr phToken);
+
+        [DllImport("kernel32.dll")]
+        private static extern Boolean CloseHandle(IntPtr hObject);
+
         public static object CambioGnral(DTOAlumnoOfertaCuotas Alumno)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -268,6 +278,31 @@ namespace BLL
                         StatusId = false,
                         Error.Message
                     };
+                }
+            }
+        }
+
+        public static object GetRoot()
+        {
+            IntPtr token = IntPtr.Zero;
+            LogonUser("JG_Rodriguez", "172.16.1.204", "Am2015-16",
+                9, 0, ref token);
+            using (WindowsImpersonationContext person = new WindowsIdentity(token).Impersonate())
+            {
+                try
+                {
+                    string[] allImgs = Directory.GetFiles(@"\\172.16.1.204\wwwroot");
+
+                    return allImgs;
+                }
+                catch (IOException e)
+                {
+                    return e;
+                }
+                finally
+                {
+                    person.Undo();
+                    CloseHandle(token);
                 }
             }
         }

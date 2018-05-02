@@ -77,6 +77,23 @@
                 console.log("Fallo la carga de GetPlantel");
             });
     },
+    GetMedios() {
+        $("#slcMedio").empty();
+        IndexFn.Api("General/TraerListaMedios", "GET", "")
+            .done(function (data) {
+                $(data).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.Descripcion);
+                    option.val(this.MedioDifusionId);
+
+                    $("#slcMedio").append(option);
+                });
+            })
+            .fail(function (data) {
+                console.log("Fallo la carga de Cargar Medios");
+            });
+    },
     GetTipoOferta(PlantelId) {
         $("#slcTipoOferta").empty();
         $("#slcOFertaEducativa").empty();
@@ -167,6 +184,7 @@
 
     },
     GetEstadoCivil() {
+        $("#slcEstadoCivil").empty();
         IndexFn.Api("General/ConsultarEstadoCivil", "GET", "")
             .done(function (data) {
                 var datos = data;
@@ -177,6 +195,31 @@
                     option.val(this.EstadoCivilId);
 
                     $("#slcEstadoCivil").append(option);
+                });
+            })
+            .fail(function (data) {
+                console.log(data);
+            });
+    },
+    GetParentesco(NameSlc) {
+        $("#" + NameSlc).empty();
+
+        var DefaultOp = $(document.createElement('option'));
+        DefaultOp.text("--Seleccionar--");
+        DefaultOp.val("-1");
+
+        $("#" + NameSlc).append(DefaultOp);
+
+        IndexFn.Api("General/ConsultarParentesco", "GET", "")
+            .done(function (data) {
+                var datos = data;
+                $(datos).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.Descripcion);
+                    option.val(this.ParentescoId);
+
+                    $("#" + NameSlc).append(option);
                 });
             })
             .fail(function (data) {
@@ -226,4 +269,22 @@
         return deferred.promise();
 
     },
+    GetAreas(NameSlc) {
+        $("#" + NameSlc).empty();
+        IndexFn.Api("General/ObtenerAreas", "GET", "")
+            .done(function (data) {
+                var datos = data;
+                $(datos).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.Descripcion);
+                    option.val(this.AreaAcademicaId);
+
+                    $("#" + NameSlc).append(option);
+                });
+            })
+            .fail(function (data) {
+                console.log(data);
+            });
+    }
 };
