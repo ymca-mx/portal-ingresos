@@ -119,9 +119,6 @@ $(document).ready(function init() {
 
     $('#Guardar').on('click',function () {
         if (form.valid() == false) { return false; }
-        var nombre = $('#hCarga');
-        nombre[0].innerText = "Guardando";
-        $('#Load').modal('show');
         GuardarTodo();
     });
 

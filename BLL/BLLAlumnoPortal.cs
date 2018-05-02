@@ -797,7 +797,8 @@ namespace BLL
                         ProspectoId = Alumno.AlumnoId,
                         TelefonoCasa = Alumno.AlumnoDetalle.TelefonoCasa,
                         TelefonoOficina = Alumno.AlumnoDetalle.TelefonoOficina,
-                        UsuarioId = usuarioId
+                        UsuarioId = usuarioId,
+                        Observaciones=Alumno.AlumnoDetalle.Observaciones,
                     });
 
                     DateTime fechan = DateTime.ParseExact(nacimiento, "yyyy-MM-dd", Cultura);
@@ -1659,6 +1660,7 @@ namespace BLL
                         Email = AlumnoActualizaDatos.Email,
                         ProspectoId = 0,
                         UsuarioId = 0,
+                        Observaciones=AlumnoActualizaDatos.Observaciones,
                         Fecha = DateTime.Now
                     });
 
@@ -13408,7 +13410,8 @@ namespace BLL
                         Email = actualizaDatos.Email,
                         ProspectoId = 0,
                         UsuarioId = AlumnoDatos.UsuarioId,
-                        Fecha = DateTime.Now
+                        Fecha = DateTime.Now,
+                        Observaciones=actualizaDatos.Observaciones
                     });
 
                     // actualiza AlumnoDetalle

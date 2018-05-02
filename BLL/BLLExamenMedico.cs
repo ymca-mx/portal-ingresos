@@ -80,7 +80,8 @@ namespace BLL
                             ProspectoId = alumno.PaisId,
                             TelefonoCasa = alumno.TelefonoCasa,
                             TelefonoOficina = alumno.TelefonoOficina,
-                            UsuarioId = UsuarioId
+                            UsuarioId = UsuarioId,
+                            Observaciones=alumno.Observaciones
                         });
                     #endregion
 
