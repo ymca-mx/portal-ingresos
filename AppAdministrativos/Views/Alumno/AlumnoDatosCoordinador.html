@@ -70,30 +70,49 @@
                                         </div>
                                         <div id="tab1" class="tab-pane">
                                             <h3 class="block">Personales</h3>
-
+                                          
                                             <div class="row">
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group col-md-10">
+                                                <div class="col-md-2">
+                                                    <div class="col-md-2">
+                                                        <img id="fotoAlumno" style="width:120px; height:150px; border-style:double;border-width:4px;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="col-md-8">
                                                         <label class="control-label">Nombre</label>
                                                         <div class="input-icon right">
                                                             <i class="fa"></i>
                                                             <input type="text" id="txtnombre" class="form-control " name="txtnombre" readonly />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Apellido Paterno</label>
+                                                    <div class="col-md-4">
+                                                        <label class="control-label">Fecha de Nacimiento</label>
+                                                        <input id="txtFNacimiento" name="txtFNacimiento" type="text" class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label class="control-label">Genero</label>
                                                         <div class="input-icon right">
-                                                            <i class="fa"></i>
-                                                            <input type="text" id="txtApPaterno" name="txtApPaterno" class="form-control " readonly />
+                                                            <select class="form-control" id="slcSexo" name="slcSexo" disabled>
+                                                                <option value="-1">--Seleccionar--</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Apellido Materno</label>
+                                                    <div class="col-md-7">
+                                                        <label class="control-label">CURP</label>
                                                         <div class="input-icon right">
                                                             <i class="fa"></i>
-                                                            <input type="text" id="txtApMaterno" name="txtApMaterno" class="form-control " readonly />
+                                                            <input type="text" class="form-control uppercase" id="txtCURP" name="txtCURP" readonly />
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <hr class="line" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 ">
                                                     <div class="col-md-10 form-group">
                                                         <label class="control-label">Estado Civil</label>
                                                         <div class="input-icon right">
@@ -116,28 +135,6 @@
 
                                                 <div class="col-md-6 ">
 
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Fecha de Nacimiento</label>
-                                                        <input id="txtFNacimiento" name="txtFNacimiento" type="text" class="form-control" readonly />
-
-                                                    </div>
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Genero</label>
-                                                        <div class="input-icon right">
-                                                            <select class="form-control" id="slcSexo" name="slcSexo" disabled>
-                                                                <option value="-1">--Seleccionar--</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <!--Curp-->
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">CURP</label>
-                                                        <div class="input-icon right">
-                                                            <i class="fa"></i>
-                                                            <input type="text" class="form-control uppercase" id="txtCURP" name="txtCURP" readonly />
-                                                        </div>
-                                                    </div>
-                                                    <!--</div>-->
                                                     <!--Correo electronico-->
 
                                                     <div class="col-md-10 form-group">
@@ -225,36 +222,6 @@
                                                         <label class="control-label">Delegación | Municipio</label>
                                                         <div class="input-icon right">
                                                             <select class="form-control" id="slcMunicipio" name="slcMunicipio">
-                                                                <option value="-1">--Seleccionar--</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <hr class="line" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group col-md-10">
-                                                        <label class="control-label">Nacionalidad</label>
-                                                        <div class="input-icon right">
-                                                            <select id="slcNacionalidad" class="form-control" name="slcNacionalidad" disabled>
-                                                                <option value="-1">--Seleccionar--</option>
-                                                                <option value="1">Mexicana</option>
-                                                                <option value="2">Extranjera</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Lugar de Nacimiento-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group col-md-10">
-                                                        <label class="control-label">Lugar de Nacimiento</label>
-                                                        <div class="input-icon right">
-                                                            <select id="slcLugarN" class="form-control" name="slcLugarN" disabled>
                                                                 <option value="-1">--Seleccionar--</option>
                                                             </select>
                                                         </div>

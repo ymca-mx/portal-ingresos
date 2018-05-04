@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.ComponentModel;
 using System.Threading;
+using Utilities;
 
 namespace Universidad.BLL
 {
@@ -1724,10 +1725,11 @@ namespace Universidad.BLL
                                   select (a.Nombre + " " + a.Paterno + " " + a.Materno).Trim()).FirstOrDefault()
                     };
                 }
+                string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(alumnoId);
                 return new DTO.Alumno.DTOAlumnoImagen
                 {
                     nombre = Ano.nombre,
-                    imagenBase64 = Convert.ToBase64String(Ano.imagen),
+                    imagenBase64 = fotoAlumno,//Convert.ToBase64String(Ano.imagen),
                     extensionImagen = Ano.extensionImagen
                 };
 
