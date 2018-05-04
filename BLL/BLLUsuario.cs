@@ -169,6 +169,9 @@ namespace Universidad.BLL
 
                     
                 }
+
+
+
                 return new DTO.Usuario.DTOUsuarioImagen {
                     nombre = Ano.nombre,
                     imagenBase64 = Convert.ToBase64String(Ano.imagen),

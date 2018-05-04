@@ -18,7 +18,6 @@
                 $("#btnBuscarAlumno").on("click", fnDatos.buscarAlumno);
                 $('#tblAlumnos').on('click', 'a', fnDatos.seleccionarAlumno);
                 $('#Guardar').on('click', fnDatos.guardarTodo);
-                $('#slcNacionalidad').on("change", fnDatos.nacionalidadChange);
                 $('#txtAlumno').on('keydown', function (e) {
                     if (e.which == 13) {
                         $('#btnBuscarAlumno').click();
@@ -123,7 +122,6 @@
 
                 if (!isNaN(AlumnoNum)) {
                     fnDatos.esNumero(AlumnoNum);
-                    $('#frmTabs').show();
                 } else {
                     fnDatos.esString(AlumnoNum);
                 }
@@ -136,37 +134,13 @@
                 AlumnoNum = rowadd.AlumnoId;
                 fnDatos.esNumero(AlumnoNum);
             },
-            nacionalidadChange: function () {
-                $("#slcLugarN").empty();
-                var optionP = $(document.createElement('option'));
-                optionP.text('--Seleccionar--');
-                optionP.val('-1');
-                $("#slcLugarN").append(optionP);
-
-                var tipo = $("#slcNacionalidad");
-                tipo = tipo[0].value;
-                if (tipo == 2) {
-                    GlobalFn.GetPais($("#slcLugarN"), -1);
-                }
-                else if (tipo == 1) {
-                    GlobalFn.GetEstado($("#slcLugarN"), -1);
-                }
-                else { $("#slcLugarN").append(optionP); }
-            },
             esNumero: function (Alumno) {
                 IndexFn.Api('Alumno/ObenerDatosAlumnoCordinador/' + Alumno, "GET", "")
                     .done(function (data) {
                         if (data != null) {
-                            $('#slcNacionalidad').val(data.DTOAlumnoDetalle.PaisId == 146 ? 1 : 2);
-                            if (data.DTOAlumnoDetalle.PaisId == 146) {
-                                GlobalFn.GetEstado('slcLugarN', data.DTOAlumnoDetalle.EntidadNacimientoId);
-                            } else {
-                                GlobalFn.GetPais('slcLugarN', data.DTOAlumnoDetalle.PaisId);
-                            }
                             ///Personales 
-                            $('#txtnombre').val(data.Nombre);
-                            $('#txtApPaterno').val(data.Paterno);
-                            $('#txtApMaterno').val(data.Materno);
+                            document.getElementById("fotoAlumno").src = "data:image/png;base64," + data.DTOAlumnoDetalle.fotoBase64;
+                            $('#txtnombre').val(data.Nombre + " " + data.Paterno + " " + data.Materno);
                             $('#txtCelular').val(data.DTOAlumnoDetalle.Celular);
                             $('#txtFNacimiento').val(data.DTOAlumnoDetalle.FechaNacimientoC);
                             $('#txtCURP').val(data.DTOAlumnoDetalle.CURP);
@@ -187,10 +161,11 @@
                             });
 
                             $("#divGuardar").show();
+                            $('#frmTabs').show();
                             $('#Load').modal('hide');
                         }
                         else {
-                            $('#PopDatosAlumno').modal('hide');
+                            $("#frmTabs").hide()
                             $('#Load').modal('hide');
                             alertify.alert("Error, El Alumno no Existe.");
                         }

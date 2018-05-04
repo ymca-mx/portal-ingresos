@@ -1445,6 +1445,7 @@ namespace BLL
                     AlumnoBase.AlumnoInscrito = new List<AlumnoInscrito>(AlumnoBase.AlumnoInscrito
                         .OrderBy(o => o.Anio).ThenBy(o => o.PeriodoId).Reverse());
 
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
 
                     DTOAlumno Alumno = new DTOAlumno
                     {
@@ -1472,7 +1473,8 @@ namespace BLL
                             MunicipioId = AlumnoBase.AlumnoDetalle.MunicipioId,
                             PaisId = AlumnoBase.AlumnoDetalle.PaisId,
                             EntidadNacimientoId = AlumnoBase.AlumnoDetalle.EntidadNacimientoId,
-                            Observaciones=AlumnoBase.AlumnoDetalle?.Observaciones ?? ""
+                            Observaciones=AlumnoBase.AlumnoDetalle?.Observaciones ?? "",
+                            fotoBase64 = fotoAlumno
                         },
                         lstOfertas = AlumnoBase.AlumnoInscrito
                         .Select(s =>
@@ -1552,6 +1554,8 @@ namespace BLL
             {
                 try
                 {
+
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
                     Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
                     DTOAlumno objAlumno = new DTOAlumno
@@ -1578,7 +1582,8 @@ namespace BLL
                             EntidadFederativaId = objAlB.AlumnoDetalle.EntidadFederativaId,
                             MunicipioId = objAlB.AlumnoDetalle.MunicipioId,
                             PaisId = objAlB.AlumnoDetalle.PaisId,
-                            EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId
+                            EntidadNacimientoId = objAlB.AlumnoDetalle.EntidadNacimientoId,
+                            fotoBase64 = fotoAlumno
                         }
                     };
                     return objAlumno;
@@ -1682,6 +1687,12 @@ namespace BLL
                         {
                             Dato = "Delegación | Municipio",
                             ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Municipio.Descripcion ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Observaciones",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Observaciones  ?? ""
                         }
                     };
 
@@ -13403,6 +13414,8 @@ namespace BLL
             {
                 try
                 {
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+
                     Alumno alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
                     DTOAlumno objAlumno = new DTOAlumno
@@ -13429,7 +13442,8 @@ namespace BLL
                             EntidadFederativaId = alumno.AlumnoDetalle.EntidadFederativaId,
                             MunicipioId = alumno.AlumnoDetalle.MunicipioId,
                             PaisId = alumno.AlumnoDetalle.PaisId,
-                            EntidadNacimientoId = alumno.AlumnoDetalle.EntidadNacimientoId
+                            EntidadNacimientoId = alumno.AlumnoDetalle.EntidadNacimientoId,
+                            fotoBase64 = fotoAlumno
                         }
                     };
 

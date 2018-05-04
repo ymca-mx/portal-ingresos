@@ -26,11 +26,12 @@ namespace Utilities
             {
                 using (Impersonation.LogonUser("172.16.1.204", "Administrador", "41rM43st2011", LogonType.NewCredentials))
                 {
-                    byte[] imageArray = System.IO.File.ReadAllBytes(@"\\172.16.1.204\\Unidades\\Universidad\\Fotos\\SINFOTO.jpg");
+                    byte[] imageArray = System.IO.File.ReadAllBytes(@"\\172.16.1.204\\Unidades\\Universidad\\Fotos\\SinFoto.png");
                     base64Image = Convert.ToBase64String(imageArray);
                 }
             }
             return base64Image;
         }
+
     }
 }

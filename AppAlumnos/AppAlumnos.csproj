@@ -101,6 +101,7 @@
     <Content Include="JS\Alumno\EncuestaPortal.js" />
     <Content Include="JS\Alumno\Reglamento.js" />
     <Content Include="JS\Alumno\SolicitarInscripcion.js" />
+    <Content Include="JS\index\funcionesGlobales.js" />
     <Content Include="JS\Reinscripcion\Reinscripcion.js" />
     <Content Include="Script\alertify\alertify.js" />
     <Content Include="JS\DatePickerRange\daterangepicker.css" />

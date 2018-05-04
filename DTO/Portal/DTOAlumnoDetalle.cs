@@ -31,5 +31,6 @@ namespace DTO
         public DTOProspectoDetalle ProspectoO { get; set; }
         public int UsuarioId { get; set; }
         public string Observaciones { get; set; }
+        public string fotoBase64 { get; set; }
     }
 }

@@ -1,6 +1,25 @@
 ﻿var IndexFn = {
     TiempoRestante: null,
     Continue: false,
+    Api(url, type, data) {
+        var dfd = $.Deferred();
+
+        var Api = $.ajax({
+            url: "Api/" + url,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: type,
+            data: data,
+        });
+
+        Api.done(function (data) {
+            dfd.resolve(data);
+        }).fail(function (data) {
+            dfd.reject(data);
+        });
+
+        return dfd.promise();
+    },
     LifeSesion: function () {
         $('#txtTime').val("00:01:00");
         $('#txtTime').data("time", 60);
@@ -112,11 +131,11 @@ $(function () {
                 }
                 else {
 
-                    $('#imgUsuario').attr('src', 'data:image/' + Datos.extensionImagen + ';base64,' + Datos.imagenBase64);
+                    $('#imgUsuario').attr('src', 'data:image/png;base64,' + Datos.imagenBase64);
                     $('#lblUsuario span').text(Datos.nombre);
 
-                    if (Datos.extensionImagen == ".png")
-                        $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
+                    //if (Datos.extensionImagen == ".png")
+                    //    $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                     IndexFn.ConstruirMenu();
                 }
             },

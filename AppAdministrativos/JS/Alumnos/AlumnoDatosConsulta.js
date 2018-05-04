@@ -7,13 +7,10 @@
             init() {
                 GlobalFn.init()
                 GlobalFn.GetGenero();
-                GlobalFn.GetEstado("slcEstado", 9);
                 $("#btnBuscarAlumno").click(fnAlumnoDatos.buscarAlumno);
 
                 $('#tblAlumnos').on('click', 'a', fnAlumnoDatos.seleccionarAlumno);
-
-                $('#slcNacionalidad').change(fnAlumnoDatos.nacionalidadChange);
-
+                
                 $('#txtAlumno').on('keydown', function (e) {
                     if (e.which == 13) {
                         $('#btnBuscarAlumno').click();
@@ -33,7 +30,6 @@
 
                 if (!isNaN(AlumnoNum)) {
                     fnAlumnoDatos.esNumero(AlumnoNum);
-                    $('#frmTabs').show();
                 } else {
                     fnAlumnoDatos.esString(AlumnoNum);
                 }
@@ -46,46 +42,17 @@
                 AlumnoNum = rowadd.AlumnoId;
                 fnAlumnoDatos.esNumero(AlumnoNum);
             },
-            nacionalidadChange() {
-                $("#slcLugarN").empty();
-                var optionP = $(document.createElement('option'));
-                optionP.text('--Seleccionar--');
-                optionP.val('-1');
-                $("#slcLugarN").append(optionP);
-
-                var tipo = $("#slcNacionalidad");
-                tipo = tipo[0].value;
-                if (tipo == 2) {
-                    GlobalFn.GetPais($("#slcLugarN"), -1);
-                }
-                else if (tipo == 1) {
-                    GlobalFn.GetEstado($("#slcLugarN"), -1);
-                }
-                else { $("#slcLugarN").append(optionP); }
-            },
             esNumero(Alumno) {
                 IndexFn.Api('Alumno/ObenerDatosAlumnoTodos/' + Alumno, "GET", "")
                     .done(function (data) {
                         if (data != null) {
-                            $('#slcNacionalidad').val(data.PaisId == 146 ? 1 : 2);
-                            if (data.PaisId == 146) {
-                                GlobalFn.GetEstado('slcLugarN', data.EntidadNacimientoId);
-                            } else {
-                                GlobalFn.GetPais('slcLugarN', data.PaisId);
-                            }
-                            ///Personales 
-
-                            var base64_string = data.fotoBase64;
-                            document.getElementById("fotoAlumno").src = "data:image/png;base64," + base64_string;
-
-                            $('#txtnombre').val(data.Nombre);
-                            $('#txtApPaterno').val(data.Paterno);
-                            $('#txtApMaterno').val(data.Materno);
+                           
+                            ///Personales
+                            document.getElementById("fotoAlumno").src = "data:image/png;base64," + data.fotoBase64;
+                            $('#txtnombre').val(data.Nombre + " " + data.Paterno + " " + data.Materno);
                             $('#txtFNacimiento').val(data.FechaNacimientoC);
                             $('#txtCURP').val(data.CURP);
                             $('#slcSexo').val(data.GeneroId);
-
-
                             tblDatos = $('#tblDatos').dataTable({
                                 "aaData": data.DatosContacto,
                                 "aoColumns": [
@@ -120,14 +87,13 @@
                                     row.childNodes[0].style.color = "#fff";
                                 }
                             });
-
+                            $('#frmTabs').show();
                             $('#Load').modal('hide');
                         }
                         else {
-                            $('#PopDatosAlumno').modal('hide');
+                            $('#frmTabs').hide();
                             $('#Load').modal('hide');
                             alertify.alert("Error, El Alumno no Existe.");
-
                         }
                     })
                     .fail(function (data) {

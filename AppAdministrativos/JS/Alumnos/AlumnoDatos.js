@@ -346,6 +346,7 @@
                             GlobalFn.GetPais("slcLugarN", data.DTOAlumnoDetalle.PaisId);
                         }
                         ///Personales 
+                        document.getElementById("fotoAlumno").src = "data:image/png;base64," + data.DTOAlumnoDetalle.fotoBase64;
                         $('#txtMatricula').val(data.Matricula);
                         $('#txtnombre').val(data.Nombre);
                         $('#txtApPaterno').val(data.Paterno);
@@ -408,6 +409,7 @@
                         $('#tab1btn').click();
                     }
                     else {
+                        document.getElementById("fotoAlumno").src = "";
                         $('#Load').modal('hide');
                         alertify.alert("Error, El Alumno no Existe.");
 
