@@ -907,7 +907,7 @@
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
             AlumnoNum = rowadd.AlumnoId;
             AlumnoDatosFn.EsNumero(rowadd.AlumnoId);
-        },
+        }, 
         btnEditarClick() {
             $('#divEditar').hide();
             $('#submit_form  input').prop("disabled", false);

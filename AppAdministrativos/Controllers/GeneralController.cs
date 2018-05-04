@@ -53,6 +53,23 @@ namespace AppAdministrativos.Controllers
             return Ok(BLLPeriodoPortal.ConsultarPeriodos());
         }
 
+        [Route("ConsultarPeriodosPCF")]
+        [HttpGet]
+        public IHttpActionResult GetPeriodosAn_Ac_Sg()
+        {
+            object Result = BLLPeriodoPortal.GetPeriodo_An_Ac_Sg();
+
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
         [Route("ConsultarPais")]
         [HttpGet]
         public IHttpActionResult GetPais()

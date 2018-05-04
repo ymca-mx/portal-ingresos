@@ -60,6 +60,49 @@ namespace BLL
             }
         }
 
+        public static object GetPeriodo_An_Ac_Sg()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    DateTime Fecha = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00);
+
+                    var periodo = (from b in db.Periodo
+                                   where b.FechaInicial <= Fecha && b.FechaFinal >= Fecha
+                                   select new
+                                   {
+                                       b.Anio,
+                                       b.PeriodoId
+                                   }).FirstOrDefault();
+
+                    return
+                    db.Periodo.Where(a => (a.Anio == (periodo.PeriodoId == 3 ? periodo.Anio + 1 : periodo.Anio)
+                                        && a.PeriodoId == (periodo.PeriodoId == 3 ? 1 : periodo.PeriodoId + 1))
+                                        || (a.Anio == (periodo.PeriodoId == 1 ? periodo.Anio - 1 : periodo.Anio)
+                                        && a.PeriodoId == (periodo.PeriodoId == 1 ? 3 : periodo.PeriodoId - 1))
+                                        || (a.Anio == periodo.Anio && a.PeriodoId == periodo.PeriodoId))
+                        .ToList()
+                        .Select(a => new
+                        {
+                            a.Anio,
+                            a.PeriodoId,
+                            a.Descripcion
+                        })
+                        .OrderBy(a => a.Anio)
+                        .ThenBy(a => a.PeriodoId)
+                        .ToList();
+                }
+                catch(Exception err) {
+                    return new
+                    {
+                        EstatusId = false,
+                        err.Message
+                    };
+                }
+            }
+        }
+
         public static DTOPeriodo ConsultarPeriodo(string Descripcion)
         {
             int PeriodoId = int.Parse(Descripcion.Substring(0, 1));

@@ -14,12 +14,12 @@
             GlobalFn.init();
             GlobalFn.GetTurno();
             GlobalFn.GetPlantel();
-            GlobalFn.GetPeriodo_N_I();
+            GlobalFn.GetPeriodo_P_C_F("slcPeriodo");
             this.TraerAlumnos();
         },
         TraerAlumnos() {
             $('#Load').modal('show');
-            IndexFn.Api('Alumno/ConsultarAlumnosNuevos/', "GET", "")
+            IndexFn.Api('Alumno/ConsultarAlumnosNuevosRP/', "GET", "")
                 .done(function (Respuesta) {
                     tblAlumnos = $('#tblAlumnos').dataTable({
                         "aaData": Respuesta,
@@ -61,18 +61,20 @@
         },
         tblAlumnosClickA() {
             $('#Load').modal('show');
-            var fid = tblAlumnos.fnGetData(this.parentNode.parentNode, 0);
+            var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
 
-            DatosFn.TraerDatosAcademicos(fid);
+            DatosFn.TraerDatosAcademicos((rowadd.AlumnoId + "/" + rowadd.OfertaEducativaId));
             
         },
-        TraerDatosAcademicos(AlumnoId) {
-            IndexFn.Api("Alumno/Academicos/" + AlumnoId, "GET", "")
+        TraerDatosAcademicos(Para) {
+            IndexFn.Api("Alumno/Academicos/" + Para, "GET", "")
                 .done(function (data) {
                     DatosFn.ChangeCombos(data);
                     DatosFn.objGuardar = {};
-                    DatosFn.objGuardar.AlumnoId = AlumnoId;
+                    DatosFn.objGuardar.AlumnoId = data.AlumnoId;
                     DatosFn.objGuardar.OfertaEducativaId = data.OfertaEducativaId;
+                    DatosFn.objGuardar.Anio = data.Anio;
+                    DatosFn.objGuardar.PeriodoId = data.PeriodoId;
 
                     var Colegiatura = data.Cuotas.find(function (cuota) {
                         return cuota.PagoConceptoId === 800;
@@ -135,7 +137,7 @@
                     $('#txtExamPPagar').val(Math.round((Examen.Monto - ((Examen.Porcentaje * Examen.Monto) / 100))));
                     $('#txtCredencialPPagar').val(Math.round((Credencial.Monto - ((Credencial.Porcentaje * Credencial.Monto) / 100))));
 
-                    $("#slcPeriodo").val(data.PeriodoId + " " + data.Anio).change();
+                    $("#slcPeriodo").val((data.PeriodoId + " " + data.Anio)).change();
                     $("#slcTurno").val(data.TurnoId).change();
                     $('#chkEmpresa').prop('checked', data.EsEmpresa);
                     $('#chkEmpresa').change();
@@ -179,7 +181,13 @@
                 OfertaEducativaIdNueva: $('#slcOFertaEducativa').val(),
                 TurnoId: $('#slcTurno').val(),
                 EsEmpresa: $('#chkEmpresa').prop('checked'),
-                UsuarioId: $.cookie('userAdmin')
+                UsuarioId: $.cookie('userAdmin'),
+                MontoColegiatura: $('#txtColegPPagar').val(),
+                MontoInscripcion: $('#txtInscrPPagar').val(),
+                MontoCredencial: $('#txtCredencialPPagar').val(),
+                MontoExamen: $('#txtExamPPagar').val(),
+                AnioAnterior: DatosFn.objGuardar.Anio,
+                PeriodoIdAnterior: DatosFn.objGuardar.PeriodoId
             };
 
             IndexFn.Api("Alumno/ChageOffer", "POST", JSON.stringify(objGuardar))
@@ -207,22 +215,23 @@
             if (this.checked) {
                 $($('#txtColegBeca')[0].parentNode).hide();
                 $($('#txtInscrBeca')[0].parentNode).hide();
-                $($('#txtExamenBeca')[0].parentNode).hide();
-                $($($($('#txtCredencialBeca')[0].parentNode)[0].parentNode).hide()[0].previousElementSibling).hide()
+                $($('#txtCredencialBeca')[0].parentNode).hide();
+                $($($($('#txtExamenBeca')[0].parentNode)[0].parentNode).hide()[0].previousElementSibling).hide()
 
                 $('#txtColegPPagar').removeAttr('readonly');
                 $('#txtInscrPPagar').removeAttr('readonly');
-                $('#txtExamPPagar').removeAttr('readonly');
+                $('#txtCredencialPPagar').removeAttr('readonly');
+                $('#txtExamPPagar').val(0);
 
             } else {
                 $($('#txtColegBeca')[0].parentNode).show();
                 $($('#txtInscrBeca')[0].parentNode).show();
-                $($('#txtExamenBeca')[0].parentNode).show();
-                $($($($('#txtCredencialBeca')[0].parentNode)[0].parentNode).show()[0].previousElementSibling).show()
+                $($('#txtCredencialBeca')[0].parentNode).show();
+                $($($($('#txtExamenBeca')[0].parentNode)[0].parentNode).show()[0].previousElementSibling).show()
 
                 $('#txtColegPPagar').attr('readonly', true);
                 $('#txtInscrPPagar').attr('readonly', true);
-                $('#txtExamPPagar').attr('readonly', true);
+                $('#txtCredencialPPagar').attr('readonly', true);
             }
         }
     };

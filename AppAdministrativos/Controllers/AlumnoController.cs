@@ -32,11 +32,28 @@ namespace AppAdministrativos.Controllers
             return Ok(BLLAlumnoPortal.ConsultarAlumnosNuevos());
         }
 
-        [Route("Academicos/{AlumnoId:int}")]
+        [Route("ConsultarAlumnosNuevosRP")]
         [HttpGet]
-        public IHttpActionResult GetDatosAcademicos(int AlumnoId)
+        public IHttpActionResult GetAlumnosNuevoIngresoRP()
         {
-            return Ok(BLLAlumnoPortal.AlumnoDatosAcademicos(AlumnoId));
+            object Result = BLLAlumnoPortal.NuevoIngreso();
+            
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, "+ Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("Academicos/{AlumnoId:int}/{OfertaEducativaId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetDatosAcademicos(int AlumnoId, int OfertaEducativaId)
+        {
+            return Ok(BLLAlumnoPortal.AlumnoDatosAcademicos(AlumnoId, OfertaEducativaId));
         }
 
         [Route("ChageOffer")]

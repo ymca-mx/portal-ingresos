@@ -57,6 +57,25 @@
                 console.log("Fallo la carga de GetPeriodo_N_I");
             });
     },
+    GetPeriodo_P_C_F(ComboId) {
+        $("#" + ComboId).empty();
+        IndexFn.Api("General/ConsultarPeriodosPCF", "GET", "")
+            .done(function (data) {
+                $(data).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.Descripcion);
+                    option.val(this.PeriodoId + " " + this.Anio);
+                    option.data("anio", this.Anio);
+                    option.data("periodoid", this.PeriodoId);
+
+                    $("#" + ComboId).append(option);
+                });
+            })
+            .fail(function (data) {
+                console.log("Fallo la carga de GetPeriodo_N_I");
+            });
+    },
     GetPlantel() {
         $("#slcPlantel").empty();
         $("#slcTipoOferta").empty();

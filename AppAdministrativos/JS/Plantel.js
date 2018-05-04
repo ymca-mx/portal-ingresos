@@ -11,7 +11,7 @@
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));
 
-                    option.text(this.DescripcionId);
+                    option.text(this.Descripcion);
                     option.val(this.SucursalId);
 
                     $("#slcPlantel").append(option);

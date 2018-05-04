@@ -109,7 +109,7 @@ namespace BLL
                                 Email = objDetalleAlumno.Email,
                                 TelefonoOficina = objDetalleAlumno.TelefonoOficina,
                                 EntidadNacimientoId = objDetalleAlumno.EntidadNacimientoId,
-
+                                Observaciones=""
                             },
                             GrupoAlumnoConfiguracion = objAlumnoInscrito.EsEmpresa ?
                             new List<GrupoAlumnoConfiguracion> {
@@ -202,7 +202,70 @@ namespace BLL
             }
         }
 
-        public static object AlumnoDatosAcademicos(int AlumnoId)
+        public static object NuevoIngreso()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                
+                try
+                {
+                    DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+                    DTOPeriodo PeriodoSiguiente = new DTOPeriodo
+                    {
+                        Anio = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio,
+                        PeriodoId = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1,
+                    };
+                    DTOPeriodo PeriodoAnterior = new DTOPeriodo
+                    {
+                        Anio = PeriodoActual.PeriodoId == 1 ? PeriodoActual.Anio - 1 : PeriodoActual.Anio,
+                        PeriodoId = PeriodoActual.PeriodoId == 1 ? 3 : PeriodoActual.PeriodoId - 1,
+                    };
+
+
+                    return db.AlumnoInscrito
+                                    .Where(a => ((a.Alumno.Anio == PeriodoActual.Anio && a.Alumno.PeriodoId == PeriodoActual.PeriodoId) ||
+                                                    (a.Alumno.Anio == PeriodoSiguiente.Anio && a.Alumno.PeriodoId == PeriodoSiguiente.PeriodoId) ||
+                                                    (a.Alumno.Anio == PeriodoAnterior.Anio && a.Alumno.PeriodoId == PeriodoAnterior.PeriodoId))
+                                                && ((a.Anio == PeriodoActual.Anio && a.PeriodoId == PeriodoActual.PeriodoId) ||
+                                                    (a.Anio == PeriodoSiguiente.Anio && a.PeriodoId == PeriodoSiguiente.PeriodoId) ||
+                                                    (a.Anio == PeriodoAnterior.Anio && a.PeriodoId == PeriodoAnterior.PeriodoId))
+                                                && a.OfertaEducativa.OfertaEducativaTipoId != 4
+                                                && a.Alumno.EstatusId != 3
+                                                && (a.Alumno.AlumnoInscritoBitacora.Count == 0 ||
+                                                    a.Alumno.AlumnoInscritoBitacora.Where(k => k.OfertaEducativaId == a.OfertaEducativaId && k.PagoPlanId == null).ToList().Count == 1 ||
+                                                    a.Alumno.AlumnoInscritoBitacora.Where(ab => ab.OfertaEducativaId == a.OfertaEducativaId && ab.Anio == a.Anio && ab.PeriodoId == a.PeriodoId).ToList().Count == 1)
+                                                && a.EstatusId != 2)
+                                    .ToList()
+                                    .GroupBy(a => new { a.AlumnoId, a.Anio, a.PeriodoId, a.OfertaEducativaId })
+                                    .Select(a => a.FirstOrDefault())
+                                    .ToList()
+                                             .Select(a => new
+                                             {
+                                                 a.AlumnoId,
+                                                 Nombre = a.Alumno.Nombre + " " + a.Alumno.Paterno + " " + a.Alumno.Materno,
+                                                 Usuario = a.Alumno.Usuario.Nombre,
+                                                 FechaRegistro = ((a.Alumno.FechaRegistro.Day < 10 ? "0" + a.Alumno.FechaRegistro.Day : "" + a.Alumno.FechaRegistro.Day) + "/" +
+                                                                (a.Alumno.FechaRegistro.Month < 10 ? "0" + a.Alumno.FechaRegistro.Month : "" + a.Alumno.FechaRegistro.Month) + "/" +
+                                                                "" + a.Alumno.FechaRegistro.Year),
+                                                 a.OfertaEducativa.Descripcion,
+                                                 a.OfertaEducativaId
+                                             })
+                                             .OrderBy(k => k.AlumnoId)
+                                            .ToList();
+                }
+                catch (Exception err)
+                {
+                    return new
+                    {
+                        Estatus = false,
+                        err.Message
+                    };
+                }
+
+            }
+        }
+
+        public static object AlumnoDatosAcademicos(int AlumnoId, int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -210,7 +273,8 @@ namespace BLL
 
                 return
                 db.AlumnoInscrito
-                    .Where(al => al.AlumnoId == AlumnoId)
+                    .Where(al => al.AlumnoId == AlumnoId
+                                && al.OfertaEducativaId==OfertaEducativaId)
                     .Select(al => new
                     {
                         al.AlumnoId,
