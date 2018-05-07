@@ -1434,7 +1434,7 @@ namespace BLL
             }
         }
 
-        public static DTOAlumno ObtenerAlumnoCompleto(int AlumnoId)
+        public static object ObtenerAlumnoCompleto(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -1445,7 +1445,15 @@ namespace BLL
                     AlumnoBase.AlumnoInscrito = new List<AlumnoInscrito>(AlumnoBase.AlumnoInscrito
                         .OrderBy(o => o.Anio).ThenBy(o => o.PeriodoId).Reverse());
 
-                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    string fotoAlumno = "";
+                    try
+                    {
+                        fotoAlumno =AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    }
+                    catch
+                    {
+                        fotoAlumno = "";
+                    }
 
                     DTOAlumno Alumno = new DTOAlumno
                     {
@@ -1541,9 +1549,13 @@ namespace BLL
 
                     return Alumno;
                 }
-                catch
+                catch(Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        error.Message,
+                        Inner = error.InnerException.Message
+                    };
                 }
             }
         }
@@ -1555,7 +1567,9 @@ namespace BLL
                 try
                 {
 
-                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    string fotoAlumno = "";
+                    try { fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId); }
+                    catch { fotoAlumno = ""; }
                     Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
                     DTOAlumno objAlumno = new DTOAlumno
@@ -1602,7 +1616,15 @@ namespace BLL
                 try
                 {
 
-                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    string fotoAlumno = "";
+                    try
+                    {
+                        fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    }
+                    catch
+                    {
+                        fotoAlumno = "";
+                    }
 
                     DTOAlumnoDatos alumnoDatos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
                                         .Select(b => new DTOAlumnoDatos

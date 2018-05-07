@@ -1725,7 +1725,15 @@ namespace Universidad.BLL
                                   select (a.Nombre + " " + a.Paterno + " " + a.Materno).Trim()).FirstOrDefault()
                     };
                 }
-                string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(alumnoId);
+                string fotoAlumno = "";
+                try
+                {
+                    fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(alumnoId);
+                }
+                catch
+                {
+                    fotoAlumno = "";
+                }
                 return new DTO.Alumno.DTOAlumnoImagen
                 {
                     nombre = Ano.nombre,

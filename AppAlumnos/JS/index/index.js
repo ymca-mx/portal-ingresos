@@ -168,20 +168,7 @@ $(function () {
                     $('#popDatos').load('Views/Alumno/AlumnoActualizaDatos.html', function () {
                         $('#popDatos').modal('show');
                     });
-                } else {
-                    var PDF = '<div class="container">' +
-                        '    <div class="page-body">' +
-                        '        <div class="col-md-12 form-group">' +
-                        '            <h2>Referencias de reinscripción</h2>' +
-                        '        </div>' +
-                        '        <div id="pdf" class="col-md-12">' +
-                        '            <iframe id="filepdf" class="form-control" style="height:700px;" src="Documentos/infografía.pdf"></iframe>' +
-                        '        </div>' +
-                        '        <div class="col-md-12"><hr /></div>' +
-                        '    </div>' +
-                        '</div>';
-                    $('#divDinamico').html(PDF);
-                }
+                } 
                 IndexFn.SetTime();
             }
         });
@@ -250,18 +237,7 @@ $(function () {
                 $('#divDinamico').load(url);
                 $('#divDinamico').append(IndexFn.ClearAlert());
             } else {
-                var PDF = '<div class="container">' +
-                    '    <div class="page-body">' +
-                    '        <div class="col-md-12 form-group">' +
-                    '            <h2>Referencias de reinscripción</h2>' +
-                    '        </div>' +
-                    '        <div id="pdf" class="col-md-12">' +
-                    '            <iframe id="filepdf" class="form-control" style="height:700px;" src="Documentos/infografía.pdf"></iframe>' +
-                    '        </div>' +
-                    '        <div class="col-md-12"><hr /></div>' +
-                    '    </div>' +
-                    '</div>';
-                $('#divDinamico').html(PDF);
+                IndexFn.PDF();  
             }
         }
         return false;
@@ -269,6 +245,22 @@ $(function () {
     IndexFn.PopDatosAlumnoClick = function () {
         location.reload();
     };
+
+    IndexFn.PDF = function () {
+        var PDF = '<div class="container">' +
+            '    <div class="page-body">' +
+            '        <div class="col-md-12 form-group">' +
+            '            <h2>Referencias de reinscripción</h2>' +
+            '        </div>' +
+            '        <div id="pdf" class="col-md-12">' +
+            '            <iframe id="filepdf" class="form-control" style="height:700px;" src="Documentos/infografía.pdf"></iframe>' +
+            '        </div>' +
+            '        <div class="col-md-12"><hr /></div>' +
+            '    </div>' +
+            '</div>';
+        $('#divDinamico').html(PDF);
+    };
+
     IndexFn.ConstruirMenu = function () {
         var ul = "";
         var ulPer = "";
@@ -472,6 +464,7 @@ $(function () {
             }
             $('#divDinamico').empty();
             if (actions === null) {
+                IndexFn.PDF();
                 actions = "#";
                 return false;
             }

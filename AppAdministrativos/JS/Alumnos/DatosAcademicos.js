@@ -191,12 +191,16 @@
             };
 
             IndexFn.Api("Alumno/ChageOffer", "POST", JSON.stringify(objGuardar))
-                .done(function (data) {
-                    $('#ModalEducativa').modal('hide');
+                .done(function (data) {                    
                     $('#Load').modal('hide');
-                    alertify.alert("Se guardo correctamente", function () {
-                        DatosFn.TraerAlumnos();
-                    });
+                    if (data.Status) {
+                        $('#ModalEducativa').modal('hide');
+                        alertify.alert("Se guardo correctamente", function () {
+                            DatosFn.TraerAlumnos();
+                        });
+                    } else {
+                        alertify.alert("Error al consultar la información");
+                    }
                 })
                 .fail(function (data) {
                     $('#Load').modal('hide');

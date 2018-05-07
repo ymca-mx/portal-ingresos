@@ -359,7 +359,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public DTOAlumno ObenerDatosAlumno(string AlumnoId)
+        public object ObenerDatosAlumno(string AlumnoId)
         {
             return BLLAlumnoPortal.ObtenerAlumnoCompleto(int.Parse(AlumnoId));
         }
