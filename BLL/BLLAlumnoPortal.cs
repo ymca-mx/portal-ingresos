@@ -13436,7 +13436,15 @@ namespace BLL
             {
                 try
                 {
-                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    string fotoAlumno = "";
+                    try
+                    {
+                        fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    }
+                    catch (Exception)
+                    {
+                        fotoAlumno = "";
+                    }
 
                     Alumno alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
