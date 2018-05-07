@@ -110,6 +110,7 @@
     <Content Include="Global.asax" />
     <Content Include="Imagenes\actualizar.png" />
     <Content Include="Imagenes\export-to-excel.png" />
+    <Content Include="Imagenes\SinFoto.png" />
     <Content Include="Imagenes\ver.png" />
     <Content Include="index.html" />
     <Content Include="JS\account\recovery.js" />
