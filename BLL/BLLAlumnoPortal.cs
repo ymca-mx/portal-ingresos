@@ -109,7 +109,7 @@ namespace BLL
                                 Email = objDetalleAlumno.Email,
                                 TelefonoOficina = objDetalleAlumno.TelefonoOficina,
                                 EntidadNacimientoId = objDetalleAlumno.EntidadNacimientoId,
-                                Observaciones=""
+                                Observaciones = ""
                             },
                             GrupoAlumnoConfiguracion = objAlumnoInscrito.EsEmpresa ?
                             new List<GrupoAlumnoConfiguracion> {
@@ -204,9 +204,9 @@ namespace BLL
 
         public static object NuevoIngreso()
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
-                
+
                 try
                 {
                     DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
@@ -274,7 +274,7 @@ namespace BLL
                 return
                 db.AlumnoInscrito
                     .Where(al => al.AlumnoId == AlumnoId
-                                && al.OfertaEducativaId==OfertaEducativaId)
+                                && al.OfertaEducativaId == OfertaEducativaId)
                     .Select(al => new
                     {
                         al.AlumnoId,
@@ -302,7 +302,7 @@ namespace BLL
                                         .FirstOrDefault(),
                                         cu.PagoConceptoId,
                                         cu.Monto
-                                        
+
                                     }).ToList()
                     })
                     .FirstOrDefault();
@@ -862,7 +862,7 @@ namespace BLL
                         TelefonoCasa = Alumno.AlumnoDetalle.TelefonoCasa,
                         TelefonoOficina = Alumno.AlumnoDetalle.TelefonoOficina,
                         UsuarioId = usuarioId,
-                        Observaciones=Alumno.AlumnoDetalle.Observaciones,
+                        Observaciones = Alumno.AlumnoDetalle.Observaciones,
                     });
 
                     DateTime fechan = DateTime.ParseExact(nacimiento, "yyyy-MM-dd", Cultura);
@@ -1445,15 +1445,7 @@ namespace BLL
                     AlumnoBase.AlumnoInscrito = new List<AlumnoInscrito>(AlumnoBase.AlumnoInscrito
                         .OrderBy(o => o.Anio).ThenBy(o => o.PeriodoId).Reverse());
 
-                    string fotoAlumno = "";
-                    try
-                    {
-                        fotoAlumno =AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
-                    }
-                    catch
-                    {
-                        fotoAlumno = "";
-                    }
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
 
                     DTOAlumno Alumno = new DTOAlumno
                     {
@@ -1481,7 +1473,7 @@ namespace BLL
                             MunicipioId = AlumnoBase.AlumnoDetalle.MunicipioId,
                             PaisId = AlumnoBase.AlumnoDetalle.PaisId,
                             EntidadNacimientoId = AlumnoBase.AlumnoDetalle.EntidadNacimientoId,
-                            Observaciones=AlumnoBase.AlumnoDetalle?.Observaciones ?? "",
+                            Observaciones = AlumnoBase.AlumnoDetalle?.Observaciones ?? "",
                             fotoBase64 = fotoAlumno
                         },
                         lstOfertas = AlumnoBase.AlumnoInscrito
@@ -1549,7 +1541,7 @@ namespace BLL
 
                     return Alumno;
                 }
-                catch(Exception error)
+                catch (Exception error)
                 {
                     return new
                     {
@@ -1567,9 +1559,7 @@ namespace BLL
                 try
                 {
 
-                    string fotoAlumno = "";
-                    try { fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId); }
-                    catch { fotoAlumno = ""; }
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
                     Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
                     DTOAlumno objAlumno = new DTOAlumno
@@ -1616,15 +1606,7 @@ namespace BLL
                 try
                 {
 
-                    string fotoAlumno = "";
-                    try
-                    {
-                        fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
-                    }
-                    catch
-                    {
-                        fotoAlumno = "";
-                    }
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
 
                     DTOAlumnoDatos alumnoDatos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
                                         .Select(b => new DTOAlumnoDatos
@@ -1760,7 +1742,7 @@ namespace BLL
                         Email = AlumnoActualizaDatos.Email,
                         ProspectoId = 0,
                         UsuarioId = 0,
-                        Observaciones=AlumnoActualizaDatos.Observaciones,
+                        Observaciones = AlumnoActualizaDatos.Observaciones,
                         Fecha = DateTime.Now
                     });
 
@@ -12411,7 +12393,7 @@ namespace BLL
                         PaisId = AlumnoOriginal.AlumnoDetalle.PaisId,
                         TelefonoCasa = AlumnoOriginal.AlumnoDetalle.TelefonoCasa,
                         TelefonoOficina = AlumnoOriginal.AlumnoDetalle.TelefonoOficina,
-                        Observaciones=AlumnoOriginal.AlumnoDetalle.Observaciones
+                        Observaciones = AlumnoOriginal.AlumnoDetalle.Observaciones
                     });
 
                     AlumnoOriginal.AlumnoDetalle.Calle = AlumnoActualizacion.DTOAlumnoDetalle.Calle;
@@ -13436,15 +13418,7 @@ namespace BLL
             {
                 try
                 {
-                    string fotoAlumno = "";
-                    try
-                    {
-                        fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
-                    }
-                    catch (Exception)
-                    {
-                        fotoAlumno = "";
-                    }
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
 
                     Alumno alumno = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
@@ -13522,7 +13496,7 @@ namespace BLL
                         ProspectoId = 0,
                         UsuarioId = AlumnoDatos.UsuarioId,
                         Fecha = DateTime.Now,
-                        Observaciones=actualizaDatos.Observaciones
+                        Observaciones = actualizaDatos.Observaciones
                     });
 
                     // actualiza AlumnoDetalle

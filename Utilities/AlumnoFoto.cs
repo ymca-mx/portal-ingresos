@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Utilities
 {
@@ -24,11 +25,9 @@ namespace Utilities
             }
             catch (Exception)
             {
-                using (Impersonation.LogonUser("172.16.1.204", "Administrador", "41rM43st2011", LogonType.NewCredentials))
-                {
-                    byte[] imageArray = System.IO.File.ReadAllBytes(@"\\172.16.1.204\\Unidades\\Universidad\\Fotos\\SinFoto.png");
-                    base64Image = Convert.ToBase64String(imageArray);
-                }
+                var url = HttpContext.Current.Server.MapPath("../../../Imagenes");
+                byte[] imageArray = System.IO.File.ReadAllBytes(url + "/SinFoto.png");
+                base64Image = Convert.ToBase64String(imageArray);
             }
             return base64Image;
         }
