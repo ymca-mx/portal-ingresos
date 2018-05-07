@@ -163,7 +163,7 @@
     GetPais(SelectName, PaisId)
     {
         $("#" + SelectName).empty();
-        IndexFn.Api("General/ConsultarPaises", "GET", "")
+        IndexFn.Api("General/ConsultarPais", "GET", "")
             .done(function (data) {
                 var datos = data;
                 $(datos).each(function () {

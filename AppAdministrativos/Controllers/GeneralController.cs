@@ -74,7 +74,7 @@ namespace AppAdministrativos.Controllers
         [HttpGet]
         public IHttpActionResult GetPais()
         {
-            return Ok(BLLPeriodoPortal.ConsultarPeriodos());
+            return Ok(BLLPais.TraerPaises());
         }
 
         [Route("ConsultarEntidadFederativa")]
