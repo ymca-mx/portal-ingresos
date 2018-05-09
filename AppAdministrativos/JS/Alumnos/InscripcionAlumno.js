@@ -496,6 +496,7 @@
             TCasa: $('#txtTelefonoCasa').val(),//15
             TCelular: $('#txtCelular').val(),//16
             Email: $('#txtEmail').val(),//17
+            Observaciones: $('#txtObservaciones').val(),
 
             PANombre: $('#txtPAutorizada').val(),//18
             PAPaterno: $('#txtAPPaterno').val(),//19

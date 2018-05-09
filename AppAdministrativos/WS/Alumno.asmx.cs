@@ -35,7 +35,7 @@ namespace AppAdministrativos.WS
              string Preparatoria, string Area, string AñoPrepa, string Promedio, string Universidad, string Plantel, string PANombre2,
              string PAPaterno2, string PAMaterno2, string PATCelular2, string PAEmail2, string Parentesco2, string Nacionalidad, string NacionalidadPre,
              string PaisEstadoPre, string NacionalidadUni, string PaisEstadoUni, string Titulado, string Motivo, string Autoriza1, string Autoriza2,
-             string TelefonoCasaP, string TelefonoCasaP2, string EsEmpresa, string MedioDifusion, string Usuario)
+             string TelefonoCasaP, string TelefonoCasaP2, string EsEmpresa, string MedioDifusion, string Usuario, string Observaciones)
         {
 
             //var obj = JsonConvert.DeserializeObject<List<List<object>>>(lstDatos);
@@ -68,7 +68,8 @@ namespace AppAdministrativos.WS
                         Celular = TCelular,
                         Email = Email,
                         TelefonoOficina = "",
-                        EntidadNacimientoId = int.Parse(Nacionalidad) == 1 ? int.Parse(Pais) : defaul
+                        EntidadNacimientoId = int.Parse(Nacionalidad) == 1 ? int.Parse(Pais) : defaul,
+                        Observaciones = Observaciones
                     };
                 }
                 catch { return "Error AlumnoDetalle " + FNacimiento; }

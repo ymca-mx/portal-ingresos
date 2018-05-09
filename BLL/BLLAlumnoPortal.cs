@@ -109,7 +109,7 @@ namespace BLL
                                 Email = objDetalleAlumno.Email,
                                 TelefonoOficina = objDetalleAlumno.TelefonoOficina,
                                 EntidadNacimientoId = objDetalleAlumno.EntidadNacimientoId,
-                                Observaciones = ""
+                                Observaciones = objDetalleAlumno.Observaciones
                             },
                             GrupoAlumnoConfiguracion = objAlumnoInscrito.EsEmpresa ?
                             new List<GrupoAlumnoConfiguracion> {

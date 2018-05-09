@@ -19,6 +19,7 @@
             $('#btnGuardarCurso').on('click', this.btnGuardarCursoExClick);
         },
         EsCursoYMCA: false,
+        DocenteEstudio: {},
         ListDocentes: [],
         TraerDocentes() {
             $.ajax({
@@ -344,6 +345,7 @@
                     $('#slcOFertaTipo').val(this.EstudioDocente.OfertaEducativaTipoId);
                     $('#txtCarrera').val(this.EstudioDocente.Carrera);
                     $('#slcDocumentoTipo').val(this.EstudioDocente.Documento.DocumentoTipoId);
+                    $('#txtInstitucion').val(this.EstudioDocente.Institucion);
 
                     if (this.EstudioDocente.Documento.DocumentoUrl !== null) {
                         $('#FileComprobante span span').text('Cambiar');                        
@@ -352,8 +354,6 @@
                     }
                 }
             });
-
-            $('#txtInstitucion').val(DTODocente.Nombre + " " + DTODocente.Paterno + " " + DTODocente.Materno);
             
             $('#ModalFormacion').modal('show');
 
@@ -393,7 +393,10 @@
 
         },
         PopFormacionAcademica(DTODocente) {
-            Funciones.DocenteSeleccionado = DTODocente.DocenteId;
+            Funciones.DocenteEstudio = {
+                DocenteId: DTODocente.DocenteId,
+                DocenteCursoId: -1
+            };
             $('#frmFormacion')[0].reset();
             $('#slcDocumentoTipo').attr('disabled', false);
             $('#slcOFertaTipo').attr('disabled', false);
