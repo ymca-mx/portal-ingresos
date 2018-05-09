@@ -60,7 +60,17 @@ namespace AppAdministrativos.Controllers
         [HttpPost]
         public IHttpActionResult CambiarOfertaEducativa(DTO.DTOAlumnoOfertaCuotas alumno)
         {
-            return Ok(BLL.BLLAlumnoCambio.CambioGnral(alumno));
+            var Result = BLL.BLLAlumnoCambio.CambioGnral(alumno);
+
+            if (((bool)Result.GetType().GetProperty("Status").GetValue(Result, null)))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                    + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
+            }
         }
 
         [Route("BuscarAlumnoString/{Filtro}")]
@@ -120,6 +130,21 @@ namespace AppAdministrativos.Controllers
         public IHttpActionResult GetDatosAlumnoTodos(int AlumnoId)
         {
             return Ok(BLLAlumnoPortal.ObenerDatosAlumnoTodos(AlumnoId));
+        }
+
+        [Route("ConsultarAlumnos")]
+        [HttpGet]
+        public IHttpActionResult ConsultarAlumnos()
+        {
+            var Result = BLLAlumnoPortal.ListarAlumnos();
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
         }
     }
 }

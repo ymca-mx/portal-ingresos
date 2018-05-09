@@ -5490,6 +5490,7 @@
     <Compile Include="Controllers\BibliotecaController.cs" />
     <Compile Include="Controllers\DocentesController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\OfertaEducativaController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Global.asax.cs">

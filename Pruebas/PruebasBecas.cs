@@ -61,7 +61,7 @@ namespace Pruebas
         [TestMethod]
         public void Alumnos()
         {
-            var obj = BLL.BLLAlumnoPortal.ListarAlumnos();
+            var obj =(List<DTOAlumnoLigero>) BLL.BLLAlumnoPortal.ListarAlumnos();
             obj.ForEach(k =>
             {
                 Console.WriteLine(k.AlumnoId + " -  " + k.Nombre + " -  " + k.Descripcion);

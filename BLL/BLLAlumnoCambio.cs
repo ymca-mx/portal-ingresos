@@ -109,11 +109,11 @@ namespace BLL
                         {
                             Anio = Alumno.Anio,
                             EsEmpresa = Alumno.EsEmpresa,
-                            EstatusId = AlumnoInscritodb.EstatusId,
+                            EstatusId = Alumno.EsEmpresa ? 1 : AlumnoInscritodb.EstatusId,
                             FechaInscripcion = AlumnoInscritodb.FechaInscripcion,
                             HoraInscripcion = AlumnoInscritodb.HoraInscripcion,
                             OfertaEducativaId = Alumno.OfertaEducativaIdNueva,
-                            PagoPlanId = AlumnoInscritodb.PagoPlanId,
+                            PagoPlanId = Alumno.EsEmpresa && AlumnoInscritodb.EstatusId == 8 ? null : AlumnoInscritodb.PagoPlanId,
                             PeriodoId = Alumno.PeriodoId,
                             TurnoId = Alumno.TurnoId,
                             UsuarioId = Alumno.UsuarioId
@@ -213,8 +213,6 @@ namespace BLL
                             PagoPlanId = null,
                             UsuarioId = Alumno.UsuarioId,
                         });
-
-                        AlumnoInscritodb.PagoPlanId = null;
                         AlumnoInscritodb.EsEmpresa = true;
                     }
 
@@ -249,6 +247,9 @@ namespace BLL
                             Descuento.PeriodoId = Alumno.PeriodoId;
                             Descuento.OfertaEducativaId = Alumno.OfertaEducativaIdNueva;
                             Descuento.UsuarioId = Alumno.UsuarioId;
+                            Descuento.FechaAplicacion = DateTime.Now;
+                            Descuento.HoraGeneracion = DateTime.Now.TimeOfDay;
+                            Descuento.FechaGeneracion = DateTime.Now;
 
                             Descuento.DescuentoId = lstDescuentos.Find(x => x.PagoConceptoId == ConceptoId).DescuentoId;
 
@@ -269,7 +270,10 @@ namespace BLL
                                     break;
                             }
                         }
-                        else
+                        else if ((ConceptoId == 1 ? DescuentoExamen :
+                                            ConceptoId == 800 ? DescuentoColegiatura :
+                                            ConceptoId == 802 ? DescuentoInscripcion :
+                                            DescuentoCredencial) > 0)
                         {
                             if (!Alumno.EsEmpresa || ConceptoId != 1)
                             {
@@ -336,6 +340,9 @@ namespace BLL
 
                                 decimal MontoPagado = pago.Promesa - pago.PagoParcial.Sum(o => o.Pago);
                                 pago.Restante = MontoPagado <= 0 ? 0 : MontoPagado;
+
+                                pago.EstatusId = 1;
+
                                 pago.EstatusId = !Alumno.EsEmpresa ? pago.EstatusId != 2 ? (MontoPagado <= 0 ? 4 : 1) : 2 :
                                 (pago.Cuota1.PagoConceptoId == 1 ? 2 : pago.EstatusId != 2 ? (MontoPagado <= 0 ? 4 : 1) : 2);
 
@@ -346,20 +353,30 @@ namespace BLL
                                                                         a.PagoId
                                                                     })
                                                                     .ToList();
-
-                                pago.PagoDescuento.Clear();
-
-                                lstDescuentosPago.ForEach(desc =>
+                                if (lstDescuentosPago.Count > 0)
                                 {
+                                    pago.PagoDescuento.Clear();
 
-                                    db.PagoDescuento.Add(new PagoDescuento
+                                    lstDescuentosPago.ForEach(desc =>
+                                    {
+
+                                        db.PagoDescuento.Add(new PagoDescuento
+                                        {
+                                            Monto = pago.Cuota - pago.Promesa,
+                                            DescuentoId = lstDescuentos.Find(x => x.PagoConceptoId == ConceptoId).DescuentoId,
+                                            PagoId = desc.PagoId
+                                        });
+
+                                    });
+                                }
+                                else if(pago.Promesa!=pago.Cuota)
+                                {
+                                    pago.PagoDescuento.Add(new PagoDescuento
                                     {
                                         Monto = pago.Cuota - pago.Promesa,
-                                        DescuentoId = desc.DescuentoId,
-                                        PagoId = desc.PagoId
+                                        DescuentoId = lstDescuentos.Find(x => x.PagoConceptoId == ConceptoId).DescuentoId
                                     });
-
-                                });
+                                }
                             });
                         }
                         else if(AlumnoInscritodb.EstatusId!=8)

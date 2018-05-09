@@ -152,6 +152,8 @@
 
                 if (GlobalFn.DatosOferta.OFertaEducativa !== -1) {
                     $("#slcOFertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
+                } else {
+                    $("#slcOFertaEducativa").val(data[0].OfertaEducativaId);
                 }
 
                 $("#slcOFertaEducativa").change();

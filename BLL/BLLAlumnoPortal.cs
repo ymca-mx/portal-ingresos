@@ -405,30 +405,87 @@ namespace BLL
             }
         }
 
-        public static List<DTOAlumnoLigero> ListarAlumnos()
+        public static object ListarAlumnos()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
                     db.Configuration.LazyLoadingEnabled = false;
-                    List<DTOAlumnoLigero> lstAlumnos = ((from a in db.Alumno
-                                                         where a.EstatusId != 3
-                                                         //where a.FechaRegistro.Year >= DateTime.Now.Year - 7
-                                                         select new DTOAlumnoLigero
-                                                         {
-                                                             AlumnoId = a.AlumnoId,
-                                                             Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
-                                                             FechaRegistro = a.FechaRegistro.ToString(),
-                                                             Usuario = a.Usuario.Nombre,
-                                                             OfertasEducativas = a.AlumnoInscrito
-                                                                                .Select(AI => AI.OfertaEducativa.Descripcion)
-                                                                                    .ToList(),
-                                                         }).AsNoTracking().ToList());
-                    return lstAlumnos;
+
+                    //return (from a in db.Alumno
+                    //        where a.EstatusId != 3
+                    //        select new
+                    //        {
+                    //            a.AlumnoId,
+                    //            Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                    //            FechaRegistro = a.FechaRegistro.ToString(),
+                    //            Usuario = a.Usuario.Nombre,
+                    //            OFertas = a.AlumnoInscrito.Select(b => b.OfertaEducativa.Descripcion).ToList()
+                    //        })
+                    //    .ToList()
+                    //    .Select(b => new
+                    //    {
+                    //        b.AlumnoId,
+                    //        b.Nombre,
+                    //        b.FechaRegistro,
+                    //        b.Usuario,
+                    //        Descripcion = string.Join(" / ", b.OFertas)
+                    //    })
+                    //    .ToList();
+
+                    //return db.Alumno
+                    //    .AsNoTracking()
+                    //    .Where(a => a.EstatusId != 3)
+                    //    .Select(a => new
+                    //    {
+                    //        a.AlumnoId,
+                    //        Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                    //        FechaRegistro = a.FechaRegistro.ToString(),
+                    //        Usuario = a.Usuario.Nombre,
+                    //        OFertas = a.AlumnoInscrito.Select(b => b.OfertaEducativa.Descripcion).ToList()
+                    //    })
+                    //   .ToList()
+                    //   .Select(b => new
+                    //   {
+                    //       b.AlumnoId,
+                    //       b.Nombre,
+                    //       b.FechaRegistro,
+                    //       b.Usuario,
+                    //       Descripcion = string.Join(" / ", b.OFertas)
+                    //   })
+                    //   .ToList();
+
+                    string query = "select " +
+                                         "a.AlumnoId, " +
+                                         "a.Nombre+' '+a.Paterno+' '+a.Materno Nombre, " +
+                                         "b.Nombre Usuario, " +
+                                         "convert(varchar(10),FORMAT(a.FechaRegistro, 'd','es-mx')) as FechaRegistro, " +
+                                         "STUFF((Select ' / '+ d.Descripcion from AlumnoInscrito c " +
+                                             "inner join OfertaEducativa d on c.OfertaEducativaId=d.OFertaEducativaId " +
+                                             "where  a.AlumnoId=c.AlumnoId " +
+                                             "for XML PATH('')),1,2,'') Descripcion " +
+                                     "from Alumno a " +
+                                     "inner join Usuario b on a.UsuarioId=b.UsuarioId " +
+                                     "where a.EstatusId != 3 " +
+                                     "order by a.AlumnoId ";
+
+                    return
+                    db.Database.SqlQuery<AlumnoQuery>(query)
+                                     .ToList();
+
                 }
-                catch { return null; }
+                catch (Exception err) { return new { Status = false, err }; }
             }
+        }
+
+        public class AlumnoQuery
+        {
+            public int AlumnoId { get; set; }
+            public string Nombre { get; set; }
+            public string Usuario { get; set; }
+            public string FechaRegistro { get; set; }
+            public string Descripcion { get; set; }
         }
 
         public static DTOAlumno ObtenerAlumnoR(int AlumnoId)

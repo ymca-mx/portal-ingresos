@@ -43,6 +43,40 @@ namespace BLL
             }
         }
 
+        public static object GetCostos(int anio, int periodoId, int ofertaEducativaId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+
+                    int[] PagoConcepto = { 1, 800, 802, 1000 };
+
+                    return
+                    db.Cuota.Where(cuota => PagoConcepto.Contains(cuota.PagoConceptoId)
+                                    && cuota.Anio == anio
+                                    && cuota.PeriodoId == periodoId
+                                    && cuota.OfertaEducativaId == ofertaEducativaId)
+                             .Select(cuota => new
+                             {
+                                 cuota.PagoConceptoId,
+                                 cuota.PagoConcepto.Descripcion,
+                                 cuota.Monto
+                             })
+                             .ToList();
+                }
+                catch (Exception Error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        Error.Message,
+                        Inner = (Error?.InnerException?.InnerException?.Message) ?? ""
+                    };
+                }
+            }
+        }
+
         public static DTOOfertaEducativaTipo ConsultarOferta(int OfertaEducativaId)
         {
             using(UniversidadEntities db= new UniversidadEntities())

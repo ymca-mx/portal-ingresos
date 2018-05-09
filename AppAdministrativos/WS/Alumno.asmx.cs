@@ -162,7 +162,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public List<DTOAlumnoLigero> ConsultarAlumnos()
+        public object ConsultarAlumnos()
         {
             return BLLAlumnoPortal.ListarAlumnos();
         }

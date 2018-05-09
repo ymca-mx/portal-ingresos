@@ -636,15 +636,10 @@
         }
     });
     function Cargar() {
-        $.ajax({
-            url: 'WS/Alumno.asmx/ConsultarAlumnos',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: '{}',
-            dataType: 'json',
-            success: function (Respuesta) {
+        IndexFn.Api("Alumno/ConsultarAlumnos", "GET", "")
+            .done(function (Respuesta) {
                 MItable = $('#tbAlumnos').dataTable({
-                    "aaData": Respuesta.d,
+                    "aaData": Respuesta,
                     "aoColumns": [
                         {
                             "mDataProp": "AlumnoId", "Nombre": "AlumnoId",
@@ -655,7 +650,7 @@
                             "mRender": function (data) {
                                 return "<a href=''onclick='return false;'>" + data + " </a> ";
                             },
-                            sWidth: '350px' 
+                            sWidth: '350px'
                         },
                         { "mDataProp": "FechaRegistro" },
                         { "mDataProp": "Descripcion" },
@@ -681,11 +676,10 @@
                 var fil = $('#tbAlumnos_filter label input');
                 fil.removeClass('input-small').addClass('input-large');
                 $('#Load').modal('hide');
-            },
-            error: function (Respuesta) {
+            })
+            .fail(function (data) {
                 alertify.alert('Error al cargar datos');
-            }
-        });
+            });
     }
     //$('#btnNuevo').on('click', function () {
     //    $('#divDinamico').empty();
@@ -695,6 +689,7 @@
     //});
     function Platel() {
         $('#slcPlantel').empty();
+
         $.ajax({
             type: "POST",
             url: "WS/General.asmx/ConsultarPlantel",
@@ -706,7 +701,7 @@
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));
 
-                    option.text(this.DescripcionId);
+                    option.text(this.Descripcion);
                     option.val(this.SucursalId);
 
                     $("#slcPlantel").append(option);
