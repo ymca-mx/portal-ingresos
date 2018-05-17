@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using DAL;
+using Herramientas;
 
 namespace BLL
 {
@@ -30,6 +31,67 @@ namespace BLL
             }
 
         }
+
+        public static object GuardarDescuentosNuevoIngreso(DTODescuentoAlumno ObjAlumno)
+        {
+            using(UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    int[] PagoConceptoId = { 1, 800, 802, 1000 };
+
+                    AlumnoInscrito objAlumnoIncrito = db.AlumnoInscrito.Where(X => X.AlumnoId == ObjAlumno.AlumnoId).FirstOrDefault();
+                    object Cuotas = db.Cuota.Where(c => c.OfertaEducativaId == ObjAlumno.OfertaEducativaId
+                                                      && c.Anio == ObjAlumno.Anio
+                                                      && c.PeriodoId == ObjAlumno.PeriodoId
+                                                      && PagoConceptoId.Contains(c.PagoConceptoId))
+                                                    .Select(c => new
+                                                    {
+                                                        c.CuotaId,
+                                                        c.PagoConceptoId,
+                                                        c.Monto
+                                                    })
+                                                    .ToList();
+
+                    object Descuentos = db.Descuento.Where(d => d.OfertaEducativaId == ObjAlumno.OfertaEducativaId
+                                                            && PagoConceptoId.Contains(d.PagoConceptoId)
+                                                            && (d.Descripcion == "Beca Académica"
+                                                                        || d.Descripcion == "Descuento en inscripción"
+                                                                        || d.Descripcion == "Descuento en examen diagnóstico"
+                                                                        || d.Descripcion == "Descuento en credencial nuevo ingreso"))
+                                                    .Select(d => new
+                                                    {
+                                                        d.DescuentoId,
+                                                        d.PagoConceptoId
+                                                    })
+                                                    .ToList();
+
+
+
+
+                    objAlumnoIncrito.PagoPlanId = ObjAlumno.SistemaPago;
+                    objAlumnoIncrito.EstatusId = objAlumnoIncrito.OfertaEducativa.OfertaEducativaTipoId != 4 ? 8 : 1;
+
+                    db.AlumnoPassword.Add(new AlumnoPassword
+                    {
+                        AlumnoId = ObjAlumno.AlumnoId,
+                        Password = Utilities.Seguridad.Encripta(27, ConvertidorT.CrearPass())
+                    });
+
+
+
+                }
+                catch(Exception error )
+                {
+                    return new
+                    {
+                        error.Message,
+                        inner = error?.InnerException?.Message
+                    };
+                }
+            }
+        }
+
         public static DTOAlumnoInscrito ConsultarAlumnoInscrito(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
