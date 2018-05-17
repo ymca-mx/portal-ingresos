@@ -75,7 +75,7 @@ namespace AppAdministrativos.WS
         [WebMethod]
         public ObejtoC ExampleObject()
         {
-            ObejtoC listaAlumnos = new ObejtoC { lstAlumnos = BLLAlumnoPortal.ListarAlumnos() };
+            ObejtoC listaAlumnos = new ObejtoC { lstAlumnos =(List<DTOAlumnoLigero>) BLLAlumnoPortal.ListarAlumnos() };
 
             return listaAlumnos;
         }         

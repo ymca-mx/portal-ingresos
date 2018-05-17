@@ -5488,8 +5488,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
     <Compile Include="Controllers\BibliotecaController.cs" />
+    <Compile Include="Controllers\CuotaController.cs" />
+    <Compile Include="Controllers\DescuentosController.cs" />
     <Compile Include="Controllers\DocentesController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\OfertaEducativaController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Global.asax.cs">

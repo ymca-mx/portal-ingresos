@@ -33,5 +33,6 @@ namespace DTO
         public string Observaciones { get; set; }
         public string fotoBase64 { get; set; }
         public DTOPersonaAutorizada PersonaAutorizada { get; set; }
+        public DTOAlumnoAntecendente AlumnoAntecendente { get; set; }
     }
 }

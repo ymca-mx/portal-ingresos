@@ -96,6 +96,24 @@
                 console.log("Fallo la carga de GetPlantel");
             });
     },
+    GetSistemaPagoAlumno(idslc, AlumnoId) {
+        $('#' + idslc).empty();
+        IndexFn.Api('General/SistemaPagoAlumno/' + AlumnoId, 'get', '')
+            .done(function (data) {
+                $(data).each(function () {
+                    var option = $(document.createElement('option'));
+
+                    option.text(this.PlanPago);
+                    option.val(this.PagoPlanId);
+
+                    $('#' + idslc).append(option);
+                });
+                $('#' + idslc).select(data[0].PagoPlanId).change();
+            })
+            .fail(function (data) {
+                console.log(data);
+            });
+    },
     GetMedios() {
         $("#slcMedio").empty();
         IndexFn.Api("General/TraerListaMedios", "GET", "")
@@ -152,6 +170,8 @@
 
                 if (GlobalFn.DatosOferta.OFertaEducativa !== -1) {
                     $("#slcOFertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
+                } else {
+                    $("#slcOFertaEducativa").val(data[0].OfertaEducativaId);
                 }
 
                 $("#slcOFertaEducativa").change();
@@ -163,7 +183,7 @@
     GetPais(SelectName, PaisId)
     {
         $("#" + SelectName).empty();
-        IndexFn.Api("General/ConsultarPaises", "GET", "")
+        IndexFn.Api("General/ConsultarPais", "GET", "")
             .done(function (data) {
                 var datos = data;
                 $(datos).each(function () {

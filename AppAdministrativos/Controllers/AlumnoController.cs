@@ -37,7 +37,7 @@ namespace AppAdministrativos.Controllers
         public IHttpActionResult GetAlumnosNuevoIngresoRP()
         {
             object Result = BLLAlumnoPortal.NuevoIngreso();
-            
+
 
             if (Result.ToString().Contains("System.Collections.Generic.List"))
             {
@@ -45,7 +45,7 @@ namespace AppAdministrativos.Controllers
             }
             else
             {
-                return BadRequest("Fallo al momento de guardar, "+ Result.GetType().GetProperty("Message").GetValue(Result, null));
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
 
@@ -60,7 +60,17 @@ namespace AppAdministrativos.Controllers
         [HttpPost]
         public IHttpActionResult CambiarOfertaEducativa(DTO.DTOAlumnoOfertaCuotas alumno)
         {
-            return Ok(BLL.BLLAlumnoCambio.CambioGnral(alumno));
+            var Result = BLL.BLLAlumnoCambio.CambioGnral(alumno);
+
+            if (((bool)Result.GetType().GetProperty("Status").GetValue(Result, null)))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                    + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
+            }
         }
 
         [Route("BuscarAlumnoString/{Filtro}")]
@@ -68,6 +78,21 @@ namespace AppAdministrativos.Controllers
         public IHttpActionResult BuscarAlumnoString(string Filtro)
         {
             return Ok(BLLAlumnoPortal.BuscarAlumnoTexto(Filtro));
+        }
+
+        [Route("BuscarAlumno")]
+        [HttpPost]
+        public IHttpActionResult GetHomonimos(DTO.DTOAlumno alumno)
+        {
+            var Result = BLLAlumnoPortal.ListarAlumnos(alumno.Nombre, alumno.Paterno, alumno.Materno);
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
         }
 
         //Cambio turno
@@ -120,6 +145,53 @@ namespace AppAdministrativos.Controllers
         public IHttpActionResult GetDatosAlumnoTodos(int AlumnoId)
         {
             return Ok(BLLAlumnoPortal.ObenerDatosAlumnoTodos(AlumnoId));
+        }
+
+        [Route("ConsultarAlumnos")]
+        [HttpGet]
+        public IHttpActionResult ConsultarAlumnos()
+        {
+            var Result = BLLAlumnoPortal.ListarAlumnos();
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("Nuevo")]
+        [HttpPut]
+        public IHttpActionResult AddAlumno(DTO.DTOAlumno Alumno)
+        {
+            var Result = BLLAlumnoPortal.InsertarAlumno(Alumno);
+
+            if (Result is string)
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("ConsultarAlumnoPromocionCasa2/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetPromocionCasa(int AlumnoId)
+        {
+            var Result = BLLAlumnoPortal.ConsultarAlumnoPromocionCasa2(AlumnoId);
+
+            if ((Result is DTO.DTOAlumnoPromocionCasa) || (Result == null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
         }
     }
 }

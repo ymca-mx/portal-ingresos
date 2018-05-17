@@ -66,7 +66,7 @@ function CalcularDescuento(Monto, Descuento) {
     return Redondeado;
 }
 function RecalculaTabla(monto) {
-    if (MesP.length == 0) {
+    if (MesP.length === 0) {
         for (i = 0; i < 4; i++) {
            MesP[i]= $('#mes' + i).text().replace('$','');
         }
@@ -74,7 +74,7 @@ function RecalculaTabla(monto) {
     var filx;
     var descu;
     for (i = 0; i < 4; i++) {
-        if (MesP[i] != '0.00') {
+        if (MesP[i] !== '0.00') {
             filx = $('#mes' + i);
             descu = CalcularDescuento(MesP[i], monto);
             $(filx).text('$' + String(descu));

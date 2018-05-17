@@ -100,7 +100,7 @@ namespace AppAdministrativos.WS
             return BLLSucursal.ConsultarSucursalesEmpresa();
         }
         [WebMethod]
-        public List<DTOPagoPlan> ConsultarPagosPlan(string AlumnoId)
+        public object ConsultarPagosPlan(string AlumnoId)
         {
             return BLLPagoPlan.ConsultarPagos(int.Parse(AlumnoId));
         }

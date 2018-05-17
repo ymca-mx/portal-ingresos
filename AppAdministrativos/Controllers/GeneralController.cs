@@ -74,7 +74,7 @@ namespace AppAdministrativos.Controllers
         [HttpGet]
         public IHttpActionResult GetPais()
         {
-            return Ok(BLLPeriodoPortal.ConsultarPeriodos());
+            return Ok(BLLPais.TraerPaises());
         }
 
         [Route("ConsultarEntidadFederativa")]
@@ -124,6 +124,22 @@ namespace AppAdministrativos.Controllers
         public IHttpActionResult GetAreas()
         {
             return Ok(BLLAreaAcademica.AreasAcademicas());
+        }
+
+        [Route("SistemaPagoAlumno/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult SistemaPagoAlumno(int AlumnoId)
+        {
+            var Result = BLLPagoPlan.ConsultarPagos(AlumnoId);
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de trer datos, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
         }
     }
 }
