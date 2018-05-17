@@ -70,7 +70,7 @@
                                         </div>
                                         <div id="tab1" class="tab-pane">
                                             <h3 class="block">Personales</h3>
-                                          
+
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <div class="col-md-2">
@@ -134,9 +134,7 @@
                                                 </div>
 
                                                 <div class="col-md-6 ">
-
                                                     <!--Correo electronico-->
-
                                                     <div class="col-md-10 form-group">
                                                         <label class="control-label">Correo Electrónico</label>
                                                         <div class="input-icon right">
@@ -228,12 +226,76 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <hr class="line" />
+                                                    <h3 class="">Persona de contacto (contactar en caso de emergencia)</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <!--Apartado de Persona Autorizada-->
+                                                    <div class="form-group col-md-10">
+                                                        <label class="control-label">Nombre</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" id="txtPAutorizada" class="form-control" name="txtPAutorizada" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-10">
+                                                        <label class="control-label">Apellido Paterno</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" id="txtAPPaterno" name="txtAPPaterno" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-10">
+                                                        <label class="control-label">Apellido Materno</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" id="txtAPMaterno" name="txtAPMaterno" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-8">
+                                                        <label class="control-label">Parentesco</label>
+                                                        <div class="input-icon right">
+                                                            <select class="form-control" id="slcParentesco" name="slcParentesco">
+                                                                <option value="-1">--Seleccionar--</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group col-md-10">
+                                                        <label class="control-label">Correo Electrónico</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="email" id="txtPEmail" name="txtPEmail" class="form-control" placeholder="Correo Electrónico:" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-10">
+                                                        <label class="control-label">Teléfono Celular</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" id="txtTelefonoPA" name="txtTelefonoPA" class="form-control" />
+                                                            <span class="help-block"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-10">
+                                                        <label class="control-label">Teléfono Casa</label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" id="txtTelefonoPAT" name="txtTelefonoPAT" class="form-control" />
+                                                            <span class="help-block"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
                                         <div class="modal-dialog modal-sm" style="height: 90px;">
-                                            <!--<div class="modal-content" style="width:auto">-->
                                             <div class="form-group">
                                                 <h3 id="hCarga">Cargando</h3>
                                             </div>
@@ -241,7 +303,6 @@
                                                 <div class="bar" style="width:auto" id="divBar">
                                                     <p id="txtBar"></p>
                                                 </div>
-                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </div>

@@ -25,6 +25,7 @@ namespace DAL
         public string Email { get; set; }
         public int ParentescoId { get; set; }
         public bool EsAutorizada { get; set; }
+        public bool EsContacto { get; set; }
         public int UsuarioId { get; set; }
         public System.DateTime Fecha { get; set; }
     }

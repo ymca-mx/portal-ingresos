@@ -718,6 +718,9 @@
     <Compile Include="SucursalDetalle.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="TempAdeudo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="TipoDocumento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

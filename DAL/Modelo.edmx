@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UniversidadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.AdelantoLic_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="AdelantoLic_20162">
+          <Property Name="ALUMNOID" Type="float" />
+          <Property Name="OFERTAEDUCATIVAID" Type="float" />
+          <Property Name="INSCRITAS" Type="float" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.AdelantoPos_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="AdelantoPos_20162">
+          <Property Name="ALUMNOID" Type="float" />
+          <Property Name="OFERTAEDUCATIVAID" Type="float" />
+          <Property Name="INSCRITAS" Type="float" />
+        </EntityType>-->
         <EntityType Name="Adeudo">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -17,6 +31,17 @@
           <Property Name="Pagare" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="OfertaEducativaId" Type="int" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.Adeudo29ABR2016' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Adeudo29ABR2016">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="OfertaEducativaId" Type="int" />
+          <Property Name="ColegiaturaIdiomas" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Colegiatura" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Inscripcion" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Financiamiento" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Pagare" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>-->
         <EntityType Name="AdeudoBiblioteca">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -129,7 +154,7 @@
           <Property Name="Documento" Type="varbinary(max)" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoBeca' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoBeca' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoBeca">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -469,7 +494,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoBeca' no tiene definid
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoInscritoBitacoraBKSalome' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoInscritoBitacoraBKSalome' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoInscritoBitacoraBKSalome">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -593,7 +618,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoInscritoBitacoraBKSalo
           <Property Name="FechaDocumento" Type="smalldatetime" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoMatricula' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoMatricula' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoMatricula">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -691,7 +716,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoMatricula' no tiene de
           <Property Name="Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.AlumnoPermitido20162' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlumnoPermitido20162">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -750,6 +775,19 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tie
           <Property Name="AdelantoMateria" Type="int" Nullable="false" />
           <Property Name="Observaciones" Type="varchar" MaxLength="300" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.Alumnos2016_2_sueltas' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Alumnos2016_2_sueltas">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="OfertaEducativaId" Type="int" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.Alumnos2016-2' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Alumnos2016-2">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="Inscritas" Type="int" />
+          <Property Name="OfertaEducativaId" Type="int" />
+        </EntityType>-->
         <EntityType Name="AlumnoSaldo">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -795,6 +833,23 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tie
           <Property Name="Inscripcion" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Colegiatura" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.AlumnosLE20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="AlumnosLE20162">
+          <Property Name="PagoId" Type="int" />
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="CuotaId" Type="int" />
+          <Property Name="Promesa" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Estatus" Type="int" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.AlumnosLEAgregar20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="AlumnosLEAgregar20162">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="CuotaId" Type="int" />
+          <Property Name="Promesa" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Estatus" Type="int" />
+        </EntityType>-->
         <EntityType Name="AntecedenteTipo">
           <Key>
             <PropertyRef Name="AntecedenteTipoId" />
@@ -876,7 +931,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.AlumnoPermitido20162' no tie
           <Property Name="HoraAplicacion" Type="time" Precision="0" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.BecaSEPBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.BecaSEPBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="BecaSEPBitacora">
           <Key>
             <PropertyRef Name="PagoId" />
@@ -893,6 +948,20 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.BecaSEPBitacora' no tiene de
           <Property Name="HoraBitacora" Type="time" Precision="0" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.BitacoraCancelacion' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="BitacoraCancelacion">
+          <Property Name="PagoId" Type="int" />
+          <Property Name="FechaProceso" Type="date" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.BitacoraMatAdelanto' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="BitacoraMatAdelanto">
+          <Property Name="AlumnoId" Type="int" />
+          <Property Name="FechaProceso" Type="date" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
         <EntityType Name="BitacoraReinscripcionAdeudo">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -953,7 +1022,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.BecaSEPBitacora' no tiene de
           <Property Name="BajaMaterias" Type="varchar" MaxLength="1000" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.COLEGIATURA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.COLEGIATURA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="COLEGIATURA">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -1352,7 +1421,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.COLEGIATURA' no tiene defini
           <Property Name="EstatusId" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.IdiomasInscrito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.IdiomasInscrito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="IdiomasInscrito">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -1392,6 +1461,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.IdiomasInscrito' no tiene de
           <Property Name="DiaInicial" Type="int" Nullable="false" />
           <Property Name="DiaFinal" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.Licenciatura_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Licenciatura_20162">
+          <Property Name="FiClave" Type="float" />
+          <Property Name="Inscritas" Type="float" />
+          <Property Name="FiCarrera" Type="float" />
+          <Property Name="Cuatrimestre" Type="float" />
+        </EntityType>-->
         <EntityType Name="Matricula">
           <Key>
             <PropertyRef Name="MatriculaId" />
@@ -1667,7 +1744,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.IdiomasInscrito' no tiene de
           <Property Name="Monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.PagoDescuentoBitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PagoDescuentoBitacora">
           <Key>
             <PropertyRef Name="PagoId" />
@@ -1835,6 +1912,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ParentescoId" Type="int" Nullable="false" />
           <Property Name="EsAutorizada" Type="bit" Nullable="false" />
+          <Property Name="EsContacto" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PersonaAutorizadaBitacora">
           <Key>
@@ -1851,6 +1929,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ParentescoId" Type="int" Nullable="false" />
           <Property Name="EsAutorizada" Type="bit" Nullable="false" />
+          <Property Name="EsContacto" Type="bit" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1968,6 +2047,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="PolizaTipoId" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.Posgrado_20162' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Posgrado_20162">
+          <Property Name="FiClave" Type="float" />
+          <Property Name="Inscritas" Type="float" />
+          <Property Name="FiCarrera" Type="float" />
+          <Property Name="Cuatrimestre" Type="float" />
+        </EntityType>-->
         <EntityType Name="Pregunta">
           <Key>
             <PropertyRef Name="PreguntaId" />
@@ -2382,7 +2469,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.PagoDescuentoBitacora' no ti
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.ReporteEstadoCuentaDescuento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.ReporteEstadoCuentaDescuento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ReporteEstadoCuentaDescuento">
           <Key>
             <PropertyRef Name="PagoConceptoId" />
@@ -2396,7 +2483,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.ReporteEstadoCuentaDescuento
           <Property Name="TipoDescuentoDesc" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.ReporteEstadoCuentaPagosConcepto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.ReporteEstadoCuentaPagosConcepto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ReporteEstadoCuentaPagosConcepto">
           <Key>
             <PropertyRef Name="PagoConceptoID" />
@@ -2427,7 +2514,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.ReporteEstadoCuentaPagosConc
           <Property Name="Comentario" Type="varchar" MaxLength="300" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.Saldos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Saldos">
           <Key>
             <PropertyRef Name="AlumnoId" />
@@ -2583,6 +2670,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="EntidadFederativaId" Type="int" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="TempAdeudo">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="int" Nullable="false" />
+          <Property Name="Adeudo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
             <PropertyRef Name="TipoDocumento" />
@@ -2620,7 +2716,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="Descripcion" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="UniversidadAdeudo">
           <Key>
             <PropertyRef Name="AlumnoID" />
@@ -2629,7 +2725,13 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="UniversidadAdeudo" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6013: La tabla o vista 'Universidad_W.dbo.UniversidadAdeudo29ABR2016' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="UniversidadAdeudo29ABR2016">
+          <Property Name="AlumnoID" Type="int" />
+          <Property Name="UniversidadAdeudo29ABR2016" Type="decimal" Precision="20" Scale="2" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Universidad_W.dbo.UniversidadNewAdeudo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="UniversidadNewAdeudo">
           <Key>
             <PropertyRef Name="AlumnoID" />
@@ -7517,6 +7619,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="Self.SucursalAnuncio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalCaja" EntityType="Self.SucursalCaja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SucursalDetalle" EntityType="Self.SucursalDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempAdeudo" EntityType="Self.TempAdeudo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="Self.TipoMovimientoCRUD" Schema="dbo" store:Type="Tables" />
@@ -9326,6 +9429,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySet Name="SucursalAnuncio" EntityType="UniversidadModel.SucursalAnuncio" />
           <EntitySet Name="SucursalCaja" EntityType="UniversidadModel.SucursalCaja" />
           <EntitySet Name="SucursalDetalle" EntityType="UniversidadModel.SucursalDetalle" />
+          <EntitySet Name="TempAdeudo" EntityType="UniversidadModel.TempAdeudo" />
           <EntitySet Name="TipoDocumento" EntityType="UniversidadModel.TipoDocumento" />
           <EntitySet Name="TipoMovimiento" EntityType="UniversidadModel.TipoMovimiento" />
           <EntitySet Name="TipoMovimientoCRUD" EntityType="UniversidadModel.TipoMovimientoCRUD" />
@@ -11199,6 +11303,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Celular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="TieneExamenMedico" Type="Boolean" Nullable="false" />
+          <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_AlumnoDetalle_Alumno" FromRole="AlumnoDetalle" ToRole="Alumno" />
           <NavigationProperty Name="EntidadFederativa" Relationship="UniversidadModel.FK_AlumnoDetalle_EntidadFederativa" FromRole="AlumnoDetalle" ToRole="EntidadFederativa" />
           <NavigationProperty Name="EntidadFederativa1" Relationship="UniversidadModel.FK_AlumnoDetalle_EntidadFederativa1" FromRole="AlumnoDetalle" ToRole="EntidadFederativa" />
@@ -11207,7 +11312,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <NavigationProperty Name="Municipio" Relationship="UniversidadModel.FK_AlumnoDetalle_Municipio" FromRole="AlumnoDetalle" ToRole="Municipio" />
           <NavigationProperty Name="Pais" Relationship="UniversidadModel.FK_AlumnoDetalle_Pais" FromRole="AlumnoDetalle" ToRole="Pais" />
           <NavigationProperty Name="AlumnoExamenMedico" Relationship="UniversidadModel.FK_AlumnoExamenMedico_AlumnoDetalle" FromRole="AlumnoDetalle" ToRole="AlumnoExamenMedico" />
-          <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AlumnoDetalleAlumno">
           <Key>
@@ -11256,8 +11360,8 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="ProspectoId" Type="Int32" Nullable="false" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_AlumnoDetalleBitacora_Alumno" FromRole="AlumnoDetalleBitacora" ToRole="Alumno" />
           <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_AlumnoDetalleBitacora_Alumno" FromRole="AlumnoDetalleBitacora" ToRole="Alumno" />
         </EntityType>
         <EntityType Name="AlumnoExamenMedico">
           <Key>
@@ -12952,6 +13056,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ParentescoId" Type="Int32" Nullable="false" />
           <Property Name="EsAutorizada" Type="Boolean" Nullable="false" />
+          <Property Name="EsContacto" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Alumno" Relationship="UniversidadModel.FK_PersonaAutorizada_Alumno" FromRole="PersonaAutorizada" ToRole="Alumno" />
           <NavigationProperty Name="Parentesco" Relationship="UniversidadModel.FK_PersonaAutorizada_Parentesco" FromRole="PersonaAutorizada" ToRole="Parentesco" />
         </EntityType>
@@ -12970,6 +13075,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ParentescoId" Type="Int32" Nullable="false" />
           <Property Name="EsAutorizada" Type="Boolean" Nullable="false" />
+          <Property Name="EsContacto" Type="Boolean" Nullable="false" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -13753,6 +13859,15 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <Property Name="Telefono" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pais" Relationship="UniversidadModel.FK_SucursalDetalle_Pais" FromRole="SucursalDetalle" ToRole="Pais" />
           <NavigationProperty Name="Sucursal" Relationship="UniversidadModel.FK_SucursalDetalle_Sucursal" FromRole="SucursalDetalle" ToRole="Sucursal" />
+        </EntityType>
+        <EntityType Name="TempAdeudo">
+          <Key>
+            <PropertyRef Name="AlumnoId" />
+          </Key>
+          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
+          <Property Name="Adeudo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="OfertaEducativaId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
@@ -20594,6 +20709,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
           <EntitySetMapping Name="PersonaAutorizada">
             <EntityTypeMapping TypeName="UniversidadModel.PersonaAutorizada">
               <MappingFragment StoreEntitySet="PersonaAutorizada">
+                <ScalarProperty Name="EsContacto" ColumnName="EsContacto" />
                 <ScalarProperty Name="EsAutorizada" ColumnName="EsAutorizada" />
                 <ScalarProperty Name="ParentescoId" ColumnName="ParentescoId" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -20612,6 +20728,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
               <MappingFragment StoreEntitySet="PersonaAutorizadaBitacora">
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="EsContacto" ColumnName="EsContacto" />
                 <ScalarProperty Name="EsAutorizada" ColumnName="EsAutorizada" />
                 <ScalarProperty Name="ParentescoId" ColumnName="ParentescoId" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -21265,6 +21382,16 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadNewAdeudo' no tie
                 <ScalarProperty Name="NoExterior" ColumnName="NoExterior" />
                 <ScalarProperty Name="Calle" ColumnName="Calle" />
                 <ScalarProperty Name="SucursalId" ColumnName="SucursalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempAdeudo">
+            <EntityTypeMapping TypeName="UniversidadModel.TempAdeudo">
+              <MappingFragment StoreEntitySet="TempAdeudo">
+                <ScalarProperty Name="OfertaEducativaId" ColumnName="OfertaEducativaId" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Adeudo" ColumnName="Adeudo" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

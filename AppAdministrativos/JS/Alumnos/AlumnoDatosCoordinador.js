@@ -14,6 +14,7 @@
                 GlobalFn.GetGenero();
                 GlobalFn.GetEstado("slcEstado", 9);
                 GlobalFn.GetEstadoCivil();
+                GlobalFn.GetParentesco("slcParentesco");
 
                 $("#btnBuscarAlumno").on("click", fnDatos.buscarAlumno);
                 $('#tblAlumnos').on('click', 'a', fnDatos.seleccionarAlumno);
@@ -39,13 +40,13 @@
                             //required: true,
                             digits: true,
                             minlength: 10,
-                            maxlength: 10
+                            maxlength: 13
                         },
                         txtTelefonoCasa: {
                             digits: true,
                             //required: true,
                             minlength: 8,
-                            maxlength: 10
+                            maxlength: 13
                         },
                         txtCalle: {
                             //required: true,
@@ -160,6 +161,14 @@
                                 $("#slcMunicipio").val(data.DTOAlumnoDetalle.MunicipioId);
                             });
 
+                            $('#txtPAutorizada').val(data.DTOPersonaAutorizada[0].Nombre);
+                            $('#txtAPPaterno').val(data.DTOPersonaAutorizada[0].Paterno);
+                            $('#txtAPMaterno').val(data.DTOPersonaAutorizada[0].Materno);
+                            $('#slcParentesco').val(data.DTOPersonaAutorizada[0].ParentescoId);
+                            $('#txtPEmail').val(data.DTOPersonaAutorizada[0].Email);
+                            $('#txtTelefonoPA').val(data.DTOPersonaAutorizada[0].Celular);
+                            $('#txtTelefonoPAT').val(data.DTOPersonaAutorizada[0].Telefono);
+
                             $("#divGuardar").show();
                             $('#frmTabs').show();
                             $('#Load').modal('hide');
@@ -232,7 +241,6 @@
                 $('#Load').modal('show');
 
                 var obj = {
-                    'AlumnoDatos': {
                         "AlumnoId": AlumnoNum,
                         "Celular": $('#txtCelular').val(),
                         "Email": $('#txtEmail').val(),
@@ -245,18 +253,25 @@
                         "EstadoCivilId": $('#slcEstadoCivil').val(),
                         "EntidadFederativaId": $('#slcEstado').val(),
                         "MunicipioId": $('#slcMunicipio').val(),
-                        "UsuarioId": UsuarioId
-                    }
+                        "UsuarioId": UsuarioId,
+                        "PersonaAutorizada":
+                        {
+                            "AlumnoId": AlumnoNum,
+                            "Nombre": $('#txtPAutorizada').val(),
+                            "Paterno": $('#txtAPPaterno').val(),
+                            "Materno": $('#txtAPMaterno').val(),
+                            "Telefono": $('#txtTelefonoPAT').val(),
+                            "Celular": $('#txtTelefonoPA').val(),
+                            "Email": $('#txtPEmail').val(),
+                            "ParentescoId": $('#slcParentesco').val()
+                        }
                 };
+
                 obj = JSON.stringify(obj);
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Alumno.asmx/UpdateAlumnoDatosCoordinador",
-                    data: obj,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.d) {
+
+                IndexFn.Api('Alumno/UpdateAlumnoDatosCoordinador', "POST", obj)
+                    .done(function (data) {
+                        if (data) {
                             $('#Load').modal('hide');
                             $('#PopDatosAlumno').modal('hide');
                             alertify.alert("Datos del Alumno Modificados", function () {
@@ -269,10 +284,11 @@
                                 $('#popDatos').empty();
                             });
                         }
-                    }
-                });
-
-
+                    })
+                    .fail(function (data) {
+                        alertify.alert("Error, Revisar datos capturados.");
+                    });
+                
             },
             limpiarCampos: function () {
                 $("#submit_form").trigger('reset');
