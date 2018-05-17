@@ -1192,30 +1192,59 @@ namespace BLL
             }
         }
 
-        public static List<DTOCuota> TraerDescuentos(int AlumnoId)
+        public static object TraerDescuentos(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
+                    int[] Conceptos = { 1, 800, 802, 1000 };
+                    var Alumno = db.AlumnoInscrito
+                            .Where(al => al.AlumnoId == AlumnoId)
+                            .FirstOrDefault();
+                                    
 
-                    DTOAlumnoInscrito objOferta = BLLAlumnoInscrito.ConsultarAlumnoInscrito(AlumnoId);
-                    List<DTODescuentos> listDescuentos = new List<DTODescuentos> { BLLDescuentos.obtenerDescuentos(objOferta.OfertaEducativaId, 802),
-                BLLDescuentos.obtenerDescuentos(objOferta.OfertaEducativaId, 800,"Beca Académica"),
-                BLLDescuentos.obtenerDescuentos(objOferta.OfertaEducativaId,1),
-                BLLDescuentos.obtenerDescuentos(objOferta.OfertaEducativaId, 1000)};
-
-                    List<DTOCuota> lstCuotas = new List<DTOCuota>();
-                    foreach (DTODescuentos objDescuento in listDescuentos)
-                    {
-                        lstCuotas.Add(BLLCuota.traerCuotaParametros(objOferta, objDescuento));
-                        lstCuotas.Last().Descuento = objDescuento;
-                    }
-                    return lstCuotas;
+                    return
+                    db.Cuota
+                            .Where(cu => Conceptos.Contains(cu.PagoConceptoId)
+                                    && cu.OfertaEducativaId == Alumno.OfertaEducativaId
+                                    && cu.Anio==Alumno.Anio
+                                    && cu.PeriodoId==Alumno.PeriodoId)
+                             .Select(d => new
+                             {
+                                 d.CuotaId,
+                                 d.Anio,
+                                 d.PeriodoId,
+                                 d.OfertaEducativaId,
+                                 d.PagoConceptoId,
+                                 d.Monto,
+                                 Descuento = db.Descuento
+                                            .Where(des => des.PagoConceptoId == d.PagoConceptoId
+                                                && des.OfertaEducativaId == d.OfertaEducativaId
+                                                && (d.PagoConceptoId == 800 || d.PagoConceptoId == 802 ?
+                                                des.Descripcion == "Beca Académica" || des.Descripcion == "Descuento en inscripción" : true))
+                                                .Select(c => new
+                                                {
+                                                    c.DescuentoId,
+                                                    c.PagoConceptoId,
+                                                    c.DescuentoTipoId,
+                                                    c.OfertaEducativaId,
+                                                    c.MontoMaximo,
+                                                    c.MontoMinimo,
+                                                    c.Descripcion
+                                                }).FirstOrDefault()
+                             })
+                             .OrderBy(a=> a.PagoConceptoId)
+                             .ToList();
+                    
                 }
-                catch
+                catch(Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }
@@ -2042,6 +2071,38 @@ namespace BLL
             }
         }
 
+        public static object TraerCuotasOfertaEducativaPeriodo(int OFertaEducativaId, int Anio, int PeriodoId)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    int[] PagoConcepto = { 1, 800, 802, 1000 };
+
+                    return db.Cuota
+                        .Where(cu => cu.Anio == Anio
+                                    && cu.PeriodoId == PeriodoId
+                                    && cu.OfertaEducativaId == OFertaEducativaId
+                                    && PagoConcepto.Contains(cu.PagoConceptoId))
+                               .Select(a => new
+                               {
+                                   a.PagoConceptoId,
+                                   a.PagoConcepto.Descripcion,
+                                   a.Monto,
+                                   a.CuotaId
+                               })
+                               .ToList();
+                }
+                catch(Exception error)
+                {
+                    return new
+                    {
+                        error.Message,
+                        Inner = error.InnerException.Message
+                    };
+                }
+            }
+        }
         //public static string GenerarCargos_Becas(int AlumnoId, int OfertaEducatovaId, decimal Monto, bool SEP, int Anio, int PeriodoId, int UsuarioId)
         //{
         //    using (UniversidadEntities db = new UniversidadEntities())

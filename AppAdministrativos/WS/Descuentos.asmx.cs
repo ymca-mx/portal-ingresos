@@ -153,7 +153,7 @@ namespace AppAdministrativos.WS
             return file;
         }
         [WebMethod]
-        public List<DTOCuota> TraerDescuentos(int AlumnoId)
+        public object TraerDescuentos(int AlumnoId)
         {
             return BLLAlumnoDescuento.TraerDescuentos(AlumnoId);
         }

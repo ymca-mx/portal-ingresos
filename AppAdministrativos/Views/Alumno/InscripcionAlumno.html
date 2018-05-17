@@ -9,21 +9,6 @@
     <meta content="" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="pragma" content="no-cache" />
-    <script src="JS/UpdatePanel.js"></script>
-    <script src="JS/Genero.js"></script>
-    <script src="JS/Parentesco.js"></script>
-    <script src="JS/Pais.js"></script>
-    <script src="JS/Turno.js"></script>
-    <script src="JS/Periodo.js"></script>
-    <script src="JS/EntidadFederativa.js"></script>
-    <script src="JS/EstadoCivil.js"></script>
-    <script src="JS/Plantel.js"></script>
-    <script src="JS/Descuentos.js"></script>
-    <script src="JS/Homonimos.js"></script>
-    <script src="JS/Posgrado.js"></script>
-    <script src="JS/MedioDifusion.js"></script>
-    <script src="JS/AreaAcademica.js"></script>
-    <script src="JS/Archivos.js"></script>
     <link href="Style/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
 </head>
 <body>
@@ -534,14 +519,14 @@
                                                                 </div>
                                                                 <div class="form-group col-md-10">
                                                                     <label class="control-label">Oferta Educativa</label>
-                                                                    <select id="slcOferta" name="slcOferta" class="form-control selector">
+                                                                    <select id="slcTipoOferta" name="slcTipoOferta" class="form-control selector">
                                                                         <option value="-1">--Seleccionar--</option>
                                                                     </select>
                                                                 </div>
 
                                                                 <div class="form-group col-md-10">
                                                                     <label class="control-label" id="lblOFerta">Carrera</label>
-                                                                    <select id="slcCarrera" name="slcCarrera" class="form-control selector"></select>
+                                                                    <select id="slcOFertaEducativa" name="slcOFertaEducativa" class="form-control selector"></select>
                                                                 </div>
 
                                                                 <div class="form-group col-md-10">
@@ -721,26 +706,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-5" id="divTablaDescuento">
-                                                                <table class="table table-striped table-bordered table-advance table-hover" id="tblDescuentos">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th id="thm1">
-                                                                                <i class="fa fa-calendar"></i>&nbsp; Mes1
-                                                                            </th>
-                                                                            <th id="thm2">
-                                                                                <i class="fa fa-calendar"></i>&nbsp; Mes2
-                                                                            </th>
-                                                                            <th id="thm3">
-                                                                                <i class="fa fa-calendar"></i>&nbsp; Mes3
-                                                                            </th>
-                                                                            <th id="thm4">
-                                                                                <i class="fa fa-calendar"></i>&nbsp; Mes4
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
                                                             </div>
                                                         </div>
                                                         <!--Incripcion-->
@@ -995,25 +960,12 @@
             </div>
         </div>
     </div>
-    <script src="Style/assets/global/plugins/icheck/icheck.min.js"></script>
-    <script src="JS/Alumnos/InscripcionAlumno.js"></script>
     <script>
-        jQuery(document).ready(function () {
-            Genero.init();
-            Parentesco.init();
-            Turno.init();
-            Periodo.init();
-            Estado.init();
-            EstadoCivil.init();
-            Plantel.init();
-            PruebaSL.init();
-            Validacion.init();
-            ComponentsKnobDials.init();
-            ComponentsPickers.init();
-            Metronic.stopPageLoading();
-        });
-
-
+        $.getScript("JS/Archivos.js");
+        $.getScript("Style/assets/global/plugins/icheck/icheck.min.js");        
+        $.getScript("JS/Alumnos/InscripcionAlumno.js");
+        
+        ComponentsPickers.init();
 
         function ActivarUni() {
             if (txtUni.disabled) {
@@ -1022,6 +974,7 @@
                 txtUni.disabled = true;
             }
         }
+        
     </script>
 </body>
 </html>

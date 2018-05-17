@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Globalization;
 using Utilities;
 using BLL;
+using System.Net;
+using System.IO;
 
 namespace Pruebas
 {
@@ -343,6 +345,36 @@ namespace Pruebas
                 }
                 Console.WriteLine(Fallidos);
             }
+        }
+
+        [TestMethod]
+        public void FilesinServer()
+        {
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://108.163.172.122/Fotos/universidad/");
+                request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+
+                request.Credentials = new NetworkCredential("Jose_Rodriguez", "Reguez15");
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+                string names = reader.ReadToEnd();
+
+                reader.Close();
+                response.Close();
+
+                names.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(a =>
+                {
+                    var b = a.Replace("                ", "  ").Replace("  "," ").Split(' ');
+                    Console.WriteLine("Nombre: " + b[2] + " - Fecha: " + b[0] + " - Hora: " + b[1]);
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

@@ -37,6 +37,25 @@ $(function () {
 
             return dfd.promise();
         },
+        ApiFile(url, data) {
+            var dfd = $.Deferred();
+
+            var Api = $.ajax({
+                url: "Api/" + url,
+                type: "POST",
+                data: data,
+                contentType: false,
+                processData: false
+            });
+
+            Api.done(function (data) {
+                dfd.resolve(data);
+            }).fail(function (data) {
+                dfd.reject(data);
+            });
+
+            return dfd.promise();
+        },
         btnSalir: function () {
             $.removeCookie('userAdmin', { path: '/' });
             Backbone.history.stop();

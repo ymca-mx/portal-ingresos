@@ -125,5 +125,21 @@ namespace AppAdministrativos.Controllers
         {
             return Ok(BLLAreaAcademica.AreasAcademicas());
         }
+
+        [Route("SistemaPagoAlumno/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult SistemaPagoAlumno(int AlumnoId)
+        {
+            var Result = BLLPagoPlan.ConsultarPagos(AlumnoId);
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de trer datos, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
     }
 }

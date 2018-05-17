@@ -1,16 +1,11 @@
-$(function () {
-    
-    var Usuario,
-        esEmpresa,
-        b_Valid = 0,
-        AlumnoPromocion,
-        tblAlumno2,
-        dataAlumno = [],
-        hayPromocion = false,
-        MesP = [];
-
+﻿$(function () {
+    console.log("Soy el Script");
+    var Usuario, esEmpresa;
+    var b_Valid = 0;
+    var AlumnoPromocion, tblAlumno2, dataAlumno = [], hayPromocion = false;
     var FormWizard = function () {
         $('#divMaterial').hide();
+        $('#divTablaDescuento').hide();
         var form = $('#submit_form');
         var error = $('.alert-danger', form);
         var success = $('.alert-success', form);
@@ -304,7 +299,7 @@ $(function () {
             } else {
                 $('#form_wizard_1').find('.button-previous').show();
                 Metronic.scrollTo($('.page-title'));
-                $('#btnListado').hide();
+                $('#btnListado').hide();;
             }
 
             if (current == 3) {
@@ -344,7 +339,7 @@ $(function () {
                 Metronic.scrollTo($('.page-title'));
             }
 
-        };
+        }
 
         // default form wizard
         $('#form_wizard_1').bootstrapWizard({
@@ -400,9 +395,9 @@ $(function () {
                     $('#hCarga').text("Guardando...");
                     $('#Load').modal('show');
                     if ($('#slcTipoOferta').val() == '4') {
-                        InscripcionFn.GuardarIngles();
+                        GuardarIngles();
                     } else {
-                        InscripcionFn.GuardarDescuentos();
+                        GuardarDescuentos();
                     }
                 } else { return false; }
             });
@@ -447,7 +442,7 @@ $(function () {
                         } else {
                             alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
                                 if (e) {
-                                    InscripcionFn.Invocar();
+                                    Invocar();
                                     //$('#form_wizard_1').find('.button-submit').click();
                                 }
                             });
@@ -469,43 +464,6 @@ $(function () {
         init() {
             $('#slcNacionalidad').on('change', this.NacionalidadChange);
             $('#slcNacionalidadPrep').on('change', this.NacionalidadPrepChange);
-
-            $('#txtDescuentoBec').data('labelp', 'txtPagarCol');
-            $('#txtDescuentoBec').data('label', 'txtcuotaCol');
-            $('#txtDescuentoBec').on('keyup', this.GetMontos);
-            $('#txtDescuentoBec').knob({
-                'change': function (val) {
-                    InscripcionFn.GetMontosKnob(val, 'txtDescuentoBec');
-                }
-            });
-
-            $('#txtDescuentoIns').data('labelp', 'txtPagarIn');
-            $('#txtDescuentoIns').data('label', 'txtcuotaIn');
-            $('#txtDescuentoIns').on('keyup', this.GetMontos);
-            $('#txtDescuentoIns').knob({
-                'change': function (val) {
-                    InscripcionFn.GetMontosKnob(val, 'txtDescuentoIns');
-                }
-            });
-
-            $('#txtDescuentoExa').data('labelp', 'txtPagarExa');
-            $('#txtDescuentoExa').data('label', 'txtcuotaExa');
-            $('#txtDescuentoExa').on('keyup', this.GetMontos);
-            $('#txtDescuentoExa').knob({
-                'change': function (val) {
-                    InscripcionFn.GetMontosKnob(val, 'txtDescuentoExa');
-                }
-            });
-
-            $('#txtDescuentoCred').data('labelp', 'txtPagarCred');
-            $('#txtDescuentoCred').data('label', 'txtcuotaCred');
-            $('#txtDescuentoCred').on('keyup', this.GetMontos);
-            $('#txtDescuentoCred').knob({
-                'change': function (val) {
-                    InscripcionFn.GetMontosKnob(val, 'txtDescuentoCred');
-                }
-            });
-            this.SetFecha();
             GlobalFn.GetGenero();
             GlobalFn.GetMedios();
             GlobalFn.GetPlantel();
@@ -542,10 +500,11 @@ $(function () {
             $('#txtClave1').on('keydown', this.txtClave1KeyDown);
             $("#btnBuscar1").on('click', this.btnBuscar1Click);
             $('#txtApPaterno').focusout(this.Buscar);
-            $("#txtApMaterno").focusout(this.Buscar);            
+            $("#txtApMaterno").focusout(this.Buscar);
 
             this.Beca();
-            this.Inscripcion();            
+            this.Inscripcion();
+            this.SetFecha();
         },
         NacionalidadChange() {
             if (parseInt($('#slcNacionalidad').val()) === 1) {
@@ -598,21 +557,21 @@ $(function () {
                     Email: $('#txtEmail').val(),
                     Observaciones: $('#txtObservaciones').val(),
                     ProspectoO: {
-                        PrepaProcedencia : $('#txtNombrePrepa').val() == "" || $('#txtNombrePrepa').val() == " " ? 'null' : $('#txtNombrePrepa').val(),
-                        PrepaArea : $('#slcArea').val(),
-                        PrepaAnio : $('#txtAñoT').val(),
-                        PrepaPromedio : $('#txtPromedio').val() == "" || $('#txtPromedio').val() == " " ? 'null' : $('#txtPromedio').val(),
-                        EsEquivalencia : $('#chkUni')[0].checked,
-                        UniversidadProcedencia : $('#txtUni').val(),
-                        SucursalId : $('#slcPlantel').val(),
-                        PrepaMes : ($('#txtMesT').val().length == 1 ? '0' + $('#txtMesT').val() : $('#txtMesT').val()),
-                        PrepaPaisId : parseInt($('#slcNacionalidadPrep').val()) == 1 ? 146 : $('#slcEstadoPais').val(),
-                        PrepaEntidadId :  parseInt($('#slcNacionalidadPrep').val()) == 1 ? $('#slcEstadoPais').val() : null,
-                        UniversidadPaisId :null,
-                        UniversidadEntidadId : null,
-                        EsTitulado : $('#chkUniSi')[0].checked,
-                        UniversidadMotivo : $('#txtUniMotivo').val(),
-                        MedioDifusionId : $("#slcMedio").val(),
+                        PrepaProcedencia = $('#txtNombrePrepa').val() == "" || $('#txtNombrePrepa').val() == " " ? 'null' : $('#txtNombrePrepa').val(),
+                        PrepaArea = $('#slcArea').val(),
+                        PrepaAnio = $('#txtAñoT').val(),
+                        PrepaPromedio = $('#txtPromedio').val() == "" || $('#txtPromedio').val() == " " ? 'null' : $('#txtPromedio').val(),
+                        EsEquivalencia = $('#chkUni')[0].checked,
+                        UniversidadProcedencia = $('#txtUni').val(),
+                        SucursalId = $('#slcPlantel').val(),
+                        PrepaMes = ($('#txtMesT').val().length == 1 ? '0' + $('#txtMesT').val() : $('#txtMesT').val()),
+                        PrepaPaisId = parseInt($('#slcNacionalidadPrep').val()) == 1 ? 146 : $('#slcEstadoPais').val(),
+                        PrepaEntidadId =  parseInt($('#slcNacionalidadPrep').val()) == 1 ? $('#slcEstadoPais').val() : null,
+                        UniversidadPaisId =null,
+                        UniversidadEntidadId = null,
+                        EsTitulado = $('#chkUniSi')[0].checked,
+                        UniversidadMotivo = $('#txtUniMotivo').val(),
+                        MedioDifusionId = $("#slcMedio").val(),
                     }
                 },
                 DTOPersonaAutorizada: [{
@@ -621,17 +580,17 @@ $(function () {
                     Materno: $('#txtAPMaterno').val(),//20
                     Celular: $('#txtTelefonoPA').val(),//21
                     Email: $('#txtPEmail').val(),//22
-                    ParentescoId: $('#slcParentesco').val(),//23
+                    Parentesco: $('#slcParentesco').val(),//23
                     Autoriza: $('#chkAuotiza1')[0].checked,//46
                     Telefono: $('#txtTelefonoPAT').val() == '' ? 'null' : $('#txtTelefonoPAT').val(),//48
                 }],
                 AlumnoInscrito: {
-                    OfertaEducativaId : $('#slcOFertaEducativa').val(),
-                    TurnoId : $('#slcTurno').val(),
+                    OfertaEducativaId = $('#slcOFertaEducativa').val(),
+                    TurnoId = $('#slcTurno').val(),
                     Anio: $('#slcPeriodo :selected').data("anio"),
                     PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
-                    EsEmpresa : $('#chkEsEmpresa')[0].checked,//50
-                    UsuarioId : $.cookie('userAdmin'),
+                    EsEmpresa = $('#chkEsEmpresa')[0].checked,//50
+                    UsuarioId = $.cookie('userAdmin'),
                 }
             }
 
@@ -642,7 +601,7 @@ $(function () {
                     Email: $('#txtPEmail2').val(),
                     Materno: $('#txtAPMaterno2').val(),
                     Nombre: $('#txtPAutorizada2').val(),
-                    ParentescoId: $('#slcParentesco2').val(),
+                    Parentesco: $('#slcParentesco2').val(),
                     Paterno: $('#txtAPPaterno2').val(),
                     Telefono: $('#txtTelefonoPAT2').val()
                 });
@@ -671,6 +630,7 @@ $(function () {
                                     //    GuardarIngles(data.d);
                                     MandarEMail(Alumno);
                                 } else {
+                                    $('#divTablaDescuento').hide();
                                     GlobalFn.GetSistemaPagoAlumno('slcSistemaPago', Alumno);
                                     InscripcionFn.CargarDescuentos(Alumno);
                                     $('#form_wizard_1').bootstrapWizard('next');
@@ -771,78 +731,42 @@ $(function () {
                 });
         },
         GuardarDescuentos() {
-            if (jQuery.type($.cookie('userAdmin')) === "undefined") {
+            Usuario = $.cookie('userAdmin');
+            if (jQuery.type(Usuario) === "undefined") {
                 return false;
             }
-
-            var ObjAlumno = {
-                AlumnoId: $('#txtFolio').val(),
-                SistemaPagoId: $('#slcSistemaPago').val(),
-                Anio: $('#slcPeriodo :selected').data("anio"),
-                PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
-                OfertaEducativaId: $('#slcOFertaEducativa').val(),
-                Observaciones: $('#txtObservacion').val(),
-                UsuarioId: $.cookie('userAdmin'),
-                Descuentos: [{
-                    PagoConceptoId: 1,
-                    TotalPagar: Number($('#txtPagarExa').text().replace(/[^0-9\.-]+/g, "")),
-                    Justificacion: $('#txtJustificacionExa').val()
-                },
-                {
-                    PagoConceptoId: 800,
-                    TotalPagar: Number($('#txtPagarCol').text().replace(/[^0-9\.-]+/g, "")),
-                    Justificacion: $('#txtJustificacionBec').val()
-                },
-                {
-                    PagoConceptoId: 802,
-                    TotalPagar: Number($('#txtPagarIn').text().replace(/[^0-9\.-]+/g, "")),
-                    Justificacion: $('#txtJustificacionIns').val()
-                },
-                {
-                    PagoConceptoId: 1000,
-                    TotalPagar: Number($('#txtPagarCred').text().replace(/[^0-9\.-]+/g, "")),
-                    Justificacion: $('#txtJustificacionCred').val()
-                }]
+            var lsDatos = {
+                'AlumnoId': $('#txtFolio').val(),//0
+                'DescuentoIns': $('#txtDescuentoIns').val(),//1
+                'JustificacionIns': $('#txtJustificacionIns').val(),//2        
+                'DescuentoBec': $('#txtDescuentoBec').val(),//3
+                'JustificacionBec': $('#txtJustificacionBec').val(),//4
+                'Observacion': $('#txtObservacion').val(),//5
+                'SistemaPago': $('#slcSistemaPago').val(),//6
+                'DescuentoExamen': $('#txtDescuentoExa').val(), //Descuento Examen 7
+                'JustificacionExam': $('#txtJustificacionExa').val(), //Comentario Examen 8
+                'Credencial': $('#txtDescuentoCred').val(),//9
+                'JustificacionCred': $('#txtJustificacionCred').val(),//10
+                'Usuario': Usuario //11
             };
 
-            var data = new FormData();
-
-            var flIns = $('#BecArchivo'); // FileList object
-            flIns = flIns[0].files[0];
-            data.append("DocBeca", flIns);
-
-            flIns = $('#InsArchivo');
-            flIns = flIns[0].files[0];
-            data.append("DocInscipcion", flIns);
-
-            flIns = $('#ExamenArchivo');
-            flIns = flIns[0].files[0];
-            data.append("DocExamen", flIns);
-
-            data.append("ObjAlumno", JSON.stringify(ObjAlumno));
-
-            IndexFn.ApiFile("Descuentos/GuardarDescuentos", data)
-                .done(function (data) {
-                    if (data != null) {
-                        InscripcionFn.MandarMail($('#txtFolio').val());
-
-                        $('#Load').modal('hide');
-                        alertify.alert("Alumno Guardado </br> " + extramail, function (Respuesta) {
-                            var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + $('#txtFolio').val() + "&OfertaEducativaId=" + $('#slcOFertaEducativa').val();
-                            window.open(url, "Credenciales");
-                            $(location).attr('href', '#Views/1');
-                        });
-
+            $.ajax({
+                type: "POST",
+                url: "WS/Descuentos.asmx/GuardarDescuentos",
+                data: JSON.stringify(lsDatos), // the data in form-encoded format, ie as it would appear on a querystring
+                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
+                datatype: JSON,
+                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
+                success: function (data) {
+                    if (data.d != null) {
+                        GuardarDocumentos(data.d[1], data.d[0], data.d[2]);
+                        MandarMail($('#txtFolio').val());
                     } else {
                         $('#Load').modal('hide');
                         alertify.alert("No se guardaron los cambios, intente de nuevo");
                     }
-                })
-                .fail(function (data) {
-                    $('#Load').modal('hide');
-                    alertify.alert("No se guardaron los cambios, intente de nuevo");
-                });
-            
+                }
+            });
         },
         MandarMail2(AlumnoId) {
             $.ajax({
@@ -853,9 +777,9 @@ $(function () {
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                 success: function (data) {
                     if (data.d.length > 1) {
-                        InscripcionFn.MandarMail(Alumnoid);
+                        MandarMail(Alumnoid);
                     } else {
-                        InscripcionFn.GuardarDocumentoIngles($('#txtFolio').val(), $('#slcOFertaEducativa').val());
+                        GuardarDocumentoIngles($('#txtFolio').val(), $('#slcOFertaEducativa').val());
                     }
                 }
             });
@@ -869,7 +793,7 @@ $(function () {
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                 success: function (data) {
                     if (data.d.length > 1) {
-                        InscripcionFn.MandarMail(alumnoid);
+                        MandarMail(alumnoid);
                     } else {
                         $('#Load').modal('hide');
                         var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
@@ -891,7 +815,7 @@ $(function () {
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                 success: function (data) {
                     if (data.d.length > 1) {
-                        InscripcionFn.MandarMail(Alumnoid);
+                        MandarMail(Alumnoid);
                     } else {
                         jQuery('li', $('#form_wizard_1')).removeClass("done");
                         jQuery('li', $('#form_wizard_1')).addClass("done");
@@ -994,7 +918,7 @@ $(function () {
                         contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                         success: function (data) {
                             if (data.d[0] == "Guardado") {
-                                InscripcionFn.TemEmail($('#txtFolio').val());
+                                TemEmail($('#txtFolio').val());
                                 //MandarMail2($('#txtFolio').val());
                             }
                             else {
@@ -1017,7 +941,7 @@ $(function () {
                 datatype: JSON,
                 contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
                 success: function (data) {
-                    InscripcionFn.GuardarDocumentoIngles($('#txtFolio').val(), $('#slcOFertaEducativa').val());
+                    GuardarDocumentoIngles($('#txtFolio').val(), $('#slcOFertaEducativa').val());
                 }
             });
         },
@@ -1097,8 +1021,7 @@ $(function () {
             $('#slcPeriodo').change();
         },
         slcPeriodoChange() {
-            if (($('#slcPeriodo').val() == "" || $('#slcOFertaEducativa').val() == "")
-            || ($('#slcPeriodo').val() == undefined || $('#slcOFertaEducativa').val() == undefined)){ return false; }
+            if ($('#slcPeriodo').val() == -1 || $('#slcOFertaEducativa').val() == -1) { return false; }
             var param = $('#slcOFertaEducativa').val() + "/" +
                 $('#slcPeriodo :selected').data("anio") + "/" +
                 $('#slcPeriodo :selected').data("periodoid");
@@ -1157,7 +1080,7 @@ $(function () {
             $("#ModalEsEmpresa").modal("hide");
             alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
                 if (e) {
-                    InscripcionFn.Invocar();
+                    Invocar();
                     //$('#form_wizard_1').find('.button-submit').click();
                 }
             });
@@ -1199,14 +1122,19 @@ $(function () {
             $('#hCarga').text("Cargando...");
             $('#Load').modal('show');
 
-            IndexFn.Api("Alumno/ConsultarAlumnoPromocionCasa2/" + $('#txtClave1').val(), "GET", "")
-                .done(function (data) {
-                    if (data === null) {
+            $.ajax({
+                type: "POST",
+                url: "WS/Alumno.asmx/ConsultarAlumnoPromocionCasa2",
+                data: "{AlumnoPromocion:'" + AlumnoPromocion + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.d === null) {
                         $('#Load').modal('hide');
                         return false;
                     }
                     dataAlumno.length = 0;
-                    dataAlumno.push(data);
+                    dataAlumno.push(data.d);
 
                     tblAlumno2 = $("#dtAlumno1").dataTable({
                         "aaData": dataAlumno,
@@ -1258,11 +1186,8 @@ $(function () {
                     });//$('#dtbecas').DataTable
 
                     $('#Load').modal('hide');
-                })
-                .fail(function (data) {
-                    $('#Load').modal('hide');
-                    return false;
-                });
+                }
+            });
         },
         Inscripcion() {
             $('#DescuentoI').noUiSlider({
@@ -1412,48 +1337,6 @@ $(function () {
                 .fail(function (data) {
                     alertify.alert('Error al cargar datos');
                 });
-        },
-        CalcularDescuento(Monto, Descuento) {
-            var Redondeado;
-            Monto = parseFloat(Monto);
-            Descuento = (Monto * (Descuento / 100))
-            Redondeado = Monto - Descuento;
-            Redondeado = Math.round(Redondeado);
-            return Redondeado;
-        },
-        GetMontos() {
-            var idlabel = $('#' + this.id).data('label');
-            var idlabelP = $('#' + this.id).data('labelp');
-
-            var Maximo = $('#' + this.id).data();
-            if (Maximo.valMax < $('#' + this.id).val()) { $('#' + this.id).val(Maximo.valMax); return false; }
-            var monto = InscripcionFn.CalcularDescuento($('#' + idlabel).text().replace('$', ''), $('#' + this.id).val());
-            $('#' + idlabelP).text('$' + String(monto));
-        },
-        GetMontosKnob(val, idl) {
-            var idlabel = $('#' + idl).data('label');
-            var idlabelP = $('#' + idl).data('labelp');
-
-            var Maximo = $('#' + idl).data();
-            if (Maximo.valMax < val) { $('#' + idl).val(Maximo.valMax); return false; }
-            var monto = InscripcionFn.CalcularDescuento($('#' + idlabel).text().replace('$', ''), val);
-            $('#' + idlabelP).text('$' + String(monto));
-        },
-        RecalculaTabla(monto) {
-            if (MesP.length == 0) {
-                for (i = 0; i < 4; i++) {
-                    MesP[i] = $('#mes' + i).text().replace('$', '');
-                }
-            }
-            var filx;
-            var descu;
-            for (i = 0; i < 4; i++) {
-                if (MesP[i] != '0.00') {
-                    filx = $('#mes' + i);
-                    descu = InscripcionFn.CalcularDescuento(MesP[i], monto);
-                    $(filx).text('$' + String(descu));
-                }
-            }
         }
     };
 
