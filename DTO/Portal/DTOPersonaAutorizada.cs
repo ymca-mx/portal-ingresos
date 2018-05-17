@@ -19,5 +19,6 @@ namespace DTO
         public int Alumno { get; set; }
         public int Parentesco { get; set; }
         public Boolean Autoriza { get; set; }
+        public Boolean EsContacto { get; set; }
     }
 }

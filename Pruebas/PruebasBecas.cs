@@ -121,24 +121,23 @@ namespace Pruebas
             }
 
         }
+
         [TestMethod]
         public void BecaAcademica()
         {
             List<DTO.Alumno.Beca.DTOAlumnoBeca> Alumno = new List<DTO.Alumno.Beca.DTOAlumnoBeca>();
-
-
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 8490,
+                alumnoId = 7488,
                 anio = 2017,
-                periodoId = 3,
-                ofertaEducativaId = 24,
-                porcentajeBeca = 76.12m,//70.15
-                porcentajeInscripcion = 100m,
+                periodoId = 2,
+                ofertaEducativaId = 5,
+                porcentajeBeca = 64.34m,//70.15
+                porcentajeInscripcion = 0m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
-                usuarioId = 6157, //Usua4rio que inscribio  -> Alejandra 6070
+                usuarioId = 8358, //Usua4rio que inscribio  -> Alejandra 6070
                 fecha = "", // Solo si esta en AlumnoInscrito Fecha 23/01/2017
                 genera = true
                 //    //Colegiatura = decimal
@@ -149,11 +148,8 @@ namespace Pruebas
             {
                 BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, false);
             });
-
-
         }
-
-
+        
         [TestMethod]
         public void AplicaBecaSep()
         {
@@ -235,9 +231,7 @@ namespace Pruebas
 
             }
         }
-
-
-
+        
         [TestMethod]
         public void PuebasPromocionCasa()
         {
@@ -443,9 +437,7 @@ namespace Pruebas
             }
 
         }
-
-
-
+        
         [TestMethod]
         public void generarReferenciasDoctorado()
         {

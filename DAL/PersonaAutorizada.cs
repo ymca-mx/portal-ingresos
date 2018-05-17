@@ -24,6 +24,7 @@ namespace DAL
         public string Email { get; set; }
         public int ParentescoId { get; set; }
         public bool EsAutorizada { get; set; }
+        public bool EsContacto { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual Parentesco Parentesco { get; set; }

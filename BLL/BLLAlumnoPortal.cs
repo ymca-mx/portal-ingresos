@@ -1812,7 +1812,6 @@ namespace BLL
             {
                 try
                 {
-
                     string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
                     Alumno objAlB = db.Alumno.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault();
 
@@ -1854,6 +1853,117 @@ namespace BLL
         }
 
         public static DTOAlumnoDatos ObenerDatosAlumnoTodos(int AlumnoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+
+                    DTOAlumnoDatos alumnoDatos = db.Alumno.Where(a => a.AlumnoId == AlumnoId)
+                                        .Select(b => new DTOAlumnoDatos
+                                        {
+                                            AlumnoId = b.AlumnoId,
+                                            Nombre = b.Nombre,
+                                            Paterno = b.Paterno,
+                                            Materno = b.Materno,
+                                            FechaNacimiento = b.AlumnoDetalle.FechaNacimiento,
+                                            GeneroId = b.AlumnoDetalle.GeneroId,
+                                            CURP = b.AlumnoDetalle.CURP,
+                                            PaisId = b.AlumnoDetalle.PaisId,
+                                            EntidadNacimientoId = b.AlumnoDetalle.EntidadNacimientoId,
+                                            fotoBase64 = fotoAlumno
+                                        }).FirstOrDefault();
+
+                    alumnoDatos.FechaNacimientoC = alumnoDatos.FechaNacimiento.ToString("dd/MM/yyyy", Cultura);
+
+                    alumnoDatos.DatosContacto = new List<DTOAlumnoDatos2>
+                    {
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Estado Civil",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EstadoCivil.Descripcion.ToString() ?? "",
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Correo Electrónico",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Email.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Teléfono Celular",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Celular.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Teléfono Casa",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.TelefonoCasa.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Calle",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Calle.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Número Exterior",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoExterior.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Numero Interior",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.NoInterior.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Código Postal",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.CP.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Colonia",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Colonia.ToString() ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Estado",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.EntidadFederativa.Descripcion ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Delegación | Municipio",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Municipio.Descripcion ?? ""
+                        },
+
+                        new DTOAlumnoDatos2
+                        {
+                            Dato = "Observaciones",
+                            ServiciosEscolares = db.AlumnoDetalle.Where(a => a.AlumnoId == AlumnoId).FirstOrDefault()?.Observaciones  ?? ""
+                        }
+                    };
+
+                    return alumnoDatos;
+                }
+                catch (Exception ex)
+                {
+                    var a = ex;
+                    return null;
+                }
+            }
+        }
+
+        public static DTOAlumnoDatos ObenerDatosAlumnoClipper(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -13687,7 +13797,21 @@ namespace BLL
                             PaisId = alumno.AlumnoDetalle.PaisId,
                             EntidadNacimientoId = alumno.AlumnoDetalle.EntidadNacimientoId,
                             fotoBase64 = fotoAlumno
-                        }
+                        },
+                        DTOPersonaAutorizada = alumno.PersonaAutorizada
+                                                  .Where(a => a.EsContacto == true)
+                                                  .Select(b => new DTOPersonaAutorizada
+                                                  {
+                                                      AlumnoId = b.AlumnoId,
+                                                      Nombre = b.Nombre,
+                                                      Paterno = b.Paterno,
+                                                      Materno = b.Materno,
+                                                      Telefono = b.Telefono,
+                                                      Celular = b.Celular,
+                                                      Email = b.Email,
+                                                      ParentescoId = b.ParentescoId,
+                                                      EsContacto = b.EsContacto
+                                                  }).ToList()
                     };
 
                     return objAlumno;
@@ -13750,6 +13874,55 @@ namespace BLL
                     actualizaDatos.TelefonoCasa = AlumnoDatos.TelefonoCasa;
                     actualizaDatos.Celular = AlumnoDatos.Celular;
                     actualizaDatos.Email = AlumnoDatos.Email;
+
+                    PersonaAutorizada personaAutorizada = db.PersonaAutorizada.Where(a => a.AlumnoId == AlumnoDatos.AlumnoId && a.EsContacto == true).FirstOrDefault();
+
+                    if (personaAutorizada != null)
+                    {
+                        db.PersonaAutorizadaBitacora.Add(new PersonaAutorizadaBitacora
+                        {
+                            PersonaAutorizadaId = personaAutorizada.PersonaAutorizadaId,
+                            AlumnoId = personaAutorizada.AlumnoId,
+                            Nombre = personaAutorizada.Nombre,
+                            Paterno = personaAutorizada.Paterno,
+                            Materno = personaAutorizada.Materno,
+                            Telefono = personaAutorizada.Telefono,
+                            Celular = personaAutorizada.Celular,
+                            Email = personaAutorizada.Email,
+                            ParentescoId = personaAutorizada.ParentescoId,
+                            EsAutorizada = personaAutorizada.EsAutorizada,
+                            EsContacto = personaAutorizada.EsContacto,
+                            UsuarioId = AlumnoDatos.UsuarioId,
+                            Fecha = DateTime.Now
+                        });
+
+                        personaAutorizada.AlumnoId = AlumnoDatos.PersonaAutorizada.AlumnoId;
+                        personaAutorizada.Nombre = AlumnoDatos.PersonaAutorizada.Nombre;
+                        personaAutorizada.Paterno = AlumnoDatos.PersonaAutorizada.Paterno;
+                        personaAutorizada.Materno = AlumnoDatos.PersonaAutorizada.Materno;
+                        personaAutorizada.Telefono = AlumnoDatos.PersonaAutorizada.Telefono;
+                        personaAutorizada.Celular = AlumnoDatos.PersonaAutorizada.Celular;
+                        personaAutorizada.Email = AlumnoDatos.PersonaAutorizada.Email;
+                        personaAutorizada.ParentescoId = AlumnoDatos.PersonaAutorizada.ParentescoId;
+                        personaAutorizada.EsAutorizada = false;
+                        personaAutorizada.EsContacto = true;
+                    }
+                    else
+                    {
+                        db.PersonaAutorizada.Add(new PersonaAutorizada
+                        {
+                            AlumnoId = AlumnoDatos.AlumnoId,
+                            Nombre = AlumnoDatos.PersonaAutorizada.Nombre,
+                            Paterno = AlumnoDatos.PersonaAutorizada.Paterno,
+                            Materno = AlumnoDatos.PersonaAutorizada.Materno,
+                            Telefono = AlumnoDatos.PersonaAutorizada.Telefono,
+                            Celular = AlumnoDatos.PersonaAutorizada.Celular,
+                            Email = AlumnoDatos.PersonaAutorizada.Email,
+                            ParentescoId = AlumnoDatos.PersonaAutorizada.ParentescoId,
+                            EsAutorizada = false,
+                            EsContacto = true
+                        });
+                    }
 
                     db.SaveChanges();
                     return true;

@@ -128,7 +128,7 @@
     <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\Biblioteca\Comunicado.js" />
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
-    <Content Include="JS\Empresas\ReAjusteCuotas.js" />
+    <Content Include="JS\Empresas\Empresa.js" />
     <Content Include="JS\EnvioReporteVistoBueno.js" />
     <Content Include="JS\EvaluacionDocente\ActualizacionDocente.js" />
     <Content Include="JS\EvaluacionDocente\VistoBuenoDocentes.js" />
@@ -4766,7 +4766,7 @@
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Biblioteca\Comunicado.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
-    <Content Include="Views\Empresas\ReAjusteCuotas.html" />
+    <Content Include="Views\Empresas\Empresas.html" />
     <Content Include="Views\Menu\menu 1\css\menu.css" />
     <Content Include="Views\Menu\menu 1\css\bg.png" />
     <Content Include="Views\Menu\menu 1\js\menu-min.js" />
