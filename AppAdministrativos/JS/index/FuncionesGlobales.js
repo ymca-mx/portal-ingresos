@@ -79,7 +79,7 @@
     GetPlantel() {
         $("#slcPlantel").empty();
         $("#slcTipoOferta").empty();
-        $("#slcOFertaEducativa").empty();
+        $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/Plantel", "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -88,15 +88,16 @@
                     option.text(this.Descripcion);
                     option.val(this.SucursalId);
 
-                    $("#slcPlantel").append(option);
+                    $("#slcPlantel").append(option);                    
                 });
                 $("#slcPlantel").change();
             })
             .fail(function (data) {
-                console.log("Fallo la carga de GetPlantel");
+                console.log("Fallo la carga de GetPlantel");                
             });
     },
     GetSistemaPagoAlumno(idslc, AlumnoId) {
+        var deferred = $.Deferred();
         $('#' + idslc).empty();
         IndexFn.Api('General/SistemaPagoAlumno/' + AlumnoId, 'get', '')
             .done(function (data) {
@@ -109,10 +110,13 @@
                     $('#' + idslc).append(option);
                 });
                 $('#' + idslc).select(data[0].PagoPlanId).change();
+                deferred.resolve(data);
             })
             .fail(function (data) {
                 console.log(data);
+                deferred.reject;
             });
+        return deferred.promise();
     },
     GetMedios() {
         $("#slcMedio").empty();
@@ -133,7 +137,7 @@
     },
     GetTipoOferta(PlantelId) {
         $("#slcTipoOferta").empty();
-        $("#slcOFertaEducativa").empty();
+        $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/OFertaEducativaTipo/" + PlantelId, "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -156,7 +160,7 @@
             });
     },
     GetOfertaEducativa(PlantelId, TipoOFertaId) {
-        $("#slcOFertaEducativa").empty();
+        $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/OFertaEducativa/" + PlantelId + "/" + TipoOFertaId, "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -165,16 +169,16 @@
                     option.text(this.Descripcion);
                     option.val(this.OfertaEducativaId);
 
-                    $("#slcOFertaEducativa").append(option);
+                    $("#slcOfertaEducativa").append(option);
                 });
 
                 if (GlobalFn.DatosOferta.OFertaEducativa !== -1) {
-                    $("#slcOFertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
+                    $("#slcOfertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
                 } else {
-                    $("#slcOFertaEducativa").val(data[0].OfertaEducativaId);
+                    $("#slcOfertaEducativa").val(data[0].OfertaEducativaId);
                 }
 
-                $("#slcOFertaEducativa").change();
+                $("#slcOfertaEducativa").change();
             })
             .fail(function (data) {
                 console.log(data);

@@ -24,12 +24,14 @@ namespace BLL
                                                                             .FirstOrDefault().OfertaEducativa.OfertaEducativaTipoId)
                                         .Select(b => b.PagoPlanId)
                                         .ToList()
-                                        .Contains(p.PagoPlanId))
+                                        .Contains(p.PagoPlanId)
+                                        && p.EstatusId == 1)
                         .Select(a => new
                         {
                             PlanPago = a.PlanPago + " - " + (a.Pagos > 1 ? a.Pagos + " Pagos" : a.Pagos + " Pago"),
                             a.Descripcion,
-                            a.Pagos
+                            a.Pagos,
+                            a.PagoPlanId
                         })
                         .ToList();
                 }
@@ -44,27 +46,32 @@ namespace BLL
             }
         }
 
-        public static List<DTOPagoPlan> ConsultarPagosPlanLenguas(int Carrera)
+        public static object ConsultarPagosPlanLenguas(int TipoOfertaId)
         {
             using (UniversidadEntities db= new UniversidadEntities())
             {
-                List<DTOPagoPlan> pagosPlan = (from a in db.PagoPlan
-                                                  join b in db.OfertaEducativaPlan on a.PagoPlanId equals b.PagoPlanId
-                                                  join c in db.OfertaEducativaTipo on b.OfertaEducativaTipoId equals c.OfertaEducativaTipoId
-                                                  where c.OfertaEducativaTipoId==Carrera && a.EstatusId==1
-                                                  select new DTOPagoPlan
-                                                  {
-                                                      PagoPlanId = a.PagoPlanId,
-                                                      PlanPago = a.PlanPago,
-                                                      Descripcion = a.Descripcion,
-                                                      Pagos = a.Pagos
-                                                  }).ToList();
-                foreach (DTOPagoPlan pagosPlan2 in pagosPlan)
+                try
                 {
-                    string descuentoPlan = pagosPlan2.Pagos > 1 ? pagosPlan2.Pagos + " Pagos" : pagosPlan2.Pagos + " Pago";
-                    pagosPlan2.PlanPago += " - " + descuentoPlan;
+                    return (from a in db.PagoPlan
+                            join b in db.OfertaEducativaPlan on a.PagoPlanId equals b.PagoPlanId
+                            join c in db.OfertaEducativaTipo on b.OfertaEducativaTipoId equals c.OfertaEducativaTipoId
+                            where c.OfertaEducativaTipoId == TipoOfertaId && a.EstatusId == 1
+                            select new
+                            {
+                                PlanPago = a.PlanPago + " - " + (a.Pagos > 1 ? a.Pagos + " Pagos" : a.Pagos + " Pago"),
+                                a.Descripcion,
+                                a.Pagos,
+                                a.PagoPlanId
+                            }).ToList();
+
+                }catch(Exception Error)
+                {
+                    return new
+                    {
+                        Error.Message,
+                        Inner = Error?.InnerException?.Message ?? ""
+                    };
                 }
-                return pagosPlan;
             }
         }
 

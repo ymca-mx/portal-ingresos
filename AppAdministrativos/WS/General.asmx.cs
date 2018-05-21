@@ -117,7 +117,7 @@ namespace AppAdministrativos.WS
 
 
         [WebMethod]
-        public List<DTOPagoPlan> ConsultarPagosPlanLenguas(int Oferta)
+        public object ConsultarPagosPlanLenguas(int Oferta)
         {
             return BLLPagoPlan.ConsultarPagosPlanLenguas(Oferta);
         }
