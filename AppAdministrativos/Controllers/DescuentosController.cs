@@ -37,17 +37,17 @@ namespace AppAdministrativos.Controllers
             var objAlumno = JObject.Parse(HttpContext.Current.Request.Form["ObjAlumno"]);
             var alumno2 = objAlumno.ToObject<DTO.DTODescuentoAlumno>();
 
-            Stream DocBeca = HttpContext.Current.Request.Files["DocBeca"].InputStream;
-            Stream DocInscipcion = HttpContext.Current.Request.Files["DocInscipcion"].InputStream;
-            Stream DocExamen = HttpContext.Current.Request.Files["DocExamen"].InputStream;
+            Stream DocBeca = HttpContext.Current.Request?.Files["DocBeca"]?.InputStream ?? null;
+            Stream DocInscipcion = HttpContext.Current.Request?.Files["DocInscipcion"]?.InputStream ?? null;
+            Stream DocExamen = HttpContext.Current.Request?.Files["DocExamen"]?.InputStream ?? null;
 
-            alumno2.Descuentos.Find(a => a.PagoConceptoId == 800).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocBeca,
+            alumno2.Descuentos.Find(a => a.PagoConceptoId == 800).Comprobante = DocBeca == null ? null : Herramientas.ConvertidorT.ConvertirStream(DocBeca,
                 HttpContext.Current.Request.Files["DocBeca"].ContentLength);
 
-            alumno2.Descuentos.Find(a => a.PagoConceptoId == 802).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocInscipcion,
+            alumno2.Descuentos.Find(a => a.PagoConceptoId == 802).Comprobante = DocInscipcion == null ? null : Herramientas.ConvertidorT.ConvertirStream(DocInscipcion,
                 HttpContext.Current.Request.Files["DocInscipcion"].ContentLength);
 
-            alumno2.Descuentos.Find(a => a.PagoConceptoId == 1000).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocExamen,
+            alumno2.Descuentos.Find(a => a.PagoConceptoId == 1000).Comprobante = DocExamen == null ? null : Herramientas.ConvertidorT.ConvertirStream(DocExamen,
                 HttpContext.Current.Request.Files["DocExamen"].ContentLength);
 
             var Result = BLLAlumnoInscrito.GuardarDescuentosNuevoIngreso(alumno2);
