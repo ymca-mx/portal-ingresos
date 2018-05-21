@@ -22,6 +22,7 @@ namespace DTO
     {
         public int AlumnoId { get; set; }
         public int OfertaEducativaId { get; set; }
+        public int OfertaEducativaTipoId { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public int GrupoId { get; set; }

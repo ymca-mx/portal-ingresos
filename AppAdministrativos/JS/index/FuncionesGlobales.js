@@ -79,7 +79,7 @@
     GetPlantel() {
         $("#slcPlantel").empty();
         $("#slcTipoOferta").empty();
-        $("#slcOFertaEducativa").empty();
+        $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/Plantel", "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -132,8 +132,9 @@
             });
     },
     GetTipoOferta(PlantelId) {
+        var deferred = $.Deferred();
         $("#slcTipoOferta").empty();
-        $("#slcOFertaEducativa").empty();
+        $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/OFertaEducativaTipo/" + PlantelId, "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -149,14 +150,19 @@
                     $("#slcTipoOferta").val(GlobalFn.DatosOferta.OfertaEducativaTipoId);
                 }
 
-                $("#slcTipoOferta").change();
+                GlobalFn.GetOfertaEducativa($("#slcPlantel").val(), $("#slcTipoOferta").val()).done(function () {
+                    deferred.resolve(data);
+                });
             })
             .fail(function (data) {
                 console.log(data);
+                deferred.reject;
             });
+        return deferred.promise();
     },
     GetOfertaEducativa(PlantelId, TipoOFertaId) {
-        $("#slcOFertaEducativa").empty();
+        var deferred = $.Deferred();
+        $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/OFertaEducativa/" + PlantelId + "/" + TipoOFertaId, "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -165,24 +171,29 @@
                     option.text(this.Descripcion);
                     option.val(this.OfertaEducativaId);
 
-                    $("#slcOFertaEducativa").append(option);
+                    $("#slcOfertaEducativa").append(option);
                 });
 
                 if (GlobalFn.DatosOferta.OFertaEducativa !== -1) {
-                    $("#slcOFertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
+                    $("#slcOfertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
                 } else {
-                    $("#slcOFertaEducativa").val(data[0].OfertaEducativaId);
+                    $("#slcOfertaEducativa").val(data[0].OfertaEducativaId);
                 }
 
-                $("#slcOFertaEducativa").change();
+                $("#slcOfertaEducativa").change();
+                deferred.resolve(data);
+
             })
             .fail(function (data) {
                 console.log(data);
+                deferred.reject;
             });
+        return deferred.promise();
     },
-    GetPais(SelectName, PaisId)
-    {
+    GetPais(SelectName, PaisId) {
+        var deferred = $.Deferred();
         $("#" + SelectName).empty();
+
         IndexFn.Api("General/ConsultarPais", "GET", "")
             .done(function (data) {
                 var datos = data;
@@ -194,14 +205,21 @@
                     $("#" + SelectName).append(option);
                 });
                 $("#" + SelectName).val(PaisId);
-
+                deferred.resolve(data);
             })
             .fail(function (data) {
                 console.log(data);
+                deferred.reject;
             });
+        return deferred.promise();
     },
     GetEstado(SelectName, EstadoId) {
+        var deferred = $.Deferred();
         $("#" + SelectName).empty();
+        var optionP = $(document.createElement('option'));
+        optionP.text('--Seleccionar--');
+        optionP.val('-1');
+        $("#" + SelectName).append(optionP);
         IndexFn.Api("General/ConsultarEntidadFederativa", "GET", "")
             .done(function (data) {
                 $('#Load').modal('hide');
@@ -216,11 +234,13 @@
                 });
                 $("#" + SelectName).val(EstadoId);
                 $('#' + SelectName).change();
+                deferred.resolve(data);
             })
             .fail(function (data) {
                 console.log(data);
+                deferred.reject;
             });
-
+        return deferred.promise();
     },
     GetEstadoCivil() {
         $("#slcEstadoCivil").empty();
@@ -278,7 +298,6 @@
     },
     EstadoChange() {
         var deferred = $.Deferred();
-
         $("#slcMunicipio").empty();
         var Entidad = $("#slcEstado");
         var optionP = $(document.createElement('option'));

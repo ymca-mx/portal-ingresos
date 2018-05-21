@@ -15,7 +15,6 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 List<DTOPais> paises = (from a in db.Pais
-                                                       where a.PaisId != 146
                                                        orderby a.Descripcion ascending
                                                        select new DTOPais
                                                        {
