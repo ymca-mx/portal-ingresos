@@ -187,7 +187,7 @@ namespace AppAdministrativos.WS
 
         //Promocion en casa
         [WebMethod]
-        public bool GuardarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public object GuardarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             return BLLAlumnoPortal.GuardarPromocionCasa(Promocion);
         }

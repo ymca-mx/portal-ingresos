@@ -88,15 +88,16 @@
                     option.text(this.Descripcion);
                     option.val(this.SucursalId);
 
-                    $("#slcPlantel").append(option);
+                    $("#slcPlantel").append(option);                    
                 });
                 $("#slcPlantel").change();
             })
             .fail(function (data) {
-                console.log("Fallo la carga de GetPlantel");
+                console.log("Fallo la carga de GetPlantel");                
             });
     },
     GetSistemaPagoAlumno(idslc, AlumnoId) {
+        var deferred = $.Deferred();
         $('#' + idslc).empty();
         IndexFn.Api('General/SistemaPagoAlumno/' + AlumnoId, 'get', '')
             .done(function (data) {
@@ -109,10 +110,13 @@
                     $('#' + idslc).append(option);
                 });
                 $('#' + idslc).select(data[0].PagoPlanId).change();
+                deferred.resolve(data);
             })
             .fail(function (data) {
                 console.log(data);
+                deferred.reject;
             });
+        return deferred.promise();
     },
     GetMedios() {
         $("#slcMedio").empty();

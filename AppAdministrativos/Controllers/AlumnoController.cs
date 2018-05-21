@@ -193,5 +193,20 @@ namespace AppAdministrativos.Controllers
                 return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
+
+        [Route("GuardarPromocionCasa")]
+        [HttpPost]
+        public IHttpActionResult GuardarPromocionCasa(DTO.DTOAlumnoPromocionCasa Promocion)
+        {
+            var Result= BLLAlumnoPortal.GuardarPromocionCasa(Promocion);
+            if ((bool)Result)
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
     }
 }

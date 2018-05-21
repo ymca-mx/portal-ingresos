@@ -18,7 +18,7 @@ namespace AppAdministrativos.Controllers
         [HttpGet]
         public IHttpActionResult GetDescuentos(int AlumnoId)
         {
-            var Result= BLLAlumnoDescuento.TraerDescuentos(AlumnoId);
+            var Result = BLLAlumnoDescuento.TraerDescuentos(AlumnoId);
             if (Result.ToString().Contains("System.Collections.Generic.List"))
             {
                 return Ok(Result);
@@ -41,16 +41,25 @@ namespace AppAdministrativos.Controllers
             Stream DocInscipcion = HttpContext.Current.Request.Files["DocInscipcion"].InputStream;
             Stream DocExamen = HttpContext.Current.Request.Files["DocExamen"].InputStream;
 
-            alumno2.Descuentos.Find(a => a.PagoConceptoId == 800).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocBeca, 
+            alumno2.Descuentos.Find(a => a.PagoConceptoId == 800).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocBeca,
                 HttpContext.Current.Request.Files["DocBeca"].ContentLength);
 
-            alumno2.Descuentos.Find(a => a.PagoConceptoId == 802).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocInscipcion, 
+            alumno2.Descuentos.Find(a => a.PagoConceptoId == 802).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocInscipcion,
                 HttpContext.Current.Request.Files["DocInscipcion"].ContentLength);
 
-            alumno2.Descuentos.Find(a => a.PagoConceptoId == 1000).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocExamen, 
+            alumno2.Descuentos.Find(a => a.PagoConceptoId == 1000).Comprobante = Herramientas.ConvertidorT.ConvertirStream(DocExamen,
                 HttpContext.Current.Request.Files["DocExamen"].ContentLength);
 
-            return Ok(alumno2);
+            var Result = BLLAlumnoInscrito.GuardarDescuentosNuevoIngreso(alumno2);
+
+            if ((int)Result.GetType().GetProperty("AlumnoId").GetValue(Result, null) > 0)
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
         }
     }
 }

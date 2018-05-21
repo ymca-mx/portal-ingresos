@@ -141,5 +141,48 @@ namespace AppAdministrativos.Controllers
                 return BadRequest("Fallo al momento de trer datos, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
+
+        [Route("EnviarMail2")]
+        [HttpPost]
+        public IHttpActionResult SendMail(List<int> lstAlumnos)
+        {
+            var Result = BLLEmail.SendMultipleEmail(lstAlumnos);
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                if (((List<string>)Result).Count > 0)
+                {
+                    return BadRequest(String.Join("/ ", ((List<string>)Result).ToArray()));
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        Message = "Se envio el email correctamente"
+                    });
+                }
+            }
+            else
+            {
+
+                return BadRequest(String.Join("/ ", ((List<string>)Result).ToArray()));
+            }
+        }
+        [Route("ConsultarPagosPlanLenguas/{TipoOfertaId:int}")]
+        [HttpGet]
+        public IHttpActionResult PlanPagoLenguas(int TipoOfertaId)
+        {
+            var Result = BLLPagoPlan.ConsultarPagosPlanLenguas(TipoOfertaId);
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de trer datos, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+
+        }
     }
 }

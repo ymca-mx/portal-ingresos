@@ -1279,7 +1279,7 @@ namespace BLL
 
         //promocion en casa
 
-        public static bool GuardarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public static object GuardarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -1312,9 +1312,13 @@ namespace BLL
 
                     return true;
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-                    return false;
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

@@ -23,7 +23,7 @@ namespace DTO
     public class DTODescuentoAlumno
     {
         public int AlumnoId { get; set; }
-        public int SistemaPago { get; set; }
+        public int SistemaPagoId { get; set; }
         public int Anio { get; set; }
         public int PeriodoId { get; set; }
         public int OfertaEducativaId { get; set; }
