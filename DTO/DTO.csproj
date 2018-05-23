@@ -112,8 +112,8 @@
     <Compile Include="Portal\DTODia.cs" />
     <Compile Include="Docente\DTODocente.cs" />
     <Compile Include="Docente\DTODocenteDetalle.cs" />
-    <Compile Include="Portal\DTOEmpresa.cs" />
-    <Compile Include="Portal\DTOEmpresaDetalle.cs" />
+    <Compile Include="Empresa\DTOEmpresa.cs" />
+    <Compile Include="Empresa\DTOEmpresaDetalle.cs" />
     <Compile Include="Portal\DTOEntidadFederativa.cs" />
     <Compile Include="Portal\DTOEstadoCivil.cs" />
     <Compile Include="Portal\DTOEstadoCuenta.cs" />
@@ -194,5 +194,6 @@
       <Name>DAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

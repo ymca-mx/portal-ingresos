@@ -88,12 +88,12 @@
                     option.text(this.Descripcion);
                     option.val(this.SucursalId);
 
-                    $("#slcPlantel").append(option);                    
+                    $("#slcPlantel").append(option);
                 });
                 $("#slcPlantel").change();
             })
             .fail(function (data) {
-                console.log("Fallo la carga de GetPlantel");                
+                console.log("Fallo la carga de GetPlantel");
             });
     },
     GetSistemaPagoAlumno(idslc, AlumnoId) {
@@ -136,7 +136,6 @@
             });
     },
     GetTipoOferta(PlantelId) {
-        var deferred = $.Deferred();
         $("#slcTipoOferta").empty();
         $("#slcOfertaEducativa").empty();
         IndexFn.Api("General/OFertaEducativaTipo/" + PlantelId, "GET", "")
@@ -154,45 +153,42 @@
                     $("#slcTipoOferta").val(GlobalFn.DatosOferta.OfertaEducativaTipoId);
                 }
 
-                GlobalFn.GetOfertaEducativa($("#slcPlantel").val(), $("#slcTipoOferta").val()).done(function () {
-                    deferred.resolve(data);
-                });
+                GlobalFn.GetOfertaEducativa(GlobalFn.DatosOferta.PlantelId, GlobalFn.DatosOferta.OfertaEducativaTipoId);
             })
             .fail(function (data) {
                 console.log(data);
-                deferred.reject;
             });
-        return deferred.promise();
     },
     GetOfertaEducativa(PlantelId, TipoOFertaId) {
-        var deferred = $.Deferred();
-        $("#slcOfertaEducativa").empty();
-        IndexFn.Api("General/OFertaEducativa/" + PlantelId + "/" + TipoOFertaId, "GET", "")
-            .done(function (data) {
-                $(data).each(function () {
-                    var option = $(document.createElement('option'));
+        if (PlantelId == -1 || TipoOFertaId == -1) {
+            return false;
+        } 
+            $("#slcOfertaEducativa").empty();
+            IndexFn.Api("General/OFertaEducativa/" + PlantelId + "/" + TipoOFertaId, "GET", "")
+                .done(function (data) {
+                    $(data).each(function () {
+                        var option = $(document.createElement('option'));
 
-                    option.text(this.Descripcion);
-                    option.val(this.OfertaEducativaId);
+                        option.text(this.Descripcion);
+                        option.val(this.OfertaEducativaId);
 
-                    $("#slcOfertaEducativa").append(option);
+                        $("#slcOfertaEducativa").append(option);
+                    });
+
+                    if (GlobalFn.DatosOferta.OFertaEducativa !== -1) {
+                        $("#slcOfertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
+                    } else {
+                        $("#slcOfertaEducativa").val(data[0].OfertaEducativaId);
+                    }
+
+                    $("#slcOfertaEducativa").change();
+                    GlobalFn.GetPagoPlan();
+
+                })
+                .fail(function (data) {
+                    console.log(data);
                 });
-
-                if (GlobalFn.DatosOferta.OFertaEducativa !== -1) {
-                    $("#slcOfertaEducativa").val(GlobalFn.DatosOferta.OFertaEducativa);
-                } else {
-                    $("#slcOfertaEducativa").val(data[0].OfertaEducativaId);
-                }
-
-                $("#slcOfertaEducativa").change();
-                deferred.resolve(data);
-
-            })
-            .fail(function (data) {
-                console.log(data);
-                deferred.reject;
-            });
-        return deferred.promise();
+       
     },
     GetPais(SelectName, PaisId) {
         var deferred = $.Deferred();
@@ -283,6 +279,28 @@
                     option.val(this.ParentescoId);
 
                     $("#" + NameSlc).append(option);
+                });
+            })
+            .fail(function (data) {
+                console.log(data);
+            });
+    },
+    GetPagoPlan() {
+        $("#slcSistemaPago").empty();
+        var tipoOferta = $('#slcTipoOferta').val();
+
+        IndexFn.Api("General/ConsultarPagosPlan/" + tipoOferta, "GET", "")
+            .done(function (data) {
+                var datos = data;
+                $(datos).each(function () {
+                    var datos = data;
+                    $(datos).each(function () {
+                        var option = $(document.createElement('option'));
+                        option.text(this.PlanPago);
+                        option.val(this.PagoPlanId);
+
+                        $("#slcSistemaPago").append(option);
+                    });
                 });
             })
             .fail(function (data) {

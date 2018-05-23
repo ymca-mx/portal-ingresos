@@ -14,6 +14,7 @@ namespace DTO
         public System.DateTime FechaAlta { get; set; }
         public string FechaAltaS { get; set; }
         public System.DateTime FechaVigencia { get; set; }
+        public string FechaV { get; set; }
         public int Usuarioid { get; set; }
         public DTOEmpresaDetalle EmpresaDetalle { get; set; }
         public List<DTOGrupo> Grupo { get; set; }
@@ -37,5 +38,5 @@ namespace DTO
         public string RazonSocial { get; set; }
         public List<DTOGrupoLigero> Grupo { get; set; }
     }
-
+    
 }
