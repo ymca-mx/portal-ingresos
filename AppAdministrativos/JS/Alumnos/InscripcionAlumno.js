@@ -438,7 +438,8 @@ $(function () {
                     if (link.length > 0) {
                         var next = false;
                         if ($('#chkEsEmpresa')[0].checked == false) {
-                            $("#ModalEsEmpresa").modal("show"); return false;
+                            event.preventDefault();
+                            $("#ModalEsEmpresa").modal("show");                            
                         } else {
                             alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
                                 if (e) {
@@ -1003,7 +1004,6 @@ $(function () {
             alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
                 if (e) {
                     InscripcionFn.Invocar();
-                    //$('#form_wizard_1').find('.button-submit').click();
                 }
             });
         },
