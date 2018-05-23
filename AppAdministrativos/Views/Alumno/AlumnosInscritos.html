@@ -116,7 +116,7 @@
                                                     </div>
                                                     <div class="col-md-10 form-group">
                                                         <label class="control-label">Oferta Educativa</label>
-                                                        <select id="slcOferta" name="slcOferta" class="form-control selector">
+                                                        <select id="slcTipoOferta" name="slcTipoOferta" class="form-control selector">
                                                             <option value="-1">--Seleccionar--</option>
                                                         </select>
                                                     </div>
@@ -509,15 +509,9 @@
             </div>
         </div>
     </div>
-    <script src="JS/IncritosIngles.js"></script>
-    <script src="JS/Turno.js"></script>
-    <script src="JS/Periodo.js"></script>
-    <script src="JS/Archivos.js"></script>
     <script>
-        jQuery(document).ready(function () {
-            Turno.init();
-            Periodo.init();
-        });
+        $.getScript("JS/Archivos.js");
+        $.getScript("JS/Alumnos/AlumnosInscritos.js");
     </script>
 </body>
 </html>

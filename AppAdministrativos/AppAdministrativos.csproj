@@ -5300,7 +5300,7 @@
   <ItemGroup>
     <Content Include="Views\Pago\ActualPagos.html" />
     <Content Include="Views\Pago\ActualPagosBuscar.html" />
-    <Content Include="Views\Alumno\Alumnos.html" />
+    <Content Include="Views\Alumno\AlumnosInscritos.html" />
     <Content Include="Views\Alumno\AlumnoDatos.html" />
     <Content Include="Views\Alumno\AlumnoDatosConsulta.html" />
     <Content Include="Views\Alumno\AlumnoMail.html" />
@@ -5364,7 +5364,7 @@
     <Content Include="JS\hdpicanvas.js" />
     <Content Include="JS\Homonimos.js" />
     <Content Include="JS\html2canvas.js" />
-    <Content Include="JS\IncritosIngles.js" />
+    <Content Include="JS\Alumnos\AlumnosInscritos.js" />
     <Content Include="JS\jquery-1.12.2.min.js" />
     <Content Include="JS\jquery-1.12.4.js" />
     <Content Include="JS\jQuery.print.js" />
