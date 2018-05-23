@@ -168,9 +168,9 @@ namespace AppAdministrativos.Controllers
                 return BadRequest(String.Join("/ ", ((List<string>)Result).ToArray()));
             }
         }
-        [Route("ConsultarPagosPlanLenguas/{TipoOfertaId:int}")]
+        [Route("ConsultarPagosPlan/{TipoOfertaId:int}")]
         [HttpGet]
-        public IHttpActionResult PlanPagoLenguas(int TipoOfertaId)
+        public IHttpActionResult PlanPago(int TipoOfertaId)
         {
             var Result = BLLPagoPlan.ConsultarPagosPlanLenguas(TipoOfertaId);
 

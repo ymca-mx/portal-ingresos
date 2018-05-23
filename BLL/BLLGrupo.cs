@@ -289,6 +289,7 @@ namespace BLL
                                              {
                                                  AlumnoId = k.AlumnoId,
                                                  OfertaEducativaId = k.OfertaEducativaId,
+                                                 OfertaEducativaTipoId = k.OfertaEducativa.OfertaEducativaTipoId,
                                                  EmpresaId = k.GrupoId != null ? k.Grupo.EmpresaId :0,
                                                  GrupoId =k.GrupoId!= null? (int)k.GrupoId: 0,
                                                  CuotaColegiatura = k.CuotaColegiatura,

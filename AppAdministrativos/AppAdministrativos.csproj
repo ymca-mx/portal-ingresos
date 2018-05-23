@@ -5491,6 +5491,7 @@
     <Compile Include="Controllers\CuotaController.cs" />
     <Compile Include="Controllers\DescuentosController.cs" />
     <Compile Include="Controllers\DocentesController.cs" />
+    <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\OfertaEducativaController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
