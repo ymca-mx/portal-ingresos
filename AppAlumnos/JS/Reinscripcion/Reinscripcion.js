@@ -15,8 +15,9 @@
             url: 'Api/Alumno/ConsultarAlumnoReinscripcion/' + AlumnoId,
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (data) {
+            dataType: 'json'
+        })
+            .done(function (data) {
                 if (data == null) {
                     IndexFn.Block(false);
                     return null;
@@ -29,16 +30,20 @@
                     option.attr("data-Tipo", this.OfertaEducativa.OfertaEducativaTipoId);
                     $('#slcOfertaEducativa').append(option);
                 });
-                
-                if (data.lstAlumnoInscrito.length ==1) {
+
+                if (data.lstAlumnoInscrito.length == 1) {
                     $('#slcOfertaEducativa').val(data.lstAlumnoInscrito[0].OfertaEducativaId);
                     $('#slcOfertaEducativa').change();
                     $('#slcOfertaEducativa').prop("disabled", true);
                 } else {
                     IndexFn.Block(false);
                 }
-            }
-        });
+            })
+            .fail(function (data) {
+                console.log(data);
+                IndexFn.Block(false);
+                return null;
+            });
     }
     $('#slcOfertaEducativa').change(function () {
         if ($('#slcOfertaEducativa').val() == -1) { return false; } else {
@@ -49,24 +54,27 @@
     });
     function Pagar(Descripcion) {
          OfertaEducativa = $('#slcOfertaEducativa').val();
-         $.ajax({
-             type: "Post",
-             url: "Api/Reinscripcion/GenerarInscrCole",
-             data: JSON.stringify({ AlumnoId: AlumnoId, OfertaEducativaId: OfertaEducativa, PeriodoD: Descripcion }),
-             contentType: "application/json; charset=utf-8", 
-             success: function (data) {
-                 if (data == "Guardado") {
-                     alertify.alert("Universidad YMCA","Tus Cargos se han generado correctamente.");
-                     Bandera = 0;
-                 } else {
-                     alertify.alert("Universidad YMCA","Se a producido un error intente de nuevo mas tarde.");
-                     Bandera = 0;
-                     $('#btnGenerar').prop("disabled", false);;
-                     console.log(data);
-                 }
-                 IndexFn.Block(false);
-             }
-         });
+        $.ajax({
+            type: "Post",
+            url: "Api/Reinscripcion/GenerarInscrCole",
+            data: JSON.stringify({ AlumnoId: AlumnoId, OfertaEducativaId: OfertaEducativa, PeriodoD: Descripcion }),
+            contentType: "application/json; charset=utf-8"
+        }).done(function (data) {
+            if (data == "Guardado") {
+                alertify.alert("Universidad YMCA", "Tus Cargos se han generado correctamente.");
+                Bandera = 0;
+            } else {
+                alertify.alert("Universidad YMCA", "Se a producido un error intente de nuevo mas tarde.");
+                Bandera = 0;
+                $('#btnGenerar').prop("disabled", false);;
+                console.log(data);
+            }
+            IndexFn.Block(false);
+        })
+            .fail(function (data) {
+                IndexFn.Block(false);
+                console.log(data);
+            });
     }
     $('#btnGenerar').on('click', function () {
         IndexFn.Block(true);

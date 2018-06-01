@@ -38,6 +38,13 @@ namespace Pruebas
         }
 
         [TestMethod]
+        public void GetMatricula()
+        {
+            Console.WriteLine(Herramientas.Matricula
+                                            .GenerarMatricula(2018, 3, 8838, null, 4));
+        }
+
+        [TestMethod]
         public void BuscarAlumnoBeca()
         {
             var obj =

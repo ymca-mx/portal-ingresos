@@ -2089,7 +2089,24 @@ namespace BLL
                                    a.PagoConceptoId,
                                    a.PagoConcepto.Descripcion,
                                    a.Monto,
-                                   a.CuotaId
+                                   a.CuotaId,
+                                   a.Anio,
+                                   a.PeriodoId,
+                                   Descuento = db.Descuento
+                                            .Where(des => des.PagoConceptoId == a.PagoConceptoId
+                                                && des.OfertaEducativaId == a.OfertaEducativaId
+                                                && (a.PagoConceptoId == 800 || a.PagoConceptoId == 802 ?
+                                                des.Descripcion == "Beca Académica" || des.Descripcion == "Descuento en inscripción" : true))
+                                                .Select(c => new
+                                                {
+                                                    c.DescuentoId,
+                                                    c.PagoConceptoId,
+                                                    c.DescuentoTipoId,
+                                                    c.OfertaEducativaId,
+                                                    c.MontoMaximo,
+                                                    c.MontoMinimo,
+                                                    c.Descripcion
+                                                }).FirstOrDefault()
                                })
                                .ToList();
                 }
@@ -2103,6 +2120,7 @@ namespace BLL
                 }
             }
         }
+        
         //public static string GenerarCargos_Becas(int AlumnoId, int OfertaEducatovaId, decimal Monto, bool SEP, int Anio, int PeriodoId, int UsuarioId)
         //{
         //    using (UniversidadEntities db = new UniversidadEntities())

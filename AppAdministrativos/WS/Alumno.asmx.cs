@@ -467,7 +467,7 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ObtenerOfertasAlumno(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public bool GuardarAntecedentes(string AlumnoId, string AntecedenteTipoId, string AreaAcademicaId, string Procedencia,
+        public object GuardarAntecedentes(string AlumnoId, string AntecedenteTipoId, string AreaAcademicaId, string Procedencia,
         string Promedio, string Anio, string MesId, string EsEquivalencia, string EscuelaEquivalencia, string PaisId,
         string EntidadFederativaId, string EsTitulado, string TitulacionMedio, string MedioDifusionId, string UsuarioId)
         {

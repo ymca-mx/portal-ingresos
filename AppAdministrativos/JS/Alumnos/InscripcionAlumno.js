@@ -741,7 +741,7 @@ $(function () {
                         var MaxDes;
 
                         var Colegiatura = data.find(function (cuota) {
-                            return cuota.PagoConceptoId === 802;
+                            return cuota.PagoConceptoId === 800;
                         });
                         var Inscripcion = data.find(function (cuota) {
                             return cuota.PagoConceptoId === 802;
@@ -1284,22 +1284,6 @@ $(function () {
             var monto = InscripcionFn.CalcularDescuento($('#' + idlabel).text().replace('$', ''), val);
             $('#' + idlabelP).text('$' + String(monto));
         },
-        RecalculaTabla(monto) {
-            if (MesP.length == 0) {
-                for (i = 0; i < 4; i++) {
-                    MesP[i] = $('#mes' + i).text().replace('$', '');
-                }
-            }
-            var filx;
-            var descu;
-            for (i = 0; i < 4; i++) {
-                if (MesP[i] != '0.00') {
-                    filx = $('#mes' + i);
-                    descu = InscripcionFn.CalcularDescuento(MesP[i], monto);
-                    $(filx).text('$' + String(descu));
-                }
-            }
-        }
     };
 
     InscripcionFn.init();

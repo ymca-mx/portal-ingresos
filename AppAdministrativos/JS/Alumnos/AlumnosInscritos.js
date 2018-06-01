@@ -95,14 +95,124 @@
             $('#btnCancelar').on('click', this.btnCancelar);
             $('#btnGuardar').on('click', this.btnGuardar);
             $('#btnGuardarAntecedente').on('click', this.btnGuardarAntecedente);
+
             $('#slcTipoOferta').on('change', this.CambiarNombre);
+            $('#slcPeriodo').on('change', this.slcPeriodoChange);
+            $('#slcOfertaEducativa').on('change', this.slcPeriodoChange);
+
             this.Cargar();
             GlobalFn.init();
             GlobalFn.GetPlantel();
             GlobalFn.GetTurno();
-            GlobalFn.GetPeriodo_P_C_F();
-            //GlobalFn.gets
-            $('#lblOFerta').html('Licenciatura');
+            GlobalFn.GetPeriodo_N_I();
+
+            $('#txtDescuentoBec').data('labelp', 'txtPagarCol');
+            $('#txtDescuentoBec').data('label', 'txtcuotaCol');
+            $('#txtDescuentoBec').on('keyup', this.GetMontos);
+            $('#txtDescuentoBec').knob({
+                'change': function (val) {
+                    InscritosFn.GetMontosKnob(val, 'txtDescuentoBec');
+                }
+            });
+
+            $('#txtDescuentoIns').data('labelp', 'txtPagarIn');
+            $('#txtDescuentoIns').data('label', 'txtcuotaIn');
+            $('#txtDescuentoIns').on('keyup', this.GetMontos);
+            $('#txtDescuentoIns').knob({
+                'change': function (val) {
+                    InscritosFn.GetMontosKnob(val, 'txtDescuentoIns');
+                }
+            });
+
+            $('#txtDescuentoExa').data('labelp', 'txtPagarExa');
+            $('#txtDescuentoExa').data('label', 'txtcuotaExa');
+            $('#txtDescuentoExa').on('keyup', this.GetMontos);
+            $('#txtDescuentoExa').knob({
+                'change': function (val) {
+                    InscritosFn.GetMontosKnob(val, 'txtDescuentoExa');
+                }
+            });
+
+            $('#txtDescuentoCred').data('labelp', 'txtPagarCred');
+            $('#txtDescuentoCred').data('label', 'txtcuotaCred');
+            $('#txtDescuentoCred').on('keyup', this.GetMontos);
+            $('#txtDescuentoCred').knob({
+                'change': function (val) {
+                    InscritosFn.GetMontosKnob(val, 'txtDescuentoCred');
+                }
+            });
+
+            GlobalFn.GetMedios();
+            GlobalFn.GetAreas("slcArea");
+
+            this.Beca();
+            this.Inscripcion();
+
+            $('#chkEsEmpresa').on('click', this.chkEmpresa);
+            $('#slcNacionalidadPrep').on('change', this.PaisPrepa);
+            $('#chkUniSi').on('click', this.chkUniSi);
+            $('#chkUniNo').on('click', this.chkUniNo);
+            $('#chkUni').on('click', this.chkUni);
+            $('#slcEstadoPais').on('change', this.slcEstadoPaisChange);
+
+        },
+        Inscripcion() {
+            $('#DescuentoI').noUiSlider({
+                start: 50,
+                step: 5,
+                range: {
+                    min: 0,
+                    max: 100
+                }
+            });
+
+            $('#DescuentoI').noUiSlider_pips({
+                mode: 'values',
+                values: [20, 80],
+                density: 5
+            });
+
+            $('#DescuentoI').on('set', function (event, value) {
+                if (value < 20) {
+                    $(this).val(20);
+                } else if (value > 80) {
+                    $(this).val(80);
+                }
+                $('#valIn').text($(this).val() + '%');
+            });
+
+        },
+        Beca() {
+            $('#DescuentoB').noUiSlider({
+                start: 50,
+                step: 5,
+                range: {
+                    min: 0,
+                    max: 100
+                }
+            });
+
+            $('#DescuentoB').noUiSlider_pips({
+                mode: 'values',
+                values: [20, 80],
+                density: 5
+            });
+
+            $('#DescuentoB').on('set', function (event, value) {
+                if (value < 20) {
+                    $(this).val(20);
+                } else if (value > 80) {
+                    $(this).val(80);
+                }
+                $('#valBe').text($(this).val() + '%');
+
+            });
+            jQuery('#pulsate-regular').pulsate({
+                color: "#bf1c56"
+            });
+            jQuery("#dvCargosEf").pulsate({
+                color: "#bf1c56"
+            });
         },
         CambiarNombre() {
             var tipo = parseInt($('#slcTipoOferta').val());
@@ -134,85 +244,99 @@
                     $('#divCredencial').show();
                     if (Mas != 1) { $('#divExamen').show(); }
                     $('#divMaterial').hide();
-                }
+                }                
             }
         },
-        DescuentosPeriodos(Idioma, Periodo) {
-            $.ajax({
-                type: "POST",
-                url: "WS/Descuentos.asmx/TraerDescuentosPeriodo",
-                data: "{'OfertaEducativaId':" + Idioma + ",Periodo:'" + Periodo + "'}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    var Sispago = $('#slcSistemaPago option:selected').html();
-                    var monto;
-                    var temtxt;
-                    var MaxDes;
-                    if (Sispago.search("4") != -1 || Sispago.search("6") != -1) {
-                        MaxDes = data.d[1].Descuento.MontoMaximo;
+        slcPeriodoChange() {
 
-                        //$('#txtDescuentoBec').attr("data-val-max", MaxDes);
-                        temtxt = $('#txtDescuentoBec').data();
-                        temtxt.valMax = MaxDes;
-                        //$('#txtDescuentoBec').val(MaxDes);
-                        $('#txtcuotaCol').text('$' + data.d[1].Monto);
-                        monto = data.d[1].Monto * (parseFloat($('#txtDescuentoBec').val()) / 100);
-                        monto = data.d[1].Monto - monto;
-                        monto = Math.round(monto);
-                        $('#txtPagarCol').text('$' + String(monto));
-                        //$('#txtDescuentoBec').change();
+            if (($('#slcPeriodo').val() == "" || $('#slcOfertaEducativa').val() == "" ||
+                parseInt($('#slcTipoOferta').val()) ===4)
+                || ($('#slcPeriodo').val() == undefined || $('#slcOfertaEducativa').val() == undefined)) { return false; }
+            var param = $('#slcOfertaEducativa').val() + "/" +
+                $('#slcPeriodo :selected').data("anio") + "/" +
+                $('#slcPeriodo :selected').data("periodoid");
+
+            IndexFn.Api("Cuota/TraerCuotaPeriodo/" + param, "GET", "")
+                .done(function (data) {
+                    if (data.length > 0) {
+                        InscritosFn.SetCuotas(data);
                     } else {
-                        MaxDes = data.d[1].Descuento.MontoMaximo;
-                        //$('#txtDescuentoBec').attr("data-val-max", MaxDes);
-                        temtxt = $('#txtDescuentoBec').data();
-                        temtxt.valMax = MaxDes;
-                        //$('#txtDescuentoBec').val(MaxDes);
-                        $('#txtcuotaCol').text('$' + (data.d[1].Monto * 4));
-                        monto = (data.d[1].Monto * 4) * (parseFloat($('#txtDescuentoBec').val()) / 100);
-                        monto = (data.d[1].Monto * 4) - monto;
-                        monto = Math.round(monto);
-                        $('#txtPagarCol').text('$' + String(monto));
-                        //$('#txtDescuentoBec').change();
+                        alertify.alert("Error: El periodo seleccionado aun no tiene cuotas generadas, favor de comunicarse al área de Sistemas");
                     }
-                    MaxDes = data.d[0].Descuento.MontoMaximo;
-                    temtxt = $('#txtDescuentoIns').data();
-                    temtxt.valMax = MaxDes;
-                    //$('#txtDescuentoIns').val(MaxDes);
-                    $('#txtcuotaIn').text('$' + data.d[0].Monto);
-                    monto = (data.d[0].Monto * (parseFloat($('#txtDescuentoIns').val()) / 100));
-                    monto = data.d[0].Monto - monto;
-                    monto = Math.round(monto);
-                    $('#txtPagarIn').text('$' + String(monto));
-                    //$('#txtDescuentoIns').change();
+                })
+                .fail(function (data) {
+                    alertify.alert("Error: El periodo seleccionado aun no tiene cuotas generadas, favor de comunicarse al área de Sistemas");
+                    $('#slcPeriodo').val($("#slcPeriodo option:first").val());
+                });
+        },
+        SetCuotas(data) {
+            var Sispago = $('#slcSistemaPago option:selected').html();
+            if (Sispago === undefined) {
+                setTimeout(function () { InscritosFn.SetCuotas(data); }, 200);
+            } else {
+                var monto;
+                var MaxDes;
 
-                    MaxDes = data.d[2].Descuento.MontoMaximo;
-                    temtxt = $('#txtDescuentoExa').data();
-                    temtxt.valMax = MaxDes;
-                    //$('#txtDescuentoExa').val(MaxDes);
-                    $('#txtcuotaExa').text('$' + data.d[2].Monto);
-                    monto = (data.d[2].Monto * (parseFloat($('#txtDescuentoExa').val()) / 100));
-                    monto = data.d[2].Monto - monto;
-                    monto = Math.round(monto);
-                    $('#txtPagarExa').text('$' + String(monto));
-                    //$('#txtDescuentoExa').change();
+                var Colegiatura = data.find(function (cuota) {
+                    return cuota.PagoConceptoId === 800;
+                });
+                var Inscripcion = data.find(function (cuota) {
+                    return cuota.PagoConceptoId === 802;
+                });
+                var Examen = data.find(function (cuota) {
+                    return cuota.PagoConceptoId === 1;
+                });
+                var Credencial = data.find(function (cuota) {
+                    return cuota.PagoConceptoId === 1000;
+                });
 
-                    MaxDes = data.d[3].Descuento.MontoMaximo;
-                    temtxt = $('#txtDescuentoCred').data();
-                    temtxt.valMax = MaxDes;
-                    //$('#txtDescuentoCred').val(MaxDes);
-                    $('#txtcuotaCred').text('$' + data.d[3].Monto);
-                    monto = (data.d[3].Monto * (parseFloat($('#txtDescuentoCred').val()) / 100));
-                    monto = data.d[3].Monto - monto;
-                    monto = Math.round(monto);
-                    $('#txtPagarCred').text('$' + String(monto));
-                    //$('#txtDescuentoCred').change();
-
-                },
-                error: function (request, status, error) {
-                    alertify.alert("No hay cuotas dadas de alta para el periodo seleccionado");
-                    Limpiar();
+                if (Sispago.search("4") != -1 || Sispago.search("6") != -1) {
+                    MaxDes = Colegiatura.Descuento.MontoMaximo;
+                    $('#txtDescuentoBec').attr("data-val-max", MaxDes);
+                    //$('#txtDescuentoBec').val(MaxDes);
+                    $('#txtcuotaCol').text('$' + Colegiatura.Monto);
+                    monto = Colegiatura.Monto * (parseFloat($('#txtDescuentoBec').val()) / 100);
+                    monto = Colegiatura.Monto - monto;
+                    $('#txtPagarCol').text('$' + String(Math.round(monto)));
+                    //$('#txtDescuentoBec').change();
+                } else {
+                    MaxDes = Colegiatura.Descuento.MontoMaximo;
+                    $('#txtDescuentoBec').attr("data-val-max", MaxDes);
+                    //$('#txtDescuentoBec').val(MaxDes);
+                    $('#txtcuotaCol').text('$' + (Colegiatura.Monto * 4));
+                    monto = (Colegiatura.Monto * 4) * (parseFloat($('#txtDescuentoBec').val()) / 100);
+                    monto = (Colegiatura.Monto * 4) - monto;
+                    $('#txtPagarCol').text('$' + String(Math.round(monto)));
+                    //$('#txtDescuentoBec').change();
                 }
-            });
+
+                MaxDes = Inscripcion.Descuento.MontoMaximo;
+                $('#txtDescuentoIns').attr("data-val-max", MaxDes);
+                //$('#txtDescuentoIns').val(MaxDes);
+                $('#txtcuotaIn').text('$' + Inscripcion.Monto);
+                monto = (Inscripcion.Monto * (parseFloat($('#txtDescuentoIns').val()) / 100));
+                monto = Inscripcion.Monto - monto;
+                $('#txtPagarIn').text('$' + String(Math.round(monto)));
+                //$('#txtDescuentoIns').change();
+
+                MaxDes = Examen.Descuento.MontoMaximo;
+                $('#txtDescuentoExa').attr("data-val-max", MaxDes);
+                //$('#txtDescuentoExa').val(MaxDes);
+                $('#txtcuotaExa').text('$' + Examen.Monto);
+                monto = (Examen.Monto * (parseFloat($('#txtDescuentoExa').val()) / 100));
+                monto = Examen.Monto - monto;
+                $('#txtPagarExa').text('$' + String(Math.round(monto)));
+                //$('#txtDescuentoExa').change();
+
+                MaxDes = Credencial.Descuento.MontoMaximo;
+                $('#txtDescuentoCred').attr("data-val-max", MaxDes);
+                //$('#txtDescuentoCred').val(MaxDes);
+                $('#txtcuotaCred').text('$' + Credencial.Monto);
+                monto = (Credencial.Monto * (parseFloat($('#txtDescuentoCred').val()) / 100));
+                monto = Credencial.Monto - monto;
+                $('#txtPagarCred').text('$' + String(Math.round(monto)));
+                //$('#txtDescuentoCred').change();
+            }
         },
         Limpiar() {
             $('#txtcuotaCol').text('');
@@ -226,241 +350,137 @@
             $('#chkMaterial')[0].checked = false;
             $('#chkEsEmpresa')[0].checked = false;
         },
-        GuardarDocumentoIngles(AlumnoId, OfertaEducativa) {
-            var data = new FormData();
-            var flIns = $('#BecArchivo');
+        GuardarOFerta(Campos) {
 
-            flIns = flIns[0].files[0];
-            data.append("DocBeca", flIns);
-            data.append("AlumnoId", AlumnoId);
-            data.append("OfertaEducativaId", OfertaEducativa);
-            var request = new XMLHttpRequest();
-            request.open("POST", 'WS/Descuentos.asmx/GuardarDocumentosIngles', true);
-            request.send(data);
-
+            IndexFn.Api("Alumno/NuevaOferta", "put", JSON.stringify(Campos))
+                .done(function (data) {
+                    if (Campos.AlumnoInscrito.EsEmpresa || parseInt($('#slcTipoOferta').val()) === 4) {
+                        alertify.alert("Alumno Guardado", function () {
+                            $('#Load').modal('hide');
+                            InscritosFn.Email(data.AlumnoId, Campos.AlumnoInscrito.OfertaEducativaId);
+                        });
+                    } else {
+                        InscritosFn.GuardarDescuentos(data.AlumnoId);
+                    }
+                })
+                .fail(function (data) {
+                    alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
+                        $('#Load').modal('hide');
+                    });
+                });
+            
         },
-        GuardarDocumentos(Beca, Insc, Exam) {
-            var data = new FormData();
-            var flIns = $('#BecArchivo'); // FileList object
+        GuardarDescuentos(AlumnoId) {
+            if (jQuery.type($.cookie('userAdmin')) === "undefined") {
+                return false;
+            }
 
+            var ObjAlumno = {
+                AlumnoId: AlumnoId,
+                SistemaPagoId: $('#slcSistemaPago').val(),
+                Anio: $('#slcPeriodo :selected').data("anio"),
+                PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
+                OfertaEducativaId: $('#slcOfertaEducativa').val(),
+                UsuarioId: $.cookie('userAdmin'),
+                Descuentos: [
+                {
+                    PagoConceptoId: 800,
+                    TotalPagar: Number($('#txtPagarCol').text().replace(/[^0-9\.-]+/g, "")),
+                    Justificacion: $('#txtJustificacionBec').val()
+                },
+                {
+                    PagoConceptoId: 802,
+                    TotalPagar: Number($('#txtPagarIn').text().replace(/[^0-9\.-]+/g, "")),
+                    Justificacion: $('#txtJustificacionIns').val()
+                },
+                {
+                    PagoConceptoId: 1000,
+                    TotalPagar: Number($('#txtPagarCred').text().replace(/[^0-9\.-]+/g, "")),
+                    Justificacion: $('#txtJustificacionCred').val()
+                }]
+            };
+
+            var data = new FormData();
+
+            var flIns = $('#BecArchivo'); // FileList object
             flIns = flIns[0].files[0];
             data.append("DocBeca", flIns);
-            data.append("DescuentoIdB", Beca);
+
             flIns = $('#InsArchivo');
             flIns = flIns[0].files[0];
             data.append("DocInscipcion", flIns);
-            data.append("DescuentoIdI", Insc);
+
             flIns = $('#ExamenArchivo');
             flIns = flIns[0].files[0];
             data.append("DocExamen", flIns);
-            data.append("DescuentoExam", Exam);
 
+            data.append("ObjAlumno", JSON.stringify(ObjAlumno));
+            IndexFn.clearAlert();
 
-            var request = new XMLHttpRequest();
-            request.open("POST", 'WS/Descuentos.asmx/GuardarDocumentos', true);
-            request.send(data);
+            IndexFn.ApiFile("Descuentos/GuardarDescuentos", data)
+                .done(function (data) {
+                    if (data != null) {
+                        $('#Load').modal('hide');
+                        var Alumnos = [ObjAlumno.AlumnoId];
+                        IndexFn.Api("General/EnviarMail2", "Post", JSON.stringify(Alumnos))
+                            .done(function (data) {
 
-        },
-        AreasCursadas() {
-            $('#slcArea').empty();
-            var option1 = $(document.createElement('option'));
+                                alertify.alert("Alumno Guardado </br> ", function () {
+                                    $('#Encabezado').show();
+                                    $('#Contenedor').hide();
+                                    var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + ObjAlumno.AlumnoId + "&OfertaEducativaId=" + ObjAlumno.OfertaEducativaId;
+                                    window.open(url, "Credenciales");
+                                    InscritosFn.Cargar();
+                                });
+                            })
+                            .fail(function (data) {
+                                console.log(data);
+                                InscritosFn.Email(ObjAlumno.AlumnoId, ObjAlumno.OfertaEducativaId);
+                            });
 
-            option1.text("--Seleccionar--");
-            option1.val(-1);
-            $("#slcArea").append(option1);
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/ObtenerAreas",
-                data: "",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    var datos = data.d;
-                    $(datos).each(function () {
-                        var option = $(document.createElement('option'));
-
-                        option.text(this.Descripcion);
-                        option.val(this.AreaAcademicaId);
-
-                        $("#slcArea").append(option);
-                    });
-                }
-            });
-        },
-        Paises() {
-            $('#slcEstadoPais').empty();
-            var option1 = $(document.createElement('option'));
-
-            option1.text("--Seleccionar--");
-            option1.val(-1);
-            $("#slcEstadoPais").append(option1);
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/ConsultarPaises",
-                data: "{}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    var datos = data.d;
-                    $(datos).each(function () {
-                        var option = $(document.createElement('option'));
-                        option.text(this.Descripcion);
-                        option.val(this.PaisId);
-
-                        $("#slcEstadoPais").append(option);
-                    });
-                }
-            });
-
-        },
-        Estados() {
-            $('#slcEstadoPais').empty();
-            var option1 = $(document.createElement('option'));
-
-            option1.text("--Seleccionar--");
-            option1.val(-1);
-            $("#slcEstadoPais").append(option1);
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/ConsultarEntidadFederativa",
-                data: "{}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    var datos = data.d;
-                    $(datos).each(function () {
-                        var option = $(document.createElement('option'));
-
-                        option.text(this.Descripcion);
-                        option.val(this.EntidadFederativaId);
-
-                        $("#slcEstadoPais").append(option);
-                    });
-                    $("#slcEstadoPais").val(9);
-
-                }
-            });
-        },
-        MedioDifusion() {
-            $('#slcMedio').empty();
-            var option1 = $(document.createElement('option'));
-
-            option1.text("--Seleccionar--");
-            option1.val(-1);
-            $("#slcMedio").append(option1);
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/TraerListaMedios",
-                data: "{}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    var datos = data.d;
-                    $(datos).each(function () {
-                        var option = $(document.createElement('option'));
-
-                        option.text(this.Descripcion);
-                        option.val(this.MedioDifusionId);
-
-                        $("#slcMedio").append(option);
-                    });
-                }
-            });
-        },
-        GuardarDescuentos(Campos) {
-            $.ajax({
-                type: "POST",
-                url: "WS/Descuentos.asmx/GuardarIdioma",
-                data: JSON.stringify(Campos), // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                datatype: JSON,
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                success: function (data) {
-                    var Respuesta = data.d[0];
-
-                    if (Respuesta == "Guardado") {
-                        GuardarDocumentoIngles(fid, $('#slcOfertaEducativa').val());
-                        Resultado = "guardado";
-                    } else if (data.d != null) {
-                        var res2 = data.d[0];
-                        if (res2 !== undefined) {
-                            GuardarDocumentos(data.d[1], data.d[0], data.d[2]);
-                            Resultado = "guardado";
-                        } else { return "Fallo"; }
-                    }
-                    if (Resultado == "guardado") {
-                        alertify.alert("Alumno Guardado", function () {
-                            CargadInfoAntecedentes.Email(fid);
-                        });
-
-                    } else {
-                        alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
-                            $('#Load').modal('hide');
-                            return false;
-                        });
-                    }
-                }
-            });
-        },
-        GuardarAntecedentes(Antecedente, Campos) {
-            $.ajax({
-                type: "POST",
-                url: "WS/Alumno.asmx/GuardarAntecedentes",
-                data: Antecedente,
-                datatype: JSON,
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (data.d) {
-                        $('#Antecedentes').modal('hide');
-                        CargadInfoAntecedentes.GuardarDescuentos(Campos);
                     } else {
                         $('#Load').modal('hide');
-                        alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
-                            $('#Antecedentes').modal('show');
-                            return false;
-                        });
+                        alertify.alert("No se guardaron los cambios, intente de nuevo");
                     }
-                }
-            });
+                })
+                .fail(function (data) {
+                    $('#Load').modal('hide');
+                    alertify.alert("No se guardaron los cambios, intente de nuevo");
+                    console.log(data);
+                });
         },
-        Email(alumnoid) {
-            $.ajax({
-                type: "POST",
-                url: "WS/Descuentos.asmx/EnviarMail2",
-                data: "{listaID:'" + alumnoid + "'}", // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                success: function (data) {
-                    if (data.d.length > 1) {
-                        CargadInfoAntecedentes.Email2(alumnoid);
-                    } else {
-                        var extramail = "<p>" + "Se ha enviado un mail al Alumno en el cual podra visualizar el reglamento escolar." + "</p>";
-                        alertify.alert(extramail, function () {
-                            $('#Encabezado').show();
-                            $('#Contenedor').hide();
-                            Cargar();
-                        });
-                    }
-                }
-            });
+        GuardarAntecedentes(objAlumno) {
+            IndexFn.Api("Alumno/GuardarAntecedentes", "Put", JSON.stringify(objAlumno.Antecendentes[0]))
+                .done(function (data) {
+                    $('#Antecedentes').modal('hide');
+                    InscritosFn.GuardarOFerta(objAlumno);
+                })
+                .fail(function (data) {
+                    $('#Load').modal('hide');
+                    alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
+                        $('#Antecedentes').modal('show');
+                    });
+                });
         },
-        Email2(Alumnoid) {
-            $.ajax({
-                type: "POST",
-                url: "WS/Descuentos.asmx/EnviarMail2",
-                data: "{listaID:'" + Alumnoid + "'}", // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                success: function (data) {
-                    if (data.d.length > 1) {
-                        CargadInfoAntecedentes.Email2(Alumnoid);
-                    } else {
-                        var extramail = "<p>" + "Se ha enviado un mail al Alumno en el cual podra visualizar el reglamento escolar." + "</p>";
-                        alertify.alert(extramail, function () {
-                            $('#Encabezado').show();
-                            $('#Contenedor').hide();
-                            Cargar();
-                        });
+        Email(AlumnoId, OfertaId) {
+            var Alumnos = [AlumnoId];
+            IndexFn.Api("General/EnviarMail2", "Post", JSON.stringify(Alumnos))
+                .done(function (data) {
+                    var extramail = "<p>" + "Se ha enviado un mail al Alumno en el cual podra visualizar el reglamento escolar." + "</p>";
+                    alertify.alert(extramail, function () {
+                        $('#Encabezado').show();
+                        $('#Contenedor').hide();
 
-                    }
-                }
-            });
+                        var url = "Views/Alumno/Credenciales.aspx?AlumnoId=" + AlumnoId + "&OfertaEducativaId=" + OfertaId;
+                        window.open(url, "Credenciales");
+
+                        InscritosFn.Cargar();
+                    });
+                })
+                .fail(function (data) {
+                    console.log(data);
+                    InscritosFn.Email(AlumnoId, OfertaId);
+                });
         },
         Cargar() {
             IndexFn.Api("Alumno/ConsultarAlumnos", "GET", "")
@@ -502,93 +522,12 @@
                     });
                     var fil = $('#tbAlumnos_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
+                    $('#slcTipoOferta').change();
                     $('#Load').modal('hide');
                 })
                 .fail(function (data) {
                     alertify.alert('Error al cargar datos');
                 });
-        },
-        Platel() {
-            $('#slcPlantel').empty();
-
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/ConsultarPlantel",
-                data: "{}", // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                success: function (data) {
-                    var datos = data.d;
-                    $(datos).each(function () {
-                        var option = $(document.createElement('option'));
-
-                        option.text(this.Descripcion);
-                        option.val(this.SucursalId);
-
-                        $("#slcPlantel").append(option);
-                    });
-                    //$("#slcSexo").html(data); // show the string that was returned, this will be the data inside the xml wrapper
-                    $('#divTablaDescuento').hide();
-                    $("#slcPlantel").val('1');
-                    $('#slcPlantel').change();
-                }
-            });
-        },
-        PlanPago() {
-            $("#slcSistemaPago").empty();
-            var OFerta = $('#slcTipoOferta').val();
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/ConsultarPagosPlanLenguas",
-                data: "{Oferta:'" + OFerta + "'}", // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                success: function (data) {
-                    var datos = data.d;
-                    $(datos).each(function () {
-                        var option = $(document.createElement('option'));
-                        option.text(this.PlanPago);
-                        option.val(this.PagoPlanId);
-
-                        $("#slcSistemaPago").append(option);
-                    });
-                }
-            });
-        },
-        CrearTabla(Periodo) {
-            var th;
-            var num;
-            var fila = '<tr id="tr1">';
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/PeriodosCompletos",
-                data: "{Periodo:'" + Periodo + "',ofertaId:'" + $("#slcOfertaEducativa").val() + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
-                    var row = document.getElementById("tr1");
-                    if (row != null) {
-                        padre = row.parentNode;
-                        padre.removeChild(row);
-                    }
-                    var meses = data.d.lstSubPeriodo.length;
-                    for (i = 0; i < meses; i++) {
-                        num = i + 1;
-                        th = '#thm' + num;
-                        $(th).html('<i class="fa fa-calendar"></i>&nbsp;' + data.d.lstSubPeriodo[i].Mes.Descripcion);
-                        if (data.d.lstSubPeriodo[i].Mes.MontoLengua != null) {
-                            MesP[i] = data.d.lstSubPeriodo[i].Mes.MontoLengua.Cuota.Monto;
-                            fila += '<td id="' + 'mes' + i + '">' + '$' + data.d.lstSubPeriodo[i].Mes.MontoLengua.Cuota.Monto + '</td>';
-                        } else {
-                            MesP[i] = 0.00;
-                            fila += '<td id="' + 'mes' + i + '">$0.00</td>';
-                        }
-                    }
-                    fila += '</tr>';
-                    $('#tblDescuentos').append(fila);
-                    $('#txtDescuentoBec').keyup();
-                }
-            });
         },
         CalcularDescuento(Monto, Descuento) {
             var Redondeado;
@@ -598,36 +537,39 @@
             Redondeado = Math.round(Redondeado);
             return Redondeado;
         },
-        RecalculaTabla(monto) {
-            var filx;
-            var descu;
-            for (i = 0; i < 4; i++) {
-                if (MesP[i] != '0.00') {
-                    filx = $('#mes' + i);
-                    descu = CalcularDescuento(MesP[i], monto);
-                    $(filx).text('$' + String(descu));
-                }
-            }
+        GetMontos() {
+            var idlabel = $('#' + this.id).data('label');
+            var idlabelP = $('#' + this.id).data('labelp');
+
+            var Maximo = $('#' + this.id).data();
+            if (Maximo.valMax < $('#' + this.id).val()) { $('#' + this.id).val(Maximo.valMax); return false; }
+            var monto = InscritosFn.CalcularDescuento($('#' + idlabel).text().replace('$', ''), $('#' + this.id).val());
+            $('#' + idlabelP).text('$' + String(monto));
+        },
+        GetMontosKnob(val, idl) {
+            var idlabel = $('#' + idl).data('label');
+            var idlabelP = $('#' + idl).data('labelp');
+
+            var Maximo = $('#' + idl).data();
+            if (Maximo.valMax < val) { $('#' + idl).val(Maximo.valMax); return false; }
+            var monto = InscritosFn.CalcularDescuento($('#' + idlabel).text().replace('$', ''), val);
+            $('#' + idlabelP).text('$' + String(monto));
         },
         tbAlumnosClikA() {
+            
             Mas = undefined;
             fid = MItable.fnGetData(this.parentNode.parentNode, 0);
             var Fecha;
-            $.ajax({
-                url: 'WS/Alumno.asmx/ConsultarAlumno',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: '{AlumnoId:"' + fid + '"}',
-                dataType: 'json',
-                success: function (data) {
-                    EsLenguas = false;
 
-                    if (data.d.lstAlumnoInscrito.length == 0) {
-                        if (data.d.lstAlumnoInscrito[0].OfertaEducativa.OfertaEducativaTipoId === 4) {
+            IndexFn.Api("Alumno/ConsultarAlumno/" + fid, "Get", "")
+                .done(function (data) {
+                    EsLenguas = false;                    
+                    if (data.lstAlumnoInscrito.length == 0) {
+                        if (data.lstAlumnoInscrito[0].OfertaEducativa.OfertaEducativaTipoId === 4) {
                             EsLenguas = true;
                         }
                     }
-                    $(data.d.lstAlumnoInscrito).each(function () {
+                    $(data.lstAlumnoInscrito).each(function () {
                         if (this.OfertaEducativa.OfertaEducativaTipoId != 4) { Mas = 1; }
                     });
 
@@ -636,19 +578,24 @@
                         EsLenguas = true;
                     }
                     $('#txtAlumnoId').val(fid);
-                    Fecha = new Date(parseInt(data.d.DTOAlumnoDetalle.FechaNacimiento.slice(6)));
+                    Fecha = new Date(parseInt(data.DTOAlumnoDetalle.FechaNacimiento.slice(6)));
                     Fecha = new Date(Fecha);
-                    $('#txtNombre').val(data.d.Nombre);
-                    $('#txtPaterno').val(data.d.Paterno);
-                    $('#txtMaterno').val(data.d.Materno);
+                    $('#txtNombre').val(data.Nombre);
+                    $('#txtPaterno').val(data.Paterno);
+                    $('#txtMaterno').val(data.Materno);
                     $('#txtFechaNacimiento').val(Fecha.getDate() + '/' + parseInt(Fecha.getMonth() + 1) + '/' + Fecha.getFullYear());
-                    $('#txtOferta').val(data.d.AlumnoInscrito.OfertaEducativa.Descripcion);
-                    $('#txtFechaRegistro').val(data.d.FechaRegistro);
+                    $('#txtOferta').val(data.AlumnoInscrito.OfertaEducativa.Descripcion);
+                    $('#txtFechaRegistro').val(data.FechaRegistro);
                     $('#Encabezado').hide();
                     $('#Contenedor').show();
                     $('#DivDescuentos').show();
-                }
-            });
+
+                    $("#slcSistemaPago").change();
+                })
+                .fail(function (data) {
+                    alertify.alert("Fallo la carga de los datos del alumno.");
+                    console.log(data);
+                });
         },
         btnCancelar() {
             $('#txtcuotaCol').text('');
@@ -664,7 +611,7 @@
             //$('#tblDescuentos').hide();
         },
         btnGuardar() {
-            if ($('#slcOfertaEducativa').val() == '-1') {
+            if ($('#slcOfertaEducativa').val() === '-1') {
                 alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar", function () {
                     return true;
                 });
@@ -673,32 +620,28 @@
             if (EsLenguas) {
                 $('#Antecedentes').modal('show');
             }
-            else {
-                $('#Load').modal('show');
+            else {                
                 if (!form.valid()) { return false; }
+
                 Usuario = $.cookie('userAdmin');
                 if (jQuery.type(Usuario) === "undefined") {
                     return false;
                 }
-                var Campos = {
-                    'AlumnoId': fid,//0
-                    'OfertaEducativa': $('#slcOfertaEducativa').val(),//1
-                    'Turno': $('#slcTurno').val(),//2
-                    'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//3
-                    'SistemaPago': $('#slcSistemaPago').val(),//4
-                    'DescuentoBec': $('#txtDescuentoBec').val(),//5
-                    'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),//6
-                    'Credencial': $('#txtDescuentoCred').val(),//7
-                    'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),//8
-                    'Material': $('#chkMaterial')[0].checked,//9
-                    'EsEmpresa': $('#chkEsEmpresa')[0].checked,//10
-                    'DescuentoExamen': Mas == 1 ? '-1' : $('#txtDescuentoExa').val(),//11
-                    'JustificacionExam': $('#txtJustificacionExa').val() == '' ? 'null' : $('#txtJustificacionExa').val(),//12
-                    'DescuentoIns': $('#txtDescuentoIns').val(),//13
-                    'JustificacionIns': $('#txtJustificacionIns').val() == '' ? 'null' : $('#txtJustificacionIns').val(),//14
-                    'Usuario': Usuario//15
+                var objAlumno = {
+                    AlumnoId: fid,
+                    UsuarioId: Usuario,
+                    Anio: $('#slcPeriodo :selected').data("anio"),
+                    PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
+                    AlumnoInscrito: {
+                        OfertaEducativaId: $('#slcOfertaEducativa').val(),
+                        EsEmpresa: $('#chkEsEmpresa')[0].checked,
+                        PagoPlanId: $('#slcSistemaPago').val(),
+                        TurnoId: $('#slcTurno').val(),
+                        Material: $('#chkMaterial')[0].checked
+                    },
                 };
-                CargadInfoAntecedentes.GuardarDescuentos(Campos);
+                $('#Load').modal('show');
+                InscritosFn.GuardarOFerta(objAlumno);
             }
             //$('#btnGuardarAntecedente').click();
         },
@@ -711,349 +654,85 @@
             }
             var Resultado;
 
-            var Campos = {
-                'AlumnoId': fid,//0
-                'OfertaEducativa': $('#slcOfertaEducativa').val(),//1
-                'Turno': $('#slcTurno').val(),//2
-                'Periodo': $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html(),//3
-                'SistemaPago': $('#slcSistemaPago').val(),//4
-                'DescuentoBec': $('#txtDescuentoBec').val(),//5
-                'JustificacionBec': $('#txtJustificacionBec').val() == '' ? 'null' : $('#txtJustificacionBec').val(),//6
-                'Credencial': $('#txtDescuentoCred').val(),//7
-                'JustificacionCred': $('#txtJustificacionCred').val() == '' ? 'null' : $('#txtJustificacionCred').val(),//8
-                'Material': $('#chkMaterial')[0].checked,//9
-                'EsEmpresa': $('#chkEsEmpresa')[0].checked,//10
-                'DescuentoExamen': Mas == 1 ? '-1' : $('#txtDescuentoExa').val(),//11
-                'JustificacionExam': $('#txtJustificacionExa').val() == '' ? 'null' : $('#txtJustificacionExa').val(),//12
-                'DescuentoIns': $('#txtDescuentoIns').val(),//13
-                'JustificacionIns': $('#txtJustificacionIns').val() == '' ? 'null' : $('#txtJustificacionIns').val(),//14
-                'Usuario': Usuario//15
-            };
-            var Antecedentes = {
+            var objAlumno = {
                 AlumnoId: fid,
-                AntecedenteTipoId: $('#slcTipoOferta').val(),
                 UsuarioId: Usuario,
-                Procedencia: $('#txtNombrePrepa').val(),
-                MesId: $('#txtMesT').val(),
-                Anio: $('#txtAñoT').val(),
-                AreaAcademicaId: $('#slcArea').val(),
-                Promedio: $('#txtPromedio').val(),
-                EsEquivalencia: $('#chkUni')[0].checked,
-                EscuelaEquivalencia: $('#txtUni').val(),
-                PaisId: $('#slcNacionalidadPrep').val() === "1" ? 146 : $('#slcEstadoPais').val(),
-                EntidadFederativaId: $('#slcNacionalidadPrep').val() === "1" ? $('#slcEstadoPais').val() : 33,
-                EsTitulado: $('#chkUniSi')[0].checked ? true : false,
-                TitulacionMedio: $('#txtUniMotivo').val(),
-                MedioDifusionId: $('#slcMedio').val(),
+                Anio: $('#slcPeriodo :selected').data("anio"),
+                PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
+                AlumnoInscrito: {
+                    OfertaEducativaId: $('#slcOfertaEducativa').val(),
+                    EsEmpresa: $('#chkEsEmpresa')[0].checked,
+                    PagoPlanId: $('#slcSistemaPago').val(),
+                    TurnoId: $('#slcTurno').val(),
+                    Material: $('#chkMaterial')[0].checked
+                },
+                Antecendentes: [{
+                    AlumnoId: fid,
+                    UsuarioId: Usuario,
+                    AntecedenteTipoId: $('#slcTipoOferta').val(),
+                    Procedencia: $('#txtNombrePrepa').val(),
+                    MesId: $('#txtMesT').val(),
+                    Anio: $('#txtAñoT').val(),
+                    AreaAcademicaId: $('#slcArea').val(),
+                    Promedio: $('#txtPromedio').val(),
+                    EsEquivalencia: $('#chkUni')[0].checked,
+                    EscuelaEquivalencia: $('#txtUni').val(),
+                    PaisId: $('#slcNacionalidadPrep').val() === "1" ? 146 : $('#slcEstadoPais').val(),
+                    EntidadFederativaId: $('#slcNacionalidadPrep').val() === "1" ? $('#slcEstadoPais').val() : 33,
+                    EsTitulado: $('#chkUniSi')[0].checked ? true : false,
+                    TitulacionMedio: $('#txtUniMotivo').val(),
+                    MedioDifusionId: $('#slcMedio').val(),
+                }]
             };
-            Antecedentes = JSON.stringify(Antecedentes);
+            
             $('#Antecedentes').modal('hide');
             alertify.confirm("¿Esta seguro que desea guardar los cambios?",
                 function (e) {
                     $('#Load').modal('show');
-                    CargadInfoAntecedentes.GuardarAntecedentes(Antecedentes, Campos);
+                    InscritosFn.GuardarAntecedentes(objAlumno);
                 },
                 function () {
                     $('#Antecedentes').modal('show');
                 });
 
         },
-
+        chkEmpresa() {
+            if (this.checked) {
+                $('#DivDescuentos').hide();
+            } else { $('#DivDescuentos').show(); }
+        },
+        PaisPrepa() {
+            if (parseInt($('#slcNacionalidadPrep').val()) === 1) {
+                GlobalFn.GetEstado('slcEstadoPais', 9);
+            } else {
+                GlobalFn.GetPais('slcEstadoPais', 1);
+            }
+        },
+        chkUniSi() {
+            if (this.checked) {
+                $('#txtUniMotivo').prop('disabled', false);
+            }
+        },
+        chkUniNo() {
+            if (this.checked) {
+                $('#txtUniMotivo').prop('disabled', true);
+            }
+        },
+        chkUni() {
+            if (this.checked) { $('#txtUni').prop('disabled', false); }
+            else { $('#txtUni').prop('disabled', true); }
+        },
+        slcEstadoPaisChange() {
+            if (parseInt($('#slcNacionalidadPrep').val()) == 1) {
+                if (parseInt($('#slcEstado').val()) == 146) {
+                    $('#slcNacionalidadPrep').val(2);
+                }
+            }
+        }
     };
 
 
     InscritosFn.init();
-
-    /*
-    $('#slcPlantel').change(function () {
-        $("#slcOferta").empty();
-        var plantel = $('#slcPlantel').val();
-        if (plantel == -1) { $("#slcOfertaEducativa").empty(); $("#slcSistemaPago").empty(); return false; }
-        $.ajax({
-            type: "POST",
-            url: "WS/General.asmx/ConsultarOfertaEducativaTipo",
-            data: "{Plantel:'" + plantel + "'}", // the data in form-encoded format, ie as it would appear on a querystring
-            //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-            contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-            success: function (data) {
-                var datos = data.d;
-                $(datos).each(function () {
-                    var option = $(document.createElement('option'));
-
-                    option.text(this.Descripcion);
-                    option.val(this.OfertaEducativaTipoId);
-
-                    $("#slcOferta").append(option);
-                });
-                //$("#slcSexo").html(data); // show the string that was returned, this will be the data inside the xml wrapper
-                $("#slcOferta").change();
-            }
-        });
-    });
-    $("#slcOferta").change(function () {
-        Limpiar();
-        $('#divTablaDescuento').hide();
-        $("#slcOfertaEducativa").empty();
-        var plantel = $('#slcPlantel').val();
-        if (plantel == -1) { return false; }
-        var optionP = $(document.createElement('option'));
-        optionP.text('--Seleccionar--');
-        optionP.val('-1');
-        $("#slcOfertaEducativa").append(optionP);
-        var tipo = $("#slcOferta");
-        tipo = tipo[0].value;
-
-
-        if (tipo != -1) {
-            $('#lblOFerta').html(tipo == 1 ? 'Licenciatura' : tipo == 2 ? 'Especialidad' : tipo == 3 ? 'Meastría' : tipo == 4 ? 'Idioma' : tipo == 5 ? 'Doctorado' : ' ');
-            if (tipo == 4) {
-                $('#txtDescuentoBec').val(0).trigger('change');
-                $('#DivCol').hide();
-                $('#divInscripcion').hide();
-                $('#divExamen').hide();
-                $('#divCredencial').hide();
-                $('#divMaterial').show();
-                EsLenguas = false;
-            } else {
-                if (tipo === "1") {
-                    $('#lblLugarP').text("Lugar donde estudio la preparatoria");
-                    $('#hOfertaTitulo').text('Preparatoria de Procedencia');
-                    $('#lblOfertaTitulo2').text('Preparatoria de Procedencia');
-                    $('#txtNombrePrepa').val("");
-                } else if (tipo === "2" || tipo === "3") {
-                    $('#hOfertaTitulo').text('Universidad de Procedencia');
-                    $('#lblOfertaTitulo2').text('Universidad de Procedencia');
-                    $('#lblLugarP').text("Lugar donde estudio la Universidad");
-                    $('#txtNombrePrepa').val("universidad YMCA");
-                }
-                $('#txtDescuentoBec').val(50).trigger('change');
-                $('#DivCol').show();
-                $('#divInscripcion').show();
-                $('#divCredencial').show();
-                if (Mas != 1) { $('#divExamen').show(); }
-                $('#divMaterial').hide();
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/ConsultarOfertaEducativa",
-                data: "{tipoOferta:'" + tipo + "',Plantel:'" + plantel + "'}", // the data in form-encoded format, ie as it would appear on a querystring
-                //contentType: "application/x-www-form-urlencoded; charset=UTF-8", // if you are using form encoding, this is default so you don't need to supply it
-                contentType: "application/json; charset=utf-8", // the data type we want back, so text.  The data will come wrapped in xml
-                dataType: "json",
-                success: function (data) {
-                    var datos = data.d;
-                    if (datos.length > 0) {
-                        $(datos).each(function () {
-                            var option = $(document.createElement('option'));
-
-                            option.text(this.Descripcion);
-                            option.val(this.OfertaEducativaId);
-
-                            $("#slcOfertaEducativa").append(option);
-                        });
-                    } else {
-                        $("#slcOfertaEducativa").append(optionP);
-                    }
-
-                }
-            });
-            PlanPago();
-        } else {
-            $("#slcOfertaEducativa").append(optionP);
-            $("#slcSistemaPago").empty();
-        }
-    });
-    $("#slcSistemaPago").change(function () {
-        var Sispago = $('#slcSistemaPago option:selected').html();
-        var monto, total;
-        if (Sispago.search("4") != -1 || Sispago.search("6") != -1) {
-            total = Number($('#txtcuotaCol').text().replace('$', ''));
-            $('#txtcuotaCol').text('$' + (total / 4));
-            monto = (total / 4) * (parseFloat($('#txtDescuentoBec').val()) / 100);
-            monto = (total / 4) - monto;
-            monto = Math.round(monto);
-            $('#txtPagarCol').text('$' + String(monto));
-            //$('#txtDescuentoBec').change();
-        } else {
-            total = Number($('#txtcuotaCol').text().replace('$', ''));
-            $('#txtcuotaCol').text('$' + (total * 4));
-            monto = (total * 4) * (parseFloat($('#txtDescuentoBec').val()) / 100);
-            monto = (total * 4) - monto;
-            monto = Math.round(monto);
-            $('#txtPagarCol').text('$' + String(monto));
-        }
-    });
-    $('#slcOfertaEducativa').change(function () {
-        var Idioma = $('#slcOfertaEducativa').val();
-        var Periodo = $('#slcPeriodo').val().substring(0, 1) + $('#slcPeriodo option:selected').html();
-
-        $.ajax({
-            type: "POST",
-            url: "WS/General.asmx/BuscarLengua",
-            data: "{AlumnoId:'" + fid + "',Idioma:'" + Idioma + "',Periodo:'" + Periodo + "'}",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var bResp = data.d;
-                if (bResp == "0") {
-                    if ($('#slcTipoOferta').val() == 4) {
-                        //$('#divTablaDescuento').show();
-                        //$.ajax({
-                        //    type: "POST",
-                        //    url: "WS/Descuentos.asmx/TraerDescuentosIdiomas",
-                        //    data: "{'Idioma':" + Idioma + ",Periodo:'" + Periodo + "'}",
-                        //    contentType: "application/json; charset=utf-8",
-                        //    success: function (data) {
-                        //        if (data.d.length > 0) {
-                        //            var temtxt;
-                        //            var MaxDes;
-                        //            MaxDes = data.d[0].Descuento.MontoMaximo;
-                        //            //$('#txtDescuentoBec').attr("data-val-max", MaxDes);
-                        //            temtxt = $('#txtDescuentoBec').data();
-                        //            temtxt.valMax = MaxDes;
-                        //            $('#txtcuotaCol').text('$' + data.d[0].Monto);
-                        //            //$('#txtDescuentoBec').val(MaxDes);
-                        //            monto = data.d[0].Monto * (parseFloat($('#txtDescuentoBec').val()) / 100);
-                        //            monto = data.d[0].Monto - monto;
-                        //            monto = Math.round(monto);
-                        //            $('#txtPagarCol').text('$' + String(monto));
-                        //            //$('#txtDescuentoBec').change()
-
-                        //            MaxDes = data.d[1].Descuento.MontoMaximo;
-                        //            temtxt = $('#txtDescuentoCred').data();
-                        //            temtxt.valMax = MaxDes;
-                        //            //$('#txtDescuentoCred').val(MaxDes);
-                        //            $('#txtcuotaCred').text('$' + data.d[1].Monto);
-                        //            monto = (data.d[1].Monto * (parseFloat($('#txtDescuentoCred').val()) / 100));
-                        //            monto = data.d[1].Monto - monto;
-                        //            monto = Math.round(monto);
-                        //            $('#txtPagarCred').text('$' + String(monto));
-                        //            //$('#txtDescuentoCred').change();
-                        //            CrearTabla(Periodo);
-                        //        }
-                        //        else {
-                        //            Limpiar();
-                        //        }
-                        //    }
-                        //});
-
-                    } else {
-                        //if ($('#slcTipoOferta').val() == 2 || $('#slcTipoOferta').val() == 3) {
-                        //    $.ajax({
-                        //        type: "POST",
-                        //        url: "WS/Descuentos.asmx/ConsultarAdeudo",
-                        //        data: '{AlumnoId:' + fid + '}',
-                        //        contentType: "application/json; charset=utf-8",
-                        //        success: function (data) {
-                        //            if (data.d == "Debe") {
-                        //                alertify.alert('El alumno ' + $('#txtNombre').val() + ' tiene adeudo, favor de pasar a Control Administrativo para resolver su situación financiera.');
-                        //                $('#slcOfertaEducativa').val(-1);
-                        //            } else {
-                        //                DescuentosPeriodos(Idioma, Periodo);
-                        //            }
-                        //        }
-                        //    });
-                        //} else {
-                            DescuentosPeriodos(Idioma, Periodo);
-                        //}
-                    }
-                } else {
-                    alertify.alert('El alumno ya tiene registrado la opción seleccionada');
-                    $('#slcOfertaEducativa').val("-1");
-                    Limpiar();
-                }
-            }
-        });
-
-    });
-    $('#chkEsEmpresa').on('click', function () {
-        if (this.checked) {
-            $('#DivDescuentos').hide();
-        } else { $('#DivDescuentos').show();}
-    });
-    $('#slcPeriodo').change(function () {
-        $('#slcOfertaEducativa').change();
-    });
-    $('#txtDescuentoBec').keyup(function () {
-        var Maximo = $('#txtDescuentoBec').data();
-        if (Maximo.valMax < $('#txtDescuentoBec').val()) { $('#txtDescuentoBec').val(Maximo.valMax); return false; }
-        var monto = CalcularDescuento($('#txtcuotaCol').text().replace('$', ''), $('#txtDescuentoBec').val());
-        $('#txtPagarCol').text('$' + String(monto));
-        RecalculaTabla($('#txtDescuentoBec').val());
-    });
-    $('#txtDescuentoBec').knob({
-        change: function (val) {
-            var Maximo = $('#txtDescuentoBec').data();
-            if (Maximo.valMax < val) { $('#txtDescuentoBec').val(Maximo.valMax); return false; }
-            var monto = CalcularDescuento($('#txtcuotaCol').text().replace('$', ''), val);
-            $('#txtPagarCol').text('$' + String(monto));
-            RecalculaTabla(val);
-        }
-    });
-    $('#txtDescuentoCred').keyup(function () {
-        var Maximo = $('#txtDescuentoCred').data();
-        if (Maximo < $('#txtDescuentoCred').val()) { $('#txtDescuentoCred').val(Maximo.valMax); return false; }
-        var monto = CalcularDescuento($('#txtcuotaCred').text().replace('$', ''), $('#txtDescuentoCred').val());
-        $('#txtPagarCred').text('$' + String(monto));
-    });
-    $('#txtDescuentoCred').knob({
-        change: function (val) {
-            var Maximo = $('#txtDescuentoCred').data();
-            if (Maximo.valMax < val) { $('#txtDescuentoCred').val(Maximo.valMax); return false; }
-            var monto = CalcularDescuento($('#txtcuotaCred').text().replace('$', ''), val);
-            $('#txtPagarCred').text('$' + String(monto));
-        }
-    });
-    $('#txtDescuentoIns').keyup(function () {
-        var Maximo = $('#txtDescuentoIns').data();
-        if (Maximo.valMax < $('#txtDescuentoIns').val()) { $('#txtDescuentoIns').val(Maximo.valMax); return false; }
-        $('#txtPagarIn').text('$' +
-            String(CalcularDescuento($('#txtcuotaIn').text().replace('$', ''), $('#txtDescuentoIns').val())));
-    });
-    $('#txtDescuentoIns').knob({
-        change: function (val) {
-            var Maximo = $('#txtDescuentoIns').data();
-            if (Maximo.valMax < val) { $('#txtDescuentoIns').val(Maximo.valMax); return false; }
-            $('#txtPagarIn').text('$' +
-           String(CalcularDescuento($('#txtcuotaIn').text().replace('$', ''), val)));
-        }
-    });
-    $('#txtDescuentoExa').keyup(function () {
-        var Maximo = $('#txtDescuentoExa').data();
-        if (Maximo.valMax < $('#txtDescuentoExa').val()) { $('#txtDescuentoExa').val(Maximo.valMax); return false; }
-        $('#txtPagarExa').text('$' +
-            String(CalcularDescuento($('#txtcuotaExa').text().replace('$', ''), $('#txtDescuentoExa').val())));
-    });
-    $('#txtDescuentoExa').knob({
-        change: function (val) {
-            var Maximo = $('#txtDescuentoExa').data();
-            if (Maximo.valMax < val) { $('#txtDescuentoExa').val(Maximo.valMax); return false; }
-            $('#txtPagarExa').text('$' +
-           String(CalcularDescuento($('#txtcuotaExa').text().replace('$', ''), val)));
-        }
-    });
-    $('#slcNacionalidadPrep').on('change', function () {
-        $('#Load').modal('show');
-        if (this.value === "1") { CargadInfoAntecedentes.Estados(); }
-        else if (this.value === "2") { CargadInfoAntecedentes.Paises(); }
-        else { $('#slcEstadoPais').empty(); }
-        $('#Load').modal('hide');
-    });
-    $('#chkUniSi').on('click', function () {
-        if (this.checked) {
-            $('#txtUniMotivo').prop('disabled', false);
-        }
-    });
-    $('#chkUniNo').on('click', function () {
-        if (this.checked) {
-            $('#txtUniMotivo').prop('disabled', true);
-        }
-    });
-    $('#chkUni').on('click', function () {
-        if (this.checked) { $('#txtUni').prop('disabled', false); }
-        else { $('#txtUni').prop('disabled', true); }
-    });
-
-*/
+    
 });
  

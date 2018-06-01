@@ -2993,7 +2993,7 @@ namespace BLL
             }
         }
 
-        public static string GenerarInscripcionColegiatura(int AlumnoId, int OfertaEducativaId)
+        public static object GenerarInscripcionColegiatura(int AlumnoId, int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -3031,22 +3031,37 @@ namespace BLL
                     decimal DesInscM = 0;
                     decimal DesColM = 0;
                     #region Alumnos - Empresa - Especiales 
+                    
                     BLLGrupo.UpdateAlumnoConfiguracion(objPeriodo.Anio, objPeriodo.PeriodoId, AlumnoId, OfertaEducativaId, 7878); //Usuario de Luis Daniel
-                    List<DTOAlumnoGrupoCuota> lstAlumnoGrupoDesc = db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == AlumnoId && a.OfertaEducativaId == OfertaEducativaId).Select(a => new DTOAlumnoGrupoCuota
-                    {
-                        AlumnoId = (int)a.AlumnoId,
-                        Anio = (int)a.Anio,
-                        GrupoId = (int)a.GrupoId,
-                        OFertaEducativaId = (int)a.OfertaEducativaId,
-                        PeriodoId = (int)a.PeriodoId,
-                        MontoInscripcion = a.CuotaInscripcion,
-                        MontoColegiatura = a.CuotaColegiatura
-                    }).ToList();
+                    List<DTOAlumnoGrupoCuota> lstAlumnoGrupoDesc =
+                        db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == AlumnoId && a.OfertaEducativaId == OfertaEducativaId)
+                        .Select(a => new DTOAlumnoGrupoCuota
+                        {
+                            AlumnoId = (int)a.AlumnoId,
+                            Anio = (int)a.Anio,
+                            GrupoId =(int) (a.GrupoId != null ? a.GrupoId : 0),
+                            OFertaEducativaId = (int)a.OfertaEducativaId,
+                            PeriodoId = (int)a.PeriodoId,
+                            MontoInscripcion = a.CuotaInscripcion,
+                            MontoColegiatura = a.CuotaColegiatura
+                        }).ToList();
+
 
                     int DescuentoInsc = 0, DescuentoColg = 0;
                     //si hay algo en la configuracion se trae 
                     if (lstAlumnoGrupoDesc.Count > 0)
                     {
+                        if (lstAlumnoGrupoDesc.Count == 1)
+                        {
+                            if (lstAlumnoGrupoDesc.FirstOrDefault().GrupoId != 0)
+                            {
+                                return new
+                                {
+                                    Message = "Favor de pasar con Relaciones Publicas a terminar el proceso de configuración.",
+                                    Inner = "No tiene Grupo"
+                                };
+                            }
+                        }
                         #region AlumnoDescuento
                         Recargo = false;
 
@@ -3217,11 +3232,15 @@ namespace BLL
 
                     db.SaveChanges();
 
-                    return "Guardado";
+                    return new[] { "Guardado", AlumnoId.ToString() };
                 }
                 catch (Exception e)
                 {
-                    return e.Message;
+                    return new
+                    {
+                        e.Message,
+                        Inner = e.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

@@ -1,980 +1,970 @@
-﻿<!DOCTYPE html>
-<html lang="es-mx">
-<head>
-    <meta charset="utf-8" />
-    <title>Nuevos Alumnos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <link href="Style/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
-</head>
-<body>
-    <!-- BEGIN PAGE CONTAINER -->
-    <div class="page-container">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="page-head">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="portlet light" id="form_wizard_1">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <span class="caption-subject font-green-sharp bold uppercase">Inscripción de Alumno - <span class="step-title">Ficha 1 de 4 </span>
-                                    </span>
+﻿
+<link href="Style/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
+<main>
+    <div class="panel panel-primary" id="form_wizard_1">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="bold uppercase">
+                    Inscripción de Alumno - <span class="step-title">Ficha 1 de 4 </span>
+                </span>
+            </div>
+        </div>
+        <div class="panel-body" id="frmTabs">
+            <form action="javascript:;" class="form-horizontal" id="submit_form" method="post">
+                <div class="form-wizard">
+                    <div class="form-body">
+                        <div class="tab-content">
+
+                            <ul class="nav nav-pills nav-justified steps">
+                                <li>
+                                    <a href="#tab1" data-toggle="tab" class="step">
+                                        <span class="number">
+                                            1
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i>Personales
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab2" data-toggle="tab" class="step">
+                                        <span class="number">
+                                            2
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i>Contacto
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab3" data-toggle="tab" class="step active">
+                                        <span class="number">
+                                            3
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i>Oferta
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab5" data-toggle="tab" class="step">
+                                        <span class="number">
+                                            4
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i>Descuentos
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div id="bar" class="progress progress-striped" role="progressbar">
+                                <div class="progress-bar progress-bar-success">
                                 </div>
                             </div>
-                            <div class="portlet-body form" id="frmTabs">
-                                <form action="javascript:;" class="form-horizontal" id="submit_form" method="post">
-                                    <div class="form-wizard">
-                                        <div class="form-body">
-                                            <div class="tab-content">
+                            <div class="alert alert-danger display-none">
+                                <button class="close" data-dismiss="alert"></button>
+                                Por favor revisa la información, hay algunos campos inválidos
+                            </div>
+                            <div class="alert alert-success display-none">
+                                <button class="close" data-dismiss="alert"></button>
+                                Campos validos
+                            </div>
 
-                                                <ul class="nav nav-pills nav-justified steps">
-                                                    <li>
-                                                        <a href="#tab1" data-toggle="tab" class="step">
-                                                            <span class="number">1
-                                                            </span>
-                                                            <span class="desc">
-                                                                <i class="fa fa-check"></i>Personales
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#tab2" data-toggle="tab" class="step">
-                                                            <span class="number">2
-                                                            </span>
-                                                            <span class="desc">
-                                                                <i class="fa fa-check"></i>Contacto
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#tab3" data-toggle="tab" class="step active">
-                                                            <span class="number">3
-                                                            </span>
-                                                            <span class="desc">
-                                                                <i class="fa fa-check"></i>Oferta
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#tab5" data-toggle="tab" class="step">
-                                                            <span class="number">4
-                                                            </span>
-                                                            <span class="desc">
-                                                                <i class="fa fa-check"></i>Descuentos
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <div id="bar" class="progress progress-striped" role="progressbar">
-                                                    <div class="progress-bar progress-bar-success">
-                                                    </div>
-                                                </div>
-                                                <div class="alert alert-danger display-none">
-                                                    <button class="close" data-dismiss="alert"></button>
-                                                    Por favor revisa la información, hay algunos campos inválidos
-                                                </div>
-                                                <div class="alert alert-success display-none">
-                                                    <button class="close" data-dismiss="alert"></button>
-                                                    Campos validos
-                                                </div>
+                            <div class="tab-pane" id="tab1">
+                                <div id="pulsate-regular" style="padding: 5px;" hidden="hidden">
+                                    <div class="portlet-body form">
+                                        <h4>Homónimos</h4>
+                                        <table class="table table-striped table-bordered table-advance table-hover" id="Alumnos">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <i class="fa fa-user"></i>&nbsp; ID
+                                                    </th>
+                                                    <th>
+                                                        <i class="fa fa-user"></i>&nbsp; Nombre
+                                                    </th>
+                                                    <th>
+                                                        <i class="fa fa-calendar"></i>&nbsp; Fecha Nacimiento
+                                                    </th>
+                                                    <th>
+                                                        <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                                    </th>
+                                                    <th>
+                                                        <i class="fa fa-user-md"></i>&nbsp; Usuario
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <h3 class="block">Personales</h3>
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Nombre</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtnombre" class="form-control " name="txtnombre" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Apellido Paterno</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtApPaterno" name="txtApPaterno" class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Apellido Materno</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtApMaterno" name="txtApMaterno" class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Estado Civil</label>
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="slcEstadoCivil" name="slcEstadoCivil">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                                <div class="tab-pane" id="tab1">
-                                                    <div id="pulsate-regular" style="padding: 5px;" hidden="hidden">
-                                                        <div class="portlet-body form">
-                                                            <h4>Homónimos</h4>
-                                                            <table class="table table-striped table-bordered table-advance table-hover" id="Alumnos">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <i class="fa fa-user"></i>&nbsp; ID
-                                                                        </th>
-                                                                        <th>
-                                                                            <i class="fa fa-user"></i>&nbsp; Nombre
-                                                                        </th>
-                                                                        <th>
-                                                                            <i class="fa fa-calendar"></i>&nbsp; Fecha Nacimiento
-                                                                        </th>
-                                                                        <th>
-                                                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
-                                                                        </th>
-                                                                        <th>
-                                                                            <i class="fa fa-user-md"></i>&nbsp; Usuario
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="block">Personales</h3>
-                                                    <div class="row">
-                                                        <div class="col-md-6 ">
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Nombre</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtnombre" class="form-control " name="txtnombre" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Apellido Paterno</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtApPaterno" name="txtApPaterno" class="form-control " />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Apellido Materno</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtApMaterno" name="txtApMaterno" class="form-control " />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Estado Civil</label>
-                                                                <div class="input-icon right">
-                                                                    <select class="form-control" id="slcEstadoCivil" name="slcEstadoCivil">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <!--Telefono Celular-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Teléfono Celular</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtCelular" name="txtCelular" class="form-control" />
-                                                                    <span class="help-block"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6 ">
-                                                            <div class="col-md-12 form-group">
-                                                                <label class="control-label">Fecha de Nacimiento</label>
-                                                                <div class="input-group col-md-10 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                                    <input id="txtFNacimiento" name="txtFNacimiento" type="text" class="form-control" />
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                    </span><span id="spnA" class="span form-control"></span>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Genero</label>
-                                                                <div class="input-icon right">
-                                                                    <select class="form-control" id="slcSexo" name="slcSexo">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <!--Curp-->
-                                                            <!--<div class="col-md-10 form-group">-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">CURP</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" class="form-control uppercase" id="txtCURP" name="txtCURP" />
-                                                                </div>
-                                                            </div>
-                                                            <!--</div>-->
-                                                            <!--Correo electronico-->
-
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Correo Electrónico</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="email" id="txtEmail" class="form-control email" name="txtemail" />
-                                                                </div>
-                                                            </div>
-                                                            <!--Telefono Casa-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Teléfono Casa</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtTelefonoCasa" name="txtTelefonoCasa" class="form-control" />
-                                                                    <span class="help-block"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="col-md-11 form-group">
-                                                                <label class="control-label">Observaciones</label>
-                                                                <textarea class="form-control" id="txtObservaciones"  maxlength="500" rows="5"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <hr class="line" />
-                                                            <h3 class="">Dirección</h3>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <!--Calle-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Calle</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" class="form-control " id="txtCalle" name="txtCalle" />
-                                                                </div>
-                                                            </div>
-                                                            <!--col-md-5-->
-                                                            <!--Numero Exterior-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Número Exterior</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" class="form-control " id="txtNumeroE" name="txtNumeroE" />
-                                                                </div>
-                                                            </div>
-                                                            <!--Numero Interior-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Numero Interior</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" class="form-control " id="txtNumeroI" name="txtNumeroI" />
-                                                                </div>
-                                                            </div>
-                                                            <!--Codigo postal-->
-                                                            <div class="col-md-10 form-group ">
-                                                                <div class="col-md-5 form-group ">
-                                                                    <label class="control-label">Código Postal</label>
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" id="txtCP" name="txtCP" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <!--Colonia-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Colonia</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" class="form-control " id="txtColonia" name="txtColonia" />
-                                                                </div>
-                                                            </div>
-                                                            <!--Estado-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Estado</label>
-                                                                <div class="input-icon right">
-                                                                    <select id="slcEstado" class="form-control" name="slcEstado">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <!--Delegacion-->
-                                                            <div class="col-md-10 form-group">
-                                                                <label class="control-label">Delegación | Municipio</label>
-                                                                <div class="input-icon right">
-                                                                    <select class="form-control" id="slcMunicipio" name="slcMunicipio">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <hr class="line" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Nacionalidad</label>
-                                                                <div class="input-icon right">
-                                                                    <select id="slcNacionalidad" class="form-control" name="slcNacionalidad">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                        <option value="1">Mexicana</option>
-                                                                        <option value="2">Extranjera</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--Lugar de Nacimiento-->
-                                                        <div class="col-md-6">
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Lugar de Nacimiento</label>
-                                                                <div class="input-icon right">
-                                                                    <select id="slcLugarN" class="form-control" name="slcLugarN">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Tab 2-->
-                                                <div id="tab2" class="tab-pane">
-                                                    <h3 class="block">Persona de contacto</h3>
-
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <!--Apartado de Persona Autorizada-->
-
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Nombre</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtPAutorizada" class="form-control " name="txtPAutorizada" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Apellido Paterno</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtAPPaterno" name="txtAPPaterno" class="form-control " />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Apellido Materno</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtAPMaterno" name="txtAPMaterno" class="form-control " />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-8">
-                                                                <label class="control-label">Parentesco</label>
-                                                                <div class="input-icon right">
-                                                                    <select class="form-control" id="slcParentesco" name="slcParentesco">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Correo Electrónico</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="email" id="txtPEmail" name="txtPEmail" class="form-control" placeholder="Correo Electrónico:" />
-                                                                </div>
-                                                            </div>
-                                                            <!--<div class="form-group col-md-10">-->
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Teléfono Celular</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtTelefonoPA" name="txtTelefonoPA" class="form-control" />
-                                                                    <span class="help-block"></span>
-                                                                </div>
-                                                            </div>
-                                                            <!--</div>-->
-                                                            <!--<div class="form-group col-md-10">-->
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Teléfono Casa</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtTelefonoPAT" name="txtTelefonoPAT" class="form-control" />
-                                                                    <span class="help-block"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-10">
-                                                                <div class="input-icon right">
-                                                                    <div class="checkbox">
-                                                                        <input type="checkbox" id="chkAuotiza1" class="checkbox" />
-                                                                        <label for="chkAuotiza1" class="control-label">Autoriza dar información académica.</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--</div>-->
-                                                        </div>
-                                                    </div>
-                                                    <hr />
-                                                    <h3 class="block">Persona de contacto (opcional)</h3>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group col-md-10">
-
-                                                                <div class="checkbox"><br>
-                                                                    <input type="checkbox" id="chkYo" class="checkbox" />
-                                                                    <label for="chkYo">Yo Mismo</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <!--Apartado de Persona Autorizada-->
-
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Nombre</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtPAutorizada2" class="form-control " name="txtPAutorizada2" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Apellido Paterno</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtAPPaterno2" name="txtAPPaterno2" class="form-control " />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Apellido Materno</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtAPMaterno2" name="txtAPMaterno2" class="form-control " />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-8">
-                                                                <label class="control-label">Parentesco</label>
-                                                                <div class="input-icon right">
-                                                                    <select class="form-control" id="slcParentesco2" name="slcParentesco2">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Correo Electrónico</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="email" id="txtPEmail2" name="txtPEmail2" class="form-control" placeholder="Correo Electrónico:" />
-                                                                </div>
-                                                            </div>
-                                                            <!--<div class="form-group col-md-10">-->
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Teléfono Celular</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtTelefonoPA2" name="txtTelefonoPA2" class="form-control" />
-                                                                    <span class="help-block"></span>
-                                                                </div>
-                                                            </div>
-                                                            <!--</div>-->
-                                                            <!--<div class="form-group col-md-10">-->
-                                                            <div class="form-group col-md-10">
-                                                                <label class="control-label">Teléfono Casa</label>
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" id="txtTelefonoPAT2" name="txtTelefonoPAT2" class="form-control" />
-                                                                    <span class="help-block"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-10">
-                                                                <div class="input-icon right">
-                                                                    <div class="checkbox">
-                                                                        <input type="checkbox" id="chkAuotiza2" class="checkbox" />
-                                                                        <label for="chkAuotiza2" class="control-label">Autoriza dar información académica.</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--</div>-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Tab 3-->
-                                                <div id="tab3" class="tab-pane">
-                                                    <!--<div class="page-content">-->
-                                                    <div class="container">
-
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group col-md-6">
-
-                                                                        <div class="icheck-list">
-                                                                            <label class="control-label bold" style="font-size:18px" for="chkEsEmpresa">
-                                                                             <input type="checkbox" id="chkEsEmpresa" class="checkbox"/>Es alumno de empresa.</label>
-                                                                        </div>
-                                                                    </div> 
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group col-md-12">
-                                                                        <label class="control-label bold " style="font-size:18px">Promoción en Casa</label>&nbsp;
-                                                                        <a class="btn btn-default yellow " id="btnPromocion">
-                                                                            Agregar <i class="fa fa-edit " style="color:white"></i>
-                                                                        </a>
-                                                                        <div>&nbsp;</div>
-                                                                        <div class="col-md-12 alert alert-info alert-dismissable" id="divAlumnoPormocion" hidden="hidden">
-                                                                            <button type="button" class="close" id="btnClosePromo"></button>
-                                                                            <strong>Alumno :</strong>
-                                                                            <label id="lbAlumnoPromocion"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <h3 class="block">Oferta Educativa de Interés</h3>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label">Plantel</label>
-                                                                    <select id="slcPlantel" name="slcPlantel" class="form-control selector">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-md-10">
-                                                                    <label class="control-label">Oferta Educativa</label>
-                                                                    <select id="slcTipoOferta" name="slcTipoOferta" class="form-control selector">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-
-                                                                <div class="form-group col-md-10">
-                                                                    <label class="control-label" id="lblOFerta">Carrera</label>
-                                                                    <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control selector"></select>
-                                                                </div>
-
-                                                                <div class="form-group col-md-10">
-                                                                    <label class="control-label">Turno</label>
-                                                                    <select id="slcTurno" name="slcTurno" class="form-control selector"></select>
-                                                                </div>
-
-                                                                <div class="form-group col-md-10">
-                                                                    <label class="control-label">Periodo</label>
-                                                                    <select id="slcPeriodo" name="slcPeriodo" class="form-control selector"></select>
-                                                                </div>
-                                                                <div class="form-group col-md-10">
-                                                                    <label class="control-label">¿Por que medio te enteraste de nuestra Universidad? </label>
-                                                                    <select id="slcMedio" name="slcMedio" class="form-control selector">
-                                                                        <option value="-1">--Seleccionar--</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-md-10" id="divUni">
-                                                                    <div class="checkbox">
-                                                                        <input type="checkbox" class="checkbox" id="chkUni" onclick="ActivarUni();" />Equivalencia<br>
-                                                                        <label class="control-label" for="chkUni">Universidad de Procedencia</label>
-                                                                    </div>
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control " id="txtUni" name="txtUni" disabled="disabled" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-6" id="divPrepa">
-
-                                                                <h3 class="block" id="h3Titulo">Preparatoria de Procedencia</h3>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label" id="lblTituloProcedencia">Preparatoria de Procedencia</label>
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="col-md-6 form-control " id="txtNombrePrepa" name="txtNombrePrepa" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label">Promedio Final</label>
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" id="txtPromedio" name="txtPromedio" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label">Año y mes de terminación</label>
-                                                                    <div class="col-md-11 form-group">
-                                                                    <div class="col-md-4">
-                                                                        <div class="input-icon right">
-                                                                            <i class="fa"></i>
-                                                                            <input type="text" class="form-control" id="txtAñoT" name="txtAñoT" placeholder="1900" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <div class="input-icon right">
-                                                                            <i class="fa"></i>
-                                                                            <input type="text" class="form-control" id="txtMesT" name="txtMesT"  placeholder="12"/>
-                                                                        </div>
-                                                                    </div>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label">Área Cursada</label>
-                                                                    <div class="input-icon right">
-                                                                        <!--<input type="text" class="form-control " id="txtArea" name="txtArea" />-->
-                                                                        <select id="slcArea" class="form-control" name="slcArea">
-                                                                            <option value="-1">--Seleccionar--</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label" id="lblLugarProcedencia">Lugar donde estudio la preparatoria</label>
-                                                                    <div class="input-icon right">
-                                                                        <select id="slcNacionalidadPrep" class="form-control" name="slcNacionalidadPrep">
-                                                                            <option value="-1">--Seleccionar--</option>
-                                                                            <option value="1">México</option>
-                                                                            <option value="2">Extranjero</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-10 form-group">
-                                                                    <label class="control-label" id="lblPN">País | Estado</label>
-                                                                    <div class="input-icon right">
-                                                                        <select id="slcEstadoPais" class="form-control" name="slcEstadoPais">
-                                                                            <option value="-1">--Seleccionar--</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-md-10" id="titulado">
-                                                                    <label class="control-label">Titulado</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" id="chkUniSi" name="chkUni" />Si</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" id="chkUniNo" name="chkUni" checked />No</label>
-                                                                </div>
-                                                                <div class="form-group col-md-10" id="tituladoP">
-                                                                    <label class="control-label">Porque</label>
-                                                                    <input class="form-control " type="text" id="txtUniMotivo" disabled="disabled" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <!--</div>
-                                                -->
-                                                </div>
-
-                                                <!--Tab 4-->
-                                                <div id="tab5" class="tab-pane ">
-
-                                                    <div class="col-md-4 form-group">
-                                                        <h3 class="block">Descuentos</h3>
-                                                    </div>
-                                                    <div class=" col-md-12 form-group" id="dvCargos">
-                                                        <div class="col-md-4 form-group">
-                                                            <label class="control-label">Clave Alumno</label>
-
-                                                            <input type="text" class="form-control" id="txtFolio" readonly="readonly" />
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label id="dvCargosEf" class="text-center">
-                                                                <code>Para finalizar el proceso es necesario establecer el sistema de pago así como también capturar becas y|o descuentos.
-                                                                </code>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group col-md-4">
-                                                                <label class="control-label">Sistema de pago</label>
-                                                                <select id="slcSistemaPago" class="form-control selector"></select>
-                                                            </div>
-                                                        </div>
-                                                        <!--Colegiatura-->
-                                                        <div class="col-md-12">
-                                                            <hr />
-                                                            <h3>Colegiatura</h3>
-                                                            <div class="col-md-3">
-                                                                <div class="col-md-10">
-                                                                    <h4>Cuota</h4>
-                                                                    <label id="txtcuotaCol" class="form-control"></label>
-                                                                </div>
-                                                                <div class="col-md-10">
-                                                                    <h4>a Pagar</h4>
-                                                                    <label id="txtPagarCol" class="form-control"></label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4 ">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <h4>Beca</h4>
-                                                                        <input class="knob" data-angleoffset="90" data-val-max="100" value="0" id="txtDescuentoBec" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3 form-group">
-                                                                <h4>Justificación</h4>
-                                                                <textarea class="form-control " id="txtJustificacionBec"></textarea>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <h4>Anexar Documento</h4>
-                                                                <div class="row fileupload-buttonbar">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="fileinput-new " data-provides="fileinput" id="FileBec">
-                                                                            <!-- The fileinput-button span is used to style the file input field as button -->
-                                                                            <span class="btn blue  fileinput-button">
-                                                                                <i class="fa fa-plus"></i>
-                                                                                <span>Seleccionar Archivo...
-                                                                                </span>
-                                                                                <input type="file" id="BecArchivo" name="BecArchivo" accept=".PDF, .pdf" />
-                                                                            </span>
-                                                                            <span id="txtBeca" class="fileinput-filename col-lg-10"></span>
-                                                                            <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--Incripcion-->
-                                                        <div class="col-md-12" id="divInscripcion">
-                                                            <hr />
-                                                            <h3>Inscripción</h3>
-                                                            <div class="col-md-3">
-                                                                <div class="col-md-10">
-                                                                    <h4>Cuota</h4>
-                                                                    <label id="txtcuotaIn" class="form-control"></label>
-                                                                </div>
-                                                                <div class="col-md-10">
-                                                                    <h4>a Pagar</h4>
-                                                                    <label id="txtPagarIn" class="form-control"></label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4 ">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <h4>Descuento </h4>
-                                                                        <input class="knob" data-angleoffset="90" data-val-max="100" value="50" id="txtDescuentoIns" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3 form-group">
-                                                                <h4>Justificación</h4>
-                                                                <textarea class="form-control" id="txtJustificacionIns"> </textarea>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <h4>Anexar Documento</h4>
-                                                                <div class="row fileupload-buttonbar">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="fileinput-new " data-provides="fileinput" id="FileIns">
-                                                                            <!-- The fileinput-button span is used to style the file input field as button -->
-                                                                            <span class="btn blue  fileinput-button">
-                                                                                <i class="fa fa-plus"></i>
-                                                                                <span>Seleccionar Archivo...
-                                                                                </span>
-                                                                                <input type="file" id="InsArchivo" name="InsArchivo" accept=".PDF, .pdf">
-                                                                            </span>
-                                                                            <span id="txtIns" class="fileinput-filename col-lg-10"></span>
-                                                                            <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--Examen de Admicion-->
-                                                        <div class="col-md-12" id="divExamen">
-                                                            <hr />
-                                                            <h3>Examen de Diagnóstico</h3>
-                                                            <div class="col-md-3">
-                                                                <div class="col-md-10">
-                                                                    <h4>Cuota</h4>
-                                                                    <label id="txtcuotaExa" class="form-control"></label>
-                                                                </div>
-                                                                <div class="col-md-10">
-                                                                    <h4>a Pagar</h4>
-                                                                    <label id="txtPagarExa" class="form-control"></label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-4">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <h4>Descuento</h4>
-                                                                        <input class="knob" data-angleoffset="90" data-val-max="100" value="50" id="txtDescuentoExa" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="col-md-3 form-group ">
-                                                                <h4>Justificación</h4>
-                                                                <textarea class="form-control " id="txtJustificacionExa"></textarea>
-                                                            </div>
-                                                            <div class="col-md-2 ">
-                                                                <h4>Anexar Documento</h4>
-                                                                <div class="row fileupload-buttonbar">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="fileinput-new " data-provides="fileinput" id="FileExa">
-                                                                            <!-- The fileinput-button span is used to style the file input field as button -->
-                                                                            <span class="btn blue  fileinput-button">
-                                                                                <i class="fa fa-plus"></i>
-                                                                                <span>Seleccionar Archivo...
-                                                                                </span>
-                                                                                <input type="file" id="ExamenArchivo" name="ExamenArchivo" accept=".PDF, .pdf" />
-                                                                            </span>
-                                                                            <span id="txtExa" class="fileinput-filename col-lg-10"></span>
-                                                                            <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--Credencial-->
-                                                        <div class="col-md-12">
-                                                            <hr />
-                                                            <h3>Credencial</h3>
-                                                            <div class="col-md-3">
-                                                                <div class="col-md-10">
-                                                                    <h4>Cuota</h4>
-                                                                    <label id="txtcuotaCred" class="form-control"></label>
-                                                                </div>
-                                                                <div class="col-md-10">
-                                                                    <h4>a Pagar</h4>
-                                                                    <label id="txtPagarCred" class="form-control"></label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <h4>Descuento</h4>
-                                                                        <input class="knob" data-angleoffset="90" value="0" data-val-max="0" id="txtDescuentoCred" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3 form-group">
-                                                                <h4>Justificación</h4>
-                                                                <textarea class="form-control " id="txtJustificacionCred"></textarea>
-                                                            </div>
-                                                            <div class="col-md-1"></div>
-                                                        </div>
-                                                        <!--MAterial-->
-                                                        <div class="col-md-12" id="divMaterial">
-                                                            <hr />
-                                                            <div class="col-md-6 form-group">
-                                                                <h4>Cargar material didactico</h4>
-                                                                <div class="checkbox">
-                                                                    <input type="checkbox" id="chkMaterial" class="check form-control" />
-                                                                    <label for="checkbox">Si</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--Observaciones-->
-                                                        <div class="col-md-12">
-                                                            <hr />
-                                                            <div class="col-md-12 form-group">
-                                                                <label class="control-label">Observación</label>
-                                                                <textarea id="txtObservacion" class="form-control text-capitalize"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-actions">
-                                                    <div class="row">
-                                                        <div class="col-md-offset-4 col-md-9">
-                                                            <a class="btn default button-Regresa Contenido" href="#Views/1" id="btnListado"><i class="m-icon-swapleft"></i>Regresar al listado</a>
-                                                            <a href="javascript:;" class="btn default button-previous">
-                                                                <i class="m-icon-swapleft"></i>Regresar
-                                                            </a>
-                                                            <a href="javascript:;" class="btn blue button-next" id="Guardar">Continuar <i class="m-icon-swapright m-icon-white"></i>
-                                                            </a>
-                                                            <!--<a href="javascript:;" class="btn green button-submit">Guardar Alumno<i class="m-icon-swapright m-icon-white"></i>
-                                                            </a>-->
-                                                            <a href="javascript:;" class="btn green button-guardar">Guardar <i class="fa fa-floppy-o m-icon-white"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                        <!--Telefono Celular-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Teléfono Celular</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtCelular" name="txtCelular" class="form-control" />
+                                                <span class="help-block"></span>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
 
-                                <!--Popup de Agregar Alumno Promocion-->
-                                <div class="modal fade" tabindex="-1" data-width="850" data-height="250" id="PopAlumnoPromocion">
-                                    <div class="modal-dialog modal-dialog" style="width:800px">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                            <h3 class="modal-title">Asignación de Alumno Promoción</h3>
+                                    <div class="col-md-6 ">
+                                        <div class="col-md-12 form-group">
+                                            <label class="control-label">Fecha de Nacimiento</label>
+                                            <div class="input-group col-md-10 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                <input id="txtFNacimiento" name="txtFNacimiento" type="text" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span><span id="spnA" class="span form-control"></span>
+                                            </div>
+
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="col-md-12 ">
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Genero</label>
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="slcSexo" name="slcSexo">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--Curp-->
+                                        <!--<div class="col-md-10 form-group">-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">CURP</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control uppercase" id="txtCURP" name="txtCURP" />
+                                            </div>
+                                        </div>
+                                        <!--</div>-->
+                                        <!--Correo electronico-->
+
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Correo Electrónico</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="email" id="txtEmail" class="form-control email" name="txtemail" />
+                                            </div>
+                                        </div>
+                                        <!--Telefono Casa-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Teléfono Casa</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtTelefonoCasa" name="txtTelefonoCasa" class="form-control" />
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-11 form-group">
+                                            <label class="control-label">Observaciones</label>
+                                            <textarea class="form-control" id="txtObservaciones" maxlength="500" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <hr class="line" />
+                                        <h3 class="">Dirección</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--Calle-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Calle</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control " id="txtCalle" name="txtCalle" />
+                                            </div>
+                                        </div>
+                                        <!--col-md-5-->
+                                        <!--Numero Exterior-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Número Exterior</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control " id="txtNumeroE" name="txtNumeroE" />
+                                            </div>
+                                        </div>
+                                        <!--Numero Interior-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Numero Interior</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control " id="txtNumeroI" name="txtNumeroI" />
+                                            </div>
+                                        </div>
+                                        <!--Codigo postal-->
+                                        <div class="col-md-10 form-group ">
+                                            <div class="col-md-5 form-group ">
+                                                <label class="control-label">Código Postal</label>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control" id="txtCP" name="txtCP" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--Colonia-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Colonia</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" class="form-control " id="txtColonia" name="txtColonia" />
+                                            </div>
+                                        </div>
+                                        <!--Estado-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Estado</label>
+                                            <div class="input-icon right">
+                                                <select id="slcEstado" class="form-control" name="slcEstado">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--Delegacion-->
+                                        <div class="col-md-10 form-group">
+                                            <label class="control-label">Delegación | Municipio</label>
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="slcMunicipio" name="slcMunicipio">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <hr class="line" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Nacionalidad</label>
+                                            <div class="input-icon right">
+                                                <select id="slcNacionalidad" class="form-control" name="slcNacionalidad">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                    <option value="1">Mexicana</option>
+                                                    <option value="2">Extranjera</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Lugar de Nacimiento-->
+                                    <div class="col-md-6">
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Lugar de Nacimiento</label>
+                                            <div class="input-icon right">
+                                                <select id="slcLugarN" class="form-control" name="slcLugarN">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Tab 2-->
+                            <div id="tab2" class="tab-pane">
+                                <h3 class="block">Persona de contacto</h3>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--Apartado de Persona Autorizada-->
+
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Nombre</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtPAutorizada" class="form-control " name="txtPAutorizada" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Apellido Paterno</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtAPPaterno" name="txtAPPaterno" class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Apellido Materno</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtAPMaterno" name="txtAPMaterno" class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <label class="control-label">Parentesco</label>
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="slcParentesco" name="slcParentesco">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Correo Electrónico</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="email" id="txtPEmail" name="txtPEmail" class="form-control" placeholder="Correo Electrónico:" />
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group col-md-10">-->
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Teléfono Celular</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtTelefonoPA" name="txtTelefonoPA" class="form-control" />
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <!--</div>-->
+                                        <!--<div class="form-group col-md-10">-->
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Teléfono Casa</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtTelefonoPAT" name="txtTelefonoPAT" class="form-control" />
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <div class="input-icon right">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" id="chkAuotiza1" class="checkbox" />
+                                                    <label for="chkAuotiza1" class="control-label">Autoriza dar información académica.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <hr />
+                                <h3 class="block">Persona de contacto (opcional)</h3>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-10">
+
+                                            <div class="checkbox">
+                                                <br>
+                                                <input type="checkbox" id="chkYo" class="checkbox" />
+                                                <label for="chkYo">Yo Mismo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--Apartado de Persona Autorizada-->
+
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Nombre</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtPAutorizada2" class="form-control " name="txtPAutorizada2" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Apellido Paterno</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtAPPaterno2" name="txtAPPaterno2" class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Apellido Materno</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtAPMaterno2" name="txtAPMaterno2" class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <label class="control-label">Parentesco</label>
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="slcParentesco2" name="slcParentesco2">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Correo Electrónico</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="email" id="txtPEmail2" name="txtPEmail2" class="form-control" placeholder="Correo Electrónico:" />
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group col-md-10">-->
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Teléfono Celular</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtTelefonoPA2" name="txtTelefonoPA2" class="form-control" />
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <!--</div>-->
+                                        <!--<div class="form-group col-md-10">-->
+                                        <div class="form-group col-md-10">
+                                            <label class="control-label">Teléfono Casa</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input type="text" id="txtTelefonoPAT2" name="txtTelefonoPAT2" class="form-control" />
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <div class="input-icon right">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" id="chkAuotiza2" class="checkbox" />
+                                                    <label for="chkAuotiza2" class="control-label">Autoriza dar información académica.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Tab 3-->
+                            <div id="tab3" class="tab-pane">
+                                <!--<div class="page-content">-->
+                                <div class="container">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group col-md-6">
+
+                                                    <div class="icheck-list">
+                                                        <label class="control-label bold" style="font-size:18px" for="chkEsEmpresa">
+                                                            <input type="checkbox" id="chkEsEmpresa" class="checkbox" />Es alumno de empresa.
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label bold " style="font-size:18px">Promoción en Casa</label>&nbsp;
+                                                    <a class="btn btn-default yellow " id="btnPromocion">
+                                                        Agregar <i class="fa fa-edit " style="color:white"></i>
+                                                    </a>
+                                                    <div>&nbsp;</div>
+                                                    <div class="col-md-12 alert alert-info alert-dismissable" id="divAlumnoPormocion" hidden="hidden">
+                                                        <button type="button" class="close" id="btnClosePromo"></button>
+                                                        <strong>Alumno :</strong>
+                                                        <label id="lbAlumnoPromocion"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <h3 class="block">Oferta Educativa de Interés</h3>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Plantel</label>
+                                                <select id="slcPlantel" name="slcPlantel" class="form-control selector">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">Oferta Educativa</label>
+                                                <select id="slcTipoOferta" name="slcTipoOferta" class="form-control selector">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label" id="lblOFerta">Carrera</label>
+                                                <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control selector"></select>
+                                            </div>
+
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">Turno</label>
+                                                <select id="slcTurno" name="slcTurno" class="form-control selector"></select>
+                                            </div>
+
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">Periodo</label>
+                                                <select id="slcPeriodo" name="slcPeriodo" class="form-control selector"></select>
+                                            </div>
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">¿Por que medio te enteraste de nuestra Universidad? </label>
+                                                <select id="slcMedio" name="slcMedio" class="form-control selector">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-10" id="divUni">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" class="checkbox" id="chkUni" onclick="ActivarUni();" />Equivalencia<br>
+                                                    <label class="control-label" for="chkUni">Universidad de Procedencia</label>
+                                                </div>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control " id="txtUni" name="txtUni" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" id="divPrepa">
+
+                                            <h3 class="block" id="h3Titulo">Preparatoria de Procedencia</h3>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label" id="lblTituloProcedencia">Preparatoria de Procedencia</label>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="col-md-6 form-control " id="txtNombrePrepa" name="txtNombrePrepa" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Promedio Final</label>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control" id="txtPromedio" name="txtPromedio" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Año y mes de terminación</label>
+                                                <div class="col-md-11 form-group">
+                                                    <div class="col-md-4">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="txtAñoT" name="txtAñoT" placeholder="1900" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="txtMesT" name="txtMesT" placeholder="12" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Área Cursada</label>
+                                                <div class="input-icon right">
+                                                    <!--<input type="text" class="form-control " id="txtArea" name="txtArea" />-->
+                                                    <select id="slcArea" class="form-control" name="slcArea">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label" id="lblLugarProcedencia">Lugar donde estudio la preparatoria</label>
+                                                <div class="input-icon right">
+                                                    <select id="slcNacionalidadPrep" class="form-control" name="slcNacionalidadPrep">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                        <option value="1">México</option>
+                                                        <option value="2">Extranjero</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label" id="lblPN">País | Estado</label>
+                                                <div class="input-icon right">
+                                                    <select id="slcEstadoPais" class="form-control" name="slcEstadoPais">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-10" id="titulado">
+                                                <label class="control-label">Titulado</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="chkUniSi" name="chkUni" />Si
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="chkUniNo" name="chkUni" checked />No
+                                                </label>
+                                            </div>
+                                            <div class="form-group col-md-10" id="tituladoP">
+                                                <label class="control-label">Porque</label>
+                                                <input class="form-control " type="text" id="txtUniMotivo" disabled="disabled" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--</div>
+                                -->
+                            </div>
+
+                            <!--Tab 4-->
+                            <div id="tab5" class="tab-pane ">
+
+                                <div class="col-md-4 form-group">
+                                    <h3 class="block">Descuentos</h3>
+                                </div>
+                                <div class=" col-md-12 form-group" id="dvCargos">
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label">Clave Alumno</label>
+
+                                        <input type="text" class="form-control" id="txtFolio" readonly="readonly" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label id="dvCargosEf" class="text-center">
+                                            <code>
+                                                Para finalizar el proceso es necesario establecer el sistema de pago así como también capturar becas y|o descuentos.
+                                            </code>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label">Sistema de pago</label>
+                                            <select id="slcSistemaPago" class="form-control selector"></select>
+                                        </div>
+                                    </div>
+                                    <!--Colegiatura-->
+                                    <div class="col-md-12">
+                                        <hr />
+                                        <h3>Colegiatura</h3>
+                                        <div class="col-md-3">
+                                            <div class="col-md-10">
+                                                <h4>Cuota</h4>
+                                                <label id="txtcuotaCol" class="form-control"></label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h4>a Pagar</h4>
+                                                <label id="txtPagarCol" class="form-control"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <div class="row">
                                                 <div class="col-md-12">
-                                                    <label class="control-label">Clave del Alumno</label>
-                                                    <input type="number" id="txtClave1" name="txtClave1" class="form-control-static font-md" tabindex="1" />
-                                                    <a class="btn blue" id="btnBuscar1" tabindex="2">Buscar Alumno</a>
+                                                    <h4>Beca</h4>
+                                                    <input class="knob" data-angleoffset="90" data-val-max="100" value="0" id="txtDescuentoBec" />
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-group">
+                                            <h4>Justificación</h4>
+                                            <textarea class="form-control " id="txtJustificacionBec"></textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Anexar Documento</h4>
+                                            <div class="row fileupload-buttonbar">
+                                                <div class="col-lg-12">
+                                                    <div class="fileinput-new " data-provides="fileinput" id="FileBec">
+                                                        <!-- The fileinput-button span is used to style the file input field as button -->
+                                                        <span class="btn blue  fileinput-button">
+                                                            <i class="fa fa-plus"></i>
+                                                            <span>
+                                                                Seleccionar Archivo...
+                                                            </span>
+                                                            <input type="file" id="BecArchivo" name="BecArchivo" accept=".PDF, .pdf" />
+                                                        </span>
+                                                        <span id="txtBeca" class="fileinput-filename col-lg-10"></span>
+                                                        <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Incripcion-->
+                                    <div class="col-md-12" id="divInscripcion">
+                                        <hr />
+                                        <h3>Inscripción</h3>
+                                        <div class="col-md-3">
+                                            <div class="col-md-10">
+                                                <h4>Cuota</h4>
+                                                <label id="txtcuotaIn" class="form-control"></label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h4>a Pagar</h4>
+                                                <label id="txtPagarIn" class="form-control"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <div class="row">
                                                 <div class="col-md-12">
-                                                    <hr />
-                                                    <table id="dtAlumno1" class="table table-striped table-bordered table-advance table-hover ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="text-align:center">
-                                                                    Clave | Nombre Alumno
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    Oferta Educativa
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    Acción
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <h4>Descuento </h4>
+                                                    <input class="knob" data-angleoffset="90" data-val-max="100" value="50" id="txtDescuentoIns" />
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="modal-footer">
-                                            <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                                        <div class="col-md-3 form-group">
+                                            <h4>Justificación</h4>
+                                            <textarea class="form-control" id="txtJustificacionIns"> </textarea>
                                         </div>
-                                    </div>
-                                </div>
-                                <!--Popup de Agregar Alumno Promocion-->
-
-                                <!--modal es empres-->
-                                <div class="modal fade" id="ModalEsEmpresa" data-backdrop="static" data-keyboard="false">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Es Empresa</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Esta seguro no es  alumno empresa?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn blue" id="btnSi">Si</button>
-                                            <button type="button" class="btn default" data-dismiss="modal" id="btnNo">No</button>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-
-
-                                <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                                    <div class="modal-dialog modal-sm" style="height: 90px;">
-                                        <!--<div class="modal-content" style="width:auto">-->
-                                        <div class="form-group">
-                                            <h3 id="hCarga">Trabajando...</h3>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="bar" style="width: auto" id="divBar">
-                                                <p id="txtBar"></p>
+                                        <div class="col-md-2">
+                                            <h4>Anexar Documento</h4>
+                                            <div class="row fileupload-buttonbar">
+                                                <div class="col-lg-12">
+                                                    <div class="fileinput-new " data-provides="fileinput" id="FileIns">
+                                                        <!-- The fileinput-button span is used to style the file input field as button -->
+                                                        <span class="btn blue  fileinput-button">
+                                                            <i class="fa fa-plus"></i>
+                                                            <span>
+                                                                Seleccionar Archivo...
+                                                            </span>
+                                                            <input type="file" id="InsArchivo" name="InsArchivo" accept=".PDF, .pdf">
+                                                        </span>
+                                                        <span id="txtIns" class="fileinput-filename col-lg-10"></span>
+                                                        <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                    <!--Examen de Admicion-->
+                                    <div class="col-md-12" id="divExamen">
+                                        <hr />
+                                        <h3>Examen de Diagnóstico</h3>
+                                        <div class="col-md-3">
+                                            <div class="col-md-10">
+                                                <h4>Cuota</h4>
+                                                <label id="txtcuotaExa" class="form-control"></label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h4>a Pagar</h4>
+                                                <label id="txtPagarExa" class="form-control"></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>Descuento</h4>
+                                                    <input class="knob" data-angleoffset="90" data-val-max="100" value="50" id="txtDescuentoExa" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3 form-group ">
+                                            <h4>Justificación</h4>
+                                            <textarea class="form-control " id="txtJustificacionExa"></textarea>
+                                        </div>
+                                        <div class="col-md-2 ">
+                                            <h4>Anexar Documento</h4>
+                                            <div class="row fileupload-buttonbar">
+                                                <div class="col-lg-12">
+                                                    <div class="fileinput-new " data-provides="fileinput" id="FileExa">
+                                                        <!-- The fileinput-button span is used to style the file input field as button -->
+                                                        <span class="btn blue  fileinput-button">
+                                                            <i class="fa fa-plus"></i>
+                                                            <span>
+                                                                Seleccionar Archivo...
+                                                            </span>
+                                                            <input type="file" id="ExamenArchivo" name="ExamenArchivo" accept=".PDF, .pdf" />
+                                                        </span>
+                                                        <span id="txtExa" class="fileinput-filename col-lg-10"></span>
+                                                        <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Credencial-->
+                                    <div class="col-md-12">
+                                        <hr />
+                                        <h3>Credencial</h3>
+                                        <div class="col-md-3">
+                                            <div class="col-md-10">
+                                                <h4>Cuota</h4>
+                                                <label id="txtcuotaCred" class="form-control"></label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h4>a Pagar</h4>
+                                                <label id="txtPagarCred" class="form-control"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>Descuento</h4>
+                                                    <input class="knob" data-angleoffset="90" value="0" data-val-max="0" id="txtDescuentoCred" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-group">
+                                            <h4>Justificación</h4>
+                                            <textarea class="form-control " id="txtJustificacionCred"></textarea>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
+                                    <!--MAterial-->
+                                    <div class="col-md-12" id="divMaterial">
+                                        <hr />
+                                        <div class="col-md-6 form-group">
+                                            <h4>Cargar material didactico</h4>
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="chkMaterial" class="check form-control" />
+                                                <label for="checkbox">Si</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Observaciones-->
+                                    <div class="col-md-12">
+                                        <hr />
+                                        <div class="col-md-12 form-group">
+                                            <label class="control-label">Observación</label>
+                                            <textarea id="txtObservacion" class="form-control text-capitalize"></textarea>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-9">
+                                        <a class="btn default button-Regresa Contenido" href="#Views/1" id="btnListado"><i class="m-icon-swapleft"></i>Regresar al listado</a>
+                                        <a href="javascript:;" class="btn default button-previous">
+                                            <i class="m-icon-swapleft"></i>Regresar
+                                        </a>
+                                        <a href="javascript:;" class="btn blue button-next" id="Guardar">
+                                            Continuar <i class="m-icon-swapright m-icon-white"></i>
+                                        </a>
+                                        <!--<a href="javascript:;" class="btn green button-submit">Guardar Alumno<i class="m-icon-swapright m-icon-white"></i>
+                                        </a>-->
+                                        <a href="javascript:;" class="btn green button-guardar">Guardar <i class="fa fa-floppy-o m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!--Popup de Agregar Alumno Promocion-->
+            <div class="modal fade" tabindex="-1" data-width="850" data-height="250" id="PopAlumnoPromocion">
+                <div class="modal-dialog modal-dialog" style="width:800px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                        <h3 class="modal-title">Asignación de Alumno Promoción</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 ">
+                            <div class="col-md-12">
+                                <label class="control-label">Clave del Alumno</label>
+                                <input type="number" id="txtClave1" name="txtClave1" class="form-control-static font-md" tabindex="1" />
+                                <a class="btn blue" id="btnBuscar1" tabindex="2">Buscar Alumno</a>
+                            </div>
+                            <div class="col-md-12">
+                                <hr />
+                                <table id="dtAlumno1" class="table table-striped table-bordered table-advance table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">
+                                                Clave | Nombre Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                Oferta Educativa
+                                            </th>
+                                            <th style="text-align:center">
+                                                Acción
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+            <!--Popup de Agregar Alumno Promocion-->
+            <!--modal es empres-->
+            <div class="modal fade" id="ModalEsEmpresa" data-backdrop="static" data-keyboard="false">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Es Empresa</h4>
+                    </div>
+                    <div class="modal-body">
+                        ¿Esta seguro no es  alumno empresa?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn blue" id="btnSi">Si</button>
+                        <button type="button" class="btn default" data-dismiss="modal" id="btnNo">No</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+
+
+            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+                <div class="modal-dialog modal-sm" style="height: 90px;">
+                    <!--<div class="modal-content" style="width:auto">-->
+                    <div class="form-group">
+                        <h3 id="hCarga">Trabajando...</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="bar" style="width: auto" id="divBar">
+                            <p id="txtBar"></p>
+                        </div>
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        $.getScript("JS/Archivos.js");
-        $.getScript("Style/assets/global/plugins/icheck/icheck.min.js");        
-        $.getScript("JS/Alumnos/InscripcionAlumno.js");
-        
-        ComponentsPickers.init();
+</main>
 
-        function ActivarUni() {
-            if (txtUni.disabled) {
-                txtUni.disabled = false;
-            } else {
-                txtUni.disabled = true;
-            }
+<script>
+    $.getScript("JS/Archivos.js");
+    $.getScript("Style/assets/global/plugins/icheck/icheck.min.js");
+    $.getScript("JS/Alumnos/InscripcionAlumno.js");
+
+    ComponentsPickers.init();
+
+    function ActivarUni() {
+        if (txtUni.disabled) {
+            txtUni.disabled = false;
+        } else {
+            txtUni.disabled = true;
         }
-        
-    </script>
-</body>
-</html>
+    }
+
+</script>
