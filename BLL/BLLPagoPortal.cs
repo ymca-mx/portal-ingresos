@@ -842,30 +842,42 @@ namespace BLL
                     #endregion
                 });
 
-                int ofert = PagosDetalles[0].OfertaEducativaId;
-
-                PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar += Adeudos.Count > 0 ? PagosAdeudos.Sum(P => P.SaldoAdeudo) : 0;
-                PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar.ToString("C", Cultura);
-                PagosDetalles[0].TotalPagado = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS;
-                PagosDetalles[0].esEmpresa = db.AlumnoInscrito.Where(a =>
-                                            a.AlumnoId == AlumnoId &&
-                                            a.EsEmpresa == true).ToList().Count > 0 ? true : false;
-                if (PagosDetalles[0].esEmpresa)
+                if (PagosDetalles.Count > 0)
                 {
-                    var alConf = db.GrupoAlumnoConfiguracion.Where(k =>
-                                 k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList();
-                    PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
-                }
-                //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
+                    int ofert = PagosDetalles?[0]?.OfertaEducativaId ?? 0;
 
-                return
-                    new PantallaPago
+                    PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar += Adeudos.Count > 0 ? PagosAdeudos.Sum(P => P.SaldoAdeudo) : 0;
+                    PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar.ToString("C", Cultura);
+                    PagosDetalles[0].TotalPagado = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS;
+                    PagosDetalles[0].esEmpresa = db.AlumnoInscrito.Where(a =>
+                                                a.AlumnoId == AlumnoId &&
+                                                a.EsEmpresa == true).ToList().Count > 0 ? true : false;
+                    if (PagosDetalles[0].esEmpresa)
                     {
-                        Pagos = PagosDetalles,
-                        Estatus = PagosDetalles.Where(l => (l?.OtroDescuento?.Length ?? 0) > 0).ToList().Count > 0 ? true : false,
-                        Periodos = PeriodosDTO
-                    };
+                        var alConf = db.GrupoAlumnoConfiguracion.Where(k =>
+                                     k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList();
+                        PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
+                    }
+                    //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
 
+                    return
+                        new PantallaPago
+                        {
+                            Pagos = PagosDetalles,
+                            Estatus = PagosDetalles.Where(l => (l?.OtroDescuento?.Length ?? 0) > 0).ToList().Count > 0 ? true : false,
+                            Periodos = PeriodosDTO
+                        };
+                }
+                else
+                {
+                    return
+                       new PantallaPago
+                       {
+                           Pagos = new List<DTOPagoDetallado>(),
+                           Estatus = false,
+                           Periodos = new List<DTOPeriodoReferencias>()
+                       };
+                }
             }
         }
 

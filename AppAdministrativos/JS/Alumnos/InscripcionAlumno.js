@@ -439,6 +439,8 @@ $(function () {
                         var next = false;
                         if ($('#chkEsEmpresa')[0].checked == false) {
                             event.preventDefault();
+                            $("#btnSi").on('click', InscripcionFn.btnSiClick);
+                            $("#btnNo").on('click', InscripcionFn.btnNoClick);
                             $("#ModalEsEmpresa").modal("show");                            
                         } else {
                             alertify.confirm("<p>¿Esta seguro que desea guardar los cambios?<br><br><hr>", function (e) {
@@ -467,7 +469,7 @@ $(function () {
             $('#slcNacionalidadPrep').on('change', this.NacionalidadPrepChange);
             $('#slcLugarN').on('chango', this.setPaisEstado);//<<<--- falta 
 
-            $('#slcTipoOferta').on('change', this.ChangeLabels);
+            
 
             $('#txtDescuentoBec').data('labelp', 'txtPagarCol');
             $('#txtDescuentoBec').data('label', 'txtcuotaCol');
@@ -517,6 +519,7 @@ $(function () {
             GlobalFn.GetPeriodo_N_I();
             $('#slcNacionalidad').val('1').change();
             GlobalFn.init();
+            $('#slcTipoOferta').on('change', this.ChangeLabels);
 
             FormWizard();
             this.Eventos();

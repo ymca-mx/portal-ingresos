@@ -178,7 +178,7 @@ namespace AppAdministrativos.WS
             return BLLDia.ConsultarDias();
         }
         [WebMethod]
-        public List<Oferta_Costo> Ofertas_costos_Alumno(string AlumnoId, string Anio, string PeriodoId)
+        public object Ofertas_costos_Alumno(string AlumnoId, string Anio, string PeriodoId)
         {
             return BLLCuota.TraerOfertasCuotasAlumno(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId));
         }

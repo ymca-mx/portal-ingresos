@@ -26,5 +26,21 @@ namespace AppAdministrativos.Controllers
                 return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
+
+        [Route("Anticipado/{AlumnoId:int}/Periodo/{Anio:int}/{PeriodoId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetCostoAnticipado(int AlumnoId, int Anio, int PeriodoId)
+        {
+            var Result= BLLCuota.TraerOfertasCuotasAlumno(AlumnoId,Anio,PeriodoId);
+
+            if (Result.ToString().Contains("Oferta_Costo") || Result.ToString().Contains("[]"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de consultar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
     }
 }

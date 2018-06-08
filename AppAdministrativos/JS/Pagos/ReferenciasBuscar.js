@@ -1,41 +1,48 @@
-﻿$(function init() {
-    var AlumnoId;
-    var PeriodoId;
-    var Anio;
-    var tblReferencias;
-    var PeriodoAlcorriente = null;
-    var Periodo = null;
-    var Tipo;
+﻿$(function() {
+    var AlumnoId,
+        PeriodoId,
+        Anio,
+        tblReferencias,
+        PeriodoAlcorriente = null,
+        Periodo = null,
+        Tipo;
    
     var Funciones = {
-        TablaMaster: {},
-        BuscarAlumno: function (idAlumno) {
-            $.ajax({
-                type: "POST",
-                url: "WS/Alumno.asmx/ConsultarAlumno",
-                data: "{AlumnoId:'" + idAlumno + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
-                    var lbl = $('#lblNombre');
-                    lbl[0].innerHTML = data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno;
-                    lbl[0].innerHTML += data.d.AlumnoInscrito.EsEmpresa == true ? (data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial") + " - " + data.d.Grupo.Descripcion : "";
-                    Funciones.CargarPagos();                    
-                }
-            });
+        init() {
+            $('#lblNombre').hide();
+            $('#pDescripcion').hide();
+            $('#btnBuscar').on('click', this.BtnBuscarClick);
+            $('#txtClave').on('keydown', this.txtClaveKeydown);
+            $("#sclPeriodo").on('change', this.slcPeriodoChange);
+            $('#tblAlumnos').on('click', 'a', this.TablaAlumnoClick);
         },
-        BuscarNombre: function (Nombre) {
-            $.ajax({
-                url: 'WS/Alumno.asmx/BuscarAlumnoString',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: '{Filtro:"' + Nombre + '"}',
-                dataType: 'json',
-                success: function (data) {
+        TablaMaster: {},
+        BuscarAlumno(idAlumno) {
+
+            IndexFn.Api("Alumno/ConsultarAlumno/" + idAlumno+"/basic", "GET", "")
+                .done(function (data) {
+                    document.getElementById("fotoAlumno").src = "data:image/png;base64," + data.fotoBase64;
+                    $('#lblNombre').show();
+                    $('#pDescripcion').show();
+                    var lbl = $('#lblNombre');
+                    lbl[0].innerHTML = data.Nombre;
+                    lbl[0].innerHTML += data.AlumnoInscrito.EsEmpresa == true && data.AlumnoInscrito.Grupo != null ? (data.AlumnoInscrito.Grupo.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial") + " - " + data.AlumnoInscrito.Grupo.Descripcion : "";
+                    $('#pDescripcion')[0].innerHTML = data.StatusActual;
+
+                    Funciones.CargarPagos(idAlumno);
+                })
+                .fail(function (data) {
+                    console.log(data);
+                });
+        },
+        BuscarNombre(Nombre) {
+
+            IndexFn.Api("Alumno/BuscarAlumnoString/" + Nombre, "GET", "")
+                .done(function (data) {
                     if (data != null) {
                         $('#frmVarios').show();
                         tblAlumnos = $('#tblAlumnos').dataTable({
-                            "aaData": data.d,
+                            "aaData": data,
                             "aoColumns": [
                                 { "mDataProp": "AlumnoId" },
                                 { "mDataProp": "Nombre" },
@@ -72,14 +79,16 @@
                         });
                     }
                     $('#Load').modal('hide');
-
-                }
-            });
+                })
+                .fail(function (data) {
+                    $('#Load').modal('hide');
+                    console.log(data);
+                });
         },
-        PintarTabla: function (dat1a) {
-            var data = dat1a.d.Pagos;
-            var dk = dat1a.d.Estatus;
-            var Especial = dat1a.d.Pagos[0].EsEspecial;
+        PintarTabla (dat1a) {
+            var data = dat1a.Pagos;
+            var dk = dat1a.Estatus;
+            var Especial = dat1a.Pagos[0].esEspecial;
             if (data[0].esEmpresa) {
                 $('#tblReferencias2').hide();
                 $('#tblReferencias').hide();
@@ -358,23 +367,25 @@
             } else { $('#Load').modal('hide');}
             
         },
-        CargarPagos: function () {
-            $.ajax({
-                type: "POST",
-                url: "WS/Alumno.asmx/ConsultaPagosDetalle",
-                data: "{AlumnoId:'" + AlumnoId + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (dat1a) {
-                    if (dat1a.d != null) {
-                        Funciones.TablaMaster = dat1a;
-                        Funciones.CrearCombo();
-                    } else { $('#Load').modal('hide');}
-                }
-            });
+        CargarPagos () {
+
+            IndexFn.Api("Pago/ConsultaPagoDetalle/" + AlumnoId, "GET", "")
+                .done(function (dat1a) {
+                    $('#Load').modal('hide');
+                    if (dat1a != null) {
+                        if (dat1a.Pagos.length > 0) {
+                            Funciones.TablaMaster = dat1a;
+                            Funciones.CrearCombo();
+                        }
+                    } 
+                })
+                .fail(function (data) {
+                    $('#Load').modal('hide');
+                    console.log(data);
+                });            
         },
-        CrearCombo: function () {
-            if (Funciones.TablaMaster.d.Periodos.length > 1) {
+        CrearCombo () {
+            if (Funciones.TablaMaster.Periodos.length > 1) {
                 var option = $(document.createElement('option'));
                 option.text("TODOS");
                 option.val(-1);
@@ -384,7 +395,7 @@
                 $('#sclPeriodo').append(option);
             }
 
-            $(Funciones.TablaMaster.d.Periodos).each(function () {
+            $(Funciones.TablaMaster.Periodos).each(function () {
                 var option2 = $(document.createElement('option'));
                 option2.val(this.Anio + '' + this.PeriodoId);
                 option2.text(this.Descripcion);
@@ -393,27 +404,22 @@
                 option2.attr("data-total", this.Total);
                 $('#sclPeriodo').append(option2);
             });
-            if (Funciones.TablaMaster.d.Periodos.length > 1) { $('#sclPeriodo').val(-1); }
-            else { $('#sclPeriodo').val(Funciones.TablaMaster.d.Periodos[0].Anio + '' + Funciones.TablaMaster.d.Periodos[0].PeriodoId); }
+            if (Funciones.TablaMaster.Periodos.length > 1) { $('#sclPeriodo').val(-1); }
+            else { $('#sclPeriodo').val(Funciones.TablaMaster.Periodos[0].Anio + '' + Funciones.TablaMaster.Periodos[0].PeriodoId); }
             Funciones.slcPeriodoChange();
         },
-        Anticipado: function () {
-            $.ajax({
-                type: "POST",
-                url: "WS/General.asmx/Ofertas_costos_Alumno",
-                data: "{AlumnoId:'" + AlumnoId + "',Anio:'" + Anio + "',PeriodoId:'" + PeriodoId + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
+        Anticipado() {
+            IndexFn.Api("Cuota/Anticipado/" + AlumnoId + "/Periodo/" + Anio + "/" + PeriodoId, "GET", "")
+                .done(function (data) {
                     $('#Load').modal('hide');
                     var Descripcion = "";
-                    if (data.d == null) { return null; }
+                    if (data == null) { return null; }
                     var Genera = 0;
                     $('#divtablas').empty();
 
                     //Descripcion = " Si vas hacer tu pago anticipado tienes hasta el "+1+" para pagar los siguientes montos con las referencias indicadas:";
 
-                    $(data.d).each(function () {
+                    $(data).each(function () {
                         var tabla1 = '<br />' +
                             '<table>' +
                             '<thead>' +
@@ -476,13 +482,22 @@
                         //$('#pdescription').text(Descripcion);
                     } else { $('#divAnticipado').hide(); }
                     //AlumnoId = "";
-                }
-            });
+                })
+                .fail(function (data) {
+                    console.log(data);
+                    $('#Load').modal('hide');
+                });
         },
-        BtnBuscarClick: function () {
+        BtnBuscarClick() {
+            document.getElementById("fotoAlumno").src = ""; 
             $('#frmVarios').hide();
+
+            $('#lblNombre').hide();
+            $('#pDescripcion').hide();
+
             var lbl = $('#lblNombre');
             lbl[0].innerHTML = "";
+            $('#pDescripcion')[0].innerHTML = "";
             AlumnoId = $('#txtClave').val();
 
             if (AlumnoId.length == 0) { return false; }
@@ -494,19 +509,19 @@
             if (!isNaN(AlumnoId)) { Funciones.BuscarAlumno(AlumnoId); }
             else { Funciones.BuscarNombre(AlumnoId); }
         },
-        txtClaveKeydown: function (e) {
+        txtClaveKeydown (e) {
             if (e.which == 13) {
                 Funciones.BtnBuscarClick();
             }
         },
-        TablaAlumnoClick: function () {
+        TablaAlumnoClick () {
             $('#frmVarios').hide();
             $('#Load').modal('show');
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
             AlumnoId = rowadd.AlumnoId;
             Funciones.BuscarAlumno(rowadd.AlumnoId);
         },
-        slcPeriodoChange: function () {
+        slcPeriodoChange () {
             var val = $('#sclPeriodo').val();
             Anio = $('#sclPeriodo').find(':selected').data("anio");
             PeriodoId = $('#sclPeriodo').find(':selected').data("periodoid");
@@ -516,25 +531,23 @@
                 Funciones.PintarTabla(Funciones.TablaMaster);
             } else {
                 var objNuevo = {
-                    d: {
-                        Estatus: Funciones.TablaMaster.d.Estatus,
-                        Pagos: Funciones.TraerPagosPeriodo(Anio, PeriodoId, Total)
-                    }
+                    Estatus: Funciones.TablaMaster.Estatus,
+                    Pagos: Funciones.TraerPagosPeriodo(Anio, PeriodoId, Total)
                 };
 
                 Funciones.PintarTabla(objNuevo);
             }
         },
-        TraerPagosPeriodo: function (Anio, PeriodoId, Total) {
+        TraerPagosPeriodo (Anio, PeriodoId, Total) {
             var lstp = [], EsSep, BecaSEP, EsEmpresa;
 
-            $(Funciones.TablaMaster.d.Pagos).each(function () {
+            $(Funciones.TablaMaster.Pagos).each(function () {
                 if (this.Anio === Anio && this.PeriodoId === PeriodoId && this.Titulo === false) {
                     lstp.push(this);
                 }
             });
 
-            $(Funciones.TablaMaster.d.Periodos).each(function () {
+            $(Funciones.TablaMaster.Periodos).each(function () {
                 if (this.Anio === Anio && this.PeriodoId === PeriodoId) {
                     EsSep = this.EsSep;
                     BecaSEP = this.BecaSEP;
@@ -550,8 +563,6 @@
         }
     };
 
-    $('#btnBuscar').on('click', Funciones.BtnBuscarClick);
-    $('#txtClave').on('keydown', Funciones.txtClaveKeydown);
-    $("#sclPeriodo").on('change', Funciones.slcPeriodoChange);
-    $('#tblAlumnos').on('click', 'a', Funciones.TablaAlumnoClick);
+    Funciones.init();
+    
 });

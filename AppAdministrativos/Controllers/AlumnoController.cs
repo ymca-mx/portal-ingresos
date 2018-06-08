@@ -25,6 +25,10 @@ namespace AppAdministrativos.Controllers
         [HttpGet]
         public IHttpActionResult GetDatosAlumno(int AlumnoId) => Ok(BLLAlumnoPortal.ObtenerAlumno(AlumnoId));
 
+        [Route("ConsultarAlumno/{AlumnoId:int}/basic")]
+        [HttpGet]
+        public IHttpActionResult GetDatosAlumnoAnonym(int AlumnoId) => Ok(BLLAlumnoPortal.ObtenerAlumnoAnon(AlumnoId));
+
         [Route("ConsultarAlumnosNuevos")]
         [HttpGet]
         public IHttpActionResult GetAlumnosNuevoIngreso()

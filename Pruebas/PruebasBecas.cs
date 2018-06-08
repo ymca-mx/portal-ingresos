@@ -128,12 +128,12 @@ namespace Pruebas
             List<DTO.Alumno.Beca.DTOAlumnoBeca> Alumno = new List<DTO.Alumno.Beca.DTOAlumnoBeca>();
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7488,
-                anio = 2017,
-                periodoId = 2,
-                ofertaEducativaId = 5,
-                porcentajeBeca = 64.34m,//70.15
-                porcentajeInscripcion = 0m,
+                alumnoId = 7505,
+                anio = 2018,
+                periodoId = 3,
+                ofertaEducativaId = 14,
+                porcentajeBeca = 62.81m,//70.15
+                porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,
                 esEmpresa = true,
@@ -146,7 +146,7 @@ namespace Pruebas
             
             Alumno.ForEach(a =>
             {
-                BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, false);
+                BLL.BLLAlumnoPortal.AplicaBeca_Excepcion(a, true);
             });
         }
         

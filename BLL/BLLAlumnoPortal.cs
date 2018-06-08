@@ -1135,6 +1135,149 @@ namespace BLL
             }
         }
 
+        public static object ObtenerAlumnoAnon(int AlumnoId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    string StatusActual = "";
+                    string fotoAlumno = "";
+                    try { fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId); } catch { fotoAlumno = ""; }
+                    DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    int[] Conceptos = { 800, 802 };
+
+                    Periodo PeriodoActual = db.Periodo
+                                                .Where(p => FechaActual >= p.FechaInicial
+                                                                && FechaActual <= p.FechaFinal)
+                                                .FirstOrDefault();
+
+                    var NuevoIngreso = db.Alumno
+                                            .Where(a => a.AlumnoId == AlumnoId
+                                                    && a.PeriodoId== PeriodoActual.PeriodoId
+                                                    && a.Anio == PeriodoActual.Anio)
+                                            .ToList();
+                    if (NuevoIngreso.Count == 0)
+                    {
+
+                        var AlumnoPagos = db.Pago.Where(a => a.AlumnoId == AlumnoId
+                                                         && a.Anio == PeriodoActual.Anio
+                                                         && a.PeriodoId == PeriodoActual.PeriodoId
+                                                         && a.EstatusId != 2
+                                                         && Conceptos.Contains(a.Cuota1.PagoConceptoId))
+                                                         .Select(p => new
+                                                         {
+                                                             p.PagoId,
+                                                             p.OfertaEducativaId,
+                                                             p.Anio,
+                                                             p.PeriodoId,
+                                                             p.EstatusId,
+                                                             p.AlumnoId,
+                                                             p.SubperiodoId
+                                                         })
+                                                        .ToList();
+                        if (AlumnoPagos.Count >= 2)
+                        {
+                            StatusActual = "Ya inicio su proceso, aun no cuenta con Visto Bueno ni Inscripción.";
+                            int OfertaId = AlumnoPagos[0].OfertaEducativaId;
+                            var Revision = db.AlumnoRevision
+                                            .Where(a => a.AlumnoId == AlumnoId
+                                                        && a.Anio == PeriodoActual.Anio
+                                                        && a.PeriodoId == PeriodoActual.PeriodoId
+                                                        && a.OfertaEducativaId == OfertaId)
+                                            .ToList();
+
+                            var AlumnoInscrito = db.AlumnoInscrito
+                                                .Where(a => a.AlumnoId == AlumnoId
+                                                            && a.Anio == PeriodoActual.Anio
+                                                            && a.PeriodoId == PeriodoActual.PeriodoId
+                                                            && a.OfertaEducativaId == OfertaId
+                                                            && a.EstatusId != 2)
+                                               .ToList();
+
+                            StatusActual = (Revision.Count > 0 && AlumnoInscrito.Count > 0) ? "Alumno Inscrito." :
+                                (Revision.Count == 0 && AlumnoInscrito.Count > 0) ? "Sin Visto Bueno." :
+                                "Sin Visto Bueno y Sin Inscripción";
+                        }
+                        else
+                        {
+                            StatusActual = "No ha iniciado su proceso de inscripción.";
+                        }
+                    }
+                    else
+                    {
+                        StatusActual = "Alumno de nuevo ingreso o en nueva oferta.";
+                    }
+                    return db.Alumno.Where(a => a.AlumnoId == AlumnoId)
+                                .Select(a => new
+                                {
+                                    Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
+                                    AlumnoInscrito = a.AlumnoInscrito.Where(b => b.EstatusId == 1).ToList().Count > 0 ?
+                                        a.AlumnoInscrito.Where(b => b.EstatusId == 1)
+                                            .ToList()
+                                            .OrderByDescending(b => b.FechaInscripcion)
+                                            .ThenByDescending(b => b.HoraInscripcion)
+                                            .Select(b => new
+                                            {
+                                                b.EsEmpresa,
+                                                Grupo = b.EsEmpresa ?
+                                                        db.GrupoAlumnoConfiguracion
+                                                            .Where(c => c.AlumnoId == b.AlumnoId
+                                                                    && c.OfertaEducativaId == b.OfertaEducativaId)
+                                                             .Select(c => new
+                                                             {
+                                                                 c.EsEspecial,
+                                                                 Descripcion = c.GrupoId != null ? c.Grupo.Descripcion : ""
+                                                             })
+                                                             .FirstOrDefault() :
+                                                              new
+                                                              {
+                                                                  EsEspecial = false,
+                                                                  Descripcion = ""
+                                                              }
+                                            }).FirstOrDefault()
+                                            :
+                                        a.AlumnoInscrito
+                                         .ToList()
+                                         .OrderByDescending(b => b.FechaInscripcion)
+                                         .ThenByDescending(b => b.HoraInscripcion)
+                                         .Select(b => new
+                                         {
+                                             b.EsEmpresa,
+                                             Grupo = b.EsEmpresa ?
+                                                        db.GrupoAlumnoConfiguracion
+                                                            .Where(c => c.AlumnoId == b.AlumnoId
+                                                                    && c.OfertaEducativaId == b.OfertaEducativaId)
+                                                             .Select(c => new
+                                                             {
+                                                                 c.EsEspecial,
+                                                                 Descripcion = c.GrupoId != null ? c.Grupo.Descripcion : ""
+                                                             })
+                                                             .FirstOrDefault() :
+                                                              new
+                                                              {
+                                                                  EsEspecial = false,
+                                                                  Descripcion = ""
+                                                              }
+                                         }).FirstOrDefault(),
+                                    fotoBase64 = fotoAlumno,
+                                    StatusActual
+                                })
+                                .FirstOrDefault();
+                   
+                }
+                catch(Exception error)
+                {
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner1 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
+                }
+            }
+        }
+
         public static DTOAlumno ObtenerAlumno(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -1142,6 +1285,7 @@ namespace BLL
                 try
                 {
 
+                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
 
                     DTOAlumno Alumno = (from a in db.Alumno
                                         where a.AlumnoId == AlumnoId
@@ -1176,7 +1320,8 @@ namespace BLL
                                                 UsuarioId = a.UsuarioId,
                                                 Nombre = a.Usuario.Nombre
                                             },
-                                            Email = a.AlumnoDetalle.Email
+                                            Email = a.AlumnoDetalle.Email,
+                                            fotoBase64 = fotoAlumno
 
                                         }).AsNoTracking().FirstOrDefault();
                     Alumno.Grupo = new DTOGrupo

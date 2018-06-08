@@ -14,7 +14,7 @@ namespace BLL
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
 
-        public static DTOAlumnoBecaComite ObtenerAlumno(int AlumnoId)
+        public static object ObtenerAlumno(int AlumnoId)
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
@@ -26,51 +26,57 @@ namespace BLL
                         AlumnoId = a.AlumnoId,
                         Nombre = a.Nombre + " " + a.Paterno + " " + a.Materno,
                     }).FirstOrDefault();
-                    Alumno.EsEmpresa = db.AlumnoInscrito.Where(l => l.AlumnoId == AlumnoId && l.EsEmpresa).ToList().Count > 0 ? true : false;
 
                     Alumno.lstDescuentos = new List<DTOAlumnoDescuento>();
                     Alumno.PeriodosAlumno = new List<PeriodoBeca>();
 
                     #region Group by Ofertas Alumnos
-                   IEnumerable<DTOAlumnoOfertas> OfertasAlumno = db.Pago.Where(s => s.AlumnoId == AlumnoId
-                                                    && (s.Cuota1.PagoConceptoId == 800
-                                                    || s.Cuota1.PagoConceptoId == 802)
-                                                    && s.EstatusId != 2)
-                                                    .ToList()
-                                                    .GroupBy(s => new { s.AlumnoId, s.OfertaEducativaId })
-                                                    .Select(s => new DTOAlumnoOfertas
-                                                    {
-                                                        OfertaEducativaId = s.Key.OfertaEducativaId,
-                                                        Descripcion=""
-                                                    });
+                    IEnumerable<DTOAlumnoOfertas> OfertasAlumno = db.Pago.Where(s => s.AlumnoId == AlumnoId
+                                                     && (s.Cuota1.PagoConceptoId == 800
+                                                     || s.Cuota1.PagoConceptoId == 802)
+                                                     && s.EstatusId != 2)
+                                                     .ToList()
+                                                     .GroupBy(s => new { s.AlumnoId, s.OfertaEducativaId, s.EsEmpresa })
+                                                     .Select(s => new DTOAlumnoOfertas
+                                                     {
+                                                         OfertaEducativaId = s.Key.OfertaEducativaId,
+                                                         Descripcion = "",
+                                                     });
 
                     Alumno.OfertasAlumnos = (from a in OfertasAlumno
                                              select new DTOAlumnoOfertas
                                              {
                                                  Descripcion = a.Descripcion,
-                                                 OfertaEducativaId = a.OfertaEducativaId
+                                                 OfertaEducativaId = a.OfertaEducativaId,
+                                                 EsEmpresa = db.AlumnoInscrito
+                                                                .Where(b => b.AlumnoId == AlumnoId 
+                                                                        && b.OfertaEducativaId == a.OfertaEducativaId)?
+                                                                        .FirstOrDefault()?
+                                                                        .EsEmpresa ?? false
                                              }).ToList();
                     #endregion
 
                     Alumno.OfertasAlumnos.ForEach(s2 =>
                     {
-                    #region Group By Periodo de Ofertas
-                    s2.Descripcion = db.OfertaEducativa.Where(o => o.OfertaEducativaId == s2.OfertaEducativaId).FirstOrDefault().Descripcion;
 
-                    IEnumerable<PeriodoBeca> OfertasAlumnoAnioPeriodo = db.Pago.Where(s => s.AlumnoId == AlumnoId
-                                                && (s.Cuota1.PagoConceptoId == 800
-                                                || s.Cuota1.PagoConceptoId == 802)
-                                                && s.EstatusId != 2
-                                                && s.OfertaEducativaId == s2.OfertaEducativaId)
-                                                .ToList()
-                                                .GroupBy(d => new { d.Anio, d.PeriodoId })
-                                                .Select(d => new PeriodoBeca
-                                                {
-                                                    Anio = d.Key.Anio,
-                                                    OfertaEducativaId = s2.OfertaEducativaId,
-                                                    PeriodoId = d.Key.PeriodoId,
-                                                    Descripcion = ""
-                                                });
+                        #region Group By Periodo de Ofertas
+                        s2.Descripcion = db.OfertaEducativa.Where(o => o.OfertaEducativaId == s2.OfertaEducativaId).FirstOrDefault().Descripcion;
+
+                        IEnumerable<PeriodoBeca> OfertasAlumnoAnioPeriodo = db.Pago.Where(s => s.AlumnoId == AlumnoId
+                                                    && (s.Cuota1.PagoConceptoId == 800
+                                                    || s.Cuota1.PagoConceptoId == 802)
+                                                    && s.EstatusId != 2
+                                                    && s.OfertaEducativaId == s2.OfertaEducativaId)
+                                                    .ToList()
+                                                    .GroupBy(d => new { d.Anio, d.PeriodoId })
+                                                    .Select(d => new PeriodoBeca
+                                                    {
+                                                        Anio = d.Key.Anio,
+                                                        OfertaEducativaId = s2.OfertaEducativaId,
+                                                        PeriodoId = d.Key.PeriodoId,
+                                                        Descripcion = "",
+                                                        
+                                                    });
 
                         Alumno.PeriodosAlumno.AddRange((from a in OfertasAlumnoAnioPeriodo
                                                         select new PeriodoBeca
@@ -102,9 +108,9 @@ namespace BLL
                             }
                             else
                             { o.EsEmprea = true; }
-                            
+
                             o.Descripcion = db.Periodo.Where(i => i.Anio == o.Anio && i.PeriodoId == o.PeriodoId).FirstOrDefault().Descripcion;
-                            
+
                             List<AlumnoInscritoDocumento> lstDocumentosAlumno =
                                 db.AlumnoInscritoDocumento.Where(doc =>
                                                                       doc.AlumnoId == AlumnoId
@@ -118,7 +124,7 @@ namespace BLL
                                                                                    && ad.OfertaEducativaId == s2.OfertaEducativaId
                                                                                    && ad.PagoConceptoId == 800
                                                                                    && ad.EstatusId == 2
-                                                                                   && ad.Monto>0).FirstOrDefault();
+                                                                                   && ad.Monto > 0).FirstOrDefault();
                             if (DescuentoAlumno != null)
                             {
                                 Alumno.lstDescuentos.Add(new DTOAlumnoDescuento
@@ -155,7 +161,7 @@ namespace BLL
                                                             .Where(a => a.TipoDocumento == 2)?
                                                             .FirstOrDefault()?
                                                             .AlumnoInscritoDocumentoId.ToString() ?? "")
-                                                            
+
                                 });
                             }
                             #endregion
@@ -164,9 +170,22 @@ namespace BLL
 
                     });
 
-                    return Alumno;
+                    return new
+                    {
+                        Alumno,
+                        Status = true
+                    };
                 }
-                catch { return null; }                 
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message,
+                        Inner2 = error?.InnerException?.InnerException?.Message
+                    };
+                }
             }
         }
 

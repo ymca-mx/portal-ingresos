@@ -43,6 +43,7 @@ namespace DTO
         public int Plantel { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string fotoBase64 { get; set; }
     }
 
     public class DTOAlumnoDatos
@@ -237,12 +238,12 @@ namespace DTO
         public string Descripcion { get; set; }
         public int OfertaEducativaTipoId { get; set; }
         public string Mensaje { get; set; }
+        public bool EsEmpresa { get; set; }
     }
     public class DTOAlumnoBecaComite
     {
         public int AlumnoId { get; set; }
         public string Nombre { get; set; }
-        public bool EsEmpresa { get; set; }
         public List<PeriodoBeca> PeriodosAlumno { get; set; }
         public List<DTOAlumnoOfertas> OfertasAlumnos { get; set; }
         public List<DTOAlumnoDescuento> lstDescuentos { get; set; }
