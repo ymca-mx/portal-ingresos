@@ -127,6 +127,8 @@ namespace Pruebas
                                                     }
                                                 }).ToList()
                                             })
+                                            .OrderByDescending(a=> a.Anio)
+                                            .ThenBy(a=> a.PeriodoId)
                                             .ToList();
 
                 var Periodos = ListaPagos.Where(P => P.AlumnoId == AlumnoId
@@ -533,7 +535,8 @@ namespace Pruebas
                         PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
                     }
                     //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
-
+                    PagosDetalles.ForEach(p => Console.WriteLine(p.ReferenciaId + " " + p.DescripcionOferta + " " + p.CargoFechaLimite + p.CargoMonto));
+                    PeriodosDTO.ForEach(p => Console.WriteLine(p.Descripcion));
                     Console.Write(
                         new PantallaPago
                         {
@@ -972,6 +975,9 @@ namespace Pruebas
                         PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
                     }
                     //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
+
+                    PagosDetalles.ForEach(p => Console.WriteLine(p.ReferenciaId + " " + p.DescripcionOferta + " " + p.CargoFechaLimite + p.CargoMonto));
+                    PeriodosDTO.ForEach(p => Console.WriteLine(p.Descripcion));
 
                     Console.Write(
                         new PantallaPago
