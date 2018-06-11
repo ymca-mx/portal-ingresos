@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using DAL;
+using System.Globalization;
 
 namespace BLL
 {
@@ -59,12 +60,10 @@ namespace BLL
                         RFC= empresa.RFC,
                         RazonSocial = empresa.RazonSocial,
                         FechaAlta = DateTime.Now,
-                        FechaVigencia = empresa.FechaVigencia,
+                        FechaVigencia = DateTime.ParseExact(empresa.FechaV, "dd-MM-yyyy", CultureInfo.InvariantCulture),
                         UsuarioId = empresa.Usuarioid,
-
                         EmpresaDetalle = new EmpresaDetalle
                         {
-
                             Nombre = empresa.EmpresaDetalle.Nombre,
                             Paterno = empresa.EmpresaDetalle.Paterno,
                             Materno = empresa.EmpresaDetalle.Materno,
@@ -81,9 +80,7 @@ namespace BLL
                             NoInterior = empresa.EmpresaDetalle.NoInterior,
                             Email = empresa.EmpresaDetalle.Email,
                             Observacion = empresa.EmpresaDetalle.Observacion,
-
                         },
-
                         DatosFiscales = new DatosFiscales
                         {
                             RFC = empresa.EmpresaDetalle.DatosFiscales.RFC,
@@ -96,7 +93,7 @@ namespace BLL
                             NoExterior = empresa.EmpresaDetalle.DatosFiscales.NoExterior,
                             NoInterior = empresa.EmpresaDetalle.DatosFiscales.NoInterior,
                             Observacion = empresa.EmpresaDetalle.DatosFiscales.Observacion,
-                            EsEmpresa = (bool)empresa.EmpresaDetalle.DatosFiscales.EsEmpresa,
+                            EsEmpresa = true
                         }
 
                     });
@@ -104,7 +101,7 @@ namespace BLL
                     db.SaveChanges();
                     return true.ToString();
                 }
-                catch (Exception )
+                catch (Exception Ex)
                 {
                     return false.ToString();
                 }
