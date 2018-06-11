@@ -9,6 +9,7 @@
    
     var Funciones = {
         init() {
+            $('#fotoAlumno').hide();
             $('#lblNombre').hide();
             $('#pDescripcion').hide();
             $('#btnBuscar').on('click', this.BtnBuscarClick);
@@ -21,6 +22,7 @@
 
             IndexFn.Api("Alumno/ConsultarAlumno/" + idAlumno+"/basic", "GET", "")
                 .done(function (data) {
+                    $('#fotoAlumno').show();
                     document.getElementById("fotoAlumno").src = "data:image/png;base64," + data.fotoBase64;
                     $('#lblNombre').show();
                     $('#pDescripcion').show();
@@ -491,6 +493,7 @@
         BtnBuscarClick() {
             document.getElementById("fotoAlumno").src = ""; 
             $('#frmVarios').hide();
+            $('#fotoAlumno').hide();
 
             $('#lblNombre').hide();
             $('#pDescripcion').hide();
