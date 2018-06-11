@@ -450,12 +450,106 @@ namespace BLL
             using (UniversidadEntities db = new UniversidadEntities())
             {
 
-                List<Pago> ListaPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId
+                var ListaPagos = db.Pago.Where(P => P.AlumnoId == AlumnoId
                                                         && P.EstatusId != 2
                                                         && (P.Cuota1.PagoConceptoId != 1007 && P.Cuota1.PagoConceptoId != 1001))
-                                            .AsNoTracking().ToList();
+                                            .AsNoTracking()
+                                            .Select(pago => new
+                                            {
+                                                Alumno = new
+                                                {
+                                                    AlumnoInscrito = pago.Alumno.AlumnoInscrito.Select(a => new
+                                                    {
+                                                        a.AlumnoId,
+                                                        a.OfertaEducativaId,
+                                                        a.EsEmpresa
+                                                    })
+                                                },
+                                                pago.FechaGeneracion,
+                                                pago.AlumnoId,
+                                                pago.PagoId,
+                                                pago.ReferenciaId,
+                                                pago.Anio,
+                                                pago.PeriodoId,
+                                                pago.SubperiodoId,
+                                                Subperiodo = new
+                                                {
+                                                    Mes = new { pago.Subperiodo.Mes.Descripcion }
+                                                },
+                                                pago.EstatusId,
+                                                pago.Promesa,
+                                                pago.Restante,
+                                                pago.Cuota,
+                                                Cuota1 = new
+                                                {
+                                                    pago.Cuota1.CuotaId,
+                                                    pago.Cuota1.PagoConceptoId,
+                                                    PagoConcepto = new
+                                                    {
+                                                        pago.Cuota1.PagoConcepto.Descripcion
+                                                    }
+                                                },
+                                                Periodo = new
+                                                {
+                                                    pago.PeriodoId,
+                                                    pago.Anio,
+                                                    pago.Periodo.Descripcion
+                                                },
+                                                PagoDescripcion = new
+                                                {
+                                                    pago.PagoDescripcion.Descripcion,
+                                                },
+                                                pago.OfertaEducativaId,
+                                                OfertaEducativa = new
+                                                {
+                                                    pago.OfertaEducativa.Descripcion,
+                                                    pago.OfertaEducativa.OfertaEducativaTipoId
+                                                },
+                                                PagoDescuento = pago.PagoDescuento
+                                                       .Select(pa => new
+                                                       {
+                                                           pa.PagoId,
+                                                           pa.DescuentoId,
+                                                           pa.Monto,
+                                                           Descuento = new { pa.Descuento.Descripcion }
+                                                       }).ToList(),
+                                                PagoRecargo1 = pago.PagoRecargo1.Select(pa => new
+                                                {
+                                                    pa.PagoId,
+                                                    pa.PagoRecargoId,
+                                                    pa.PagoIdRecargo,
+                                                    Pago = new
+                                                    {
+                                                        pa.Pago.SubperiodoId,
+                                                        pa.Pago.PeriodoId,
+                                                        pa.Pago.Anio,
+                                                        pa.Pago.PagoId,
+                                                        Subperiodo = new
+                                                        {
+                                                            pa.Pago.SubperiodoId,
+                                                            Mes = new
+                                                            {
+                                                                pa.Pago.Subperiodo.Mes.Descripcion,
+                                                                pa.Pago.Subperiodo.Mes.MesId
+                                                            }
+                                                        },
+                                                        Cuota1 = new
+                                                        {
+                                                            pa.Pago.Cuota1,
+                                                            pa.Pago.Cuota1.PagoConceptoId,
+                                                            PagoConcepto = new
+                                                            {
+                                                                pa.Pago.Cuota1.PagoConcepto.Descripcion,
+                                                                pa.Pago.Cuota1.PagoConcepto.PagoConceptoId,
+                                                            }
+                                                        }
+                                                    }
+                                                }).ToList()
+                                            })
+                                            .OrderBy(a => a.PagoId)
+                                            .ToList();
 
-                List<Periodo> Periodos = ListaPagos.Where(P => P.AlumnoId == AlumnoId
+                var Periodos = ListaPagos.Where(P => P.AlumnoId == AlumnoId
                                                         && P.EstatusId != 2
                                                         && (P.Cuota1.PagoConceptoId != 1007 && P.Cuota1.PagoConceptoId != 1001)
                                                         && (P.Anio != 2016 || P.PeriodoId != 1 || (P.EstatusId == 14 || P.EstatusId == 4)))
@@ -463,16 +557,18 @@ namespace BLL
                                             .GroupBy(p => new { p.Anio, p.PeriodoId })
                                             .Select(p => p.FirstOrDefault())
                                             .ToList()
-                                            .OrderBy(a=> a.Anio).ThenBy(a=> a.PeriodoId)
+                                            .OrderBy(a => a.Anio).ThenBy(a => a.PeriodoId)
                                             .ToList();
+
                 List<AlumnoDescuento> ListaDescuentosAlumno = db.AlumnoDescuento
                                                        .Where(ad => ad.AlumnoId == AlumnoId
                                                                     && ad.EstatusId != 3)
                                                         .ToList();
-                
 
-                List<Pago> Adeudos = ListaPagos.Where(P => P.AlumnoId == AlumnoId && P.Anio == 2016 && P.PeriodoId == 1
-                        && (P.EstatusId == 1 || P.EstatusId == 13)).ToList();
+
+                var Adeudos = ListaPagos.Where(P => P.AlumnoId == AlumnoId && P.Anio == 2016 && P.PeriodoId == 1
+                        && (P.EstatusId == 1 || P.EstatusId == 13))
+                        .ToList();
 
                 List<DTOPagoDetallado> PagosDetalles = new List<DTOPagoDetallado>();
                 List<DTOPagoDetallado> PagosAdeudos = new List<DTOPagoDetallado>();
@@ -480,8 +576,6 @@ namespace BLL
                 decimal porpagar20161 = 0;
                 Adeudos.ForEach(Pago =>
                 {
-
-
                     decimal total = 0;
                     total = Pago.Promesa - (Pago.Promesa - Pago.Restante);
                     porpagar20161 += total;
@@ -520,16 +614,16 @@ namespace BLL
                         PeriodoId = 1,
                         Concepto = "Septiembre - Diciembre 2015",
                         Titulo = true,
-                        esEmpresa=true
+                        esEmpresa = true
                     });
                 }
 
                 if (Periodos.Where(per => per.Anio == 2016 && per.PeriodoId == 1).ToList().Count == 0 && PagosDetalles.Count > 0)
                 {
-                    Periodos.Insert(0,new Periodo
+                    Periodos.Insert(0, new
                     {
-                        Anio = 2016,
                         PeriodoId = 1,
+                        Anio = 2016,
                         Descripcion = "Septiembre - Diciembre 2015",
                     });
                 }
@@ -542,14 +636,14 @@ namespace BLL
                                                                      Descripcion = per.Descripcion,
                                                                      Total = per.Anio == 2016 && per.PeriodoId == 1 ? porpagar20161 : 0,
                                                                      EsSep = per.Anio == 2016 && per.PeriodoId == 1 ? 2 : 0,
-                                                                     BecaSEP= per.Anio == 2016 && per.PeriodoId == 1 ? "" : "",
-                                                                     EsEmpresa = per.Anio == 2016 && per.PeriodoId == 1 ? true: false,
+                                                                     BecaSEP = per.Anio == 2016 && per.PeriodoId == 1 ? "" : "",
+                                                                     EsEmpresa = per.Anio == 2016 && per.PeriodoId == 1 ? true : false,
                                                                  }).ToList();
 
                 Periodos.ForEach(Periodobd =>
                 {
                     int ofertaid = 0;
-                    List<Pago> Pagos = ListaPagos.Where(P => P.AlumnoId == AlumnoId
+                    var Pagos = ListaPagos.Where(P => P.AlumnoId == AlumnoId
                                                             && P.Anio == Periodobd.Anio
                                                             && P.PeriodoId == Periodobd.PeriodoId
                                                             && P.EstatusId != 2
@@ -682,7 +776,7 @@ namespace BLL
                             else
                             {
                                 DTOPagoDetallado PagosDetallesAgregar = new DTOPagoDetallado();
-                                List<PagoDescuento> PagosAnticipados = Pago.PagoDescuento.Where(PD => PD.Descuento.Descripcion == "Pago Anticipado").ToList();
+                                var PagosAnticipados = Pago.PagoDescuento.Where(PD => PD.Descuento.Descripcion == "Pago Anticipado").ToList();
                                 List<Descuento> ListaDescuentosAP = db
                                                                     .Descuento
                                                                     .Where(D =>
@@ -859,8 +953,7 @@ namespace BLL
                         PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
                     }
                     //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
-
-                    return
+                   return 
                         new PantallaPago
                         {
                             Pagos = PagosDetalles,
@@ -870,7 +963,7 @@ namespace BLL
                 }
                 else
                 {
-                    return
+                    return 
                        new PantallaPago
                        {
                            Pagos = new List<DTOPagoDetallado>(),

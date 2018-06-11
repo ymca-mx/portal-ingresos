@@ -127,8 +127,7 @@ namespace Pruebas
                                                     }
                                                 }).ToList()
                                             })
-                                            .OrderByDescending(a=> a.Anio)
-                                            .ThenBy(a=> a.PeriodoId)
+                                            .OrderBy(a=> a.PagoId)
                                             .ToList();
 
                 var Periodos = ListaPagos.Where(P => P.AlumnoId == AlumnoId
