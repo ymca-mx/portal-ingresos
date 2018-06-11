@@ -22,7 +22,7 @@ namespace AppAdministrativos.WS
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
         [WebMethod]
-        public string GenerarInscrCole(string AlumnoId, string OfertaEducativaId, string PeriodoD)
+        public object GenerarInscrCole(string AlumnoId, string OfertaEducativaId, string PeriodoD)
         {
             DTOPeriodo objPeriodo = BLLPeriodoPortal.ConsultarPeriodo2(PeriodoD);
 

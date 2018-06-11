@@ -2,9 +2,9 @@
     var AlumnoObject;
     var tblBecas=null;
     var Alumnoid;
-    $('#btnGenerarCargos').click(function () {
+    $('#btnGenerarCargos').on('click', function () {
         var txtMonto = $('#txtBecaMonto').val();
-        var Perid = $('#slcPeriodo').val();
+        var Perid = parseInt($('#slcPeriodo').val());
         if (Perid === -1) {
             alertify.alert('Periodo Invalido');
             return false;
@@ -15,36 +15,42 @@
             nombre[0].innerText = "Guardando";
             $('#Load').modal('show');
 
-            var an = $('#slcPeriodo').find(':selected').data("anio");
-            var per =  $('#slcPeriodo').find(':selected').data("periodoid");
-            var Datos = "{";
-            Datos += "AlumnoId:'" + Alumnoid + "',";
-            Datos += "OfertaEducativaId:'" +  $('#slcOfertas').val() + "',";
-            Datos += "Anio:'" + an + "',";
-            Datos += "PeriodoId:'" + per + "',";
-            Datos += "Porcentaje:'" + txtMonto + "',";
-            Datos += "UsuarioId:'" + $.cookie('userAdmin') + "',";
-            Datos += "EsComite:'" + "true" + "',";
+
+            var Datos = {
+                alumnoId: Alumnoid,
+                ofertaEducativaId: $('#slcOfertas').val(),
+                anio: $('#slcPeriodo').find(':selected').data("anio"),
+                periodoId: $('#slcPeriodo').find(':selected').data("periodoId"),
+                porcentajeBeca: txtMonto,
+                usuarioId: $.cookie('userAdmin'),
+                esComite: true,
+                esSEP: false,
+                esEmpresa: false,
+                fecha:""
+            };
+
             var Sep = "No";
-            var Empresa = "false";
+            var Empresa = false;
+
             $(AlumnoObject.lstDescuentos).each(function () {
                 var da = this;
                 if (da.OfertaEducativaId === $("#slcOfertas").val()
-                     && da.Anio === an && da.PeriodoId===per) {
+                    && da.Anio === an && da.PeriodoId === per) {
                     Sep = da.BecaSEP;
                 }
             });
             $(AlumnoObject.PeriodosAlumno).each(function () {
                 var da = this;
                 if (da.OfertaEducativaId === $("#slcOfertas").val()
-                     && da.Anio === an && da.PeriodoId === per && da.EsEmpresa === true) {
-                    Empresa = "true";
+                    && da.Anio === an && da.PeriodoId === per && da.EsEmpresa === true) {
+                    Empresa = true;
                 }
             });
-            Datos += "EsSEP:'";
-            Datos += (Sep === "No" ? "False" : "True") + "',";
-            Datos += "EsEmpresa:'" + Empresa + "'";
-            Datos += "}";
+
+
+            Datos.esSEP = (Sep === "No" ? false : true);
+            Datos.esEmpresa = Empresa;
+
             BecaComite(Datos);
         }
         else {
@@ -54,17 +60,13 @@
     });
 
     function BecaComite(Cadena) {
-        $.ajax({
-            type: "POST",
-            url: "WS/Beca.asmx/BecaComite",
-            data: Cadena,
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                if (data.d === 'Guardado') {
-                    var obj = JSON.parse(JSON.stringify(eval('(' + Cadena+ ')')));
-                    GuardarDocumentos(obj.AlumnoId, obj.OfertaEducativaId, obj.Anio, obj.PeriodoId, obj.EsComite, obj.UsuarioId);
+        IndexFn.Api("Beca/BecaComite", "POST", JSON.stringify(Cadena))
+            .done(function (data) {
+                if (data === 'Guardado') {
+
+                    GuardarDocumentos(Cadena.alumnoId, Cadena.ofertaEducativaId, Cadena.anio, Cadena.periodoId, Cadena.esComite, Cadena.usuarioId);
                 }
-                else if (data.d === "No tiene") {
+                else if (data === "No tiene") {
                     alertify.alert('El Alumno debe estar inscrito para poder aplicar una beca comité gracias');
                     $('#Load').modal('hide');
                 }
@@ -72,8 +74,11 @@
                     alertify.alert('Error al cargar datos');
                     $('#Load').modal('hide');
                 }
-            }
-        });
+            })
+            .fail(function (data) {
+                alertify.alert('Error al cargar datos');
+                $('#Load').modal('hide');
+            });
     }
 
     $('#txtBecaMonto').keyup(function (e) {
@@ -124,49 +129,47 @@
         optionP.val('-1');
         $("#slcOfertas").append(optionP);
 
-        $.ajax({
-            type: "POST",
-            url: "WS/Beca.asmx/ObtenerAlumno",
-            data: "{AlumnoId:" + AlumnoId + "}",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var datos = data.d;
-                if (datos.EsEmpresa) {
-                    $('#Load').modal('hide');
-                    alertify.alert('El Alumno es de empresa, no se puede generar Becas-Comite a ellos.');
-                    return false;
-                }
-                AlumnoObject = datos;
+        IndexFn.Api("Beca/ObtenerAlumno/" + AlumnoId, "GET", "")
+            .done(function (data) {
+                AlumnoObject = data;
                 Alumnoid = AlumnoObject.AlumnoId;
-                $('#lblNombre').text(datos.Nombre);
+                $('#lblNombre').text(data.Nombre);
 
-                if (datos.OfertasAlumnos.length > 1) {
-                    $(datos.OfertasAlumnos).each(function (s, d) {
+                if (data.OfertasAlumnos.length > 1) {
+                    $(data.OfertasAlumnos).each(function (s, d) {
                         var option = $(document.createElement('option'));
                         option.text(d.Descripcion);
                         option.val(d.OfertaEducativaId);
+                        option.data("esEmpresa", d.EsEmpresa);
+
                         $("#slcOfertas").append(option);
                     });
 
                 }
-                else if (datos.OfertasAlumnos.length === 1) {
+                else if (data.OfertasAlumnos.length === 1) {
                     var option = $(document.createElement('option'));
-                    option.text(datos.OfertasAlumnos[0].Descripcion);
-                    option.val(datos.OfertasAlumnos[0].OfertaEducativaId);
+                    option.text(data.OfertasAlumnos[0].Descripcion);
+                    option.val(data.OfertasAlumnos[0].OfertaEducativaId);
+                    option.data("esEmpresa", data.OfertasAlumnos[0].EsEmpresa);
+
                     $("#slcOfertas").append(option);
-                    $("#slcOfertas").val(datos.OfertasAlumnos[0].OfertaEducativaId);
+                    $("#slcOfertas").val(data.OfertasAlumnos[0].OfertaEducativaId);
                     $("#slcOfertas").change();
                 } else {
                     $('#Load').modal('hide');
                     return false;
                 }
                 $('#Load').modal('hide');
-            }
-        });
+            })
+            .fail(function (data) {
+                $('#Load').modal('hide');
+                console.log(data);
+            });
     }
 
     $("#slcOfertas").change(function () {
         $("#btnGenerarCargos").attr("disabled", "disabled");
+
         var Oferta = $("#slcOfertas").val();
         $("#slcPeriodo").empty();
         var optionP = $(document.createElement('option'));
@@ -176,19 +179,24 @@
 
         if (Oferta === -1) { return false; }
 
-        $(AlumnoObject.PeriodosAlumno).each(function (s, d) {
-            if (d.OfertaEducativaId.toString() === Oferta.toString()) {
-                var option = $(document.createElement('option'));
-                option.text(d.Descripcion);
-                option.attr("data-Anio", this.Anio);
-                option.attr("data-PeriodoId", this.PeriodoId);
-                option.val(d.Anio + " " + d.PeriodoId);
-                $("#slcPeriodo").append(option);
-                $("#slcPeriodo").val(d.Anio + " " + d.PeriodoId);
-            }
-            $('#slcPeriodo').change();
-        });
-        
+        if (!$('#slcOfertas').find(':selected').data("esEmpresa")) {
+            $(AlumnoObject.PeriodosAlumno).each(function (s, d) {
+                if (d.OfertaEducativaId.toString() === Oferta.toString()) {
+                    var option = $(document.createElement('option'));
+                    option.text(d.Descripcion);
+                    option.data("anio", this.Anio);
+                    option.data("periodoId", this.PeriodoId);
+
+                    option.val(d.Anio + " " + d.PeriodoId);
+                    $("#slcPeriodo").append(option);
+                    $("#slcPeriodo").val(d.Anio + " " + d.PeriodoId);
+                }
+                $('#slcPeriodo').change();
+            });
+        } else{
+            alertify.alert('El alumno en esta oferta educativa es tipo empresa, no es posible aplicar una beca comite.');
+        }
+
         var desc = [];
         $(AlumnoObject.lstDescuentos).each(function () {
             var da = this;
@@ -201,8 +209,10 @@
     });
 
     $('#slcPeriodo').change(function () {
-        var Perid = $('#slcPeriodo').val();
-        if (Perid === -1) { return false; }
+        $("#btnGenerarCargos").attr("disabled");
+
+        var Perid = parseInt($('#slcPeriodo').val());
+        if (Perid === -1) { return false; }        
 
         $("#btnGenerarCargos").removeAttr("disabled");
     });

@@ -11,7 +11,7 @@ namespace BLL
 {
     public class BLLAntecedente
     {
-        public static bool GuardarAntecendente(DTOAlumnoAntecendente objAntecedente)
+        public static object GuardarAntecendente(DTOAlumnoAntecendente objAntecedente)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -83,11 +83,21 @@ namespace BLL
                     }
 
                     db.SaveChanges();
-                    return true;
+
+                    return new
+                    {
+                        Estatus=true,
+                        Message="Guardado Correctamente"
+                    };
                 }
-                catch
+                catch (Exception error)
                 {
-                    return false;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error.InnerException?.Message
+                    };
                 }
             }
         }

@@ -19,15 +19,17 @@ namespace AppAlumnos.Controllers
         [HttpPost]
         public IHttpActionResult GenerarInscrCole([FromBody] JObject jObjectAlumno)
         {
-            try
-            {
-                DTOPeriodo objPeriodo = BLLPeriodoPortal.ConsultarPeriodo2((string)jObjectAlumno["PeriodoD"]);
+            var Result = BLLPagoPortal.GenerarInscripcionColegiatura((int)jObjectAlumno["AlumnoId"],
+                    (int)jObjectAlumno["OfertaEducativaId"]);
 
-                return Ok(BLLPagoPortal.GenerarInscripcionColegiatura((int)jObjectAlumno["AlumnoId"],
-                    (int)jObjectAlumno["OfertaEducativaId"]));
-            }catch(Exception err)
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
             {
-                return BadRequest("Fallo " + err.Message);
+                return Ok(((List<string>)Result)[0]);
+            }
+            else
+            {
+                return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                     + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
             }
         }
 

@@ -21,7 +21,7 @@ namespace AppAdministrativos.WS
     public class Beca : System.Web.Services.WebService
     {
         [WebMethod]
-        public DTOAlumnoBecaComite ObtenerAlumno(string AlumnoId)
+        public object ObtenerAlumno(string AlumnoId)
         {
             return BLLBeca.ObtenerAlumno(int.Parse(AlumnoId));
         }

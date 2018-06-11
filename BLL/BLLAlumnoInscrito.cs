@@ -71,11 +71,14 @@ namespace BLL
                     objAlumnoIncrito.PagoPlanId = ObjAlumno.SistemaPagoId;
                     objAlumnoIncrito.EstatusId = objAlumnoIncrito.OfertaEducativa.OfertaEducativaTipoId != 4 ? 8 : 1;
 
-                    db.AlumnoPassword.Add(new AlumnoPassword
+                    if (db.AlumnoPassword.Where(a => a.AlumnoId == ObjAlumno.AlumnoId).ToList().Count == 0)
                     {
-                        AlumnoId = ObjAlumno.AlumnoId,
-                        Password = Utilities.Seguridad.Encripta(27, Herramientas.ConvertidorT.CrearPass())
-                    });
+                        db.AlumnoPassword.Add(new AlumnoPassword
+                        {
+                            AlumnoId = ObjAlumno.AlumnoId,
+                            Password = Utilities.Seguridad.Encripta(27, Herramientas.ConvertidorT.CrearPass())
+                        });
+                    }
 
 
                     Descuentos.ForEach(desc =>
@@ -83,57 +86,59 @@ namespace BLL
                         var descuento = ObjAlumno.Descuentos.Find(a => a.PagoConceptoId == desc.PagoConceptoId);
                         var cuota = Cuotas.Find(a => a.PagoConceptoId == desc.PagoConceptoId);
 
-                        if (descuento.TotalPagar != cuota.Monto)
+                        if (descuento != null)
                         {
-                            db.AlumnoDescuento.Add(new AlumnoDescuento
+                            if (descuento.TotalPagar != cuota.Monto)
                             {
-                                AlumnoId = ObjAlumno.AlumnoId,
-                                OfertaEducativaId = ObjAlumno.OfertaEducativaId,
-                                Anio = ObjAlumno.Anio,
-                                PeriodoId = ObjAlumno.PeriodoId,
-                                DescuentoId = desc.DescuentoId,
-                                PagoConceptoId = desc.PagoConceptoId,
-                                Monto = Math.Round(100 - ((descuento.TotalPagar * 100) / cuota.Monto)),
-                                UsuarioId = ObjAlumno.UsuarioId,
-                                Comentario = descuento.Justificacion,
-                                FechaGeneracion = DateTime.Now,
-                                HoraGeneracion = DateTime.Now.TimeOfDay,
-                                EsSEP = false,
-                                EsComite = false,
-                                EsDeportiva = false,
-                                FechaAplicacion = DateTime.Now,
-                                EstatusId = 2,                           
-                            });
-                        }
-
-                        #region pagos
-
-                        if (objAlumnoIncrito.EstatusId != 8)
-                        {
-
-                            int NPagos = desc.PagoConceptoId == 800 ? 4 : 1;
-
-                            for (int indice = 1; indice <= NPagos; indice++)
-                            {
-                                db.Pago.Add(new Pago
+                                db.AlumnoDescuento.Add(new AlumnoDescuento
                                 {
-                                    ReferenciaId = "",
                                     AlumnoId = ObjAlumno.AlumnoId,
+                                    OfertaEducativaId = ObjAlumno.OfertaEducativaId,
                                     Anio = ObjAlumno.Anio,
                                     PeriodoId = ObjAlumno.PeriodoId,
-                                    SubperiodoId = indice,
-                                    OfertaEducativaId = ObjAlumno.OfertaEducativaId,
+                                    DescuentoId = desc.DescuentoId,
+                                    PagoConceptoId = desc.PagoConceptoId,
+                                    Monto = Math.Round(100 - ((descuento.TotalPagar * 100) / cuota.Monto)),
+                                    UsuarioId = ObjAlumno.UsuarioId,
+                                    Comentario = descuento.Justificacion,
                                     FechaGeneracion = DateTime.Now,
                                     HoraGeneracion = DateTime.Now.TimeOfDay,
-                                    CuotaId = cuota.CuotaId,
-                                    Cuota = cuota.Monto,
-                                    Promesa = descuento.TotalPagar,
-                                    Restante = descuento.TotalPagar,
-                                    EstatusId = descuento.TotalPagar == 0 ? 4 : 1,
-                                    UsuarioTipoId = 1,
-                                    EsEmpresa = false,
-                                    EsAnticipado = false,
-                                    PagoDescuento = descuento.TotalPagar != cuota.Monto ? new List<PagoDescuento>
+                                    EsSEP = false,
+                                    EsComite = false,
+                                    EsDeportiva = false,
+                                    FechaAplicacion = DateTime.Now,
+                                    EstatusId = 2,
+                                });
+                            }
+
+                            #region pagos
+
+                            if (objAlumnoIncrito.EstatusId != 8)
+                            {
+
+                                int NPagos = desc.PagoConceptoId == 800 ? 4 : 1;
+
+                                for (int indice = 1; indice <= NPagos; indice++)
+                                {
+                                    db.Pago.Add(new Pago
+                                    {
+                                        ReferenciaId = "",
+                                        AlumnoId = ObjAlumno.AlumnoId,
+                                        Anio = ObjAlumno.Anio,
+                                        PeriodoId = ObjAlumno.PeriodoId,
+                                        SubperiodoId = indice,
+                                        OfertaEducativaId = ObjAlumno.OfertaEducativaId,
+                                        FechaGeneracion = DateTime.Now,
+                                        HoraGeneracion = DateTime.Now.TimeOfDay,
+                                        CuotaId = cuota.CuotaId,
+                                        Cuota = cuota.Monto,
+                                        Promesa = descuento.TotalPagar,
+                                        Restante = descuento.TotalPagar,
+                                        EstatusId = descuento.TotalPagar == 0 ? 4 : 1,
+                                        UsuarioTipoId = 1,
+                                        EsEmpresa = false,
+                                        EsAnticipado = false,
+                                        PagoDescuento = descuento.TotalPagar != cuota.Monto ? new List<PagoDescuento>
                                 {
                                     new PagoDescuento
                                     {
@@ -141,13 +146,13 @@ namespace BLL
                                         Monto=(cuota.Monto-descuento.TotalPagar)
                                     }
                                 } : null
-                                });
+                                    });
+                                }
                             }
+
+                            #endregion
                         }
-
-                        #endregion
-
-                    });
+                        });
 
                     db.SaveChanges();
 
@@ -184,6 +189,278 @@ namespace BLL
                     {
                         error.Message,
                         inner = error?.InnerException?.Message
+                    };
+                }
+            }
+        }
+
+        public static object InscribirNuevaOferta(DTOAlumno objAlumno)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    Alumno alumnodb = db.Alumno.Where(a => a.AlumnoId == objAlumno.AlumnoId)
+                         .FirstOrDefault();
+
+                    if (alumnodb != null)
+                    {
+                        db.AlumnoBitacora.Add(new AlumnoBitacora
+                        {
+                            AlumnoId = alumnodb.AlumnoId,
+                            Anio = alumnodb.Anio,
+                            EstatusId = alumnodb.EstatusId,
+                            Fecha = DateTime.Now,
+                            FechaRegistro = alumnodb.FechaRegistro,
+                            Materno = alumnodb.Materno,
+                            MatriculaId = alumnodb.MatriculaId,
+                            Nombre = alumnodb.Nombre,
+                            Paterno = alumnodb.Paterno,
+                            PeriodoId = alumnodb.PeriodoId,
+                            UsuarioId = alumnodb.UsuarioId,
+                            UsuarioIdBitacora = objAlumno.UsuarioId
+                        });
+
+                        if (db.Matricula.Where(kl => kl.MatriculaId == alumnodb.MatriculaId).ToList().Count == 0)
+                        {
+                            db.Matricula.Add(new Matricula
+                            {
+                                AlumnoId = alumnodb.AlumnoId,
+                                Anio = alumnodb.Anio,
+                                FechaAsignacion = alumnodb.FechaRegistro,
+                                MatriculaId = alumnodb.MatriculaId,
+                                OfertaEducativaId = objAlumno.AlumnoInscrito.OfertaEducativaId,
+                                PeriodoId = alumnodb.PeriodoId,
+                                UsuarioId = alumnodb.UsuarioId
+                            });
+                        }
+
+                        db.SaveChanges();
+
+                        alumnodb.Anio = objAlumno.Anio;
+                        alumnodb.PeriodoId = objAlumno.PeriodoId;
+                        alumnodb.FechaRegistro = DateTime.Now;
+                        alumnodb.MatriculaId = Herramientas.Matricula
+                                            .GenerarMatricula(objAlumno.Anio, objAlumno.PeriodoId, objAlumno.AlumnoId,
+                                                        db.OfertaEducativa.Where(a => a.OfertaEducativaId == objAlumno.AlumnoInscrito.OfertaEducativaId)
+                                                        .FirstOrDefault()?.Rvoe ?? null, objAlumno.AlumnoInscrito.TurnoId);
+
+                        AlumnoInscrito AlumnoInscritodb = db.AlumnoInscrito
+                                                        .Where(a => a.AlumnoId == objAlumno.AlumnoId
+                                                                && a.OfertaEducativaId == objAlumno.AlumnoInscrito.OfertaEducativaId)
+                                                        .FirstOrDefault();
+
+                        if (AlumnoInscritodb != null)
+                        {
+                            db.AlumnoInscrito.Remove(AlumnoInscritodb);
+                            db.SaveChanges();
+                        }
+
+                        List<AlumnoInscrito> lssOFertasInscritas = db.AlumnoInscrito
+                                                                    .Where(a => a.AlumnoId == objAlumno.AlumnoId)
+                                                                    .ToList();
+
+                        lssOFertasInscritas.ForEach(oferta =>
+                        {
+                            if (db.AlumnoInscritoBitacora.Where(a =>
+                                 a.AlumnoId == objAlumno.AlumnoId
+                                 && a.OfertaEducativaId == objAlumno.AlumnoInscrito.OfertaEducativaId
+                                 && a.Anio == objAlumno.Anio
+                                 && a.PeriodoId == objAlumno.PeriodoId
+                                 && a.HoraInscripcion == oferta.HoraInscripcion
+                                 && a.FechaInscripcion == oferta.FechaInscripcion)
+                               .ToList().Count == 0)
+                            {
+                                db.AlumnoInscritoBitacora.Add(new AlumnoInscritoBitacora
+                                {
+                                    AlumnoId = oferta.AlumnoId,
+                                    Anio = oferta.Anio,
+                                    EsEmpresa = oferta.EsEmpresa,
+                                    FechaInscripcion = oferta.FechaInscripcion,
+                                    HoraInscripcion = oferta.HoraInscripcion,
+                                    OfertaEducativaId = oferta.OfertaEducativaId,
+                                    PagoPlanId = oferta.PagoPlanId,
+                                    PeriodoId = oferta.PeriodoId,
+                                    TurnoId = oferta.TurnoId,
+                                    UsuarioId = oferta.UsuarioId
+                                });
+
+                                oferta.EstatusId = 2;
+                                oferta.UsuarioId = objAlumno.UsuarioId;
+                                oferta.HoraInscripcion = DateTime.Now.TimeOfDay;
+                                oferta.FechaInscripcion = DateTime.Now;
+
+                                db.SaveChanges();
+                            }
+                        });
+
+                        AlumnoCuatrimestre AlumnoCuatridb = db.AlumnoCuatrimestre
+                                                            .Where(a => a.AlumnoId == objAlumno.AlumnoId
+                                                                    && a.OfertaEducativaId == objAlumno.AlumnoInscrito.OfertaEducativaId)
+                                                            .FirstOrDefault();
+                        if (AlumnoCuatridb != null)
+                        {
+                            db.AlumnoCuatrimestre.Remove(AlumnoCuatridb);
+                            db.SaveChanges();
+                        }
+
+                        db.AlumnoCuatrimestre.Add(new AlumnoCuatrimestre
+                        {
+                            AlumnoId = alumnodb.AlumnoId,
+                            OfertaEducativaId = objAlumno.AlumnoInscrito.OfertaEducativaId,
+                            Cuatrimestre = 1,
+                            Anio = objAlumno.Anio,
+                            PeriodoId = objAlumno.PeriodoId,
+                            esRegular = true,
+                            FechaAsignacion = DateTime.Now,
+                            HoraAsignacion = DateTime.Now.TimeOfDay,
+                            UsuarioId = objAlumno.UsuarioId
+                        });
+
+                        db.AlumnoInscrito.Add(new AlumnoInscrito
+                        {
+                            AlumnoId=objAlumno.AlumnoId,
+                            Anio = objAlumno.Anio,
+                            EsEmpresa = objAlumno.AlumnoInscrito.EsEmpresa,
+                            EstatusId = objAlumno.AlumnoInscrito.EsEmpresa ? 1 : 8,
+                            FechaInscripcion = DateTime.Now,
+                            HoraInscripcion = DateTime.Now.TimeOfDay,
+                            OfertaEducativaId = objAlumno.AlumnoInscrito.OfertaEducativaId,
+                            PagoPlanId = objAlumno.AlumnoInscrito.EsEmpresa ? null : objAlumno.AlumnoInscrito.PagoPlanId,
+                            PeriodoId = objAlumno.PeriodoId,
+                            TurnoId = objAlumno.AlumnoInscrito.TurnoId,
+                            UsuarioId = objAlumno.UsuarioId
+                        });
+
+                        #region Grupo Alumno
+                        if (objAlumno.AlumnoInscrito.EsEmpresa)
+                        {
+                            GrupoAlumnoConfiguracion GrupoAlumnodb = db.GrupoAlumnoConfiguracion
+                                .Where(a => a.AlumnoId == objAlumno.AlumnoId
+                                        && a.OfertaEducativaId == objAlumno.AlumnoInscrito.OfertaEducativaId)
+                                .FirstOrDefault();
+
+                            if (GrupoAlumnodb != null)
+                            {
+                                db.GrupoAlumnoConfiguracionBitacora.Add(new GrupoAlumnoConfiguracionBitacora
+                                {
+                                    AlumnoId = GrupoAlumnodb.AlumnoId,
+                                    Anio = GrupoAlumnodb.Anio,
+                                    CuotaColegiatura = GrupoAlumnodb.CuotaColegiatura,
+                                    CuotaInscripcion = GrupoAlumnodb.CuotaInscripcion,
+                                    EsCuotaCongelada = GrupoAlumnodb.EsCuotaCongelada,
+                                    EsEspecial = GrupoAlumnodb.EsEspecial,
+                                    EsInscripcionCongelada = GrupoAlumnodb.EsInscripcionCongelada,
+                                    FechaRegistro = GrupoAlumnodb.FechaRegistro,
+                                    GrupoId = GrupoAlumnodb.GrupoId,
+                                    HoraRegistro = GrupoAlumnodb.HoraRegistro,
+                                    NumeroPagos = GrupoAlumnodb.NumeroPagos,
+                                    OfertaEducativaId = GrupoAlumnodb.OfertaEducativaId,
+                                    PagoPlanId = GrupoAlumnodb.PagoPlanId,
+                                    PeriodoId = GrupoAlumnodb.PeriodoId,
+                                    UsuarioId = GrupoAlumnodb.UsuarioId
+                                });
+
+                                GrupoAlumnodb.Anio = objAlumno.Anio;
+                                GrupoAlumnodb.PeriodoId = objAlumno.PeriodoId;
+                                GrupoAlumnodb.GrupoId = null;
+                                GrupoAlumnodb.CuotaColegiatura = 0;
+                                GrupoAlumnodb.CuotaInscripcion = 0;
+                                GrupoAlumnodb.EsCuotaCongelada = false;
+                                GrupoAlumnodb.EsInscripcionCongelada = false;
+                                GrupoAlumnodb.EsEspecial = false;
+                                GrupoAlumnodb.UsuarioId = objAlumno.UsuarioId;
+                                GrupoAlumnodb.PagoPlanId = null;
+                                GrupoAlumnodb.NumeroPagos = null;
+                                GrupoAlumnodb.HoraRegistro = DateTime.Now.TimeOfDay;
+                                GrupoAlumnodb.FechaRegistro = DateTime.Now;
+                                GrupoAlumnodb.EstatusId = 8;
+                            }
+                            else
+                            {
+                                db.GrupoAlumnoConfiguracion.Add(
+                                    new GrupoAlumnoConfiguracion
+                                    {
+                                        AlumnoId = objAlumno.AlumnoId,
+                                        OfertaEducativaId = objAlumno.AlumnoInscrito.OfertaEducativaId,
+                                        Anio = objAlumno.Anio,
+                                        PeriodoId = objAlumno.PeriodoId,
+                                        GrupoId = null,
+                                        CuotaColegiatura = 0,
+                                        CuotaInscripcion = 0,
+                                        EsCuotaCongelada = false,
+                                        EsEspecial = false,
+                                        EsInscripcionCongelada = false,
+                                        UsuarioId = objAlumno.UsuarioId,
+                                        PagoPlanId = null,
+                                        NumeroPagos = null,
+                                        FechaRegistro = DateTime.Now,
+                                        HoraRegistro = DateTime.Now.TimeOfDay,
+                                        EstatusId = 8
+                                    });
+                            }
+                        }
+                        #endregion
+
+                        #region Material Didactico
+                        if (objAlumno.AlumnoInscrito.Material)
+                        {
+                            Cuota CuotaMateria = db.Cuota
+                                        .Where(a => a.OfertaEducativaId == objAlumno.AlumnoInscrito.OfertaEducativaId
+                                            && a.Anio == objAlumno.AlumnoInscrito.Anio
+                                            && a.PeriodoId == objAlumno.AlumnoInscrito.PeriodoId
+                                            && a.PagoConceptoId == 808)
+                                        .FirstOrDefault();
+
+                            if (CuotaMateria != null)
+                            {
+                                db.Pago.Add(new Pago
+                                {
+                                    AlumnoId = objAlumno.AlumnoId,
+                                    Anio = objAlumno.AlumnoInscrito.Anio,
+                                    PeriodoId = objAlumno.AlumnoInscrito.PeriodoId,
+                                    SubperiodoId = 1,
+                                    OfertaEducativaId = objAlumno.AlumnoInscrito.OfertaEducativaId,
+                                    FechaGeneracion = DateTime.Now,
+                                    CuotaId = CuotaMateria.CuotaId,
+                                    Cuota = CuotaMateria.Monto,
+                                    Promesa = CuotaMateria.Monto,
+                                    Restante = CuotaMateria.Monto,
+                                    EstatusId = 1,
+                                    ReferenciaId = "",
+                                    EsEmpresa = false,
+                                    UsuarioId = objAlumno.UsuarioId,
+                                    UsuarioTipoId = 1,
+                                    HoraGeneracion = DateTime.Now.TimeOfDay
+                                });
+                            }
+                        }
+                        #endregion
+
+                        db.SaveChanges();
+
+                        db.Pago.Local.ToList().ForEach(pago =>
+                        {
+                            pago.ReferenciaId = db.spGeneraReferencia(pago.PagoId).FirstOrDefault();
+                        });
+
+                        db.SaveChanges();
+                    }
+
+                    return new
+                    {
+                        objAlumno.AlumnoId,
+                        Message = "Todo Correcto",
+                        Estatus = true
+                    };
+                }
+                catch (Exception Error)
+                {
+                    return new
+                    {
+                        Estatus = false,
+                        Error.Message,
+                        Inner = Error?.InnerException?.Message ?? ""
                     };
                 }
             }

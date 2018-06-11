@@ -240,13 +240,13 @@ namespace BLL
             }
         }
         
-        public static List<Oferta_Costo> TraerOfertasCuotasAlumno(int AlumnoId, int Anio, int PeriodoId)
+        public static object TraerOfertasCuotasAlumno(int AlumnoId, int Anio, int PeriodoId)
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
                 try
                 {
-
+                    List<Oferta_Costo> CostosOfertas = new List<Oferta_Costo>();
                     DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
                     Periodo PeriodoActual = db.Periodo.Where(P => FechaActual >= P.FechaInicial && FechaActual <= P.FechaFinal).FirstOrDefault();
@@ -281,16 +281,16 @@ namespace BLL
                                                        && (a.AlumnoInscritoBitacora.Count == 0 || a.AlumnoInscritoBitacora
                                                                                                     .Where(k => k.PagoPlanId == null).ToList().Count == 1)
                                                        && a.AlumnoId == AlumnoId
-                                                       && a.EstatusId != 3).ToList().Count > 0) { return null; }
+                                                       && a.EstatusId != 3).ToList().Count > 0) { return CostosOfertas; }
 
 
-                    if (SubPeriodoId != 4) { return null; }
+                    if (SubPeriodoId != 4) { return CostosOfertas; }
                     int PeriodoTexto = PeriodoActual.PeriodoId == 3 ? 1 : PeriodoActual.PeriodoId + 1, AnioS = PeriodoActual.PeriodoId == 3 ? PeriodoActual.Anio + 1 : PeriodoActual.Anio;
 
                     List<Pago> Cuotas = db.Pago.Where(P => P.AlumnoId == AlumnoId && P.Anio == AnioS && P.PeriodoId == PeriodoTexto
                         && P.EstatusId == 1 && (P.Cuota1.PagoConceptoId == 800 || P.Cuota1.PagoConceptoId == 802)).ToList();
                     List<OfertaEducativa> OfertasAlumno=new List<OfertaEducativa>();
-                    List<Oferta_Costo> CostosOfertas = new List<Oferta_Costo>();
+                    
                     Cuotas.ForEach(Pago=> 
                     {
                         if (OfertasAlumno.Count < 1)
@@ -328,13 +328,17 @@ namespace BLL
                             MontoColeg = PagoCol != null ? PagoCol.Cuota.ToString("C", Cultura) + " - " + DescuentoColegiatura.ToString("C", Cultura) + " = " + (PagoCol.Cuota - DescuentoColegiatura).ToString("C", Cultura) : null,
                         });
                     });
-                    
-                    return CostosOfertas.Count > 0 ? CostosOfertas : null;
+
+                    return CostosOfertas;
 
                 }
-                catch
+                catch (Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

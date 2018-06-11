@@ -52,6 +52,7 @@
 
                     $("#slcPeriodo").append(option);
                 });
+
             })
             .fail(function (data) {
                 console.log("Fallo la carga de GetPeriodo_N_I");
@@ -160,7 +161,7 @@
             });
     },
     GetOfertaEducativa(PlantelId, TipoOFertaId) {
-        if (PlantelId == -1 || TipoOFertaId == -1) {
+        if (PlantelId === -1 || TipoOFertaId === -1) {
             return false;
         } 
             $("#slcOfertaEducativa").empty();
@@ -301,7 +302,7 @@
 
                         $("#slcSistemaPago").append(option);
                     });
-                });
+                });                
             })
             .fail(function (data) {
                 console.log(data);

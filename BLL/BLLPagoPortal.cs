@@ -842,30 +842,42 @@ namespace BLL
                     #endregion
                 });
 
-                int ofert = PagosDetalles[0].OfertaEducativaId;
-
-                PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar += Adeudos.Count > 0 ? PagosAdeudos.Sum(P => P.SaldoAdeudo) : 0;
-                PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar.ToString("C", Cultura);
-                PagosDetalles[0].TotalPagado = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS;
-                PagosDetalles[0].esEmpresa = db.AlumnoInscrito.Where(a =>
-                                            a.AlumnoId == AlumnoId &&
-                                            a.EsEmpresa == true).ToList().Count > 0 ? true : false;
-                if (PagosDetalles[0].esEmpresa)
+                if (PagosDetalles.Count > 0)
                 {
-                    var alConf = db.GrupoAlumnoConfiguracion.Where(k =>
-                                 k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList();
-                    PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
-                }
-                //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
+                    int ofert = PagosDetalles?[0]?.OfertaEducativaId ?? 0;
 
-                return
-                    new PantallaPago
+                    PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar += Adeudos.Count > 0 ? PagosAdeudos.Sum(P => P.SaldoAdeudo) : 0;
+                    PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_Pagar.ToString("C", Cultura);
+                    PagosDetalles[0].TotalPagado = PagosDetalles[Adeudos.Count > 0 ? 1 : 0].Total_a_PagarS;
+                    PagosDetalles[0].esEmpresa = db.AlumnoInscrito.Where(a =>
+                                                a.AlumnoId == AlumnoId &&
+                                                a.EsEmpresa == true).ToList().Count > 0 ? true : false;
+                    if (PagosDetalles[0].esEmpresa)
                     {
-                        Pagos = PagosDetalles,
-                        Estatus = PagosDetalles.Where(l => (l?.OtroDescuento?.Length ?? 0) > 0).ToList().Count > 0 ? true : false,
-                        Periodos = PeriodosDTO
-                    };
+                        var alConf = db.GrupoAlumnoConfiguracion.Where(k =>
+                                     k.AlumnoId == AlumnoId && k.EsEspecial == true).ToList();
+                        PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
+                    }
+                    //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
 
+                    return
+                        new PantallaPago
+                        {
+                            Pagos = PagosDetalles,
+                            Estatus = PagosDetalles.Where(l => (l?.OtroDescuento?.Length ?? 0) > 0).ToList().Count > 0 ? true : false,
+                            Periodos = PeriodosDTO
+                        };
+                }
+                else
+                {
+                    return
+                       new PantallaPago
+                       {
+                           Pagos = new List<DTOPagoDetallado>(),
+                           Estatus = false,
+                           Periodos = new List<DTOPeriodoReferencias>()
+                       };
+                }
             }
         }
 
@@ -2993,7 +3005,7 @@ namespace BLL
             }
         }
 
-        public static string GenerarInscripcionColegiatura(int AlumnoId, int OfertaEducativaId)
+        public static object GenerarInscripcionColegiatura(int AlumnoId, int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -3031,22 +3043,37 @@ namespace BLL
                     decimal DesInscM = 0;
                     decimal DesColM = 0;
                     #region Alumnos - Empresa - Especiales 
+                    
                     BLLGrupo.UpdateAlumnoConfiguracion(objPeriodo.Anio, objPeriodo.PeriodoId, AlumnoId, OfertaEducativaId, 7878); //Usuario de Luis Daniel
-                    List<DTOAlumnoGrupoCuota> lstAlumnoGrupoDesc = db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == AlumnoId && a.OfertaEducativaId == OfertaEducativaId).Select(a => new DTOAlumnoGrupoCuota
-                    {
-                        AlumnoId = (int)a.AlumnoId,
-                        Anio = (int)a.Anio,
-                        GrupoId = (int)a.GrupoId,
-                        OFertaEducativaId = (int)a.OfertaEducativaId,
-                        PeriodoId = (int)a.PeriodoId,
-                        MontoInscripcion = a.CuotaInscripcion,
-                        MontoColegiatura = a.CuotaColegiatura
-                    }).ToList();
+                    List<DTOAlumnoGrupoCuota> lstAlumnoGrupoDesc =
+                        db.GrupoAlumnoConfiguracion.Where(a => a.AlumnoId == AlumnoId && a.OfertaEducativaId == OfertaEducativaId)
+                        .Select(a => new DTOAlumnoGrupoCuota
+                        {
+                            AlumnoId = (int)a.AlumnoId,
+                            Anio = (int)a.Anio,
+                            GrupoId =(int) (a.GrupoId != null ? a.GrupoId : 0),
+                            OFertaEducativaId = (int)a.OfertaEducativaId,
+                            PeriodoId = (int)a.PeriodoId,
+                            MontoInscripcion = a.CuotaInscripcion,
+                            MontoColegiatura = a.CuotaColegiatura
+                        }).ToList();
+
 
                     int DescuentoInsc = 0, DescuentoColg = 0;
                     //si hay algo en la configuracion se trae 
                     if (lstAlumnoGrupoDesc.Count > 0)
                     {
+                        if (lstAlumnoGrupoDesc.Count == 1)
+                        {
+                            if (lstAlumnoGrupoDesc.FirstOrDefault().GrupoId != 0)
+                            {
+                                return new
+                                {
+                                    Message = "Favor de pasar con Relaciones Publicas a terminar el proceso de configuración.",
+                                    Inner = "No tiene Grupo"
+                                };
+                            }
+                        }
                         #region AlumnoDescuento
                         Recargo = false;
 
@@ -3217,11 +3244,15 @@ namespace BLL
 
                     db.SaveChanges();
 
-                    return "Guardado";
+                    return new[] { "Guardado", AlumnoId.ToString() };
                 }
                 catch (Exception e)
                 {
-                    return e.Message;
+                    return new
+                    {
+                        e.Message,
+                        Inner = e.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

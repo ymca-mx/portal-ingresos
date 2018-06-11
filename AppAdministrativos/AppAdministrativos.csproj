@@ -146,7 +146,7 @@
     <Content Include="JS\Referencias\SolicitudCancelacionReferencias.js" />
     <Content Include="JS\Referencias\SolicitudesCancelacionReferencias.js" />
     <Content Include="JS\Referencias\VoBoCancelacionReferencias.js" />
-    <Content Include="JS\src\Reinscripcion\inscripcion.js" />
+    <Content Include="JS\Reinscripcion\inscripcion.js" />
     <Content Include="JS\Reportes\AntiguedadSaldos.js" />
     <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\CarteraVencida.js" />
@@ -5300,7 +5300,7 @@
   <ItemGroup>
     <Content Include="Views\Pago\ActualPagos.html" />
     <Content Include="Views\Pago\ActualPagosBuscar.html" />
-    <Content Include="Views\Alumno\Alumnos.html" />
+    <Content Include="Views\Alumno\AlumnosInscritos.html" />
     <Content Include="Views\Alumno\AlumnoDatos.html" />
     <Content Include="Views\Alumno\AlumnoDatosConsulta.html" />
     <Content Include="Views\Alumno\AlumnoMail.html" />
@@ -5364,7 +5364,7 @@
     <Content Include="JS\hdpicanvas.js" />
     <Content Include="JS\Homonimos.js" />
     <Content Include="JS\html2canvas.js" />
-    <Content Include="JS\IncritosIngles.js" />
+    <Content Include="JS\Alumnos\AlumnosInscritos.js" />
     <Content Include="JS\jquery-1.12.2.min.js" />
     <Content Include="JS\jquery-1.12.4.js" />
     <Content Include="JS\jQuery.print.js" />
@@ -5388,7 +5388,7 @@
     <Content Include="JS\Referencias Pagadas.js" />
     <Content Include="JS\Referencias.js" />
     <Content Include="JS\ReferenciasPagadasBuscar.js" />
-    <Content Include="JS\src\Reinscripcion\MateriasAsesorias.js" />
+    <Content Include="JS\Reinscripcion\MateriasAsesorias.js" />
     <Content Include="JS\RelacionarMateria.js" />
     <Content Include="JS\Reportes\ReporteAcademico.js" />
     <Content Include="JS\Reportes\ReporteAlumnoOferta.js" />
@@ -5487,6 +5487,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\BecaController.cs" />
     <Compile Include="Controllers\BibliotecaController.cs" />
     <Compile Include="Controllers\CuotaController.cs" />
     <Compile Include="Controllers\DescuentosController.cs" />

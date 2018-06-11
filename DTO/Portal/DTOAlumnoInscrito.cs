@@ -59,6 +59,7 @@ namespace DTO
         public int EstatusId { get; set; }
         public int Cuatrimestre { get; set; }
         public AlumnoAutorizacion AlumnoAutorizacion { get; set; }
+        public bool Material { get; set; }
     }
 
     public class AlumnoAutorizacion

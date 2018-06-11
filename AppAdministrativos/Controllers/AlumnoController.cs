@@ -25,6 +25,10 @@ namespace AppAdministrativos.Controllers
         [HttpGet]
         public IHttpActionResult GetDatosAlumno(int AlumnoId) => Ok(BLLAlumnoPortal.ObtenerAlumno(AlumnoId));
 
+        [Route("ConsultarAlumno/{AlumnoId:int}/basic")]
+        [HttpGet]
+        public IHttpActionResult GetDatosAlumnoAnonym(int AlumnoId) => Ok(BLLAlumnoPortal.ObtenerAlumnoAnon(AlumnoId));
+
         [Route("ConsultarAlumnosNuevos")]
         [HttpGet]
         public IHttpActionResult GetAlumnosNuevoIngreso()
@@ -200,6 +204,37 @@ namespace AppAdministrativos.Controllers
         {
             var Result= BLLAlumnoPortal.GuardarPromocionCasa(Promocion);
             if ((bool)Result)
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("NuevaOferta")]
+        [HttpPut]
+        public IHttpActionResult AddNuevaOferta(DTO.DTOAlumno objAlumno)
+        {
+            var Result = BLLAlumnoInscrito.InscribirNuevaOferta(objAlumno);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("GuardarAntecedentes")]
+        [HttpPut]
+        public IHttpActionResult AddAntecedente(DTO.DTOAlumnoAntecendente AlumnoAntecedente)
+        {
+            var Result= BLLAntecedente.GuardarAntecendente(AlumnoAntecedente);
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
             {
                 return Ok(Result);
             }
