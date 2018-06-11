@@ -142,16 +142,6 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                //db.GrupoDetalle.Add(new GrupoDetalle
-                //{
-                //    //PorcentajeInscripcion = objGrupo.GrupoDetalle.PorcentajeInscripcion??0,
-                //    //PorcentajeColegiatura = objGrupo.GrupoDetalle.PorcentajeColegiatura,
-                //    //SiempreInscripcion = objGrupo.GrupoDetalle.SiempreInscripcion,
-                //    //NoPagos = objGrupo.GrupoDetalle.NoPagos,
-                //    //EsCuotaCongelada = objGrupo.GrupoDetalle.EsCongelada,
-
-
-
                 if (objGrupo.GrupoId == 0)
                 {
                     db.Grupo.Add(new Grupo
@@ -160,7 +150,7 @@ namespace BLL
                         Descripcion = objGrupo.Descripcion,
                         SucursalId = objGrupo.SucursalId,
                         SucursalDireccion = objGrupo.SucursalDireccion,
-                        FechaInicio = objGrupo.FechaInicio,
+                        FechaInicio = DateTime.ParseExact(objGrupo.FechaInicioS, "dd-MM-yyyy", CultureInfo.InvariantCulture),
                         FechaRegistro = DateTime.Now,
                         UsuarioId = objGrupo.UsuarioId
                     });
@@ -193,7 +183,7 @@ namespace BLL
                     actualizarGrupo.Descripcion = objGrupo.Descripcion;
                     actualizarGrupo.SucursalId = objGrupo.SucursalId;
                     actualizarGrupo.SucursalDireccion = objGrupo.SucursalDireccion;
-                    actualizarGrupo.FechaInicio = objGrupo.FechaInicio;
+                    actualizarGrupo.FechaInicio = DateTime.ParseExact(objGrupo.FechaInicioS, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     actualizarGrupo.FechaRegistro = DateTime.Now;
                     actualizarGrupo.UsuarioId = objGrupo.UsuarioId;
 
@@ -373,22 +363,17 @@ namespace BLL
 
         }
 
-        public static string MovimientosAlumnoGrupo(int GrupoId, int AlumnoId, int UsuarioId, int OfertaId, int TipoMovimiento)
+        public static string MovimientosAlumnoGrupo(DTOGrupoMovimiento grupoMovimiento)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-
                 try
                 {
+                    GrupoAlumnoConfiguracion actualizarGrupoAlumnoConfiguracion = db.GrupoAlumnoConfiguracion.First(a => a.AlumnoId == grupoMovimiento.AlumnoId && a.OfertaEducativaId == grupoMovimiento.OfertaId);
 
-
-                    GrupoAlumnoConfiguracion actualizarGrupoAlumnoConfiguracion = db.GrupoAlumnoConfiguracion.First(a => a.AlumnoId == AlumnoId && a.OfertaEducativaId == OfertaId);
-
-                    if (TipoMovimiento == 1)
+                    if (grupoMovimiento.TipoMovimiento == 1)
                     {
-                        
-                        actualizarGrupoAlumnoConfiguracion.GrupoId = GrupoId;
-
+                        actualizarGrupoAlumnoConfiguracion.GrupoId = grupoMovimiento.GrupoId;
                     }
                     else {
                         // actualzar GrupoAlumnoConfiguracion 
@@ -413,13 +398,12 @@ namespace BLL
                         });
 
                         // actualzar GrupoAlumnoConfiguracion 
-                        actualizarGrupoAlumnoConfiguracion.GrupoId = GrupoId;
-                        actualizarGrupoAlumnoConfiguracion.UsuarioId = UsuarioId;
+                        actualizarGrupoAlumnoConfiguracion.GrupoId = grupoMovimiento.GrupoId;
+                        actualizarGrupoAlumnoConfiguracion.UsuarioId = grupoMovimiento.UsuarioId;
                         actualizarGrupoAlumnoConfiguracion.FechaRegistro = DateTime.Now;
                         actualizarGrupoAlumnoConfiguracion.HoraRegistro = DateTime.Now.TimeOfDay;
 
                     }
-
                     
                     db.SaveChanges();
                     return "Guardado";

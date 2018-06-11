@@ -122,9 +122,9 @@ namespace AppAdministrativos.WS
         }
 
          [WebMethod]
-         public string MovimientosAlumnoGrupo(string GrupoId, string AlumnoId, string UsuarioId, string OfertaId, string TipoMovimiento)
+         public string MovimientosAlumnoGrupo(DTOGrupoMovimiento grupoMovimiento)
          {
-             return BLLGrupo.MovimientosAlumnoGrupo(int.Parse(GrupoId), int.Parse(AlumnoId), int.Parse(UsuarioId), int.Parse(OfertaId), int .Parse(TipoMovimiento));
+             return BLLGrupo.MovimientosAlumnoGrupo(grupoMovimiento);
          }
 
         [WebMethod]

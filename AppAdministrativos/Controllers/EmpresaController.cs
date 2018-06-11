@@ -42,10 +42,48 @@ namespace AppAdministrativos.Controllers
         [HttpPost]
         public IHttpActionResult SaveEmpresa(DTOEmpresa Empresa)
         {
-            var asf = Empresa;
-            return Ok();
+            return Ok(BLLEmpresa.GuardarEmpresa(Empresa));
         }
 
+        [Route("MovimientosAlumnoGrupo")]
+        [HttpPost]
+        public IHttpActionResult SaveAlumnoGrupo(DTOGrupoMovimiento grupoMovimiento)
+        {
+            return Ok(BLLGrupo.MovimientosAlumnoGrupo(grupoMovimiento));
+        }
+
+        [Route("GuardarGrupo")]
+        [HttpPost]
+        public IHttpActionResult SaveGrupo(DTOGrupo grupo)
+        {
+            return Ok(BLLGrupo.GuardarGrupo2(grupo));
+        }
+
+        [Route("ListarAlumnos/{grupoId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetAlumnosGrupo(int grupoId)
+        {
+            return Ok(BLLGrupo.TraerAlumnosDeEpresa(grupoId));
+        }
+
+        [Route("ListarEmpresaLigera")]
+        [HttpGet]
+        public IHttpActionResult GetEmpresaLigera()
+        {
+            return Ok(BLLEmpresa.ListarEmpresaLigera());
+        }
+
+        [Route("GuardarConfiguracion")]
+        [HttpPost]
+        public IHttpActionResult SaveConfiguracion(DTOGrupoAlumnoCuotaString AlumnoConfig)
+        {
+            if (BLLGrupo.GuardarAlumnoConfiguracion(AlumnoConfig))
+            {
+                BLLGrupo.GenerarCuotas(AlumnoConfig);
+                return Ok(true);
+            }
+            else { return Ok(false); }
+        }
 
     }
 }

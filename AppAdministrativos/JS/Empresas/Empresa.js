@@ -300,13 +300,9 @@
                 $("#slcDelegacionFiscal").append(optionP);
 
                 Entidad = Entidad[0].value;
-                $.ajax({
-                    type: "POST",
-                    url: "WS/General.asmx/ConsultarMunicipios",
-                    data: "{EntidadFederativaId:'" + Entidad + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        var datos = data.d;
+                IndexFn.Api("General/ConsultarMunicipios/" + Entidad, "GET", "")
+                    .done(function (data) {
+                        var datos = data;
                         $(datos).each(function () {
                             var option = $(document.createElement('option'));
 
@@ -320,8 +316,11 @@
                         } else {
                             $("#slcDelegacionFiscal").val($('#slcMunicipio').val());
                         }
-                    }
-                });
+                    })
+                    .fail(function (data) {
+                        console.log(data);
+                    });
+
             },
             BtnSiguienteClick() {
                 if (form.valid() == false) { return false; }
@@ -384,15 +383,15 @@
                         Usuarioid: $.cookie('userAdmin'),
                         EmpresaDetalle:
                         {
-                            NombreC: $('#txtNombre').val(),
+                            Nombre: $('#txtNombre').val(),
                             Paterno: $('#txtPaterno').val(),
                             Materno: $('#txtMaterno').val(),
-                            EmailC: $('#txtEmail').val(),
+                            EmailContacto: $('#txtEmail').val(),
                             Telefono: $('#txtTelefono').val(),
                             Celular: $('#txtCelular').val(),
-                            Pais: $('#slcPaisUni').val(),
-                            Estado: $('#slcEstado').val(),
-                            Delegacion: $('#slcMunicipio').val(),
+                            PaisId: $('#slcPaisUni').val(),
+                            EntidadFederativaId: $('#slcEstado').val(),
+                            MunicipioId: $('#slcMunicipio').val(),
                             CP: $('#txtCP').val(),
                             Colonia: $('#txtColonia').val(),
                             Calle: $('#txtCalle').val(),
@@ -400,40 +399,26 @@
                             NoInterior: $('#NoInterior').val(),
                             Email: $('#txtmail').val(),
                             Observacion: $('#txtObservacion').val(),
+                            DatosFiscales:
+                            {
+                                RFC: $('#txtRFC').val(),
+                                PaisId: $('#slcPaisUniFiscal').val(),
+                                EntidadFederativaId: $('#slcEstadoPaisFiscal').val(),
+                                MunicipioId: $('#slcDelegacionFiscal').val(),
+                                CP: $('#txtCPFiscal').val(),
+                                Colonia: $('#txtColoniaFiscal').val(),
+                                Calle: $('#txtCalleFiscal').val(),
+                                NoExterior: $('#NoExteriorFiscal').val(),
+                                NoInterior: $('#NoInteriorFiscal').val(),
+                                Observacion: $('#txtObservacionFiscal').val()
+                            }
                         },
-                        DatosFiscales:
-                        {
-                            PaisId: $('#slcPaisUniFiscal').val(),
-                            EntidadFederativaId: $('#slcEstadoPaisFiscal').val(),
-                            MunicipioId: $('#slcDelegacionFiscal').val(),
-                            CP: $('#txtCPFiscal').val(),
-                            Colonia: $('#txtColoniaFiscal').val(),
-                            Calle: $('#txtCalleFiscal').val(),
-                            NoExterior: $('#NoExteriorFiscal').val(),
-                            NoInterior: $('#NoInteriorFiscal').val(),
-                            Observacion: $('#txtObservacionFiscal').val()
-                        }
                     };
 
-                //var query = "{";
-                //query += "Razon:'" + $('#txtDescripcion').val() + "',RFC:'" + $('#txtRFC').val() + "',UsuarioId:'" + $.cookie('userAdmin') + "',Email:'" + $('#txtmail').val() + "',Calle:'" + $('#txtCalle').val() + "',CP:'" + $('#txtCP').val() +
-                //    "',NoExterior:'" + $('#NoExterior').val() + "',NoInterior:'" + $('#NoInterior').val() + "',Pais:'" + $('#slcPaisUni').val() + "',Estado:'" + $('#slcEstado').val() +
-                //    "',Delegacion:'" + $('#slcMunicipio').val() + "',Observacion:'" + $('#txtObservacion').val() + "',Colonia:'" + $('#txtColonia').val() + "',FechaV:'" + $('#txtFechaV').val() +
-                //    "',NombreC:'" + $('#txtNombre').val() + "',Paterno:'" + $('#txtPaterno').val() + "',Materno:'" + $('#txtMaterno').val() + "',EmailC:'" + $('#txtEmail').val() + "',Telefono:'" + $('#txtTelefono').val() +
-                //    "',Celular:'" + $('#txtCelular').val() + "'";
-
-                //if ($('#chkFiscales')[0].checked == false) {
-                //    query += ",CalleF:'" + $('#txtCalleFiscal').val() + "',CPF:'" + $('#txtCPFiscal').val() + "',NoExteriorF:'" + $('#NoExteriorFiscal').val() + "',NoInteriorF:'" + $('#NoInteriorFiscal').val() +
-                //        "',PaisF:'" + $('#slcPaisUniFiscal').val() + "',EstadoF:'" + $('#slcEstadoPaisFiscal').val() + "',DelegacionF:'" + $('#slcDelegacionFiscal').val() + "',ObservacionF:'" + $('#txtObservacionFiscal').val() + "',ColoniaF:'" + $('#txtColoniaFiscal').val() + "',Igual:'false'}";;
-                //} else {
-                //    query += ",CalleF:'" + "" + "',CPF:'" + "" + "',NoExteriorF:'" + "" + "',NoInteriorF:'" + "" + "',PaisF:'" + "" +
-                //        "',EstadoF:'" + "" + "',DelegacionF:'" + "" + "',ObservacionF:'" + "" + "',ColoniaF:'" + "" + "',Igual:'true'}";
-                //}
-
-                IndexFn.Api("Empresas/GuardarEmpresa", "POST", Empresa)
+                IndexFn.Api("Empresas/GuardarEmpresa", "POST", JSON.stringify(Empresa))
                     .done(function (data) {
                         $('#NuevaEmpresa').modal('show');
-                        if (data.d == "True") {
+                        if (data == "True") {
                             alertify.alert("Empresa Guardada", function () {
                                 $("#formPopup").trigger('reset');
                                 error.hide();
@@ -721,14 +706,18 @@
                     if (GrupoI != grupo) {
                         var usuario = $.cookie('userAdmin');
                         $('#Load').modal('show');
-                        $.ajax({
-                            type: "POST",
-                            url: "WS/Empresa.asmx/MovimientosAlumnoGrupo",
-                            data: "{GrupoId:'" + grupo + "',AlumnoId:'" + AlumnoId + "',UsuarioId:'" + usuario + "',OfertaId:'" + OfertaI + "',TipoMovimiento:'" + TipoMovimiento + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            success: function (data) {
-                                if (data.d == "Guardado") {
 
+                        var AlumnoGrupo =
+                            {
+                                GrupoId: grupo,
+                                AlumnoId: AlumnoId,
+                                UsuarioId: usuario,
+                                OfertaId: OfertaI,
+                                TipoMovimiento: TipoMovimiento
+                            };
+                        IndexFn.Api("Empresas/MovimientosAlumnoGrupo", "POST", JSON.stringify(AlumnoGrupo))
+                            .done(function (data) {
+                                if (data == "Guardado") {
                                     if (ModificarGrupo == 1) {
                                         EmpresasFn.CargarTabla();
                                     } else {
@@ -737,10 +726,11 @@
                                     alertify.alert("Guardado Correctamente");
                                     $('#PopAlumnoGrupo').modal('hide');
                                     $('#Load').modal('hide');
-
                                 }
-                            }
-                        });
+                            })
+                            .fail(function (data) {
+                                console.log(data);
+                            });
                     }
                 }
             },
@@ -1014,35 +1004,39 @@
             },
             GuardarGrupo() {
                 if (GrupoFrm.valid() == false) { return false; }
-                query = "{ EmpresaId:" + EmpresaI + ",GrupoId:" + GrupoI + ",Nombre:'" + $('#txtNombreGrupo').val() + "',Sede:'" + $('#slcPlantel').val() + "',Direccion:'" + $('#txtDireccion').val() + "',FechaIni:'" + $('#txtFechaInicio').val() +
-                    "',UsuarioId:'" + $.cookie('userAdmin') + "'}";
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Empresa.asmx/GuardarGrupo2",
-                    data: query,
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        if (data.d >= 1) {
+
+                var grupo =
+                    {
+                        EmpresaId: EmpresaI,
+                        GrupoId: GrupoI,
+                        Descripcion: $('#txtNombreGrupo').val(),
+                        SucursalId: $('#slcPlantel').val(),
+                        SucursalDireccion: $('#txtDireccion').val(),
+                        FechaInicioS: $('#txtFechaInicio').val(),
+                        UsuarioId: $.cookie('userAdmin')
+                    };
+
+                IndexFn.Api("Empresas/GuardarGrupo", "POST", JSON.stringify(grupo))
+                    .done(function (data) {
+                        if (data >= 1) {
                             EmpresasFn.LimpiarGrupo();
                             alertify.alert("Grupo Guardado");
                             EmpresasFn.CargarGrupo(EmpresaI);
                         }
                         else { alertify.alert("Error"); }
-                    }
-                });
+                    })
+                    .fail(function (data) {
+                        alertify.alert("Error");
+                        console.log(data);
+                    });
             },
             CargarTablaAlumnosGrupo(GrupoId) {
                 TM = 2;
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Empresa.asmx/ListarAlumnos",
-                    data: "{GrupoId:'" + GrupoId + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.d != null) {
+                IndexFn.Api("Empresas/ListarAlumnos/" + GrupoId, "GET", "")
+                    .done(function (datos) {
+                        if (datos != null) {
                             tblAlumnosCompletos1 = $('#tblAlumnosCom1').dataTable({
-                                "aaData": data.d,
+                                "aaData": datos,
                                 "aoColumns": [
                                     { "mDataProp": "AlumnoId" },
                                     { "mDataProp": "Nombre" },
@@ -1113,18 +1107,16 @@
                             $('#Load').modal('hide');
                         }
                         else { alertify.alert("Error"); }
-                    }
-                });
+                    })
+                    .fail(function (data) {
+                        alertify.alert("Error");
+                        console.log(data);
+                    });
             },
             CargarEmpresasLigero() {
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Empresa.asmx/ListarEmpresaLigera",
-                    data: "{}",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-
-                        DatosEmpresas = data.d;
+                IndexFn.Api("Empresas/ListarEmpresaLigera", "GET", "")
+                    .done(function (data) {
+                        DatosEmpresas = data;
 
                         $("#slcEmpresa").empty();
                         var option0 = $(document.createElement('option'));
@@ -1142,21 +1134,19 @@
                         });
 
                         $('#Load').modal('hide');
-                    }
-                });
+                    })
+                    .fail(function (data) {
+                        alertify.alert("Error");
+                        console.log(data);
+                    });
             },
             CargarTabla() {
                 TM = 1;
-                $.ajax({
-                    type: "POST",
-                    url: "WS/Empresa.asmx/ListarAlumnos",
-                    data: "{GrupoId:'" + 0 + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.d != null) {
+                IndexFn.Api("Empresas/ListarAlumnos/" + 0, "GET", "")
+                    .done(function (datos) {
+                        if (datos != null) {
                             tblAlumnosCompletos = $('#tblAlumnosCom').dataTable({
-                                "aaData": data.d,
+                                "aaData": datos,
                                 "aoColumns": [
                                     { "mDataProp": "AlumnoId" },
                                     { "mDataProp": "Nombre" },
@@ -1255,8 +1245,12 @@
                             EmpresasFn.CargarEmpresasLigero();
                         }
                         else { alertify.alert("Error"); }
-                    }
-                });
+                    })
+                    .fail(function (data) {
+                        alertify.alert("Error");
+                        console.log(data);
+                    });
+
             },
             GuardarConfiguracion() {
                 if (formAlumno.valid()) {
@@ -1266,7 +1260,6 @@
                     var periodoId = periodo.substring(0, 1);
                     var anio = periodo.substring(2, 6);
                     var obj = {
-                        'AlumnoConfig': {
                             'AlumnoId': AlumnoConfig.AlumnoId,
                             'OfertaEducativaId': $('#slcOfertaEducativa').val(),
                             'OfertaEducativaIdAnterior': OfertaI,
@@ -1282,17 +1275,11 @@
                             'Anio': anio,
                             'PeriodoId': periodoId,
                             'Credenciales': $('#chkCredenciales')[0].checked
-                        }
                     };
-                    obj = JSON.stringify(obj);
-                    $.ajax({
-                        type: "POST",
-                        url: "WS/Empresa.asmx/GuardarConfiguracion",
-                        data: obj,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.d) {
+
+                    IndexFn.Api("Empresas/GuardarConfiguracion", "POST", JSON.stringify(obj))
+                        .done(function (data) {
+                            if (data) {
                                 alertify.alert("Configuración Guardada");
                                 $('#PopAlumnoConfiguracion').modal('hide');
                                 if (TM == 1) { EmpresasFn.CargarTabla(); } else { EmpresasFn.CargarTablaAlumnosGrupo(GrupoI) }
@@ -1300,8 +1287,12 @@
                                 $('#Load').modal('hide');
                                 alertify.alert("Error al guardar, intente nuevamente");
                             }
-                        }
-                    });
+                        })
+                        .fail(function (data) {
+                            alertify.alert("Error");
+                            console.log(data);
+                        });
+
                 }
             }
         };

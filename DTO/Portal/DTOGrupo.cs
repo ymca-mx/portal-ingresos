@@ -36,6 +36,15 @@ namespace DTO
         public int GrupoId { get; set; }
         public string Descripcion { get; set; }
         public int NumeroDePagos { get; set; }
-      
     }
+    
+    public class DTOGrupoMovimiento
+    {
+        public int GrupoId { get; set; }
+        public int AlumnoId { get; set; }
+        public int UsuarioId { get; set; }
+        public int OfertaId { get; set; }
+        public int TipoMovimiento { get; set; }
+    }
+
 }
