@@ -469,7 +469,7 @@ $(function () {
             $('#slcNacionalidadPrep').on('change', this.NacionalidadPrepChange);
             $('#slcLugarN').on('chango', this.setPaisEstado);//<<<--- falta 
 
-            
+
 
             $('#txtDescuentoBec').data('labelp', 'txtPagarCol');
             $('#txtDescuentoBec').data('label', 'txtcuotaCol');
@@ -506,6 +506,7 @@ $(function () {
                     InscripcionFn.GetMontosKnob(val, 'txtDescuentoCred');
                 }
             });
+
             this.SetFecha();
             GlobalFn.GetGenero();
             GlobalFn.GetMedios();
@@ -518,15 +519,16 @@ $(function () {
             GlobalFn.GetParentesco("slcParentesco2");
             GlobalFn.GetPeriodo_N_I();
             $('#slcNacionalidad').val('1').change();
-            GlobalFn.init();
-            $('#slcTipoOferta').on('change', this.ChangeLabels);
+
+            //$('#slcTipoOferta').on('change', this.ChangeLabels);
+
+            $("#slcPlantel").change(GlobalFn.PlantelChange);
+            $("#slcTipoOferta").change(this.ChangeLabels);
+
+            $("#slcEstado").change(GlobalFn.EstadoChange);
 
             FormWizard();
-            this.Eventos();
-        },
-        Eventos() {
-            
-            $('#slcOfertaEducativa').on('change', this.slcOfertaEducativaChange);
+
             $('#slcPeriodo').on('change', this.slcPeriodoChange);
             $('#chkYo').on('click', this.chkYoClick);
             $("#slcTurno").on('change', this.slcTurnoChange);
@@ -544,12 +546,12 @@ $(function () {
             $('#txtClave1').on('keydown', this.txtClave1KeyDown);
             $("#btnBuscar1").on('click', this.btnBuscar1Click);
             $('#txtApPaterno').focusout(this.Buscar);
-            $("#txtApMaterno").focusout(this.Buscar);            
+            $("#txtApMaterno").focusout(this.Buscar);
             $('#chkUniSi').on('change', this.ActiveObse);
             $('#chkUniNo').on('change', this.ActiveObse);
 
             this.Beca();
-            this.Inscripcion();            
+            this.Inscripcion();
         },
         ActiveObse() {
             if ($('#chkUniSi')[0].checked) {
@@ -587,6 +589,8 @@ $(function () {
                 $('#divPrepa').hide();
                 $('#divUni').hide();
             }
+
+            GlobalFn.GetOfertaEducativa($("#slcPlantel").val(), $("#slcTipoOferta").val());
         },
         NacionalidadChange() {
             if (parseInt($('#slcNacionalidad').val()) === 1) {

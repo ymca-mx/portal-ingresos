@@ -155,6 +155,7 @@
                 }
 
                 GlobalFn.GetOfertaEducativa(GlobalFn.DatosOferta.PlantelId, GlobalFn.DatosOferta.OfertaEducativaTipoId);
+                $("#slcTipoOferta").change();
             })
             .fail(function (data) {
                 console.log(data);
