@@ -42,6 +42,49 @@ namespace BLL
             }
         }//ObtenerReporteAlumnoOferta()
 
+        public static object CargarReporteSaldosOfertaEducativa(int ofertaEducativaId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+
+                List<SP_ReporteSaldoAlumno_Result> alumnoSaldo0 = db.SP_ReporteSaldoAlumno().ToList();
+
+                var periodos0 = alumnoSaldo0.Select(a => a.Descripcion).Distinct().ToList();
+
+                var periodos = db.Periodo.Where(a => periodos0.Select(w => w).Contains(a.Descripcion))
+                                                  .OrderByDescending(b => b.Anio)
+                                                  .Select(c => new
+                                                  {
+                                                      c.Descripcion,
+                                                      DescripcionCorta = c.Descripcion,
+                                                      c.Anio,
+                                                      c.PeriodoId
+                                                  }).ToList();
+
+                var alumnos = alumnoSaldo0.Where(a => a.OfertaEducativaId == ofertaEducativaId)
+                                .Select(a => new { a.AlumnoId, a.Nombre }).Distinct().ToList();
+
+
+                List<DTOSaldoAlumno> SaldoAlumno = alumnos.Select(a => new DTOSaldoAlumno
+                {
+                    AlumnoId = a.AlumnoId,
+                    Nombre = a.Nombre,
+                    Detalle = periodos.Select(c => new DTOSaldosDetalle
+                    {
+                        AlumnoId = (int)a.AlumnoId,
+                        Periodo = c.Descripcion,
+                        Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion && e.OfertaEducativaId==ofertaEducativaId).FirstOrDefault()?.Saldo ?? 0)
+                    }).ToList(),
+                    SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.OfertaEducativaId == ofertaEducativaId).Select(f => f.Saldo).ToList().Sum())
+                }).ToList();
+
+                return new
+                {
+                    Alumnos = SaldoAlumno,
+                    Estatus = true
+                };
+            }
+        }
         public static DTOCuatrimestre CargarCuatrimestreHistorico()
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -299,7 +342,7 @@ namespace BLL
             }
         }
 
-        public static DTOReporteSaldos CargarReporteSaldos()
+        public static object CargarReporteSaldos()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -308,16 +351,18 @@ namespace BLL
 
                 var periodos0 = alumnoSaldo0.Select(a => a.Descripcion).Distinct().ToList();
 
-                List<DTOPeriodoSaldos> periodos = db.Periodo.Where(a => periodos0.Select(w => w).Contains(a.Descripcion))
+                var periodos = db.Periodo.Where(a => periodos0.Select(w => w).Contains(a.Descripcion))
                                                   .OrderByDescending(b => b.Anio)
-                                                  .Select(c => new DTOPeriodoSaldos
+                                                  .Select(c => new
                                                   {
-                                                      Descripcion = c.Descripcion,
-                                                      DescripcionCorta = c.Descripcion
+                                                      c.Descripcion,
+                                                      DescripcionCorta = c.Descripcion,
+                                                      c.Anio,
+                                                      c.PeriodoId
                                                   }).ToList();
 
-                var alumnos = alumnoSaldo0.Select(a => new { a.AlumnoId,a.Nombre}).Distinct().ToList();
-                
+                var alumnos = alumnoSaldo0.Select(a => new { a.AlumnoId, a.Nombre }).Distinct().ToList();
+
 
                 List<DTOSaldoAlumno> SaldoAlumno = alumnos.Select(a => new DTOSaldoAlumno
                 {
@@ -325,9 +370,9 @@ namespace BLL
                     Nombre = a.Nombre,
                     Detalle = periodos.Select(c => new DTOSaldosDetalle
                     {
-                        AlumnoId =(int) a.AlumnoId,
+                        AlumnoId = (int)a.AlumnoId,
                         Periodo = c.Descripcion,
-                        Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion ).FirstOrDefault()?.Saldo??0)
+                        Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion).FirstOrDefault()?.Saldo ?? 0)
                     }).ToList(),
                     SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId).Select(f => f.Saldo).ToList().Sum())
                 }).ToList();
@@ -338,13 +383,13 @@ namespace BLL
                                           OfertaEducativaId = (int)b.Key.OfertaEducativaId,
                                           Descripcion = db.OfertaEducativa.Where(c => c.OfertaEducativaId == b.Key.OfertaEducativaId).FirstOrDefault().Descripcion,
                                           Periodos = periodos.Select(f => new DTOSaldoPeriodos
-                                                     {
-                                                         Periodo = f.Descripcion,
-                                                         Saldo = String.Format("{0:C}", (decimal)alumnoSaldo0.Where(g => g.OfertaEducativaId == b.Key.OfertaEducativaId
-                                                                                        && g.Descripcion == f.Descripcion)
+                                          {
+                                              Periodo = f.Descripcion,
+                                              Saldo = String.Format("{0:C}", (decimal)alumnoSaldo0.Where(g => g.OfertaEducativaId == b.Key.OfertaEducativaId
+                                                                             && g.Descripcion == f.Descripcion)
                                                                            .Select(h => h.Saldo).ToList().Sum())
-                                                     }).ToList(),
-                                          SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(p => p.OfertaEducativaId == b.Key.OfertaEducativaId).Select(l=> l.Saldo).Sum())
+                                          }).ToList(),
+                                          SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(p => p.OfertaEducativaId == b.Key.OfertaEducativaId).Select(l => l.Saldo).Sum())
 
                                       }).OrderBy(j => j.OfertaEducativaId).ToList();
 
@@ -361,12 +406,58 @@ namespace BLL
                     SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Select(l => l.Saldo).Sum())
                 });
 
-                DTOReporteSaldos Reporte = new DTOReporteSaldos();
-                Reporte.Periodos = periodos;
-                Reporte.Alumnos = SaldoAlumno;
-                Reporte.Ofertas = saldoOfertas;
+                var ofertas = alumnoSaldo0.Select(a => a.OfertaEducativaId).Distinct().ToList();
 
-                return Reporte;
+                var TipoOfertas = db.OfertaEducativa
+                                    .Where(a => ofertas.Contains(a.OfertaEducativaId))
+                                    .Select(b => new
+                                    {
+                                        b.OfertaEducativaTipoId,
+                                        b.OfertaEducativaTipo.Descripcion
+                                    })
+                                    .Distinct()
+                                    .ToList()
+                                    .Select(a => new
+                                    {
+                                        a.OfertaEducativaTipoId,
+                                        a.Descripcion,
+                                        OfertasEducativas = db.OfertaEducativa
+                                                            .Where(b => ofertas.Contains(b.OfertaEducativaId) && b.OfertaEducativaTipoId == a.OfertaEducativaTipoId)
+                                                            .Select(Ab => new
+                                                            {
+                                                                Ab.OfertaEducativaId,
+                                                                Ab.Descripcion
+                                                            })
+                                                            .ToList()
+                                    })
+                                    .ToList();
+                TipoOfertas.Insert(0, new
+                {
+                    OfertaEducativaTipoId = -1,
+                    Descripcion = "Todas",
+                    OfertasEducativas = new[]
+                    {
+                        new {
+                            OfertaEducativaId =-1,
+                            Descripcion="Todas"
+                        }
+
+                    }
+                    .ToList()
+                });
+
+                //DTOReporteSaldos Reporte = new DTOReporteSaldos();
+                //Reporte.Periodos = periodos;
+                //Reporte.Alumnos = SaldoAlumno;
+                //Reporte.Ofertas = saldoOfertas;
+
+                return new
+                {
+                    Periodos = periodos,
+                    Alumnos = SaldoAlumno,
+                    Ofertas = saldoOfertas,
+                    TipoOfertas
+                };
             }
         }
 
