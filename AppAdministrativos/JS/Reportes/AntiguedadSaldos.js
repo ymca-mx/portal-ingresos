@@ -85,7 +85,6 @@
                         return false;
                     }
 
-                    debugger;
                     periodos = data.Periodos;
 
                     ReporteFn.TipoOfertas = [];
