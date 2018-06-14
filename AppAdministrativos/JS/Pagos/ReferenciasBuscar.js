@@ -35,6 +35,7 @@
                 })
                 .fail(function (data) {
                     console.log(data);
+                    $('#Load').modal('hide');
                 });
         },
         BuscarNombre(Nombre) {

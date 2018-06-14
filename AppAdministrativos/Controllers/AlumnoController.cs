@@ -27,7 +27,23 @@ namespace AppAdministrativos.Controllers
 
         [Route("ConsultarAlumno/{AlumnoId:int}/basic")]
         [HttpGet]
-        public IHttpActionResult GetDatosAlumnoAnonym(int AlumnoId) => Ok(BLLAlumnoPortal.ObtenerAlumnoAnon(AlumnoId));
+        public IHttpActionResult GetDatosAlumnoAnonym(int AlumnoId)
+        {
+            var Result= BLLAlumnoPortal.ObtenerAlumnoAnon(AlumnoId);
+            if (Result != null) {
+                if ((bool)Result.GetType().GetProperty("Status").GetValue(Result, null))
+                {
+                    return Ok(Result);
+                }
+                else 
+                {
+                    return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                        + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
+                }
+            }
+            else { return NotFound(); }
+           
+        }
 
         [Route("ConsultarAlumnosNuevos")]
         [HttpGet]

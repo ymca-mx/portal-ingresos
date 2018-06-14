@@ -1261,7 +1261,8 @@ namespace BLL
                                                               }
                                          }).FirstOrDefault(),
                                     fotoBase64 = fotoAlumno,
-                                    StatusActual
+                                    StatusActual,
+                                    Status = true
                                 })
                                 .FirstOrDefault();
                    
@@ -1270,6 +1271,7 @@ namespace BLL
                 {
                     return new
                     {
+                        Status = false,
                         error.Message,
                         Inner = error?.InnerException?.Message ?? "",
                         Inner1 = error?.InnerException?.InnerException?.Message ?? ""
