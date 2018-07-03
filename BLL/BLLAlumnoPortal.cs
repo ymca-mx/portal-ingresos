@@ -681,70 +681,41 @@ namespace BLL
             public string Descripcion { get; set; }
         }
 
-        public static DTOAlumno ObtenerAlumnoR(int AlumnoId)
+        public static object ObtenerAlumnoR(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    DTOAlumno Alumno = (from a in db.Alumno
-                                        where a.AlumnoId == AlumnoId
-                                        select new DTOAlumno
-                                        {
-                                            Grupo = new DTOGrupo
-                                            {
-                                                Descripcion = a.GrupoAlumnoConfiguracion.Where(o => o.AlumnoId == a.AlumnoId && o.EstatusId == 1).ToList().Count > 0 ?
-                                                             a.GrupoAlumnoConfiguracion.Where(o => o.AlumnoId == a.AlumnoId && o.EstatusId == 1).FirstOrDefault().Grupo.Descripcion : ""
-                                            },
-                                            AlumnoId = a.AlumnoId,
-                                            Nombre = a.Nombre,
-                                            Paterno = a.Paterno,
-                                            Materno = a.Materno,
-                                            FechaRegistro = a.FechaRegistro.Day + "/" + a.FechaRegistro.Month + "/" + a.FechaRegistro.Year,
-                                            DTOAlumnoDetalle = new DTOAlumnoDetalle
-                                            {
-                                                AlumnoId = a.AlumnoDetalle.AlumnoId,
-                                                FechaNacimiento = a.AlumnoDetalle.FechaNacimiento,
-                                                Email = a.AlumnoDetalle.Email
-                                            },
-                                            AlumnoInscrito = a.AlumnoInscrito.Where(a2 => a2.OfertaEducativa.OfertaEducativaTipoId != 4)
-                                                             .Select(Ai => new DTOAlumnoInscrito
-                                                             {
-                                                                 AlumnoId = Ai.AlumnoId,
-                                                                 OfertaEducativaId = Ai.OfertaEducativaId,
-                                                                 OfertaEducativa = new DTOOfertaEducativa
-                                                                 {
-                                                                     OfertaEducativaId = Ai.OfertaEducativa.OfertaEducativaId,
-                                                                     Descripcion = Ai.OfertaEducativa.Descripcion
-                                                                 }
-                                                             }).FirstOrDefault(),
-                                            Usuario = new DTOUsuario
-                                            {
-                                                UsuarioId = a.UsuarioId,
-                                                Nombre = a.Usuario.Nombre
-                                            }
-
-                                        }).AsNoTracking().FirstOrDefault();
-                    //Alumno.AlumnoInscrito.OfertaEducativa.Descripcion = Alumno.AlumnoInscrito != null ? Alumno.AlumnoInscrito.OfertaEducativa.Descripcion : "";
-                    Alumno.AlumnoInscrito = Alumno.AlumnoInscrito ?? new DTOAlumnoInscrito { OfertaEducativa = new DTOOfertaEducativa { Descripcion = "" } };
-                    Alumno.AlumnoInscrito.EsEmpresa = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId).ToList().Count > 0 ?
-                        db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId).ToList().Where(a => a.EsEmpresa == true).ToList().Count > 0 ?
-                        true : false : false;
-                    Alumno.lstAlumnoInscrito = db.AlumnoInscrito.Where(A => A.AlumnoId == AlumnoId && A.OfertaEducativa.OfertaEducativaTipoId != 4)
-                                                .ToList().ConvertAll(new Converter<AlumnoInscrito, DTOAlumnoInscrito>(Convertidor.ToDTOAlumnoInscrito));
-                    List<List<DTOAlumnoInscrito>> AlumnoInscrito = Alumno.lstAlumnoInscrito.GroupBy(v => v.OfertaEducativaId).Select(A => A.ToList()).ToList();
-
-                    Alumno.lstAlumnoInscrito.Clear();
-                    AlumnoInscrito.ForEach(a =>
-                    {
-                        Alumno.lstAlumnoInscrito.Add(a.FirstOrDefault());
-                    });
-
-                    return Alumno;
+                    return db.Alumno
+                         .Where(a => a.AlumnoId == AlumnoId)
+                         .Select(alumno => new
+                         {
+                             alumno.AlumnoId,
+                             alumno.Nombre,
+                             alumno.Paterno,
+                             alumno.Materno,
+                             Ofertas = alumno
+                                         .AlumnoInscrito
+                                         .Where(a => a.OfertaEducativa.OfertaEducativaTipoId != 4)// Diferente de idiomas
+                                         .Select(a => new
+                                         {
+                                             a.OfertaEducativaId,
+                                             a.OfertaEducativa.Descripcion
+                                         })
+                                         .ToList(),
+                             Status = true
+                         })
+                         .FirstOrDefault();
                 }
-                catch
+                catch (Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message,
+                        Status = false
+                    };
                 }
             }
         }

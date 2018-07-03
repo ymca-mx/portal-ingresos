@@ -44,8 +44,8 @@
         }, 1000);
     },
     ContinuarSesion: function () {
-        IndexFn.Continue = true;
-        IndexFn.SetTime();
+        //IndexFn.Continue = true;
+        //IndexFn.SetTime();
         $('#modalTime').modal('hide');
     },
     CerrarSesion: function () {
@@ -53,55 +53,55 @@
         $(location).attr('href', 'login.html');
     },
     SetTime: function () {
-        setTimeout(this.LifeSesion, 500000);
+        //setTimeout(this.LifeSesion, 500000);
     },
     Message:
-         '<div class="modal" tabindex="-1" data-backdrop="static" style="background-color:#0000008f;" id="Load" data-keyboard="false">' +
-            '<div class="modal-dialog modal-sm" style="height: 180px;">' +
-            '<div class="scene">' +
-            '<svg version="1.1"' +
-            'id="dc-spinner"' +
-            'xmlns="http://www.w3.org/2000/svg"' +
-            'x="0px" y="0px"' +
-            'wwidth="200" height="200"' +
-            'viewBox="0 0 38 38"' +
-            'preserveAspectRatio="xMinYMin meet">' +
-            '<image xlink:href="Imagenes/uniymca.png" height="20" width="20" x="10" y="12"></image>' +
-            '<path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203' +
-            'C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20' +
-            'C34.797,11.841,28.159,5.203,20,5.203z">' +
-            '</path>' +
-            '<path fill="#373a42" d="M20,33.125c-7.237,0-13.125-5.888-13.125-13.125S12.763,6.875,20,6.875S33.125,12.763,33.125,20' +
-            'S27.237,33.125,20,33.125z M20,7.078C12.875,7.078,7.078,12.875,7.078,20c0,7.125,5.797,12.922,12.922,12.922' +
-            'S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">' +
-            '</path>' +
-            '<path fill="#ff0129" stroke="#ff0129" stroke-width="0.70" stroke-miterlimit="10" d="M5.203,20' +
-            'c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">' +
-            '<animateTransform attributeName="transform"' +
-            'type="rotate"' +
-            'from="0 20 20"' +
-            'to="360 20 20"' +
-            'calcMode="spline"' +
-            'keySplines="0.4, 0, 0.2, 1"' +
-            'keyTimes="0;1"' +
-            'dur="2s"' +
-            'repeatCount="indefinite" />' +
-            '</path>' +
-            '<path fill="#3B83BD" stroke="#3B83BD" stroke-width="0.50" stroke-miterlimit="10" d="M7.078,20' +
-            'c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203' +
-            'C12.875,32.922,7.078,27.125,7.078,20z">' +
-            '<animateTransform attributeName="transform"' +
-            'type="rotate"' +
-            'from="0 20 20"' +
-            'to="360 20 20"' +
-            'dur="1.8s"' +
-            'repeatCount="indefinite" />' +
-            '</path>' +
-            '</svg>' +
-            '</div>' +
-            '</div>' +
-            '</div>'
-    
+        '<div class="modal" tabindex="-1" data-backdrop="static" style="background-color:#0000008f;" id="Load" data-keyboard="false">' +
+        '<div class="modal-dialog modal-sm" style="height: 100%;">' +
+        '<div class="scene">' +
+        '<svg version="1.1"' +
+        'id="dc-spinner"' +
+        'xmlns="http://www.w3.org/2000/svg"' +
+        'x="0px" y="0px"' +
+        'wwidth="200" height="200"' +
+        'viewBox="0 0 38 38"' +
+        'preserveAspectRatio="xMinYMin meet">' +
+        '<image xlink:href="Imagenes/uniymca.png" height="20" width="20" x="10" y="12"></image>' +
+        '<path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203' +
+        'C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20' +
+        'C34.797,11.841,28.159,5.203,20,5.203z">' +
+        '</path>' +
+        '<path fill="#373a42" d="M20,33.125c-7.237,0-13.125-5.888-13.125-13.125S12.763,6.875,20,6.875S33.125,12.763,33.125,20' +
+        'S27.237,33.125,20,33.125z M20,7.078C12.875,7.078,7.078,12.875,7.078,20c0,7.125,5.797,12.922,12.922,12.922' +
+        'S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">' +
+        '</path>' +
+        '<path fill="#ff0129" stroke="#ff0129" stroke-width="0.70" stroke-miterlimit="10" d="M5.203,20' +
+        'c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">' +
+        '<animateTransform attributeName="transform"' +
+        'type="rotate"' +
+        'from="0 20 20"' +
+        'to="360 20 20"' +
+        'calcMode="spline"' +
+        'keySplines="0.4, 0, 0.2, 1"' +
+        'keyTimes="0;1"' +
+        'dur="2s"' +
+        'repeatCount="indefinite" />' +
+        '</path>' +
+        '<path fill="#3B83BD" stroke="#3B83BD" stroke-width="0.50" stroke-miterlimit="10" d="M7.078,20' +
+        'c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203' +
+        'C12.875,32.922,7.078,27.125,7.078,20z">' +
+        '<animateTransform attributeName="transform"' +
+        'type="rotate"' +
+        'from="0 20 20"' +
+        'to="360 20 20"' +
+        'dur="1.8s"' +
+        'repeatCount="indefinite" />' +
+        '</path>' +
+        '</svg>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+
 };
 $(function () {
     var app_router;
@@ -109,7 +109,7 @@ $(function () {
 
     IndexFn.init = function () {
         this.Block(true);
-        $('#btnSesionContinuar').on('click', this.ContinuarSesion);
+        //$('#btnSesionContinuar').on('click', this.ContinuarSesion);
         $('#btnSesionCerrar').on('click', this.CerrarSesion);
         $('#popDatos').on('hidden.bs.modal', this.PopDatosAlumnoClick);
         this.TraerAlumno();
@@ -168,7 +168,7 @@ $(function () {
                     $('#popDatos').load('Views/Alumno/AlumnoActualizaDatos.html', function () {
                         $('#popDatos').modal('show');
                     });
-                } 
+                }
                 IndexFn.SetTime();
             }
         });
@@ -204,6 +204,25 @@ $(function () {
         });
     };
     IndexFn.contenidoClick = function () {
+        $($('#MenuItems li')).each(function () {
+            $(this).removeClass('active');
+        });
+
+        $($(this)[0]
+            .parentNode)
+            .addClass('active');
+
+        $($($($(this)[0]
+            .parentNode)[0]
+            .parentNode)[0]
+            .parentNode)
+            .addClass('active');
+
+        $($($($(this)[0]
+            .parentNode)[0]
+            .parentNode)[0]
+            .parentNode)
+            .addClass('active');
 
         bandera = 0;
         var url = $(this).attr('href');
@@ -218,7 +237,7 @@ $(function () {
                 arrurl = arrurl.split('/');
                 var id = arrurl[(arrurl.length - 1)];
                 id = parseInt(id);
-
+                
                 $(IndexFn.Menu).each(function () {
                     if (this.MenuId === menuid) {
                         $(this.SubMenus).each(function () {
@@ -237,7 +256,7 @@ $(function () {
                 $('#divDinamico').load(url);
                 $('#divDinamico').append(IndexFn.ClearAlert());
             } else {
-                IndexFn.PDF();  
+                IndexFn.PDF();
             }
         }
         return false;
@@ -247,38 +266,61 @@ $(function () {
     };
 
     IndexFn.PDF = function () {
-        var PDF = '<div class="container">' +
-            '    <div class="page-body">' +
-            '        <div class="col-md-12 form-group">' +
-            '            <h2>Referencias de reinscripción</h2>' +
+        var PDF = '<main>'+
+        '<div class="panel panel-primary">' +
+            '    <div class="panel-heading">' +
+            '        <div class="panel-title">' +
+            '             <span class="caption title bold">Referencias de reinscripción</span>' +
             '        </div>' +
-            '        <div id="pdf" class="col-md-12">' +
+            '</div>' +
+            '        <div id="pdf" class=""panel-body">' +
             '            <iframe id="filepdf" class="form-control" style="height:700px;" src="Documentos/infografía.pdf"></iframe>' +
             '        </div>' +
             '        <div class="col-md-12"><hr /></div>' +
             '    </div>' +
-            '</div>';
+            '</main>';
         $('#divDinamico').html(PDF);
     };
 
     IndexFn.ConstruirMenu = function () {
         var ul = "";
         var ulPer = "";
+        var clssLi = " ";
+        var clssLiM = " ";
+
         $(IndexFn.Menu).each(function () {
             if (this.TipoMenuId === 1) {
-                ul += '<li class="menu-dropdown classic-menu-dropdown ">' +
-                    '<a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" > ' +
-                    this.Descripcion + '<i class="' + this.icono + '"></i>' +
-                    '</a>';
+                
+                var ulS = '';
                 if (this.SubMenus.length > 0) {
-                    ul += '<ul class="dropdown-menu pull-left">';
+                    ulS += '<ul class="sub-menu">';
                     $(this.SubMenus).each(function () {
-                        ul += '<li>' +
-                            '<a href="#Views/' + this.SubMenuId + '" class="contenido">' +
+                        var dir = '#Views/' + this.SubMenuId ;
+                        var url = document.location.href;
+                        if (url.includes(dir)) {
+                            clssLi = "active";
+                            clssLiM = "active";
+                        }
+
+                        ulS += '<li class="' + clssLi + '">' +
+                            '<a href="' + dir + '" class="contenido" >' +
                             '<i class="' + this.Icono + '"></i>  ' + this.Descripcion +
                             '</a></li>';
+
+                        clssLi = " ";
                     });
+
+                    ul += '<li class="' + clssLiM + '">' +
+                        '<a href="javascript:;" > ' +
+                        '<i class="' + this.icono + '"></i>' +
+                        '<span class="title"> ' + this.Descripcion + '</span>' +
+                        '<span class="arrow "></span>' +
+                        '</a>';
+
+                    ul += ulS;
                     ul += "</ul>";
+
+                    clssLiM = " ";
                 }
             } else if (this.TipoMenuId === 2) {
                 $(this.SubMenus).each(function () {
@@ -307,7 +349,7 @@ $(function () {
                 TipoMenuId: 1,
                 MenuId: 1,
                 Descripcion: "Pagos",
-                icono: "fa fa-angle-down",
+                icono: "fa fa-th-list",
                 SubMenus: [
                     {
                         SubMenuId: 1,
@@ -320,7 +362,15 @@ $(function () {
                         Descripcion: 'Estado de Cuenta',
                         Direccion: 'Views/Pago/EstadodeCuenta2.html',
                         Icono: 'fa fa-bar-chart-o'
-                    },
+                    }
+                ],
+            },
+            {
+                TipoMenuId: 1,
+                MenuId: 1,
+                Descripcion: "Inscripción",
+                icono: "fa fa-mortar-board",
+                SubMenus: [
                     {
                         SubMenuId: 3,
                         Descripcion: 'Generar Referencias - Trámites',
@@ -334,7 +384,6 @@ $(function () {
                         Icono: 'fa fa-book'
                     }
                 ],
-
             },
             {
                 MenuId: 0,
@@ -371,7 +420,7 @@ $(function () {
                 if (e != null) { e.removeChild('body'); }
 
                 $('#divDinamico').after(IndexFn.Message);
-                
+
                 Message = $('#Load');
             }
             $.blockUI({
@@ -391,6 +440,7 @@ $(function () {
             "*actions": "defaultRoute",
         },
         LoadPage: function (SubMenuId) {
+            
             if (localStorage.getItem("user") === null) {
                 Backbone.history.stop();
                 localStorage.clear();
@@ -413,6 +463,8 @@ $(function () {
                 }
             });
             if (direccion.length > 0) {
+                //console.log($('Views/' + subInt));
+
                 IndexFn.SetTime();
                 IndexFn.ClearAlert();
                 $('#divDinamico').load(direccion);
@@ -456,6 +508,7 @@ $(function () {
             bandera = 1;
         },
         defaultRoute: function (actions) {
+            console.log("soy defaultRoute");
             if (localStorage.getItem("user") === null) {
                 Backbone.history.stop();
                 localStorage.clear();

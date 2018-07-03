@@ -1,15 +1,20 @@
-﻿<div class="container">
-    <div class="page-title">
-        <div class="col-md-12 form-group">
-            <h2>Reglamento Escolar</h2>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title bold">Reglamento Escolar</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div id="pdf" class="col-md-12">
+                    <iframe id="filepdf" class="form-control" style="height:700px;"></iframe>
+                </div>
+                <div class="col-md-12"><hr /></div>
+            </div>
         </div>
     </div>
-    <div class="page-body">
-        <div class="col-md-12"><hr /></div>
-        <div id="pdf" class="col-md-12">
-            <iframe id="filepdf" class="form-control" style="height:700px;"></iframe>
-        </div>
-        <div class="col-md-12"><hr /></div>
-    </div>
-</div>
-<script src="JS/Alumno/Reglamento.js"></script>
+</main>
+<script>
+    $.getScript("JS/Alumno/Reglamento.js");
+</script>

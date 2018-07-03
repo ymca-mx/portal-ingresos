@@ -10,17 +10,18 @@ using Universidad.BLL;
 
 namespace AppAlumnos.Controllers
 {
+    [RoutePrefix("Api/Alumno")]
     public class AlumnoController : ApiController
     {
 
-        [Route("Api/Alumno/Datos/{alumnoId:int}")]
+        [Route("Datos/{alumnoId:int}")]
         [HttpGet]
         public IHttpActionResult Datos(int alumnoId)
         {
             return Ok(Universidad.BLL.BLLAlumno.ImagenIndex(alumnoId));
         }
 
-        [Route("Api/Alumno/EstadoDeCuenta/{AlumnoId}")]
+        [Route("EstadoDeCuenta/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult EstadoDeCuenta(string AlumnoId,  [FromUri] string FechaI, [FromUri] string FechaF)
         {
@@ -33,7 +34,7 @@ namespace AppAlumnos.Controllers
                             DateTime.ParseExact(FechaF, "dd/MM/yyyy", CultureInfo.InvariantCulture))));
         }
 
-        [Route("Api/Alumno/ActualizaPassword")]
+        [Route("ActualizaPassword")]
         [HttpPost]
         public IHttpActionResult ActualizaPassword([FromBody]JObject jObject)
         {
@@ -50,78 +51,92 @@ namespace AppAlumnos.Controllers
             }
         }
 
-        [Route("Api/Alumno/InsertaBitacora/{alumnoId:int}")]
+        [Route("InsertaBitacora/{alumnoId:int}")]
         [HttpGet]
         public void InsertaBitacora(int alumnoId)
         {
             Universidad.BLL.BLLAlumno.InsertaBitacora(alumnoId);
         }
 
-        [Route("Api/Alumno/CalcularAnticipado/{alumnoId}")]
+        [Route("CalcularAnticipado/{alumnoId}")]
         [HttpGet]
         public IHttpActionResult CalcularAnticipado(string alumnoId)
         {
             return Ok(BLLPeriodo.SaberAnticipado(int.Parse(alumnoId)));
         }
 
-        [Route("Api/Alumno/ConsultarAlumnoReinscripcion/{AlumnoId}")]
+        [Route("ConsultarAlumnoReinscripcion/{AlumnoId:int}")]
         [HttpGet]
-        public IHttpActionResult ConsultarAlumnoReinscripcion(int AlumnoId)
+        public IHttpActionResult GetReinscripcion(int AlumnoId)
         {
-            return Ok(BLL.BLLAlumnoPortal.ObtenerAlumnoR(AlumnoId));
+            var Result = BLL.BLLAlumnoPortal.ObtenerAlumnoR(AlumnoId);
+
+            if (Result == null)
+            {
+                return NotFound();
+            }
+            else if ((bool)Result.GetType().GetProperty("Status").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                    + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
+            }
         }
 
 
-        [Route("Api/Alumno/TraerSede/{AlumnoId}")]
+        [Route("TraerSede/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult TraerSede(string AlumnoId)
         {
             return Ok(BLL.BLLSede.SedeAlumno(int.Parse(AlumnoId)));
         }
 
-        [Route("Api/Alumno/VerificaAlumnoDatos/{AlumnoId}")]
+        [Route("VerificaAlumnoDatos/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult VerificaAlumnoDatos(string AlumnoId)
         {
             return Ok(BLL.BLLAlumnoPortal.VerificaAlumnoDatos(int.Parse(AlumnoId)));
         }
 
-        [Route("Api/Alumno/VerificaAlumnoEncuesta/{AlumnoId}")]
+        [Route("VerificaAlumnoEncuesta/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult VerificaAlumnoEncuesta(string AlumnoId)
         {
             return Ok(BLL.BLLAlumnoPortal.VerificaAlumnoEncuesta(int.Parse(AlumnoId)));
         }
 
-        [Route("Api/Alumno/ObenerDatosAlumnoActualiza/{AlumnoId}")]
+        [Route("ObenerDatosAlumnoActualiza/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult ObenerDatosAlumnoActualiza(string AlumnoId)
         {
             return Ok(BLL.BLLAlumnoPortal.ObenerDatosAlumnoActualiza(int.Parse(AlumnoId)));
         }
 
-        [Route("Api/Alumno/UpdateAlumnoDatos")]
+        [Route("UpdateAlumnoDatos")]
         [HttpPost]
         public IHttpActionResult UpdateAlumnoDatos([FromBody] DTO.DTOAlumnoDetalle AlumnoDatos)
         {
             return Ok(BLL.BLLAlumnoPortal.UpdateAlumnoDatos(AlumnoDatos));
         }
 
-        [Route("Api/Alumno/PreguntasPortal")]
+        [Route("PreguntasPortal")]
         [HttpGet]
         public IHttpActionResult PreguntasPortal()
         {
             return Ok(BLL.BLLAlumnoPortal.PreguntasPortal());
         }
 
-        [Route("Api/Alumno/GuardarRespuestas")]
+        [Route("GuardarRespuestas")]
         [HttpPost]
         public IHttpActionResult GuardarRespuestas([FromBody] DTO.DTORespuestas RespuestasEncuesta)
         {
             return Ok(BLL.BLLAlumnoPortal.GuardarRespuestas(RespuestasEncuesta));
         }
 
-        [Route("Api/Alumno/ConsultaPagosDetalle/{AlumnoId}")]
+        [Route("ConsultaPagosDetalle/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult ConsultaPagosDetalle(string AlumnoId)
         {
@@ -135,27 +150,28 @@ namespace AppAlumnos.Controllers
             }
         }
 
-        [Route("Api/Alumno/")]
-        public IHttpActionResult ConsultarPeriodosAlumno(string AlumnoId)
-        {
-            return Ok(BLL.BLLPeriodoPortal.ConsultarPeriodos(int.Parse(AlumnoId)));
-        }
+        //[Route("")]
+        //[HttpGet]
+        //public IHttpActionResult ConsultarPeriodosAlumno(string AlumnoId)
+        //{
+        //    return Ok(BLL.BLLPeriodoPortal.ConsultarPeriodos(int.Parse(AlumnoId)));
+        //}
 
-        [Route("Api/Alumno/ConsultarAlumno/{AlumnoId}")]
+        [Route("ConsultarAlumno/{AlumnoId}")]
         [HttpGet]
         public IHttpActionResult ConsultarAlumno(string AlumnoId)
         {
             return Ok(BLL.BLLAlumnoPortal.ObtenerAlumno(int.Parse(AlumnoId)));
         }
 
-        [Route("Api/Alumno/ConsultarAdeudo/{AlumnoId:int}/{OfertaEducativaId}")]
+        [Route("ConsultarAdeudo/{AlumnoId:int}/{OfertaEducativaId}")]
         [HttpGet]
         public IHttpActionResult ConsultarAdeudo(int AlumnoId, int OfertaEducativaId)
         {
             return Ok(BLL.BLLPagoPortal.TraerAdeudos(AlumnoId, OfertaEducativaId));
         }
 
-        [Route("Api/Alumno/ConsultarReferenciasCP/{AlumnoId:int}")]
+        [Route("ConsultarReferenciasCP/{AlumnoId:int}")]
         [HttpGet]
         public IHttpActionResult ConsultarReferenciasCP(int AlumnoId)
         {

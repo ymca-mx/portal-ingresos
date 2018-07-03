@@ -1,0 +1,99 @@
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title bold">Usuarios del Sistema</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tblUsuarios" class="table table-striped bg-inverse">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Password</th>
+                                <th>Estatus</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" data-height="350" id="PopDatos" data-keyboard="false">
+        <div class="modal-dialog modal-dialog" style="width:600px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h3 class="modal-title">Modificar Datos de Usuario</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">UsuarioId</label>
+                            <input class="form-control" type="text" id="txtUsuarioId" readonly />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Nombre</label>
+                            <input class="form-control" type="text" id="txtNombre" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Paterno</label>
+                            <input class="form-control" type="text" id="txtPaterno" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Materno</label>
+                            <input class="form-control" type="text" id="txtMaterno" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Contraseña Actual</label>
+                            <input class="form-control" type="text" id="txtPassword" readonly />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Nueva Contraseña</label>
+                            <input class="form-control" type="text" id="txtPasswordN" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Estatus</label>
+                            <div class="col-md-12 checkbox" style="padding:inherit !important">
+                                <input type="checkbox" id="chkEstatus" class="checkbox" />
+                                <label for="chkEstatus" class="control-label" id="lblEstatus">Activo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                <button type="button" id="btnGuardar" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="height: 90px;">
+            <!--<div class="modal-content" style="width:auto">-->
+            <div class="form-group">
+                <h3 id="hCarga">Cargando</h3>
+            </div>
+            <div class="form-group">
+                <div class="bar" style="width:auto" id="divBar">
+                    <p id="txtBar"></p>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+</main>
+<script>
+    $.getScript("Js/Usuarios/Administracion.js");
+</script>

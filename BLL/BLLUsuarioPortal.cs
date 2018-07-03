@@ -28,6 +28,109 @@ namespace BLL
                  }).FirstOrDefault();
             }
         }
+
+        public static object TraerTodos(int UsuarioId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                
+                try
+                {
+                    return
+                          new
+                          {
+                              Status = true,
+                              Usuarios =
+                                  db.Usuario.Where(a => a.UsuarioId != UsuarioId
+                                                    && a.UsuarioId!=0)
+                                  .Select(a => new
+                                  {
+                                      a.UsuarioId,
+                                      a.Nombre,
+                                      a.Paterno,
+                                      a.Materno,
+                                      Estatus = a.Estatus.Descripcion,
+                                      a.EstatusId,
+                                      a.UsuarioTipo.Descripcion,
+                                      a.Password
+                                  })
+                                  .AsEnumerable()
+                                  .Select(a => new
+                                  {
+                                      a.UsuarioId,
+                                      a.Nombre,
+                                      a.Paterno,
+                                      a.Materno,
+                                      a.Estatus,
+                                      a.EstatusId,
+                                      a.Descripcion,
+                                      Password = Utilities.Seguridad.Desencripta(27, a.Password)
+                                  })
+                                  .ToList()
+                          };
+                }
+                catch (Exception Error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        Error.Message,
+                        Inner = Error?.InnerException?.Message
+                    };
+                }
+            }
+        }
+
+        public static object UpdateUsuario(DTOUsuario objUsuario)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    Usuario usuariodb = db.Usuario
+                        .Where(a => a.UsuarioId == objUsuario.UsuarioId)
+                        .FirstOrDefault();
+
+                    if (usuariodb != null)
+                    {
+                        usuariodb.Nombre = objUsuario.Nombre;
+                        usuariodb.Paterno = objUsuario.Paterno;
+                        usuariodb.Materno = objUsuario.Materno;
+                        usuariodb.EstatusId = objUsuario.EstatusId;
+
+                        usuariodb.Password = Utilities.Seguridad.Encripta(27, objUsuario.Password);
+
+                        db.SaveChanges();
+
+                        return new
+                        {
+                            Status = true,
+                            Message = "No existe el usuario en la base",
+                            Inner = ""
+                        };
+                    }
+                    else
+                    {
+                        return new
+                        {
+                            Status = false,
+                            Message = "No existe el usuario en la base",
+                            Inner = ""
+                        };
+                    }
+                }
+                catch (Exception Error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        Error.Message,
+                        Inner = Error?.InnerException?.Message ?? ""
+                    };
+                }
+            }
+        }
+
         public static DTOUsuarioDetalle ObtenerDetalle(int UsuarioId)
         {
             using(UniversidadEntities db= new UniversidadEntities())

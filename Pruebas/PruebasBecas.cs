@@ -128,11 +128,11 @@ namespace Pruebas
             List<DTO.Alumno.Beca.DTOAlumnoBeca> Alumno = new List<DTO.Alumno.Beca.DTOAlumnoBeca>();
             Alumno.Add(new DTO.Alumno.Beca.DTOAlumnoBeca
             {
-                alumnoId = 7505,
+                alumnoId = 8512,
                 anio = 2018,
-                periodoId = 3,
-                ofertaEducativaId = 14,
-                porcentajeBeca = 62.81m,//70.15
+                periodoId = 2,
+                ofertaEducativaId = 45,
+                porcentajeBeca = 69.42m,//70.15
                 porcentajeInscripcion = 100m,
                 esSEP = false,
                 esComite = false,

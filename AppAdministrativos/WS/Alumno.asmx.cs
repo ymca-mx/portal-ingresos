@@ -212,12 +212,7 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.AplicarPromocionCasa(Promocion);
         }
         //Promocion en casa
-
-        [WebMethod]
-        public DTOAlumno ConsultarAlumnoReinscripcion(string AlumnoId)
-        {
-            return BLLAlumnoPortal.ObtenerAlumnoR(int.Parse(AlumnoId));
-        }
+        
         [WebMethod]
         public DTOAlumno ConsultarAlumnoL(string AlumnoId)
         {
@@ -259,7 +254,7 @@ namespace AppAdministrativos.WS
             return BLLPagoPortal.ConsultarReferenciasPagadas(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public List<DTOPagos> ConsultarReferenciasCP(string AlumnoId)
+        public object ConsultarReferenciasCP(string AlumnoId)
         {
             return BLLPagoPortal.ConsultarReferenciasConceptos(int.Parse(AlumnoId));
         }

@@ -151,8 +151,8 @@ namespace AppAdministrativos.WS
             return BLLMedioDifusion.ConsultarListadeMedios();
         }
         [WebMethod]
-        public List<DTOCuota> Conceptos(string AlumnoId, string OfertaEducativa) 
-            => BLLPagoConcepto.ListaPagoConceptos(int.Parse(AlumnoId), int.Parse(OfertaEducativa));
+        public object Conceptos(string AlumnoId, string OfertaEducativa) 
+            => BLLPagoConcepto.ListaPagoConceptos(int.Parse(OfertaEducativa));
 
         [WebMethod]
         public List<DTOCuota> Conceptos2(string AlumnoId, string OfertaEducativa, string UsuarioId) 

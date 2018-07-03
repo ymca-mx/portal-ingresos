@@ -48,11 +48,20 @@ namespace AppAlumnos.Controllers
             return Ok(BLLCuota.TraerOfertasCuotasAlumno(int.Parse(AlumnoId), int.Parse(Anio), int.Parse(PeriodoId)));
         }
 
-        [Route("Api/General/Conceptos/{AlumnoId}/{OfertaEducativa}")]
+        [Route("Api/General/Conceptos/{OfertaEducativaId:int}")]
         [HttpGet]
-        public IHttpActionResult Conceptos(string AlumnoId, string OfertaEducativa)
+        public IHttpActionResult Conceptos(int OfertaEducativaId)
         {
-            return Ok(BLLPagoConcepto.ListaPagoConceptos(int.Parse(AlumnoId), int.Parse(OfertaEducativa)));
+            var Result = BLLPagoConcepto.ListaPagoConceptos(OfertaEducativaId);
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de consultar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
         }
 
         [Route("Api/General/ConsultarPagoConcepto/{OfertaEducativaId:int}/{PagoConceptoId:int}")]

@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Panel de Alumno Universidad YMCA</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="Style/Complementos/Load/Load.css" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/clockface/css/clockface.css" />
+    <link rel="stylesheet" type="text/css" href="Style/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" />
+    <link href="Style/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="Style/assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN /theme STYLES -->
+    <link href="Style/assets/admin/pages/css/invoice.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/nouislider/jquery.nouislider.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/nouislider/jquery.nouislider.pips.min.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="Style/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="Style/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <link href="Style/Complementos/alertify/css/alertify.css" rel="stylesheet" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
+<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
+<body>
+    <!-- BEGIN HEADER -->
+    <div class="page-header">
+        <!-- BEGIN HEADER TOP -->
+        <div class="page-header-top">
+            <div class="container">
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <img src="Style/engato/login/imagenes/logo/100.png" width="50" height="65" />
+                </div>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <!-- La imagen esta ../Images -->
+                <a href="javascript:;" class="menu-toggler"></a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="droddown dropdown-separator">
+                            <span class="separator"></span>
+                        </li>
+                        <li class="dropdown dropdown-user dropdown-dark">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" id="lblUsuario">
+                                <img alt="" class="img-circle" src="" id="imgUsuario" style="width: 45px; height: 45px;" />
+                                <span class="username username-hide-mobile">Usuario del sistema</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default" id="UlPerfil"></ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+                    </ul>
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+        </div>
+        <!-- END HEADER TOP -->
+        <!-- BEGIN HEADER MENU -->
+        <div class="page-header-menu">
+            <div class="container">
+                <!-- BEGIN MEGA MENU -->
+                <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+                <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+                <div class="hor-menu ">
+                    <ul class="nav navbar-nav" id="MenuItems">
+                        <li class="active">
+                            <a class="contenido">HOME</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MEGA MENU -->
+            </div>
+        </div>
+        <!-- END HEADER MENU -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN PAGE CONTAINER -->
+    <!-- BEGIN PAGE CONTENT -->
+    <div class="page-content" style="border: 1px solid blue; padding:0px">
+        <div class="container" id="divDinamico">
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTime" data-width="650" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tiempo de sesión por finalizar</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form">
+                        <div class="form-group">
+                            <h4 class="control-label">
+                                Por tu seguridad y debido a que no has realizado ninguna operación,
+                                Si deeas continuar dentro del portal haz clic en "Continuar".
+                            </h4>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label class="control-label">Tiempo Restante:</label>
+                                <input type="text" class="form-control" id="txtTime" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group"><br />&nbsp;</div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnSesionCerrar">Cerrar Sesion</button>
+                    <button type="button" class="btn btn-primary" id="btnSesionContinuar">Continuar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--popDatos Nueva-->
+    <div id="popDatos" class="modal fade" tabindex="-1" role="dialog" data-width="950" data-backdrop="static" data-keyboard="false">
+    </div>
+    <!-- END PAGE CONTAINER -->
+    <!-- BEGIN PRE-FOOTER -->
+    <div class="page-prefooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 footer-block">
+                    <h2>Acerca de</h2>
+                    <p>
+                        Grupo YMCA
+                    </p>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 footer-block">
+                    <h2>Siguenos</h2>
+                    <ul class="social-icons">
+                        <li>
+                            <a href="https://www.facebook.com/UniversidadYMCA/" data-original-title="facebook" class="facebook"></a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/user/YMCAUniversidad" data-original-title="youtube" class="youtube"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 footer-block">
+                    <h2>Contacto</h2>
+                    <address class="margin-bottom-40">
+                        Telefono: 5255-47-05<br />
+                        Email: <a href="mailto:sofiarivera@uniymca.edu.mx">sofiarivera@uniymca.edu.mx</a>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- END PRE-FOOTER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="container">
+            2015 &copy; YMCA. Todos los derechos reservados.
+        </div>
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
+
+    <!-- END FOOTER -->
+    <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]>
+    $.getScript("assets/global/plugins/respond.min.js");
+    $.getScript("assets/global/plugins/excanvas.min.js");
+    <![endif]-->
+    <script src="Script/jquery-2.2.4.min.js"></script>
+    <script src="Script/BackBone/underscore-min.js"></script>
+    <script src="Script/BackBone/backbone-min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="Style/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="Style/assets/global/plugins/nouislider/jquery.nouislider.all.js"></script>
+    <script src="Style/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
+    <script src="Style/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js"></script>
+    <script src="Style/assets/global/scripts/metronic.js"></script>
+    <script src="Style/assets/admin/layout3/scripts/layout.js"></script>
+    <script src="Style/assets/admin/layout3/scripts/demo.js"></script>
+    <script src="Script/alertify/alertify.js"></script>
+    <script src="Style/Complementos/jquery.blockUI.js" ></script>
+
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        $.when(
+            $.getScript("Js/index/index.js"),
+            $.getScript("Js/index/bitacora.js"),
+            $.getScript("JS/index/funcionesGlobales.js"))
+            .done(function () {
+                $.getScript("Style/assets/global/plugins/jquery-knob/js/jquery.knob.js");
+                $.getScript("Style/assets/global/plugins/uniform/jquery.uniform.min.js");
+                $.getScript("Style/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js");
+                $.getScript("Style/assets/global/plugins/bootstrap-daterangepicker/moment.min.js");
+                $.getScript("Style/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js");
+                $.getScript("Style/assets/global/plugins/jquery-validation/js/jquery.validate.min.js");
+                $.getScript("Style/assets/global/plugins/jquery.pulsate.min.js");
+                $.getScript("Style/assets/global/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js");
+                $.getScript("Style/assets/admin/pages/scripts/components-pickers.js");
+                $.getScript("Style/assets/admin/pages/scripts/table-advanced.js");
+                $.getScript("Style/assets/admin/pages/scripts/components-knob-dials.js");
+                $.getScript("Style/assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js");
+                $.getScript("Style/assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js");
+                $.getScript("Style/assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js");
+                $.getScript("Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js");
+                $.getScript("Style/assets/global/plugins/jquery-validation/js/additional-methods.min.js");
+            })
+            .done(function () {
+                Metronic.init();
+                Layout.init();
+            })
+            .fail(function () {
+                console.log('Soy Fail');
+                console.log(this);
+            });
+
+    </script>
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

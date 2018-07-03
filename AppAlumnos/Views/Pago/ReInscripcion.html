@@ -1,93 +1,57 @@
-﻿<div class="container">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <h1 class="caption-subject font-blue bold uppercase">
-                            Reinscripción
-                        </h1>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title bold">
+                    Reinscripción
+                </span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="control-label">Oferta Educativa</label>
+                        <select class="form-control" id="slcOfertaEducativa">
+                            <option value="-1">--Seleccionar--</option>
+                        </select>
                     </div>
                 </div>
-                <div class="portlet-body">
-                    <div class="table">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <label class="control-label">Oferta Educativa</label>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <select class="form-control" id="slcOfertaEducativa">
-                                        <option value="-1">--Seleccionar--</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="btn form-control blue" id="btnGenerar">Generar Referencia</button>
-
-                                    <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Reinscripción</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ¿Para que mes desea generar su colegiatura?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn blue" id="btnActual"></button>
-                                                    <button type="button" class="btn green" id="btnSiguiente"></button>
-                                                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                                                </div>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12 form-group"></div>
-
-                            <div class="col-md-12">
-                                <hr />
-                                <div class="col-md-8">
-                                    <label class="control-label" style="font-size: 16px">Alumno:</label>
-                                    <label id="lblAlumno" class="control-label" style="font-size: 16px"></label>
-                                </div>
-                            </div>
-                            <div class="col-md-12" id="divpul" hidden>
-                                <div id="pulsate-regular" style="padding: 5px;">
-                                    <p class="h4">
-                                        Si ya terminaste la Especialidad y deseas seguir estudiando la Maestría.
-                                        Por favor acudir con Relaciones Publicas para que te den de alta en la Maestría que deseas estudiar.
-                                        </>
-                                </div>
-                            </div>
-                            <!--<div class="col-md-12 table-container">
-                                <div class="col-md-8">
-                                    <label class="control-label">Flujo de re-inscripción (grupo)</label>
-                                </div>
-                                <table class="table table-hover table-bordered1 dataTables" id="tblFlujo">
-                                    <thead>
-                                        <tr>
-                                            <th class="Titulo-Tabla">Nombre</th>
-                                            <th class="Titulo-Tabla">Movimiento</th>
-                                            <th class="Titulo-Tabla">Fecha</th>
-                                            <th class="Titulo-Tabla">Hora</th>
-                                            <th class="Titulo-Tabla">Estatus</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>-->
-
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">&nbsp;</label>
+                        <div class="input-group">
+                            <button type="button" class="btn btn-primary" id="btnGenerar">
+                                Generar
+                                <span class="fa fa-save"></span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <div class="col-md-8">
+                        <label class="control-label" style="font-size: 16px">Alumno:</label>
+                        <label id="lblAlumno" class="control-label" style="font-size: 16px"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="divpul" hidden>
+                    <div id="pulsate-regular" style="padding: 5px;">
+                        <p class="h4">
+                            Si ya terminaste la Especialidad y deseas seguir estudiando la Maestría.
+                            Por favor acudir con Relaciones Publicas para que te den de alta en la Maestría que deseas estudiar.
+                            </>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
-<script src="JS/Reinscripcion/Reinscripcion.js"></script>
+</main>
+<script>
+    $.getScript("JS/Reinscripcion/Reinscripcion.js");
+</script>

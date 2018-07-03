@@ -1629,163 +1629,31 @@ namespace BLL
                 }
             }
         }
-        public static List<DTOPagos> ConsultarReferenciasConceptos(int AlumnoId)
+        public static object ConsultarReferenciasConceptos(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
                     //int idPago = 2588;
-                    DTOCuota CuotaAnterior;
-                    DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                    FechaActual = FechaActual.AddDays(-7);
-                    List<DTOPagos> Pagos = (from p in db.Pago
-                                            where p.AlumnoId == AlumnoId
-                                                     && p.EstatusId == 1
-                                                     && (p.Cuota1.PagoConceptoId != 800 && p.Cuota1.PagoConceptoId != 802)
-                                            select new DTOPagos
-                                            {
-                                                PagoId = p.PagoId,
-                                                AlumnoId = p.AlumnoId,
-                                                Anio = p.Anio,
-                                                PeriodoId = p.PeriodoId,
-                                                DTOPeriodo = new DTOPeriodo
-                                                {
-                                                    PeriodoId = p.Periodo.PeriodoId,
-                                                    Anio = p.Periodo.Anio,
-                                                    Descripcion = p.Periodo.Descripcion,
-                                                    FechaInicial = p.Periodo.FechaInicial,
-                                                    FechaFinal = p.Periodo.FechaFinal,
-                                                    Meses = p.Periodo.Meses
-                                                },
-                                                SubperiodoId = p.SubperiodoId,
-                                                DTOSubPeriodo = new DTOSubPeriodo
-                                                {
-                                                    SubperiodoId = p.Subperiodo.SubperiodoId,
-                                                    PeriodoId = p.Subperiodo.PeriodoId,
-                                                    MesId = p.Subperiodo.MesId,
-                                                    Mes = (from c in db.Mes
-                                                           where c.MesId == p.Subperiodo.MesId
-                                                           select new DTOMes
-                                                           {
-                                                               Descripcion = c.Descripcion,
-                                                               MesId = c.MesId,
-                                                           }).FirstOrDefault()
-                                                },
-                                                OfertaEducativaId = p.OfertaEducativaId,
-                                                OfertaEducativa = new DTOOfertaEducativa
-                                                {
-                                                    OfertaEducativaId = p.OfertaEducativa.OfertaEducativaId,
-                                                    OfertaEducativaTipoId = p.OfertaEducativa.OfertaEducativaTipoId,
-                                                    Descripcion = p.OfertaEducativa.Descripcion,
-                                                    DTOOfertaEducativaTipo = new DTOOfertaEducativaTipo
-                                                    {
-                                                        Descripcion = p.OfertaEducativa.OfertaEducativaTipo.Descripcion,
-                                                        OfertaEducativaTipoId = p.OfertaEducativa.OfertaEducativaTipo.OfertaEducativaTipoId
-                                                    }
-                                                },
-                                                FechaGeneracion = p.FechaGeneracion,
-                                                CuotaId = p.CuotaId,
-                                                Cuota = p.Cuota,
-                                                DTOCuota = new DTOCuota
-                                                {
-                                                    CuotaId = p.Cuota1.CuotaId,
-                                                    Anio = p.Cuota1.Anio,
-                                                    PeriodoId = p.Cuota1.PeriodoId,
-                                                    OfertaEducativaId = p.Cuota1.OfertaEducativaId,
-                                                    PagoConceptoId = p.Cuota1.PagoConceptoId,
-                                                    Monto = p.Cuota1.Monto,
-                                                    EsEmpresa = p.Cuota1.EsEmpresa,
-                                                    DTOPagoConcepto = new DTOPagoConcepto
-                                                    {
-                                                        CuentaContable = p.Cuota1.PagoConcepto.CuentaContable,
-                                                        Descripcion = p.Cuota1.PagoConcepto.Descripcion,
-                                                        EstatusId = p.Cuota1.PagoConcepto.EstatusId,
-                                                        OfertaEducativaId = p.Cuota1.PagoConcepto.OfertaEducativaId,
-                                                        PagoConceptoId = p.Cuota1.PagoConcepto.PagoConceptoId
-                                                    }
-                                                },
-                                                Promesa = p.Promesa,
-                                                Referencia = p.ReferenciaId,
-                                                EstatusId = p.EstatusId
-                                            }).ToList();
-
-                    Pagos.ForEach(Pago =>
-                    {
-                        Pago.objNormal = new Pagos_Detalles
-                        {
-                            FechaLimite = Pago.FechaGeneracion.AddDays(7).ToString("dd/MM/yyyy", Cultura),
-                            Monto = Pago.Promesa.ToString("C", Cultura)
-                        };
-                        if (Pago.Anio == 2016 && Pago.PeriodoId == 1)
-                        {
-                            Pago.DTOCuota.PeridoAnio = "";
-                            CuotaAnterior = null;
-                        }
-                        else
-                        {
-                            Pago.DTOCuota.PeridoAnio = Pago.DTOCuota.Anio.ToString() + "-" + Pago.DTOCuota.PeriodoId.ToString();
-                            int Anio, Periodo, Oferta, Concepto;
-                            Anio = (Pago.DTOPeriodo.PeriodoId == 4 ? Pago.DTOPeriodo.Anio - 1 : Pago.DTOPeriodo.Anio);
-                            Periodo = (Pago.DTOPeriodo.PeriodoId == 1 ? 4 : Pago.DTOPeriodo.PeriodoId - 1);
-                            Oferta = Pago.OfertaEducativaId;
-                            Concepto = Pago.DTOCuota.PagoConceptoId;
-                            CuotaAnterior = (from a in db.Cuota
-                                             where a.Anio == Anio && a.PeriodoId == Periodo
-                                             && a.OfertaEducativaId == Oferta && a.PagoConceptoId == Concepto
-                                             select new DTOCuota
-                                             {
-                                                 CuotaId = a.CuotaId,
-                                                 Anio = a.Anio,
-                                                 PeriodoId = a.PeriodoId,
-                                                 OfertaEducativaId = a.OfertaEducativaId,
-                                                 PagoConceptoId = a.PagoConceptoId,
-                                                 Monto = a.Monto,
-                                                 EsEmpresa = a.EsEmpresa
-                                             }).FirstOrDefault();
-                        }
-                        if (Pago.DTOCuota.DTOPagoConcepto.PagoConceptoId == 800)
-                        {
-                            Pago.DTOCuota.DTOPagoConcepto.Descripcion += " " + Pago.DTOSubPeriodo.Mes.Descripcion + " " +
-                                Pago.DTOPeriodo.FechaInicial.Year.ToString();
-                        }
-                        Pago.lstPagoDescuento = (from pd in db.PagoDescuento
-                                                 join ad in db.AlumnoDescuento on pd.DescuentoId equals ad.DescuentoId
-                                                 where pd.PagoId == Pago.PagoId && ad.AlumnoId == AlumnoId
-                                                 select new DTOPagoDescuento
-                                                 {
-                                                     DescuentoId = pd.DescuentoId,
-                                                     Monto = pd.Monto,
-                                                     PagoId = pd.PagoId,
-                                                     DTOAlumnDes = new DTOAlumnoDescuento
-                                                     {
-                                                         AlumnoId = ad.AlumnoId,
-                                                         Anio = ad.Anio,
-                                                         ConceptoId = ad.PagoConceptoId,
-                                                         DescuentoId = ad.DescuentoId,
-                                                         EstatusId = ad.EstatusId,
-                                                         Monto = ad.Monto,
-                                                         SMonto = ad.Monto.ToString() + "%",
-                                                         OfertaEducativaId = ad.OfertaEducativaId,
-                                                         PeriodoId = ad.PeriodoId
-                                                     }
-                                                 }).ToList();
-                        if (Pago.lstPagoDescuento.Count == 0)
-                        {
-                            Pago.lstPagoDescuento = new List<DTOPagoDescuento>{
-                                new DTOPagoDescuento{
-                                    DTOAlumnDes= new DTOAlumnoDescuento{
-                                    Monto=0,
-                                    SMonto=Pago.Anio == 2016 && Pago.PeriodoId == 1? "":"0%"
-                                    }
-                                }
-                            };
-                        }
-
-
-                    });
-
-                    return Pagos;
+                    return db.Pago
+                                        .Where(a => a.AlumnoId == AlumnoId
+                                                && a.EstatusId == 1
+                                                && (a.Cuota1.PagoConceptoId != 800 && a.Cuota1.PagoConceptoId != 802)
+                                                && a.Restante > 0
+                                                && !a.Cuota1.PagoConcepto.EsVariable
+                                                && a.Cuota1.PagoConcepto.EsVisible)
+                                        .AsEnumerable()
+                                        .Select(a => new
+                                        {
+                                            a.PagoId,
+                                            ReferenciaId = int.Parse(a.ReferenciaId),
+                                            a.Cuota1.PagoConcepto.Descripcion,
+                                            Cuota = a.Cuota.ToString("C", Cultura),
+                                            Restante = a.Restante.ToString("C", Cultura),
+                                            FechaLimite = a.FechaGeneracion.AddDays(15).ToString("dd/MM/yyyy"),
+                                            a.Cuota1.PagoConceptoId
+                                        }).ToList();
                 }
                 catch (Exception)
                 {
@@ -3296,9 +3164,15 @@ namespace BLL
                         {
                             if (objPago.EstatusId != 4)
                             {
-                                Cuota objCuotaRecargo = db.Cuota.Where(C => C.PagoConceptoId == 306
-                                    && C.OfertaEducativaId == objPago.OfertaEducativaId && C.Anio == objPago.Anio && C.PeriodoId == objPago.PeriodoId).FirstOrDefault();
-                                decimal Cuota = objPago.Cuota * decimal.Parse("0.05");
+                                Cuota objCuotaRecargo = db.Cuota
+                                                        .Where(C => C.PagoConceptoId == 306
+                                                                && C.OfertaEducativaId == objPago.OfertaEducativaId 
+                                                                && C.Anio == objPago.Anio 
+                                                                && C.PeriodoId == objPago.PeriodoId)
+                                                       .FirstOrDefault();
+                                decimal recargo = 0.05M;
+                                decimal Cuota = objPago.Cuota * recargo;
+
                                 Cuota = Math.Round(Cuota);
 
                                 db.PagoRecargo.Add(new PagoRecargo
