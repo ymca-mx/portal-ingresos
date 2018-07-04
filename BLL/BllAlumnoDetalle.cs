@@ -12,7 +12,7 @@ namespace BLL
 {
     public class BllAlumnoDetalle
     {
-        public static bool UpdateEmail(int AlumnoId, int UsuarioId, string Mail)
+        public static object UpdateEmail(int AlumnoId, int UsuarioId, string Mail)
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
@@ -48,15 +48,24 @@ namespace BLL
 
                     db.SaveChanges();
 
-                    return true;
+                    return new
+                    {
+                        Estatus = true,
+                        AlumnoId
+                    };
                 }
-                catch
+                catch(Exception error)
                 {
-                    return false;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }
-        public static DTOAlumnoDetallev2 GetAlumnoDetalle(int AlumnoId)
+        public static object GetAlumnoDetalle(int AlumnoId)
         {
             using(UniversidadEntities db= new UniversidadEntities())
             {
@@ -64,16 +73,22 @@ namespace BLL
                 {
                     return (from a in db.AlumnoDetalle
                             where a.AlumnoId == AlumnoId
-                            select new DTOAlumnoDetallev2
+                            select new 
                             {
-                                AlumnoId = a.AlumnoId,
-                                Email = a.Email,
+                                Estatus=true,
+                                a.AlumnoId,
+                                a.Email,
                                 Nombre = a.Alumno.Nombre + " " + a.Alumno.Paterno + " " + a.Alumno.Materno
                             }).FirstOrDefault();
                 }
-                catch
+                catch(Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        Estatus = true,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

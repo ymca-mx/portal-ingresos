@@ -96,7 +96,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data === null) {
-                        alertify.alert("Error");
+                        alertify.alert("Universidad YMCA","El alumno no tiene ninguna referencia.");
+                        IndexFn.Block(false);
                         return false;
                     }
                     var lbl = $('#lblNombre');
@@ -123,7 +124,7 @@
                 success: function (data) {
                     if (data === null) {
                         IndexFn.Block(false);
-                        alertify.alert("Error");
+                        alertify.alert("Universidad YMCA","Error");
                         return false;
                     }
                     EdoCuenta.CrearLista(data);

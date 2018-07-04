@@ -1258,7 +1258,8 @@ namespace BLL
                 try
                 {
 
-                    string fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId);
+                    string fotoAlumno = "";
+                    try { fotoAlumno = AlumnoFoto.GetAlumnoFotoBase64(AlumnoId); } catch { fotoAlumno = ""; }
 
                     DTOAlumno Alumno = (from a in db.Alumno
                                         where a.AlumnoId == AlumnoId

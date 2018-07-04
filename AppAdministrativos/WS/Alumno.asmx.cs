@@ -447,12 +447,12 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod]
-        public bool UpdateMail(string AlumnoId, string Email, string UsuarId)
+        public object UpdateMail(string AlumnoId, string Email, string UsuarId)
         {
             return BllAlumnoDetalle.UpdateEmail(int.Parse(AlumnoId), int.Parse(UsuarId), Email);
         }
         [WebMethod]
-        public DTOAlumnoDetallev2 TraerAlumnoDetalle(string AlumnoId)
+        public object TraerAlumnoDetalle(string AlumnoId)
         {
             return BllAlumnoDetalle.GetAlumnoDetalle(int.Parse(AlumnoId));
         }

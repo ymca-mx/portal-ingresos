@@ -259,5 +259,36 @@ namespace AppAdministrativos.Controllers
                 return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
+
+        [Route("TraerAlumnoDetalle/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult TraerAlumnoDetalle(int AlumnoId)
+        {
+            var Result = BllAlumnoDetalle.GetAlumnoDetalle(AlumnoId);
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("UpdateMail")]
+        [HttpPost]
+        public IHttpActionResult UpdateMail(int AlumnoId, string Email, int UsuarId)
+        {
+            var Result = BllAlumnoDetalle.UpdateEmail(AlumnoId, UsuarId, Email);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
     }
 }

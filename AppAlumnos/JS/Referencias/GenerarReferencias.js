@@ -12,7 +12,10 @@
             IndexFn.Block(true);
             IndexFn.Api("Alumno/ConsultarAlumno/" + localStorage.getItem("user"), "GET", "")
                 .done(function (data) {
-                    if (data == null) { return null; }
+                    if (data == null) {
+                        IndexFn.Block(false);
+                        return false;
+                    }
                     $('#lblAlumno').text(data.Nombre + " " + data.Paterno + " " + data.Materno);
                     $(data.lstAlumnoInscrito).each(function () {
                         var option = $(document.createElement('option'));
