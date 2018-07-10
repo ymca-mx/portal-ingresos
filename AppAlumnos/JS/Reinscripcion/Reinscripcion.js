@@ -22,7 +22,7 @@
             IndexFn.Api("Reinscripcion/GenerarInscrCole", "POST",
                 JSON.stringify({ AlumnoId: AlumnoId, OfertaEducativaId: OfertaEducativa, PeriodoD: Descripcion }))
                 .done(function (data) {
-                    if (data == "Guardado") {
+                    if (data[0] === "Guardado") {
                         alertify.alert("Universidad YMCA", "Tus Cargos se han generado correctamente.");
                         Bandera = 0;
                     } else {
