@@ -10,7 +10,7 @@
             $('#txtExamenBeca').on('input', this.txtChange);
             $('#txtCredencialBeca').on('input', this.txtChange);
             $('#chkEmpresa').on('change', this.chkChange);
-            $('#slcOFertaEducativa').on('change', this.GetCosto);
+            $('#slcOfertaEducativa').on('change', this.GetCosto);
             $('#slcTurno').on('change', this.chkEmpresaChange);
             $("#slcPeriodo").on('change', this.GetCosto);
 
@@ -25,10 +25,10 @@
                 $('#chkEmpresa').prop('checked', true).change();
         },
         GetCosto() {
-            if ($('#slcOFertaEducativa').val() != null) {
+            if ($('#slcOfertaEducativa').val() != null) {
                 var url = $('#slcPeriodo :selected').data("anio") + "/"
                     + $('#slcPeriodo :selected').data("periodoid") + "/"
-                    + $('#slcOFertaEducativa').val();
+                    + $('#slcOfertaEducativa').val();
 
                 IndexFn.Api('OfertaEducativa/Costos/' + url, "GET", "")
                     .done(function (Respuesta) {
@@ -201,9 +201,9 @@
             } else if (parseInt($("#slcTipoOferta").val()) !== data.OfertaEducativaTipoId) {
                 $("#slcTipoOferta").val(data.OfertaEducativaTipoId);
                 $("#slcTipoOferta").change();
-            } else if (parseInt($("#slcOFertaEducativa").val()) !== data.OfertaEducativaId) {
-                $("#slcOFertaEducativa").val(data.OfertaEducativaId);
-                $("#slcOFertaEducativa").change();
+            } else if (parseInt($("#slcOfertaEducativa").val()) !== data.OfertaEducativaId) {
+                $("#slcOfertaEducativa").val(data.OfertaEducativaId);
+                $("#slcOfertaEducativa").change();
             }
 
         },
@@ -214,7 +214,7 @@
                 Anio: $('#slcPeriodo :selected').data("anio"),
                 PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
                 OfertaEducativaIdActual: DatosFn.objGuardar.OfertaEducativaId,
-                OfertaEducativaIdNueva: $('#slcOFertaEducativa').val(),
+                OfertaEducativaIdNueva: $('#slcOfertaEducativa').val(),
                 TurnoId: $('#slcTurno').val(),
                 EsEmpresa: $('#chkEmpresa').prop('checked'),
                 UsuarioId: $.cookie('userAdmin'),

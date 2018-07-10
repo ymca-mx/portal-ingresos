@@ -8,26 +8,26 @@
 
         <div class="panel-body">
             <div class="row col-md-12">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label">Periodo</label>
-                            <div class="input-group">
-                                <input type="text" name="daterange" id="txtPeriodo" class="form-control" readonly />
-                                <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Periodo</label>
+                        <div class="input-group">
+                            <input type="text" name="daterange" id="txtPeriodo" class="form-control" readonly />
+                            <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label class="control-label">&nbsp;</label>
-                            <div class="input-group">
-                                <button type="button" class="btn btn-primary" id="btnBuscar">
-                                    Consultar
-                                    <span class="glyphicon glyphicon-search fa fa-search"></span>
-                                </button>
-                            </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">&nbsp;</label>
+                        <div class="input-group">
+                            <button type="button" class="btn btn-primary" id="btnBuscar">
+                                Consultar
+                                <span class="glyphicon glyphicon-search fa fa-search"></span>
+                            </button>
                         </div>
                     </div>
+                </div>
             </div>
             <div class="row col-md-12">
                 <label class="control-label black" style="font-weight:bold;" id="lblNombre"></label>
@@ -74,5 +74,7 @@
     </div>
 </main>
 <script>
+    $.getScript("Style/assets/global/plugins/jquery-validation/js/additional-methods.min.js");
+    $.getScript("Style/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js");
     $.getScript("JS/Pagos/EstadodeCuenta.js");
 </script>
