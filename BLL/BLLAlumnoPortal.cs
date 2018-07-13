@@ -259,7 +259,7 @@ namespace BLL
                                 UsuarioId=Alumno.UsuarioId,
                                 TurnoId = Alumno.AlumnoInscrito.TurnoId,
                                 HoraInscripcion=DateTime.Now.TimeOfDay,
-                                EstatusId= (Alumno.AlumnoInscrito.EsEmpresa || OfertaEducativadb.OfertaEducativaTipoId == 4)?1:8,
+                                EstatusId= OfertaEducativadb.OfertaEducativaTipoId == 4?1:8,
                                 PagoPlanId = pagoplan
                                 }
                             },
@@ -1125,7 +1125,7 @@ namespace BLL
 
                     var NuevoIngreso = db.Alumno
                                             .Where(a => a.AlumnoId == AlumnoId
-                                                    && a.PeriodoId== PeriodoActual.PeriodoId
+                                                    && a.PeriodoId == PeriodoActual.PeriodoId
                                                     && a.Anio == PeriodoActual.Anio)
                                             .ToList();
                     if (NuevoIngreso.Count == 0)
@@ -1236,9 +1236,9 @@ namespace BLL
                                     Status = true
                                 })
                                 .FirstOrDefault();
-                   
+
                 }
-                catch(Exception error)
+                catch (Exception error)
                 {
                     return new
                     {
@@ -1745,7 +1745,7 @@ namespace BLL
                 return new
                 {
                     error.Message,
-                    inner=error?.InnerException?.Message
+                    inner = error?.InnerException?.Message
                 };
 
             }
@@ -2582,10 +2582,10 @@ namespace BLL
                                 AlumnoInscrito = new DTOAlumnoInscrito
                                 {
                                     AlumnoId = a.AlumnoId,
-                                    OfertaEducativaId = a.AlumnoInscrito.Count==0?0: a.AlumnoInscrito.FirstOrDefault().OfertaEducativaId,
+                                    OfertaEducativaId = a.AlumnoInscrito.Count == 0 ? 0 : a.AlumnoInscrito.FirstOrDefault().OfertaEducativaId,
                                     OfertaEducativa = new DTOOfertaEducativa
                                     {
-                                        OfertaEducativaId = a.AlumnoInscrito.Count == 0  ? 0 : a.AlumnoInscrito.FirstOrDefault().OfertaEducativaId,
+                                        OfertaEducativaId = a.AlumnoInscrito.Count == 0 ? 0 : a.AlumnoInscrito.FirstOrDefault().OfertaEducativaId,
                                         Descripcion = a.AlumnoInscrito.Count == 0 ? "" : a.AlumnoInscrito.FirstOrDefault().OfertaEducativa.Descripcion
                                     }
                                 },
@@ -2601,7 +2601,7 @@ namespace BLL
                     return new
                     {
                         error.Message,
-                        Inner = error?.InnerException?.Message??""
+                        Inner = error?.InnerException?.Message ?? ""
                     };
                 }
             }

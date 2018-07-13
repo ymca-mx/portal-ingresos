@@ -43,5 +43,22 @@ namespace AppAdministrativos.Controllers
                     + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
             }
         }
+
+        [Route("Usuario/{UsuarioId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetUsuario(int UsuarioId)
+        {
+            var Result = BLL.BLLUsuarioPortal.GetUsuario(UsuarioId);
+
+            if ((bool)Result.GetType().GetProperty("Status").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                    + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
+            }
+        }
     }
 }

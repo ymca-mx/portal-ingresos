@@ -177,12 +177,34 @@ namespace BLL
 
                         if (Alumno.EsEmpresa)
                         {
-                            AlumnoConfiguraciondb.Anio = Alumno.Anio;
-                            AlumnoConfiguraciondb.OfertaEducativaId = Alumno.OfertaEducativaIdNueva;
-                            AlumnoConfiguraciondb.PeriodoId = Alumno.PeriodoId;
-                            AlumnoConfiguraciondb.UsuarioId = Alumno.UsuarioId;
-                            AlumnoConfiguraciondb.CuotaColegiatura = Alumno.MontoColegiatura;
-                            AlumnoConfiguraciondb.CuotaInscripcion = Alumno.MontoInscripcion;
+                            //AlumnoConfiguraciondb.Anio = Alumno.Anio;
+                            //AlumnoConfiguraciondb.OfertaEducativaId = Alumno.OfertaEducativaIdNueva;
+                            //AlumnoConfiguraciondb.PeriodoId = Alumno.PeriodoId;
+                            //AlumnoConfiguraciondb.UsuarioId = Alumno.UsuarioId;
+                            //AlumnoConfiguraciondb.CuotaColegiatura = Alumno.MontoColegiatura;
+                            //AlumnoConfiguraciondb.CuotaInscripcion = Alumno.MontoInscripcion;
+
+                            db.GrupoAlumnoConfiguracion.Add(new GrupoAlumnoConfiguracion
+                            {
+                                AlumnoId = AlumnoConfiguraciondb.AlumnoId,
+                                Anio = Alumno.Anio,
+                                CuotaColegiatura = Alumno.MontoColegiatura,
+                                CuotaInscripcion = Alumno.MontoInscripcion,
+                                EsCuotaCongelada = AlumnoConfiguraciondb.EsCuotaCongelada,
+                                EsEspecial = AlumnoConfiguraciondb.EsEspecial,
+                                EsInscripcionCongelada = AlumnoConfiguraciondb.EsInscripcionCongelada,
+                                EstatusId = AlumnoConfiguraciondb.EstatusId,
+                                FechaRegistro = AlumnoConfiguraciondb.FechaRegistro,
+                                GrupoId = AlumnoConfiguraciondb.GrupoId,
+                                HoraRegistro = AlumnoConfiguraciondb.HoraRegistro,
+                                NumeroPagos = AlumnoConfiguraciondb.NumeroPagos,
+                                OfertaEducativaId = Alumno.OfertaEducativaIdNueva,
+                                PagoPlanId = AlumnoConfiguraciondb.PagoPlanId,
+                                PeriodoId = Alumno.PeriodoId,
+                                UsuarioId = Alumno.UsuarioId
+                            });
+
+                            AlumnoDb.GrupoAlumnoConfiguracion.Remove(AlumnoConfiguraciondb);
                         }
                         else
                         {

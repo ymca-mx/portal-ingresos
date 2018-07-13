@@ -1,0 +1,85 @@
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title bold">Perfil</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form class="form" id="frmPerfil" >
+                <div class="row">
+                    <div class="col-md-12"><span>Usuario</span></div>                    
+                    <div class="col-md-6">
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Numero de empleado.</label>
+                            <input type="number" class="form-control" id="txtUsuarioId" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><span>Datos Personales</span></div>
+                    <div class="col-md-6">
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" id="txtNombre" required />
+                        </div>
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Paterno</label>
+                            <input type="text" class="form-control" id="txtPaterno" required  />
+                        </div>
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Materno</label>
+                            <input type="text" class="form-control" id="txtMaterno" />
+                        </div>
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Fecha de Nacimiento</label>
+                            <div class="row col-md-12">
+                                <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-start-date="+0d">
+                                    <input type="text" class="form-control" id="txtFecha" >
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Genero</label>
+                            <select id="slcSexo" class="form-control" ></select>
+                        </div>
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Email</label>
+                            <input type="email" class="form-control" id="txtEmail" required />
+                        </div>
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Telefono</label>
+                            <input type="text" class="form-control" required  id="txtTelefono" />
+                        </div>
+                        <div class="col-md-10 input-group">
+                            <label class="control-label">Descripcion</label>
+                            <input type="text" class="form-control" id="txtTipoUsuario" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<script>
+    $.getScript("Js/Usuarios/Perfil.js");
+</script>

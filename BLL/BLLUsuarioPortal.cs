@@ -81,6 +81,43 @@ namespace BLL
             }
         }
 
+        public static object GetUsuario(int usuarioId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    return db
+                            .Usuario
+                            .Where(a => a.UsuarioId == usuarioId)
+                            .AsEnumerable()
+                            .Select(a => new
+                            {
+                                Status = true,
+                                a.Nombre,
+                                a.Paterno,
+                                a.Materno,
+                                FechaNacimiento = a.UsuarioDetalle.FechaNacimiento.ToString("dd/MM/yyyy"),
+                                a.UsuarioDetalle.GeneroId,
+                                a.UsuarioDetalle.Email,
+                                a.UsuarioDetalle.Telefono,
+                                UsuarioTipo = a.UsuarioTipo.Descripcion
+                            })
+                            .FirstOrDefault();
+
+                }
+                catch (Exception err)
+                {
+                    return new
+                    {
+                        Status = false,
+                        err.Message,
+                        Inner = err?.InnerException?.Message
+                    };
+                }
+            }
+        }
+
         public static object UpdateUsuario(DTOUsuario objUsuario)
         {
             using (UniversidadEntities db = new UniversidadEntities())
