@@ -131,6 +131,7 @@
     <Content Include="Imagenes\actualizar.png" />
     <Content Include="Imagenes\export-to-excel.png" />
     <Content Include="Imagenes\SinFoto.png" />
+    <Content Include="Imagenes\uniymca.png" />
     <Content Include="Imagenes\ver.png" />
     <Content Include="index.html" />
     <Content Include="JS\account\recovery.js" />
@@ -5519,9 +5520,11 @@
     <Compile Include="Controllers\DocentesController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OfertaEducativaController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Alumno\Credenciales.aspx.cs">
       <DependentUpon>Credenciales.aspx</DependentUpon>

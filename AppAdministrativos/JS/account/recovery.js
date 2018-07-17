@@ -24,10 +24,10 @@
 
     function RPass() {
         $.ajax({
-            url: '../Services/Usuario.asmx/ActualizaPassword',
+            url: '../../Api/Usuario/ActualizaPassword',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: datos,
+            data: JSON.stringify(datos),
             dataType: 'json'
         }).done(function (resultado) {
             alert('La contraseña de tu cuenta ha sido actualizada correctamente.');
@@ -42,8 +42,10 @@
         $('#form_recovery').submit(function () {
             if ($(this).valid()) {
 
-                datos = "{'password':'" + $('#txtpassword').val() +
-                "', 'token':'" + urlParametros['token'] + "'}";
+                datos = {
+                    password: $('#txtpassword').val(),
+                    token: urlParametros['token']
+                };
                 
                 RPass();
             }

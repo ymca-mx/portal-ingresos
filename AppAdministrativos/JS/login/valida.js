@@ -1,66 +1,5 @@
-﻿var Login = function () {
-
-    function Validar() {
-        var credenciales = {
-            username: $('#username').val(),
-            password: $('#password').val()
-        };
-
-        $.ajax({
-            url: 'WS/Login.asmx/Valida',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(credenciales),
-            dataType: 'json',
-            success: function (Resultado) {
-                Datos = Resultado.d;
-                if (Datos === null)
-                    alert('Favor de verificar las credenciales');
-                else {
-                    $.cookie('userAdmin', credenciales['username'], { expires: 1 });
-                    $('#username').append($.cookie('userAdmin'));
-                    $(location).attr('href', 'index.html');
-                }
-            },
-            error: function (Resultado) {
-                alert('Se presento un error en la validación de las credenciales');
-            }
-        });
-    }
-
-    function RecoveryPassword() {
-      
-
-        $.ajax({
-            url: 'WS/Usuario.asmx/RecuperaPassword',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: "{'email': '" + $('#email').val() + "'}",
-            dataType: 'json',
-            success: function (Resultado) {
-                //$(location).attr('href', 'login.html');
-                $('.content').css('width', '550px');
-                $('#div-recovery').html(
-
-                    "<p style='text-align: right;'><a href='http://108.163.172.122/portaladministrativo/login.html'>Log In</a> | Universidad YMCA" +
-                    "</p>" +
-                    "<br />" +
-                    "<p><h3>Recuperación de la contraseña.</h3></p>" +
-                    "<p>Se ha enviado un email a la cuenta de correo electrónico asociado," +
-                    " si no puedes visualizarlo en tu bandeja de entrada en los proximos 15 minutos; " +
-                    " buscalo en tu carpeta de elementos no deseados.</p>" +
-                    "<p>Si lo encuentras ahi, por favor marcalo como 'No Spam'.</p>");
-
-                jQuery('.login-form').hide();
-                jQuery('.forget-form').hide();
-            },
-            error: function (Resultado) {
-                alert('Se presento un error en la validación de las credenciales');
-            }
-        });
-    }
-
-    var handleLogin = function () {
+﻿$(function () {
+    
         $('.login-form').validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block', // default input error message class
@@ -96,22 +35,8 @@
                 form.submit();
             }
         });
+        
 
-        $('#btnLoginU').click(function () {
-            if ($('#form_login').valid())
-                Validar();
-        });
-
-
-        $('.login-form input').keypress(function (e) {
-            if (e.which === 13) {
-                if ($('#form_login').valid())
-                    Validar();
-            }
-        });
-    }
-
-    var handleForgetPassword = function () {
         $('.forget-form').validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block', // default input error message class
@@ -147,30 +72,6 @@
             }
         });
 
-        /*
-        $('.forget-form input').keypress(function (e) {
-            if (e.which == 13) {
-                if ($('.forget-form').validate().form()) {
-                    //$('.forget-form').submit();
-
-                }
-                return false;
-            }
-        });
-        */
-
-        $('.forget-form input').keypress(function (e) {
-            if (e.which === 13) {
-                if ($('.forget-form').valid())
-                    Validar();
-            }
-        });
-
-        $('#btnLogin').click(function () {
-            RecoveryPassword();
-        });
-
-
         jQuery('#forget-password').click(function () {
             jQuery('.login-form').hide();
             jQuery('.forget-form').show();
@@ -180,14 +81,124 @@
             jQuery('.login-form').show();
             jQuery('.forget-form').hide();
         });
-    }
 
-    return {
-        //main function to initiate the module
-        init: function () {
-            handleLogin();
-            handleForgetPassword();
+    var Login = {
+        init() {
+            $('.forget-form input').keypress(function (e) {
+                if (e.which === 13) {
+                    if ($('.forget-form').valid())
+                        Login.Validar();
+                }
+            });
+
+            $('#btnLogin').click(function () {
+                Login.RecoveryPassword();
+            });
+
+            $('#btnLoginU').click(function () {
+                if ($('#form_login').valid())
+                    Login.Validar();
+            });
+
+
+            $('.login-form input').keypress(function (e) {
+                if (e.which === 13) {
+                    if ($('#form_login').valid())
+                        Login.Validar();
+                }
+            });
+        },
+        Validar() {
+
+
+            $.blockUI({
+                message: $('#Load'),
+                css: { backgroundColor: '#48525e', color: '#fff', border: 'none' }
+            });
+
+            var credenciales = {
+                UsuarioId: $('#username').val(),
+                Password: $('#password').val()
+            };
+
+            $.ajax({
+                url: 'Api/Login/Valida',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(credenciales),
+                dataType: 'json'
+            })
+                .done(function (Resultado) {
+                    $.unblockUI({ onUnblock: function () { } });
+
+                    if (Resultado === null)
+                        alert('Favor de verificar las credenciales');
+                    else {
+                        if (!Resultado.Status) {
+                            alert("ocurrio un error al consultar la información.");
+                            return false;
+                        }
+
+                        $.cookie('userAdmin', credenciales.UsuarioId, { expires: 1 });
+                        $('#username').append($.cookie('userAdmin'));
+                        $(location).attr('href', 'index.html');
+                    }
+                })
+                .fail(function (Resultado) {
+                    $.unblockUI({ onUnblock: function () { } });
+                    if (Resultado.status===404) {
+                        alert("Credenciales incorrectas");
+                        return false;
+                    }
+                    alert('Se presento un error en la validación de las credenciales');
+                });
+        },
+        RecoveryPassword() {
+            $.blockUI({
+                message: $('#Load'),
+                css: { backgroundColor: '#48525e', color: '#fff', border: 'none' }
+            });
+            
+            var obj =
+                {
+                    Email: $('#email').val()
+                };
+
+            $.ajax({
+                url: 'Api/Usuario/RecuperaPassword',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(obj),
+                dataType: 'json'
+            })
+                .done(function (Resultado) {
+                    $.unblockUI({ onUnblock: function () { } });
+
+                    $('.content').css('width', '550px');
+                    $('#div-recovery').html(
+
+                        "<p style='text-align: right;'><a href='http://108.163.172.122/portaladministrativo/login.html'>Log In</a> | Universidad YMCA" +
+                        "</p>" +
+                        "<br />" +
+                        "<p><h3>Recuperación de la contraseña.</h3></p>" +
+                        "<p>Se ha enviado un email a la cuenta de correo electrónico asociado," +
+                        " si no puedes visualizarlo en tu bandeja de entrada en los proximos 15 minutos; " +
+                        " buscalo en tu carpeta de elementos no deseados.</p>" +
+                        "<p>Si lo encuentras ahi, por favor marcalo como 'No Spam'.</p>");
+
+                    jQuery('.login-form').hide();
+                    jQuery('.forget-form').hide();
+                })
+                .fail(function (Resultado) {
+                    $.unblockUI({ onUnblock: function () { } });
+                    if (Resultado.status === 404) {
+                        alert("El email ingresado no existe.");
+                        return false;
+                    }
+                    alert('Se presento un error en la validación de las credenciales');
+                });
         }
     };
 
-}();
+    Login.init();
+});

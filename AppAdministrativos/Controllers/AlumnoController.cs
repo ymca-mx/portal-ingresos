@@ -1,4 +1,5 @@
 ﻿using BLL;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -277,9 +278,10 @@ namespace AppAdministrativos.Controllers
 
         [Route("UpdateMail")]
         [HttpPost]
-        public IHttpActionResult UpdateMail(int AlumnoId, string Email, int UsuarId)
+        public IHttpActionResult UpdateMail(JObject objAlumno)
         {
-            var Result = BllAlumnoDetalle.UpdateEmail(AlumnoId, UsuarId, Email);
+
+            var Result = BllAlumnoDetalle.UpdateEmail(int.Parse(objAlumno["AlumnoId"].ToString()), int.Parse(objAlumno["UsuarioId"].ToString()), objAlumno["Email"].ToString());
 
             if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
             {

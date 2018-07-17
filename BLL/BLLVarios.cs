@@ -414,7 +414,7 @@ namespace Universidad.BLL
         public static string GeneraLink(string token, bool esAlumno)
         {
 
-            return "http://108.163.172.122/" + (esAlumno ? "portalalumno" : "portaladministrativo") + "/account/recovery.html?recoveryToken=" + token;
+            return "http://108.163.172.122/" + (esAlumno ? "portalalumno" : "portaladministrativo") + "views/account/recovery.html?recoveryToken=" + token;
         }
     }
 }

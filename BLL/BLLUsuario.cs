@@ -206,38 +206,83 @@ namespace Universidad.BLL
             }
         }
 
-        public static void RecuperaPassword(string email)
+        public static object RecuperaPassword(string email)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-                //Verificar si el email esta asociado a un alumno
-                var Emails = (from a in db.UsuarioDetalle
-                              where a.Email == email
-                              select a);
-
-                if (Emails.Count() > 0)
+                try
                 {
-                    var Email = BLLVarios.RecuperaPassword(Emails.FirstOrDefault().UsuarioId, false);
-                    Utilities.ProcessResult resultado = new Utilities.ProcessResult();
-                    Utilities.Email.Enviar(Email.email, Email.password, Email.displayName, email, ';', "Solicitud de cambio de contraseña", Email.body, "", ';', Email.smtp, Email.puerto, Email.ssl, true, ref resultado);
+                    //Verificar si el email esta asociado a un alumno
+                    var Emails = (from a in db.UsuarioDetalle
+                                  where a.Email == email
+                                  select a);
+
+                    if (Emails.Count() > 0)
+                    {
+                        var Email = BLLVarios.RecuperaPassword(Emails.FirstOrDefault().UsuarioId, false);
+                        Utilities.ProcessResult resultado = new Utilities.ProcessResult();
+
+                        if(Utilities.Email.Enviar(Email.email, Email.password, Email.displayName, email, ';', "Solicitud de cambio de contraseña", Email.body, "", ';', Email.smtp, Email.puerto, Email.ssl, true, ref resultado))
+                        {
+                            return new
+                            {
+                                Status = true,
+                                Message="Correo Enviado.",
+                                resultado
+                            };
+                        }
+                        else
+                        {
+                            return new
+                            {
+                                Status = false,
+                                Message = "Fallo el Envio del correo.",
+                                resultado
+                            };
+                        }
+                        
+                    }
+                    else { return null; }
+                }
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message
+                    };
                 }
             }
         }
 
-        public static DTO.DTOLogin LoginAdministrativo(int usuarioId, string password)
+        public static object LoginAdministrativo(int usuarioId, string password)
         {
             password = Utilities.Seguridad.Encripta(27, password);
             using (UniversidadEntities db = new UniversidadEntities())
             {
+                try
+                {
 
-                return (from a in db.Usuario
-                        where a.UsuarioId == usuarioId
-                        && a.Password == password
-                        && a.EstatusId == 1
-                        select new DTO.DTOLogin
-                        {
-                            usuarioId = a.UsuarioId
-                        }).FirstOrDefault();
+                    return (from a in db.Usuario
+                            where a.UsuarioId == usuarioId
+                            && a.Password == password
+                            && a.EstatusId == 1
+                            select new
+                            {
+                                Status = true,
+                                usuarioId = a.UsuarioId
+                            }).FirstOrDefault();
+                }
+                catch(Exception error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        error?.Message,
+                        Inner = error?.InnerException?.Message
+                    };
+                }
             }
         }
 
