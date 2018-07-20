@@ -10,61 +10,67 @@ namespace BLL
 {
     public class BLLPagoConcepto
     {
-        public static List<DTOCuota> ListaPagoConceptos(int AlumnoId, int OfertaEducativaId)
+        public static object ListaPagoConceptos(int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    List<DTOCuota> Conceptos;
-
-                    List<Pago> Pagos = db.Pago
-                                                .Where(P => P.AlumnoId == AlumnoId && P.EstatusId == 1)
-                                                .ToList();
 
                     DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
 
-                    Conceptos = (from a in db.PagoConcepto
-                                        join b in db.AlumnoInscrito on a.OfertaEducativaId equals b.OfertaEducativaId
-                                        join c in db.Cuota on new { a.PagoConceptoId, a.OfertaEducativaId } equals new { c.PagoConceptoId, c.OfertaEducativaId }
-                                        where (a.EsVariable == false && a.EsVisible == true)
-                                                && b.AlumnoId == AlumnoId 
-                                                && c.PeriodoId == PeriodoActual.PeriodoId 
-                                                && c.Anio == PeriodoActual.Anio 
-                                                && c.OfertaEducativaId == OfertaEducativaId
-                                                //|| a.PagoConceptoId == 807 
-                                        orderby a.Descripcion ascending
-                                        select new DTOCuota
-                                        {
-                                            DTOPagoConcepto = new DTOPagoConcepto
-                                            {
-                                                PagoConceptoId = a.PagoConceptoId,
-                                                Descripcion = a.Descripcion,
-                                            },
-                                            Anio = c.Anio,
-                                            CuotaId = c.CuotaId,
-                                            EsEmpresa = c.EsEmpresa,
-                                            Monto = c.Monto,
-                                            OfertaEducativaId = c.OfertaEducativaId,
-                                            PagoConceptoId = c.PagoConceptoId,
-                                            PeriodoId = c.PeriodoId
-                                        }).ToList();             
-                    if(Conceptos.Where(co=> co.PagoConceptoId == 807).ToList().Count > 0)
-                    {
-                        List<DTOCuota> listCuotas = Conceptos.Where(co => co.PagoConceptoId == 807).ToList();
-                        listCuotas = listCuotas.OrderByDescending(a => a.Monto).ToList();
+                    var Conceptos2 = db.Cuota
+                         .Where(c => c.OfertaEducativaId == OfertaEducativaId
+                                     && c.Anio == PeriodoActual.Anio
+                                     && c.PeriodoId == PeriodoActual.PeriodoId
+                                     && !c.PagoConcepto.EsVariable
+                                     && c.PagoConcepto.EsVisible
+                                     && c.PagoConceptoId != 807)
+                         .Select(cu => new
+                         {
+                             cu.CuotaId,
+                             cu.PagoConceptoId,
+                             cu.PagoConcepto.Descripcion,
+                             cu.OfertaEducativaId,
+                             cu.Monto,
+                             cu.PagoConcepto.EsMultireferencia
+                         })
+                         .ToList();
 
-                        Conceptos = Conceptos.Where(co => co.PagoConceptoId != 807).ToList();
-                        Conceptos.Add(listCuotas.FirstOrDefault());
-                    }
+                    Conceptos2.Add(
+                            db.Cuota
+                            .Where(c => c.OfertaEducativaId == OfertaEducativaId
+                                        && c.Anio == PeriodoActual.Anio
+                                        && c.PeriodoId == PeriodoActual.PeriodoId
+                                        && !c.PagoConcepto.EsVariable
+                                        && c.PagoConcepto.EsVisible
+                                        && c.PagoConceptoId == 807)
+                            .Select(cu => new
+                            {
+                                cu.CuotaId,
+                                cu.PagoConceptoId,
+                                cu.PagoConcepto.Descripcion,
+                                cu.OfertaEducativaId,
+                                cu.Monto,
+                                cu.PagoConcepto.EsMultireferencia
+                            })
+                            .ToList()?
+                            .OrderByDescending(a => a.Monto)?
+                            .FirstOrDefault() ?? null);
 
-                    return Conceptos;
+                    Conceptos2 = Conceptos2.Where(a => a != null).ToList();
+
+                    return Conceptos2.OrderBy(a => a.Descripcion).ToList();
 
 
                 }
-                catch (Exception )
+                catch (Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message
+                    };
                 }
             }            
         }

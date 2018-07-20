@@ -40,7 +40,7 @@ namespace AppAdministrativos.WS
 
 
         [WebMethod]
-        public DTOReporteSaldos CargarReporteSaldos()
+        public object CargarReporteSaldos()
         {
             return BLLReportePortal.CargarReporteSaldos();
         }

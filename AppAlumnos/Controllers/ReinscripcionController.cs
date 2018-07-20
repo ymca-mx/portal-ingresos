@@ -21,10 +21,10 @@ namespace AppAlumnos.Controllers
         {
             var Result = BLLPagoPortal.GenerarInscripcionColegiatura((int)jObjectAlumno["AlumnoId"],
                     (int)jObjectAlumno["OfertaEducativaId"]);
-
-            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            
+            if (Result.ToString().Contains("System.String[]"))
             {
-                return Ok(((List<string>)Result)[0]);
+                return Ok(Result);
             }
             else
             {

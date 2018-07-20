@@ -128,7 +128,32 @@ $(function () {
                                 Direccion: "Views/Alumno/InscripcionAlumno.html"
                             }
                         };
+
+                        var UsuariosM = {
+                            Descripcion: "",
+                            MenuId: 0,
+                            SubMenu: {
+                                SubMenuId: -1,
+                                MenuId: 0,
+                                Descripcion: "Usuarios",
+                                Direccion: "Views/Usuarios/Administracion.html"
+                            }
+                        };
+
+                        var PerfilM = {
+                            Descripcion: "",
+                            MenuId: 0,
+                            SubMenu: {
+                                SubMenuId: -2,
+                                MenuId: 0,
+                                Descripcion: "Perfil",
+                                Direccion: "Views/Usuarios/Perfil.html"
+                            }
+                        };
+
                         IndexFn.Menu.push(MenuNuevoIngreso);
+                        IndexFn.Menu.push(UsuariosM);
+                        IndexFn.Menu.push(PerfilM);
 
                         $('#Menu').append(Menu);
                         app_router = new AppRouter;

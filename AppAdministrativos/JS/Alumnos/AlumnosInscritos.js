@@ -1,5 +1,4 @@
-﻿$(function init() {
-    //$.cookie('userAdmin', 6883, { expires: 1 });
+﻿$(function () {
     $('#Contenedor').hide();
     var EsLenguas = false;
     var Usuario;

@@ -21,7 +21,7 @@ namespace AppAdministrativos.WS
     public class Login : System.Web.Services.WebService
     {
         [WebMethod, ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public DTOLogin Valida(int username, string password)
+        public object Valida(int username, string password)
         {
             return Universidad.BLL.BLLUsuario.LoginAdministrativo(username, password);
         }

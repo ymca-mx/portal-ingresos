@@ -1,77 +1,54 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Buscar Alumnos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-</head>
-<body style="font-size: 10px !important">
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <h4 class="caption title">Enviar Credenciales a Alumno </h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="portlet-body form">
-                            <div class="form-body" style="height: 600px;">
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                        <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
-                                    </div>
-                                </div>
-                                <form id="frmCambios" action="post">
-                                    <div class="col-md-12 form-group">
-                                        <div class="col-md-12">
-                                            <label class="control-label bold">Nombre: </label>
-                                            <label class="control-label bold" id="lblNombre"></label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="control-label">Email del Alumno</label>
-                                            <input type="text" id="txtMail" class="form-control font-md" tabindex="1" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                         <div class="col-md-2">
-                                             <a href="javascript:return 0;" class="btn blue-dark" id="btnEnviar">Enviar Email</a>
-                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="height: 90px;">
-                            <!--<div class="modal-content" style="width:auto">-->
-                            <div class="form-group">
-                                <h3 id="hCarga">Cargando</h3>
-                            </div>
-                            <div class="form-group">
-                                <div class="bar" style="width:auto" id="divBar">
-                                    <p id="txtBar"></p>
-                                </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title bold">Enviar Credenciales a Alumno </span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-body">
+                <div class="col-md-12 form-group">
+                    <div class="col-md-12">
+                        <label class="control-label">Clave del Alumno</label>
+                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                        <button class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</button>
                     </div>
                 </div>
+                <form id="frmCambios">
+                    <div class="col-md-12 form-group">
+                        <div class="col-md-12">
+                            <label class="control-label bold">Nombre: </label>
+                            <label class="control-label bold" id="lblNombre"></label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">Email del Alumno</label>
+                            <input type="text" id="txtMail" class="form-control font-md" tabindex="1" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div class="col-md-2">
+                            <button class="btn blue-dark" id="btnEnviar">Enviar Email</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <script src="JS/Alumnos/AlumnoMail.js"></script>
-</body>
-</html>
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="height: 90px;">
+            <!--<div class="modal-content" style="width:auto">-->
+            <div class="form-group">
+                <h3 id="hCarga">Cargando</h3>
+            </div>
+            <div class="form-group">
+                <div class="bar" style="width:auto" id="divBar">
+                    <p id="txtBar"></p>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    $.getScript("JS/Alumnos/AlumnoMail.js");
+</script>

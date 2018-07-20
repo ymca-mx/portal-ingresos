@@ -5,6 +5,28 @@
         Totales;
     var EdoCuenta = {
         init: function () {
+            $('#tblEstado').dataTable({
+                "lengthMenu": [[20, 60, 100, -1], [20, 60, 100, 'Todos']],
+                "searching": false,
+                "ordering": false,
+                "async": true,
+                "bDestroy": true,
+                "bPaginate": true,
+                "bLengthChange": true,
+                "bFilter": false,
+                "bInfo": true,
+                "pageLength": 20,
+                "bAutoWidth": false,
+                "asStripClasses": null,
+                "language": {
+                    "lengthMenu": "_MENU_  Registros",
+                    "paginate": {
+                        "previous": "<",
+                        "next": ">"
+                    },
+                    "search": "Buscar Alumno ",
+                    "info": "Registro _START_ al _END_ de _TOTAL_ entradas",
+                }});
             AlumnoId = localStorage.getItem("user");
             this.starDate();
             $('#btnBuscar').on('click', this.bntBuscar);
@@ -81,7 +103,7 @@
             //    });
             //});
         },
-        bntBuscar: function () {
+        bntBuscar: function () {            
             if (tblEstadoDeCuenta != undefined) {
                 $('#tblEstado').empty();
             }
@@ -96,7 +118,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data === null) {
-                        alertify.alert("Error");
+                        alertify.alert("Universidad YMCA","El alumno no tiene ninguna referencia.");
+                        IndexFn.Block(false);
                         return false;
                     }
                     var lbl = $('#lblNombre');
@@ -123,7 +146,7 @@
                 success: function (data) {
                     if (data === null) {
                         IndexFn.Block(false);
-                        alertify.alert("Error");
+                        alertify.alert("Universidad YMCA","Error");
                         return false;
                     }
                     EdoCuenta.CrearLista(data);
@@ -249,7 +272,7 @@
                 "bPaginate": true,
                 "bLengthChange": true,
                 "bFilter": false,
-                "bInfo": false,
+                "bInfo": true,
                 "pageLength": 20,
                 "bAutoWidth": false,
                 "asStripClasses": null,
@@ -259,7 +282,8 @@
                         "previous": "<",
                         "next": ">"
                     },
-                    "search": "Buscar Alumno "
+                    "search": "Buscar Alumno ",
+                    "info": "Registro _START_ al _END_ de _TOTAL_ entradas",
                 },
                 "createdRow": function (row, data, dataIndex) {
                     row.childNodes[2].style.textAlign = 'right';

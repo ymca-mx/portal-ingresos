@@ -1,5 +1,4 @@
 ﻿
-<link href="Style/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
 <main>
     <div class="panel panel-primary" id="form_wizard_1">
         <div class="panel-heading">
@@ -535,12 +534,16 @@
                                                     <option value="-1">--Seleccionar--</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-10" id="divUni">
+                                            <div class="col-md-10">
                                                 <div class="checkbox">
-                                                    <input type="checkbox" class="checkbox" id="chkUni" onclick="ActivarUni();" />Equivalencia<br>
-                                                    <label class="control-label" for="chkUni">Universidad de Procedencia</label>
+                                                    <input type="checkbox" class="checkbox" id="chkUni" onclick="ActivarUni();" />
+                                                    <label for="chkUni" class="control-label">Equivalencia</label>
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="form-group col-md-10" id="divUni">
                                                 <div class="input-icon right">
+                                                    <label class="control-label" for="chkUni">Universidad de Procedencia</label>
                                                     <i class="fa"></i>
                                                     <input type="text" class="form-control " id="txtUni" name="txtUni" disabled="disabled" />
                                                 </div>

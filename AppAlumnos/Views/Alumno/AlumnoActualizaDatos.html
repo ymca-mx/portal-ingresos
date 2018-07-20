@@ -1,11 +1,15 @@
-﻿
-<div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-body">
-            <div class="portlet-body form" id="frmTabs">
-                <form action="javascript:;" class="form-horizontal" id="submit_form" method="post">
-                    <div class="form-wizard">
-                        <div class="form-body">
+﻿<main>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="portlet-body form" id="frmTabs">
+                    <form action="javascript:;" class="form-horizontal" id="submit_form" method="post">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <span class="caption title bold">Personales </span>
+                                </div>
+                            </div>
 
                             <div class="alert alert-danger display-none">
                                 <button class="close" data-dismiss="alert"></button>
@@ -15,8 +19,8 @@
                                 <button class="close" data-dismiss="alert"></button>
                                 Campos validos
                             </div>
-                            <div id="tab1" class="tab-pane">
-                                <h3 class="block">Personales</h3>
+
+                            <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="profile-userpic col-md-2">
@@ -27,7 +31,6 @@
                                         <div class="col-md-8">
                                             <label class="control-label">Nombre</label>
                                             <div class="input-icon right">
-                                                <i class="fa"></i>
                                                 <input type="text" id="txtnombre" class="form-control " name="txtnombre" readonly />
                                             </div>
                                         </div>
@@ -46,7 +49,6 @@
                                         <div class="col-md-7">
                                             <label class="control-label">CURP</label>
                                             <div class="input-icon right">
-                                                <i class="fa"></i>
                                                 <input type="text" class="form-control uppercase" id="txtCURP" name="txtCURP" readonly />
                                             </div>
                                         </div>
@@ -59,7 +61,7 @@
                                     </div>
 
                                     <div class="col-md-6 ">
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Estado Civil</label>
                                             <div class="input-icon right">
                                                 <select class="form-control" id="slcEstadoCivil" name="slcEstadoCivil">
@@ -69,7 +71,7 @@
                                         </div>
 
                                         <!--Telefono Celular-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Teléfono Celular</label>
                                             <div class="input-icon right">
                                                 <i class="fa"></i>
@@ -83,61 +85,76 @@
 
                                         <!--Correo electronico-->
 
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Correo Electrónico</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="email" id="txtEmail" class="form-control email" name="txtemail" />
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="email" id="txtEmail" class="form-control email" name="txtemail" />
+                                                </div>
                                             </div>
                                         </div>
                                         <!--Telefono Casa-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Teléfono Casa</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" id="txtTelefonoCasa" name="txtTelefonoCasa" class="form-control" placeholder="55555555" />
-                                                <span class="help-block"></span>
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" id="txtTelefonoCasa" name="txtTelefonoCasa" class="form-control" placeholder="55555555" />
+                                                    <span class="help-block"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <hr class="line" />
-                                        <h3 class="">Dirección</h3>
+
+                                <div class="row">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <div class="panel-title">
+                                                <span class="caption title bold">Dirección </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <!--Calle-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Calle</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" class="form-control " id="txtCalle" name="txtCalle" />
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control " id="txtCalle" name="txtCalle" />
+                                                </div>
                                             </div>
                                         </div>
                                         <!--col-md-5-->
                                         <!--Numero Exterior-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Número Exterior</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" class="form-control " id="txtNumeroE" name="txtNumeroE" />
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control " id="txtNumeroE" name="txtNumeroE" />
+                                                </div>
                                             </div>
                                         </div>
                                         <!--Numero Interior-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Numero Interior</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" class="form-control " id="txtNumeroI" name="txtNumeroI" />
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control " id="txtNumeroI" name="txtNumeroI" />
+                                                </div>
                                             </div>
                                         </div>
                                         <!--Codigo postal-->
-                                        <div class="col-md-10 form-group ">
-                                            <div class="col-md-5 form-group ">
-                                                <label class="control-label">Código Postal</label>
+                                        <div class="col-md-8 form-group ">
+                                            <label class="control-label">Código Postal</label>
+                                            <div class="row col-md-12">
                                                 <div class="input-icon right">
                                                     <i class="fa"></i>
                                                     <input type="text" class="form-control" id="txtCP" name="txtCP" />
@@ -147,51 +164,58 @@
                                     </div>
                                     <div class="col-md-6">
                                         <!--Colonia-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Colonia</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" class="form-control " id="txtColonia" name="txtColonia" />
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control " id="txtColonia" name="txtColonia" />
+                                                </div>
                                             </div>
                                         </div>
                                         <!--Estado-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Estado</label>
-                                            <div class="input-icon right">
-                                                <select id="slcEstado" class="form-control" name="slcEstado">
-                                                    <option value="-1">--Seleccionar--</option>
-                                                </select>
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <select id="slcEstado" class="form-control" name="slcEstado">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--Delegacion-->
-                                        <div class="col-md-10 form-group">
+                                        <div class="col-md-12 form-group">
                                             <label class="control-label">Delegación | Municipio</label>
-                                            <div class="input-icon right">
-                                                <select class="form-control" id="slcMunicipio" name="slcMunicipio">
-                                                    <option value="-1">--Seleccionar--</option>
-                                                </select>
+                                            <div class="row col-md-12">
+                                                <div class="input-icon right">
+                                                    <select class="form-control" id="slcMunicipio" name="slcMunicipio">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+
             </div>
 
-        </div>
+            <div class="modal-footer">
 
-        <div class="modal-footer">
+                <div id="divGuardar" class="form-group col-md-1">
+                    <a href="javascript:;" class="btn btn-primary" id="Guardar">
+                        Guardar <i class="fa fa-save"></i>
+                    </a>
+                </div>
 
-            <div id="divGuardar" class="form-group col-md-1">
-                <a href="javascript:;" class="btn blue button-next" id="Guardar">
-                    Guardar <i class="fa fa-save"></i>
-                </a>
             </div>
-
         </div>
     </div>
-</div>
-
-<script src="JS/Alumno/AlumnoActualizaDatos.js"></script>
+    <script>
+        $.getScript("JS/Alumno/AlumnoActualizaDatos.js");
+    </script>
+</main>

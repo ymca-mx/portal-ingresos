@@ -333,7 +333,11 @@
                 $('#sclPeriodo').append(option2);
             });
             if (Funciones.TablaMaster.Periodos.length > 1) { $('#sclPeriodo').val(-1); }
-            else { $('#sclPeriodo').val(Funciones.TablaMaster.Periodos[0].Anio + '' + Funciones.TablaMaster.Periodos[0].PeriodoId); }
+            else if (Funciones.TablaMaster.length === 1) { $('#sclPeriodo').val(Funciones.TablaMaster.Periodos[0].Anio + '' + Funciones.TablaMaster.Periodos[0].PeriodoId); }
+            else {
+                IndexFn.Block(false);
+                return false;
+            }
             Funciones.slcPeriodoChange();
         },
         Anticipado: function () {
