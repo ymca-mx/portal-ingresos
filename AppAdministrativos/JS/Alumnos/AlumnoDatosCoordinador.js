@@ -8,8 +8,6 @@
     var fnDatos =
         {
             init: function () {
-                ComponentsKnobDials.init();
-                ComponentsPickers.init();
                 GlobalFn.init()
                 GlobalFn.GetGenero();
                 GlobalFn.GetEstado("slcEstado", 9);
@@ -161,13 +159,15 @@
                                 $("#slcMunicipio").val(data.DTOAlumnoDetalle.MunicipioId);
                             });
 
-                            $('#txtPAutorizada').val(data.DTOPersonaAutorizada[0].Nombre);
-                            $('#txtAPPaterno').val(data.DTOPersonaAutorizada[0].Paterno);
-                            $('#txtAPMaterno').val(data.DTOPersonaAutorizada[0].Materno);
-                            $('#slcParentesco').val(data.DTOPersonaAutorizada[0].ParentescoId);
-                            $('#txtPEmail').val(data.DTOPersonaAutorizada[0].Email);
-                            $('#txtTelefonoPA').val(data.DTOPersonaAutorizada[0].Celular);
-                            $('#txtTelefonoPAT').val(data.DTOPersonaAutorizada[0].Telefono);
+                            if (data.DTOPersonaAutorizada.length > 0) {
+                                $('#txtPAutorizada').val(data.DTOPersonaAutorizada[0].Nombre);
+                                $('#txtAPPaterno').val(data.DTOPersonaAutorizada[0].Paterno);
+                                $('#txtAPMaterno').val(data.DTOPersonaAutorizada[0].Materno);
+                                $('#slcParentesco').val(data.DTOPersonaAutorizada[0].ParentescoId);
+                                $('#txtPEmail').val(data.DTOPersonaAutorizada[0].Email);
+                                $('#txtTelefonoPA').val(data.DTOPersonaAutorizada[0].Celular);
+                                $('#txtTelefonoPAT').val(data.DTOPersonaAutorizada[0].Telefono);
+                            }
 
                             $("#divGuardar").show();
                             $('#frmTabs').show();
@@ -240,30 +240,30 @@
                 IndexFn.Block(true);
 
                 var obj = {
+                    "AlumnoId": AlumnoNum,
+                    "Celular": $('#txtCelular').val(),
+                    "Email": $('#txtEmail').val(),
+                    "TelefonoCasa": $('#txtTelefonoCasa').val(),
+                    "Calle": $('#txtCalle').val(),
+                    "NoExterior": $('#txtNumeroE').val(),
+                    "NoInterior": $('#txtNumeroI').val(),
+                    "Cp": $('#txtCP').val(),
+                    "Colonia": $('#txtColonia').val(),
+                    "EstadoCivilId": $('#slcEstadoCivil').val(),
+                    "EntidadFederativaId": $('#slcEstado').val(),
+                    "MunicipioId": $('#slcMunicipio').val(),
+                    "UsuarioId": UsuarioId,
+                    "PersonaAutorizada":
+                    {
                         "AlumnoId": AlumnoNum,
-                        "Celular": $('#txtCelular').val(),
-                        "Email": $('#txtEmail').val(),
-                        "TelefonoCasa": $('#txtTelefonoCasa').val(),
-                        "Calle": $('#txtCalle').val(),
-                        "NoExterior": $('#txtNumeroE').val(),
-                        "NoInterior": $('#txtNumeroI').val(),
-                        "Cp": $('#txtCP').val(),
-                        "Colonia": $('#txtColonia').val(),
-                        "EstadoCivilId": $('#slcEstadoCivil').val(),
-                        "EntidadFederativaId": $('#slcEstado').val(),
-                        "MunicipioId": $('#slcMunicipio').val(),
-                        "UsuarioId": UsuarioId,
-                        "PersonaAutorizada":
-                        {
-                            "AlumnoId": AlumnoNum,
-                            "Nombre": $('#txtPAutorizada').val(),
-                            "Paterno": $('#txtAPPaterno').val(),
-                            "Materno": $('#txtAPMaterno').val(),
-                            "Telefono": $('#txtTelefonoPAT').val(),
-                            "Celular": $('#txtTelefonoPA').val(),
-                            "Email": $('#txtPEmail').val(),
-                            "ParentescoId": $('#slcParentesco').val()
-                        }
+                        "Nombre": $('#txtPAutorizada').val(),
+                        "Paterno": $('#txtAPPaterno').val(),
+                        "Materno": $('#txtAPMaterno').val(),
+                        "Telefono": $('#txtTelefonoPAT').val(),
+                        "Celular": $('#txtTelefonoPA').val(),
+                        "Email": $('#txtPEmail').val(),
+                        "ParentescoId": $('#slcParentesco').val()
+                    }
                 };
 
                 obj = JSON.stringify(obj);
@@ -287,7 +287,7 @@
                     .fail(function (data) {
                         alertify.alert("Error, Revisar datos capturados.");
                     });
-                
+
             },
             limpiarCampos: function () {
                 $("#submit_form").trigger('reset');
