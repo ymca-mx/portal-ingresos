@@ -35,7 +35,9 @@ namespace DAL
             this.IdiomaGrupoAlumno = new HashSet<IdiomaGrupoAlumno>();
             this.Matricula = new HashSet<Matricula>();
             this.OfertaCalendario = new HashSet<OfertaCalendario>();
+            this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
             this.PagoConcepto = new HashSet<PagoConcepto>();
+            this.InstitucionOfertaEducativa = new HashSet<InstitucionOfertaEducativa>();
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
             this.OfertaEducativaRequerimiento = new HashSet<OfertaEducativaRequerimiento>();
             this.Pago = new HashSet<Pago>();
@@ -94,7 +96,11 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfertaCalendario> OfertaCalendario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InstitucionOfertaEducativa> InstitucionOfertaEducativa { get; set; }
         public virtual OfertaEducativaTipo OfertaEducativaTipo { get; set; }
         public virtual Sucursal Sucursal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

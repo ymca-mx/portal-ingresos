@@ -3,7 +3,7 @@
     var Funciones = {
         init() {
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             this.DocumentoTipo();
             this.TraerTiposOfertas();
             this.TraerDocentes();
@@ -33,10 +33,10 @@
                         if (tblDocentes !== undefined) { $('#tblDocentes').empty(); }
                         Funciones.TraerPeriodos();
                         Funciones.ListDocentes = data;
-                    } else { $('#Load').modal('hide'); }
+                    } else { IndexFn.Block(false); }
                 },
                 error: function () {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },
@@ -230,7 +230,7 @@
             });
             var fil = $('#tblDocentes_filter label input');
             fil.removeClass('input-small').addClass('input-large');
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         IdentificarBoton() {
 
@@ -509,7 +509,7 @@
                     $('#slcOFertaTipo').focus();
                     $('#slcOFertaTipo').select();
                 } else {
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     $('#ModalFormacion').modal('hide');
                     Funciones.GuardarFormacionAcademica();
                 }
@@ -519,7 +519,7 @@
             var $frm = $('#frmCurso');
             if ($frm[0].checkValidity()) {
                 $('#ModalCurso').modal('hide');
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 var Rango = $('#txtFechas').val();
                 var objCurso
                 objCurso = Funciones.DatosCurso();
@@ -539,13 +539,13 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data !== -1) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Guardado Correctamente.", function () {
                             $('#ModalFormacion').modal('hide');
                             Funciones.TraerDocentes();
                         });
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Fallo el guardado del docente, Intente nuevamente");
                         $('#ModalCurso').modal('show');
                     }
@@ -564,7 +564,7 @@
                 FechaFinal: '',
                 EsCursoYMCA: Funciones.EsCursoYMCA,
                 DocenteId: Funciones.DocenteEstudio.DocenteId,
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
             }
         },
         GuardarFormacionAcademica() {
@@ -582,7 +582,7 @@
                     Documento: {
                         DocumentoTipoId: $('#slcDocumentoTipo').val()
                     },
-                    UsuarioId: $.cookie('userAdmin'),
+                    UsuarioId:  localStorage.getItem('userAdmin'),
                 }
             };
 
@@ -612,12 +612,12 @@
                             Funciones.TraerDocentes();
                         });
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Fallo la subida del Archivo, intente nuevamente.", function () { $('#ModalFormacion').modal('show'); });
                     }
                 })
                 .fail(function () {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Fallo la subida del Archivo, intente nuevamente.", function () { $('#ModalFormacion').modal('show'); });
                 });
         },

@@ -7,7 +7,7 @@
                 radioClass: 'iradio_square-grey',
                 increaseArea: '20%' // optional
             });
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             Funciones.TraerDocentes();
             Funciones.TraerTiposOfertas();
         },
@@ -48,10 +48,10 @@
                         if (tblDocentes !== undefined)
                         { $('#tblDocentes').empty(); }
                         Funciones.PintarTabla(data.d);
-                    } else { $('#Load').modal('hide'); }
+                    } else { IndexFn.Block(false); }
                 },
                 error: function () {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },
@@ -171,7 +171,7 @@
             });
             var fil = $('#tblDocentes_filter label input');
             fil.removeClass('input-small').addClass('input-large');
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         IdentificarBoton: function () {
             var row = this.parentNode.parentNode;
@@ -246,10 +246,10 @@
         CancelarCurso: function () {
             alertify.prompt("Por favor inserte un comentario.","", function (evt, value) {
                 $('#ModalCurso').modal('hide');
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 var objFomacion = {
                     CursoId: Funciones.DocenteCursoId,
-                    UsuarioId: $.cookie('userAdmin'),
+                    UsuarioId:  localStorage.getItem('userAdmin'),
                     Comentario: value
                 };
                 objFomacion = JSON.stringify(objFomacion);
@@ -266,7 +266,7 @@
                                 Funciones.TraerDocentes();
                             });
                         } else {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Fallo el guardado del docente, Intente nuevamente");
                             $('#ModalCurso').modal('show');
                         }
@@ -277,10 +277,10 @@
         CancelarEstudio: function () {
             alertify.prompt("Por favor inserte un comentario.","", function (evt, value) {
                 $('#ModalFormacion').modal('hide');
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 var objFomacion = {
                     EstudioPeriodoId: Funciones.DocenteEstudioId,
-                    UsuarioId: $.cookie('userAdmin'),
+                    UsuarioId:  localStorage.getItem('userAdmin'),
                     Comentario: value
                 };
                 objFomacion = JSON.stringify(objFomacion);
@@ -297,7 +297,7 @@
                                 Funciones.TraerDocentes();
                             });
                         } else {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Fallo el guardado del docente, Intente nuevamente");
                             $('#ModalFormacion').modal('show');
                         }
@@ -307,10 +307,10 @@
         },
         VBoCurso: function () {
             $('#ModalCurso').modal('hide');
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var objFomacion = {
                 CursoId: Funciones.DocenteCursoId,
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
             };
             objFomacion = JSON.stringify(objFomacion);
 
@@ -326,7 +326,7 @@
                             Funciones.TraerDocentes();
                         });
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Fallo el guardado del docente, Intente nuevamente");
                         $('#ModalCurso').modal('show');
                     }
@@ -336,10 +336,10 @@
         VBoEstudio: function () {
 
             $('#ModalFormacion').modal('hide');
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var objFomacion = {
                 EstudioId: Funciones.DocenteEstudioId,
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
             };
             objFomacion = JSON.stringify(objFomacion);
 
@@ -355,7 +355,7 @@
                             Funciones.TraerDocentes();
                         });
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Fallo el guardado del docente, Intente nuevamente");
                         $('#ModalFormacion').modal('show');
                     }

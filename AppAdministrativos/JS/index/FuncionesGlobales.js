@@ -224,7 +224,7 @@
         $("#" + SelectName).append(optionP);
         IndexFn.Api("General/ConsultarEntidadFederativa", "GET", "")
             .done(function (data) {
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 var datos = data;
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));
@@ -333,7 +333,7 @@
 
         IndexFn.Api("General/ConsultarMunicipios/" + Entidad, "GET", "")
             .done(function (data) {
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 var datos = data;
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));

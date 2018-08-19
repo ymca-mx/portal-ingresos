@@ -51,7 +51,7 @@
             tblReferencias.fnClearTable();
         }
        
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         BuscarReferencia(buscar);
 
     });
@@ -68,7 +68,7 @@
             success: function (res) {
                 var data = res.d;
                 if (data === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 tblReferencias = $('#tblReferencias3').dataTable({
@@ -114,7 +114,7 @@
                     }
                 });
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }

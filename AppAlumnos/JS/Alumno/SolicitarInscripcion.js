@@ -57,7 +57,7 @@
                             "order": [[2, "desc"]]
                         });
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 }
             });

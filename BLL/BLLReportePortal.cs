@@ -372,9 +372,12 @@ namespace BLL
                     {
                         AlumnoId = (int)a.AlumnoId,
                         Periodo = c.Descripcion,
-                        Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion).FirstOrDefault()?.Saldo ?? 0)
+                        Saldo = String.Format("{0:C}", 
+                                    alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion)
+                                    .FirstOrDefault()?
+                                    .Saldo ?? 0)
                     }).ToList(),
-                    SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId).Select(f => f.Saldo).ToList().Sum())
+                    SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId).Select(f => f.Saldo).ToList().Sum()),
                 }).ToList();
 
                 List<DTOSaldosOfertas> saldoOfertas = alumnoSaldo0.GroupBy(a => new { a.OfertaEducativaId })

@@ -75,7 +75,7 @@
         });
     }
     $('#btnLiberar').click(function () {
-        var Usuario = $.cookie('userAdmin');
+        var Usuario =  localStorage.getItem('userAdmin');
         var Descripcion = $('#txtComentario').val();
         var count = Descripcion.trim();
         if (count.length < 5) {

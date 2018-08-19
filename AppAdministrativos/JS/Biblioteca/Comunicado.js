@@ -22,7 +22,7 @@
         EnviarComunicado() {
             var data = new FormData();
             data.append("Documento", $('#fileComunicado')[0].files[0]);
-            data.append("UsuarioId", $.cookie('userAdmin'));
+            data.append("UsuarioId",  localStorage.getItem('userAdmin'));
             data.append("Asunto", $('#txtAsunto').val());
 
             alertify.alert("Se iniciara el proceso de envio, este proceso puede tardar entre 1 a 3 horas,  le mandaremos una copia al terminar.", function () {
@@ -53,17 +53,17 @@
         },
         TrerComunicados() {
             console.log("hola");
-            //$('#Load').modal('show');
+            //IndexFn.Block(true);
             Comunicado.Api("Biblioteca/Comunicados", "GET", "")
                 .done(function (data) {
                     if (data.length > 0) {
                         Comunicado.PintarTabla(data);
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 });
         },
         Api(Url, type, data) {
@@ -118,7 +118,7 @@
             });
             var fil = $('#tblComunicados_filter label input');
             fil.removeClass('input-small').addClass('input-large');
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         PintarFallidos() {
             var rowadd = tblComunicados.fnGetData($(this).closest('tr'));

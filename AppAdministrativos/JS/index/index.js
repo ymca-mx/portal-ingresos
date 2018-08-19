@@ -11,13 +11,13 @@
        
         TraerImagen: function () {
             $.ajax({
-                url: 'WS/Usuario.asmx/Datos',
-                type: 'POST',
+                url: 'Api/Usuario/Datos/' + localStorage.getItem('userAdmin'),
+                type: 'GET',
                 contentType: 'application/json; charset=utf-8',
-                data: "{'usuarioId':'" + $.cookie('userAdmin') + "'}",
                 dataType: 'json',
-                success: function (Resultado) {
-                    Datos = Resultado.d;
+            })
+                .done(function (Resultado) {
+                    Datos = Resultado;
                     if (Datos == null)
                         alert('Error en la carga de datos generales');
                     else {
@@ -28,11 +28,10 @@
                         if (Datos.extensionImagen == ".png")
                             $('#imgUsuario').attr('src', 'Style/engato/index/imagenes/Guest.png');
                     }
-                },
-                error: function (Resultado) {
+                })
+                .fail(function (Resultado) {
                     alert('Se presento un error en la validación de las credenciales');
-                }
-            });
+                });
         }
     }
     Funciones.TraerImagen();

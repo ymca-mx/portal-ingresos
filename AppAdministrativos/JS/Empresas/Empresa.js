@@ -380,7 +380,7 @@
                         RFC: $('#txtRFC').val(),
                         RazonSocial: $('#txtDescripcion').val(),
                         FechaV: $('#txtFechaV').val(),
-                        Usuarioid: $.cookie('userAdmin'),
+                        Usuarioid:  localStorage.getItem('userAdmin'),
                         EmpresaDetalle:
                         {
                             Nombre: $('#txtNombre').val(),
@@ -490,7 +490,7 @@
                     var rowadd = MiGrupo.fnGetData($(this).closest('tr'));
                     rFila = MiGrupo.fnGetData(rFila, 0);
                     GrupoI = rowadd.GrupoId;
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     EmpresasFn.CargarTablaAlumnosGrupo(GrupoI);
                     EmpresasFn.CargarEmpresasLigero();
                     $('#EmpresaC').hide();
@@ -514,7 +514,7 @@
             BtnAlumnosClick() {
                 $('#EmpresaLista').hide();
                 $('#DivAlumnos').show();
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 EmpresasFn.CargarTabla();
                 $('#DivAlumnos').removeAttr('data-origen');
                 $('#DivAlumnos').data("origen", 'EmpresaLista');
@@ -522,7 +522,7 @@
             BtnAlumnos1Click() {
                 $('#DivAlumnosGrupo').hide();
                 $('#DivAlumnos').show();
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 EmpresasFn.CargarTabla();
                 $('#DivAlumnos').removeAttr('data-origen');
                 $('#DivAlumnos').data("origen", 'DivAlumnosGrupo');
@@ -704,8 +704,8 @@
                     var grupo = $('#slcGrupo').val();
                     var ofertaid = OfertaI
                     if (GrupoI != grupo) {
-                        var usuario = $.cookie('userAdmin');
-                        $('#Load').modal('show');
+                        var usuario =  localStorage.getItem('userAdmin');
+                        IndexFn.Block(true);
 
                         var AlumnoGrupo =
                             {
@@ -725,7 +725,7 @@
                                     }
                                     alertify.alert("Guardado Correctamente");
                                     $('#PopAlumnoGrupo').modal('hide');
-                                    $('#Load').modal('hide');
+                                    IndexFn.Block(false);
                                 }
                             })
                             .fail(function (data) {
@@ -882,7 +882,7 @@
                 $('#PopAlumnoConfiguracion').modal('show');
             },
             Cargar() {
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 IndexFn.Api("Empresas/ListarEmpresas", "GET", "")
                     .done(function (data) {
                         MItable = $('#tblEmpresa').dataTable({
@@ -917,7 +917,7 @@
                                 EmpresasFn.CambiarNumero(this[0].id);
                             }
                         });
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     })
                     .fail(function (data) {
                         alertify.alert('Error al cargar datos');
@@ -1013,7 +1013,7 @@
                         SucursalId: $('#slcPlantel').val(),
                         SucursalDireccion: $('#txtDireccion').val(),
                         FechaInicioS: $('#txtFechaInicio').val(),
-                        UsuarioId: $.cookie('userAdmin')
+                        UsuarioId:  localStorage.getItem('userAdmin')
                     };
 
                 IndexFn.Api("Empresas/GuardarGrupo", "POST", JSON.stringify(grupo))
@@ -1104,7 +1104,7 @@
                                 }
                             });
 
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         }
                         else { alertify.alert("Error"); }
                     })
@@ -1133,7 +1133,7 @@
                             $("#slcEmpresa").append(option);
                         });
 
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     })
                     .fail(function (data) {
                         alertify.alert("Error");
@@ -1254,8 +1254,8 @@
             },
             GuardarConfiguracion() {
                 if (formAlumno.valid()) {
-                    $('#Load').modal('show');
-                    var usuario = $.cookie('userAdmin');
+                    IndexFn.Block(true);
+                    var usuario =  localStorage.getItem('userAdmin');
                     var periodo = $('#slcPeriodo').val();
                     var periodoId = periodo.substring(0, 1);
                     var anio = periodo.substring(2, 6);
@@ -1284,7 +1284,7 @@
                                 $('#PopAlumnoConfiguracion').modal('hide');
                                 if (TM == 1) { EmpresasFn.CargarTabla(); } else { EmpresasFn.CargarTablaAlumnosGrupo(GrupoI) }
                             } else {
-                                $('#Load').modal('hide');
+                                IndexFn.Block(false);
                                 alertify.alert("Error al guardar, intente nuevamente");
                             }
                         })

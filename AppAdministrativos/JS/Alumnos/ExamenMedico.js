@@ -7,7 +7,7 @@
         }
         if ($('#txtAlumno').val().length == 0) { return false; }
         
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         AlumnoNum = $('#txtAlumno').val();
 
         if (!isNaN(AlumnoNum)) {
@@ -38,17 +38,17 @@
                         var spq = $('#chkExamen')[0].parentElement;
                         $(spq).addClass('checked');
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 } else {
                     alertify.alert("Error al traer los datos del Alumno");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         });
     }
     $('#btnGuardaExamen').on('click', function () {
         
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         if (AlumnoId == -1) { return false; }
         var comentario = $('#txtComentario').val();
         var Examen = $('#chkExamen')[0].checked;
@@ -64,7 +64,7 @@
         objAl = JSON.stringify(objAl);
         alertify.confirm("¿Esta seguro que desea guardar el examen medico?", function (e) {
             if (e) {
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 $.ajax({
                     url: 'WS/ExamenMedico.asmx/GuardarExamen',
                     type: 'POST',
@@ -73,7 +73,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.d) {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Datos guardados", function () {
 
                                 $('#chkExamen')[0].checked = false;
@@ -87,7 +87,7 @@
 
                             });
                         } else {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Error al guardar datos, intente de nuevo");
                         }
                     }
@@ -140,7 +140,7 @@
                         },
                         "order": [[2, "desc"]]
                     });
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     $('#frmVarios').show();
                 }
             }
@@ -153,7 +153,7 @@
     });
     $('#tblAlumnos').on('click', 'a', function () {
         $('#frmVarios').hide();
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
         AlumnoNum = rowadd.AlumnoId;
         EsNumero(rowadd.AlumnoId);

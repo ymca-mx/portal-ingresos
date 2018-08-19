@@ -166,7 +166,7 @@
         {
             alertify.alert("No has indicado el nombre del grupo.");
         } else {
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             var nombre = $('#txtNombreGrupo').val();
             var periodo = $('#slcCuatrimestre').val();
             var periodoId = periodo.substring(0, 1);
@@ -197,7 +197,7 @@
         if ($('#txtNombreGrupo1').val() == "") {
             alertify.alert("No has indicado el nombre del grupo.");
         } else {
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             var nombre = $('#txtNombreGrupo1').val();
             var periodo = $('#slcCuatrimestre1').val();
             var periodoId = periodo.substring(0, 1);
@@ -241,7 +241,7 @@
         } else {
             $('#txtBar').text("Cargando");
             $('#divBar').modal('show');
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             if (TM != 3) {
                 GrupoId = $('#slcGrupo').val();
             }

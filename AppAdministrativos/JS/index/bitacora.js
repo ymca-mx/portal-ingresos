@@ -1,17 +1,15 @@
 ﻿$(document).ready(function () {
     var datos;
+    console.log("soy bitacora");
+    datos = { usuarioId: localStorage.getItem('userAdmin') };
 
-    datos = "{'usuarioId':'" + $.cookie('userAdmin') + "'}";
-  
     $.ajax({
-        url: 'WS/Usuario.asmx/InsertaBitacora',
+        url: 'Api/Usuario/InsertaBitacora',
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
-        data: datos,
+        data: JSON.stringify(datos),
         dataType: 'json'
     }).done(function (resultado) {
-        
     }).fail(function (jqXHR, textStatus) {
-       
     });
 });

@@ -292,7 +292,7 @@
     }//CargarCatrimestre
 
     function CargarBecasCuatrimestre(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargaReporteBecaCuatrimestre",
@@ -302,7 +302,7 @@
 
             success: function (data) {
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -361,7 +361,7 @@
                 filtros();
 
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             },//success
         });// end $.ajax
 
@@ -369,7 +369,7 @@
     }//function CargarReporteBecas()
 
     function CargarAlumnosInscritos(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargaReporteInscrito",
@@ -380,7 +380,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -433,7 +433,7 @@
 
                 
                 filtros();
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }//success
 
         });//$.ajax
@@ -442,7 +442,7 @@
     }//CargarAlumnosInscritos()
 
     function CargarAlumnosBecaSep(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargaReporteBecaSep",
@@ -453,7 +453,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 tblBecas2 = $("#dtbecas3").DataTable({
@@ -506,7 +506,7 @@
                 
 
                 filtros();
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }//success
 
         });//$.ajax
@@ -515,7 +515,7 @@
     }//function CargarAlumnosBecaSep()
 
     function CargarBecasInegi(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargaReporteIneg",
@@ -526,7 +526,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 tblBecas3 = $("#dtbecas4").DataTable({
@@ -582,7 +582,7 @@
                 fil.removeClass('input-small').addClass('input-large');
 
                 filtros();
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }//success
 
         });//$.ajax
@@ -793,7 +793,7 @@
 
     $("#btnSolicitar").click(function ()
     {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/EnviarSolicitudSep",
@@ -802,7 +802,7 @@
             dataType: "json",
 
             success: function (data) {
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 if (data.d) {
                     alertify.alert("Email enviado");
                     

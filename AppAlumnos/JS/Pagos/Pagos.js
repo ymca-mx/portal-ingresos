@@ -10,6 +10,7 @@
 
     var Funciones = {
         init: function () {
+            $("#sclPeriodo").on('change', Funciones.slcPeriodoChange);
             AlumnoId = localStorage.getItem("user");
             if (AlumnoId.length == 0) { return false; }
             IndexFn.Block(true);
@@ -53,6 +54,7 @@
                     "bInfo": false,
                     "bAutoWidth": false,
                     "asStripClasses": null,
+                    "dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
                     "language": {
                         "lengthMenu": "_MENU_  Registros",
                         "paginate": {
@@ -147,6 +149,7 @@
                         "bInfo": false,
                         "bAutoWidth": false,
                         "asStripClasses": null,
+                        "dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
                         "language": {
                             "lengthMenu": "_MENU_  Registros",
                             "paginate": {
@@ -237,6 +240,7 @@
                         "bInfo": false,
                         "bAutoWidth": false,
                         "asStripClasses": null,
+                        "dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
                         "language": {
                             "lengthMenu": "_MENU_  Registros",
                             "paginate": {
@@ -333,7 +337,7 @@
                 $('#sclPeriodo').append(option2);
             });
             if (Funciones.TablaMaster.Periodos.length > 1) { $('#sclPeriodo').val(-1); }
-            else if (Funciones.TablaMaster.length === 1) { $('#sclPeriodo').val(Funciones.TablaMaster.Periodos[0].Anio + '' + Funciones.TablaMaster.Periodos[0].PeriodoId); }
+            else if (Funciones.TablaMaster.Periodos.length === 1) { $('#sclPeriodo').val(Funciones.TablaMaster.Periodos[0].Anio + '' + Funciones.TablaMaster.Periodos[0].PeriodoId); }
             else {
                 IndexFn.Block(false);
                 return false;
@@ -408,7 +412,7 @@
                     });
                     ///Se tiene que regresar a valor anterior
                     if (Genera == 1) {
-                        $('#divAnticipado').show();
+                        //$('#divAnticipado').show();
                     } else { $('#divAnticipado').hide(); }
                     //AlumnoId = "";
                 }
@@ -458,6 +462,6 @@
     };
 
     Funciones.init();
-    $("#sclPeriodo").on('change', Funciones.slcPeriodoChange);
+    
 
 });

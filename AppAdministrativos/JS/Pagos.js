@@ -341,7 +341,7 @@
 
                     }
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 }
         });
     }
@@ -377,7 +377,7 @@
                         option.attr("data-PeriodoId", this.PeriodoId);
                         $("#sclPeriodo").append(option);
                     });
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         });

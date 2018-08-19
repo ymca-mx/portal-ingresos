@@ -139,55 +139,58 @@ namespace Universidad.BLL
             }
         }
 
-        public static DTO.Usuario.DTOUsuarioImagen ImagenIndex(int usuarioId)
+        public static object ImagenIndex(int usuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-
-                var Ano = (from a in db.Usuario
-                           join c in db.UsuarioImagen on a.UsuarioId equals c.UsuarioId
-                           join d in db.UsuarioImagenDetalle on a.UsuarioId equals d.UsuarioId
-                           where a.UsuarioId == usuarioId
-                           select new DTO.Usuario.DTOUsuarioImagen {
-                               nombre = (a.Nombre + " " + a.Paterno + " " + a.Materno).Trim(),
-                               imagen = c.Imagen,
-                               extensionImagen = d.Extension
-                           }).FirstOrDefault();
-
-                if (Ano == null)
+                try
                 {
+                    var Ano = (from a in db.Usuario
+                               join c in db.UsuarioImagen on a.UsuarioId equals c.UsuarioId
+                               join d in db.UsuarioImagenDetalle on a.UsuarioId equals d.UsuarioId
+                               where a.UsuarioId == usuarioId
+                               select new DTO.Usuario.DTOUsuarioImagen
+                               {
+                                   nombre = (a.Nombre + " " + a.Paterno + " " + a.Materno).Trim(),
+                                   imagen = c.Imagen,
+                                   extensionImagen = d.Extension
+                               }).FirstOrDefault();
 
-
-                    Ano = new DTO.Usuario.DTOUsuarioImagen
+                    if (Ano == null)
                     {
-                        imagen = ImagenDefault(),
-                        extensionImagen = ".png",
-                        nombre = (from a in db.Usuario
-                                  where a.UsuarioId == usuarioId
-                                  select (a.Nombre + " " + a.Paterno + " " + a.Materno).Trim()).FirstOrDefault()
+
+
+                        Ano = new DTO.Usuario.DTOUsuarioImagen
+                        {
+                            imagen = ImagenDefault(),
+                            extensionImagen = ".png",
+                            nombre = (from a in db.Usuario
+                                      where a.UsuarioId == usuarioId
+                                      select (a.Nombre + " " + a.Paterno + " " + a.Materno).Trim()).FirstOrDefault()
+                        };
+
+
+                    }
+
+
+
+                    return new
+                    {
+                        Status = true,
+                        Ano.nombre,
+                        imagenBase64 = Convert.ToBase64String(Ano.imagen),
+                        Ano.extensionImagen
                     };
-
-                    
                 }
-
-
-
-                return new DTO.Usuario.DTOUsuarioImagen {
-                    nombre = Ano.nombre,
-                    imagenBase64 = Convert.ToBase64String(Ano.imagen),
-                    extensionImagen = Ano.extensionImagen
-                };
-
-                //return new DTO.Usuario.DTOUsuarioImagen
-                //{
-                //    imagenBase64 = Convert.ToBase64String((from a in db.UsuarioImagen
-                //                                           where a.UsuarioId == usuarioId
-                //                                           select a.Imagen).ToList().FirstOrDefault()),
-                //    extensionImagen = (from a in db.UsuarioImagenDetalle
-                //                       where a.UsuarioId == usuarioId
-                //                       select a.Extension).FirstOrDefault(),
-                //                       nombre = 
-                //};
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message
+                    };
+                }
             }
         }
 
@@ -354,44 +357,70 @@ namespace Universidad.BLL
                 db.SaveChanges();
             }
         }
-        public static List<DTO.DTOMenu> TraerMenu(int UsuarioId)
+        public static object TraerMenu(int UsuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
-               List<ICollection<TipoUsuarioSubmenu>> lstITipoUsu1 = (from m in db.Usuario
-                                                               where m.UsuarioId == UsuarioId
-                                                               select m.UsuarioTipo.TipoUsuarioSubmenu).ToList();
-               List<TipoUsuarioSubmenu> lstTipoUsu = (List<TipoUsuarioSubmenu>)lstITipoUsu1[0].ToList();
-               
-
-                List<DTO.DTOMenu> lstMenu= new List<DTO.DTOMenu>();
-                lstTipoUsu.ForEach(delegate(TipoUsuarioSubmenu objTipo)
+                try
                 {
-                    if (lstMenu.FindIndex(X => X.MenuId == objTipo.SubMenu.Menu.MenuId) < 0)
+                    var SubMenus =
+                    db.Usuario
+                        .Where(a => a.UsuarioId == UsuarioId)
+                        .Select(a =>
+                            a.UsuarioTipo
+                            .TipoUsuarioSubmenu
+                            .Select(b => new
+                            {
+                                b.SubMenu.Descripcion,
+                                b.SubMenu.Direccion,
+                                b.SubmenuId,
+                                b.SubMenu.MenuId
+                            }).ToList()
+                            ).FirstOrDefault();
+
+                    var listMenuId = SubMenus.Select(a => a.MenuId).ToList();
+
+                    listMenuId = listMenuId.Distinct().ToList();
+
+                    return new
                     {
-                        lstMenu.Add(new DTO.DTOMenu
-                        {
-                            Descripcion = objTipo.SubMenu.Menu.Descripcion,
-                            MenuId = objTipo.SubMenu.Menu.MenuId
-                        });
-                    }
-                });
+                        Status = true,
+                        Menu =
+                            db.Menu
+                            .Where(a => listMenuId.Contains(a.MenuId)
+                                    && a.EstatusId == 1)
+                            .ToList()
+                            .AsEnumerable()
+                            .Select(a => new
+                            {
+                                a.MenuId,
+                                a.Descripcion,
+                                a.Icono,
+                                SubMenu = SubMenus
+                                        .Where(b => b.MenuId == a.MenuId)
+                                        .Select(b => new
+                                        {
+                                            b.Descripcion,
+                                            b.Direccion,
+                                            b.MenuId,
+                                            b.SubmenuId
+                                        })
+                                        .ToList()
+                            })
+                            .ToList()
+                            .OrderBy(a => a.MenuId)
+                    };
 
-                lstMenu.ForEach(delegate(DTO.DTOMenu objM)
+                }
+                catch(Exception error)
                 {
-                    objM.SubMenu = (from a in lstTipoUsu
-                                    where a.SubMenu.MenuId == objM.MenuId
-                                    orderby a.SubmenuId
-                                    select new DTO.DTOSubMenu
-                                    {
-                                        Descripcion = a.SubMenu.Descripcion,
-                                        Direccion = a.SubMenu.Direccion,
-                                        MenuId = a.SubMenu.MenuId,
-                                        SubmenuId = a.SubMenu.SubmenuId
-                                    }).ToList();
-                });
-                lstMenu = lstMenu.OrderBy(M => M.MenuId).ToList();
-                return lstMenu;
+                    return new
+                    {
+                        Status = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message
+                    };
+                }
             }
         }
     }

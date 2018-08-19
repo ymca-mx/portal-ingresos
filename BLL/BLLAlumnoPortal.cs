@@ -259,7 +259,7 @@ namespace BLL
                                 UsuarioId=Alumno.UsuarioId,
                                 TurnoId = Alumno.AlumnoInscrito.TurnoId,
                                 HoraInscripcion=DateTime.Now.TimeOfDay,
-                                EstatusId= OfertaEducativadb.OfertaEducativaTipoId == 4?1:8,
+                                EstatusId= Alumno.AlumnoInscrito.EsEmpresa|| OfertaEducativadb.OfertaEducativaTipoId == 4?1:8,
                                 PagoPlanId = pagoplan
                                 }
                             },
@@ -292,7 +292,9 @@ namespace BLL
                                 Colonia = Alumno.DTOAlumnoDetalle.Colonia,
                                 Calle = Alumno.DTOAlumnoDetalle.Calle,
                                 NoExterior = Alumno.DTOAlumnoDetalle.NoExterior,
-                                NoInterior = Alumno.DTOAlumnoDetalle.NoInterior,
+                                NoInterior = Alumno.DTOAlumnoDetalle.NoInterior != null
+                                        || Alumno.DTOAlumnoDetalle.NoInterior != "null"
+                                        || Alumno.DTOAlumnoDetalle.NoInterior.Length > 0 ? Alumno.DTOAlumnoDetalle.NoInterior : "",
                                 TelefonoCasa = Alumno.DTOAlumnoDetalle.TelefonoCasa,
                                 Celular = Alumno.DTOAlumnoDetalle.Celular,
                                 Email = Alumno.DTOAlumnoDetalle.Email,
@@ -562,7 +564,8 @@ namespace BLL
 
                 int num = 0;
                 return Alumnobd.ofertaEducativa == null ? null : (Alumnobd.curp.Length > 2 || Alumnobd.curp.Length == 18) ?
-                     int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 2), out num) ? Alumnobd :
+                     (int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 1), out num) 
+                     || int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 1, 1), out num)) ? Alumnobd :
                      (new
                      {
                          Alumnobd.alumnoId,

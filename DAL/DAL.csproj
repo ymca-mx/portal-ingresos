@@ -200,6 +200,9 @@
     <Compile Include="AlumnosEmpresa.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoTitulo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="AntecedenteTipo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -213,6 +216,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="AsociacionDetalle.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutorizacionReconocimiento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BajaMotivo.cs">
@@ -242,13 +248,16 @@
     <Compile Include="CalificacionesAntecedente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Campus.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="CancelacionCursoDocente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="CancelacionDocenteEstudio.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="COLEGIATURA.cs">
+    <Compile Include="Cargo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Comunicado.cs">
@@ -264,6 +273,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="CuotaIncremento.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatosClipper.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="DatosFiscales.cs">
@@ -327,6 +339,9 @@
     <Compile Include="Financiamiento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="FundamentoLegal.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Genero.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -375,6 +390,12 @@
     <Compile Include="IngresosPermiso.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Institucion.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InstitucionOfertaEducativa.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="LenguasRelacion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -406,6 +427,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Mes.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModalidadTitulacion.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelo.Context.cs">
@@ -718,10 +742,10 @@
     <Compile Include="SucursalDetalle.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="TempAdeudo.cs">
+    <Compile Include="TipoDocumento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="TipoDocumento.cs">
+    <Compile Include="TipoEstudioAntecedente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoMovimiento.cs">
@@ -740,9 +764,6 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UniversidadAdeudo.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UniversidadNewAdeudo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UniversidadValidacion.cs">
@@ -773,6 +794,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UsuarioPermiso.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioResponsable.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="UsuarioTipo.cs">

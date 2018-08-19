@@ -27,7 +27,11 @@
             var Oferta = parseInt($('#slcOfertaEducativa').val());
             
             if (TipoO !== -1 && Oferta !== -1) {
-                ReporteFn.GetDetalleAlumno(Oferta);
+                var lstAlumnosOFerta = [];
+
+                ReporteFn.Todos.find(x => x.Ofer);
+
+
             } else if (TipoO === -1 && Oferta === -1){
                 ReporteFn.GenerarAlumnoDetalle(ReporteFn.Todos);
             }
@@ -52,13 +56,13 @@
             $("#slcOfertaEducativa").change();
         },
         GetDetalleAlumno(OfertaEducativaId) {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             IndexFn.Api("Reporte/ReporteSaldosAlumnos/" + OfertaEducativaId, "GET", "")
                 .done(function (data) {
                     ReporteFn.GenerarAlumnoDetalle(data.Alumnos);
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 });
         },
         CargarTipoOfertas() {
@@ -77,11 +81,11 @@
         TipoOfertas: {},
         Todos: {},
         CagarReporteSaldos() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             IndexFn.Api("Reporte/CargarReporteSaldos", "GET", "")
                 .done(function (data) {
                     if (data === null) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
 
@@ -207,11 +211,11 @@
 
                     ReporteFn.CargarTipoOfertas();
 
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 });
         },
@@ -340,9 +344,9 @@
             var fil2 = $('#AntiguedadSaldos_filter label input');
             fil2.removeClass('input-small').addClass('input-large');
 
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         }
-    };
+    }; 
 
     ReporteFn.init();
 });

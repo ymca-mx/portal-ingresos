@@ -21,6 +21,8 @@ namespace DAL
             this.AlumnoDetalle = new HashSet<AlumnoDetalle>();
             this.AlumnoDetalle1 = new HashSet<AlumnoDetalle>();
             this.AlumnoDetalleAlumno = new HashSet<AlumnoDetalleAlumno>();
+            this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
+            this.AlumnoTitulo1 = new HashSet<AlumnoTitulo>();
             this.Municipio = new HashSet<Municipio>();
             this.ProspectoDetalle = new HashSet<ProspectoDetalle>();
             this.ProspectoDetalle1 = new HashSet<ProspectoDetalle>();
@@ -31,6 +33,7 @@ namespace DAL
         public string Clave { get; set; }
         public bool SeMuestra { get; set; }
         public string Descripcion { get; set; }
+        public string Abreviacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoAntecedente> AlumnoAntecedente { get; set; }
@@ -40,6 +43,10 @@ namespace DAL
         public virtual ICollection<AlumnoDetalle> AlumnoDetalle1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoDetalleAlumno> AlumnoDetalleAlumno { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoTitulo> AlumnoTitulo1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Municipio> Municipio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

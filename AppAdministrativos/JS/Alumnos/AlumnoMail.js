@@ -14,14 +14,14 @@
             }
         },
         bntBuscar() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             Email = "";
             Alumno = 0;
             var AlumnoId = $('#txtClave').val();
 
             IndexFn.Api("Alumno/TraerAlumnoDetalle/" + AlumnoId, "GET", "")
                 .done(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     $('#lblNombre').text(data.Nombre);
                     $('#txtMail').val(data.Email);
                     Email = data.Email;
@@ -29,7 +29,7 @@
                 })
                 .fail(function (data) {
                     if (data == null) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Universidad YMCA", "Alumno no encotrado..");
                         return false;
                     }
@@ -38,8 +38,8 @@
         frmSubmit(e) {
             e.preventDefault();
 
-            $('#Load').modal('show');
-            var Usuario = $.cookie('userAdmin');
+            IndexFn.Block(true);
+            var Usuario =  localStorage.getItem('userAdmin');
             var Email1 = $('#txtMail').val();
             if (Email1.length > 0) {
                 if (Email1 == Email) {
@@ -75,7 +75,7 @@
         EnviarMail(AlumnoId, Usuario) {
             IndexFn.Api("General/EnviarMailUpdate/" + AlumnoId + "/" + Usuario, "GET", "")
                 .done(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     if (data.length > 0) {
                         alertify.alert("Universidad YMCA", "No se pudo enviar el correo al alumno favor de revisar el Correo");
                         return false;

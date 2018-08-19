@@ -105,6 +105,7 @@ namespace DTO
         public int AlumnoId { get; set; }
         public string Periodo { get; set; }
         public string Saldo { get; set; }
+        
     }
 
     public class DTOSaldosOfertas

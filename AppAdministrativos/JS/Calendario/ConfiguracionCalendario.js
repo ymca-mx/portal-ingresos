@@ -8,7 +8,7 @@
             Funciones.TraerPlantel();
         },
         TraerCalendarios: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 type: "POST",
                 url: "WS/Calendario.asmx/Listar",
@@ -18,7 +18,7 @@
                 success: function (data) {
                     if (data.d.length > 0) {
                         Funciones.PintarCalendarios(data.d);
-                    } else { $('#Load').modal('hide'); }
+                    } else { IndexFn.Block(false); }
                 }
             });
         },
@@ -138,7 +138,7 @@
                 },
                 "order": [[2, "desc"]]
             });
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         ClickTabla: function (eventObject) {
             var row = this.parentNode.parentNode;
@@ -220,7 +220,7 @@
             }
         },
         GuardarNuevoCalendario: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var objGuardar = Funciones.CamposCalendario();
             objGuardar = JSON.stringify(objGuardar);
             $.ajax({
@@ -233,7 +233,7 @@
                     if (data.d > 0) {
                         Funciones.SubirArchivo(data.d, 'Se agrego el nuevo calendario');
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert('Error no se pudo agregar el nuevo calendario, intente más tarde.');
                     }
                 }
@@ -255,7 +255,7 @@
                 contentType: false,
                 processData: false,
                 success: function (data1) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     var $xml = $(data1);
                     var $bool = $xml.find("boolean");
 
@@ -272,7 +272,7 @@
             });
         },
         GuardarModificacion: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var objGuardar = Funciones.CamposCalendario();
             objGuardar = JSON.stringify(objGuardar);
             $.ajax({
@@ -286,12 +286,12 @@
                         if (CambioArchivo) {
                             Funciones.SubirArchivo($('#txtNombre').data('calendarioid'), 'Se guardaron las modificaciones');
                         } else {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             Funciones.CerrarModificar();
                             alertify.alert('Se guardaron las modificaciones').set('onok', function (CloseEvent) { Funciones.TraerCalendarios(); });
                         }
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         $('#ModificarCalendario').modal('hide');
                         alertify.alert('Error no se pudo modificar el calendario, intente más tarde.', function () { $('#ModificarCalendario').modal('show'); });
                     }
@@ -304,7 +304,7 @@
                     CalendarioEscolarId: $('#txtNombre').data('calendarioid'),
                     Nombre: $('#txtNombre').val(),
                     Direccion: $('#txtCalendario').text(),
-                    UsuarioId: $.cookie('userAdmin'),
+                    UsuarioId:  localStorage.getItem('userAdmin'),
                     EstatusId: ($('#rdbActivo')[0].checked ? 1 : 2)
                 }
             };

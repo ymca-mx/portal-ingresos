@@ -1,6 +1,6 @@
 ﻿$(function () {
     var AlumnoNum, tblAlumnos, tblDatos;
-    UsuarioId = $.cookie('userAdmin');
+    UsuarioId =  localStorage.getItem('userAdmin');
 
     var fnAlumnoDatos =
         {
@@ -25,7 +25,7 @@
                 }
                 if ($('#txtAlumno').val().length == 0) { return false; }
                 $("#submit_form").trigger('reset');
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 AlumnoNum = $('#txtAlumno').val();
 
                 if (!isNaN(AlumnoNum)) {
@@ -37,7 +37,7 @@
             seleccionarAlumno() {
                 $('#frmVarios').hide();
                 $('#frmTabs').show();
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
                 AlumnoNum = rowadd.AlumnoId;
                 fnAlumnoDatos.esNumero(AlumnoNum);
@@ -88,11 +88,11 @@
                                 }
                             });
                             $('#frmTabs').show();
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         }
                         else {
                             $('#frmTabs').hide();
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Error, El Alumno no Existe.");
                         }
                     })
@@ -143,7 +143,7 @@
                                 "order": [[2, "desc"]]
                             });
                         }
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     })
                     .fail(function (data) {
                         alertify.alert('Error al cargar datos');

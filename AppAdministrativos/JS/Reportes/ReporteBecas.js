@@ -47,7 +47,7 @@
     }
 
     function CargarReporteBecas(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargarReporteBecas",
@@ -58,7 +58,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 var calculos1 = data.d.Calculos1;
@@ -217,7 +217,7 @@
                 fil.removeClass('input-small').addClass('input-large');
 
                 $("#btnBecas3").show();
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }//success
 
         });//$.ajax

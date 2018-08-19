@@ -39,7 +39,7 @@
                             $('#txtMontoColegiatura').val(data.d.Grupo.ConfiguracionAlumno.CuotaColegiatura === -1 ? "" : data.d.Grupo.ConfiguracionAlumno.CuotaColegiatura);
 
                             GenerarSemestrales.Funciones.CargarOferta(data.d.lstAlumnoInscrito);
-                        } else { $('#Load').modal('hide'); }
+                        } else { IndexFn.Block(false); }
                     }
                 });
             },
@@ -64,7 +64,7 @@
                 $("#slcOfertaEducativa").val(ofer);
                 $("#slcOfertaEducativa").change();
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             },
             TraerReferencias: function (OFerta) {
                 $($('#ModalMontos')[0].parentNode).show();
@@ -75,7 +75,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (data) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         if (data.Code != undefined) {
                             $($('#ModalMontos')[0].parentNode).hide();
                             alertify.alert("Universidad YMCA", data.Message);
@@ -171,7 +171,7 @@
                 lbl[0].innerHTML = "";
                 AlumnoId = $('#txtClave').val();
                 if (AlumnoId.length == 0) { return false; }
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 GenerarSemestrales.Funciones.BuscarAlumno(AlumnoId);
             },
             txtClavekeydown: function (e) {
@@ -186,7 +186,7 @@
             },
             slcOfertaEducativachange: function () {
                 if ($(this).val() !== "-1") {
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     var oferta = $("#slcOfertaEducativa").val();
                     GenerarSemestrales.Funciones.TraerReferencias(oferta);
                 }
@@ -210,12 +210,12 @@
                         MesFinal: $('#sclMesFinal').val(),
                         MesInicial: $('#sclMesinicial').val(),
                         AnioFinal: $("#slcAnioFinal").val(),
-                        UsuarioId: $.cookie('userAdmin'),
+                        UsuarioId:  localStorage.getItem('userAdmin'),
                         Inscripcion: $('#txtMontoInscripcion').val(),
                         Colegiatura: $('#txtMontoColegiatura').val()
                     });                    
 
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
 
                     $.ajax({
                         type: "POST",
@@ -230,13 +230,13 @@
                                     GenerarSemestrales.Funciones.TraerReferencias($("#slcOfertaEducativa").val())
                                 });
                             } else {
-                                $('#Load').modal('hide');
+                                IndexFn.Block(false);
                                 alertify.alert("No se pudieron generar las Referencias, intente más tarde.");
                             }
                         },
                         error: function () {
                             alertify.alert("Error, hay problemas de conexión o comunicación.")
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         }
                     });
                 }

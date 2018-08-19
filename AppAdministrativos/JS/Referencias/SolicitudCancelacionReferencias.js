@@ -139,7 +139,7 @@
     }
 
     function MostrarSolicitudes() {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         $('#divBar').modal('show');
         $.ajax({
             url: 'WS/General.asmx/ConsultarPagoCancelacionSolicitud',
@@ -381,7 +381,7 @@
     });
 
     $('#btnGuardar').click(function () {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         var Texto = $('#txtComentario').val();
         Texto = $.trim(Texto);
         if (Texto.length > 5) {

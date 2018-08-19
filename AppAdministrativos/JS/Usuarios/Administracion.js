@@ -6,8 +6,8 @@
             $('#btnGuardar').on('click', this.SaveChanges);
         },
         GetUsuarios() {
-            $('#Load').modal('show');
-            IndexFn.Api("Administracion/Usuarios/" + $.cookie('userAdmin'),"GET","")
+            IndexFn.Block(true);
+            IndexFn.Api("Administracion/Usuarios/" +  localStorage.getItem('userAdmin'),"GET","")
                 .done(function (data) {
                     UsuariosFn.PintarTabla(data.Usuarios);
                 })
@@ -61,7 +61,7 @@
                 });
             var fil = $('#tblUsuarios_filter label input');
             fil.removeClass('input-small').addClass('input-large');
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         TblUsuarios: $('#tblUsuarios').dataTable(),
         ShowPop() {
@@ -89,17 +89,17 @@
                     EstatusId: ($('#chkEstatus')[0].checked ? 1 : 2)
                 };
 
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 IndexFn.Api("Administracion/Usuario", "POST", JSON.stringify(objDocente))
                     .done(function (data) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         $('#PopDatos').modal('hide');
                         alertify.alert("Universidad YMCA", 'Se guardo correctamente', function () {
                             UsuariosFn.GetUsuarios();
                         });
                     })
                     .fail(function (data) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Universidad YMCA", 'Error al guardar los datos.', function () {
                             console.log(data);
                         });

@@ -35,7 +35,7 @@
                 })
                 .fail(function (data) {
                     console.log(data);
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 });
         },
         BuscarNombre(Nombre) {
@@ -81,10 +81,10 @@
                             "order": [[2, "desc"]]
                         });
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     console.log(data);
                 });
         },
@@ -367,14 +367,14 @@
             }
             if (parseInt($('#sclPeriodo').val()) != -1) {
                 Funciones.Anticipado();
-            } else { $('#Load').modal('hide');}
+            } else { IndexFn.Block(false);}
             
         },
         CargarPagos () {
 
             IndexFn.Api("Pago/ConsultaPagoDetalle/" + AlumnoId, "GET", "")
                 .done(function (dat1a) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     if (dat1a != null) {
                         if (dat1a.Pagos.length > 0) {
                             Funciones.TablaMaster = dat1a;
@@ -383,7 +383,7 @@
                     } 
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     console.log(data);
                 });            
         },
@@ -414,7 +414,7 @@
         Anticipado() {
             IndexFn.Api("Cuota/Anticipado/" + AlumnoId + "/Periodo/" + Anio + "/" + PeriodoId, "GET", "")
                 .done(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     var Descripcion = "";
                     if (data == null) { return null; }
                     var Genera = 0;
@@ -488,7 +488,7 @@
                 })
                 .fail(function (data) {
                     console.log(data);
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 });
         },
         BtnBuscarClick() {
@@ -507,7 +507,7 @@
             if (AlumnoId.length == 0) { return false; }
             if (tblReferencias != undefined) { tblReferencias.fnClearTable(); }
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $('#sclPeriodo').empty();
 
             if (!isNaN(AlumnoId)) { Funciones.BuscarAlumno(AlumnoId); }
@@ -520,7 +520,7 @@
         },
         TablaAlumnoClick () {
             $('#frmVarios').hide();
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
             AlumnoId = rowadd.AlumnoId;
             Funciones.BuscarAlumno(rowadd.AlumnoId);

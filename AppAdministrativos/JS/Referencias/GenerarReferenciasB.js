@@ -57,7 +57,7 @@ $(function init() {
             dataType: 'json',
             success: function (data) {
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 Periodos = data.d;
@@ -131,7 +131,7 @@ $(function init() {
         }
     });
     function CargarConceptos(OfertaEducativa) {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         $("#slcConceptos").empty();
         $.ajax({
             type: "POST",
@@ -285,7 +285,7 @@ $(function init() {
 
       
 
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         $(lstCuotas).each(function () {
             var objCuota = this;
             if (objCuota.DTOPagoConcepto.PagoConceptoId == slcConcepto) {
@@ -373,7 +373,7 @@ $(function init() {
     });
 
     $('#btnGuardar').click(function () {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         var Texto = $('#txtComentario').val();
         Texto = $.trim(Texto);
         if (Texto.length > 5) {

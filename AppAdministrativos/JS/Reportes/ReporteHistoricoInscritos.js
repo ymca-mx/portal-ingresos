@@ -92,7 +92,7 @@
  
 
     function CargarAlumnosInscritos(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargaReporteInscrito",
@@ -103,7 +103,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -155,7 +155,7 @@
                 fil.removeClass('input-small').addClass('input-large');
                 
                 filtro();
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }//success
 
         });//$.ajax

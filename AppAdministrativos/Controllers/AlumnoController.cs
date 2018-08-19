@@ -187,6 +187,8 @@ namespace AppAdministrativos.Controllers
         [HttpPut]
         public IHttpActionResult AddAlumno(DTO.DTOAlumno Alumno)
         {
+            Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            //Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             var Result = BLLAlumnoPortal.InsertarAlumno(Alumno);
 
             if (Result is string)

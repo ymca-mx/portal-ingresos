@@ -51,7 +51,7 @@
     });
 
     function CargarReporteReferencias(anio, periodo) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargaReporteAlumnoReferencia",
@@ -62,7 +62,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -135,7 +135,7 @@
                 fil.removeClass('input-small').addClass('input-large');
 
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             },//success
         });// end $.ajax
 

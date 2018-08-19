@@ -12,7 +12,7 @@
         anio = $('#slcCuatrimestre').find(':selected').data("anio");
         periodo = $('#slcCuatrimestre').find(':selected').data("periodoid");
         descripcion = $('#slcCuatrimestre option:selected').text();
-        usuarioid = $.cookie('userAdmin');
+        usuarioid =  localStorage.getItem('userAdmin');
         CargarVistoBueno(anio, periodo, usuarioid);
 
     });
@@ -124,7 +124,7 @@
     }
 
     function CargarVistoBueno(anio, periodo, usuarioid) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/CargarReporteVoBo",
@@ -226,9 +226,9 @@
                     var fil = $('#dtVoBo_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
 
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             },//success
         });// end $.ajax
 
@@ -307,7 +307,7 @@
 
     $("#btnEnviar").click(function ()
     {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/ReporteVoBoEnviarEmail",
@@ -316,7 +316,7 @@
             dataType: "json",
 
             success: function (data) {
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 if (data.d) {
                     alertify.alert("Email enviado");
 

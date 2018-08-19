@@ -119,6 +119,7 @@
     <Compile Include="BLLReportePortal.cs" />
     <Compile Include="BLLSaldoAFavor.cs" />
     <Compile Include="BLLSede.cs" />
+    <Compile Include="BLLSEP.cs" />
     <Compile Include="BLLSistemaConfiguracion.cs" />
     <Compile Include="BLLSucursal.cs" />
     <Compile Include="BLLTurno.cs" />

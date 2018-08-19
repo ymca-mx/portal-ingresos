@@ -6,11 +6,11 @@
         AlumnoId = $('#txtClave').val();
         if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
         
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: "POST",
             url: "WS/Alumno.asmx/ConsultaCambioCarrera",
-            data: "{AlumnoId:'" + AlumnoId + "', UsuarioId:" + $.cookie('userAdmin') + "}",
+            data: "{AlumnoId:'" + AlumnoId + "', UsuarioId:" +  localStorage.getItem('userAdmin') + "}",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
@@ -21,7 +21,7 @@
                 $('#lblInscito').empty();
                 if (data.d === null) {
                     alertify.alert("Este alumno no existe.");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 lstop.length = 0;
@@ -37,13 +37,13 @@
                         $('#lblInscito').text("No ha iniciado proceso de cambio de carrera.");
                     }
 
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 if (lstop[0].EstatusId != 4 && lstop[0].EstatusId != 14 && lstop[0].EstatusId != 0) {
 
                     $('#lblInscito').text("No ha realizado el pago para cambio de carrera.");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -73,7 +73,7 @@
                 $("#slcOfertaEducativa2").val(-1);
 
                 $("#btnCambio").removeAttr("disabled");
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
 
@@ -105,11 +105,11 @@
         } 
 
         $("#PopComentario").modal("hide");
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         
         lstop[0].OfertaEducativaIdNueva = $('#slcOfertaEducativa2').val();
         lstop[0].Observaciones = $("#txtComentario").val();
-        lstop[0].UsuarioId = $.cookie('userAdmin');
+        lstop[0].UsuarioId =  localStorage.getItem('userAdmin');
 
         var obj = {
             "Cambio": lstop[0]
@@ -135,7 +135,7 @@
                     $("#txtComentario").empty();
                     alertify.alert("Error al  realizar cambio.");
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
 

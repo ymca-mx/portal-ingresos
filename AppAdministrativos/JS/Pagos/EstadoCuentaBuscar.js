@@ -90,7 +90,7 @@
         if (tblEstadoDeCuenta != undefined) {
             $('#tblEstado').empty();
         }
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         BuscarAlumno(AlumnoId);
     });
     function BuscarAlumno(idAlumno) {
@@ -129,12 +129,12 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error");
                     return false;
                 }
                 CrearLista(data.d);
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }

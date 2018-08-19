@@ -89,7 +89,7 @@ $(document).ready(function () {
     }
 
     function CargarVistoBueno(anio, periodo, usuarioid) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'GET',
             url: "http://108.163.172.122/portalAdministrativo/api/Reporte/CargarReporteVoBo" +
@@ -177,9 +177,9 @@ $(document).ready(function () {
                         .search("-")
                         .draw();
 
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             },//success
         });// end $.ajax
 

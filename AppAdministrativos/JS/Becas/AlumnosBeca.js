@@ -29,7 +29,7 @@
             $('#slcDescripcionBeca').on('change', Funciones.slcDescripcionBecaChange);
         },
         GetUsuario: function () {
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             $.ajax({
                 type: "POST",
                 url: "WS/General.asmx/ObtenerUsuario",
@@ -200,9 +200,9 @@
                         if (TieneSEP) {
                             Funciones.SetearCombo(true);
                         }
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 }
             });
@@ -216,10 +216,10 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data !== null) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         window.open(data.d, "ArchivoPDF");
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 }
             });
@@ -277,7 +277,7 @@
                             "order": [[2, "desc"]]
                         });
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 }
             });
@@ -341,7 +341,7 @@
                         alertify.alert("El Alumno no Existe.");
                         $("#btnGenerarCargos").attr("disabled", "disabled");
                         Funciones.Limpiar();
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
                     else if (data.d.length === 1) {
@@ -350,7 +350,7 @@
                     }
                     else if (data.d.length > 1) {
                         $('#divOfertaAlumno tbody').remove();
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         $('#divOfertas').modal('show');
 
                         $(data.d).each(function (s, d) {
@@ -374,7 +374,7 @@
                     if (data.d === null) {
                         $("#btnGenerarCargos").attr("disabled", "disabled");
                         Funciones.Limpiar();
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
 
@@ -574,7 +574,7 @@
                         Funciones.GuardarDocumentos();
                     }
                     else if (data.d === "Fallo") {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Se ha producido un error al inscribir.");
                     }
                 }
@@ -726,8 +726,7 @@
                 if (tblBecas !== null && tblBecas !== undefined)
                 { tblBecas.fnClearTable(); }
                 Funciones.Limpiar();
-                var nombre = $('#hCarga');
-                nombre[0].innerText = "Cargando";
+
                 var labelIns = $('#lblInscito');
                 labelIns.innerText = "Alumno Inscrito";
 
@@ -758,7 +757,7 @@
         divOfertaAlumnoonClicka: function (a) {
             var th = a.currentTarget.parentElement.parentElement.childNodes[0].innerText;
             $('#divOfertas').modal('hide');
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             Funciones.TraerOfertaAlumno(AlumnoId, th);
         },
         txtBecaMontoFocus: function () {
@@ -825,7 +824,7 @@
                 SEP: SEP,
                 Anio: $('#slcDescripcionBeca').find(':selected').data("anio"),
                 PeriodoId: $('#slcDescripcionBeca').find(':selected').data("periodoid"),
-                Usuario: $.cookie('userAdmin'),
+                Usuario:  localStorage.getItem('userAdmin'),
                 EsComite: objAlumno !== undefined ? objAlumno.BecaComite === "Si" ? true : false : false,
                 EsEmpresa: esEmpresa,
                 Materias: $('#txtMateria').val(),
@@ -833,9 +832,7 @@
             };
         },
         btnGenerarCargosonClick: function () {
-            var nombre = $('#hCarga');
-            nombre[0].innerText = "Guardando";
-            $('#Load').modal('show');
+            IndexFn.Block(true);
 
             Funciones.Guardar();
         },

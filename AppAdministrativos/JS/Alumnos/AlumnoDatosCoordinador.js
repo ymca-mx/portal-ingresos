@@ -3,7 +3,7 @@
     var form = $('#submit_form');
     var error = $('.alert-danger', form);
     var success = $('.alert-success', form);
-    UsuarioId = $.cookie('userAdmin');
+    UsuarioId =  localStorage.getItem('userAdmin');
 
     var fnDatos =
         {
@@ -118,7 +118,7 @@
                 }
                 if ($('#txtAlumno').val().length == 0) { return false; }
                 fnDatos.limpiarCampos();
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 AlumnoNum = $('#txtAlumno').val();
 
                 if (!isNaN(AlumnoNum)) {
@@ -130,7 +130,7 @@
             seleccionarAlumno: function () {
                 $('#frmVarios').hide();
                 $('#frmTabs').show();
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
                 AlumnoNum = rowadd.AlumnoId;
                 fnDatos.esNumero(AlumnoNum);
@@ -171,11 +171,11 @@
 
                             $("#divGuardar").show();
                             $('#frmTabs').show();
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         }
                         else {
                             $("#frmTabs").hide()
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Error, El Alumno no Existe.");
                         }
                     })
@@ -227,7 +227,7 @@
                                 "order": [[2, "desc"]]
                             });
                         }
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     })
                     .fail(function (data) {
                         alertify.alert('Error al cargar datos');
@@ -236,9 +236,8 @@
             },
             guardarTodo: function () {
                 if (form.valid() == false) { return false; }
-                var nombre = $('#hCarga');
-                nombre[0].innerText = "Guardando";
-                $('#Load').modal('show');
+
+                IndexFn.Block(true);
 
                 var obj = {
                         "AlumnoId": AlumnoNum,
@@ -272,12 +271,12 @@
                 IndexFn.Api('Alumno/UpdateAlumnoDatosCoordinador', "POST", obj)
                     .done(function (data) {
                         if (data) {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             $('#PopDatosAlumno').modal('hide');
                             alertify.alert("Datos del Alumno Modificados", function () {
                             });
                         } else {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             $('#PopDatosAlumno').modal('hide');
                             alertify.alert("Error, Revisar datos capturados.", function () {
                                 $('#PopDatosAlumno').modal('hide');

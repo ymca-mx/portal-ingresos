@@ -33,7 +33,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod, ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public DTOUsuarioImagen Datos(int usuarioId)
+        public object Datos(int usuarioId)
         {
             return Universidad.BLL.BLLUsuario.ImagenIndex(usuarioId);
         }
@@ -45,7 +45,7 @@ namespace AppAdministrativos.WS
         }
         // Consulta de Pestañas para usuarios
         [WebMethod]
-        public List<DTOMenu> ConsultarMenu(string usuarioId)
+        public object ConsultarMenu(string usuarioId)
         {
             return Universidad.BLL.BLLUsuario.TraerMenu(int.Parse(usuarioId));
         }

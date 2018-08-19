@@ -14,7 +14,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 Periodos = data.d;
@@ -30,7 +30,7 @@
                 $("#slcPeriodo").val(0);
                 $("#slcPeriodo").change();
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
 
@@ -39,7 +39,7 @@
     $("#slcPeriodo").change(function () {
         Anio = $('#slcPeriodo').find(':selected').data("anio");
         PeriodoId = $('#slcPeriodo').find(':selected').data("periodoid");
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $("#slcMes").empty();
         var per = $('#slcPeriodo').val();
 
@@ -133,7 +133,7 @@
                     }
                 });//$('#dtbecas').DataTable
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
 
@@ -152,11 +152,11 @@
         var monto = $("#txtMonto").val();
         if (monto.length == 0 || parseInt(monto) < 1) { return false; }
 
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         
         DTOAlumnoPromocionCasa.SubPeriodoId = $('#slcMes').val();
         DTOAlumnoPromocionCasa.Monto = $("#txtMonto").val();
-        DTOAlumnoPromocionCasa.UsuarioId = $.cookie('userAdmin');
+        DTOAlumnoPromocionCasa.UsuarioId =  localStorage.getItem('userAdmin');
 
 
         var obj = {
@@ -185,7 +185,7 @@
                 $("#txtMonto").val("");
                 CargarAlumnos();
                 $("#PopAlumnoProspecto").modal('hide');
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
 

@@ -15,7 +15,7 @@
         if (tblReferencias != undefined) {
             tblReferencias.fnClearTable();
         }
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         BuscarAlumno(AlumnoId);
 
     });
@@ -28,7 +28,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 } 
 
@@ -52,7 +52,7 @@
                 var data = res.d.item1;
                 var dk = res.d.item2;
                 if (data === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -151,7 +151,7 @@
                     }
                     //var tabla = document.getElementById("tblReferencias3");
                     document.getElementById("tblReferencias3").insertRow(-1).innerHTML = tr;
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }

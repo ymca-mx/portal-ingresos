@@ -80,7 +80,7 @@
             
         },
         TraerPeriodos: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 url: 'WS/Reporte.asmx/CargarCuatrimestreHistorico',
                 type: 'POST',
@@ -99,12 +99,12 @@
 
                         $("#slcPeriodos").append(option);
                     });
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },
         TraerDatos: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var datos = {
                 Anio: $('#slcPeriodos option:selected').data("anio"),
                 PeriodoId: $('#slcPeriodos option:selected').data("periodoid"),
@@ -129,7 +129,7 @@
                             Funciones.PintarTabla(Respuesta.d);
                         
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Intente nuevamente mas tarde");
                     }
                 }
@@ -194,7 +194,7 @@
             var fil = $('#tblDatos_filter label input');
             fil.removeClass('input-small').addClass('input-large');
 
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         Exportar: function () {
 

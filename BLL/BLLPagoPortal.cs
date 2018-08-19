@@ -3026,7 +3026,7 @@ namespace BLL
                     {
                         if (lstAlumnoGrupoDesc.Count == 1)
                         {
-                            if (lstAlumnoGrupoDesc.FirstOrDefault().GrupoId != 0)
+                            if (lstAlumnoGrupoDesc.FirstOrDefault().GrupoId == 0)
                             {
                                 return new
                                 {

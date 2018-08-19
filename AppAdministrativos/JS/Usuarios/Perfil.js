@@ -19,7 +19,7 @@
 
         },
         GetUser() {
-            IndexFn.Api("Administracion/Usuario/" + $.cookie('userAdmin'), "GET", "")
+            IndexFn.Api("Administracion/Usuario/" +  localStorage.getItem('userAdmin'), "GET", "")
                 .done(function (data) {
                     $('#txtNombre').val(data.Nombre);
                     $('#txtPaterno').val(data.Paterno);
