@@ -1,96 +1,67 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Buscar Alumnos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-</head>
-<body style="font-size: 10px !important">
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title bold">Liberar Alumno </span>
+            </div>
+        </div>
+        <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <img src="Imagenes/UYMCA-100px.png" width="70" />
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="caption title">Liberar Alumno </h4>
-                                </div>
-                            </div>
+                    <label class="control-label">Clave del Alumno</label>
+                    <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                    <a class="btn blue" id="btnBuscar" href="javascript:;" tabindex="2">Buscar Alumno</a>
+                </div>
+                <div class="col-md-12" id="divBuscar">
+                    <hr />
+                    <div class="col-md-12 form-group">
+                        <label id="lblNombre" class="control-label"></label>
+                        <label id="lblOferta" class="control-label"></label>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <table class="table table-striped table-bordered table-advance table-hover" id="tblPermitidos">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <i class="fa fa-user"></i>&nbsp; AlumnoId
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-ellipsis-h"></i>&nbsp; Anio
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-ellipsis-h"></i>&nbsp; Periodo
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-comment"></i>&nbsp; Descripcion
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-calendar"></i>&nbsp; Fecha
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-clock-o"></i>&nbsp; Hora
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-user"></i>&nbsp; Usuario
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div class="col-md-6">
+                            <label class="control-label">Descripción:</label>
+                            <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
                         </div>
-
-                        <div class="portlet-body form">
-                            <div class="form-body" style="height: 600px;">
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                        <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
-                                    </div>
-                                    <div class="col-md-12 " id="divBuscar">
-                                        <hr />
-                                        <div class="col-md-12 form-group">
-                                            <label id="lblNombre" class="control-label"></label>
-                                            <label id="lblOferta" class="control-label"></label>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <table class="table table-striped table-bordered table-advance table-hover" id="tblPermitidos">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
-                                                        </th>
-                                                        <th>
-                                                            <i class="fa fa-ellipsis-h"></i>&nbsp; Anio
-                                                        </th>
-                                                        <th>
-                                                            <i class="fa fa-ellipsis-h"></i>&nbsp; Periodo
-                                                        </th>
-                                                        <th>
-                                                            <i class="fa fa-comment"></i>&nbsp; Descripcion
-                                                        </th>
-                                                        <th>
-                                                            <i class="fa fa-calendar"></i>&nbsp; Fecha
-                                                        </th>
-                                                        <th>
-                                                            <i class="fa fa-clock-o"></i>&nbsp; Hora
-                                                        </th>
-                                                        <th>
-                                                            <i class="fa fa-user"></i>&nbsp; Usuario
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                        <div class="col-md-12 form-group"">
-                                            <div class="col-md-6">
-                                                <label class="control-label">Descripción:</label>
-                                                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 form-group"">
-                                            <hr />
-                                            <a class="btn green" id="btnLiberar" href="javascript:return 0;" tabindex="2">Liberar Alumno</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <hr />
+                        <button class="btn green" id="btnLiberar" tabindex="2">Liberar Alumno</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="JS/Alumnos/AlumnoPermitido.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("JS/Alumnos/AlumnoPermitido.js");
+</script>

@@ -294,5 +294,49 @@ namespace AppAdministrativos.Controllers
                 return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
+
+        [Route("ConsultarAlumno2/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult PermitirAlumno(int AlumnoId)
+        {
+            var Result = BLLAlumnoPortal.ObtenerAlumno2(AlumnoId);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("InsertarPermiso")]
+        [HttpPut]
+        public IHttpActionResult PutPermiso(JObject objAlumno)
+        {
+            var Result = BLLAlumnoPermitido.InsertarAlumno(
+                int.Parse(objAlumno["AlumnoId"].ToString()),
+                int.Parse(objAlumno["UsuarioId"].ToString()),
+                objAlumno["Descripcion"].ToString());
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
     }
 }

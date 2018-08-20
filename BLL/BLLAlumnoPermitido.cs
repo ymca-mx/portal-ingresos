@@ -15,7 +15,7 @@ namespace BLL
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
         static CultureInfo ci = CultureInfo.InvariantCulture;
-        public static List<DTOAlumnoPermitido> InsertarAlumno(int AlumnoId, int UsuarioId, string Comentario)
+        public static object InsertarAlumno(int AlumnoId, int UsuarioId, string Comentario)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -25,7 +25,10 @@ namespace BLL
                     if (fHoy.Month == 4 || fHoy.Month == 8 || fHoy.Month == 12)
                     { fHoy.AddMonths(1); }
 
-                    Periodo objPer = db.Periodo.Where(p => fHoy >= p.FechaInicial && fHoy <= p.FechaFinal).FirstOrDefault();
+                    Periodo objPer = db.Periodo
+                                    .Where(p => fHoy >= p.FechaInicial
+                                            && fHoy <= p.FechaFinal)
+                                    .FirstOrDefault();
 
                     db.AlumnoPermitido.Add(new AlumnoPermitido
                     {
@@ -38,28 +41,32 @@ namespace BLL
                         Descripcion = Comentario
                     });
                     db.SaveChanges();
-                    List<DTOAlumnoPermitido> lstPermitido = db.AlumnoPermitido.Where(a => a.AlumnoId == AlumnoId).ToList().Select(b => new DTOAlumnoPermitido
-                    {
-                        AlumnoId = b.AlumnoId,
-                        UsuarioId = b.UsuarioId,
-                        Anio = (int)b.Anio,
-                        PeriodoId = (int)b.PeriodoId,
-                        FechaRegistro = b.FechaRegistro,
-                        HoraRegistro = b.HoraRegistro,
-                        Descripcion = b.Descripcion
-                    }).ToList();
 
-                    lstPermitido.ForEach(c =>
-                    {
-                        c.FechaRegistroS = c.FechaRegistro.ToString("dd/MM/yyyy", Cultura);
-                        c.HoraRegistroS = c.HoraRegistro.ToString();
-                    });
-
-                    return lstPermitido;
+                    return
+                    db.AlumnoPermitido
+                        .Where(a => a.AlumnoId == AlumnoId)
+                        .ToList()
+                        .AsQueryable()
+                        .Select(b => new
+                        {
+                            b.AlumnoId,
+                            b.UsuarioId,
+                            b.Anio,
+                            b.PeriodoId,
+                            FechaRegistroS = b.FechaRegistro.ToString("dd/MM/yyyy", Cultura),
+                            HoraRegistroS = b.HoraRegistro.ToString(),
+                            b.Descripcion
+                        })
+                        .ToList();
                 }
-                catch
+                catch(Exception error)
                 {
-                    return null; 
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message
+                    };
                 }
             }
         }

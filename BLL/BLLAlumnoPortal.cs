@@ -2811,7 +2811,7 @@ namespace BLL
             }
         }
 
-        public static DTOAlumnoPermitido1 ObtenerAlumno2(int AlumnoId)
+        public static object ObtenerAlumno2(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -2833,8 +2833,9 @@ namespace BLL
                                             && A.PeriodoId == PeriodoActual.PeriodoId)
                                 .ToList().Count > 0)
                     {
-                        return new DTOAlumnoPermitido1
+                        return new 
                         {
+                            Estatus = true,
                             AlumnoId = 0,
                             Nombre = "El Alumno ya esta liberado",
                             lstBitacora = BLLAlumnoPermitido.RegistrosdeAlumno(AlumnoId)
@@ -2842,23 +2843,46 @@ namespace BLL
                     }
                     else
                     {
-                        DTOAlumnoPermitido1 Alumno = (from a in db.Alumno
-                                                      where a.AlumnoId == AlumnoId
-                                                      select new DTOAlumnoPermitido1
-                                                      {
-                                                          AlumnoId = a.AlumnoId,
-                                                          Nombre = a.Nombre,
-                                                          Paterno = a.Paterno,
-                                                          Materno = a.Materno
-                                                      }).AsNoTracking()
-                                                         .FirstOrDefault();
-                        Alumno.lstBitacora = BLLAlumnoPermitido.RegistrosdeAlumno(AlumnoId);
-                        return Alumno;
+                        return
+                        db.Alumno
+                            .Where(a => a.AlumnoId == AlumnoId)
+                            .ToList()                            
+                            .AsQueryable()
+                            .Select(a => new
+                            {
+                                Estatus = true,
+                                a.AlumnoId,
+                                a.Paterno,
+                                a.Materno,
+                                a.Nombre,
+                                lstBitacora = a.AlumnoPermitido
+                                            .ToList()
+                                            .AsQueryable()
+                                            .Select(b => new
+                                            {
+                                                Estatus = true,
+                                                b.AlumnoId,
+                                                b.UsuarioId,
+                                                b.Anio,
+                                                b.PeriodoId,
+                                                FechaRegistroS = b.FechaRegistro.ToString("dd/MM/yyyy", Cultura),
+                                                HoraRegistroS = b.HoraRegistro.ToString(),
+                                                b.Descripcion
+                                            })
+                                            .ToList()
+                            })
+                            .FirstOrDefault();
                     }
                 }
-                catch
+                catch (Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message
+                    };
                 }
             }
         }

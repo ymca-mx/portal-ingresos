@@ -219,7 +219,7 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ObtenerAlumno1(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public DTOAlumnoPermitido1 ConsultarAlumno2(string AlumnoId)
+        public object ConsultarAlumno2(string AlumnoId)
         {
             return BLLAlumnoPortal.ObtenerAlumno2(int.Parse(AlumnoId));
         }
@@ -334,7 +334,7 @@ namespace AppAdministrativos.WS
             return BLLPeriodoPortal.ConsultarPeriodos(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public List<DTOAlumnoPermitido> InsertarPermiso(string AlumnoId, string UsuarioId, string Descripcion)
+        public object InsertarPermiso(string AlumnoId, string UsuarioId, string Descripcion)
         {
             return BLLAlumnoPermitido.InsertarAlumno(int.Parse(AlumnoId), int.Parse(UsuarioId), Descripcion);
         }
