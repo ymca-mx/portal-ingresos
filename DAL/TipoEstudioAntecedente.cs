@@ -17,7 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoEstudioAntecedente()
         {
-            this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
+            this.AlumnoAntecedente1 = new HashSet<AlumnoAntecedente1>();
         }
     
         public int TipoEstudioAntecedenteId { get; set; }
@@ -25,6 +25,6 @@ namespace DAL
         public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
+        public virtual ICollection<AlumnoAntecedente1> AlumnoAntecedente1 { get; set; }
     }
 }

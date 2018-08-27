@@ -173,7 +173,8 @@
     <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\CarteraVencida.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
-    <Content Include="JS\SEP\Titulo.js" />
+    <Content Include="JS\SEP\Titulo\Firmar.js" />
+    <Content Include="JS\SEP\Titulo\Solicitar.js" />
     <Content Include="JS\Usuarios\Administracion.js" />
     <Content Include="JS\Usuarios\Perfil.js" />
     <Content Include="login.html" />
@@ -4820,7 +4821,8 @@
     <Content Include="Views\Reportes\EnvioReporteVistoBueno.html" />
     <Content Include="Views\Reportes\ReporteBecas.html" />
     <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
-    <Content Include="Views\SEP\Titulo.html" />
+    <Content Include="Views\SEP\Titulo\Firmar.html" />
+    <Content Include="Views\SEP\Titulo\Solicitar.html" />
     <Content Include="Views\Usuarios\Administracion.html" />
     <Content Include="Views\Usuarios\Perfil.html" />
     <Content Include="WS\Alumno.asmx" />
@@ -5318,7 +5320,6 @@
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\less\bootstrap-multiselect.less" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\LICENSE.md" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\README.md" />
-    <Content Include="tsconfig.json" />
     <Content Include="Scripts\underscore-min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -5610,11 +5611,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documentos\SEP\Certificado\" />
+    <Folder Include="Documentos\SEP\Titulo\" />
+    <Folder Include="JS\SEP\Certificado\" />
     <Folder Include="JS\themes\Switch\" />
     <Folder Include="Scripts\typings\angularjs\" />
     <Folder Include="Scripts\typings\jquery\" />
     <Folder Include="Style\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Style\engato\login\imagenes\recovery\" />
+    <Folder Include="Views\SEP\Certificado\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

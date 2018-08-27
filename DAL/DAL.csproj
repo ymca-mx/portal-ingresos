@@ -68,6 +68,9 @@
     <Compile Include="AlumnoAntecedente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlumnoAntecedente1.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoAntecedenteBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -137,9 +140,6 @@
     <Compile Include="AlumnoInscritoBitacora.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="AlumnoInscritoBitacoraBKSalome.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="AlumnoInscritoCompleto.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -165,6 +165,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="AlumnoMovimientoTurno.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnoOfertaEducativa.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="AlumnoPassword.cs">
@@ -258,6 +261,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Cargo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COLEGIATURA.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Comunicado.cs">

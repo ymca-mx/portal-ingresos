@@ -325,7 +325,7 @@
             IndexFn.Block(true);
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
 
-            Funciones.BuscarAlumno(rowadd.AlumnoId);
+            TituloFn.BuscarAlumno(rowadd.AlumnoId);
         },
         PushAlumno() {
             var objAlumno = new ClasesFn.AlumnoTitulo();
@@ -404,8 +404,8 @@
         PushTitulo() {
 
             if ($('#slcEntidadFederativa').val() === "-1"
-                && $('#txtFechaExamen').val().length < 10
-                && $('#txtFechaExencion').val().length < 10) {
+                || $('#txtFechaExamen').val().length < 10
+                || $('#txtFechaExencion').val().length < 10) {
                 alertify.alert("Universidad YMCA", "Todos los campos son obligatorios");
                 return false;
             }
@@ -829,14 +829,18 @@
             if (AlumnosB.length === 0) { return false; }
             IndexFn.Block(true);
             IndexFn.Api("SEP/Nuevo", 'PUT', JSON.stringify(AlumnosB))
-                .done(function (data) {
-                    data = data.Alumnos;
+                .done(function (data) {                    
                     IndexFn.Block(false);
 
-                    if (data.length > 0) {
+                    if (data.Alumnos.length > 0) {
                         alertify.alert("Universidad YMCA", "Alumnos enviados a los responsables.");
                     } else {
                         alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
+                        $(data.Alumnos).each(function (AlumnoSelect) {
+                            TituloFn.lstTitulos.splice(TituloFn.lstTitulos.indexOf(AlumnoSelect), 1);
+                        });
+
+                        TituloFn.InitAlumnos();
                     }
                 })
                 .fail(function (data) {

@@ -131,5 +131,25 @@ namespace AppAdministrativos.Controllers
                 return BadRequest(message);
             }
         }
+
+        [Route("Alumnos/{UsuarioId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetAlumnos(int UsuarioId)
+        {
+            object Result = BLLSEP.GetAlumnos(UsuarioId);
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                        + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                        + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
     }
 }

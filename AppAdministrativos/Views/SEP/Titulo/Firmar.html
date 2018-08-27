@@ -6,41 +6,6 @@
             </div>
         </div>
         <div class="panel-body">
-            <div class="row form-group" id="divBuscar">
-                <div class="col-md-12">
-                    <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
-                    <input type="text" id="txtClave" class="form-control-static font-md" style="text-align:right" />&nbsp;
-                    <a class="btn blue" id="btnBuscar" tabindex="2">Buscar</a>
-                </div>
-                <div class="col-md-12">
-                    <div class="portlet-body form" id="frmVarios" hidden="hidden">
-                        <div class="col-md-12">
-                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-user"></i>&nbsp; Nombre
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-calendar"></i>&nbsp; Registro
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-edit"></i>&nbsp; Acción
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="table">
                 <div class="row">
                     <hr />
@@ -136,7 +101,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn blue" id="btnAlumnoAdd">Agregar</button>
                 </div>
             </div>
         </div>
@@ -196,7 +160,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha inicio</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFInicioOferta" />
+                                    <input type="text" class="form-control" id="txtFInicioOferta" readonly />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -207,7 +171,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha Fin</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFFinOferta" />
+                                    <input type="text" class="form-control" id="txtFFinOferta" readonly/>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -220,7 +184,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn blue" id="btnSedeAdd">Agregar</button>
+
                 </div>
             </div>
         </div>
@@ -245,7 +209,7 @@
                             <div class="col-md-10 form-group" id="divExamen">
                                 <label class="control-label">Fecha examen profesional</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaExamen" />
+                                    <input type="text" class="form-control" id="txtFechaExamen" readonly />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -258,7 +222,7 @@
                             <div class="col-md-10 form-group" id="divExencion">
                                 <label class="control-label">Fecha exencion examen profesional</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaExencion" />
+                                    <input type="text" class="form-control" id="txtFechaExencion" readonly/>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -295,7 +259,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn blue" id="btnTituloAdd">Agregar</button>
                 </div>
             </div>
         </div>
@@ -313,7 +276,7 @@
                         <div class="col-md-6">
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Institución de Procedencia</label>
-                                <input type="text" class="form-control" id="txtProcedencia" />
+                                <input type="text" class="form-control" id="txtProcedencia" readonly />
                             </div>
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Tipo Antecedente</label>
@@ -328,7 +291,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha Inicio</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaInicio" />
+                                    <input type="text" class="form-control" id="txtFechaInicio" readonly/>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -339,7 +302,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha Termino</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaFin" />
+                                    <input type="text" class="form-control" id="txtFechaFin" readonly/>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -352,7 +315,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn blue" id="btnAntecedenteAdd">Agregar</button>
                 </div>
             </div>
         </div>
@@ -421,7 +383,31 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn blue" id="btnResponsableAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-modal-lg" id="modalComentario">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Comentario</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Comentario</label>
+                                <textarea class="form-control" id="txtComentario" maxlength="500" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnQuitar">Agregar</button>
                 </div>
             </div>
         </div>
@@ -429,5 +415,5 @@
 </main>
 
 <script>
-    $.getScript("JS/SEP/Titulo.js");
+    $.getScript("JS/SEP/Titulo/Firmar.js");
 </script>

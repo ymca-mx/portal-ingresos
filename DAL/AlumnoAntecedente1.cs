@@ -12,23 +12,24 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Institucion
+    public partial class AlumnoAntecedente1
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Institucion()
+        public AlumnoAntecedente1()
         {
-            this.AlumnoOfertaEducativa = new HashSet<AlumnoOfertaEducativa>();
-            this.InstitucionOfertaEducativa = new HashSet<InstitucionOfertaEducativa>();
+            this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
         }
     
-        public string InstitucionId { get; set; }
+        public int AlumnoAntecedenteId { get; set; }
+        public int TipoEstudioAntecedenteId { get; set; }
+        public int EntidadFederativaId { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFin { get; set; }
         public string Nombre { get; set; }
-        public string TipoSostenimiento { get; set; }
-        public string TipoEducativo { get; set; }
     
+        public virtual EntidadFederativa EntidadFederativa { get; set; }
+        public virtual TipoEstudioAntecedente TipoEstudioAntecedente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InstitucionOfertaEducativa> InstitucionOfertaEducativa { get; set; }
+        public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
     }
 }

@@ -17,17 +17,13 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AlumnoTitulo()
         {
+            this.AlumnoOfertaEducativa = new HashSet<AlumnoOfertaEducativa>();
             this.UsuarioResponsable = new HashSet<UsuarioResponsable>();
         }
     
         public int AlumnoTituloId { get; set; }
         public int AlumnoId { get; set; }
-        public string InstitucionId { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public System.DateTime FechaInicio { get; set; }
-        public System.DateTime FechaTermino { get; set; }
         public int AutorizacionReconocimientoId { get; set; }
-        public string RVOE { get; set; }
         public System.DateTime FechaExpedicion { get; set; }
         public int ModalidadTitulacionId { get; set; }
         public System.DateTime FechaExamenProfesional { get; set; }
@@ -35,22 +31,20 @@ namespace DAL
         public bool ServicioSocial { get; set; }
         public int FundamentoLegalId { get; set; }
         public int EntidadFederativaIdExpedicion { get; set; }
-        public int TipoEstudioAntecedenteId { get; set; }
-        public int EntidadFederativaIdAntecedente { get; set; }
-        public System.DateTime FechaInicioAntecedente { get; set; }
-        public System.DateTime FechaFinAntecedente { get; set; }
+        public int AlumnoAntecedenteId { get; set; }
         public int UsuarioId { get; set; }
+        public int EstatusId { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual EntidadFederativa EntidadFederativa { get; set; }
-        public virtual EntidadFederativa EntidadFederativa1 { get; set; }
-        public virtual OfertaEducativa OfertaEducativa { get; set; }
+        public virtual Estatus Estatus { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual AlumnoAntecedente1 AlumnoAntecedente1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
         public virtual AutorizacionReconocimiento AutorizacionReconocimiento { get; set; }
         public virtual FundamentoLegal FundamentoLegal { get; set; }
-        public virtual Institucion Institucion { get; set; }
         public virtual ModalidadTitulacion ModalidadTitulacion { get; set; }
-        public virtual TipoEstudioAntecedente TipoEstudioAntecedente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioResponsable> UsuarioResponsable { get; set; }
     }
