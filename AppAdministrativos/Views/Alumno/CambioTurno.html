@@ -1,93 +1,83 @@
-﻿
-<div class="page-content">
-    <!-- BEGIN PAGE HEAD -->
-    <div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">CAMBIO DE TURNO</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="col-md-12">
+                        <label class="control-label">Clave del Alumno</label>
+                        <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                        <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
+                    </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="portlet light">
-                    <div class="portlet-title">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <h2 class="caption title font-blue-sharp ">CAMBIO DE TURNO </h2>
-                            </div>
+                    <div class="col-md-12">
+                        <div> &nbsp;</div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Alumno: </label>&nbsp;&nbsp;
+                            <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
+
+                        </div>
+                        <div class="col-md-12" style="padding:8px;">
+                            <label class="control-label bold font-red-flamingo" id="lblInscito"></label>
                         </div>
                     </div>
 
-                    <div class="portlet-body">
-                        <div class="row">
-                            <div class="col-md-12 ">
-                                <div class="col-md-12">
-                                    <label class="control-label">Clave del Alumno</label>
-                                    <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                    <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
-                                </div>
+                    <div class="col-md-12">
 
-                                <div class="col-md-12">
-                                    <div> &nbsp;</div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Alumno: </label>&nbsp;&nbsp;
-                                        <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
-
-                                    </div>
-                                    <div class="col-md-12" style="padding:8px;">
-                                        <label class="control-label bold font-red-flamingo" id="lblInscito"></label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label"> Oferta Educativa</label>
-                                        <input type="text" id="txtOfertaEducativa" class="form-control" readonly />
-                                    </div>
-                                    <div class="form-group col-md-5">
-                                        <label class="control-label"> Periodo </label>
-                                        <input type="text" id="txtPeriodo" class="form-control" readonly />
-                                    </div>
-                                    <div class="form-group col-md-4">
-
-                                        <label class="control-label">Turno</label>
-                                        <input type="text" id="txtTurno" class="form-control" readonly />
-                                    </div>
-                                    <div class="form-group col-md-1">
-                                        <div>&nbsp;</div>
-                                        <img src="Imagenes/actualizar.png" width="80" height="30">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="control-label">Turno</label>
-                                        <select id="slcTurno" name="slcTurno" class="form-control"></select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div>&nbsp;</div>
-                                        <button class="btn green" id="btnCambio" tabindex="2" disabled>Realizar Cambio</button>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Oferta Educativa</label>
+                            <input type="text" id="txtOfertaEducativa" class="form-control" readonly />
                         </div>
+                        <div class="form-group col-md-5">
+                            <label class="control-label"> Periodo </label>
+                            <input type="text" id="txtPeriodo" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
 
-                    </div>
-
-                    <!--cometario-->
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="width:700px">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                <h3 class="modal-title">Comentario u Observación </h3>
-                            </div>
-                            <div class="modal-body">
-                                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
-                                <a id="btnGuardar" class="btn green">Guardar</a>
-                            </div>
+                            <label class="control-label">Turno</label>
+                            <input type="text" id="txtTurno" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <div>&nbsp;</div>
+                            <img src="Imagenes/actualizar.png" width="80" height="30">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Turno</label>
+                            <select id="slcTurno" name="slcTurno" class="form-control"></select>
+                        </div>
+                        <div class="col-md-1">
+                            <div>&nbsp;</div>
+                            <button class="btn green" id="btnCambio" tabindex="2" disabled>Realizar Cambio</button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-</div>
-<script src="JS/Alumnos/CambioTurno.js"></script>
+</main>
+<main>
+    <!--cometario-->
+    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="width:700px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                <h3 class="modal-title">Comentario u Observación </h3>
+            </div>
+            <div class="modal-body">
+                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                <a id="btnGuardar" class="btn green">Guardar</a>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    $.getScript("JS/Alumnos/CambioTurno.js");
+</script>

@@ -187,7 +187,7 @@
     if (jQuery().datepicker) {
         $('.date-picker').datepicker({
             rtl: Metronic.isRTL(),
-            orientation: "left",
+            orientation: "top",
             autoclose: true,
             language: 'es'
         });

@@ -1,92 +1,97 @@
-﻿<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
-            <h2>Autorizar Inscripción</h2>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="table">
-            <div class="col-md-4 form-group">
-                <label class="control-label">Selecciona un Periodo: </label>
-                <select id="slcPeriodos" class="form-control"></select>
-            </div>
-            <div class="col-md-4 form-group">
-                <label class="control-label">Selecciona Estatus</label>
-                <select id="slcEstatus" class="form-control"></select>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Autorizar Inscripción</span>
             </div>
         </div>
-        <div class="table col-md-12">
-            <hr />
-            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
-                <thead>
-                    <tr>
-                        <th>
-                            <i class="fa fa-user"></i>&nbsp; Clave
-                        </th>
-                        <th>
-                            <i class="fa fa-user"></i>&nbsp; Nombre
-                        </th>
-                        <th>
-                            <i class="fa fa-calendar"></i>&nbsp; Fecha Inscripción
-                        </th>
-                        <th>
-                            <i class="fa fa-calendar"></i>&nbsp; Periodo
-                        </th>
-                        <th>
-                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
-                        </th>
-                        <th>
-                            <i class="fa fa-user-md"></i>&nbsp; Usuario
-                        </th>
-                        <th>
-                            <i class="fa fa-edit"></i>&nbsp;
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-    <div class="panel-footer">
-
-    </div>
-</div>
-<div class="modal fade" id="MostrarDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-width="610px" data-h aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Detalles de Autorización</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <form id="frmModal">
-                        <div class="form-group">
-                            <label for="recipient-name" class="form-control-label">Alumno:</label>
-                            <input type="text" class="form-control" id="txtAlumno" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="form-control-label">Usuario:</label>
-                            <input type="text" class="form-control" id="txtUsuario" readonly>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label for="message-text" class="form-control-label">Fecha:</label>
-                                <input type="text" class="form-control" id="txtFecha" readonly>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="message-text" class="form-control-label">Hora:</label>
-                                <input type="text" class="form-control" id="txtHora" readonly>
-                            </div>
-                        </div>
-                    </form>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label">Selecciona un Periodo: </label>
+                    <select id="slcPeriodos" class="form-control"></select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label">Selecciona Estatus</label>
+                    <select id="slcEstatus" class="form-control"></select>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Clave
+                                </th>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Nombre
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Fecha Inscripción
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Periodo
+                                </th>
+                                <th>
+                                    <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                </th>
+                                <th>
+                                    <i class="fa fa-user-md"></i>&nbsp; Usuario
+                                </th>
+                                <th>
+                                    <i class="fa fa-edit"></i>&nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="JS/Alumnos/AutorizarInscripcion.js"></script>
+</main>
+<main>
+    <div class="modal fade" id="MostrarDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-width="610px" data-h aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Detalles de Autorización</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form id="frmModal">
+                            <div class="form-group">
+                                <label for="recipient-name" class="form-control-label">Alumno:</label>
+                                <input type="text" class="form-control" id="txtAlumno" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="form-control-label">Usuario:</label>
+                                <input type="text" class="form-control" id="txtUsuario" readonly>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label for="message-text" class="form-control-label">Fecha:</label>
+                                    <input type="text" class="form-control" id="txtFecha" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="message-text" class="form-control-label">Hora:</label>
+                                    <input type="text" class="form-control" id="txtHora" readonly>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    $.getScript("JS/Alumnos/AutorizarInscripcion.js");
+</script>

@@ -22,7 +22,7 @@
             IndexFn.Block(true);
 
 
-            IndexFn.Api('Alumno/ConsultaCambioTurno/' + AlumnoId +"/ " +  localStorage.getItem('userAdmin'), "GET", "")
+            IndexFn.Api('Alumno/ConsultaCambioTurno/' + AlumnoId +"/" +  localStorage.getItem('userAdmin'), "GET", "")
                 .done(function (data) {
                     $('#lblNombre').text("");
                     $("#txtOfertaEducativa").val("");
