@@ -1445,7 +1445,7 @@ namespace BLL
             }
         }
 
-        public static List<DTOAlumnoPromocionCasa> ConsultarAlumnoPromocionCasa(int Anio, int PeriodoId)
+        public static object ConsultarAlumnoPromocionCasa(int Anio, int PeriodoId)
         {
             try
             {
@@ -1466,19 +1466,29 @@ namespace BLL
                                                      EstatusId = (int)s.EstatusId
                                                  }).ToList();
 
-                    return alumnos;
+                    return new
+                    {
+                        Alumnos = alumnos,
+                        Estatus = true
+                    };
                 }
 
 
             }
-            catch (Exception)
+            catch (Exception error)
             {
 
-                return null;
+                return new
+                {
+                    Estatus = false,
+                    error.Message,
+                    Inner = error?.InnerException?.Message ?? "",
+                    Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                };
             }
         }
 
-        public static List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()
+        public static object PeriodosPromocionCasa()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -1498,17 +1508,27 @@ namespace BLL
                                                                           MesId = d.SubperiodoId
                                                                       }).ToList()
                                              }).ToList();
-                    return periodos;
+                    return new
+                    {
+                        Periodos = periodos,
+                        Estatus = true
+                    };
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
 
-                    return null;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message
+                    };
                 }
             }
         }
 
-        public static string AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public static object AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -1701,7 +1721,11 @@ namespace BLL
 
                         db.SaveChanges();
 
-                        return "Aplicada";
+                        return new
+                        {
+                            Message = "Aplicada",
+                            Estatus = true
+                        };
                     }//if (pago != null )
                     else
                     {
@@ -1711,14 +1735,24 @@ namespace BLL
                         promo.UsuarioId = Promocion.UsuarioId;
                         promo.EstatusId = 8;
                         db.SaveChanges();
-                        return "Pendiente";
+                        return new
+                        {
+                            Message = "Pendiente",
+                            Estatus = true
+                        };
                     }
 
 
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-                    return "Error";
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ??"",
+                        Inner2 = error?.InnerException?.InnerException.Message ?? ""
+                    };
                 }
             }
         }
@@ -13352,7 +13386,7 @@ namespace BLL
         }
 
         //cambio de carera
-        public static DTOAlumnoCambioCarrera ConsultaCambioCarrera(int AlumnoId, int UsuarioId)
+        public static object ConsultaCambioCarrera(int AlumnoId, int UsuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -13444,18 +13478,28 @@ namespace BLL
                         }
                     }
 
-                    return Alumno;
+                    return new
+                    {
+                        Estatus = true,
+                        Alumno
+                    };
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
 
-                    return null;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
                 }
 
             }
         }
 
-        public static bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
+        public static object AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -13662,12 +13706,23 @@ namespace BLL
 
                     db.SaveChanges();
 
-                    return true;
+                    return
+                    new
+                    {
+                        Estatus = true,
+                        Message="Se guardo Correctamente"
+                    };
                 }
                 catch (Exception e)
                 {
-                    var error = e.Message;
-                    return false;
+                    return
+                    new
+                    {
+                        Estatus = false,
+                        e.Message,
+                        Inner = e?.InnerException?.Message ?? "",
+                        Inner2 = e?.InnerException?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

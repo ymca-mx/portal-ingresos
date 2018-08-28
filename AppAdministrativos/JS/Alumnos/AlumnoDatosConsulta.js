@@ -1,32 +1,34 @@
 ﻿$(function () {
-    var AlumnoNum, tblAlumnos, tblDatos;
-    UsuarioId =  localStorage.getItem('userAdmin');
+    var AlumnoNum,
+        tblAlumnos,
+        tblDatos,
+        UsuarioId = localStorage.getItem('userAdmin');
 
     var fnAlumnoDatos =
         {
             init() {
-                GlobalFn.init()
+                GlobalFn.init();
                 GlobalFn.GetGenero();
-                $("#btnBuscarAlumno").click(fnAlumnoDatos.buscarAlumno);
+                $("#btnBuscar").on('click',fnAlumnoDatos.buscarAlumno);
 
                 $('#tblAlumnos').on('click', 'a', fnAlumnoDatos.seleccionarAlumno);
                 
-                $('#txtAlumno').on('keydown', function (e) {
-                    if (e.which == 13) {
-                        $('#btnBuscarAlumno').click();
+                $('#txtClave').on('keydown', function (e) {
+                    if (e.which === 13) {
+                        $('#btnBuscar').click();
                     }
                 });
             },
             buscarAlumno() {
                 $("#divGuardar").hide();
                 $('#frmVarios').hide();
-                if (tblAlumnos != undefined) {
+                if (tblAlumnos !== undefined) {
                     tblAlumnos.fnClearTable();
                 }
-                if ($('#txtAlumno').val().length == 0) { return false; }
+                if ($('#txtClave').val().length === 0) { return false; }
                 $("#submit_form").trigger('reset');
                 IndexFn.Block(true);
-                AlumnoNum = $('#txtAlumno').val();
+                AlumnoNum = $('#txtClave').val();
 
                 if (!isNaN(AlumnoNum)) {
                     fnAlumnoDatos.esNumero(AlumnoNum);
@@ -45,7 +47,7 @@
             esNumero(Alumno) {
                 IndexFn.Api('Alumno/ObenerDatosAlumnoTodos/' + Alumno, "GET", "")
                     .done(function (data) {
-                        if (data != null) {
+                        if (data !== null) {
                            
                             ///Personales
                             document.getElementById("fotoAlumno").src = "data:image/png;base64," + data.fotoBase64;
@@ -105,7 +107,7 @@
                 $('#frmTabs').hide();
                 IndexFn.Api("Alumno/BuscarAlumnoString/" + Alumno, "GET", "")
                     .done(function (data) {
-                        if (data != null) {
+                        if (data !== null) {
                             $('#frmVarios').show();
                             tblAlumnos = $('#tblAlumnos').dataTable({
                                 "aaData": data,

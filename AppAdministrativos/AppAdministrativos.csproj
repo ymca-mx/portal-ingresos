@@ -4789,7 +4789,7 @@
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\AutorizarInscripcion.html" />
     <Content Include="Views\Alumno\DatosAcademicos.html" />
-    <Content Include="Views\Alumno\PromociónCasa.html" />
+    <Content Include="Views\Alumno\PromocionCasa.html" />
     <Content Include="Views\Alumno\SolicitarInscripcion.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Biblioteca\Comunicado.html" />
