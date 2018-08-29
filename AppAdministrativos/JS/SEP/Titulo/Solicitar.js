@@ -92,6 +92,7 @@
 
     var TituloFn = {
         init() {
+            IndexFn.Block(true);
             $('#btnBuscar').on('click', this.BtnBuscarClick);
             $('#txtClave').on('keydown', this.txtClaveKeydown);
             $('#tblAlumnos').on('click', 'a', this.TablaAlumnoClick);
@@ -125,6 +126,7 @@
             this.InitCalendar('txtFechaInicio');
             this.InitCalendar('txtFechaFin');
             tblTitulos = $('#tblTitulos').DataTable();
+            this.GetSolicitados();
         },
         InitCalendar(inputId) {
             inputId = $('#' + inputId)[0].parentNode;
@@ -227,6 +229,7 @@
         BuscarAlumno(idAlumno) {
             $('#modalAlumno input').val('');
             $('#modalAlumno select').empty();
+            TituloFn.AlumnoSelect = new ClasesFn.AlumnoTitulo();
 
             IndexFn.Api("Sep/Alumno/" + idAlumno, "GET", "")
                 .done(function (data) {
@@ -377,22 +380,14 @@
             ];
 
             if (objAlumno.Email.length > 0 && objAlumno.CURP.length === 18) {
+                var filter = TituloFn.lstTitulos.find(x => x.AlumnoId === objAlumno.AlumnoId
+                    && x.Carrera.OfertaEducativaId === objAlumno.Carrera.OfertaEducativaId);
+                if (filter === undefined) {
+                    this.Enviar(objAlumno);
+                } else {
+                    alertify.alert("Ya existe un registro con el mismo Id de alumno.");
+                }
 
-                if (TituloFn.lstTitulos.length > 0) {
-                    var filter = TituloFn.lstTitulos.find(x => x.AlumnoId === objAlumno.AlumnoId);
-                    if (filter === undefined) {
-                        TituloFn.lstTitulos.push(objAlumno);
-                        TituloFn.SetSede(objInstitu, "slcSede");
-                        TituloFn.InitAlumnos();
-                    } else {
-                        alertify.alert("Ya existe un registro con el mismo Id de alumno.");
-                    }
-                }
-                else {
-                    TituloFn.lstTitulos.push(objAlumno);
-                    TituloFn.SetSede(objInstitu, "slcSede");
-                    TituloFn.InitAlumnos();
-                }
             } else {
                 alertify.alert("El CURP y Email son obligatorios.");
             }
@@ -814,18 +809,9 @@
             });
             
         },
-        Enviar() {
+        Enviar(Alumno) {
             var AlumnosB = [];
-            $(TituloFn.lstTitulos).each(function () {
-                if (this.Antecedente.EntidadFederativaId !== undefined
-                    && this.Carrera.AutReconocimientoId !== "0"
-                    && this.Institucion.InstitucionId !== undefined
-                    && this.Titulo.MedioTitulacionId !== undefined
-                    && this.Responsables[0].UsuarioId !== undefined
-                    && this.Responsables[1].UsuarioId !== undefined) {
-                    AlumnosB.push(this);
-                }
-            });
+            AlumnosB.push(Alumno);
             if (AlumnosB.length === 0) { return false; }
             IndexFn.Block(true);
             IndexFn.Api("SEP/Nuevo", 'PUT', JSON.stringify(AlumnosB))
@@ -847,6 +833,40 @@
                     alertify.alert("Universidad YMCA", "Fallo al momento de guardar.");
                     var result = JSON.parse(data.responseText).Message + "'";
                     console.log(result);
+                    IndexFn.Block(false);
+                });
+        },
+        GetSolicitados() {            
+            IndexFn.Api("Sep/Alumnos/Espera","GET","")
+                .done(function (data) {
+                    $(data).each(function () {
+                        var alumnobd = this;
+                        this.Institucion.SedeId = this.Institucion.InstitucionId;
+
+                        alumnobd.Sede=[];
+                        alumnobd.Sede.push({
+                            SedeId: this.Institucion.SedeId,
+                            Nombre: this.Institucion.Nombre,
+                            Clave: this.Institucion.Clave,
+                            Ofertas: [{
+                                OfertaEducativaId: this.Carrera.OfertaEducativaId,
+                                ClaveOfertaEducativa: this.Carrera.Clave,
+                                Descripcion: this.Carrera.OfertaEducativa,
+                                OfertaEducativa: this.Carrera.OfertaEducativa,
+                                Rvoe: this.Carrera.RVOE,
+                                FechaFin: this.Carrera.FFin,
+                                FechaInicio: this.Carrera.FInicio
+                            }]
+                        });
+
+                        TituloFn.lstTitulos.push(alumnobd);
+                    });
+                    
+                    TituloFn.InitAlumnos();
+                    IndexFn.Block(false);
+                })
+                .fail(function (data) {
+                    console.log(data);
                     IndexFn.Block(false);
                 });
         }

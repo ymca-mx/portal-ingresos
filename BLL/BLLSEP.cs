@@ -138,6 +138,92 @@ namespace BLL
             }
         }
 
+        public static object GetAlumnos()
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    var Alumnos = db.AlumnoTitulo.Where(a => a.EstatusId == 1).ToList().AsQueryable().ToList();
+
+
+
+                    return
+                    Alumnos
+                        .Select(a => new
+                        {
+                            a.Alumno.AlumnoId,
+                            a.Alumno.Nombre,
+                            a.Alumno.Paterno,
+                            a.Alumno.Materno,
+                            a.Alumno.AlumnoDetalle.CURP,
+                            a.Alumno.AlumnoDetalle.Email,
+                            Autorizado = true,
+                            Institucion = new
+                            {
+                                a.AlumnoOfertaEducativa.FirstOrDefault().InstitucionId,
+                                a.AlumnoOfertaEducativa.FirstOrDefault().Institucion.Nombre,
+                                a.AlumnoOfertaEducativa.FirstOrDefault().Institucion.InstitucionOfertaEducativa.FirstOrDefault().Campus.Clave,
+                                a.AlumnoOfertaEducativa.FirstOrDefault().Institucion.InstitucionOfertaEducativa.FirstOrDefault().CampusId
+                            },
+                            Titulo = new
+                            {
+                                MedioTitulacionId = a.ModalidadTitulacionId,
+                                MedioTitulacion = a.ModalidadTitulacion.TipoModalidad,
+                                FExamenProf = a.FechaExamenProfesional.ToString("dd/MM/yyyy"),
+                                FExencion = a.FechaExencionExamenProfecional.ToString("dd/MM/yyyy"),
+                                FundamentoLegalId = a.FundamentoLegalId,
+                                FundamentoLegal = a.FundamentoLegal.Descripcion,
+                                EntidadFederativaId = a.EntidadFederativaIdExpedicion,
+                                EntidadFederativa = a.EntidadFederativa.Descripcion
+                            },
+                            Carrera = new
+                            {
+                                a.AlumnoOfertaEducativa.FirstOrDefault().OfertaEducativaId,
+                                OfertaEducativa = a.AlumnoOfertaEducativa.FirstOrDefault().OfertaEducativa.Descripcion,
+                                Clave = a.AlumnoOfertaEducativa.FirstOrDefault().OfertaEducativa.InstitucionOfertaEducativa.FirstOrDefault().ClaveOfertaEducativa,
+                                FInicio = a.AlumnoOfertaEducativa.FirstOrDefault().FechaInicio.ToString("dd/MM/yyyy"),
+                                FFin = a.AlumnoOfertaEducativa.FirstOrDefault().FechaTermino.ToString("dd/MM/yyyy"),
+                                AutReconocimientoId = a.AutorizacionReconocimientoId,
+                                AutReconocimiento = a.AutorizacionReconocimiento.Descripcion,
+                                RVOE = a.AlumnoOfertaEducativa.FirstOrDefault().OfertaEducativa.Rvoe
+                            },
+                            Antecedente = new
+                            {
+                                a.AlumnoAntecedente1.EntidadFederativaId,
+                                EntidadFederativa = a.AlumnoAntecedente1.EntidadFederativa.Descripcion,
+                                TipoAntecedenteId = a.AlumnoAntecedente1.TipoEstudioAntecedenteId,
+                                TipoAntecedente = a.AlumnoAntecedente1.TipoEstudioAntecedente.Descripcion,
+                                Institucion = a.AlumnoAntecedente1.Nombre,
+                                FechaInicio = a.AlumnoAntecedente1.FechaInicio.ToString("dd/MM/yyyy"),
+                                FechaFin = a.AlumnoAntecedente1.FechaFin.ToString("dd/MM/yyyy"),
+                            },
+                            Responsables = a.UsuarioResponsable
+                                            .Select(b => new
+                                            {
+                                                b.UsuarioId,
+                                                b.Usuario.Nombre,
+                                                b.Usuario.Paterno,
+                                                b.Usuario.Materno,
+                                                b.Usuario.Cargo.FirstOrDefault().CargoId,
+                                                Cargo = b.Usuario.Cargo.FirstOrDefault().Descripcion
+                                            })
+                                            .ToList()
+                        })
+                        .ToList();
+                }
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
+                }
+            }
+        }
+
         public static object GetAlumnos(int UsuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -244,11 +330,11 @@ namespace BLL
                             AlumnoTitulo alumnoadd = new AlumnoTitulo
                             {
                                 AlumnoId = a.AlumnoId,
-                                AutorizacionReconocimientoId = a.Carrera.AutReconocimientoId,
+                                AutorizacionReconocimientoId = 1,
                                 AlumnoAntecedente1 = new AlumnoAntecedente1
                                 {
-                                    EntidadFederativaId = a.Antecedente.EntidadFederativaId,
-                                    FechaInicio = DateTime.Parse(a.Antecedente.FechaInicio, Region),
+                                    EntidadFederativaId = 9,
+                                    FechaInicio = DateTime.Now,
                                     FechaFin = DateTime.Parse(a.Antecedente.FechaFin, Region),
                                     TipoEstudioAntecedenteId = a.Antecedente.TipoAntecedenteId,
                                     Nombre = a.Antecedente.Institucion

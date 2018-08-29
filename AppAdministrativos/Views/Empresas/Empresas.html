@@ -1,420 +1,118 @@
-﻿    <!-- BEGIN PAGE CONTAINER -->
-<div class="page-container">
-    <!-- BEGIN PAGE HEAD -->
-    <div class="page-head">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="portlet light" id="EmpresaLista">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <span class="caption-subject font-green-sharp bold uppercase">
-                                Empresas
-                            </span>
-                        </div>
+﻿<main>
+    <div class="panel panel-primary" id="EmpresaLista">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Empresas</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="javascript:;" class="btn default button-Nuevo" id="btnEmpresa">Nueva Empresa</a>
+                    <a href="javascript:;" class="btn default button-Nuevo" id="btnAlumnos">Alumnos De Empresa</a>
+                    <hr />
+                    <table class="table table-striped table-bordered table-advance table-hover" id="tblEmpresa">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-indent"></i>&nbsp; Empresa Id
+                                </th>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; RFC
+                                </th>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Nombre
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Registro
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" id="EmpresaC" hidden="hidden">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Empresas &nbsp;&nbsp;&nbsp;</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <h4 class="caption-subject font-blue-sharp bold uppercase" id="NombreEmpresa"></h4>
                     </div>
-
-                    <div class="portlet-body form">
-                        <a href="javascript:void(0)" class="btn default button-Nuevo" id="btnEmpresa">Nueva Empresa</a>
-                        <a href="javascript:void(0)" class="btn default button-Nuevo" id="btnAlumnos">Alumnos De Empresa</a>
-                        <hr />
-                        <table class="table table-striped table-bordered table-advance table-hover" id="tblEmpresa">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <i class="fa fa-indent"></i>&nbsp; Empresa Id
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-user"></i>&nbsp; RFC
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-user"></i>&nbsp; Nombre
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-calendar"></i>&nbsp; Registro
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-
-                    <!--PopupEmpresa Nueva-->
-                    <div id="NuevaEmpresa" class="modal fade" tabindex="-1" role="dialog" data-width="950">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                    <h3 class="modal-title">Nueva Empresa</h3>
-                                </div>
-                                <form action="javascript:;" class="form-horizontal" id="formPopup" method="post">
-                                    <div class="alert alert-danger display-none">
-                                        <button class="close" data-dismiss="alert"></button>
-                                        Por favor revisa la información, hay algunos campos inválidos
-                                    </div>
-                                    <div class="alert alert-success display-none">
-                                        <button class="close" data-dismiss="alert"></button>
-                                        Campos validos
-                                    </div>
-                                    <div class="modal-body" id="divDatosEmpresa">
-                                        <div class="row form-group">
-                                            <div class="col-md-12">
-                                                <hr />
-                                                <h4>Datos de Contacto</h4>
-                                                <hr />
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Nombre</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Apellido Paterno</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtPaterno" name="txtPaterno" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Apellido Materno</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtMaterno" name="txtMaterno" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Email</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtEmail" name="txtEmail" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Telefono</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Celular</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtCelular" name="txtCelular" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <hr />
-                                                <h4>Dirección de Empresa</h4>
-                                                <hr />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label class="control-label">Razón social de la Empresa</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 form-group">
-                                                    <label class="control-label">Fecha Vigencia</label>
-                                                    <div class="input-group col-md-10 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                        <input id="txtFechaV" name="txtFechaV" type="text" class="form-control" />
-                                                        <span class="input-group-btn">
-                                                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Calle</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtCalle" name="txtCalle" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>No.Exterior</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="NoExterior" name="NoExterior" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>No.Interior</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="NoInterior" name="NoInterior" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>CP</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtCP" name="txtCP" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label>Colonia</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtColonia" name="txtColonia" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Pais</label>
-                                                    <div class="input-icon right">
-                                                        <select id="slcPaisUni" name="slcPaisUni" class="form-control">
-                                                            <option value="-1">--Seleccionar--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Estado</label>
-                                                    <div class="input-icon right">
-                                                        <select id="slcEstado" name="slcEstado" class="form-control">
-                                                            <option value="-1">--Seleccionar--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Delegación | Municipio</label>
-                                                    <div class="input-icon right">
-                                                        <select id="slcMunicipio" name="slcMunicipio" class="form-control">
-                                                            <option value="-1">--Seleccionar--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Observación</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <textarea id="txtObservacion" name="txtObservacion" class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body" id="divFiscales" hidden="hidden">
-                                        <h4>Datos Fiscales</h4>
-                                        <div class="col-md-12">
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label>RFC</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtRFC" name="txtRFC" class="form-control uppercase" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label>Email (Entrega de Factura)</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtmail" name="txtmail" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-md-12 ">
-                                                <div class="col-md-6">
-                                                    <div class="col-md-12 form-group">
-                                                        <div class="checkbox">
-                                                            <input type="checkbox" id="chkFiscales" />
-                                                            <label for="chkFiscales" class="control-label">Usar la misma direccion de la empresa</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label>Calle</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtCalleFiscal" name="txtCalle" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>No.Exterior</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="NoExteriorFiscal" name="NoExterior" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>No.Interior</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="NoInteriorFiscal" name="NoInterior" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>CP</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtCPFiscal" name="txtCP" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Colonia</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" id="txtColoniaFiscal" name="txtColonia" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-10 form-group">
-                                                    <label>Pais</label>
-                                                    <div class="input-icon right">
-                                                        <select id="slcPaisUniFiscal" name="slcPaisUniFiscal" class="form-control">
-                                                            <option value="-1">--Seleccionar--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Estado</label>
-                                                    <div class="input-icon right">
-                                                        <select id="slcEstadoPaisFiscal" name="slcEstadoPais" class="form-control">
-                                                            <option value="-1">--Seleccionar--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Delegación | Municipio</label>
-                                                    <div class="input-icon right">
-                                                        <select id="slcDelegacionFiscal" name="slcDelegacion" class="form-control">
-                                                            <option value="-1">--Seleccionar--</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10 form-group">
-                                                    <label>Observación</label>
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <textarea id="txtObservacionFiscal" name="txtObservacion" class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" data-dismiss="modal" id="btnCerrar" class="btn btn-default">Cerrar</button>
-                                        <button type="button" class="btn green" id="btnAtras" style="display: none">Regresar</button>
-                                        <button type="button" class="btn green" id="btnSiguiente">Siguiente</button>
-                                        <button type="button" class="btn blue" id="btnGuardar" style="display: none">Guardar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--Fin de popup-->
-                    <!--PopupEmpresa nuevo grupo y editar-->
-                    <div id="PopGrupo" class="modal fade" tabindex="-1" role="dialog" data-width="950">
-                        <div class="modal-dialog modal-lg">
-                            <!--Convenio-->
-
-                            <div class="portlet-body form" id="Convenio">
-                                <h4 class="caption-subject font-blue-sharp bold uppercase" id="hGrupos"></h4>
-                                <form action="javascript:;" class="form-horizontal" id="frmGrupo" method="post">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="alert alert-danger display-none">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                Por favor revisa la información, hay algunos campos inválidos
-                                            </div>
-                                            <div class="alert alert-success display-none">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                Campos validos
-                                            </div>
-                                        </div>
-                                        <div class="table">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Grupo Nombre</label>
-                                                        <div class="input-icon right">
-                                                            <i class="fa"></i>
-                                                            <input type="text" id="txtNombreGrupo" name="txtNombreGrupo" class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Sede</label>
-                                                        <div class="input-icon right">
-                                                            <select class="form-control" id="slcPlantel" name="slcPlantel"></select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="col-md-10 form-group">
-                                                        <label class="control-label">Dirección de sede</label>
-                                                        <div class="input-icon right">
-                                                            <i class="fa"></i>
-                                                            <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 form-group">
-                                                        <label class="control-label">Fecha inicio de curso</label>
-                                                        <div class="input-group col-md-10 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                            <input id="txtFechaInicio" name="txtFechaInicio" type="text" class="form-control" />
-                                                            <span class="input-group-btn">
-                                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-default" id="btnCerrarGrupo">Cerrar</button>
-                                                <button class="btn blue" id="btnGuardarGrupo">Guardar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-
-                            <!--Fin Convenio-->
-
-                        </div>
-                    </div>
-                    <!--Fin de popup-->
+                    <div class="col-md-4"></div>
 
                 </div>
-                <div class="portlet light" id="EmpresaC" hidden="hidden">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <span class="caption-subject font-green-sharp bold uppercase">
-                                Empresas &nbsp;&nbsp;&nbsp;
-                            </span>
-                        </div>
+            </div>
+            <div class="row">
+                <div id="ListaGrupos" class="col-md-12">
+                    <button type="button" class="btn green" id="btnAtrasE">Regresar a Empresas</button>
+                    <a data-toggle="modal" class="btn blue button-Nuevo" id="btnGrupo">Nuevo Grupo</a>
+                    <hr />
+                    <table class="table table-striped table-bordered table-advance table-hover" id="tblGrupo">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; ID
+                                </th>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Nombre
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Fecha Inicio
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" id="DivGrupo" hidden="hidden">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Grupo Alumnos &nbsp;&nbsp;&nbsp;</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div id="listaAlumnos" class="col-md-12">
+                    <button type="button" class="btn green" id="btnAtrasG">Regresar a Grupos</button>
+                    <hr />
+                    <div class="table">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-4">
-                                    <h4 class="caption-subject font-blue-sharp bold uppercase" id="NombreEmpresa"></h4>
+                                    <h4 class="caption-subject font-blue-sharp bold uppercase" id="NombreGrupo"></h4>
                                 </div>
                                 <div class="col-md-4"></div>
 
                             </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    <h4 class="caption-helper font-green-sharp bold uppercase" id="InscripcionG"></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4 class="caption-subject font-green-sharp bold uppercase" id="ColegiaturaG"></h4>
+                                </div>
+                                <div class="col-md-3"></div>
+
+                            </div>
                         </div>
-                    </div>
-                    <div id="ListaGrupos" class="portlet-body form">
-                        <button type="button" class="btn green" id="btnAtrasE">Regresar a Empresas</button>
-                        <a data-toggle="modal" class="btn blue button-Nuevo" id="btnGrupo">Nuevo Grupo</a>
-                        <hr />
-                        <table class="table table-striped table-bordered table-advance table-hover" id="tblGrupo">
+                        <h3>Alumnos Agregados</h3>
+                        <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnosN">
                             <thead>
                                 <tr>
                                     <th>
@@ -424,160 +122,436 @@
                                         <i class="fa fa-user"></i>&nbsp; Nombre
                                     </th>
                                     <th>
+                                        <i class="fa fa-book"></i>&nbsp; Oferta Educativa
+                                    </th>
+                                    <th>
                                         <i class="fa fa-calendar"></i>&nbsp; Fecha Inicio
                                     </th>
                                     <th>
+                                        <i class="fa fa-user-md"></i>&nbsp; Usuario
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-edit"></i>
                                     </th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" id="DivAlumnos" hidden>
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Alumnos</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="portlet-body col-md-12">
+                    <button id="btnAtrasAlumnos" class="btn default button-Nuevo"><i class="fa fa-arrow-circle-left"></i> Regresar Empresas</button>
+                </div>
+            </div>
+            <div class="row">
+                <hr />
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-advance table-hover table-responsive" id="tblAlumnosCom">
+                        <thead>
+                            <tr class=".bg-primary">
+                                <th style="text-align:center;" class=".bg-primary">
+                                    &nbsp;AlumnoId
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Nombre
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;OFerta Educativa
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Cuota Inscripción
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Cuota Colegiatura
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Grupo
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Configuracion
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Credenciales
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" id="DivAlumnosGrupo" hidden>
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title" id="NombreEmpresa1"></span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+
+                        <h4 class="caption-subject font-blue-sharp bold uppercase" id="NombreGrupo1"></h4>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnAtrasAlumnosGrupos" class="btn default button-Nuevo"><i class="fa fa-arrow-circle-left"></i> Regresar Grupos</button>
+
+                    <a href="javascript:;" class="btn default button-Nuevo" id="btnAlumnos1">Alumnos De Empresa</a>
 
                 </div>
+            </div>
+            <div class="row">
+                <hr>
+                <div class="col-md-12">
 
-                <div class="portlet light" id="DivGrupo" hidden="hidden">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <span class="caption-subject font-green-sharp bold uppercase">
-                                Grupo Alumnos &nbsp;&nbsp;&nbsp;
-                            </span>
-                        </div>
-                    </div>
-                    <div id="listaAlumnos" class="portlet-body form">
-                        <button type="button" class="btn green" id="btnAtrasG">Regresar a Grupos</button>
-                        <hr />
-                        <div class="table">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <h4 class="caption-subject font-blue-sharp bold uppercase" id="NombreGrupo"></h4>
-                                    </div>
-                                    <div class="col-md-4"></div>
+                    <table class="table table-striped table-bordered table-advance table-hover table-responsive" id="tblAlumnosCom1">
+                        <thead>
+                            <tr class=".bg-primary">
+                                <th style="text-align:center;" class=".bg-primary">
+                                    &nbsp;AlumnoId
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Nombre
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;OFerta Educativa
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Cuota Inscripción
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Cuota Colegiatura
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Grupo
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    &nbsp;Configuracion
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
 
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-3">
-                                        <h4 class="caption-helper font-green-sharp bold uppercase" id="InscripcionG"></h4>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h4 class="caption-subject font-green-sharp bold uppercase" id="ColegiaturaG"></h4>
-                                    </div>
-                                    <div class="col-md-3"></div>
-
-                                </div>
-                            </div>
-                            <h3>Alumnos Agregados</h3>
-                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnosN">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <i class="fa fa-user"></i>&nbsp; ID
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-user"></i>&nbsp; Nombre
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-book"></i>&nbsp; Oferta Educativa
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-calendar"></i>&nbsp; Fecha Inicio
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-user-md"></i>&nbsp; Usuario
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-edit"></i>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
                 </div>
-                <div id="DivAlumnos" class="portlet light" hidden>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="portlet light portlet-title">
-                                <div class="caption">
-                                    <span class="caption-subject font-green-sharp bold uppercase h4">
-                                        Alumnos
-                                    </span>
+            </div>
+        </div>
+    </div>
+</main>
+<main>
+    <!--PopupEmpresa Nueva-->
+    <div id="NuevaEmpresa" class="modal fade" tabindex="-1" role="dialog" data-width="950">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 class="modal-title">Nueva Empresa</h3>
+                </div>
+                <form action="javascript:;" class="form-horizontal" id="formPopup" method="post">
+                    <div class="alert alert-danger display-none">
+                        <button class="close" data-dismiss="alert"></button>
+                        Por favor revisa la información, hay algunos campos inválidos
+                    </div>
+                    <div class="alert alert-success display-none">
+                        <button class="close" data-dismiss="alert"></button>
+                        Campos validos
+                    </div>
+                    <div class="modal-body" id="divDatosEmpresa">
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <hr />
+                                <h4>Datos de Contacto</h4>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Nombre</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Apellido Paterno</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtPaterno" name="txtPaterno" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Apellido Materno</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtMaterno" name="txtMaterno" class="form-control" />
+                                    </div>
                                 </div>
                             </div>
-                            <hr />
-                        </div>
-                        <div class="portlet-body col-md-12">
-                            <button id="btnAtrasAlumnos" class="btn default button-Nuevo"><i class="fa fa-arrow-circle-left"></i> Regresar Empresas</button>
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Email</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtEmail" name="txtEmail" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Telefono</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Celular</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtCelular" name="txtCelular" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <hr />
+                                <h4>Dirección de Empresa</h4>
+                                <hr />
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label class="control-label">Razón social de la Empresa</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Fecha Vigencia</label>
+                                    <div class="input-group col-md-10 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                        <input id="txtFechaV" name="txtFechaV" type="text" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Calle</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtCalle" name="txtCalle" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>No.Exterior</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="NoExterior" name="NoExterior" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>No.Interior</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="NoInterior" name="NoInterior" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>CP</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtCP" name="txtCP" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label>Colonia</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtColonia" name="txtColonia" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Pais</label>
+                                    <div class="input-icon right">
+                                        <select id="slcPaisUni" name="slcPaisUni" class="form-control">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Estado</label>
+                                    <div class="input-icon right">
+                                        <select id="slcEstado" name="slcEstado" class="form-control">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Delegación | Municipio</label>
+                                    <div class="input-icon right">
+                                        <select id="slcMunicipio" name="slcMunicipio" class="form-control">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Observación</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <textarea id="txtObservacion" name="txtObservacion" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="modal-body" id="divFiscales" hidden="hidden">
+                        <h4>Datos Fiscales</h4>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label>RFC</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtRFC" name="txtRFC" class="form-control uppercase" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label>Email (Entrega de Factura)</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtmail" name="txtmail" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <hr />
-                        <div class="col-md-12">
-                            <table class="table table-striped table-bordered table-advance table-hover table-responsive" id="tblAlumnosCom">
-                                <thead>
-                                    <tr class=".bg-primary">
-                                        <th style="text-align:center;" class=".bg-primary">
-                                            &nbsp;AlumnoId
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Nombre
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;OFerta Educativa
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Cuota Inscripción
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Cuota Colegiatura
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Grupo
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Configuracion
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Credenciales
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                    <!--Popup de grupo-->
-                    <div class="modal fade" tabindex="-1" data-width="850" data-height="150" id="PopAlumnoGrupo">
-                        <div class="modal-dialog modal-dialog" style="width:800px">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                <h3 class="modal-title">Asignación de Grupo</h3>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-md-12">
-                                    <label class="control-label"> Empresa</label>
-                                    <select id="slcEmpresa" class="form-control"></select>
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="control-label"> Grupo</label>
-                                    <select id="slcGrupo" class="form-control"></select>
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="col-md-6">
+                                    <div class="col-md-12 form-group">
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="chkFiscales" />
+                                            <label for="chkFiscales" class="control-label">Usar la misma direccion de la empresa</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button id="btnAlumnoGrupoG" class="btn btn-primary">Guardar</button>
+
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label>Calle</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtCalleFiscal" name="txtCalle" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>No.Exterior</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="NoExteriorFiscal" name="NoExterior" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>No.Interior</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="NoInteriorFiscal" name="NoInterior" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>CP</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtCPFiscal" name="txtCP" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Colonia</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtColoniaFiscal" name="txtColonia" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-10 form-group">
+                                    <label>Pais</label>
+                                    <div class="input-icon right">
+                                        <select id="slcPaisUniFiscal" name="slcPaisUniFiscal" class="form-control">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Estado</label>
+                                    <div class="input-icon right">
+                                        <select id="slcEstadoPaisFiscal" name="slcEstadoPais" class="form-control">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Delegación | Municipio</label>
+                                    <div class="input-icon right">
+                                        <select id="slcDelegacionFiscal" name="slcDelegacion" class="form-control">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <label>Observación</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <textarea id="txtObservacionFiscal" name="txtObservacion" class="form-control"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!--Popup de grupo-->
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="850" data-height="500" id="PopAlumnoConfiguracion" data-keyboard="false">
-                        <div class="modal-dialog modal-dialog" style="width:700px">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                <h3 class="modal-title">Configuración de cargos</h3>
-                            </div>
-                            <div class="modal-body">
-                                <form id="frmAlumnoCuota">
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" id="btnCerrar" class="btn btn-default">Cerrar</button>
+                        <button type="button" class="btn green" id="btnAtras" style="display: none">Regresar</button>
+                        <button type="button" class="btn green" id="btnSiguiente">Siguiente</button>
+                        <button type="button" class="btn blue" id="btnGuardar" style="display: none">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--Fin de popup-->
+    <!--PopupEmpresa nuevo grupo y editar-->
+    <div id="PopGrupo" class="modal fade" tabindex="-1" role="dialog" data-width="950">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="caption-subject font-blue-sharp bold uppercase" id="hGrupos"></h4>
+                </div>
+                <div class="modal-body">
+                    <!--Convenio-->
+                    <div class="portlet-body form" id="Convenio">
+
+                        <form action="javascript:;" class="form-horizontal" id="frmGrupo" method="post">
+                            <div class="form-body">
+                                <div class="form-group">
                                     <div class="alert alert-danger display-none">
                                         <button class="close" data-dismiss="alert"></button>
                                         Por favor revisa la información, hay algunos campos inválidos
@@ -586,150 +560,177 @@
                                         <button class="close" data-dismiss="alert"></button>
                                         Campos validos
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label">Tipo de Oferta Educativa</label>
-                                            <select id="slcTipoOferta" name="slcTipoOferta" class="form-control"></select>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label"> Oferta Educativa</label>
-                                            <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label"> Plan de Pago</label>
-                                            <select id="slcSistemaPago" name="slcSistemaPago" class="form-control"></select>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label"> Periodo</label>
-                                            <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label">Número de Pagos</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" id="txtNPagos" name="txtNPagos" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label"> Cuota Inscripción</label>
-                                            <input type="number" class="form-control" id="txtCuotaInscripcion" name="txtCuotaInscripcion" />
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label class="control-label"> Cuota Colegiatura </label>
-                                            <input type="number" class="form-control" id="txtCuotaColegiatura" name="txtCuotaColegiatura" />
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="chkInCongelada" name="chkInCongelada">
-                                                <label class="control-label" for="chkInCongelada">
-                                                    Inscripción Congelada
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="chkCongelada" name="chkCongelada">
-                                                <label class="control-label" for="chkCongelada">Cuota Congelada</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="chkEspecial" name="chkEspecial">
-                                                <label class="control-label" for="chkEspecial">Es un alumno especial (Recomendado)</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="chkCredenciales" name="chkCredenciales">
-                                                <label class="control-label" for="chkCredenciales">
-                                                    Generar Credenciales
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
-                                <button id="btnAlumnoConfig" class="btn btn-primary">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- div alumnos vita desde grupo-->
-                <div id="DivAlumnosGrupo" class="portlet light" hidden>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="portlet light portlet-title">
-                                <div class="caption">
-                                    <span class="caption-subject font-green-sharp bold uppercase h4" id="NombreEmpresa1">
-                                    </span>
                                 </div>
-
-                                <div class="col-md-12">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-6">
-
-                                        <h4 class="caption-subject font-blue-sharp bold uppercase" id="NombreGrupo1"></h4>
+                                <div class="table">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Grupo Nombre</label>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" id="txtNombreGrupo" name="txtNombreGrupo" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Sede</label>
+                                                <div class="input-icon right">
+                                                    <select class="form-control" id="slcPlantel" name="slcPlantel"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Dirección de sede</label>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label class="control-label">Fecha inicio de curso</label>
+                                                <div class="input-group col-md-10 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                                    <input id="txtFechaInicio" name="txtFechaInicio" type="text" class="form-control" />
+                                                    <span class="input-group-btn">
+                                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3"></div>
                                 </div>
-
                             </div>
-                            <hr>
-                        </div>
-                        <div class="portlet-body col-md-12">
-                            <button id="btnAtrasAlumnosGrupos" class="btn default button-Nuevo"><i class="fa fa-arrow-circle-left"></i> Regresar Grupos</button>
 
-                            <a href="javascript:void(0)" class="btn default button-Nuevo" id="btnAlumnos1">Alumnos De Empresa</a>
-
-                        </div>
+                        </form>
                     </div>
-                    <div class="row">
-                        <hr>
-                        <div class="col-md-12">
-
-                            <table class="table table-striped table-bordered table-advance table-hover table-responsive" id="tblAlumnosCom1">
-                                <thead>
-                                    <tr class=".bg-primary">
-                                        <th style="text-align:center;" class=".bg-primary">
-                                            &nbsp;AlumnoId
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Nombre
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;OFerta Educativa
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Cuota Inscripción
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Cuota Colegiatura
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Grupo
-                                        </th>
-                                        <th style="text-align:center;" class="bg-primary">
-                                            &nbsp;Configuracion
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
-
-                        </div>
-                    </div>
+                    <!--Fin Convenio-->
                 </div>
-                <!-- fin div alumnos vita desde grupo-->
-
+                <div class="modal-footer">
+                    <button class="btn btn-default" id="btnCerrarGrupo">Cerrar</button>
+                    <button class="btn blue" id="btnGuardarGrupo">Guardar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!--Fin de popup-->
+    <!--Popup de grupo-->
+    <div class="modal fade" tabindex="-1" data-width="850" data-height="150" id="PopAlumnoGrupo">
+        <div class="modal-dialog modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                    <h3 class="modal-title">Asignación de Grupo</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label"> Empresa</label>
+                            <select id="slcEmpresa" class="form-control"></select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="control-label"> Grupo</label>
+                            <select id="slcGrupo" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnAlumnoGrupoG" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Popup de grupo-->
+    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="850" data-height="500" id="PopAlumnoConfiguracion" data-keyboard="false">
+        <div class="modal-dialog modal-dialog" style="width:700px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                    <h3 class="modal-title">Configuración de cargos</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="frmAlumnoCuota">
+                            <div class="alert alert-danger display-none">
+                                <button class="close" data-dismiss="alert"></button>
+                                Por favor revisa la información, hay algunos campos inválidos
+                            </div>
+                            <div class="alert alert-success display-none">
+                                <button class="close" data-dismiss="alert"></button>
+                                Campos validos
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Tipo de Oferta Educativa</label>
+                                    <select id="slcTipoOferta" name="slcTipoOferta" class="form-control"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label"> Oferta Educativa</label>
+                                    <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label"> Plan de Pago</label>
+                                    <select id="slcSistemaPago" name="slcSistemaPago" class="form-control"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label"> Periodo</label>
+                                    <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label">Número de Pagos</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" id="txtNPagos" name="txtNPagos" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label"> Cuota Inscripción</label>
+                                    <input type="number" class="form-control" id="txtCuotaInscripcion" name="txtCuotaInscripcion" />
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label class="control-label"> Cuota Colegiatura </label>
+                                    <input type="number" class="form-control" id="txtCuotaColegiatura" name="txtCuotaColegiatura" />
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="chkInCongelada" name="chkInCongelada">
+                                        <label class="control-label" for="chkInCongelada">
+                                            Inscripción Congelada
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="chkCongelada" name="chkCongelada">
+                                        <label class="control-label" for="chkCongelada">Cuota Congelada</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="chkEspecial" name="chkEspecial">
+                                        <label class="control-label" for="chkEspecial">Es un alumno especial (Recomendado)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="chkCredenciales" name="chkCredenciales">
+                                        <label class="control-label" for="chkCredenciales">
+                                            Generar Credenciales
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                    <button id="btnAlumnoConfig" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 <script>
     $.getScript("JS/Empresas/Empresa.js");
 </script>

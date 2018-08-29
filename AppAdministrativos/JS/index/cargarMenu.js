@@ -54,7 +54,7 @@ $(function () {
             return dfd.promise();
         },
         btnSalir: function () {
-            $.removeCookie('userAdmin', { path: '/' });
+            localStorage.clear();
             Backbone.history.stop();
             var url = "login.html";
             $(location).attr('href', url);

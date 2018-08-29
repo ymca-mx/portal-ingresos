@@ -1,181 +1,180 @@
-﻿
-<div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Generación  de referencias bancarias</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row form-group" id="divBuscar">
+                <div class="col-md-12">
+                    <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
+                    <input type="text" id="txtClave" class="form-control-static font-md" style="text-align:right" />&nbsp;
+                    <a class="btn blue" id="btnBuscar" tabindex="2">Buscar</a>
+                </div>
+                <div class="col-md-12">
+                    <div class="portlet-body form" id="frmVarios" hidden="hidden">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; Nombre
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-calendar"></i>&nbsp; Registro
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-edit"></i>&nbsp; Acción
+                                        </th>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <h1 class="caption-subject font-blue bold uppercase">
-                            Generación  de referencias bancarias
-                        </h1>
-                        <div class="col-md-1" id="Imprimir">
-                            <a id="btnImprimir" href="javascript:return 0;">
-                                <img src="Imagenes/Impresora.png" width="70" />
-                            </a>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="portlet-body">
-                    <div class="table" id="tblContenido">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <label class="control-label">Clave del Alumno</label>
-                                    <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                    <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="col-md-5">
-                                    <label class="control-label">Oferta Educativa</label>
-                                    <select class="form-control" id="slcOfertaEducativa"></select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label">Concepto</label>
-                                    <select class="form-control" id="slcConceptos"></select>
-                                </div>
-                            </div>
-                            <div> &nbsp;</div>
-                            <div class="col-md-12" id="divPeriodo" hidden="hidden">
-                                <div class="col-md-5">
-                                    <label class="control-label">Periodo</label>
-                                    <select class="form-control" id="slcPeriodo"></select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 form-group"></div>
-                            <div class="col-md-12">
-                                <div class="col-md-2">
-                                    <button class="btn form-control blue" id="btnGenerar">Generar</button>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12">
-                                <hr />
-                                <div class="col-md-8">
-                                    <label class="control-label" style="font-size: 10px">Alumno:</label>
-                                    <label id="lblAlumno" class="control-label" style="font-size: 10px"></label>
-                                </div>
-                                <!--<div class="col-md-9">
-                                    <label class="control-label" style="font-size: 10px">
-                                        Tus referencias de pago para el cuatrimestre de Enero a Abril del 2016 son:
-                                    </label>
-                                </div>-->
-                                <div class="col-md-9">
-                                    <label class="control-label bold " style="font-size: 10px; color: red;" id="txtAdeudo">
-                                    </label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12 table-container">
-
-
-                                <table class="table table-hover table-bordered1 dataTables" id="tblReferencias">
-                                    <thead>
-                                        <tr>
-                                            <th class="Titulo-Tabla">
-                                                Concepto
-                                            </th>
-                                            <th class="Titulo-Tabla">
-                                                Referencia
-                                                <br />
-                                                Bancaria
-                                            </th>
-                                            <th class="Titulo-Tabla">
-                                                Fecha
-                                                <br />
-                                                Generación
-                                            </th>
-                                            <th class="Titulo-Tabla">Monto</th>
-                                            <th class="Titulo-Tabla">Fecha de Vigencia de referencia</th>
-                                            <th class="Titulo-Tabla">Acción</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="col-md-7  form-body">
-                                <div class="col-md-10" style="border-width: 1px; border-style: dashed; border-color: black;">
-                                    <div class="col-md-12">
-                                        <label class="control-label bold" style="font-size: 10px">Banco Scotiabank</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="control-label" style="font-size: 10px">No. de Cuenta: 00105771894</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="control-label" style="font-size: 10px">Nombre del Cliente: Universidad YMCA A.C.</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="control-label" style="font-size: 10px">Moneda: MXN</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row col-md-12">
+                        <br />
+                        <label class="form-control black" style="font-weight:bold; height:auto!important" id="lblNombre"></label>
                     </div>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="divBar" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="height: 90px;">
-                            <!--<div class="modal-content" style="width:auto">-->
-                            <div class="form-group">
-                                <h3 id="hCarga">Cargando</h3>
-                            </div>
-                            <div class="form-group">
-                                <div class="bar" style="width:auto" id="divBar">
-                                    <p id="txtBar"></p>
-                                </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row col-md-5">
+                        <img id="fotoAlumno" style="width:120px; height:150px; border-style:double;border-width:4px;">
                     </div>
-                    <a href="#Monto" data-toggle="modal" hidden="hidden" id="btnPopup"></a>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Monto" data-keyboard="false">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" id="bntClose" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                    <h3 class="modal-title">Insertar Monto</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="table">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form content col-md-8">
-                                                    <label class="control-label">Monto</label>
-                                                    <input type="number" class="form-control" id="txtMonto" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn red" id="btnCancelar" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                                    <button class="btn blue" id="btnMonto">Guardar</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-1">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <label class="control-label">Oferta Educativa</label>
+                    <select class="form-control" id="slcOfertaEducativa"></select>
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">Concepto</label>
+                    <select class="form-control" id="slcConceptos"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5" id="divPeriodo" hidden="hidden">
+                    <label class="control-label">Periodo</label>
+                    <select class="form-control" id="slcPeriodo"></select>
+                </div>
+            </div>
+            <div class="row">
+                <br />
+                <div class="col-md-2">
+                    <button class="btn form-control blue" id="btnGenerar">Generar</button>
+                </div>
+            </div>
 
-                    </div>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="width:700px">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                <h3 class="modal-title">Comentario</h3>
-                            </div>
-                            <div class="modal-body">
-                                <label class="control-label"> ¿Por qué se esta cancelando el cargo?</label>
-                                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <a id="btnGuardar" class="btn red">Cancelar Cargo</a>
-                            </div>
+            <div class="row">
+                <hr />
+                <div class="col-md-12">
+                    <table class="table table-hover table-bordered1 dataTables" id="tblReferencias">
+                        <thead>
+                            <tr>
+                                <th class="Titulo-Tabla">
+                                    Concepto
+                                </th>
+                                <th class="Titulo-Tabla">
+                                    Referencia
+                                    <br />
+                                    Bancaria
+                                </th>
+                                <th class="Titulo-Tabla">
+                                    Fecha
+                                    <br />
+                                    Generación
+                                </th>
+                                <th class="Titulo-Tabla">Monto</th>
+                                <th class="Titulo-Tabla">Fecha de Vigencia de referencia</th>
+                                <th class="Titulo-Tabla">Acción</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <hr />
+                <div class="col-md-7  form-body">
+                    <div class="col-md-10" style="border-width: 1px; border-style: dashed; border-color: black;">
+                        <div class="col-md-12">
+                            <label class="control-label bold" style="font-size: 10px">Banco Scotiabank</label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="control-label" style="font-size: 10px">No. de Cuenta: 00105771894</label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="control-label" style="font-size: 10px">Nombre del Cliente: Universidad YMCA A.C.</label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="control-label" style="font-size: 10px">Moneda: MXN</label>
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
+    </div>
+</main>
+<main>
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Monto" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="bntClose" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 class="modal-title">Insertar Monto</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="table">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form content col-md-8">
+                                    <label class="control-label">Monto</label>
+                                    <input type="number" class="form-control" id="txtMonto" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn red" id="btnCancelar" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                    <button class="btn blue" id="btnMonto">Guardar</button>
+                </div>
+            </div>
+        </div>
 
     </div>
-</div>
+    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="width:700px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                <h3 class="modal-title">Comentario</h3>
+            </div>
+            <div class="modal-body">
+                <label class="control-label"> ¿Por qué se esta cancelando el cargo?</label>
+                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
+            </div>
+            <div class="modal-footer">
+                <a id="btnGuardar" class="btn red">Cancelar Cargo</a>
+            </div>
+        </div>
+    </div>
+</main>
 
-<script src="JS/Referencias/GenerarReferenciasB.js"></script>
+<script>
+    $.getScript("JS/Referencias/GenerarReferenciasB.js");
+</script>

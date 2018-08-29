@@ -151,5 +151,25 @@ namespace AppAdministrativos.Controllers
                 return BadRequest(message);
             }
         }
+
+        [Route("Alumnos/Espera")]
+        [HttpGet]
+        public IHttpActionResult GetAlumnos()
+        {
+            object Result = BLLSEP.GetAlumnos();
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                        + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                        + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
     }
 }
