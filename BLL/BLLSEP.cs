@@ -335,8 +335,8 @@ namespace BLL
                                 {
                                     EntidadFederativaId = 9,
                                     FechaInicio = DateTime.Now,
-                                    FechaFin = DateTime.Parse(a.Antecedente.FechaFin, Region),
-                                    TipoEstudioAntecedenteId = a.Antecedente.TipoAntecedenteId,
+                                    FechaFin = DateTime.Parse("01/01/1900", Region),
+                                    TipoEstudioAntecedenteId = 4,
                                     Nombre = a.Antecedente.Institucion
                                 },
                                 AlumnoOfertaEducativa = new List<AlumnoOfertaEducativa>(){
@@ -349,26 +349,15 @@ namespace BLL
                                         FechaTermino = DateTime.Parse(a.Antecedente.FechaFin, Region),
                                     }
                                 },
-                                EntidadFederativaIdExpedicion = a.Titulo.EntidadFederativaId,
-                                FechaExamenProfesional = DateTime.Parse(a.Titulo.FExamenProf, Region),
-                                FechaExencionExamenProfecional = DateTime.Parse(a.Titulo.FExencion),
-                                FechaExpedicion = DateTime.Now,
-                                FundamentoLegalId = a.Titulo.FudamentoLegalId,
-                                ModalidadTitulacionId = a.Titulo.MedioTitulacionId,
+                                EntidadFederativaIdExpedicion = 9,
+                                FechaExamenProfesional = DateTime.Parse("01/01/1900", Region),
+                                FechaExencionExamenProfecional = DateTime.Parse("01/01/1900", Region),
+                                FechaExpedicion = DateTime.Parse("01/01/1900", Region),
+                                FundamentoLegalId = 4,
+                                ModalidadTitulacionId = 1,
                                 UsuarioId = a.UsuarioId,
                                 ServicioSocial = true,
                                 EstatusId = 1,
-                                UsuarioResponsable = new List<UsuarioResponsable>
-                                {
-                                    new UsuarioResponsable
-                                    {
-                                        UsuarioId=a.Responsables[0].UsuarioId
-                                    },
-                                    new UsuarioResponsable
-                                    {
-                                        UsuarioId=a.Responsables[1].UsuarioId
-                                    }
-                                }
                             };
 
                             db.AlumnoTitulo.Add(alumnoadd);

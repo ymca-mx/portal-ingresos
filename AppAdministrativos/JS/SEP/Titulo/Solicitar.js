@@ -344,26 +344,26 @@
             objAlumno.Sede = objInstitu;
             objAlumno.UsuarioId = localStorage.getItem('userAdmin');
 
-            if (objInstitu.length === 1) {
-                objAlumno.Institucion = new ClasesFn.Institucion({
-                    InstitucionId: objInstitu[0].InstitucionId,
-                    SedeId: objInstitu[0].SedeId,
-                    Nombre: objInstitu[0].Nombre,
-                    Clave: objInstitu[0].Clave
-                });
+            var objinsti = objInstitu.find(inst => inst.Clave === $('#slcSedePrev').find(':selected').data('Clave'));
 
-                if (objInstitu[0].Ofertas.length === 1) {
-                    objAlumno.Carrera = new ClasesFn.Carrera({
-                        OfertaEducativaId: objInstitu[0].Ofertas[0].OfertaEducativaId,
-                        OfertaEducativa: objInstitu[0].Ofertas[0].Descripcion,
-                        Clave: objInstitu[0].Ofertas[0].ClaveOfertaEducativa,
-                        FInicio: objInstitu[0].Ofertas[0].FechaInicio,
-                        FFin: objInstitu[0].Ofertas[0].FechaFin,
-                        AutReconocimientoId: 0,
-                        RVOE: objInstitu[0].Ofertas[0].Rvoe
-                    });
-                }
-            }
+            objAlumno.Institucion = new ClasesFn.Institucion({
+                InstitucionId: objinsti.InstitucionId,
+                SedeId: objinsti.SedeId,
+                Nombre: objinsti.Nombre,
+                Clave: objinsti.Clave
+            });
+
+
+            objAlumno.Carrera = new ClasesFn.Carrera({
+                OfertaEducativaId: $('#slcOfertaPrev').val(),
+                OfertaEducativa: $('#slcOfertaPrev').find(':selected').text(),
+                Clave: $('#slcOfertaPrev').find(':selected').data('Clave'),
+                FInicio: $('#slcOfertaPrev').find(':selected').data('FechaInicio'),
+                FFin: $('#slcOfertaPrev').find(':selected').data('FechaFin'),
+                AutReconocimientoId: 0,
+                RVOE: $('#slcOfertaPrev').find(':selected').data('RVOE'),
+            });
+
 
             objAlumno.Antecedente = new ClasesFn.Antecedente({
                 Institucion: objAnte.Procedencia,
@@ -383,7 +383,7 @@
                 var filter = TituloFn.lstTitulos.find(x => x.AlumnoId === objAlumno.AlumnoId
                     && x.Carrera.OfertaEducativaId === objAlumno.Carrera.OfertaEducativaId);
                 if (filter === undefined) {
-                    this.Enviar(objAlumno);
+                    TituloFn.Enviar(objAlumno);
                 } else {
                     alertify.alert("Ya existe un registro con el mismo Id de alumno.");
                 }
@@ -500,10 +500,10 @@
         SedeChange() {
             $('#txtSedeClave').val($('#slcSede :selected').data("Clave"));
 
-            TituloFn.SetOfertas(JSON.parse($('#slcSede :selected').data("Ofertas")), "slcOferta", true);
+            TituloFn.SetOfertas(JSON.parse($('#slcSede :selected').data("Ofertas")), "slcOferta");
         },
         SedeChangePrev() {
-            TituloFn.SetOfertas(JSON.parse($('#slcSedePrev :selected').data("Ofertas")), "slcOfertaPrev", false);
+            TituloFn.SetOfertas(JSON.parse($('#slcSedePrev :selected').data("Ofertas")), "slcOfertaPrev");
         },
         CargoChange() {
             var id = this.id;
@@ -578,7 +578,7 @@
             }
             $('#' + slcSede).change();
         },
-        SetOfertas(lst, slcoferta, others) {
+        SetOfertas(lst, slcoferta) {
             $('#' + slcoferta).empty();
 
             $(lst).each(function () {
@@ -586,12 +586,12 @@
 
                 option.val(this.OfertaEducativaId);
                 option.text(this.Descripcion);
-                if (others) {
+
                     option.data("Clave", this.ClaveOfertaEducativa);
                     option.data("RVOE", this.Rvoe);
                     option.data("FechaFin", this.FechaFin);
-                    option.data("FechaInicio", this.FechaInicio);
-                }
+                option.data("FechaInicio", this.FechaInicio);
+
                 $("#" + slcoferta).append(option);
             });
 
@@ -819,14 +819,14 @@
                     IndexFn.Block(false);
 
                     if (data.Alumnos.length > 0) {
-                        alertify.alert("Universidad YMCA", "Alumnos enviados a los responsables.");
-                    } else {
-                        alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
+                        alertify.alert("Universidad YMCA", "No se pudo guardar.");
                         $(data.Alumnos).each(function (AlumnoSelect) {
                             TituloFn.lstTitulos.splice(TituloFn.lstTitulos.indexOf(AlumnoSelect), 1);
                         });
 
                         TituloFn.InitAlumnos();
+                    } else {
+                        alertify.alert("Universidad YMCA", "Alumno Agregado");
                     }
                 })
                 .fail(function (data) {

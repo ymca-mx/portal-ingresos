@@ -1,101 +1,61 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Pagos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-</head>
-<body style="font-size: 10px !important">
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
-
-            <div class="row">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">REFERENCIAS BANCARIAS DE TRAMITES</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row" id="divBuscar">
                 <div class="col-md-12">
-                    <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <img src="Imagenes/UYMCA-100px.png" width="70" />
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="caption title">REFERENCIAS BANCARIAS DE TRAMITES</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="portlet-body">
-                            <div class="col-md-12 form-group" id="divBuscar">
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                        <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
-                                    </div>
-                                        <div class="col-md-6">
-                                            <div class="alert alert-info">
-                                                <strong>Información! </strong> En este Modulo solo encontraras referencias generadas a partir del periodo 2016 - 2. <br>
-                                                <strong>* </strong> Referencias de periodos anteriores consultarlas en clipper.
-                                               </div>
-                                        </div>
-                                    </div>
-                                <div class="col-md-12">
-                                    <br />
-                                    <b><label class="control-label black" style="font-weight:bold" id="lblNombre"></label></b>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <table class="table table-hover table-bordered1 dataTables" id="tblReferencias3" >
-                                        <thead>
-                                            <tr>
-                                                <th class="Titulo-Tabla">
-                                                    Concepto
-                                                </th>
-                                                <th class="Titulo-Tabla">
-                                                    Referencia
-                                                </th>
-                                                <th class="Titulo-Tabla" style="text-align:center">
-                                                    Periodo
-                                                </th>
-                                                <th class="Titulo-Tabla"  style="text-align:center">
-                                                    Fecha <br /> Limite de Pago
-                                                </th>
-                                                <th class="Titulo-Tabla" style="text-align:center">Usuario</th>
-                                                <th class="Titulo-Tabla" style="text-align:right">Promesa</th>
-                                                <th class="Titulo-Tabla" style="text-align:right">Descuento</th>
-                                                <th class="Titulo-Tabla" style="text-align:right">Pagado</th>
-                                                <th class="Titulo-Tabla" style="text-align:right">Saldo por pagar</th>
-                                                <th class="Titulo-Tabla" style="text-align:center">Estatus</th>
-
-                                                <!--<th class="Titulo-Tabla">
-                                                    Recargo después de<br /> fecha límite de pago
-                                                </th>
-                                                <th class="Titulo-Tabla">
-                                                    Total a pagar con<br /> recargos
-                                                </th>-->
-                                            </tr>
-                                        </thead>
-                                    </table>
-
-                                </div>
-                              
-                            
-                            
-                            </div>
+                    <div class="col-md-6">
+                        <label class="control-label">Clave del Alumno</label>
+                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                        <button class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            <strong>Información! </strong> En este Modulo solo encontraras referencias generadas a partir del periodo 2016 - 2. <br>
+                            <strong>* </strong> Referencias de periodos anteriores consultarlas en clipper.
                         </div>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <br />
+                    <b><label class="control-label black" style="font-weight:bold" id="lblNombre"></label></b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover table-bordered1 dataTables" id="tblReferencias3">
+                        <thead>
+                            <tr>
+                                <th class="Titulo-Tabla">
+                                    Concepto
+                                </th>
+                                <th class="Titulo-Tabla">
+                                    Referencia
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:center">
+                                    Periodo
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:center">
+                                    Fecha <br /> Limite de Pago
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:center">Usuario</th>
+                                <th class="Titulo-Tabla" style="text-align:right">Promesa</th>
+                                <th class="Titulo-Tabla" style="text-align:right">Descuento</th>
+                                <th class="Titulo-Tabla" style="text-align:right">Pagado</th>
+                                <th class="Titulo-Tabla" style="text-align:right">Saldo por pagar</th>
+                                <th class="Titulo-Tabla" style="text-align:center">Estatus</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <script src="JS/Pagos/ReferenciasTramites.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("JS/Pagos/ReferenciasTramites.js");
+</script>
