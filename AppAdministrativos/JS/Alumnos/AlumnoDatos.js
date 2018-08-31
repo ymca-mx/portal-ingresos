@@ -636,7 +636,7 @@
                                 alertify.alert("Datos del Alumno Modificados");
                                 $('#divGuardar').hide();
                                 $('#divEditar').show();
-                                var load = $('#Load').modal();
+                                
                                 $('#txtAlumno').val(AlumnoNum);
                                 $('#btnBuscarAlumno').click();
                             } else {

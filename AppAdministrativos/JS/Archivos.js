@@ -29,7 +29,7 @@
         bind_Change(FileId, txtId, thisfile) {
 
             var file = $('#' + FileId);
-            var tex = $('#' + txtId).html();
+
             if (thisfile.files.length > 0) {
                 $('#' + txtId).text(ArchivosFn.RecortarNombre(thisfile.files[0].name));
                 file.addClass('fileinput-exists').removeClass('fileinput-new');

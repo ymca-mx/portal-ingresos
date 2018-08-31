@@ -390,7 +390,8 @@ namespace BLL
                     return new
                     {
                         ex.Message,
-                        Inner = ex.InnerException?.InnerException?.Message ?? ""
+                        Inner = ex.InnerException?.Message ?? "",
+                        Inner2 = ex.InnerException?.InnerException?.Message ?? ""
                     };
                 }
 

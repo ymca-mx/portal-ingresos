@@ -187,8 +187,8 @@ namespace AppAdministrativos.Controllers
         [HttpPut]
         public IHttpActionResult AddAlumno(DTO.DTOAlumno Alumno)
         {
-            Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            //Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            //Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             var Result = BLLAlumnoPortal.InsertarAlumno(Alumno);
 
             if (Result is string)
@@ -197,7 +197,11 @@ namespace AppAdministrativos.Controllers
             }
             else
             {
-                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                      + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                      + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
             }
         }
 
