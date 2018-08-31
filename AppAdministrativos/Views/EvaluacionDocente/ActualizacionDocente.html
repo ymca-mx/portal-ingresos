@@ -1,17 +1,11 @@
-﻿<div class="container">
-    <div class="portlet light">
-        <div class="portlet-title">
-            <div class="col-md-12">
-                <div class="col-md-1">
-                    <img src="Imagenes/UYMCA-100px.png" width="70" />
-                </div>
-                <div class="col-md-6">
-                    <h3 class="caption title">Actualizar Docente</h3>
-                </div>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Actualizar Docente</span>
             </div>
         </div>
-
-        <div class="portlet-body">
+        <div class="panel-body">
             <div class="row">
                 <div class="col-md-4">
                     <div class="control-group">
@@ -41,136 +35,140 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalFormacion" data-keyboard="false" data-width="650">
-    <div class="modal-absolute">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Formación Academica</h3>
-            </div>
-            <form id="frmFormacion" onSubmit="return false;">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Nombre de Institución:</label>
-                                    <input class="form-control" id="txtInstitucion" type="text" required />
+</main>
+<main>
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalFormacion" data-keyboard="false" data-width="650">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Formación Academica</h3>
+                </div>
+                <form id="frmFormacion" onSubmit="return false;">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Nombre de Institución:</label>
+                                        <input class="form-control" id="txtInstitucion" type="text" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Oferta Educativa Tipo</label>
+                                        <select class="form-control" id="slcOFertaTipo" required></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Carrera Cursada</label>
+                                        <input class="form-control" id="txtCarrera" type="text" required />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Oferta Educativa Tipo</label>
-                                    <select class="form-control" id="slcOFertaTipo" required></select>
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Periodos:</label>
+                                        <select class="form-control" id="slcPeriodo" disabled></select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Carrera Cursada</label>
-                                    <input class="form-control" id="txtCarrera" type="text" required />
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo de Documento:</label>
+                                        <select class="form-control" id="slcDocumentoTipo"></select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Periodos:</label>
-                                    <select class="form-control" id="slcPeriodo" disabled ></select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Tipo de Documento:</label>
-                                    <select class="form-control" id="slcDocumentoTipo"></select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Archivo</label>
-                                    <div class="row fileupload-buttonbar">
-                                        <div class="col-lg-12">
-                                            <div class="fileinput-new " data-provides="fileinput" id="FileComprobante">
-                                                <!-- The fileinput-button span is used to style the file input field as button -->
-                                                <span class="btn blue  fileinput-button">
-                                                    <i class="fa fa-plus"></i>
-                                                    <span>
-                                                        Seleccionar Archivo...
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Archivo</label>
+                                        <div class="row fileupload-buttonbar">
+                                            <div class="col-lg-12">
+                                                <div class="fileinput-new " data-provides="fileinput" id="FileComprobante">
+                                                    <!-- The fileinput-button span is used to style the file input field as button -->
+                                                    <span class="btn blue  fileinput-button">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>
+                                                            Seleccionar Archivo...
+                                                        </span>
+                                                        <input type="file" id="ArchivoComprobante" name="ArchivoComprobante" accept=".PDF, .pdf" />
                                                     </span>
-                                                    <input type="file" id="ArchivoComprobante" name="ArchivoComprobante" accept=".PDF, .pdf" />
-                                                </span>
-                                                <span id="txtComprobante" class="fileinput-filename col-lg-10"></span>
-                                                <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
+                                                    <span id="txtComprobante" class="fileinput-filename col-lg-10"></span>
+                                                    <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <a class="col-md-12 control-label" id="linkDoc" target="_blank" href="#"></a>
+                                        <div class="row">
+                                            <a class="col-md-12 control-label" id="linkDoc" target="_blank" href="#"></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-default" id="btnCancelarFormacion">Cancelar</a>
-                    <button class="btn btn-primary" id="btnGuardarFormacion">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalCurso" data-keyboard="false" data-width="650">
-    <div class="modal-absolute">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="tiutuloCurso">Curso</h3>
+                    <div class="modal-footer">
+                        <a class="btn btn-default" id="btnCancelarFormacion">Cancelar</a>
+                        <button class="btn btn-primary" id="btnGuardarFormacion">Guardar</button>
+                    </div>
+                </form>
             </div>
-            <form id="frmCurso" onSubmit="return false;">
-                <div class="modal-body">
-                    <div class="form-body">
-                        <div class="row">
-                            <div class="col-md-6 form-body">
-                                <div class="form-group form-md-line-input form-md-floating-label has-success">
-                                    <input type="text" class="form-control input-sm" id="txtCursoNombreI" required pattern=".{3,}">
-                                    <label for="txtCursoNombreI">Nombre de la Institución</label>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalCurso" data-keyboard="false" data-width="650">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="tiutuloCurso">Curso</h3>
+                </div>
+                <form id="frmCurso" onSubmit="return false;">
+                    <div class="modal-body">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6 form-body">
+                                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                        <input type="text" class="form-control input-sm" id="txtCursoNombreI" required pattern=".{3,}">
+                                        <label for="txtCursoNombreI">Nombre de la Institución</label>
+                                    </div>
+                                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                        <input type="text" class="form-control input-sm" id="txtTituloCurso" required pattern=".{3,}">
+                                        <label for="txtTituloCurso">Titulo del Curso</label>
+                                    </div>
+                                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                        <select class="form-control input-sm" id="slcPeriodoCurso" style="padding:0px"></select>
+                                        <label for="slcPeriodoCurso">Periodo </label>
+                                    </div>
                                 </div>
-                                <div class="form-group form-md-line-input form-md-floating-label has-success">
-                                    <input type="text" class="form-control input-sm" id="txtTituloCurso" required pattern=".{3,}">
-                                    <label for="txtTituloCurso">Titulo del Curso</label>
-                                </div>
-                                <div class="form-group form-md-line-input form-md-floating-label has-success">
-                                    <select class="form-control input-sm" id="slcPeriodoCurso" style="padding:0px"></select>
-                                    <label for="slcPeriodoCurso">Periodo </label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-body">
-                                <div class="form-group form-md-line-input form-md-floating-label has-success">
-                                    <select class="form-control input-sm" id="slcDuracion" style="padding:0px" required>
-                                        <option value=""></option>
-                                        <option value="20">20 Horas</option>
-                                        <option value="40">40 Horas</option>
-                                    </select>
-                                    <label for="slcDuracion">Seleccionar Duración </label>
-                                </div>
-                                <div class="form-group form-md-line-input form-md-floating-label has-success">
-                                    <div class="input-group">
-                                        <input type="text" style="font-size:14px;" name="daterange" id="txtFechas" class="form-control"  required pattern=".{23,}"/>
-                                        <label for="txtFechas" style="font-size:14px;">Periodo del Curso</label>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
+                                <div class="col-md-6 form-body">
+                                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                        <select class="form-control input-sm" id="slcDuracion" style="padding:0px" required>
+                                            <option value=""></option>
+                                            <option value="20">20 Horas</option>
+                                            <option value="40">40 Horas</option>
+                                        </select>
+                                        <label for="slcDuracion">Seleccionar Duración </label>
+                                    </div>
+                                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+                                        <div class="input-group">
+                                            <input type="text" style="font-size:14px;" name="daterange" id="txtFechas" class="form-control" required pattern=".{23,}" />
+                                            <label for="txtFechas" style="font-size:14px;">Periodo del Curso</label>
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-default" id="btnCancelarCurso">Cancelar</a>
-                    <button class="btn btn-primary" id="btnGuardarCurso">Guardar</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <a class="btn btn-default" id="btnCancelarCurso">Cancelar</a>
+                        <button class="btn btn-primary" id="btnGuardarCurso">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<script src="JS/EvaluacionDocente/ActualizacionDocente.js"></script>
+</main>
+<script>
+    $.getScript("JS/EvaluacionDocente/ActualizacionDocente.js");
+</script>

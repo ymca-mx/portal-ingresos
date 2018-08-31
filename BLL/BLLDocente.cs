@@ -401,11 +401,12 @@ namespace BLL
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
+                DateTime FechaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 #region Actual 
                 List<Periodo> listPeriodos = new List<Periodo>();
 
                 listPeriodos.Add(db.Periodo.Where(a =>
-                                             a.FechaInicial <= DateTime.Now && a.FechaFinal >= DateTime.Now)
+                                             a.FechaInicial <= FechaActual && a.FechaFinal >= FechaActual)
                                             .FirstOrDefault());
 
                 int anio = listPeriodos.FirstOrDefault().Anio,
