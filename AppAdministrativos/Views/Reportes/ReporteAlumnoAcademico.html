@@ -1,338 +1,326 @@
-﻿
-<div class="page-content">
-    <!-- BEGIN PAGE HEAD -->
-    <div class="container" id="divContenido">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="portlet light" id="dvCargos">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <h1 class="caption-subject font-blue bold uppercase">
-                                Reporte Academico
-                            </h1>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Reporte Academico</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <form class="recovery-form" id="form_recovery">
+                        <div class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-pills nav-justified ">
+                                        <li id="liBeca2"><a href="#divBecas2" data-toggle="tab" class="btn btn-circle default">Alumnos inscritos por cuatrimestre</a></li>
+                                        <li id="liBeca1"><a href="#divBecas1" data-toggle="tab" class="btn btn-circle default">Becas por cuatrimestre</a></li>
+                                        <li id="liBeca3"><a href="#divBecas3" data-toggle="tab" class="btn btn-circle default">Número de becas SEP</a></li>
+                                        <li id="liBeca4"><a href="#divBecas4" data-toggle="tab" class="btn btn-circle default">Reporte de INEGI</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
+                        <hr />
+                        <div class="col-md-4">
+                            <div class="form-group" id="divSlc">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label">Periodos</label>
+
+                                <div class="input-icon right">
+                                    <!--<i class="fa fa-lock"></i>-->
+                                    <select class="form-control" name="slcCuatrimestre" id="slcCuatrimestre"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" id="divSlc2">
+
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label">Oferta Educativa</label>
+
+                                <div class="input-icon right">
+                                    <!--<i class="fa fa-lock"></i>-->
+                                    <select class="form-control" name="slcOferta" id="slcOferta">
+                                        <option selected value="0">--Todas--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" id="rangoFechas">
+
+                            <input type="checkbox" id="chkYo">
+                            <label for="chkYo">Rango de fechas</label>
+                            <div class="input-group input-large date-picker input-daterange" data-date="11/10/2012" data-date-format="dd/mm/yyyy" id="data1">
+                                <span class="input-group-addon">
+                                    Del:
+                                </span>
+                                <input type="text" class="form-control" name="from" id="from" disabled>
+                                <span class="input-group-addon">
+                                    Al:
+                                </span>
+                                <input type="text" class="form-control" name="to" id="to" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div> &nbsp;</div>
+                            <label class="control-label"># de Registros :  </label>
+                            <label class="control-label" id="lbBecas" name="lbBecas"> </label>
+                        </div>
+
                         <div class="col-md-12">
 
-                            <form class="recovery-form" id="form_recovery">
-                                <div class="tab-pane">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <ul class="nav nav-pills nav-justified ">
-                                                <li id="liBeca2"><a href="#divBecas2" data-toggle="tab" class="btn btn-circle default">Alumnos inscritos por cuatrimestre</a></li>
-                                                <li id="liBeca1"><a href="#divBecas1" data-toggle="tab" class="btn btn-circle default">Becas por cuatrimestre</a></li>
-                                                <li id="liBeca3"><a href="#divBecas3" data-toggle="tab" class="btn btn-circle default">Número de becas SEP</a></li>
-                                                <li id="liBeca4"><a href="#divBecas4" data-toggle="tab" class="btn btn-circle default">Reporte de INEGI</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                            <div class="portlet-body" id="divBecas1" hidden="hidden">
+                                <button id="btndtbecas"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                <div> &nbsp;</div>
+                                <table id="dtbecas" name="dtbecas" class="table table-striped table-bordered table-advance table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-indent"></i>&nbsp; Alumno <br /> id
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-male"></i> &nbsp; Nombre Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class=" fa fa-graduation-cap "></i> <br /> &nbsp; Oferta Educativa
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-money"></i> &nbsp;Tipo <br />beca <br />|Descuento
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca <br />| descuento
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-comments-o"></i><br /> Observaciones
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-calendar"></i> &nbsp; Fecha <br /> Generacion
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-clock-o"></i> &nbsp; Hora <br />  Generacion
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-user"></i> &nbsp; Usuario <br /> Aplico
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="portlet-body" id="divBecas2">
+                                <div class="col-md-3">
+                                    <button id="btndtbecas2"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
                                 </div>
-                                <hr />
-                                <div class="col-md-4">
-                                    <div class="form-group" id="divSlc">
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="control-label">Periodos</label>
-
-                                        <div class="input-icon right">
-                                            <!--<i class="fa fa-lock"></i>-->
-                                            <select class="form-control" name="slcCuatrimestre" id="slcCuatrimestre"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group" id="divSlc2">
-
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="control-label">Oferta Educativa</label>
-
-                                        <div class="input-icon right">
-                                            <!--<i class="fa fa-lock"></i>-->
-                                            <select class="form-control" name="slcOferta" id="slcOferta">
-                                                <option selected value="0">--Todas--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3" id="rangoFechas">
-
-                                    <input type="checkbox" id="chkYo">
-                                    <label for="chkYo">Rango de fechas</label>
-                                    <div class="input-group input-large date-picker input-daterange" data-date="11/10/2012" data-date-format="dd/mm/yyyy" id="data1">
-                                        <span class="input-group-addon">
-                                            Del:
-                                        </span>
-                                        <input type="text" class="form-control" name="from" id="from" disabled>
-                                        <span class="input-group-addon">
-                                            Al:
-                                        </span>
-                                        <input type="text" class="form-control" name="to" id="to" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div> &nbsp;</div>
-                                    <label class="control-label"># de Registros :  </label>
-                                    <label class="control-label" id="lbBecas" name="lbBecas"> </label>
-                                </div>
-
-                                <div class="col-md-12">
-
-                                    <div class="portlet-body" id="divBecas1" hidden="hidden">
-                                        <button id="btndtbecas"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
-                                        <div> &nbsp;</div>
-                                        <table id="dtbecas" name="dtbecas" class="table table-striped table-bordered table-advance table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-indent"></i>&nbsp; Alumno <br /> id
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-male"></i> &nbsp; Nombre Alumno
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class=" fa fa-graduation-cap "></i> <br /> &nbsp; Oferta Educativa
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-money"></i> &nbsp;Tipo <br />beca <br />|Descuento
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca <br />| descuento
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-comments-o"></i><br /> Observaciones
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-calendar"></i> &nbsp; Fecha <br /> Generacion
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-clock-o"></i> &nbsp; Hora <br />  Generacion
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-user"></i> &nbsp; Usuario <br /> Aplico
-                                                    </th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="portlet-body" id="divBecas2">
-                                        <div class="col-md-3">
-                                            <button id="btndtbecas2"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-6">
-                                            <div class="panel-group accordion" id="accordion1">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_1" aria-expanded="false">
-                                                                Solicitar reporte para becas SEP
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                        <div class="panel-body">
-                                                                <div class="col-md-9">
-                                                                    <label>Rango de fechas</label>
-                                                                    <div class="input-group input-large date-picker input-daterange" data-date="11/10/2017" data-date-format="dd/mm/yyyy" id="data2">
-                                                                        <span class="input-group-addon">
-                                                                            Del:
-                                                                        </span>
-                                                                        <input type="text" class="form-control" name="from1" id="from1">
-                                                                        <span class="input-group-addon">
-                                                                            Al:
-                                                                        </span>
-                                                                        <input type="text" class="form-control" name="to1" id="to1">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <br />
-                                                                    <button class="btn green" id="btnSolicitar" tabindex="2">Solicitar</button>
-                                                                </div>
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="panel-group accordion" id="accordion1">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_1" aria-expanded="false">
+                                                        Solicitar reporte para becas SEP
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                <div class="panel-body">
+                                                    <div class="col-md-9">
+                                                        <label>Rango de fechas</label>
+                                                        <div class="input-group input-large date-picker input-daterange" data-date="11/10/2017" data-date-format="dd/mm/yyyy" id="data2">
+                                                            <span class="input-group-addon">
+                                                                Del:
+                                                            </span>
+                                                            <input type="text" class="form-control" name="from1" id="from1">
+                                                            <span class="input-group-addon">
+                                                                Al:
+                                                            </span>
+                                                            <input type="text" class="form-control" name="to1" id="to1">
                                                         </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <br />
+                                                        <button class="btn green" id="btnSolicitar" tabindex="2">Solicitar</button>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
-
-                                        <div> &nbsp;</div>
-                                        <table id="dtbecas2" name="dtbecas2" class="table table-striped table-bordered table-advance table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-indent"></i> &nbsp; Alumno Id
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-male"></i> &nbsp; Nombre Alumno
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-calendar"></i> &nbsp; Fecha  de <br /> Inscripción
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca | descuento
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-user-plus"></i> &nbsp; Tipo de <br /> Alumno
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-suitcase"></i> &nbsp; Es Empresa
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-user"></i> &nbsp; Usuario <br /> Aplico
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="portlet-body" id="divBecas3" hidden="hidden">
-                                        <button id="btndtbecas3"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
-                                        <div> &nbsp;</div>
-                                        <table id="dtbecas3" name="dtbecas3" class="table table-striped table-bordered table-advance table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-indent"></i> &nbsp; Alumno <br />Id
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-male"></i> &nbsp; Nombre Alumno
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca | descuento
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-comments-o"></i> &nbsp; Observaciones
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-calendar"></i> &nbsp; Fecha<br /> Generacion
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-clock-o"></i> &nbsp; Hora <br />Generacion
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-user"></i> &nbsp; Usuario Aplico
-                                                    </th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="portlet-body" id="divBecas4" hidden>
-                                        <button id="btndtbecas4"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
-                                        <div> &nbsp;</div>
-                                        <table id="dtbecas4" name="dtbecas4" class="table table-striped table-bordered table-advance table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-indent"></i> &nbsp; Alumno <br />Id
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-male"></i> &nbsp; Nombre Alumno
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-th-large"></i> &nbsp; Cuatrimestre
-                                                    </th>
-
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-venus-mars"></i> &nbsp; Sexo
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-birthday-cake"></i> &nbsp; Edad
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-calendar"></i> &nbsp; Fecha de <br />Nacimiento
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-globe"></i> &nbsp; Lugar de <br /> Nacimiento
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        <i class="fa fa-globe"></i> &nbsp; Lugar de <br />Ultimo <br />Estudio
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
 
                                 </div>
-                            </form>
-                        </div>
-                    </div>
 
+
+                                <div> &nbsp;</div>
+                                <table id="dtbecas2" name="dtbecas2" class="table table-striped table-bordered table-advance table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-indent"></i> &nbsp; Alumno Id
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-male"></i> &nbsp; Nombre Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-calendar"></i> &nbsp; Fecha  de <br /> Inscripción
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca | descuento
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-user-plus"></i> &nbsp; Tipo de <br /> Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-suitcase"></i> &nbsp; Es Empresa
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-user"></i> &nbsp; Usuario <br /> Aplico
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="portlet-body" id="divBecas3" hidden="hidden">
+                                <button id="btndtbecas3"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                <div> &nbsp;</div>
+                                <table id="dtbecas3" name="dtbecas3" class="table table-striped table-bordered table-advance table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-indent"></i> &nbsp; Alumno <br />Id
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-male"></i> &nbsp; Nombre Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca | descuento
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-comments-o"></i> &nbsp; Observaciones
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-calendar"></i> &nbsp; Fecha<br /> Generacion
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-clock-o"></i> &nbsp; Hora <br />Generacion
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-user"></i> &nbsp; Usuario Aplico
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="portlet-body" id="divBecas4" hidden>
+                                <button id="btndtbecas4"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                <div> &nbsp;</div>
+                                <table id="dtbecas4" name="dtbecas4" class="table table-striped table-bordered table-advance table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-indent"></i> &nbsp; Alumno <br />Id
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-male"></i> &nbsp; Nombre Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-th-large"></i> &nbsp; Cuatrimestre
+                                            </th>
+
+                                            <th style="text-align:center">
+                                                <i class="fa fa-venus-mars"></i> &nbsp; Sexo
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-birthday-cake"></i> &nbsp; Edad
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-calendar"></i> &nbsp; Fecha de <br />Nacimiento
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-globe"></i> &nbsp; Lugar de <br /> Nacimiento
+                                            </th>
+                                            <th style="text-align:center">
+                                                <i class="fa fa-globe"></i> &nbsp; Lugar de <br />Ultimo <br />Estudio
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-
-<script src="Scripts/js-xlsx/FileSaver.js"></script>
-<script src="Scripts/js-xlsx/xlsx.full.min.js"></script>
-
-<script src="JS/Reportes/ReporteAcademico.js"></script>
-
+</main>
+<script>
+    $.getScript("Scripts/js-xlsx/FileSaver.js");
+    $.getScript("Scripts/js-xlsx/xlsx.full.min.js");
+    $.getScript("JS/Reportes/ReporteAcademico.js");
+</script>

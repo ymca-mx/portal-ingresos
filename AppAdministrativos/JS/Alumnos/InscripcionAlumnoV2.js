@@ -1069,6 +1069,7 @@ var Usuario,
             $("#divFecha .input-group").datepicker({
                 orientation: "left",
                 autoclose: true,
+                format: 'dd/mm/yyyy',
                 language: 'es'
             });
 

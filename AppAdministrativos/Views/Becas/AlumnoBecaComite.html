@@ -1,185 +1,154 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Becas Comite Alumnos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-</head>
-<body>
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
-            <form id="frmBecas" action="javascript:;">
-                <div class="row">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Beca Comite</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div id="dvBecaBuscar">
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Clave Alumno</label>&nbsp;
+                        <input type="number" id="txtAlumno" class="form-control-static font-md" style="text-align:right" />&nbsp;
+                        <a class="btn blue " id="btnBuscarAlumno">Buscar Alumno</a>
+                    </div>
                     <div class="col-md-12">
-                        <div class="portlet light" id="dvCargos">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <h1 class="caption-subject font-blue bold uppercase">
-                                        Beca Comite
-                                    </h1>
-                                </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Alumno</label>&nbsp;&nbsp;
+                            <label class="bold" id="lblNombre"></label>
+                        </div>
+                        <div class="col-md-2" id="divInscrito" hidden="hidden">
+                            <div id="pulsate-regular" class="col-md-12" style="padding:5px;">
+                                <label class="control-label bold font-red-flamingo" id="lblInscito">Alumno Inscrito</label>
                             </div>
-                            <div class="portlet-body">
-                                <div class="portlet-body form">
-                                    <div class="table">
-                                        <div class="row">
-                                            <div id="dvBecaBuscar">
-                                                <div class="col-md-12">
-                                                    <div class="form-group col-md-12">
-                                                        <label class="control-label">Clave Alumno</label>&nbsp;
-                                                        <input type="number" id="txtAlumno" class="form-control-static font-md" style="text-align:right" />&nbsp;
-                                                        <a class="btn blue " id="btnBuscarAlumno">Buscar Alumno</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group col-md-4">
-                                                        <label class="control-label">Alumno</label>&nbsp;&nbsp;
-                                                        <label class="bold" id="lblNombre"></label>
-                                                    </div>
-                                                    <div class="col-md-2" id="divInscrito" hidden="hidden">
-                                                        <div id="pulsate-regular" class="col-md-12" style="padding:5px;">
-                                                            <label class="control-label bold font-red-flamingo" id="lblInscito">Alumno Inscrito</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2" id="divInscrito2" hidden="hidden">
-                                                        <div id="pulsate-regular2" class="col-md-12" style="padding:5px;">
-                                                            <label id="lblPagos" class="control-label bold font-green">Pagos sin Generar</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" id="divInscrito3" hidden="hidden">
-                                                        <div id="pulsate-regular3" class="col-md-12" style="padding:5px;">
-                                                            <label class="control-label bold font-red-flamingo">Alumno en Grupo Especial</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <hr style="margin:5px" />
-                                                    <div class="form-group col-md-6">
-                                                        <label class="control-label">Oferta Educativa</label>&nbsp;&nbsp;
-                                                        <select id="slcOfertas" class="form-control" title="--Seleccionar--"></select>
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" id="divGenerar">
-                                                <div class="portlet-body form">
-                                                    <table class="table table-striped table-bordered table-advance table-hover" id="tblBecas">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Periodo
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Descripción
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp;Acádemica
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp;Deportiva
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp;SEP
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; BECA
-                                                                    <br> &nbsp; COMITE
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Usuario
-                                                                </th>
-                                                                <th style="text-align:center">
-                                                                    &nbsp; Fecha
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" id="divGenerar2">
-                                                <hr style="margin:5px" />
-                                                <div class="portlet-body form">
-                                                    <table id="tblBeca" class="table table-striped " style="width:100%;">
-                                                        <thead>
-                                                            <tr class="row">
-                                                                <th class="form-group col-md-4">
-                                                                    Periodo
-                                                                </th>
-                                                                <th class="form-group col-md-4">
-                                                                    Porcentaje
-                                                                </th>
-                                                                <th class="form-group col-md-4">
-                                                                    Documento Comite
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="row">
-                                                                <td class="form-group col-md-4" style="background-color:white; text-align:left;">
-                                                                    <div class="col-md-12 ">
-                                                                        <select id="slcPeriodo" class="form-control"></select>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="form-group col-md-64" style="background-color:white;text-align:left;">
-                                                                    <div class="col-md-12">
-                                                                        <input type="text" id="txtBecaMonto" name="txtBecaMonto" class="form-control" style="text-align:center" value="0" pattern="[0-9]" />
-                                                                    </div>
-                                                                </td>
-                                                                <td class="form-group col-md-64" style="background-color:white;text-align:left;">
-                                                                    <div class="row fileupload-buttonbar">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="fileinput-new " data-provides="fileinput" id="FileComite">
-                                                                                <!-- The fileinput-button span is used to style the file input field as button -->
-                                                                                <span class="btn blue  fileinput-button">
-                                                                                    <i class="fa fa-plus"></i>
-                                                                                    <span>
-                                                                                        Seleccionar Archivo...
-                                                                                    </span>
-                                                                                    <input type="file" id="ComiteArchivo" name="ComiteArchivo" accept=".PDF, .pdf" />
-                                                                                </span>
-                                                                                <span id="TxtComiteArchivo" class="fileinput-filename col-md-6"></span>
-                                                                                <a href="javascript:;" class="close fileinput-exists" data-dissmiss="fileinput"></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <hr style="margin:5px" />
-                                                <!--<a class="btn blue " id="btnRegresar"><i class="fa  fa-arrow-left"></i>  Regresar</a>-->
-                                                <button class="btn green " id="btnGenerarCargos">Beca Comite</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-2" id="divInscrito2" hidden="hidden">
+                            <div id="pulsate-regular2" class="col-md-12" style="padding:5px;">
+                                <label id="lblPagos" class="control-label bold font-green">Pagos sin Generar</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divInscrito3" hidden="hidden">
+                            <div id="pulsate-regular3" class="col-md-12" style="padding:5px;">
+                                <label class="control-label bold font-red-flamingo">Alumno en Grupo Especial</label>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <hr style="margin:5px" />
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Oferta Educativa</label>&nbsp;&nbsp;
+                            <select id="slcOfertas" class="form-control" title="--Seleccionar--"></select>
+                        </div>
+                        <div class="form-group col-md-2">
+                        </div>
+                    </div>
                 </div>
-                <div id="divContainer">
-
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="divGenerar">
+                    <div class="portlet-body form">
+                        <table class="table table-striped table-bordered table-advance table-hover" id="tblBecas">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">
+                                        &nbsp; Periodo
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; Descripción
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; BECA
+                                        <br> &nbsp;Acádemica
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; BECA
+                                        <br> &nbsp;Deportiva
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; BECA
+                                        <br> &nbsp;SEP
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; BECA
+                                        <br> &nbsp; COMITE
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; Usuario
+                                    </th>
+                                    <th style="text-align:center">
+                                        &nbsp; Fecha
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
-                <div id="displayPDF">
-
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="divGenerar2">
+                    <hr style="margin:5px" />
+                    <div class="portlet-body form">
+                        <table id="tblBeca" class="table table-striped " style="width:100%;">
+                            <thead>
+                                <tr class="row">
+                                    <th class="form-group col-md-4">
+                                        Periodo
+                                    </th>
+                                    <th class="form-group col-md-4">
+                                        Porcentaje
+                                    </th>
+                                    <th class="form-group col-md-4">
+                                        Documento Comite
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="row">
+                                    <td class="form-group col-md-4" style="background-color:white; text-align:left;">
+                                        <div class="col-md-12 ">
+                                            <select id="slcPeriodo" class="form-control"></select>
+                                        </div>
+                                    </td>
+                                    <td class="form-group col-md-64" style="background-color:white;text-align:left;">
+                                        <div class="col-md-12">
+                                            <input type="text" id="txtBecaMonto" name="txtBecaMonto" class="form-control" style="text-align:center" value="0" pattern="[0-9]" />
+                                        </div>
+                                    </td>
+                                    <td class="form-group col-md-64" style="background-color:white;text-align:left;">
+                                        <div class="row fileupload-buttonbar">
+                                            <div class="col-lg-12">
+                                                <div class="fileinput-new " data-provides="fileinput" id="FileComite">
+                                                    <!-- The fileinput-button span is used to style the file input field as button -->
+                                                    <span class="btn blue  fileinput-button">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>
+                                                            Seleccionar Archivo...
+                                                        </span>
+                                                        <input type="file" id="ComiteArchivo" name="ComiteArchivo" accept=".PDF, .pdf" />
+                                                    </span>
+                                                    <span id="TxtComiteArchivo" class="fileinput-filename col-md-6"></span>
+                                                    <a href="javascript:;" class="close fileinput-exists" data-dissmiss="fileinput"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr style="margin:5px" />
+                    <!--<a class="btn blue " id="btnRegresar"><i class="fa  fa-arrow-left"></i>  Regresar</a>-->
+                    <button class="btn green " id="btnGenerarCargos">Beca Comite</button>
+                </div>
+            </div>
         </div>
-
     </div>
-    <script src="JS/Becas/AlumnoBecaComite.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("JS/Becas/AlumnoBecaComite.js");
+</script>
