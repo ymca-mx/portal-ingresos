@@ -28,6 +28,7 @@
                 this.Responsables = objRes;
                 this.Sede = lstSedes;
                 this.UsuarioId = Alumno.UsuarioId;
+                this.EstatusId = Alumno.EstatusId;
             }
         },
 
@@ -92,7 +93,7 @@
 
     var TituloFn = {
         init() {
-            IndexFn.Block(true);
+            
             $('#btnBuscar').on('click', this.BtnBuscarClick);
             $('#txtClave').on('keydown', this.txtClaveKeydown);
             $('#tblAlumnos').on('click', 'a', this.TablaAlumnoClick);
@@ -110,6 +111,7 @@
             $('#slcResponsable1').on('change', this.ResponsableChange);
             $('#slcResponsable2').on('change', this.ResponsableChange);
             $('#btnGuardar').on('click', this.Enviar);
+            $('#slcMedioTitulacion').on('change', this.MedioChange);
 
             this.TipoEstudio();
             this.AutorizacionReconocimiento();
@@ -126,7 +128,16 @@
             this.InitCalendar('txtFechaInicio');
             this.InitCalendar('txtFechaFin');
             tblTitulos = $('#tblTitulos').DataTable();
+            $('#modalAlumno').on('hidden.bs.modal', this.RemoveClass);
+            $('#modalSede').on('hidden.bs.modal', this.RemoveClass);
+            $('#modalTitulo').on('hidden.bs.modal', this.RemoveClass);
+            $('#modalAntecedente').on('hidden.bs.modal', this.RemoveClass);
+            $('#modalResponsables').on('hidden.bs.modal', this.RemoveClass);
+
             this.GetSolicitados();
+        },
+        RemoveClass() {
+            $("#tblTitulos tr").removeClass('bg-purple');
         },
         InitCalendar(inputId) {
             inputId = $('#' + inputId)[0].parentNode;
@@ -191,7 +202,7 @@
 
                         $("#slcServicio").append(option);
                     });
-
+                    $("#slcServicio").val(4);
                     $('#slcServicio').change();
                 })
                 .fail(function (data) {
@@ -330,6 +341,15 @@
 
             TituloFn.BuscarAlumno(rowadd.AlumnoId);
         },
+        MedioChange() {
+            if (parseInt($('#slcMedioTitulacion').val()) !== 6) {
+                $($('#txtFechaExamen').parents()[2]).show();
+                $($('#txtFechaExencion').parents()[2]).hide();
+            } else {
+                $($('#txtFechaExencion').parents()[2]).show();
+                $($('#txtFechaExamen').parents()[2]).hide();
+            }
+        },
         PushAlumno() {
             var objAlumno = new ClasesFn.AlumnoTitulo();
             var objInstitu = JSON.parse($('#modalAlumno').data("Sede"));
@@ -423,7 +443,10 @@
             $('#modalTitulo').modal('hide');
         },
         PushSede() {
-
+            if ($('#txtFFinOferta').val() === '01/01/1900') {
+                alertify.alert("La fecha de termino de los estudios no es valida.");
+                return false;
+            }
             var Carrera = new ClasesFn.Carrera();
             Carrera.AutReconocimientoId = $('#slcAutRec').val();
             Carrera.Clave = $('#slcSede :selected').data("Clave");
@@ -439,7 +462,7 @@
                 .row(TituloFn.RowSelect)
                 .data(TituloFn.AlumnoSelect)
                 .draw();
-
+            
             $('#modalSede').modal('hide');
         },
         PushAntecedente() {
@@ -494,7 +517,7 @@
                 .row(TituloFn.RowSelect)
                 .data(TituloFn.AlumnoSelect)
                 .draw();
-
+            
             $('#modalResponsables').modal('hide');
         },
         SedeChange() {
@@ -675,11 +698,20 @@
                         },
                         {
                             "mDataProp": "",
-                            "mRender": function (a, b, c) {
-                                //var elim = "<a href='javascript:;'><i class='fa fa-edit'/></a> ";
-                                //return elim;
-                                var Nombre = "<button type='button' class='bg-red' name='Borrar'>Borrar <i class='fa fa-times-circle'/></button>";
-                                return Nombre;
+                            "mRender": function (c, b, a) {
+                                var chk =a.EstatusId ===1 ?   '<div class="md-checkbox-list">' +
+                                    '<div class="md-checkbox">' +
+                                    '<input type="checkbox" id="chkAlumno' + a.AlumnoId + '" class="md-check">' +
+                                    '<label for="chkAlumno' + a.AlumnoId +'">' +
+                                    '<span></span>' +
+                                    '<span class="check"></span>' +
+                                    '<span class="box"></span>' +
+                                    'Seleccionar' +
+                                    '</label>' +
+                                    '</div>' +
+                                    '</div>' : "--";
+                                
+                                return chk;
                             }
                         }
                     ],
@@ -707,6 +739,7 @@
         NameButton() {
             TituloFn.RowSelect = {};
             TituloFn.RowSelect = this.parentNode.parentNode;
+            $(TituloFn.RowSelect).addClass('bg-purple');
 
             TituloFn.AlumnoSelect = new ClasesFn.AlumnoTitulo();
             TituloFn.AlumnoSelect = tblTitulos.row(TituloFn.RowSelect).data();
@@ -738,8 +771,8 @@
             $('#slcEntidadFederativa').val((TituloFn.AlumnoSelect.Titulo.EntidadFederativaId !== undefined ?
                 TituloFn.AlumnoSelect.Titulo.EntidadFederativaId : -1));
             
-            $('#slcServicio').val((TituloFn.AlumnoSelect.Titulo.FudamentoLegalId !== undefined ?
-                TituloFn.AlumnoSelect.Titulo.FudamentoLegalId : 1));
+            $('#slcServicio').val((TituloFn.AlumnoSelect.Titulo.FundamentoLegalId !== undefined ?
+                TituloFn.AlumnoSelect.Titulo.FundamentoLegalId : 1));
 
             $('#slcMedioTitulacion').val((TituloFn.AlumnoSelect.Titulo.MedioTitulacionId !== undefined ?
                 TituloFn.AlumnoSelect.Titulo.MedioTitulacionId : 1));
@@ -789,13 +822,17 @@
         },
         ShowResponsable() {
 
-            if (TituloFn.AlumnoSelect.Responsables[0].CargoId !== undefined) {
-                $('#slcCargo1').val(TituloFn.AlumnoSelect.Responsables[0].CargoId);
-                $('#slcCargo1').change();
+            if (TituloFn.AlumnoSelect.Responsables.length > 0) {
+                if (TituloFn.AlumnoSelect.Responsables[0].CargoId !== undefined) {
+                    $('#slcCargo1').val(TituloFn.AlumnoSelect.Responsables[0].CargoId);
+                    $('#slcCargo1').change();
+                }
             }
-            if (TituloFn.AlumnoSelect.Responsables[1].CargoId !== undefined) {
-                $('#slcCargo2').val(TituloFn.AlumnoSelect.Responsables[1].CargoId);
-                $('#slcCargo2').change();
+            if (TituloFn.AlumnoSelect.Responsables.length > 1) {
+                if (TituloFn.AlumnoSelect.Responsables[1].CargoId !== undefined) {
+                    $('#slcCargo2').val(TituloFn.AlumnoSelect.Responsables[1].CargoId);
+                    $('#slcCargo2').change();
+                }
             }
             $('#modalResponsables').modal('show');
         },
@@ -817,7 +854,6 @@
             IndexFn.Api("SEP/Nuevo", 'PUT', JSON.stringify(AlumnosB))
                 .done(function (data) {                    
                     IndexFn.Block(false);
-
                     if (data.Alumnos.length > 0) {
                         alertify.alert("Universidad YMCA", "No se pudo guardar.");
                         $(data.Alumnos).each(function (AlumnoSelect) {
@@ -836,7 +872,8 @@
                     IndexFn.Block(false);
                 });
         },
-        GetSolicitados() {            
+        GetSolicitados() {    
+            IndexFn.Block(true);
             IndexFn.Api("Sep/Alumnos/Espera","GET","")
                 .done(function (data) {
                     $(data).each(function () {

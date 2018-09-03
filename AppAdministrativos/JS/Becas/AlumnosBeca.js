@@ -140,7 +140,9 @@
                     if (data.d.length > 0) {
                         if (tblBecas !== null) {
                             $('#txtBecaMonto').val("0");
-                            tblBecas.fnClearTable();
+                            tblBecas
+                                .clear()
+                                .draw();
                         }
 
                         var objUltimo = data.d[data.d.length - 1];
@@ -339,7 +341,10 @@
             if (tblPagos !== null && tblPagos !== undefined) {
                 tblPagos.fnClearTable();
             }
-            if (tblBecas !== null && tblBecas !== undefined) { tblBecas.fnClearTable(); }
+            if (tblBecas !== null && tblBecas !== undefined) {
+                tblBecas
+                    .clear()
+                .draw(); }
         },
         SEPReadOnly() {
             $("#chkSEP").bootstrapSwitch('readonly', true);
@@ -647,9 +652,9 @@
 
                         var lstDescuentos = [];
 
-                        $(tblBecas).DataTable()
+                        $($(tblBecas).DataTable()
                             .column(2)
-                            .data()
+                            .data())
                             .each(function (value, index) {
                                 if (value.length > 0) {
                                     lstDescuentos.push({
@@ -659,9 +664,9 @@
                                     });
                                 }
                             });
-                        $(tblBecas).DataTable()
+                        $($(tblBecas).DataTable()
                             .column(4)
-                            .data()
+                            .data())
                             .each(function (value, index) {
                                 if (value.length > 0) {
                                     lstDescuentos.push({
@@ -704,7 +709,9 @@
                 tblPagos.fnClearTable();
             }
             if (tblPagos !== tblBecas) {
-                tblBecas.fnClearTable();
+                tblBecas
+                    .clear()
+                    .draw();
             }
             $("#txtAlumno").val("");
             ReincripcionFn.Limpiar();
@@ -743,7 +750,10 @@
 
                 TieneComite = false;
                 TieneSEP = false;
-                if (tblBecas !== null && tblBecas !== undefined) { tblBecas.fnClearTable(); }
+                if (tblBecas !== null && tblBecas !== undefined) {
+                    tblBecas
+                        .clear()
+                    .draw(); }
                 ReincripcionFn.Limpiar();
 
                 var labelIns = $('#lblInscito');

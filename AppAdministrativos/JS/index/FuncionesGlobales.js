@@ -224,7 +224,6 @@
         $("#" + SelectName).append(optionP);
         IndexFn.Api("General/ConsultarEntidadFederativa", "GET", "")
             .done(function (data) {
-                IndexFn.Block(false);
                 var datos = data;
                 $(datos).each(function () {
                     var option = $(document.createElement('option'));

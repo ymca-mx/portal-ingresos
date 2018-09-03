@@ -1,6 +1,6 @@
 ﻿$(function () {
     var tblTitulos;
-
+    
     var ClasesFn = {
         AlumnoTitulo: class {
             constructor(Alumno, objins, objTit, objCa, objAnt, lstUsuarios, lstSedes) {
@@ -96,6 +96,7 @@
 
     var FirmarFn = {
         init() {
+            
             $('#tblTitulos').on('click', 'button', this.NameButton);
             $('#tblTitulos').on('click', 'input', this.NameButton);
             $('#btnGuardar').on('click', this.Enviar);

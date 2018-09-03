@@ -159,6 +159,7 @@ namespace BLL
                             a.Alumno.AlumnoDetalle.CURP,
                             a.Alumno.AlumnoDetalle.Email,
                             Autorizado = true,
+                            a.EstatusId,
                             Institucion = new
                             {
                                 a.AlumnoOfertaEducativa.FirstOrDefault().InstitucionId,
@@ -315,72 +316,55 @@ namespace BLL
             }
         }
 
-        public static object NewSolicitud(List<TituloGeneral> Alumnos)
+        public static object NewSolicitud(TituloGeneral AlumnoAdd)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
                     List<TituloGeneral> Fallidos = new List<TituloGeneral>();
-                    Alumnos
-                    .ForEach(a =>
+
+
+                    AlumnoTitulo alumnoadd = new AlumnoTitulo
                     {
-                        try
+                        AlumnoId = AlumnoAdd.AlumnoId,
+                        AutorizacionReconocimientoId = 1,
+                        AlumnoAntecedente1 = new AlumnoAntecedente1
                         {
-                            AlumnoTitulo alumnoadd = new AlumnoTitulo
-                            {
-                                AlumnoId = a.AlumnoId,
-                                AutorizacionReconocimientoId = 1,
-                                AlumnoAntecedente1 = new AlumnoAntecedente1
-                                {
-                                    EntidadFederativaId = 9,
-                                    FechaInicio = DateTime.Now,
-                                    FechaFin = DateTime.Parse("01/01/1900", Region),
-                                    TipoEstudioAntecedenteId = 4,
-                                    Nombre = a.Antecedente.Institucion
-                                },
-                                AlumnoOfertaEducativa = new List<AlumnoOfertaEducativa>(){
+                            EntidadFederativaId = 9,
+                            FechaInicio = DateTime.Parse("01/01/1900", Region),
+                            FechaFin = DateTime.Parse("01/01/1900", Region),
+                            TipoEstudioAntecedenteId = 4,
+                            Nombre = AlumnoAdd.Antecedente.Institucion
+                        },
+                        AlumnoOfertaEducativa = new List<AlumnoOfertaEducativa>(){
                                     new AlumnoOfertaEducativa
                                     {
-                                        InstitucionId = a.Institucion.InstitucionId,
-                                        OfertaEducativaId = a.Carrera.OfertaEducativaId,
-                                        RVOE = a.Carrera.RVOE,
-                                        FechaInicio = DateTime.Parse(a.Carrera.FInicio, Region),
-                                        FechaTermino = DateTime.Parse(a.Antecedente.FechaFin, Region),
+                                        InstitucionId = AlumnoAdd.Institucion.InstitucionId,
+                                        OfertaEducativaId = AlumnoAdd.Carrera.OfertaEducativaId,
+                                        RVOE = AlumnoAdd.Carrera.RVOE,
+                                        FechaInicio =  DateTime.Parse("01/01/1900", Region),
+                                        FechaTermino =  DateTime.Parse("01/01/1900", Region),
                                     }
                                 },
-                                EntidadFederativaIdExpedicion = 9,
-                                FechaExamenProfesional = DateTime.Parse("01/01/1900", Region),
-                                FechaExencionExamenProfecional = DateTime.Parse("01/01/1900", Region),
-                                FechaExpedicion = DateTime.Parse("01/01/1900", Region),
-                                FundamentoLegalId = 4,
-                                ModalidadTitulacionId = 1,
-                                UsuarioId = a.UsuarioId,
-                                ServicioSocial = true,
-                                EstatusId = 1,
-                            };
+                        EntidadFederativaIdExpedicion = 9,
+                        FechaExamenProfesional = DateTime.Parse("01/01/1900", Region),
+                        FechaExencionExamenProfecional = DateTime.Parse("01/01/1900", Region),
+                        FechaExpedicion = DateTime.Parse("01/01/1900", Region),
+                        FundamentoLegalId = 4,
+                        ModalidadTitulacionId = 1,
+                        UsuarioId = AlumnoAdd.UsuarioId,
+                        ServicioSocial = true,
+                        EstatusId = 1,
+                    };
 
-                            db.AlumnoTitulo.Add(alumnoadd);
-                            db.SaveChanges();
+                    db.AlumnoTitulo.Add(alumnoadd);
 
-                        }
-                        catch (Exception error)
-                        {
-                            a.Error = new TituloError
-                            {
-                                Message = error.Message,
-                                InnerMessage = error?.InnerException?.Message ?? "",
-                                InnerInnerMessage = error?.InnerException?.InnerException?.Message ?? ""
-                            };
-
-                            Fallidos.Add(a);
-                        }
-                    });
+                    db.SaveChanges();
 
                     return new
                     {
-                        Status = true,
-                        Alumnos = Fallidos
+                        Status = true
                     };
                 }
                 catch (Exception err)
@@ -493,6 +477,7 @@ namespace BLL
                 {
                     return
                 db.AutorizacionReconocimiento
+                .Where(a => a.AutorizacionReconocimientoId == 1)
                     .Select(a => new
                     {
                         AutRecId = a.AutorizacionReconocimientoId,
