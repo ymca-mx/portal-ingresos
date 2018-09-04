@@ -9,13 +9,47 @@
    
     var Funciones = {
         init() {
+            $($('#chkAdeudo').parents()[2]).hide();
+
             $('#fotoAlumno').hide();
             $('#lblNombre').hide();
             $('#pDescripcion').hide();
             $('#btnBuscar').on('click', this.BtnBuscarClick);
             $('#txtClave').on('keydown', this.txtClaveKeydown);
             $("#sclPeriodo").on('change', this.slcPeriodoChange);
+            $("#chkAdeudo").on('change', this.slcPeriodoChange);
             $('#tblAlumnos').on('click', 'a', this.TablaAlumnoClick);
+            $('#btnPrint').on('click', this.Imprimir);
+        },
+        Imprimir() {
+            $('#divDinamico table').each(function () {
+                if (String(this.id).includes("Referencias")) {
+                    var id = "#" + String(this.id);
+                    if ($(id).is(":visible")) {
+                        var Row = "<div class='portlet-body'>";
+                        Row +=
+                            "<div class='row col-md-12'> <br> <label class='form-control black'" +
+                        "style = 'font-weight: bold; height: auto !important; display: block;' > " +
+                        AlumnoId + " - " + $("#lblNombre").text() +"</label>"
+                        "</div>";
+
+                        Row +=
+                            $($(id)[0].parentNode)[0].outerHTML;
+
+                        Row += "</div>";
+
+                        var newwindow = window.open("http://localhost/portaladministrativo/views/archivos/print.html", "Print", 'height=600,width=800');
+
+                        newwindow.dataFromParent = Row;
+                        newwindow.tableId = this.id;
+
+                        if (window.focus) { newwindow.focus() }
+
+                        newwindow.print();
+                    }
+                }
+            });
+                
         },
         TablaMaster: {},
         BuscarAlumno(idAlumno) {
@@ -380,6 +414,7 @@
                     IndexFn.Block(false);
                     if (dat1a != null) {
                         if (dat1a.Pagos.length > 0) {
+                            $($('#chkAdeudo').parents()[2]).show();
                             Funciones.TablaMaster = dat1a;
                             Funciones.CrearCombo();
                         }
@@ -528,13 +563,13 @@
             AlumnoId = rowadd.AlumnoId;
             Funciones.BuscarAlumno(rowadd.AlumnoId);
         },
-        slcPeriodoChange () {
+        slcPeriodoChange() {            
             var val = $('#sclPeriodo').val();
             Anio = $('#sclPeriodo').find(':selected').data("Anio");
             PeriodoId = $('#sclPeriodo').find(':selected').data("PeriodoId");
             var Total = $('#sclPeriodo').find(':selected').data("total");
 
-            if (val === "-1") {
+            if (val === "-1" && !$('#chkAdeudo').prop('checked')) {
                 Funciones.PintarTabla(Funciones.TablaMaster);
             } else {
                 var objNuevo = {
@@ -546,26 +581,75 @@
             }
         },
         TraerPagosPeriodo (Anio, PeriodoId, Total) {
-            var lstp = [], EsSep, BecaSEP, EsEmpresa;
+            var lstp = [], EsSep, BecaSEP, EsEmpresa,
+                lstPeriodoB = [];
 
             $(Funciones.TablaMaster.Pagos).each(function () {
-                if (this.Anio === Anio && this.PeriodoId === PeriodoId && this.Titulo === false) {
-                    lstp.push(this);
+                if (this.Anio === Anio
+                    && this.PeriodoId === PeriodoId
+                    && this.Titulo === false) {
+                    if ($('#chkAdeudo').prop('checked')) {
+                        if (this.SaldoPagado !== "$0.00") {
+                            lstp.push(this);
+                        }
+                    } else {
+                        lstp.push(this);
+                    }
+                }
+                else if (Anio === 0 && PeriodoId === 0) {
+                    if (this.SaldoPagado !== "$0.00") {
+                        var indce = lstPeriodoB.findIndex(a => a.Anio === this.Anio && a.PeriodoId === this.PeriodoId);
+                        if (indce === -1) {
+                            lstPeriodoB.push({
+                                Anio: this.Anio,
+                                PeriodoId: this.PeriodoId,
+                                Count: 1
+                            });
+                        } else {
+                            lstPeriodoB[indce].Count += 1;
+                        }
+
+                        lstp.push(this);
+                    }
                 }
             });
+            
+            if (Anio === 0 && PeriodoId === 0 && $('#chkAdeudo').prop('checked')) {
+                var listB = [];
+                $(lstPeriodoB).each(function () {                    
+                    if (this.Count > 2) {
+                        var a = this;
+                        $(lstp).each(function () {
+                            if (a.Anio === this.Anio && a.PeriodoId === this.PeriodoId) {
+                                listB.push(this);
+                            }
+                        })
+                    }
+                });
+                lstp = [];
+                lstp = listB;
 
-            $(Funciones.TablaMaster.Periodos).each(function () {
-                if (this.Anio === Anio && this.PeriodoId === PeriodoId) {
-                    EsSep = this.EsSep;
-                    BecaSEP = this.BecaSEP;
-                    EsEmpresa = this.EsEmpresa;
-                }
-            });
+                lstp[0].TotalPagado = Funciones.TablaMaster.Pagos[0].Total_a_PagarS;
+                lstp[0].EsSep = Funciones.TablaMaster.Pagos[0].EsSep;
+                lstp[0].BecaSEP = Funciones.TablaMaster.Pagos[0].BecaSEP;
+                lstp[0].esEmpresa = Funciones.TablaMaster.Pagos[0].esEmpresa;
+            }
 
-            lstp[0].TotalPagado = "$" + parseFloat(Total).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-            lstp[0].EsSep = EsSep;
-            lstp[0].BecaSEP = BecaSEP;
-            lstp[0].esEmpresa = EsEmpresa;
+            if (Anio !== 0 && PeriodoId !== 0) {
+                $(Funciones.TablaMaster.Periodos).each(function () {
+                    if (this.Anio === Anio && this.PeriodoId === PeriodoId) {
+                        EsSep = this.EsSep;
+                        BecaSEP = this.BecaSEP;
+                        EsEmpresa = this.EsEmpresa;
+                    }
+                });
+
+                lstp[0].TotalPagado = "$" + parseFloat(Total).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                lstp[0].EsSep = EsSep;
+                lstp[0].BecaSEP = BecaSEP;
+                lstp[0].esEmpresa = EsEmpresa;
+            }
+
             return lstp;
         }
     };
