@@ -36,9 +36,11 @@
                         Row +=
                             $($(id)[0].parentNode)[0].outerHTML;
 
+                        Row += "<div class='row'>" + $("#divCuenta")[0].outerHTML + "</div>";
+
                         Row += "</div>";
 
-                        var newwindow = window.open("http://localhost/portaladministrativo/views/archivos/print.html", "Print", 'height=600,width=800');
+                        var newwindow = window.open("http://108.163.172.122/portalAdministrativo/views/archivos/print.html", "Print", 'height=600,width=800');
 
                         newwindow.dataFromParent = Row;
                         newwindow.tableId = this.id;
@@ -577,7 +579,12 @@
                     Pagos: Funciones.TraerPagosPeriodo(Anio, PeriodoId, Total)
                 };
 
-                Funciones.PintarTabla(objNuevo);
+                if (objNuevo.Pagos.length > 0) {
+                    Funciones.PintarTabla(objNuevo);
+                } else {
+                    alertify.alert("No tiene adeudos.");
+                    $('#chkAdeudo').prop('checked', false);
+                }
             }
         },
         TraerPagosPeriodo (Anio, PeriodoId, Total) {
@@ -629,10 +636,12 @@
                 lstp = [];
                 lstp = listB;
 
-                lstp[0].TotalPagado = Funciones.TablaMaster.Pagos[0].Total_a_PagarS;
-                lstp[0].EsSep = Funciones.TablaMaster.Pagos[0].EsSep;
-                lstp[0].BecaSEP = Funciones.TablaMaster.Pagos[0].BecaSEP;
-                lstp[0].esEmpresa = Funciones.TablaMaster.Pagos[0].esEmpresa;
+                if (lstp.length > 0) {
+                    lstp[0].TotalPagado = Funciones.TablaMaster.Pagos[0].Total_a_PagarS;
+                    lstp[0].EsSep = Funciones.TablaMaster.Pagos[0].EsSep;
+                    lstp[0].BecaSEP = Funciones.TablaMaster.Pagos[0].BecaSEP;
+                    lstp[0].esEmpresa = Funciones.TablaMaster.Pagos[0].esEmpresa;
+                }
             }
 
             if (Anio !== 0 && PeriodoId !== 0) {
