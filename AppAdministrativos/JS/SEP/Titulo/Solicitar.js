@@ -212,8 +212,8 @@
         Cargo() {
             IndexFn.Api("SEP/Responsable", "GET", "")
                 .done(function (data) {
-                    TituloFn.SetCargo(data, 'slcCargo1');
-                    TituloFn.SetCargo(data, 'slcCargo2');
+                    TituloFn.SetCargo(data, 'slcCargo1',6);
+                    TituloFn.SetCargo(data, 'slcCargo2',3);
                 })
                 .fail(function (data) {
                     console.log(data);
@@ -418,12 +418,19 @@
         },
         PushTitulo() {
 
-            if ($('#slcEntidadFederativa').val() === "-1"
-                || $('#txtFechaExamen').val().length < 10
-                || $('#txtFechaExencion').val().length < 10) {
-                alertify.alert("Universidad YMCA", "Todos los campos son obligatorios");
+            if (parseInt($('#slcEntidadFederativa').val()) === -1) {
+                alertify.alert("Universidad YMCA", "La entidad Federativa no es valida.");
                 return false;
             }
+            var fecha = parseInt($('#slcMedioTitulacion').val()) === 6
+                ? $('#txtFechaExencion').val()
+                : $('#txtFechaExamen').val();
+
+            if (fecha === '01/01/1900') {
+                alertify.alert("Universidad YMCA", "La fecha no es valida.");
+                return false;
+            }
+
             var Titulo = new ClasesFn.Titulo({
                 MedioTitulacionId: $('#slcMedioTitulacion').val(),
                 MedioTitulacion: $('#slcMedioTitulacion :selected').data("Descripcion"),
@@ -466,8 +473,8 @@
             $('#modalSede').modal('hide');
         },
         PushAntecedente() {
-            if ($('#slcEntidadAntecedente').val() === '-1') {
-                alertify.alert("Universidad YMCA", "Favor de seleccionar un estado.");
+            if (parseInt($('#slcEntidadAntecedente').val()) === -1 || $('#txtFechaFin').val() === '01/01/1900') {
+                alertify.alert("Universidad YMCA", "La endiad federativa o la fecha de termino no son validas.");
                 return false;
             }
             var antecedente = new ClasesFn.Antecedente({
@@ -567,7 +574,7 @@
             $('#txtPaternoR' + id).val($('#' + this.id + ' :selected').data("Paterno"));
             $('#txtMaternoR' + id).val($('#' + this.id + ' :selected').data("Materno"));
         },
-        SetCargo(lstCargo, idCargo) {
+        SetCargo(lstCargo, idCargo, idset) {
             $('#' + idCargo).empty();
 
             $(lstCargo).each(function () {
@@ -577,6 +584,7 @@
                 option.text(this.Descripcion);
                 option.data('Responsables', JSON.stringify(this.Responsables));
 
+                $("#" + idCargo).val(idset);
                 $("#" + idCargo).append(option);
             });
 
@@ -657,7 +665,7 @@
                             "mDataProp": "",
                             "mRender": function (a, b, c) {
                                 var Nombre = "<button type='button' name='Institucion' class='btn blue'>Agregar</buttton>";
-                                if (c.Carrera.OfertaEducativaId > 0 && c.Carrera.AutReconocimientoId !== 0) {
+                                if (c.Carrera.FFin!=="01/01/1900") {
                                     Nombre = c.Institucion.Nombre + "  " + c.Carrera.OfertaEducativa + "  <button type='button' name='Institucion' class='bg-green'>" + "<i class='fa fa-edit'/>" + "</button>";
                                 }
                                 return Nombre;
@@ -667,17 +675,20 @@
                             "mDataProp": "Titulo.MedioTitulacion",
                             "mRender": function (a, b, c) {
                                 var Nombre = "<button type='button' name='Titulo' class='btn blue'>Agregar</buttton>";
-                                if (c.Titulo.MedioTitulacionId > 0) {
+                                var fecha = c.Titulo.MedioTitulacionId === 6 ? c.Titulo.FExencion : c.Titulo.FExamenProf;
+
+                                if (fecha !== "01/01/1900") {
                                     Nombre = c.Titulo.MedioTitulacion + "  <button type='button' name='Titulo' class='bg-green'>" + "<i class='fa fa-edit'/>" + "</button>";
                                 }
                                 return Nombre;
+
                             }
                         },
                         {
                             "mDataProp": "Antecedente.Institucion",
                             "mRender": function (a, b, c) {
                                 var Nombre = "<button type='button' name='Antecedente' class='btn blue'>Agregar</buttton>";
-                                if (c.Antecedente.TipoAntecedenteId > 0) {
+                                if (c.Antecedente.FechaFin !=="01/01/1900") {
                                     Nombre = c.Antecedente.Institucion+"  <button type='button' name='Antecedente' class='bg-green'>" + "<i class='fa fa-edit'/>" + "</button>";
                                 }
                                 return Nombre;
@@ -699,7 +710,14 @@
                         {
                             "mDataProp": "",
                             "mRender": function (c, b, a) {
-                                var chk =a.EstatusId ===1 ?   '<div class="md-checkbox-list">' +
+                                var estatus = false;
+
+                                estatus = (a.Carrera.FFin === '01/01/1900'
+                                    || a.Titulo.FExencion === '01/01/1900'
+                                    || a.Antecedente.FechaFin === '01/01/1900'
+                                    || a.Responsables.length < 2) ? false : true;
+
+                                var chk = estatus ? '<div class="md-checkbox-list">' +
                                     '<div class="md-checkbox">' +
                                     '<input type="checkbox" id="chkAlumno' + a.AlumnoId + '" class="md-check">' +
                                     '<label for="chkAlumno' + a.AlumnoId +'">' +
@@ -759,9 +777,6 @@
                     break;
                 case 'Datos':
                     TituloFn.ShowAlumno();
-                    break;
-                case 'Borrar':
-                    TituloFn.Borrar();
                     break;
             }
         },
@@ -836,22 +851,10 @@
             }
             $('#modalResponsables').modal('show');
         },
-        Borrar() {
-            alertify.confirm(("Esta seguro que desea borrar al alumno" + TituloFn.AlumnoSelect.AlumnoId + "-" + TituloFn.AlumnoSelect.Nombre),
-                function (e) {
-                    if (e) {
-                        TituloFn.lstTitulos.splice(TituloFn.lstTitulos.indexOf(TituloFn.AlumnoSelect), 1);
-                        TituloFn.InitAlumnos();
-                    }
-            });
-            
-        },
         Enviar(Alumno) {
-            var AlumnosB = [];
-            AlumnosB.push(Alumno);
-            if (AlumnosB.length === 0) { return false; }
+
             IndexFn.Block(true);
-            IndexFn.Api("SEP/Nuevo", 'PUT', JSON.stringify(AlumnosB))
+            IndexFn.Api("SEP/Nuevo", 'PUT', JSON.stringify(Alumno))
                 .done(function (data) {                    
                     IndexFn.Block(false);
                     if (data.Alumnos.length > 0) {

@@ -114,9 +114,9 @@ namespace AppAdministrativos.Controllers
 
         [Route("Nuevo")]
         [HttpPut]
-        public IHttpActionResult AddAlumnos(List<DTO.SEP.TituloGeneral> Alumnos)
+        public IHttpActionResult AddAlumnos(DTO.SEP.TituloGeneral Alumno)
         {
-            object Result = BLLSEP.NewSolicitud(Alumnos);
+            object Result = BLLSEP.NewSolicitud(Alumno);
 
             if ((bool)Result.GetType().GetProperty("Status").GetValue(Result, null))
             {
@@ -126,7 +126,7 @@ namespace AppAdministrativos.Controllers
             {
                 string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
                         + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
-                        + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'","\"") + "'";
+                        + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
 
                 return BadRequest(message);
             }
