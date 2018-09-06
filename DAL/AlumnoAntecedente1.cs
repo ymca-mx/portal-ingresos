@@ -21,11 +21,11 @@ namespace DAL
         }
     
         public int AlumnoAntecedenteId { get; set; }
+        public string Nombre { get; set; }
         public int TipoEstudioAntecedenteId { get; set; }
         public int EntidadFederativaId { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
-        public string Nombre { get; set; }
     
         public virtual EntidadFederativa EntidadFederativa { get; set; }
         public virtual TipoEstudioAntecedente TipoEstudioAntecedente { get; set; }

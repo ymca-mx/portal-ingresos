@@ -181,7 +181,6 @@ namespace DAL
         public virtual DbSet<Recibo> Recibo { get; set; }
         public virtual DbSet<ReciboArchivo> ReciboArchivo { get; set; }
         public virtual DbSet<ReciboDetalle> ReciboDetalle { get; set; }
-        public virtual DbSet<ReciboMSI> ReciboMSI { get; set; }
         public virtual DbSet<Reclasificacion> Reclasificacion { get; set; }
         public virtual DbSet<ReclasificacionTipo> ReclasificacionTipo { get; set; }
         public virtual DbSet<ReferenciadoArchivoBitacora> ReferenciadoArchivoBitacora { get; set; }
@@ -262,7 +261,6 @@ namespace DAL
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
-        public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }
         public virtual DbSet<PagoDescuentoBitacora> PagoDescuentoBitacora { get; set; }
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }

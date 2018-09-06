@@ -17,12 +17,12 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AlumnoTitulo()
         {
-            this.AlumnoOfertaEducativa = new HashSet<AlumnoOfertaEducativa>();
             this.UsuarioResponsable = new HashSet<UsuarioResponsable>();
         }
     
         public int AlumnoTituloId { get; set; }
         public int AlumnoId { get; set; }
+        public int AlumnoOfertaEducativaId { get; set; }
         public int AutorizacionReconocimientoId { get; set; }
         public System.DateTime FechaExpedicion { get; set; }
         public int ModalidadTitulacionId { get; set; }
@@ -40,8 +40,7 @@ namespace DAL
         public virtual Estatus Estatus { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual AlumnoAntecedente1 AlumnoAntecedente1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
+        public virtual AlumnoOfertaEducativa AlumnoOfertaEducativa { get; set; }
         public virtual AutorizacionReconocimiento AutorizacionReconocimiento { get; set; }
         public virtual FundamentoLegal FundamentoLegal { get; set; }
         public virtual ModalidadTitulacion ModalidadTitulacion { get; set; }

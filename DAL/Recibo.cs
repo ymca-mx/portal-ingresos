@@ -40,6 +40,5 @@ namespace DAL
         public virtual Usuario Usuario { get; set; }
         public virtual ReciboArchivo ReciboArchivo { get; set; }
         public virtual ReciboDetalle ReciboDetalle { get; set; }
-        public virtual ReciboMSI ReciboMSI { get; set; }
     }
 }

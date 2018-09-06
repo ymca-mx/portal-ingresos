@@ -14,12 +14,6 @@ namespace DAL
     
     public partial class BancoTerminal
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BancoTerminal()
-        {
-            this.ReciboMSI = new HashSet<ReciboMSI>();
-        }
-    
         public int BancoTerminalId { get; set; }
         public string Descripcion { get; set; }
         public bool TieneMSI { get; set; }
@@ -29,7 +23,5 @@ namespace DAL
     
         public virtual Estatus Estatus { get; set; }
         public virtual PagoMetodo PagoMetodo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReciboMSI> ReciboMSI { get; set; }
     }
 }

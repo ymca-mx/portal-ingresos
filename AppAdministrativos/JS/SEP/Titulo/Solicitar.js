@@ -49,7 +49,7 @@
                 this.MedioTitulacion = obj.MedioTitulacion;
                 this.FExamenProf = obj.FExamenProf;
                 this.FExencion = obj.FExencion;
-                this.FudamentoLegalId = obj.FudamentoLegalId;
+                this.FundamentoLegalId = obj.FundamentoLegalId;
                 this.EntidadFederativaId = obj.EntidadFederativaId;
             }
         },
@@ -110,8 +110,9 @@
             $('#slcCargo2').on('change', this.CargoChange);
             $('#slcResponsable1').on('change', this.ResponsableChange);
             $('#slcResponsable2').on('change', this.ResponsableChange);
-            $('#btnGuardar').on('click', this.Enviar);
-            $('#slcMedioTitulacion').on('change', this.MedioChange);
+            $('#btnGuardar').on('click', this.UpdateAlumnos);
+            $('#slcMedioTitulacion').on('change', this.MedioChange); 
+            $('#tblTitulos').on('click','input', TituloFn.SetEstatus);
 
             this.TipoEstudio();
             this.AutorizacionReconocimiento();
@@ -134,7 +135,7 @@
             $('#modalAntecedente').on('hidden.bs.modal', this.RemoveClass);
             $('#modalResponsables').on('hidden.bs.modal', this.RemoveClass);
 
-            this.GetSolicitados();
+            this.GetSolicitados("");
         },
         RemoveClass() {
             $("#tblTitulos tr").removeClass('bg-purple');
@@ -341,6 +342,21 @@
 
             TituloFn.BuscarAlumno(rowadd.AlumnoId);
         },
+        SetEstatus() {
+            TituloFn.RowSelect = {};
+            TituloFn.RowSelect = $(this).parents()[3];
+
+            TituloFn.AlumnoSelect = new ClasesFn.AlumnoTitulo();
+            TituloFn.AlumnoSelect = tblTitulos.row(TituloFn.RowSelect).data();
+
+            TituloFn.AlumnoSelect.EstatusId = $(this).prop('checked') ? 2 : 1;
+
+
+            tblTitulos
+                .row(TituloFn.RowSelect)
+                .data(TituloFn.AlumnoSelect)
+                .draw();
+        },
         MedioChange() {
             if (parseInt($('#slcMedioTitulacion').val()) !== 6) {
                 $($('#txtFechaExamen').parents()[2]).show();
@@ -436,7 +452,7 @@
                 MedioTitulacion: $('#slcMedioTitulacion :selected').data("Descripcion"),
                 FExamenProf: $('#txtFechaExamen').val(),
                 FExencion: $('#txtFechaExencion').val(),
-                FudamentoLegalId: $('#slcServicio').val(),
+                FundamentoLegalId: $('#slcServicio').val(),
                 EntidadFederativaId: $('#slcEntidadFederativa').val()
             });
 
@@ -713,23 +729,28 @@
                                 var estatus = false;
 
                                 estatus = (a.Carrera.FFin === '01/01/1900'
-                                    || a.Titulo.FExencion === '01/01/1900'
+                                    || (a.Titulo.MedioTitulacionId === 6
+                                    ? a.Titulo.FExencion === '01/01/1900'
+                                    : a.Titulo.FExamenProf === '01/01/1900')
                                     || a.Antecedente.FechaFin === '01/01/1900'
                                     || a.Responsables.length < 2) ? false : true;
-
-                                var chk = estatus ? '<div class="md-checkbox-list">' +
-                                    '<div class="md-checkbox">' +
-                                    '<input type="checkbox" id="chkAlumno' + a.AlumnoId + '" class="md-check">' +
-                                    '<label for="chkAlumno' + a.AlumnoId +'">' +
-                                    '<span></span>' +
-                                    '<span class="check"></span>' +
-                                    '<span class="box"></span>' +
-                                    'Seleccionar' +
-                                    '</label>' +
-                                    '</div>' +
-                                    '</div>' : "--";
                                 
-                                return chk;
+
+                                    var chk =  '<div class="md-checkbox-list">' +
+                                        '<div class="md-checkbox">' +
+                                        '<input type="checkbox" id="chkAlumno' + a.AlumnoId +
+                                    '" class="md-check"' + (a.EstatusId === 2 ? "checked" : "") +
+                                        (estatus ? '' :'disabled')+ '>' +
+                                        '<label for="chkAlumno' + a.AlumnoId + '">' +
+                                        '<span></span>' +
+                                        '<span class="check"></span>' +
+                                        '<span class="box"></span>' +
+                                        'Seleccionar' +
+                                        '</label>' +
+                                        '</div>' +
+                                        '</div>';
+
+                                    return chk;
                             }
                         }
                     ],
@@ -753,6 +774,7 @@
                         "search": "Buscar Alumno "
                     }
                 });
+            
         },
         NameButton() {
             TituloFn.RowSelect = {};
@@ -857,15 +879,11 @@
             IndexFn.Api("SEP/Nuevo", 'PUT', JSON.stringify(Alumno))
                 .done(function (data) {                    
                     IndexFn.Block(false);
-                    if (data.Alumnos.length > 0) {
-                        alertify.alert("Universidad YMCA", "No se pudo guardar.");
-                        $(data.Alumnos).each(function (AlumnoSelect) {
-                            TituloFn.lstTitulos.splice(TituloFn.lstTitulos.indexOf(AlumnoSelect), 1);
-                        });
-
-                        TituloFn.InitAlumnos();
+                    if (!data.Status) {
+                        alertify.alert("Universidad YMCA", "No se pudo guardar.");                       
                     } else {
                         alertify.alert("Universidad YMCA", "Alumno Agregado");
+                        TituloFn.GetSolicitados(Alumno.AlumnoId);
                     }
                 })
                 .fail(function (data) {
@@ -875,14 +893,50 @@
                     IndexFn.Block(false);
                 });
         },
-        GetSolicitados() {    
+        UpdateAlumnos() {
+
+            var AlumnosUP = [];
+
+            $(tblTitulos.rows().data()).each(function () {
+                AlumnosUP.push(this);
+            });
             IndexFn.Block(true);
-            IndexFn.Api("Sep/Alumnos/Espera","GET","")
+
+            IndexFn.Api("SEP/Alumnos/Update", "Post", JSON.stringify(AlumnosUP))
                 .done(function (data) {
+                    IndexFn.Block(false);
+                    if (data.fallidos.length === 0) {
+                        alertify.alert("Alumnos Actualizados");
+                        TituloFn.GetSolicitados();
+                    } else {
+                        alertify.alert("Error al actualizar los datos de los alumnos.")
+                        TituloFn.lstTitulos = [];
+
+                        $(data.fallidos).each(function () {
+                            TituloFn.lstTitulos.push(this.Alumno);
+                        });
+
+                        TituloFn.InitAlumnos();
+                    }
+                })
+                .fail(function (data) {
+                    alertify.alert("Error al actualizar los datos de los alumnos.")
+                    IndexFn.Block(false);
+                });
+        },
+        GetSolicitados(AlumnoId) {    
+            IndexFn.Block(true);
+            IndexFn.Api("Sep/Alumnos/Espera/" + AlumnoId, "GET", "")
+                .done(function (data) {
+                    TituloFn.lstTitulos = [];
+                    $(tblTitulos.rows().data()).each(function () {
+                        TituloFn.lstTitulos.push(this);
+                    });
+
                     $(data).each(function () {
                         var alumnobd = this;
                         this.Institucion.SedeId = this.Institucion.InstitucionId;
-
+                        alumnobd.UsuarioId = localStorage.getItem('userAdmin');
                         alumnobd.Sede=[];
                         alumnobd.Sede.push({
                             SedeId: this.Institucion.SedeId,

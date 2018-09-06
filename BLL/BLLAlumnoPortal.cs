@@ -13401,7 +13401,7 @@ namespace BLL
 
                     int tipoUsuario = db.Usuario.Where(a => a.UsuarioId == UsuarioId).FirstOrDefault().UsuarioTipoId;
 
-                    if (tipoUsuario == 22)
+                   /* if (tipoUsuario == 22)
                     {
                         Alumno = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId
                                                          && a.OfertaEducativa.OfertaEducativaTipoId != 4
@@ -13427,7 +13427,7 @@ namespace BLL
                                                                    }).ToList();
                     }
                     else
-                    {
+                    {*/
                         bool alumnoMovimiento = db.AlumnoMovimiento.Count(a => a.AlumnoId == AlumnoId
                                                                                             && a.TipoMovimientoId == 4
                                                                                             && a.Anio == periodoActual.Anio
@@ -13477,7 +13477,7 @@ namespace BLL
                                                }).FirstOrDefault();
                             if (alumnoMovimiento == true) { Alumno.EstatusId = 7; }
                         }
-                    }
+                    //}
 
                     return new
                     {

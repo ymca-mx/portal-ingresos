@@ -14,8 +14,13 @@ namespace DAL
     
     public partial class AlumnoOfertaEducativa
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AlumnoOfertaEducativa()
+        {
+            this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
+        }
+    
         public int AlumnoOfertaEducativaId { get; set; }
-        public int AlumnoTituloId { get; set; }
         public string InstitucionId { get; set; }
         public int OfertaEducativaId { get; set; }
         public System.DateTime FechaInicio { get; set; }
@@ -23,7 +28,8 @@ namespace DAL
         public string RVOE { get; set; }
     
         public virtual OfertaEducativa OfertaEducativa { get; set; }
-        public virtual AlumnoTitulo AlumnoTitulo { get; set; }
         public virtual Institucion Institucion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
     }
 }

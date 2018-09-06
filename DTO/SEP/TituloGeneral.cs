@@ -11,6 +11,7 @@ namespace DTO.SEP
         public string CURP { get; set; }
         public string Email { get; set; }
         public int UsuarioId { get; set; }
+        public int EstatusId { get; set; }
         public Institucion Institucion { get; set; }
         public Titulo Titulo { get; set; }
         public Carrera Carrera { get; set; }
@@ -38,7 +39,7 @@ namespace DTO.SEP
         public string MedioTitulacion { get; set; }
         public string FExamenProf { get; set; }
         public string FExencion { get; set; }
-        public int FudamentoLegalId { get; set; }
+        public int FundamentoLegalId { get; set; }
         public int EntidadFederativaId { get; set; }
     }
 
