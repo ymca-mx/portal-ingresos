@@ -223,6 +223,64 @@ namespace BLL
             }
         }
 
+        public static object FirmarAlumnos(List<TituloGeneral> alumnos)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    List<object> fallidos = new List<object>();
+                    alumnos.ForEach(alumno =>
+                    {
+                        try
+                        {
+                            var AlumnoBD = db
+                            .AlumnoTitulo
+                            .Where(A => A.AlumnoId == alumno.AlumnoId
+                                    && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
+                            .FirstOrDefault();
+
+                            AlumnoBD.EstatusId = alumno.Autorizado ? 3 : 1;
+
+                            var Responsable = AlumnoBD.UsuarioResponsable.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
+
+                            Responsable.Aprobo = alumno.Autorizado;
+                            Responsable.Comentario = alumno.Comentario != null ? alumno.Comentario : "";
+
+                            db.SaveChanges();
+                        }
+                        catch (Exception Error)
+                        {
+                            fallidos.Add(new
+                            {
+                                alumno,
+                                Error.Message,
+                                Inner = Error?.InnerException?.Message,
+                                Inner2 = Error?.InnerException?.InnerException?.Message
+                            });
+                        }
+                    });
+
+                    return new
+                    {
+                        Status = true,
+                        fallidos
+                    };
+                }
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
+
+                }
+            }
+        }
+
         public static object UpdateAlumnos(List<TituloGeneral> alumnos)
         {
             using (UniversidadEntities db= new UniversidadEntities())

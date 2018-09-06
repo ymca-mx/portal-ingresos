@@ -12,6 +12,8 @@ namespace DTO.SEP
         public string Email { get; set; }
         public int UsuarioId { get; set; }
         public int EstatusId { get; set; }
+        public string Comentario { get; set; }
+        public bool Autorizado { get; set; }
         public Institucion Institucion { get; set; }
         public Titulo Titulo { get; set; }
         public Carrera Carrera { get; set; }

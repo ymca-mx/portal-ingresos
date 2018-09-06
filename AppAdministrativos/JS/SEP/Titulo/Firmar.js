@@ -102,10 +102,19 @@
             $('#btnGuardar').on('click', this.Enviar);
             $('#btnComentario').on('click', this.Comentario);
             $('#btnQuitar').on('click', this.SetComentario);
-
+            $('#slcMedioTitulacion').on('change', this.MedioChange); 
 
             this.GetAlumnos();
             tblTitulos = $('#tblTitulos').DataTable();
+        },
+        MedioChange() {
+            if (parseInt($('#slcMedioTitulacion').val()) !== 6) {
+                $($('#txtFechaExamen').parents()[2]).show();
+                $($('#txtFechaExencion').parents()[2]).hide();
+            } else {
+                $($('#txtFechaExencion').parents()[2]).show();
+                $($('#txtFechaExamen').parents()[2]).hide();
+            }
         },
         GetAlumnos() {
             IndexFn.Block(true);
@@ -303,6 +312,8 @@
                 Id: FirmarFn.AlumnoSelect.Titulo.MedioTitulacionId
             }, 'slcMedioTitulacion');
 
+            $('#slcMedioTitulacion').change();
+
             $('#txtFechaExencion').val(FirmarFn.AlumnoSelect.Titulo.FExencion);
             $('#txtFechaExamen').val(FirmarFn.AlumnoSelect.Titulo.FExamenProf);
 
@@ -443,20 +454,30 @@
             $('#modalComentario').modal("hide");
         },
         Enviar() {
+            var alumnosadd = [];
+            $(tblTitulos.rows().data()).each(function () {
+                this.UsuarioId = localStorage.getItem('userAdmin');
+                alumnosadd.push(this);
+            });
 
-            if (FirmarFn.lstTitulos.length === 0) { return false; }
+            if (alumnosadd.length === 0) { return false; }
             IndexFn.Block(true);
 
-            IndexFn.Api("SEP/Firmar", 'PUT', JSON.stringify(FirmarFn.lstTitulos))
+            IndexFn.Api("SEP/Firmar", 'PUT', JSON.stringify(alumnosadd))
                 .done(function (data) {
-                    data = data.Alumnos;
                     IndexFn.Block(false);
+                    FirmarFn.lstTitulos = [];
 
-                    if (data.length > 0) {
+                    if (data.fallidos.length === 0) {
                         alertify.alert("Universidad YMCA", "Alumnos enviados a los responsables.");
                     } else {
+                        $(data.fallidos).each(function () {
+                            FirmarFn.lstTitulos.push(this.Alumno);
+                        });
                         alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
                     }
+
+                    FirmarFn.InitAlumnos();
                 })
                 .fail(function (data) {
                     alertify.alert("Universidad YMCA", "Fallo al momento de guardar.");
