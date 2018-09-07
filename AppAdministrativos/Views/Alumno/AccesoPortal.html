@@ -1,124 +1,95 @@
-﻿<div class="page-content">
-    <!-- BEGIN PAGE HEAD -->
-    <div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Acceso Portal Alumno</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12 ">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="portlet light">
-                    <div class="portlet-title">
+                    <div class="col-md-12">
                         <div class="col-md-12">
+                            <label class="control-label">Clave del Alumno</label>
+                            <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" min="1" />
+                            <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div> &nbsp;</div>
+                        <div class="form-group col-md-12">
+
+                            <div class="caption bg-dark bg-font-dark ">
+                                <i class="fa fa-male"></i>
+                                <span class="caption-subject bold  h5"> Alumno:  </span>
+                                <span class="caption-helper bold uppercase h5 font-grey-cascade" id="lbNombre"></span>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+
+                    <form id="frmAcceso" onSubmit="return false;">
+
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <label class="bold">Password: </label>
+                                <input type="password" name="password" id="myPassword" size="30" disabled />
+                                <img style="cursor:pointer" id="imgVer" src="Imagenes/ver.png" height="25" draggable="false" />
+
+                            </div>
 
                             <div class="col-md-6">
-                                <h1 class="caption title"> Acceso Portal Alumno </h1>
+                                <br />
+                                <label class="bold">Bitácora de Acceso</label>
+                                <table class="table table-striped table-bordered table-advance table-hover" id="tblBAcceso">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Fecha de Ingreso
+                                            </th>
+                                            <th>
+                                                Hora de Ingreso
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="portlet-body">
-                        <div class="row">
-                            <div class="col-md-12 ">
-
-                                <div class="col-md-12">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" min="1" />
-                                        <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div> &nbsp;</div>
-                                    <div class="form-group col-md-12">
-
-                                        <div class="caption bg-dark bg-font-dark ">
-                                            <i class="fa fa-male"></i>
-                                            <span class="caption-subject bold  h5"> Alumno:  </span>
-                                            <span class="caption-helper bold uppercase h5 font-grey-cascade" id="lbNombre"></span>
-                                        </div>
-                                        <br />
-                                    </div>
-                                </div>
-
-
-                                <form id="frmAcceso" onSubmit="return false;">
-
-                                    <div class="col-md-12">
-                                        <div class="col-md-12">
-                                            <label class="bold">Password: </label>
-                                            <input type="password" name="password" id="myPassword" size="30" disabled />
-                                            <img style="cursor:pointer" id="imgVer" src="Imagenes/ver.png" height="25"  draggable="false" />
-
-                                        </div>
-
-                                            <div class="col-md-6">
-                                                <br />
-                                                <label class="bold">Bitácora de Acceso</label>
-                                                <table class="table table-striped table-bordered table-advance table-hover" id="tblBAcceso">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>
-                                                                Fecha de Ingreso
-                                                            </th>
-                                                            <th>
-                                                                Hora de Ingreso
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>
-
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <br />
-                                                <label class="bold">Bitácora de Password</label>
-                                                <table class="table table-striped table-bordered table-advance table-hover" id="tblBPassword">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>
-                                                                Fecha de Solicitud
-                                                            </th>
-                                                            <th>
-                                                                Hora de Solicitud
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>
-
-                                            </div>
-
-                                        </div>
-
-
-                                </form>
+                            <div class="col-md-6">
+                                <br />
+                                <label class="bold">Bitácora de Password</label>
+                                <table class="table table-striped table-bordered table-advance table-hover" id="tblBPassword">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Fecha de Solicitud
+                                            </th>
+                                            <th>
+                                                Hora de Solicitud
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
 
                             </div>
 
                         </div>
 
-                    </div>
 
-
-
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="height: 90px;">
-                            <!--<div class="modal-content" style="width:auto">-->
-                            <div class="form-group">
-                                <h3 id="hCarga">Cargando</h3>
-                            </div>
-                            <div class="form-group">
-                                <div class="bar" style="width:auto" id="divBar">
-                                    <p id="txtBar"></p>
-                                </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
-                    </div>
+                    </form>
 
                 </div>
+
             </div>
         </div>
     </div>
-</div>
-<script src="JS/Alumnos/AccesoPortal.js"></script>
+</main>
+<script>
+    $.getScript("JS/Alumnos/AccesoPortal.js");
+</script>
 
 

@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace AppAdministrativos.WS
 {
@@ -192,7 +193,7 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.GuardarPromocionCasa(Promocion);
         }
         [WebMethod]
-        public List<DTOAlumnoPromocionCasa> ConsultarAlumnoPromocionCasa(string Anio, string PeriodoId)
+        public object ConsultarAlumnoPromocionCasa(string Anio, string PeriodoId)
         {
             return BLLAlumnoPortal.ConsultarAlumnoPromocionCasa(int.Parse(Anio), int.Parse(PeriodoId));
         }
@@ -202,12 +203,12 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ConsultarAlumnoPromocionCasa2(int.Parse(AlumnoPromocion));
         }
         [WebMethod]
-        public List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()
+        public object PeriodosPromocionCasa()
         {
             return BLLAlumnoPortal.PeriodosPromocionCasa();
         }
         [WebMethod]
-        public string AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public object AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             return BLLAlumnoPortal.AplicarPromocionCasa(Promocion);
         }
@@ -219,7 +220,7 @@ namespace AppAdministrativos.WS
             return BLLAlumnoPortal.ObtenerAlumno1(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public DTOAlumnoPermitido1 ConsultarAlumno2(string AlumnoId)
+        public object ConsultarAlumno2(string AlumnoId)
         {
             return BLLAlumnoPortal.ObtenerAlumno2(int.Parse(AlumnoId));
         }
@@ -334,7 +335,7 @@ namespace AppAdministrativos.WS
             return BLLPeriodoPortal.ConsultarPeriodos(int.Parse(AlumnoId));
         }
         [WebMethod]
-        public List<DTOAlumnoPermitido> InsertarPermiso(string AlumnoId, string UsuarioId, string Descripcion)
+        public object InsertarPermiso(string AlumnoId, string UsuarioId, string Descripcion)
         {
             return BLLAlumnoPermitido.InsertarAlumno(int.Parse(AlumnoId), int.Parse(UsuarioId), Descripcion);
         }
@@ -516,12 +517,12 @@ namespace AppAdministrativos.WS
 
         //Cambio carrera//
         [WebMethod]
-        public DTOAlumnoCambioCarrera ConsultaCambioCarrera(string AlumnoId, int UsuarioId)
+        public object ConsultaCambioCarrera(string AlumnoId, int UsuarioId)
         {
-           return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId), UsuarioId);
+            return BLLAlumnoPortal.ConsultaCambioCarrera(int.Parse(AlumnoId), UsuarioId);
         }
         [WebMethod]
-        public bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
+        public object AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
         {
             return BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
         }

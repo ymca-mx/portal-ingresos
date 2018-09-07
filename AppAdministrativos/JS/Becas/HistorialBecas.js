@@ -7,7 +7,7 @@
         AlumnoId = $('#txtAlumno').val();
         objAlumno = undefined;
         if (AlumnoId.length > 0) {          
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             ObtenerAlumno();
         } else { return false; }
     });
@@ -28,7 +28,7 @@
             success: function (data) {
                 if (data.d === null) {
                     alertify.alert("El Alumno no Existe.");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
                 else {
@@ -47,7 +47,7 @@
         optionP.val(-1);
         $("#slcOfertas").append(optionP);
 
-        if (ofertas.length == 0) { $('#Load').modal('hide'); return false; }
+        if (ofertas.length == 0) { IndexFn.Block(false); return false; }
         if (ofertas.length > 1) {
             $(ofertas).each(function () {
                 var option1 = $(document.createElement('option'));
@@ -64,13 +64,13 @@
         $("#slcOfertas").val(ofertas[0].OfertaEducativaId);
 
         $("#slcOfertas").change();
-        $('#Load').modal('hide');
+        IndexFn.Block(false);
     }
 
     $("#slcOfertas").on('change', function () {
         var op = $("#slcOfertas").val();
         if (op !== -1) {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             CargarDescuentos(op);
         }
     });
@@ -129,7 +129,7 @@
                         }
                     });
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }

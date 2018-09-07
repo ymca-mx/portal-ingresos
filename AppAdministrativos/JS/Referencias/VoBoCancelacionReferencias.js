@@ -6,7 +6,7 @@
     MostrarSolicitudes();
 
     function MostrarSolicitudes() {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         $('#divBar').modal('show');
         $.ajax({
             url: 'WS/General.asmx/ConsultarPagoCancelacionSolicitud',
@@ -166,7 +166,7 @@
     }
 
     $('#btnNoAplica').click(function () {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         $('#divBar').modal('show');
         $.ajax({
             url: 'WS/General.asmx/CambiarPagoCancelacionSolicitud',
@@ -191,7 +191,7 @@
     });
 
     $('#btnCancelar').click(function () {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         var rowadd = tblReferencias.fnGetData(0);
 
         var PagoId2 = String(PagoId);

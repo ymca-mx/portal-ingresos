@@ -18,5 +18,6 @@ namespace DAL
         public Nullable<int> OfertaEducativaId { get; set; }
         public string Descripcion { get; set; }
         public Nullable<decimal> Saldo { get; set; }
+        public Nullable<bool> EsEmpresa { get; set; }
     }
 }

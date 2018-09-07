@@ -1,60 +1,59 @@
-﻿$(document).ready(function () {
-    var AlumnoId;
-    var PeriodoId;
-    var Anio;
-    var tblReferencias;
-    var PeriodoAlcorriente = null;
-    var Periodo = null;
-    var Tipo;
+﻿$(function () {
+    var AlumnoId,
+        tblReferencias;
 
-    $('#btnBuscar').click(function () {
-        var lbl = $('#lblNombre');
-        lbl[0].innerHTML = "";
-        AlumnoId = $('#txtClave').val();
-        if (AlumnoId.length == 0) { return false; }
-        if (tblReferencias != undefined) {
-            tblReferencias.fnClearTable();
-        }
-        $('#Load').modal('show');
-        BuscarAlumno(AlumnoId);
-
-    });
-    function BuscarAlumno(idAlumno) {
-        $.ajax({
-            type: "POST",
-            url: "WS/Alumno.asmx/ConsultarAlumno",
-            data: "{AlumnoId:'" + idAlumno + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                if (data.d === null) {
-                    $('#Load').modal('hide');
-                    return false;
-                } 
+    var ReferenciasFn = {
+        init() {
+            $('#btnBuscar').on('click', this.BuscarClick);
+            $('#txtClave').on('keydown', this.txtClaveKey);
+        },
+        BuscarClick() {
+            var lbl = $('#lblNombre');
+            lbl[0].innerHTML = "";
+            AlumnoId = $('#txtClave').val();
+            if (AlumnoId.length == 0) { return false; }
+            if (tblReferencias != undefined) {
+                tblReferencias.fnClearTable();
+            }
+            IndexFn.Block(true);
+            ReferenciasFn.BuscarAlumno(AlumnoId);
+        },
+        BuscarAlumno(idAlumno) {
+            $.ajax({
+                type: "POST",
+                url: "WS/Alumno.asmx/ConsultarAlumno",
+                data: "{AlumnoId:'" + idAlumno + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.d === null) {
+                        IndexFn.Block(false);
+                        return false;
+                    }
 
                     var lbl = $('#lblNombre');
                     lbl[0].innerHTML = data.d.Nombre + " " + data.d.Paterno + " " + data.d.Materno;
-                    lbl[0].innerHTML += data.d.AlumnoInscrito.EsEmpresa == true ? data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial" : "" + data.d.Grupo.Descripcion ; 
-                    CargarPagos();
-            }
-        });
-    }
-    function CargarPagos() {
-        var BECA;
-
-        $.ajax({
-            type: "POST",
-            url: "WS/Alumno.asmx/ConsultaPagosTramites",
-            data: "{AlumnoId:'" + AlumnoId + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (res) {
-                var data = res.d.item1;
-                var dk = res.d.item2;
-                if (data === null) {
-                    $('#Load').modal('hide');
-                    return false;
+                    lbl[0].innerHTML += data.d.AlumnoInscrito.EsEmpresa == true ? data.d.AlumnoInscrito.EsEspecial == true ? " - Alumno Especial  " : " - Grupo  Empresarial" : "" + data.d.Grupo.Descripcion;
+                    ReferenciasFn.CargarPagos();
                 }
+            });
+        },
+        CargarPagos() {
+            var BECA;
+
+            $.ajax({
+                type: "POST",
+                url: "WS/Alumno.asmx/ConsultaPagosTramites",
+                data: "{AlumnoId:'" + AlumnoId + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (res) {
+                    var data = res.d.item1;
+                    var dk = res.d.item2;
+                    if (data === null) {
+                        IndexFn.Block(false);
+                        return false;
+                    }
 
                     var Especial = res.d.item1[0].EsEspecial;
 
@@ -73,14 +72,14 @@
                             { "mDataProp": "Pagado" },
                             { "mDataProp": "SaldoPagado" },
                             { "mDataProp": "Estatus" }
-                            
+
                         ],
                         "columnDefs": [
-                          {
-                              "targets": [6],
-                              "visible": dk,
-                              "searchable": false
-                          },
+                            {
+                                "targets": [6],
+                                "visible": dk,
+                                "searchable": false
+                            },
                         ],
                         "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
                         "searching": true,
@@ -127,16 +126,16 @@
                     var tr
                     if (dk) {
                         tr = '<tr id = "tr1">' +
-                         '<th></th>' +
-                         '<th></th>' +
-                         '<th></th>' +
-                         '<th></th>' +
-                         '<th></th>' +
-                         '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
                             '<th></th>' +
-                         '<th style="text-align:right">' + data[0].TotalPagado + '</th></tr>';
+                            '<th></th>' +
+                            '<th></th>' +
+                            '<th></th>' +
+                            '<th></th>' +
+                            '<th></th>' +
+                            '<th></th>' +
+                            '<th style="text-align:right">' + data[0].TotalPagado + '</th></tr>';
                     } else {
                         tr = '<tr id = "tr1">' +
                             '<th></th>' +
@@ -151,19 +150,17 @@
                     }
                     //var tabla = document.getElementById("tblReferencias3");
                     document.getElementById("tblReferencias3").insertRow(-1).innerHTML = tr;
-                $('#Load').modal('hide');
+                    IndexFn.Block(false);
+                }
+            });
+        },
+        txtClaveKey(e) {
+            if (e.which == 13) {
+                $('#btnBuscar').click();
             }
-        });
-    }
-
-
-
-    $('#txtClave').on('keydown', function (e) {
-        if (e.which == 13) {
-            $('#btnBuscar').click();
         }
-    });
+    };
 
-
+    ReferenciasFn.init();
 
 });

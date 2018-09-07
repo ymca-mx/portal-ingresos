@@ -86,6 +86,7 @@ namespace DTO
         public List<DTOPagoDetallado> Pagos { get; set; }
         public bool Estatus { get; set; }
         public List<DTOPeriodoReferencias> Periodos { get; set; }
+        public bool Anticipado { get; set; }
     }
 }
 

@@ -405,18 +405,18 @@
 
                         //$('#').val(data.d);
                         //OfertasAlumno(Alumno);
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         $('#tab1btn').click();
                     }
                     else {
                         document.getElementById("fotoAlumno").src = "";
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Error, El Alumno no Existe.");
 
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error, El Alumno no Existe.");
                 });
             
@@ -426,7 +426,7 @@
 
             IndexFn.Api("Alumno/BuscarAlumnoString/" + Alumno, "GET", "")
                 .done(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     if (data != null) {
                         $('#frmVarios').show();
                         tblAlumnos = $('#tblAlumnos').dataTable({
@@ -468,7 +468,7 @@
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error, No se han encontrado resultados.");
                 });
         },
@@ -544,7 +544,7 @@
                 Paterno: $('#txtApPaterno').val(),
                 Materno: $('#txtApMaterno').val(),
                 AlumnoId: AlumnoNum,
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
                 DTOAlumnoDetalle: {
                     AlumnoId: AlumnoNum,
                     ProspectoId: AlumnoNum,
@@ -632,40 +632,34 @@
                                 });
                             });
                             if (TRes) {
-                                var nombre = $('#hCarga');
-                                nombre[0].innerText = "Cargando";
+
                                 alertify.alert("Datos del Alumno Modificados");
                                 $('#divGuardar').hide();
                                 $('#divEditar').show();
-                                var load = $('#Load').modal();
+                                
                                 $('#txtAlumno').val(AlumnoNum);
                                 $('#btnBuscarAlumno').click();
                             } else {
-                                $('#Load').modal('hide');
-                                var nombre = $('#hCarga');
-                                nombre[0].innerText = "Cargando";
+                                IndexFn.Block(false);
+
                                 alertify.alert("Error, Revisar datos capturados.");
                             }
 
                         } else {
-                            $('#Load').modal('hide');
-                            var nombre = $('#hCarga');
-                            nombre[0].innerText = "Cargando";
+                            IndexFn.Block(false);
                             alertify.alert("Error, Revisar datos capturados.");
                         }
                     }
                     catch (error) {
                         console.log(error.message);
-                        $('#Load').modal('hide');
-                        var nombre = $('#hCarga');
-                        nombre[0].innerText = "Cargando";
+                        IndexFn.Block(false);
+
                         alertify.alert("Error, Revisar datos capturados.");
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
-                    var nombre = $('#hCarga');
-                    nombre[0].innerText = "Cargando";
+                    IndexFn.Block(false);
+
                     alertify.alert("Error, Revisar datos capturados.");
                 });
         },
@@ -721,7 +715,7 @@
                             //7466 557
                         }
                     });
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },
@@ -821,7 +815,7 @@
         },
         GuardarAntecedentesTmp() {
             if (OfertaEducativaTipoId === -1) { return false; }
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             var posobj = -2;
             $(Antecendentes).each(function (i) {
                 if (this.AntecedenteTipoId.toString() === OfertaEducativaTipoId.toString()) {
@@ -891,7 +885,7 @@
             AlumnoDatosFn.BloquearTodo();
 
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             AlumnoNum = $('#txtAlumno').val();
             if (tblBecas != null) {
                 tblBecas.fnClearTable();
@@ -905,7 +899,7 @@
         },
         tblAlumnosClickA() {
             $('#frmVarios').hide();
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
             AlumnoNum = rowadd.AlumnoId;
             AlumnoDatosFn.EsNumero(rowadd.AlumnoId);
@@ -930,18 +924,17 @@
 
         },
         BtnGuardarClick() {
-            var nombre = $('#hCarga');
-            nombre[0].innerText = "Guardando";
-            $('#Load').modal('show');
+
+            IndexFn.Block(true);
 
             var estatus = AlumnoDatosFn.ValidarTodos();
             if (estatus) {
                 AlumnoDatosFn.GuardarTodo();
             }
-            else { $('#Load').modal('hide'); }
+            else { IndexFn.Block(false); }
         },
         slcOfertaEducativaChange() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             AlumnoDatosFn.CargarDescuentos(AlumnoNum, $('#slcOfertaEducativa').val());
         },
         chkUniClick() {

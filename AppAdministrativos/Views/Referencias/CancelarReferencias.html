@@ -1,104 +1,80 @@
-﻿<div class="container" id="divContenido">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <h1 class="caption-subject font-blue bold uppercase">
-                            Cancelación de referencias bancarias
-                        </h1>
-                        <div class="col-md-1" id="Imprimir">
-                            <a id="btnImprimir" href="javascript:return 0;">
-                                <img src="Imagenes/Impresora.png" width="70" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table" id="tblContenido">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <label class="control-label">Clave del Alumno</label>
-                                    <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                    <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <hr />
-                                <div class="col-md-8">
-                                    <label class="control-label" style="font-size: 12px">Alumno:</label>
-                                    <label id="lblAlumno" class="control-label" style="font-size: 12px;font-weight:bold"></label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12 table-container">
-                                <table class="table table-hover table-bordered1 dataTables" id="tblReferencias">
-                                    <thead>
-                                        <tr>
-                                            <th class="Titulo-Tabla">
-                                                Concepto
-                                            </th>
-                                            <th class="Titulo-Tabla">
-                                                Referencia
-                                                <br />
-                                                Bancaria
-                                            </th>
-                                            <th class="Titulo-Tabla">
-                                                Fecha
-                                                <br />
-                                                Generación
-                                            </th>
-                                            <th class="Titulo-Tabla">Promesa</th>
-                                            <th class="Titulo-Tabla">Pagado</th>
-                                            <th class="Titulo-Tabla">
-                                                Fecha de Vigencia
-                                                <br />
-                                                de referencia
-                                            </th>
-                                            <th class="Titulo-Tabla">Estatus</th>
-                                            <th class="Titulo-Tabla">Acción</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="divBar" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="height: 90px;">
-                            <!--<div class="modal-content" style="width:auto">-->
-                            <div class="form-group">
-                                <h3 id="hCarga">Cargando</h3>
-                            </div>
-                            <div class="form-group">
-                                <div class="bar" style="width:auto" id="divBar">
-                                    <p id="txtBar"></p>
-                                </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="width:700px">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                <h3 class="modal-title">Comentario</h3>
-                            </div>
-                            <div class="modal-body">
-                                <label class="control-label"> ¿Por qué se está cancelando el cargo?</label>
-                                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <a id="btnGuardar" class="btn red">Cancelar Cargo</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Cancelación de referencias bancarias</span>
             </div>
         </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <label class="control-label">Clave del Alumno</label>
+                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                        <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar Alumno</a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <hr />
+                    <div class="col-md-8">
+                        <label class="control-label" style="font-size: 12px">Alumno:</label>
+                        <label id="lblAlumno" class="control-label" style="font-size: 12px;font-weight:bold"></label>
+                    </div>
 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 table-container">
+                    <table class="table table-hover table-bordered1 dataTables" id="tblReferencias">
+                        <thead>
+                            <tr>
+                                <th class="Titulo-Tabla">
+                                    Concepto
+                                </th>
+                                <th class="Titulo-Tabla">
+                                    Referencia
+                                    <br />
+                                    Bancaria
+                                </th>
+                                <th class="Titulo-Tabla">
+                                    Fecha
+                                    <br />
+                                    Generación
+                                </th>
+                                <th class="Titulo-Tabla">Promesa</th>
+                                <th class="Titulo-Tabla">Pagado</th>
+                                <th class="Titulo-Tabla">
+                                    Fecha de Vigencia
+                                    <br />
+                                    de referencia
+                                </th>
+                                <th class="Titulo-Tabla">Estatus</th>
+                                <th class="Titulo-Tabla">Acción</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
+    <div class="modal-dialog modal-sm" style="width:700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                <h3 class="modal-title">Comentario</h3>
+            </div>
+            <div class="modal-body">
+                <label class="control-label"> ¿Por qué se está cancelando el cargo?</label>
+                <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
+            </div>
+            <div class="modal-footer">
+                <a id="btnGuardar" class="btn red">Cancelar Cargo</a>
+            </div>
+        </div>
     </div>
 </div>
-<script src="JS/Referencias/CancelarReferencias.js"></script>
+<script>
+    $.getScript("JS/Referencias/CancelarReferencias.js");
+</script>

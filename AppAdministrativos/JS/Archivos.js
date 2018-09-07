@@ -1,80 +1,68 @@
-﻿$(document).ready(function () {
-    $('#BecArchivo').bind('change', function () {
-        var file = $('#FileBec');
-        var tex = $('#txtBeca').html();
-        if (this.files.length > 0) {
-            $('#txtBeca').text(RecortarNombre(this.files[0].name));
-            file.addClass('fileinput-exists').removeClass('fileinput-new');
-            $('#FileBec span span').text('Cambiar');
-        }
-        else {
-            $('#txtBeca').text('');
-            file.removeClass('fileinput-exists').addClass('fileinput-new');
-            $('#FileBec span span').text('Seleccionar Archivo...');
-        }
-    });
-    $('#FileBec a').click(function () {
-        var file = $('#FileBec');
-        $('#txtBeca').text('');
-        file.removeClass('fileinput-exists').addClass('fileinput-new');
-        File[0] = null;
-        $('#FileBec span span').text('Seleccionar Archivo...');
-    });
+﻿$(function () {
+    var ArchivosFn = {
+        init() {
+            $('#FileBec .close').hide();
+            $('#FileIns .close').hide();
+            $('#FileExa .close').hide();
 
-    $('#InsArchivo').bind('change',function () {
-        var file = $('#FileIns');
-        var tex = $('#txtIns').html();
-        if (this.files.length > 0) {
-            $('#txtIns').text(RecortarNombre(this.files[0].name));
-            file.addClass('fileinput-exists').removeClass('fileinput-new');
-            $('#FileIns span span').text('Cambiar');
-        }
-        else {
-            $('#txtIns').text('');
-            file.removeClass('fileinput-exists').addClass('fileinput-new');
-            $('#FileIns span span').text('Seleccionar Archivo...');
-        }
-    });
-    $('#FileIns a').click(function () {
-        var file = $('#FileIns');
-        $('#txtIns').text('');
-        file.removeClass('fileinput-exists').addClass('fileinput-new');
-        File[0] = null;
-        $('#FileIns span span').text('Seleccionar Archivo...');
-    });
+            $('#BecArchivo').bind('change', function () {
+                ArchivosFn.bind_Change('FileBec', 'txtBeca',this);
+            });
+            $('#FileBec a').click(function () {
+                ArchivosFn.Click_a('FileBec', 'txtBeca');
+            });
 
-    $('#ExamenArchivo').bind('change',function () {
-        var file = $('#FileExa');
-        var tex = $('#txtExa').html();
-        if (this.files.length > 0) {
-            $('#txtExa').text(RecortarNombre(this.files[0].name));
-            file.addClass('fileinput-exists').removeClass('fileinput-new');
-            $('#FileExa span span').text('Cambiar');
-        }
-        else {
-            $('#txtExa').text('');
+            $('#InsArchivo').bind('change', function () {
+                ArchivosFn.bind_Change('FileIns', 'txtIns', this);
+            });
+            $('#FileIns a').click(function () {
+                ArchivosFn.Click_a('FileIns', 'txtIns');
+            });
+
+            $('#ExamenArchivo').bind('change', function () {
+                ArchivosFn.bind_Change('FileExa', 'txtExa', this);
+            });
+            $('#FileExa a').click(function () {
+                ArchivosFn.Click_a('FileExa', 'txtExa');
+            });
+        },
+        bind_Change(FileId, txtId, thisfile) {
+
+            var file = $('#' + FileId);
+
+            if (thisfile.files.length > 0) {
+                $('#' + txtId).text(ArchivosFn.RecortarNombre(thisfile.files[0].name));
+                file.addClass('fileinput-exists').removeClass('fileinput-new');
+                $('#' + FileId + ' span span').text('Cambiar');
+                $('#' + FileId + ' .close').show();
+            }
+            else {
+                $('#' + txtId).text('');
+                file.removeClass('fileinput-exists').addClass('fileinput-new');
+                $('#' + FileId + ' span span').text('Seleccionar Archivo...');
+                $('#' + FileId + ' .close').hide();
+            }
+        },
+        Click_a(FileId, txtId) {
+
+            var file = $('#' + FileId);
+            $('#' + txtId).text('');
             file.removeClass('fileinput-exists').addClass('fileinput-new');
-            $('#FileExa span span').text('Seleccionar Archivo...');
+            file[0] = null;
+            $('#' + FileId + ' span span').text('Seleccionar Archivo...');
+            $('#' + FileId + ' .close').hide();
+        },
+        RecortarNombre(name) {
+            var cadena;
+            if (name.length > 15) {
+                cadena = name.substring(0, 8);
+                cadena += name.substring(name.length - 4, name.length);
+                return cadena;
+            } else {
+                return name;
+            }
         }
-    });
-    $('#FileExa a').click(function () {
-        var file = $('#FileExa');
-        $('#txtExa').text('');
-        file.removeClass('fileinput-exists').addClass('fileinput-new');
-        File[0] = null;
-        $('#FileExa span span').text('Seleccionar Archivo...');
-    });
-    function RecortarNombre(name) {
-        var cadena;
-        if (name.length > 15) {
-            cadena = name.substring(0, 8);
-            cadena += name.substring(name.length - 4, name.length);
-            return cadena;
-        } else {
-            return name;
-        }
-    }
+    };
+
+    ArchivosFn.init();
 });
-
-
-//// Hola soy una prueba

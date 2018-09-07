@@ -1,108 +1,83 @@
-﻿
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
-
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">CAMBIO DE CARRERA</span>
+            </div>
+        </div>
+        <div class="panel-body">
             <div class="row">
+                <div class="col-md-12 ">
+                    <div class="col-md-6">
+                        <label class="control-label">Clave del Alumno</label>
+                        <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                        <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
+                    </div>
+                </div>
+                <div class="col-md-12">&nbsp;</div>
                 <div class="col-md-12">
-                    <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <h2 class="caption title font-blue-sharp ">CAMBIO DE CARRERA </h2>
-                                </div>
-                            </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Alumno: </label>&nbsp;&nbsp;
+                        <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
+
+                    </div>
+                    <div class="col-md-12" style="padding:8px;">
+                        <div class="col-md-6">
+                            <label class="control-label bold font-red-flamingo" id="lblInscito"></label>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="portlet-body">
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <input type="number" id="txtClave" class="form-control-static font-md" tabindex="1" />
-                                        <a class="btn blue" id="btnBuscar" tabindex="2">Buscar Alumno</a>
-                                    </div>
+                <div class="col-md-12">
+                    <div class="form-group col-md-5">
+                        <label class="control-label"> Oferta Educativa Actual</label>
+                        <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
+                        <div>&nbsp;</div>
+                        <label class="control-label"> Periodo </label>
+                        <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
+                    </div>
+                    <div>&nbsp;</div><div>&nbsp;</div>
+                    <div class="form-group col-md-1">
+                        <div>&nbsp;</div>
+                        <img src="Imagenes/actualizar.png" width="80" height="30">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label class="control-label">  Nueva Oferta Educativa</label>
+                        <select id="slcOfertaEducativa2" name="slcOfertaEducativa2" class="form-control"></select>
+                    </div>
+                </div>
 
-                                    <div class="col-md-12">
-                                        <div> &nbsp;</div>
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label">Alumno: </label>&nbsp;&nbsp;
-                                            <label class="bold" id="lblNombre"></label>&nbsp;&nbsp;
-
-                                        </div>
-                                        <div  class="col-md-12" style="padding:8px;" >
-                                            <label class="control-label bold font-red-flamingo" id="lblInscito" ></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group col-md-5">
-                                            <label class="control-label"> Oferta Educativa Actual</label>
-                                            <select id="slcOfertaEducativa" name="slcOfertaEducativa" class="form-control"></select>
-                                            <div>&nbsp;</div>
-                                            <label class="control-label"> Periodo </label>
-                                            <select id="slcPeriodo" name="slcPeriodo" class="form-control"></select>
-                                        </div>
-                                        <div>&nbsp;</div><div>&nbsp;</div>
-                                        <div class="form-group col-md-1">
-                                            <div>&nbsp;</div>
-                                            <img src="Imagenes/actualizar.png" width="80" height="30">
-                                        </div>
-                                            <div class="form-group col-md-5">
-                                                <label class="control-label">  Nueva Oferta Educativa</label>
-                                                <select id="slcOfertaEducativa2" name="slcOfertaEducativa2" class="form-control"></select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-12">
-                                            <div class="col-md-9"></div>
-                                            <div class="col-md-1">
-                                                <button class="btn green" id="btnCambio" tabindex="2" disabled>Realizar Cambio</button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                            </div>
-
-                        </div>
-                        
-                        <!--cometario-->
-                        <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
-                            <div class="modal-dialog modal-sm" style="width:700px">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                    <h3 class="modal-title">Comentario u Observación </h3>
-                                </div>
-                                <div class="modal-body">
-                                    <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
-                                    <a id="btnGuardar" class="btn green">Guardar</a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                            <div class="modal-dialog modal-sm" style="height: 90px;">
-                                <!--<div class="modal-content" style="width:auto">-->
-                                <div class="form-group">
-                                    <h3 id="hCarga">Cargando</h3>
-                                </div>
-                                <div class="form-group">
-                                    <div class="bar" style="width:auto" id="divBar">
-                                        <p id="txtBar"></p>
-                                    </div>
-                                    <!--</div>-->
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-md-12">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <button class="btn green" id="btnCambio" tabindex="2" disabled>Realizar Cambio</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="JS/Alumnos/AlumnoCambioCarrera.js"></script>
+</main>
+<main>
+    <!--cometario-->
+    <div class="modal fade" tabindex="-1" data-backdrop="static" data-width="750" id="PopComentario" data-keyboard="false">
+        <div class="modal-dialog" style="width:700px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                    <h3 class="modal-title">Comentario u Observación </h3>
+                </div>
+                <div class="modal-body">
+                    <textarea id="txtComentario" class="form-control" required="required" autofocus="autofocus"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                    <a id="btnGuardar" class="btn green">Guardar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    $.getScript("JS/Alumnos/AlumnoCambioCarrera.js")
+</script>
 

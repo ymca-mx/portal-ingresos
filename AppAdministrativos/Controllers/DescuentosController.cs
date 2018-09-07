@@ -49,8 +49,9 @@ namespace AppAdministrativos.Controllers
 
             alumno2.Descuentos.Find(a => a.PagoConceptoId == 1000).Comprobante = DocExamen == null ? null : Herramientas.ConvertidorT.ConvertirStream(DocExamen,
                 HttpContext.Current.Request.Files["DocExamen"].ContentLength);
+            
 
-            var Result = BLLAlumnoInscrito.GuardarDescuentosNuevoIngreso(alumno2);
+            var Result =  BLLAlumnoInscrito.GuardarDescuentosNuevoIngreso(alumno2);
 
             if ((int)Result.GetType().GetProperty("AlumnoId").GetValue(Result, null) > 0)
             {

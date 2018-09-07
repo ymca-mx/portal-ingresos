@@ -144,6 +144,7 @@
     <Content Include="JS\Alumnos\AutorizarInscripcion.js" />
     <Content Include="JS\Alumnos\CambioTurno.js" />
     <Content Include="JS\Alumnos\DatosAcademicos.js" />
+    <Content Include="JS\Alumnos\InscripcionAlumnoV2.js" />
     <Content Include="JS\Alumnos\PromocionCasa.js" />
     <Content Include="JS\Alumnos\SolicitarInscripcion.js" />
     <Content Include="JS\Becas\HistorialBecas.js" />
@@ -172,6 +173,8 @@
     <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\CarteraVencida.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
+    <Content Include="JS\SEP\Titulo\Firmar.js" />
+    <Content Include="JS\SEP\Titulo\Solicitar.js" />
     <Content Include="JS\Usuarios\Administracion.js" />
     <Content Include="JS\Usuarios\Perfil.js" />
     <Content Include="login.html" />
@@ -185,6 +188,7 @@
     <Content Include="Documentos\Calendarios\Posgrado C.pdf" />
     <Content Include="Documentos\Calendarios\Posgrado.pdf" />
     <Content Include="Documentos\Manuales\Manual Baja Academica.pdf" />
+    <Content Include="Scripts\backbone-min.map" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\Ajax-Cross-Origin\jquery.ajax-cross-origin.min.js" />
     <Content Include="Scripts\backbone-min.js" />
@@ -4509,6 +4513,7 @@
     <Content Include="Style\Complementos\js-xlsx-master\xlsx.js" />
     <Content Include="Style\Complementos\JsZip\jszip.js" />
     <Content Include="Style\Complementos\JsZip\jszip.min.js" />
+    <Content Include="Style\Complementos\Load\Load.css" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\.gitignore" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\jquery.barrating.min.js" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\dist\themes\bars-1to10.css" />
@@ -4784,8 +4789,9 @@
     <Content Include="Views\Alumno\AlumnoNuevoIngreso.html" />
     <Content Include="Views\Alumno\AutorizarInscripcion.html" />
     <Content Include="Views\Alumno\DatosAcademicos.html" />
-    <Content Include="Views\Alumno\PromociónCasa.html" />
+    <Content Include="Views\Alumno\PromocionCasa.html" />
     <Content Include="Views\Alumno\SolicitarInscripcion.html" />
+    <Content Include="Views\Archivos\Print.html" />
     <Content Include="Views\Becas\HistorialBecas.html" />
     <Content Include="Views\Biblioteca\Comunicado.html" />
     <Content Include="Views\Calendario\ConfiguracionCalendario.html" />
@@ -4816,6 +4822,8 @@
     <Content Include="Views\Reportes\EnvioReporteVistoBueno.html" />
     <Content Include="Views\Reportes\ReporteBecas.html" />
     <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
+    <Content Include="Views\SEP\Titulo\Firmar.html" />
+    <Content Include="Views\SEP\Titulo\Solicitar.html" />
     <Content Include="Views\Usuarios\Administracion.html" />
     <Content Include="Views\Usuarios\Perfil.html" />
     <Content Include="WS\Alumno.asmx" />
@@ -5313,7 +5321,7 @@
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\less\bootstrap-multiselect.less" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\LICENSE.md" />
     <Content Include="Style\assets\global\plugins\bootstrap-multiselect\README.md" />
-    <Content Include="tsconfig.json" />
+    <Content Include="Scripts\underscore-min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -5409,7 +5417,6 @@
     <Content Include="JS\Plantel.js" />
     <Content Include="JS\Posgrado.js" />
     <Content Include="JS\PreAltaDocentes.js" />
-    <Content Include="JS\ProgresLoad\LoadPage.css" />
     <Content Include="JS\Referencias Pagadas.js" />
     <Content Include="JS\Referencias.js" />
     <Content Include="JS\ReferenciasPagadasBuscar.js" />
@@ -5524,6 +5531,7 @@
     <Compile Include="Controllers\OfertaEducativaController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
+    <Compile Include="Controllers\SEPController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Alumno\Credenciales.aspx.cs">
@@ -5604,11 +5612,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documentos\SEP\Certificado\" />
+    <Folder Include="Documentos\SEP\Titulo\" />
+    <Folder Include="JS\SEP\Certificado\" />
     <Folder Include="JS\themes\Switch\" />
     <Folder Include="Scripts\typings\angularjs\" />
     <Folder Include="Scripts\typings\jquery\" />
     <Folder Include="Style\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Style\engato\login\imagenes\recovery\" />
+    <Folder Include="Views\SEP\Certificado\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

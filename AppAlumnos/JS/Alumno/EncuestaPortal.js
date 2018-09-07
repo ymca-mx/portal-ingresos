@@ -12,7 +12,7 @@
     function Load() {
         $('#PopEncuesta').modal('show');
         LimpiarCampos();
-        $('#Load').modal('show');
+        IndexFn.Block(true);
        Preguntas();
     }
 
@@ -138,11 +138,11 @@
                     });
 
                     ratingEnable();
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
                 else {
                     $('#PopEncuesta').modal('hide');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
 
             }
@@ -204,7 +204,7 @@
         if (valid == 1) {
             var nombre = $('#hCarga');
             nombre[0].innerText = "Guardando";
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var lista = [];
 
 
@@ -282,7 +282,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Encuesta Guardada", function ()
                     {
                         $('#PopEncuesta').modal('hide');
@@ -290,7 +290,7 @@
                     });
                   
                 } else {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     $('#PopDatosAlumno').modal('hide');
                     alertify.alert("Error", function ()
                     {

@@ -108,7 +108,7 @@
 
         },
         TraerAlumnos() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             IndexFn.Api('Alumno/ConsultarAlumnosNuevosRP/', "GET", "")
                 .done(function (Respuesta) {
                     tblAlumnos = $('#tblAlumnos').dataTable({
@@ -143,14 +143,14 @@
                     });
                     var fil = $('#tblAlumnos_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (Respuesta) {
                     alertify.alert('Error al cargar datos');
                 });
         },
         tblAlumnosClickA() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
 
             DatosFn.TraerDatosAcademicos((rowadd.AlumnoId + "/" + rowadd.OfertaEducativaId));
@@ -174,14 +174,14 @@
 
                     $($("[aria-controls='Academicos']")[0]).click();
                     $('#ModalEducativa').modal('show');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                     GlobalFn.DatosOferta.PlantelId = -1;
                     GlobalFn.DatosOferta.OfertaEducativaTipoId = -1;
                     GlobalFn.DatosOferta.OFertaEducativa = -1;
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error al consultar la información");
                 });
         },
@@ -208,7 +208,7 @@
 
         },
         btnCambioCarreraClick() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var objGuardar = {
                 AlumnoId: DatosFn.objGuardar.AlumnoId,
                 Anio: $('#slcPeriodo :selected').data("anio"),
@@ -217,7 +217,7 @@
                 OfertaEducativaIdNueva: $('#slcOfertaEducativa').val(),
                 TurnoId: $('#slcTurno').val(),
                 EsEmpresa: $('#chkEmpresa').prop('checked'),
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
                 MontoColegiatura: $('#txtColegPPagar').val(),
                 MontoInscripcion: $('#txtInscrPPagar').val(),
                 MontoCredencial: $('#txtCredencialPPagar').val(),
@@ -228,7 +228,7 @@
 
             IndexFn.Api("Alumno/ChageOffer", "POST", JSON.stringify(objGuardar))
                 .done(function (data) {                    
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     if (data.Status) {
                         $('#ModalEducativa').modal('hide');
                         alertify.alert("Se guardo correctamente", function () {
@@ -239,7 +239,7 @@
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error al consultar la información");
                 });
         },

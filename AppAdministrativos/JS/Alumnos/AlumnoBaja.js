@@ -5,7 +5,7 @@
     var funciones =
         {
             traerCatalogos: function () {
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 $.ajax({
                     type: "POST",
                     url: "WS/Alumno.asmx/ConsultaCatalogosBaja",
@@ -15,7 +15,7 @@
                     success: function (data) {
                         if (data.d === null) {
                             alertify.alert("Error al cargar datos.");
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             return false;
                         }
                         var datos = data.d
@@ -43,7 +43,7 @@
                             option.val(this.BajaMotivoId);
                             $("#slcMotivo").append(option);
                         });
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 });
             },
@@ -51,7 +51,7 @@
                 AlumnoId = $('#txtClave').val();
                 if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
 
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 $.ajax({
                     type: "POST",
                     url: "WS/Alumno.asmx/ConsultaAlumnoBaja",
@@ -63,7 +63,7 @@
                             alumno = null;
 
                             alertify.alert("Este alumno no existe o ya esta dado de baja.");
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             return false;
                         }
                         Alumno = data.d;
@@ -72,7 +72,7 @@
                         $("#lbOfertaEducativa").text(Alumno.OfertaEducativa);
                         $("#lbPeriodo").text(Alumno.DescripcionPeriodo);
                         $("#btnBaja").removeAttr("disabled");
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 });
 
@@ -102,14 +102,14 @@
                 }
 
                 $("#PopComentario").modal("hide");
-                $('#Load').modal('show');
+                IndexFn.Block(true);
 
                 Alumno.TipoMovimientoId = $("#slcTipo").val();
                 Alumno.BajaMotivoId = $("#slcMotivo").val();
                 Alumno.FechaRecepcion = $("#txtFecha").val();
                 Alumno.Folio = $("#txtFolio").val();
                 Alumno.Observaciones = comentario;
-                Alumno.UsuarioId = $.cookie('userAdmin');
+                Alumno.UsuarioId =  localStorage.getItem('userAdmin');
 
                 var obj = {
                     "Alumno": Alumno
@@ -141,7 +141,7 @@
                         } else {
                             $("#txtComentario").empty();
                             alertify.alert("Error al  realizar cambio.");
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         }
                        
                     }
@@ -169,11 +169,11 @@
 
                         if ($bool[0].textContent == "true") {
                             alertify.alert("La baja se realizó correctamente.");
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         } else {
                             $("#txtComentario").empty();
                             alertify.alert("Error al  guardar documento.");
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                         }
 
                     }
@@ -187,7 +187,7 @@
     if (jQuery().datepicker) {
         $('.date-picker').datepicker({
             rtl: Metronic.isRTL(),
-            orientation: "left",
+            orientation: "top",
             autoclose: true,
             language: 'es'
         });

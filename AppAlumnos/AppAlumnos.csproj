@@ -728,7 +728,6 @@
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\mixins.less" />
     <Content Include="Style\Complementos\Minimal-jQuery-Rating-Widget-Plugin-Bar-Rating\themes\variables.less" />
     <Content Include="Script\jquery-2.2.4.min.map" />
-    <Content Include="tsconfig.json" />
     <Content Include="Style\Complementos\Load\Load.css" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

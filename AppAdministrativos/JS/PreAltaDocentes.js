@@ -1,7 +1,7 @@
 ﻿var Validacion = function () {
     var Usuario;
     var b_Valid = 0;
-    //$.cookie('userAdmin', 6883, { expires: 1 });
+    // localStorage.getItem('userAdmin', 6883, { expires: 1 });
     var FormWizard = function () {
       
         var form = $('#submit_form');
@@ -256,7 +256,7 @@
         
     }
     function Guardar() {
-        var Usuario = $.cookie('userAdmin');
+        var Usuario =  localStorage.getItem('userAdmin');
         if (jQuery.type(Usuario) === "undefined") {
             return false;
         }

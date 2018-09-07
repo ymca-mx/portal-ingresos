@@ -5,11 +5,11 @@
                 <span>Alumnos Nuevo Ingreso</span>
             </div>
         </div>
-        <div class="panel-body">
-            <div class="form-body">
+        <div class="panel-body form" id="Encabezado">
+            <div class="form-body" >
                 <div class="tab-pane">
                     <div class="table">
-                        <div class="row" id="Encabezado">
+                        <div class="row">
                             <div class="col-md-12">
                                 <a class="btn green button-Nuevo contenido" id="btnNuevo" href="#Views/0">Nuevo Alumno</a>
                                 <hr />
@@ -42,92 +42,107 @@
                             <hr />
                         </div>
                     </div>
-                    <div class="table" id="Contenedor">
-                        <div class="row">
+                </div>
+            </div>
+        </div>
+        <div class="panel-body form" id="Contenedor">
+            <div class="form-body" >
+                <div class="tab-pane">
+                    <div class="table">
+                        <div class="row">                            
+                            <div class="col-md-12">
+                                <h3>Datos Alumno</h3>
+                                <div class="col-md-7">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Clave Alumno</label>
+                                        <input type="text" id="txtAlumnoId" class="form-control" readonly="readonly" />
+                                    </div>
+                                </div>
 
-                            <h3>Datos Alumno</h3>
-
-                            <div class="col-md-7">
-                                <div class="form-group col-md-4">
-                                    <label class="control-label">Clave Alumno</label>
-                                    <input type="text" id="txtAlumnoId" class="form-control" readonly="readonly" />
+                                <div class="col-md-6">
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Nombre</label>
+                                        <input type="text" class="form-control" id="txtNombre" readonly="readonly" />
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Apellido Paterno</label>
+                                        <input type="text" class="form-control" id="txtPaterno" readonly="readonly" />
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Apellido Materno</label>
+                                        <input type="text" class="form-control" id="txtMaterno" readonly="readonly" />
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Nombre</label>
-                                    <input type="text" class="form-control" id="txtNombre" readonly="readonly" />
-                                </div>
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Apellido Paterno</label>
-                                    <input type="text" class="form-control" id="txtPaterno" readonly="readonly" />
-                                </div>
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Apellido Materno</label>
-                                    <input type="text" class="form-control" id="txtMaterno" readonly="readonly" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Fecha Nacimiento</label>
-                                    <input type="text" class="form-control" id="txtFechaNacimiento" readonly="readonly" />
-                                </div>
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Fecha Registro</label>
-                                    <input type="text" class="form-control" id="txtFechaRegistro" readonly="readonly" />
-                                </div>
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Oferta Educativa</label>
-                                    <input type="text" class="form-control" id="txtOferta" readonly="readonly" />
+                                <div class="col-md-6">
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Fecha Nacimiento</label>
+                                        <input type="text" class="form-control" id="txtFechaNacimiento" readonly="readonly" />
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Fecha Registro</label>
+                                        <input type="text" class="form-control" id="txtFechaRegistro" readonly="readonly" />
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Oferta Educativa</label>
+                                        <input type="text" class="form-control" id="txtOferta" readonly="readonly" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr />
                         <div class="row">
-                            <h3 class="block">Oferta Educativa de Interés</h3>
-                            <div class="col-md-6">
-                                <div class="col-md-10 form-group">
-                                    <label class="control-label">Plantel</label>
-                                    <select id="slcPlantel" name="slcPlantel" class="form-control selector">
-                                        <option value="-1">--Seleccionar--</option>
-                                    </select>
+                            <div class="col-md-12">
+                                <h3 class="block">Oferta Educativa de Interés</h3>
+                                <div class="col-md-6">
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label">Plantel</label>
+                                        <select id="slcPlantel" name="slcPlantel" class="form-control selector">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label">Oferta Educativa</label>
+                                        <select id="slcTipoOferta" name="slcTipoOferta" class="form-control selector">
+                                            <option value="-1">--Seleccionar--</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label" id="lblOFerta"></label>
+                                        <select id="slcOfertaEducativa" class="form-control col-md-12">
+                                            <option value="-1">--Seleccionar Idioma--</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Turno</label>
+                                        <select id="slcTurno" class="form-control col-md-12 selector"></select>
+                                    </div>
                                 </div>
-                                <div class="col-md-10 form-group">
-                                    <label class="control-label">Oferta Educativa</label>
-                                    <select id="slcTipoOferta" name="slcTipoOferta" class="form-control selector">
-                                        <option value="-1">--Seleccionar--</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-10 form-group">
-                                    <label class="control-label" id="lblOFerta"></label>
-                                    <select id="slcOfertaEducativa" class="form-control col-md-12">
-                                        <option value="-1">--Seleccionar Idioma--</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Turno</label>
-                                    <select id="slcTurno" class="form-control col-md-12 selector"></select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group col-md-10">
-                                    <label class="control-label">Periodo</label>
-                                    <select id="slcPeriodo" class="form-control col-md-12 selector"></select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="control-label">Sistema de pago</label>
-                                    <select id="slcSistemaPago" class="form-control col-md-12 selector"></select>
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <h4>Solo Empresa</h4>
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="chkEsEmpresa" class="checkbox" />
-                                        <label class="control-label" for="chkEsEmpresa">Es alumno de empresa</label>
+                                <div class="col-md-6">
+                                    <div class="form-group col-md-10">
+                                        <label class="control-label">Periodo</label>
+                                        <select id="slcPeriodo" class="form-control col-md-12 selector"></select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Sistema de pago</label>
+                                        <select id="slcSistemaPago" class="form-control col-md-12 selector"></select>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <h4>Solo Empresa</h4>
+                                        <div class="md-checkbox-list">
+                                            <div class="md-checkbox">
+                                                <input type="checkbox" id="chkEsEmpresa" class="md-check">
+                                                <label for="chkEsEmpresa">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span>
+                                                    Es alumno de empresa
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="DivDescuentos">
+                            <div id="DivDescuentos" class="col-md-12">
                                 <!--Colegiatura-->
                                 <div class="col-md-12" id="DivCol">
                                     <hr />
@@ -158,9 +173,8 @@
                                     <div class="col-md-2">
                                         <h4>Anexar Documento</h4>
                                         <div class="row fileupload-buttonbar">
-                                            <div class="col-lg-12">
+                                            <div class="col-md-12">
                                                 <div class="fileinput-new " data-provides="fileinput" id="FileBec">
-                                                    <!-- The fileinput-button span is used to style the file input field as button -->
                                                     <span class="btn blue  fileinput-button">
                                                         <i class="fa fa-plus"></i>
                                                         <span>
@@ -218,7 +232,7 @@
                                                         <span>
                                                             Seleccionar Archivo...
                                                         </span>
-                                                        <input type="file" id="InsArchivo" name="InsArchivo" accept=".PDF, .pdf" />
+                                                        <input type="file" id="InsArchivo" name="InsArchivo" accept=".PDF, .pdf">
                                                     </span>
                                                     <span id="txtIns" class="fileinput-filename col-lg-10"></span>
                                                     <a href="javascript:;" class=" close fileinput-exists" data-dissmiss="fileinput"></a>
@@ -305,158 +319,163 @@
                                     </div>
                                     <div class="col-md-1"></div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="divMaterial">
                                     <hr />
-                                    <div id="divMaterial" class="col-md-6 form-group">
+                                    <div class="col-md-6 form-group">
                                         <h4>Cargar material didactico</h4>
-                                        <div class="checkbox">
-                                            <input type="checkbox" id="chkMaterial" class="checkbox" />
-                                            <label for="chkMaterial" class="control-label">Si</label>
+                                        <div class="md-checkbox-list">
+                                            <div class="md-checkbox">
+                                                <input type="checkbox" id="chkMaterial" class="md-check">
+                                                <label for="chkMaterial">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span>
+                                                    Si
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <a href="javascript:;" class="btn blue button-Cancelar" id="btnCancelar">Cancelar <i class="fa fa-ban m-icon-white"></i></a>
-                            <a href="javascript:;" class="btn green button-guardar" id="btnGuardar">Guardar <i class="fa fa-save m-icon-white"></i></a>
+                        <div class="row">
+                            <hr />
+                            <div class="col-md-12">
+                                <div style="float:left">
+                                    <a href="javascript:;" class="btn blue button-Cancelar" id="btnCancelar">Cancelar <i class="fa fa-ban m-icon-white"></i></a>
+                                </div>
+                                <div style="float:right">
+                                    <a href="javascript:;" class="btn green button-guardar" id="btnGuardar">Guardar <i class="fa fa-save m-icon-white"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                    <div class="modal-dialog modal-sm" style="height: 90px;">
-                        <!--<div class="modal-content" style="width:auto">-->
-                        <div class="form-group">
-                            <h3 id="hCarga">Guardando...</h3>
-                        </div>
-                        <div class="form-group">
-                            <div class="bar" style="width:auto" id="divBar">
-                                <p id="txtBar"></p>
-                            </div>
-                            <!--</div>-->
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="Antecedentes" data-keyboard="false" data-backdrop="static" role="dialog" data-width="950">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h3 class="modal-title">Antecedente</h3>
-                            </div>
-                            <form action="javascript:;" class="form-horizontal" id="formPopup" method="post">
-                                <div class="alert alert-danger display-none">
-                                    <button class="close" data-dismiss="alert"></button>
-                                    Por favor revisa la información, hay algunos campos inválidos
+                    <div class="modal fade" id="Antecedentes" data-keyboard="false" data-backdrop="static" role="dialog" data-width="950">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                    <h3 class="modal-title">Antecedente</h3>
                                 </div>
-                                <div class="alert alert-success display-none">
-                                    <button class="close" data-dismiss="alert"></button>
-                                    Campos validos
-                                </div>
-                                <div class="modal-body">
-                                    <div class="col-md-12">
-                                        <h3 class="block" id="hOfertaTitulo">Preparatoria de Procedencia</h3>
+                                <form action="javascript:;" class="form-horizontal" id="formPopup" method="post">
+                                    <div class="alert alert-danger display-none">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        Por favor revisa la información, hay algunos campos inválidos
                                     </div>
+                                    <div class="alert alert-success display-none">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        Campos validos
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-md-12">
+                                            <h3 class="block" id="hOfertaTitulo">Preparatoria de Procedencia</h3>
+                                        </div>
 
-                                    <div class="col-md-6">
-                                        <div class="col-md-10 form-group">
-                                            <label class="control-label" id="lblOfertaTitulo2">Preparatoria de Procedencia</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" class="col-md-6 form-control " id="txtNombrePrepa" name="txtNombrePrepa" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10 form-group">
-
-                                            <label class="control-label">Promedio Final</label>
-                                            <div class="input-icon right">
-                                                <i class="fa"></i>
-                                                <input type="text" class="form-control" id="txtPromedio" name="txtPromedio" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10 form-group">
-                                            <label class="control-label">Año y mes de terminación</label>
-                                            <div class="col-md-11 form-group">
-                                                <div class="col-md-6">
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" class="form-control" id="txtAñoT" name="txtAñoT" placeholder="1900" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" class="form-control" id="txtMesT" name="txtMesT" placeholder="12" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10 form-group">
-                                            <label class="control-label">Área Cursada</label>
-                                            <select id="slcArea" class="form-control" name="slcArea">
-                                                <option value="-1">--Seleccionar--</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-10" id="divUni">
-                                            <div class="form-group">
-                                                <!---->
-                                                <label class="control-label">Universidad de Procedencia</label>
-                                                <div class="checkbox">
-                                                    <input type="checkbox" class="checkbox" id="chkUni" />
-                                                    <label class="control-label" for="chkUni">Equivalencia</label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
+                                        <div class="col-md-6">
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label" id="lblOfertaTitulo2">Preparatoria de Procedencia</label>
                                                 <div class="input-icon right">
                                                     <i class="fa"></i>
-                                                    <input type="text" class="form-control " id="txtUni" name="txtUni" disabled="disabled" />
+                                                    <input type="text" class="col-md-6 form-control " id="txtNombrePrepa" name="txtNombrePrepa" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+
+                                                <label class="control-label">Promedio Final</label>
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <input type="text" class="form-control" id="txtPromedio" name="txtPromedio" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Año y mes de terminación</label>
+                                                <div class="col-md-11 form-group">
+                                                    <div class="col-md-6">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="txtAñoT" name="txtAñoT" placeholder="1900" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="input-icon right">
+                                                            <i class="fa"></i>
+                                                            <input type="text" class="form-control" id="txtMesT" name="txtMesT" placeholder="12" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label">Área Cursada</label>
+                                                <select id="slcArea" class="form-control" name="slcArea">
+                                                    <option value="-1">--Seleccionar--</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-10">
+                                                <div class="md-checkbox-list">
+                                                    <div class="md-checkbox">
+                                                        <input type="checkbox" id="chkUni" class="md-check" onclick="ActivarUni();">
+                                                        <label for="chkUni">
+                                                            <span></span>
+                                                            <span class="check"></span>
+                                                            <span class="box"></span>
+                                                            Equivalencia
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-10" id="divUni">
+                                                <div class="form-group">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <input type="text" class="form-control " id="txtUni" name="txtUni" disabled="disabled" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6">
+                                        <div class="col-md-6">
 
-                                        <div class="col-md-10 form-group">
-                                            <label class="control-label" id="lblLugarP">Lugar donde estudio la preparatoria</label>
-                                            <div class="input-icon right">
-                                                <select id="slcNacionalidadPrep" class="form-control" name="slcNacionalidadPrep">
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label" id="lblLugarP">Lugar donde estudio la preparatoria</label>
+                                                <div class="input-icon right">
+                                                    <select id="slcNacionalidadPrep" class="form-control" name="slcNacionalidadPrep">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                        <option value="1">México</option>
+                                                        <option value="2">Extranjero</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 form-group">
+                                                <label class="control-label" id="lblPN">País | Estado</label>
+                                                <div class="input-icon right">
+                                                    <select id="slcEstadoPais" class="form-control" name="slcEstadoPais">
+                                                        <option value="-1">--Seleccionar--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">Titulado</label>
+                                                <label class="radio-inline"><input type="radio" id="chkUniSi" name="chkUni" />Si</label>
+                                                <label class="radio-inline"><input type="radio" id="chkUniNo" name="chkUni" />No</label>
+                                            </div>
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">Porque</label>
+                                                <input class="form-control " type="text" id="txtUniMotivo" disabled="disabled" />
+                                            </div>
+                                            <div class="form-group col-md-10">
+                                                <label class="control-label">¿Por que medio te enteraste de nuestra Universidad? </label>
+                                                <select id="slcMedio" name="slcMedio" class="form-control selector">
                                                     <option value="-1">--Seleccionar--</option>
-                                                    <option value="1">México</option>
-                                                    <option value="2">Extranjero</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-10 form-group">
-                                            <label class="control-label" id="lblPN">País | Estado</label>
-                                            <div class="input-icon right">
-                                                <select id="slcEstadoPais" class="form-control" name="slcEstadoPais">
-                                                    <option value="-1">--Seleccionar--</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-10">
-                                            <label class="control-label">Titulado</label>
-                                            <label class="radio-inline"><input type="radio" id="chkUniSi" name="chkUni" />Si</label>
-                                            <label class="radio-inline"><input type="radio" id="chkUniNo" name="chkUni" />No</label>
-                                        </div>
-                                        <div class="form-group col-md-10">
-                                            <label class="control-label">Porque</label>
-                                            <input class="form-control " type="text" id="txtUniMotivo" disabled="disabled" />
-                                        </div>
-                                        <div class="form-group col-md-10">
-                                            <label class="control-label">¿Por que medio te enteraste de nuestra Universidad? </label>
-                                            <select id="slcMedio" name="slcMedio" class="form-control selector">
-                                                <option value="-1">--Seleccionar--</option>
-                                            </select>
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn blue" id="btnGuardarAntecedente">Guardar</button>
-                                </div>
-                            </form>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn blue" id="btnGuardarAntecedente">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -187,6 +187,8 @@ namespace AppAdministrativos.Controllers
         [HttpPut]
         public IHttpActionResult AddAlumno(DTO.DTOAlumno Alumno)
         {
+            //Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            Alumno.DTOAlumnoDetalle.FechaNacimiento = DateTime.ParseExact(Alumno.DTOAlumnoDetalle.FechaNacimientoC, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             var Result = BLLAlumnoPortal.InsertarAlumno(Alumno);
 
             if (Result is string)
@@ -195,7 +197,11 @@ namespace AppAdministrativos.Controllers
             }
             else
             {
-                return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                      + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                      + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
             }
         }
 
@@ -290,6 +296,150 @@ namespace AppAdministrativos.Controllers
             else
             {
                 return BadRequest("Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
+            }
+        }
+
+        [Route("ConsultarAlumno2/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult PermitirAlumno(int AlumnoId)
+        {
+            var Result = BLLAlumnoPortal.ObtenerAlumno2(AlumnoId);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("InsertarPermiso")]
+        [HttpPut]
+        public IHttpActionResult PutPermiso(JObject objAlumno)
+        {
+            var Result = BLLAlumnoPermitido.InsertarAlumno(
+                int.Parse(objAlumno["AlumnoId"].ToString()),
+                int.Parse(objAlumno["UsuarioId"].ToString()),
+                objAlumno["Descripcion"].ToString());
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("CambioCarrera/{AlumnoId:int}/{UsuarioId:int}")]
+        [HttpGet]
+        public IHttpActionResult ConsultaCambioCarrera(int AlumnoId, int UsuarioId)
+        {
+            var Result = BLLAlumnoPortal.ConsultaCambioCarrera(AlumnoId, UsuarioId);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("CambioCarrera")]
+        [HttpPost] 
+        public IHttpActionResult CambiarCarrera(DTO.DTOAlumnoCambioCarrera Cambio)
+        {            
+            var Result = BLLAlumnoPortal.AplicarCambioCarrera(Cambio);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+        
+        [Route("Periodo/PromocionCasa")]
+        [HttpGet]
+        public IHttpActionResult GetPeriodoPromoCasa()
+        {
+            var Result = BLLAlumnoPortal.PeriodosPromocionCasa();
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("Alumno/PromocionCasa/{Anio:int}/{PeriodoId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetAlumnosPromocionCasa(int Anio, int PeriodoId)
+        {
+            var Result = BLLAlumnoPortal.ConsultarAlumnoPromocionCasa(Anio, PeriodoId);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("PromocionCasa")]
+        [HttpPost]
+        public IHttpActionResult AplicarPromocionCasa(DTO.DTOAlumnoPromocionCasa Promocion)
+        {
+            var Result = BLLAlumnoPortal.AplicarPromocionCasa(Promocion);
+
+            if ((bool)Result.GetType().GetProperty("Estatus").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                       + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                       + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
             }
         }
     }

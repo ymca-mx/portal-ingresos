@@ -133,7 +133,6 @@ namespace AppAdministrativos.Controllers
         public IHttpActionResult SistemaPagoAlumno(int AlumnoId)
         {
             var Result = BLLPagoPlan.ConsultarPagos(AlumnoId);
-
             if (Result.ToString().Contains("System.Collections.Generic.List"))
             {
                 return Ok(Result);
@@ -143,6 +142,7 @@ namespace AppAdministrativos.Controllers
                 return BadRequest("Fallo al momento de trer datos, " + Result.GetType().GetProperty("Message").GetValue(Result, null));
             }
         }
+    
 
         [Route("EnviarMail2")]
         [HttpPost]

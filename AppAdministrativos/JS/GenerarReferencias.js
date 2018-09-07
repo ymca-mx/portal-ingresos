@@ -14,7 +14,7 @@
     DatosAlumno();
     
     function DatosAlumno() {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         var AlumnoId = $.cookie('user');
         //var AlumnoId = '9579';
         $.ajax({
@@ -36,7 +36,7 @@
                     $('#slcOfertaEducativa').val(data.d.lstAlumnoInscrito[0].OfertaEducativaId);
                     $('#slcOfertaEducativa').change();
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }
@@ -60,7 +60,7 @@
         });
     }
     $('#slcOfertaEducativa').change(function () {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $("#slcConceptos").empty();
         ConsutlarAdeudos($('#slcOfertaEducativa').val());
     });
@@ -97,11 +97,11 @@
                 ReferenciasTbl(Respuesta);
                 var fil = $('#tblReferencias label input');
                 fil.removeClass('input-small').addClass('input-large');
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             },
             error: function (Respuesta) {
                 alertify.alert('Error al cargar datos');
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }
@@ -150,7 +150,7 @@
         });
     }
     $('#btnGenerar').on('click', function () {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         var Variables;
         var cFech;
         if ($('#slcConceptos').val() == '-1') { return false; }
@@ -176,7 +176,7 @@
                         }
                     });
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 return false;
             }
         });
@@ -197,7 +197,7 @@
                 td += '<td>' + data.d.objNormal.FechaLimite + '</td>';//Fecha
                 td += '</tr>'
                 $('#tblReferencias').append(td);
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
 
                 Alerta();
             }

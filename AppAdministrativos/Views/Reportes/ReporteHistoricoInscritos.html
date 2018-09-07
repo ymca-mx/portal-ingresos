@@ -1,145 +1,113 @@
-﻿
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="portlet light" id="dvCargos">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                <h1 class="caption-subject font-blue bold uppercase">
-                                    Reporte Alumnos Inscritos Histórico
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                <form class="recovery-form" id="form_recovery">
-                                    <div class="col-md-4">
-                                        <div class="form-group" id="divSlc">
-                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                            <label class="control-label">Periodos</label>
-
-                                            <div class="input-icon right">
-                                                <!--<i class="fa fa-lock"></i>-->
-                                                <select class="form-control" name="slcCuatrimestre" id="slcCuatrimestre"></select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group" id="divSlc2">
-
-                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                            <label class="control-label">Oferta Educativa</label>
-
-                                            <div class="input-icon right">
-                                                <!--<i class="fa fa-lock"></i>-->
-                                                <select class="form-control" name="slcOferta" id="slcOferta">
-                                                    <option selected value="0">--Todas--</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div> &nbsp;</div>
-                                        <label class="control-label"># de Registros :  </label>
-                                        <label class="control-label" id="lbInscritos" name="lbInscritos"> </label>
-                                    </div>
-
-                                    <div class="col-md-12">
-
-                                        <div class="portlet-body"  >
-                                            
-                                            <div class="portlet-body" >
-                                                <button id="btnInscritos"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
-                                                <div> &nbsp;</div>
-                                                <table id="dtInscritos" name="dtInscritos" class="table table-striped table-bordered table-advance table-hover ">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-indent"></i> &nbsp; Alumno Id
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-male"></i> &nbsp; Nombre Alumno
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-calendar"></i> &nbsp; Fecha  de <br /> Inscripción
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca | descuento
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-user-plus"></i> &nbsp; Tipo de <br /> Alumno
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-suitcase"></i> &nbsp; Es Empresa
-                                                            </th>
-                                                            <th style="text-align:center">
-                                                                <i class="fa fa-user"></i> &nbsp; Usuario <br /> Aplico
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </form>
-
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                    </div>
-                    <div class="row">
-                        <!--<a href="#Monto" data-toggle="modal" id="btnPopup"></a>-->
-                        <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                            <div class="modal-dialog modal-sm" style="height: 90px;">
-                                <!--<div class="modal-content" style="width:auto">-->
-                                <div class="form-group">
-                                    <h3 id="hCarga">Cargando</h3>
-                                </div>
-                                <div class="form-group">
-                                    <div class="bar" style="width:auto" id="divBar">
-                                        <p id="txtBar"></p>
-                                    </div>
-                                    <!--</div>-->
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Reporte Alumnos Inscritos Histórico</span>
             </div>
         </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
 
+                    <form class="recovery-form" id="form_recovery">
+                        <div class="col-md-4">
+                            <div class="form-group" id="divSlc">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label">Periodos</label>
+
+                                <div class="input-icon right">
+                                    <!--<i class="fa fa-lock"></i>-->
+                                    <select class="form-control" name="slcCuatrimestre" id="slcCuatrimestre"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" id="divSlc2">
+
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label">Oferta Educativa</label>
+
+                                <div class="input-icon right">
+                                    <!--<i class="fa fa-lock"></i>-->
+                                    <select class="form-control" name="slcOferta" id="slcOferta">
+                                        <option selected value="0">--Todas--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div> &nbsp;</div>
+                            <label class="control-label"># de Registros :  </label>
+                            <label class="control-label" id="lbInscritos" name="lbInscritos"> </label>
+                        </div>
+
+                        <div class="col-md-12">
+
+                            <div class="portlet-body">
+
+                                <div class="portlet-body">
+                                    <button id="btnInscritos"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                    <div> &nbsp;</div>
+                                    <table id="dtInscritos" name="dtInscritos" class="table table-striped table-bordered table-advance table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-indent"></i> &nbsp; Alumno Id
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-male"></i> &nbsp; Nombre Alumno
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-graduation-cap"></i> &nbsp; Oferta Educativa
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-calendar"></i> &nbsp; Fecha  de <br /> Inscripción
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-pie-chart"></i> &nbsp; Porcentaje <br /> beca | descuento
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-user-plus"></i> &nbsp; Tipo de <br /> Alumno
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-suitcase"></i> &nbsp; Es Empresa
+                                                </th>
+                                                <th style="text-align:center">
+                                                    <i class="fa fa-user"></i> &nbsp; Usuario <br /> Aplico
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
     </div>
-    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-
-
-    <script src="Scripts/js-xlsx/FileSaver.js"></script>
-    <script src="Scripts/js-xlsx/xlsx.full.min.js"></script>
-
-    <script src="JS/Reportes/ReporteHistoricoInscritos.js"></script>
+</main>
+<script>
+    $.getScript("Scripts/js-xlsx/FileSaver.js");
+    $.getScript("Scripts/js-xlsx/xlsx.full.min.js");
+    $.getScript("JS/Reportes/ReporteHistoricoInscritos.js");
+</script>

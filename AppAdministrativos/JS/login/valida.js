@@ -139,8 +139,7 @@
                             return false;
                         }
 
-                        $.cookie('userAdmin', credenciales.UsuarioId, { expires: 1 });
-                        $('#username').append($.cookie('userAdmin'));
+                        localStorage.setItem('userAdmin', credenciales.UsuarioId);
                         $(location).attr('href', 'index.html');
                     }
                 })

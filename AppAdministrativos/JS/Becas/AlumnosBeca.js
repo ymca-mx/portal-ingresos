@@ -1,49 +1,69 @@
-﻿$(document).ready(function init() {
+﻿$(function () {
     var AlumnoId;
     var tblAlumnosPActual = null, tblPagos = null, tblBecas = null, tblAlumnos = null;
     var Estado = "";
     var UsurioTipo = 0, NuevoIngreso = 0;
     var TieneSEP = false, TieneComite = false, EsEspecial = false, esEmpresa, EsCompleto = true;
     var objAlumno = undefined;
+
     $("#chkSEP").bootstrapSwitch({
-        size:"small"
+        size: "large",
+        onText: "Si",
+        offText:"No"
     });
 
-    var Funciones = {
-        CrearEnlace: function () {
-            $('#chkSEP').on('switchChange.bootstrapSwitch', Funciones.chkSEPonchange);
-            $('#btnCargosBeca').on('click', Funciones.btnCargosBecaonClick);
-            $('#btnRegresar').on('click', Funciones.btnRegresaronClcik);
-            $("#tblBecas").on('click', 'a', Funciones.tblBecasonClicka);
-            $('#tbAlumnos').on('click', 'a', Funciones.tbAlumnosonClicka);
-            $('#btnBuscarAlumno').on('click', Funciones.btnBuscarAlumnoonClick);
-            $('#btnClosedivOfertas').on('click', Funciones.btnClosedivOfertasonClick);
-            $('#divOfertaAlumno').on('click', 'a', Funciones.divOfertaAlumnoonClicka);
-            $("#txtBecaMonto").focus(Funciones.txtBecaMontoFocus);
-            $('#txtBecaMonto').keyup(Funciones.txtBecaMontoKeyUp);
-            $('#btnGenerarCargos').on('click', Funciones.btnGenerarCargosonClick);
-            $('#CartaArchivo').bind('change', Funciones.CartaArchivoBindChange);
-            $('#FileCarta a').on('click', Funciones.FileCartaAOnClick);
-            $('#txtAlumno').on('keydown', Funciones.txtAlumnoonKeyDown);
-            $('#tblAlumnos').on('click', 'a', Funciones.TablaAlumnoClick);
-            $('#slcDescripcionBeca').on('change', Funciones.slcDescripcionBecaChange);
+    var ReincripcionFn = {
+        init() {
+            $('#FileCarta .close').hide();
+            $('#dvTabla').hide();
+            $('#dvCargos').show();
+            $('#divComite2').hide();
+            $("#btnGenerarCargos").attr("disabled", "disabled");
+            jQuery('#pulsate-regular2').pulsate({
+                color: "#bf1c56"
+            });
+            $('#btnGenerarCargos').removeData('texto');
+            $('#btnGenerarCargos').removeData('disabled');
+
+            this.CrearEnlace();
+
+            this.GetUsuario();
+
         },
-        GetUsuario: function () {
-            var usuario = $.cookie('userAdmin');
+        CrearEnlace() {
+            $('#chkSEP').on('switchChange.bootstrapSwitch', ReincripcionFn.chkSEPonchange);
+            $('#btnCargosBeca').on('click', ReincripcionFn.btnCargosBecaonClick);
+            $('#btnRegresar').on('click', ReincripcionFn.btnRegresaronClcik);
+            $("#tblBecas").on('click', 'a', ReincripcionFn.tblBecasonClicka);
+            $('#tbAlumnos').on('click', 'a', ReincripcionFn.tbAlumnosonClicka);
+            $('#btnBuscarAlumno').on('click', ReincripcionFn.btnBuscarAlumnoonClick);
+            $('#btnClosedivOfertas').on('click', ReincripcionFn.btnClosedivOfertasonClick);
+            $('#divOfertaAlumno').on('click', 'a', ReincripcionFn.divOfertaAlumnoonClicka);
+            $("#txtBecaMonto").focus(ReincripcionFn.txtBecaMontoFocus);
+            $('#txtBecaMonto').keyup(ReincripcionFn.txtBecaMontoKeyUp);
+            $('#btnGenerarCargos').on('click', ReincripcionFn.btnGenerarCargosonClick);
+            $('#CartaArchivo').bind('change', ReincripcionFn.CartaArchivoBindChange);
+            $('#FileCarta a').on('click', ReincripcionFn.FileCartaAOnClick);
+            $('#txtAlumno').on('keydown', ReincripcionFn.txtAlumnoonKeyDown);
+            $('#tblAlumnos').on('click', 'a', ReincripcionFn.TablaAlumnoClick);
+            $('#slcDescripcionBeca').on('change', ReincripcionFn.slcDescripcionBecaChange);
+        },
+        GetUsuario() {
+            var usuario = localStorage.getItem('userAdmin');
             $.ajax({
                 type: "POST",
                 url: "WS/General.asmx/ObtenerUsuario",
                 data: "{UsuarioId:'" + usuario + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data.d !== null) {
                         UsurioTipo = data.d.UsuarioTipoId;
                     }
                 }
             });
         },
-        CargarPeriodo: function (data) {                    
+        CargarPeriodo(data) {
             if (data.length > 0) {
                 var Desactiva = false;
 
@@ -51,11 +71,13 @@
                     var option = $(document.createElement('option'));
                     option.text(this.Descripcion);
                     option.val(this.Anio + '' + this.PeriodoId);
-                    option.attr("data-Anio", this.Anio);
-                    option.attr("data-PeriodoId", this.PeriodoId);
+                    option.data("Anio", this.Anio);
+                    option.data("PeriodoId", this.PeriodoId);
+                    option.data("Descripcion", this.Descripcion);
+
                     if (this.SolicitudInscripcion !== null) {
                         Desactiva = Desactiva == true ? true : true;
-                        option.attr("data-Observacion",
+                        option.data("Observacion",
                             this.SolicitudInscripcion.SolicitudUsuarioId + "|" +
                             this.SolicitudInscripcion.SolicitudNombreUsuario + ": " +
                             this.SolicitudInscripcion.Observaciones);
@@ -63,7 +85,7 @@
 
                     $('#slcDescripcionBeca').append(option);
 
-                  
+
                 });
 
                 if (Desactiva) {
@@ -71,10 +93,10 @@
                 }
 
                 $('#slcDescripcionBeca').val(data[0].Anio + '' + data[0].PeriodoId);
-                Funciones.slcDescripcionBecaChange();
+                ReincripcionFn.slcDescripcionBecaChange();
             }
         },
-        slcDescripcionBecaChange: function () {
+        slcDescripcionBecaChange() {
             $('#lblPeriodoBeca').text('');
             $('#divObservaciones').hide();
 
@@ -83,13 +105,13 @@
                 $('#btnGenerarCargos').text(textbutton);
                 var estadoDisabled = $('#btnGenerarCargos').data('disabled');
                 if (estadoDisabled !== undefined || estadoDisabled === true) {
-                    $('#btnGenerarCargos').attr('disabled',"disaled");
+                    $('#btnGenerarCargos').attr('disabled', "disaled");
                 }
             }
-            
-            var Anio = $('#slcDescripcionBeca').find(':selected').data("anio");
-            var PeriodoId = $('#slcDescripcionBeca').find(':selected').data("periodoid");
-            var Observaciones = $('#slcDescripcionBeca').find(':selected').data("observacion");
+
+            var Anio = $('#slcDescripcionBeca').find(':selected').data("Anio");
+            var PeriodoId = $('#slcDescripcionBeca').find(':selected').data("PeriodoId");
+            var Observaciones = $('#slcDescripcionBeca').find(':selected').data("Observacion");
 
             $('#lblPeriodoBeca').text(Anio + ' ' + PeriodoId);
             $('#txtPeriodo').val(Anio + ' ' + PeriodoId);
@@ -106,19 +128,21 @@
                 $("#btnGenerarCargos").removeAttr("disabled");
             }
         },
-        CargarDescuentos: function () {
-            var OfertaEducativa = $('#txtOfertaEducativa').data("ofertaid");
+        CargarDescuentos() {
+            var OfertaEducativa = $('#txtOfertaEducativa').data("OfertaId");
             $.ajax({
                 url: 'WS/Beca.asmx/DescuentosAnteriores',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: '{AlumnoId:"' + AlumnoId + '",OfertaEducativaId:"' + OfertaEducativa + '"}',
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data.d.length > 0) {
                         if (tblBecas !== null) {
                             $('#txtBecaMonto').val("0");
-                            tblBecas.fnClearTable();
+                            tblBecas
+                                .clear()
+                                .draw();
                         }
 
                         var objUltimo = data.d[data.d.length - 1];
@@ -136,7 +160,7 @@
                         $('#txtBecaMonto').keyup();
                         $("#txtBecaMonto").focus();
 
-                        tblBecas = $("#tblBecas").dataTable({
+                        tblBecas = $("#tblBecas").DataTable({
                             "aaData": data.d,
                             "aoColumns": [
                                 { "mDataProp": "AnioPeriodoId" },
@@ -169,7 +193,7 @@
                                 "search": "Buscar Alumno "
                             },
                             "order": [[2, "desc"]],
-                            "createdRow": function (row, data, dataIndex) {
+                            "createdRow"(row, data, dataIndex) {
                                 row.childNodes[1].style.textAlign = 'center';
                                 row.childNodes[2].style.textAlign = 'center';
                                 row.childNodes[3].style.textAlign = 'center';
@@ -179,7 +203,6 @@
                                     if (data.DocComiteRutaId !== "-1") {
                                         var newLinkS = $(document.createElement("a"));
                                         newLinkS[0].innerText = "Archivo...";
-                                        newLinkS.attr('data-file', data.DocComiteRutaId);
 
                                         var colComite = row.childNodes[6];
                                         colComite.innerHTML += "<br />" + newLinkS[0].outerHTML;
@@ -189,7 +212,7 @@
                                     if (data.DocAcademicaId !== "-1") {
                                         var newLinkA = $(document.createElement("a"));
                                         newLinkA[0].innerText = "Archivo...";
-                                        newLinkA.attr('data-file', data.DocAcademicaId);
+
 
                                         var colComite = row.childNodes[5];
                                         colComite.innerHTML += "<br />" + newLinkA[0].outerHTML;
@@ -198,46 +221,46 @@
                             }
                         });
                         if (TieneSEP) {
-                            Funciones.SetearCombo(true);
+                            ReincripcionFn.SetearCombo(true);
                         }
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 }
             });
         },
-        CrearPDF: function (DocumentoId) {
+        CrearPDF(DocumentoId) {
             $.ajax({
                 url: 'WS/Beca.asmx/GenerarPDF',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: '{DocumentoId:"' + DocumentoId + '"}',
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data !== null) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         window.open(data.d, "ArchivoPDF");
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 }
             });
         },
-        AbrirArchivo: function (DocumentoId) {
+        AbrirArchivo(DocumentoId) {
             var url = "../../WS/Beca.asmx/GenerarPDF2?DocumentoId=" + DocumentoId;
             var archiv = window;
             archiv.open("Views/Archivos/Archivo.html", "PDF");
             archiv.Ruta = url;
         },
-        BuscarNombre: function (Nombre) {
+        BuscarNombre(Nombre) {
             $.ajax({
                 url: 'WS/Alumno.asmx/BuscarAlumnoString',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: '{Filtro:"' + Nombre + '"}',
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data != null) {
                         $('#frmVarios').show();
                         tblAlumnos = $('#tblAlumnos').dataTable({
@@ -249,7 +272,7 @@
                                 { "mDataProp": "AlumnoInscrito.OfertaEducativa.Descripcion" },
                                 //{ "mDataProp": "FechaSeguimiento" },
                                 {
-                                    "mDataProp": function (data) {
+                                    "mDataProp"(data) {
                                         return "<a class='btn green'>Seleccionar</a>";
                                     }
                                 }
@@ -277,12 +300,12 @@
                             "order": [[2, "desc"]]
                         });
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 }
             });
         },
-        Limpiar: function () {
+        Limpiar() {
             if ($('#txtAlumno').val().length === 0) { return false; }
             var nombre = $('#lblNombre');
             nombre[0].innerText = "";
@@ -294,16 +317,16 @@
             var va = chk[0].checked;
 
             if (va === true) {
-                Funciones.SetearCombo(false);               
+                ReincripcionFn.SetearCombo(false);
 
                 if (UsurioTipo === 3) {
-                    Funciones.SEPReadOnly();
+                    ReincripcionFn.SEPReadOnly();
                 }
                 va = false;
             }
             else {
                 if (UsurioTipo === 3) {
-                    Funciones.SEPReadOnly();
+                    ReincripcionFn.SEPReadOnly();
                 }
             }
 
@@ -318,39 +341,40 @@
             if (tblPagos !== null && tblPagos !== undefined) {
                 tblPagos.fnClearTable();
             }
-            if (tblBecas !== null && tblBecas !== undefined)
-            { tblBecas.fnClearTable(); }
+            if (tblBecas !== null && tblBecas !== undefined) {
+                tblBecas
+                    .clear()
+                .draw(); }
         },
-        SEPReadOnly: function () {
+        SEPReadOnly() {
             $("#chkSEP").bootstrapSwitch('readonly', true);
             $("#chkSEP").bootstrapSwitch('disabled', true);
         },
-        SEPReadOnlyOff: function () {
+        SEPReadOnlyOff() {
             $("#chkSEP").bootstrapSwitch('readonly', false);
             $("#chkSEP").bootstrapSwitch('disabled', false);
         },
-        OFertasPeriodo: function () {
+        OFertasPeriodo() {
             $.ajax({
                 url: 'WS/Beca.asmx/OfertasAlumno',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: '{AlumnoId:"' + AlumnoId + '"}',
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data.d.length === 0) {
                         alertify.alert("El Alumno no Existe.");
                         $("#btnGenerarCargos").attr("disabled", "disabled");
-                        Funciones.Limpiar();
-                        $('#Load').modal('hide');
-                        return false;
+                        ReincripcionFn.Limpiar();
+                        IndexFn.Block(false);
                     }
                     else if (data.d.length === 1) {
                         ///////////////Inicio
-                        Funciones.TraerOfertaAlumno(AlumnoId, data.d[0].OfertaEducativaId);
+                        ReincripcionFn.TraerOfertaAlumno(AlumnoId, data.d[0].OfertaEducativaId);
                     }
                     else if (data.d.length > 1) {
                         $('#divOfertaAlumno tbody').remove();
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         $('#divOfertas').modal('show');
 
                         $(data.d).each(function (s, d) {
@@ -362,7 +386,7 @@
                 }
             });
         },
-        TraerOfertaAlumno: function (AlumnoId1, Oferta2) {
+        TraerOfertaAlumno(AlumnoId1, Oferta2) {
             NuevoIngreso = 0;
             $.ajax({
                 url: 'WS/Beca.asmx/BuscarAlumno',
@@ -370,15 +394,15 @@
                 contentType: 'application/json; charset=utf-8',
                 data: '{AlumnoId:"' + AlumnoId1 + '",OfertaEducativaId:"' + Oferta2 + '"}',
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data.d === null) {
                         $("#btnGenerarCargos").attr("disabled", "disabled");
-                        Funciones.Limpiar();
-                        $('#Load').modal('hide');
+                        ReincripcionFn.Limpiar();
+                        IndexFn.Block(false);
                         return false;
                     }
 
-                    Funciones.CargarPeriodo(data.d.ListPeriodos);
+                    ReincripcionFn.CargarPeriodo(data.d.ListPeriodos);
 
                     var lblEmpresa = $('#divInscrito3');
                     lblEmpresa = $(lblEmpresa)[0].children[0].children[0].innerText;
@@ -542,10 +566,10 @@
                         labelIns[0].innerText += " Coordinador no ha dado su VistoBueno";
                     }
                     $('#txtOfertaEducativa').val(data.d.OfertasEducativas[0].Descripcion);
-                    $('#txtOfertaEducativa').attr("data-Ofertaid", data.d.OfertasEducativas[0].OfertaEducativaId);
-                    $('#txtPeriodo').val(data.d.ListPeriodos[0].PeriodoD);
-                    $('#txtPeriodo').attr("data-Anio", data.d.Anio);
-                    $('#txtPeriodo').attr("data-PeriodoId", data.d.PeriodoId);
+                    $('#txtOfertaEducativa').data("OfertaId", data.d.OfertasEducativas[0].OfertaEducativaId);
+                    $('#txtPeriodo').val(data.d.ListPeriodos[0].PeriodoD + " " + data.d.ListPeriodos[0].Descripcion);
+                    $('#txtPeriodo').data("Anio", data.d.Anio);
+                    $('#txtPeriodo').data("PeriodoId", data.d.PeriodoId);
                     var nombre = $('#lblNombre');
                     nombre[0].innerText = data.d.Nombre;
 
@@ -553,14 +577,14 @@
                         tblPagos.fnClearTable();
                     }
 
-                    Funciones.CargarDescuentos();
+                    ReincripcionFn.CargarDescuentos();
                     $("#txtBecaMonto").focus();
                     $('#txtBecaMonto').keyup();
                 }
             });
         },
-        Guardar: function () {
-            var ObjBecaAlumno = Funciones.AlumnoBeca();
+        Guardar() {
+            var ObjBecaAlumno = ReincripcionFn.AlumnoBeca();
 
             $.ajax({
                 url: 'WS/Beca.asmx/InsertarBeca',
@@ -568,19 +592,19 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(ObjBecaAlumno),
                 dataType: 'json',
-                success: function (data) {
+                success(data) {
                     if (data.d === "Guardado" || data.d === "Insertado") {
                         objAlumno = undefined;
-                        Funciones.GuardarDocumentos();
+                        ReincripcionFn.GuardarDocumentos();
                     }
                     else if (data.d === "Fallo") {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Se ha producido un error al inscribir.");
                     }
                 }
             });
         },
-        RecortarNombre: function (name) {
+        RecortarNombre(name) {
             var cadena;
             if (name.length > 15) {
                 cadena = name.substring(0, 8);
@@ -590,7 +614,7 @@
                 return name;
             }
         },
-        GuardarDocumentos: function (Alumnoid, OfertaEducativaId, Anio, Periodo, EsComite, Usuario) {
+        GuardarDocumentos(Alumnoid, OfertaEducativaId, Anio, Periodo, EsComite, Usuario) {
             var data = new FormData();
 
             var filBeca = $('#CartaArchivo'); // FileList object
@@ -598,11 +622,11 @@
             data.append("DocumentoBeca", filBeca);
 
             data.append("AlumnoId", Alumnoid);
-            data.append("OfertaEducativaId", Funciones.AlumnoBeca.OfertaEducativaId);
-            data.append("Anio", Funciones.AlumnoBeca.Anio);
-            data.append("Periodo", Funciones.AlumnoBeca.Periodo);
-            data.append("EsComite", Funciones.AlumnoBeca.EsComite);
-            data.append("UsuarioId", Funciones.AlumnoBeca.Usuario);
+            data.append("OfertaEducativaId", ReincripcionFn.AlumnoBeca.OfertaEducativaId);
+            data.append("Anio", ReincripcionFn.AlumnoBeca.Anio);
+            data.append("Periodo", ReincripcionFn.AlumnoBeca.Periodo);
+            data.append("EsComite", ReincripcionFn.AlumnoBeca.EsComite);
+            data.append("UsuarioId", ReincripcionFn.AlumnoBeca.Usuario);
 
             var request = new XMLHttpRequest();
             request.open("POST", 'WS/Beca.asmx/GuardarDocumentos', true);
@@ -614,8 +638,8 @@
                 }
             };
         },
-        chkSEPonchange: function (event) {
-            if (!isNaN(AlumnoId) && AlumnoId.length>0) {
+        chkSEPonchange(event) {
+            if (!isNaN(AlumnoId) && AlumnoId.length > 0) {
                 var val = this;
                 if (val.checked === true) {
                     (function () {
@@ -628,9 +652,9 @@
 
                         var lstDescuentos = [];
 
-                        $(tblBecas).DataTable()
+                        $($(tblBecas).DataTable()
                             .column(2)
-                            .data()
+                            .data())
                             .each(function (value, index) {
                                 if (value.length > 0) {
                                     lstDescuentos.push({
@@ -640,9 +664,9 @@
                                     });
                                 }
                             });
-                        $(tblBecas).DataTable()
+                        $($(tblBecas).DataTable()
                             .column(4)
-                            .data()
+                            .data())
                             .each(function (value, index) {
                                 if (value.length > 0) {
                                     lstDescuentos.push({
@@ -676,42 +700,45 @@
                 return false;
             }
         },
-        btnCargosBecaonClick: function () {
+        btnCargosBecaonClick() {
             $('#dvTabla').hide();
             $('#dvCargos').show();
         },
-        btnRegresaronClcik: function () {
+        btnRegresaronClcik() {
             if (tblPagos !== undefined) {
                 tblPagos.fnClearTable();
             }
             if (tblPagos !== tblBecas) {
-                tblBecas.fnClearTable();
+                tblBecas
+                    .clear()
+                    .draw();
             }
             $("#txtAlumno").val("");
-            Funciones.Limpiar();
+            ReincripcionFn.Limpiar();
             $('#dvTabla').show();
             $('#dvCargos').hide();
         },
-        tblBecasonClicka: function () {
-            var a = this;
-            a = $(a).data("file");
-            Funciones.CrearPDF(a);
+        tblBecasonClicka() {
+            var RowSelect = this.parentNode.parentNode;
+            var Select = tblBecas.row(RowSelect).data();
+
+            ReincripcionFn.CrearPDF(Select.DocComiteRutaId);
 
         },
-        tbAlumnosonClicka: function () {
+        tbAlumnosonClicka() {
             var idAlumno = tblAlumnosPActual.fnGetData(this.parentNode.parentNode, 0);
             $('#dvTabla').hide();
             $('#dvCargos').show();
             $('#txtAlumno').val(idAlumno);
             $('#btnBuscarAlumno').click();
         },
-        TablaAlumnoClick: function () {
+        TablaAlumnoClick() {
             $('#frmVarios').hide();
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
             $('#txtAlumno').val(rowadd.AlumnoId);
-            Funciones.btnBuscarAlumnoonClick();
+            ReincripcionFn.btnBuscarAlumnoonClick();
         },
-        btnBuscarAlumnoonClick: function () {
+        btnBuscarAlumnoonClick() {
             AlumnoId = $('#txtAlumno').val();
             objAlumno = undefined;
             $('#divObservaciones').hide();
@@ -723,16 +750,17 @@
 
                 TieneComite = false;
                 TieneSEP = false;
-                if (tblBecas !== null && tblBecas !== undefined)
-                { tblBecas.fnClearTable(); }
-                Funciones.Limpiar();
-                var nombre = $('#hCarga');
-                nombre[0].innerText = "Cargando";
+                if (tblBecas !== null && tblBecas !== undefined) {
+                    tblBecas
+                        .clear()
+                    .draw(); }
+                ReincripcionFn.Limpiar();
+
                 var labelIns = $('#lblInscito');
                 labelIns.innerText = "Alumno Inscrito";
 
                 $("#btnGenerarCargos").removeAttr("disabled");
-                var load = $('#Load').modal();
+                IndexFn.Block(true);
                 $('#divInscrito').hide();
                 $('#divInscrito2').hide();
                 $('#divInscrito3').hide();
@@ -746,28 +774,28 @@
                 var lab = $('#lblPagos');
                 lab[0].innerText = "Pagos sin Generar";
 
-                if (!isNaN(AlumnoId)) { Funciones.OFertasPeriodo(); }
-                else { Funciones.BuscarNombre(AlumnoId); }
+                if (!isNaN(AlumnoId)) { ReincripcionFn.OFertasPeriodo(); }
+                else { ReincripcionFn.BuscarNombre(AlumnoId); }
             }
             else { return false; }
         },
-        btnClosedivOfertasonClick: function () {
+        btnClosedivOfertasonClick() {
             $("#txtAlumno").val("");
-            Funciones.Limpiar();
+            ReincripcionFn.Limpiar();
         },
-        divOfertaAlumnoonClicka: function (a) {
+        divOfertaAlumnoonClicka(a) {
             var th = a.currentTarget.parentElement.parentElement.childNodes[0].innerText;
             $('#divOfertas').modal('hide');
-            $('#Load').modal('show');
-            Funciones.TraerOfertaAlumno(AlumnoId, th);
+            IndexFn.Block(true);
+            ReincripcionFn.TraerOfertaAlumno(AlumnoId, th);
         },
-        txtBecaMontoFocus: function () {
+        txtBecaMontoFocus() {
             this.select();
             var coords = $(this).offset();
             $(document).scrollLeft(coords.left);
             $(document).scrollTop(coords.top);
         },
-        SetearCombo: function (estatus) {
+        SetearCombo(estatus) {
             var read = $("#chkSEP").bootstrapSwitch('readonly');
             var disab = $("#chkSEP").bootstrapSwitch('disabled');
 
@@ -779,7 +807,7 @@
             $("#chkSEP").bootstrapSwitch('readonly', read);
             $("#chkSEP").bootstrapSwitch('disabled', disab);
         },
-        txtBecaMontoKeyUp: function (e) {
+        txtBecaMontoKeyUp(e) {
             var ch2 = $("#chkSEP")[0];
 
             var val = e.target.value;
@@ -798,21 +826,21 @@
 
                     if ($("#chkSEP").bootstrapSwitch('readonly')) {
                         if (!TieneSEP) {
-                            Funciones.SetearCombo(false);
+                            ReincripcionFn.SetearCombo(false);
                         }
-                        Funciones.SEPReadOnly();
+                        ReincripcionFn.SEPReadOnly();
                     }
                 } else if (val > 0) {
                     if (UsurioTipo !== 3) { $('#divComite2').show(); }
                     UsurioTipo = UsurioTipo;
 
                     if ($("#chkSEP").bootstrapSwitch('readonly') && UsurioTipo !== 3) {
-                        Funciones.SEPReadOnlyOff();
+                        ReincripcionFn.SEPReadOnlyOff();
                     }
                 }
             }
         },
-        AlumnoBeca: function () {
+        AlumnoBeca() {
             var Monto = $('#txtBecaMonto').val();
             Monto = Monto.length === 0 ? 0 : Monto;
             var SEP = $('#chkSEP');
@@ -820,69 +848,60 @@
 
             return {
                 AlumnoId: AlumnoId,
-                OfertaEducativaId: $('#txtOfertaEducativa').data("ofertaid"),
+                OfertaEducativaId: $('#txtOfertaEducativa').data("OfertaId"),
                 Monto: Monto,
                 SEP: SEP,
-                Anio: $('#slcDescripcionBeca').find(':selected').data("anio"),
-                PeriodoId: $('#slcDescripcionBeca').find(':selected').data("periodoid"),
-                Usuario: $.cookie('userAdmin'),
+                Anio: $('#slcDescripcionBeca').find(':selected').data("Anio"),
+                PeriodoId: $('#slcDescripcionBeca').find(':selected').data("PeriodoId"),
+                Usuario: localStorage.getItem('userAdmin'),
                 EsComite: objAlumno !== undefined ? objAlumno.BecaComite === "Si" ? true : false : false,
                 EsEmpresa: esEmpresa,
                 Materias: $('#txtMateria').val(),
                 Asesorias: $('#txtAsesoria').val()
             };
         },
-        btnGenerarCargosonClick: function () {
-            var nombre = $('#hCarga');
-            nombre[0].innerText = "Guardando";
-            $('#Load').modal('show');
+        btnGenerarCargosonClick() {
+            IndexFn.Block(true);
 
-            Funciones.Guardar();
+            ReincripcionFn.Guardar();
         },
-        CartaArchivoBindChange: function () {
-            var file = $('#FileCarta');
-            var tex = $('#txtCartaArchivo').html();
+        CartaArchivoBindChange() {
+            var FileId = "FileCarta";
+            var txtId = "txtCartaArchivo";
+
+            var file = $('#' + FileId);
+
+
             if (this.files.length > 0) {
-                $('#txtCartaArchivo').text(Funciones.RecortarNombre(this.files[0].name));
+                $('#' + txtId).text(ReincripcionFn.RecortarNombre(this.files[0].name));
                 file.addClass('fileinput-exists').removeClass('fileinput-new');
-                $('#FileCarta span span').text('Cambiar');
+                $('#' + FileId + ' span span').text('Cambiar');
+                $('#' + FileId + ' .close').show();
             }
             else {
-                $('#txtCartaArchivo').text('');
+                $('#' + txtId).text('');
                 file.removeClass('fileinput-exists').addClass('fileinput-new');
-                $('#FileCarta span span').text('Seleccionar Archivo...');
+                $('#' + FileId + ' span span').text('Seleccionar Archivo...');
+                $('#' + FileId + ' .close').hide();
             }
         },
-        FileCartaAOnClick: function () {
-            var file = $('#FileCarta');
-            $('#txtCartaArchivo').text('');
+        FileCartaAOnClick() {
+            var FileId = 'FileCarta';
+            var txtId = "txtCartaArchivo";
+
+            var file = $('#' + FileId);
+            $('#' + txtId).text('');
             file.removeClass('fileinput-exists').addClass('fileinput-new');
-            $('#CartaArchivo')[0].value = null;
-            $('#FileCarta span span').text('Seleccionar Archivo...');
+            file[0] = null;
+            $('#' + FileId + ' span span').text('Seleccionar Archivo...');
+            $('#' + FileId + ' .close').hide();
         },
-        txtAlumnoonKeyDown: function (e) {
+        txtAlumnoonKeyDown(e) {
             if (e.which === 13) {
-                Funciones.btnBuscarAlumnoonClick();
+                ReincripcionFn.btnBuscarAlumnoonClick();
             }
-        },        
-        init: function () {
-
-            $('#dvTabla').hide();
-            $('#dvCargos').show();
-            $('#divComite2').hide();
-            $("#btnGenerarCargos").attr("disabled", "disabled");
-            jQuery('#pulsate-regular2').pulsate({
-                color: "#bf1c56"
-            });
-            $('#btnGenerarCargos').removeData('texto');
-            $('#btnGenerarCargos').removeData('disabled');
-
-            Funciones.CrearEnlace();
-
-            Funciones.GetUsuario();
-
         },
     };
 
-    Funciones.init();
+    ReincripcionFn.init();
 });

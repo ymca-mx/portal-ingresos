@@ -234,7 +234,7 @@
     }
 
     function Cargar() {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             url: 'WS/Empresa.asmx/ListarEmpresas',
             type: 'POST',
@@ -314,7 +314,7 @@
                 objEstados = data.d;
                 $('#slcPaisUni').change();
                 $('#slcPaisUniFiscal').change();
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }
@@ -536,7 +536,7 @@
         if (GrupoFrm.valid() == false) { return false; }
 
         query = "{ EmpresaId:" + EmpresaI + ",GrupoId:" + GrupoI + ",Nombre:'" + $('#txtNombreGrupo').val() + "',Sede:'" + $('#slcPlantel').val() + "',Direccion:'" + $('#txtDireccion').val() + "',FechaIni:'" + $('#txtFechaInicio').val() +
-            "',UsuarioId:'" + $.cookie('userAdmin') + "'}";
+            "',UsuarioId:'" +  localStorage.getItem('userAdmin') + "'}";
 
         $.ajax({
             type: "POST",
@@ -649,7 +649,7 @@
         if (form.valid() == false) { return false; }
         $('#NuevaEmpresa').modal('hide');
         var query = "{";
-        query += "Razon:'" + $('#txtDescripcion').val() + "',RFC:'" + $('#txtRFC').val() + "',UsuarioId:'" + $.cookie('userAdmin') + "',Email:'" + $('#txtmail').val() + "',Calle:'" + $('#txtCalle').val() + "',CP:'" + $('#txtCP').val() +
+        query += "Razon:'" + $('#txtDescripcion').val() + "',RFC:'" + $('#txtRFC').val() + "',UsuarioId:'" +  localStorage.getItem('userAdmin') + "',Email:'" + $('#txtmail').val() + "',Calle:'" + $('#txtCalle').val() + "',CP:'" + $('#txtCP').val() +
             "',NoExterior:'" + $('#NoExterior').val() + "',NoInterior:'" + $('#NoInterior').val() + "',Pais:'" + $('#slcPaisUni').val() + "',Estado:'" + $('#slcEstadoPais').val() +
             "',Delegacion:'" + $('#slcDelegacion').val() + "',Observacion:'" + $('#txtObservacion').val() + "',Colonia:'" + $('#txtColonia').val() + "',FechaV:'" + $('#txtFechaV').val() +
             "',NombreC:'" + $('#txtNombre').val() + "',Paterno:'" + $('#txtPaterno').val() + "',Materno:'" + $('#txtMaterno').val() + "',EmailC:'" + $('#txtEmail').val() + "',Telefono:'" + $('#txtTelefono').val() +
@@ -887,7 +887,7 @@
             var rowadd = MiGrupo.fnGetData($(this).closest('tr'));
             rFila = MiGrupo.fnGetData(rFila, 0);
             GrupoI = rowadd.GrupoId;
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             CargarTablaAlumnosGrupo(GrupoI);
             CargarEmpresasLigero();
             $('#EmpresaC').hide();
@@ -1125,7 +1125,7 @@
     }
 
     function GuardarConfiguracion() {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         var periodo = $('#slcPeriodo').val();
         var  periodoId= periodo.substring(0, 1); 
         var anio = periodo.substring(2, 6);
@@ -1161,7 +1161,7 @@
                     $('#PopAlumnoConfiguracion').modal('hide');
                     if (TM == 1) { CargarTabla(); } else { CargarTablaAlumnosGrupo(GrupoI) }
                 } else {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error al guardar, intente nuevamente");
                 }
             }
@@ -1187,8 +1187,8 @@
     var ofertaid = OfertaI
     if (GrupoI != grupo)
     {
-        var usuario = $.cookie('userAdmin');
-        $('#Load').modal('show');
+        var usuario =  localStorage.getItem('userAdmin');
+        IndexFn.Block(true);
         $.ajax({
             type: "POST",
             url: "WS/Empresa.asmx/MovimientosAlumnoGrupo",
@@ -1204,7 +1204,7 @@
                     }
                     alertify.alert("Guardado Correctamente");
                     $('#PopAlumnoGrupo').modal('hide');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 }
             }
@@ -1395,7 +1395,7 @@ $('#tblAlumnosCom').on('click', 'button', function () {
 $('#btnAlumnos1').on('click', function () {
     $('#DivAlumnosGrupo').hide();
     $('#DivAlumnos').show();
-    $('#Load').modal('show');
+    IndexFn.Block(true);
     CargarTabla();
     $('#DivAlumnos').removeAttr('data-origen');
     $('#DivAlumnos').data("origen", 'DivAlumnosGrupo');
@@ -1405,7 +1405,7 @@ $('#btnAlumnos1').on('click', function () {
 $('#btnAlumnos').on('click', function () {
     $('#EmpresaLista').hide();
     $('#DivAlumnos').show();
-    $('#Load').modal('show');
+    IndexFn.Block(true);
     CargarTabla();
     $('#DivAlumnos').removeAttr('data-origen');
     $('#DivAlumnos').data("origen", 'EmpresaLista');
@@ -1413,7 +1413,7 @@ $('#btnAlumnos').on('click', function () {
 
 $('#btnAlumnoConfig').on('click', function () {
     if (formAlumno.valid()) {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         GuardarConfiguracion();
     }
 });
@@ -1488,7 +1488,7 @@ function CargarEmpresasLigero() {
                 $("#slcEmpresa").append(option);
             });
 
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         }
     });
 }
@@ -1609,7 +1609,7 @@ function CargarTablaAlumnosGrupo(GrupoId) {
                      }
                 });
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
             else { alertify.alert("Error"); }
         }

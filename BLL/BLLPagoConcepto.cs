@@ -10,6 +10,72 @@ namespace BLL
 {
     public class BLLPagoConcepto
     {
+        public static object ListaPagoConceptosAlumno(int OfertaEducativaId)
+        {
+            using (UniversidadEntities db = new UniversidadEntities())
+            {
+                try
+                {
+                    int[] Conceptos = { 304, 1000, 1, 15, 39, 320, 807 };
+
+                    DTOPeriodo PeriodoActual = BLLPeriodoPortal.TraerPeriodoEntreFechas(DateTime.Now);
+
+                    var Conceptos2 = db.Cuota
+                         .Where(c => c.OfertaEducativaId == OfertaEducativaId
+                                     && c.Anio == PeriodoActual.Anio
+                                     && c.PeriodoId == PeriodoActual.PeriodoId
+                                     && !c.PagoConcepto.EsVariable
+                                     && c.PagoConcepto.EsVisible
+                                     && !Conceptos.Contains(c.PagoConceptoId ))
+                         .Select(cu => new
+                         {
+                             cu.CuotaId,
+                             cu.PagoConceptoId,
+                             cu.PagoConcepto.Descripcion,
+                             cu.OfertaEducativaId,
+                             cu.Monto,
+                             cu.PagoConcepto.EsMultireferencia
+                         })
+                         .ToList();
+
+                    Conceptos2.Add(
+                            db.Cuota
+                            .Where(c => c.OfertaEducativaId == OfertaEducativaId
+                                        && c.Anio == PeriodoActual.Anio
+                                        && c.PeriodoId == PeriodoActual.PeriodoId
+                                        && !c.PagoConcepto.EsVariable
+                                        && c.PagoConcepto.EsVisible
+                                        && c.PagoConceptoId == 807)
+                            .Select(cu => new
+                            {
+                                cu.CuotaId,
+                                cu.PagoConceptoId,
+                                cu.PagoConcepto.Descripcion,
+                                cu.OfertaEducativaId,
+                                cu.Monto,
+                                cu.PagoConcepto.EsMultireferencia
+                            })
+                            .ToList()?
+                            .OrderByDescending(a => a.Monto)?
+                            .FirstOrDefault() ?? null);
+
+                    Conceptos2 = Conceptos2.Where(a => a != null).ToList();
+
+                    return Conceptos2.OrderBy(a => a.Descripcion).ToList();
+
+
+                }
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message
+                    };
+                }
+            }
+        }
+
         public static object ListaPagoConceptos(int OfertaEducativaId)
         {
             using (UniversidadEntities db = new UniversidadEntities())

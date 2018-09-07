@@ -355,7 +355,7 @@
                 .done(function (data) {
                     if (Campos.AlumnoInscrito.EsEmpresa || parseInt($('#slcTipoOferta').val()) === 4) {
                         alertify.alert("Alumno Guardado", function () {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             InscritosFn.Email(data.AlumnoId, Campos.AlumnoInscrito.OfertaEducativaId);
                         });
                     } else {
@@ -364,13 +364,13 @@
                 })
                 .fail(function (data) {
                     alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     });
                 });
             
         },
         GuardarDescuentos(AlumnoId) {
-            if (jQuery.type($.cookie('userAdmin')) === "undefined") {
+            if (jQuery.type( localStorage.getItem('userAdmin')) === "undefined") {
                 return false;
             }
 
@@ -380,7 +380,7 @@
                 Anio: $('#slcPeriodo :selected').data("anio"),
                 PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
                 OfertaEducativaId: $('#slcOfertaEducativa').val(),
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
                 Descuentos: [
                 {
                     PagoConceptoId: 800,
@@ -419,7 +419,7 @@
             IndexFn.ApiFile("Descuentos/GuardarDescuentos", data)
                 .done(function (data) {
                     if (data != null) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         var Alumnos = [ObjAlumno.AlumnoId];
                         IndexFn.Api("General/EnviarMail2", "Post", JSON.stringify(Alumnos))
                             .done(function (data) {
@@ -438,12 +438,12 @@
                             });
 
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("No se guardaron los cambios, intente de nuevo");
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("No se guardaron los cambios, intente de nuevo");
                     console.log(data);
                 });
@@ -455,7 +455,7 @@
                     InscritosFn.GuardarOFerta(objAlumno);
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error no se guardaron los cambios, intente de nuevo", function () {
                         $('#Antecedentes').modal('show');
                     });
@@ -522,7 +522,7 @@
                     var fil = $('#tbAlumnos_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
                     $('#slcTipoOferta').change();
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (data) {
                     alertify.alert('Error al cargar datos');
@@ -555,7 +555,7 @@
             $('#' + idlabelP).text('$' + String(monto));
         },
         tbAlumnosClikA() {
-            
+            IndexFn.Block(true);
             Mas = undefined;
             fid = MItable.fnGetData(this.parentNode.parentNode, 0);
             var Fecha;
@@ -590,8 +590,11 @@
                     $('#DivDescuentos').show();
 
                     $("#slcSistemaPago").change();
+
+                    IndexFn.Block(false);
                 })
                 .fail(function (data) {
+                    IndexFn.Block(false);
                     alertify.alert("Fallo la carga de los datos del alumno.");
                     console.log(data);
                 });
@@ -622,7 +625,7 @@
             else {                
                 if (!form.valid()) { return false; }
 
-                Usuario = $.cookie('userAdmin');
+                Usuario =  localStorage.getItem('userAdmin');
                 if (jQuery.type(Usuario) === "undefined") {
                     return false;
                 }
@@ -639,7 +642,7 @@
                         Material: $('#chkMaterial')[0].checked
                     },
                 };
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 InscritosFn.GuardarOFerta(objAlumno);
             }
             //$('#btnGuardarAntecedente').click();
@@ -647,7 +650,7 @@
         btnGuardarAntecedente() {
             if ($('#slcOfertaEducativa').val() == '-1') { alertify.alert("Seleccione un " + $('#lblOFerta').html() + " para poder continar"); return false; }
             if (!form.valid()) { return false; }
-            Usuario = $.cookie('userAdmin');
+            Usuario =  localStorage.getItem('userAdmin');
             if (jQuery.type(Usuario) === "undefined") {
                 return false;
             }
@@ -687,7 +690,7 @@
             $('#Antecedentes').modal('hide');
             alertify.confirm("¿Esta seguro que desea guardar los cambios?",
                 function (e) {
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     InscritosFn.GuardarAntecedentes(objAlumno);
                 },
                 function () {

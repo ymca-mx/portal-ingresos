@@ -180,6 +180,8 @@
     <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaConcepto.cs" />
     <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaTotal.cs" />
     <Compile Include="Reporte\CorteDeCaja\DTOFirmas.cs" />
+    <Compile Include="SEP\Titulo.cs" />
+    <Compile Include="SEP\TituloGeneral.cs" />
     <Compile Include="Usuario\CorteDeCaja\DTOCajero.cs" />
     <Compile Include="Usuario\DTOLogin.cs" />
     <Compile Include="Usuario\DTOUsuarioImagen.cs" />

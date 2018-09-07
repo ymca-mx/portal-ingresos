@@ -12,16 +12,18 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AlumnoInscritoBitacoraBKSalome
+    public partial class Cargo
     {
-        public int AlumnoId { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public int Anio { get; set; }
-        public int PeriodoId { get; set; }
-        public System.DateTime FechaInscripcion { get; set; }
-        public int PagoPlanId { get; set; }
-        public int TurnoId { get; set; }
-        public bool EsEmpresa { get; set; }
-        public int UsuarioId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cargo()
+        {
+            this.Usuario = new HashSet<Usuario>();
+        }
+    
+        public int CargoId { get; set; }
+        public string Descripcion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

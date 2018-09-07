@@ -7,7 +7,7 @@
                 AlumnoId = $('#txtClave').val();
                 if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
 
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 $.ajax({
                     type: "POST",
                     url: "WS/Alumno.asmx/BitacoraAccesoAlumno",
@@ -19,7 +19,7 @@
                             alumno = null;
 
                             alertify.alert("Alumno no existe.");
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             return false;
                         }
                         Alumno = data.d;
@@ -91,7 +91,7 @@
                             "order": [[0, "desc"]]
                         });
 
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 });
 

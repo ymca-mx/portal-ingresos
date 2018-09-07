@@ -220,7 +220,7 @@
         var slcConcepto = $('#slcConceptos');
         slcConcepto = slcConcepto[0].value;
         if (slcConcepto == '-1') { return false; }
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         $(lstCuotas).each(function () {
             var objCuota = this;
             if (objCuota.DTOPagoConcepto.PagoConceptoId == slcConcepto) {
@@ -292,7 +292,7 @@
     });
 
     $('#btnGuardar').click(function () {
-        var usuario = $.cookie('userAdmin');
+        var usuario =  localStorage.getItem('userAdmin');
         var Texto = $('#txtComentario').val();
         Texto = $.trim(Texto);
         if (Texto.length > 5) {

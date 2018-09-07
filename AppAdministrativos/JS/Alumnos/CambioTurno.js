@@ -19,10 +19,10 @@
             AlumnoId = $('#txtClave').val();
             if (AlumnoId.length == 0 || parseInt(AlumnoId) < 1) { return false; }
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
 
 
-            IndexFn.Api('Alumno/ConsultaCambioTurno/' + AlumnoId +"/ " + $.cookie('userAdmin'), "GET", "")
+            IndexFn.Api('Alumno/ConsultaCambioTurno/' + AlumnoId +"/" +  localStorage.getItem('userAdmin'), "GET", "")
                 .done(function (data) {
                     $('#lblNombre').text("");
                     $("#txtOfertaEducativa").val("");
@@ -32,7 +32,7 @@
                     $('#lblInscito').empty();
                     if (data === null) {
                         alertify.alert("Este alumno no existe.");
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
                     lstop.length = 0;
@@ -47,13 +47,13 @@
                             $('#lblInscito').text("No ha iniciado proceso de cambio de turno.");
                         }
 
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
                     if (lstop[0].EstatusId != 4 && lstop[0].EstatusId != 14 && lstop[0].EstatusId != 0) {
 
                         $('#lblInscito').text("No ha realizado el pago para cambio de turno.");
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
 
@@ -77,7 +77,7 @@
                     $("#slcTurno").val(-1);
 
                     $("#btnCambio").removeAttr("disabled");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (data) {
                     alertify.alert('Error al cargar datos');
@@ -101,11 +101,11 @@
             }
 
             $("#PopComentario").modal("hide");
-            $('#Load').modal('show');
+            IndexFn.Block(true);
 
             lstop[0].TurnoIdNueva = $('#slcTurno').val();
             lstop[0].Observaciones = $("#txtComentario").val();
-            lstop[0].UsuarioId = $.cookie('userAdmin');
+            lstop[0].UsuarioId =  localStorage.getItem('userAdmin');
 
             var obj =  lstop[0];
             obj = JSON.stringify(obj);
@@ -126,7 +126,7 @@
                         $("#txtComentario").empty();
                         alertify.alert("Error al  realizar cambio.");
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (data) {
                     alertify.alert('Error al cargar datos');

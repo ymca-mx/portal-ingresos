@@ -1,0 +1,433 @@
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Titulo Electrónico</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row form-group" id="divBuscar">
+                <div class="col-md-12">
+                    <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
+                    <input type="text" id="txtClave" class="form-control-static font-md" style="text-align:right" />&nbsp;
+                    <a class="btn blue" id="btnBuscar" tabindex="2">Buscar</a>
+                </div>
+                <div class="col-md-12">
+                    <div class="portlet-body form" id="frmVarios" hidden="hidden">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; Nombre
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-calendar"></i>&nbsp; Registro
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-edit"></i>&nbsp; Acción
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table">
+                <div class="row">
+                    <hr />
+                    <div class="col-md-12">
+                        <table class="table table-striped table-responsive" id="tblTitulos">
+                            <thead>
+                                <tr>
+                                    <th>AlumnoId</th>
+                                    <th>Nombre</th>
+                                    <th>Datos</th>
+                                    <th>Institución - Oferta</th>
+                                    <th>Titulo</th>
+                                    <th>Antecedente</th>
+                                    <th>Responsables</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="pager">
+                            <li class="previous">&nbsp;</li>
+                            <li class="next">
+                                <a href="javascript:;" class="btn blue" id="btnGuardar" style="border-radius:0px;padding: 7px 14px;">
+                                    Enviar
+                                    <i class="fa fa-save"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-heading">
+
+        </div>
+    </div>
+</main>
+<main>
+    <div class="modal fade bs-modal-lg" id="modalAlumno" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Alumno</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3 form-group">
+                                <label class="control-label">AlumnoId</label>
+                                <input type="text" readonly class="form-control" id="txtAlumnoId" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" readonly class="form-control" id="txtNombre" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Paterno</label>
+                                <input type="text" readonly class="form-control" id="txtPaterno" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Materno</label>
+                                <input type="text" readonly class="form-control" id="txtMaterno" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">CURP</label>
+                                <input type="text" readonly class="form-control" id="txtCURP" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Email</label>
+                                <input type="text" readonly class="form-control" id="txtEmail" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Sede</label>
+                                <select class="form-control" id="slcSedePrev"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Ofertas</label>
+                                <select class="form-control" id="slcOfertaPrev"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnAlumnoAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-modal-lg" id="modalSede" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Sede</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Seleccionar Sede</label>
+                                <select class="form-control" id="slcSede"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Clave</label>
+                                <input type="text" class="form-control" readonly id="txtSedeClave" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Oferta Educativa</h4>
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Seleccionar Oferta</label>
+                                <select class="form-control" id="slcOferta"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Clave Oferta Educativa</label>
+                                <input type="text" readonly class="form-control" id="txtClaveOferta" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Autorizacion Reconocimiento</label>
+                                <select class="form-control" id="slcAutRec"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">RVOE</label>
+                                <input type="text" readonly class="form-control" id="txtRVOE" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Fecha inicio</label>
+                                <div class="input-group date col-md-10">
+                                    <input type="text" class="form-control" id="txtFInicioOferta" />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button" style="border-radius:0px">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Fecha Fin</label>
+                                <div class="input-group date col-md-10">
+                                    <input type="text" class="form-control" id="txtFFinOferta" />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button" style="border-radius:0px">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnSedeAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-modal-lg" id="modalTitulo" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Titulación</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-5 form-group">
+                                <label class="control-label">Medio de Titulación</label>
+                                <select class="form-control" id="slcMedioTitulacion"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group" id="divExamen">
+                                <label class="control-label">Fecha examen profesional</label>
+                                <div class="input-group date col-md-10">
+                                    <input type="text" class="form-control" id="txtFechaExamen" />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button" style="border-radius:0px">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group" id="divExencion">
+                                <label class="control-label">Fecha exencion examen profesional</label>
+                                <div class="input-group date col-md-10">
+                                    <input type="text" class="form-control" id="txtFechaExencion" />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button" style="border-radius:0px">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"><hr /></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Servicio Social</h4>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <label class="control-label">Fundamento Legal</label>
+                                <select class="form-control" id="slcServicio"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"><hr /></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Luga de Expedición</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Entidad Federativa</label>
+                                <select class="form-control" id="slcEntidadFederativa"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnTituloAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-modal-lg" id="modalAntecedente" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Antecedente Educativo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Institución de Procedencia</label>
+                                <input type="text" class="form-control" id="txtProcedencia" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Tipo Antecedente</label>
+                                <select class="form-control" id="slcTAntecedente"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Entidad Federativa</label>
+                                <select class="form-control" id="slcEntidadAntecedente"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Fecha Inicio</label>
+                                <div class="input-group date col-md-10">
+                                    <input type="text" class="form-control" id="txtFechaInicio" />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button" style="border-radius:0px">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Fecha Termino</label>
+                                <div class="input-group date col-md-10">
+                                    <input type="text" class="form-control" id="txtFechaFin" />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button" style="border-radius:0px">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnAntecedenteAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-modal-lg" id="modalResponsables" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Responsables</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-12">
+                                <h4>Responsable 1</h4>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Cargo</label>
+                                <select class="form-control" id="slcCargo1"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Responsables</label>
+                                <select class="form-control" id="slcResponsable1"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" readonly id="txtNombreR1" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Paterno</label>
+                                <input type="text" class="form-control" readonly id="txtPaternoR1" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Materno</label>
+                                <input type="text" class="form-control" readonly id="txtMaternoR1" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-12">
+                                <h4>Responsable 2</h4>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Cargo</label>
+                                <select class="form-control" id="slcCargo2"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Responsables</label>
+                                <select class="form-control" id="slcResponsable2"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" readonly id="txtNombreR2" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Paterno</label>
+                                <input type="text" class="form-control" readonly id="txtPaternoR2" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Materno</label>
+                                <input type="text" class="form-control" readonly id="txtMaternoR2" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnResponsableAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $.getScript("JS/SEP/Titulo/Solicitar.js");
+</script>

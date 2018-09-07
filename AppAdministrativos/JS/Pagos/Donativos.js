@@ -13,7 +13,7 @@
                 lst = [];
                 if (buscar != -1) {
                     if (dato != "" && parseInt(dato)>0) {
-                        $('#Load').modal('show');
+                        IndexFn.Block(true);
                         $("#divAgregar").hide();
                         importe = 0;
                         saldoasignado = 0;
@@ -66,18 +66,18 @@
                                 }
                                 $("#lbSaldo").text("$" + importe)
 
-                                $('#Load').modal('hide');
+                                IndexFn.Block(false);
                             }
                         });
                     } else {
                         alertify.alert("Favor de indicar el número  de " + BuscarTexto);
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                    
 
                 } else {
                     alertify.alert("Debe seleccionar una opción de búsqueda.");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             },
             btnAgregar: function ()
@@ -87,7 +87,7 @@
                 if (tblAlumnos1 != undefined) { tblAlumnos1.fnClearTable(); }
             },
             buscarAlumno: function (Alumnoid) {
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 $.ajax({
                     type: "POST",
                     url: "WS/Alumno.asmx/ConsultarAlumno",
@@ -151,7 +151,7 @@
                     }
                 });
 
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
 
 
             },
@@ -214,7 +214,7 @@
                             });//$('#dtbecas').DataTable
                         }
 
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
 
                     }
                 });
@@ -225,7 +225,7 @@
 
                 if (alumnoId.length == 0) { return false; }
 
-                $('#Load').modal('show');
+                IndexFn.Block(true);
 
                 if (!isNaN(alumnoId)) { funciones.buscarAlumno(alumnoId); }
                 else { funciones.buscarNombre(alumnoId); }
@@ -357,14 +357,14 @@
                 if (lst.length > 0 && lstAlumnos.length > 0) {
 
                     if (saldoasignado == importe) {
-                        $('#Load').modal('show');
+                        IndexFn.Block(true);
 
                         var obj = {
                             "AlumnoDonativo":
                             {
                                 "Alumnos": lstAlumnos,
                                 "ReferenciaId": lst[0].referenciaId,
-                                "UsuarioId": $.cookie('userAdmin')
+                                "UsuarioId":  localStorage.getItem('userAdmin')
                             }
                         };
 
@@ -393,7 +393,7 @@
                                     alertify.alert("Ocurrió un problema al aplicar el donativo.");
                                 }
 
-                                $('#Load').modal('hide');
+                                IndexFn.Block(false);
                             }
                         });
                     } else if (saldoasignado < importe) {

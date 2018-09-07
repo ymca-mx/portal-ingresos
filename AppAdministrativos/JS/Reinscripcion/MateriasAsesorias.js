@@ -38,14 +38,14 @@
         },
         btnGuardarMaestriaClick: function () {
             $('#btnGuardarMaestria').blur();
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var objGM = {
                 AlumnoId: objAlumnoC.AlumnoId,
                 EspecialidadId: $("#slcOfertas").val(),
                 MaestriaId: $("#txtMaestria").data('maestriaid'),
                 PeriodoId: $('#slcPeriodos option:selected').data("periodoid"),
                 Anio: $('#slcPeriodos option:selected').data("anio"),
-                UsuarioId: $.cookie('userAdmin')
+                UsuarioId:  localStorage.getItem('userAdmin')
             };
             objGM = JSON.stringify(objGM);
 
@@ -55,7 +55,7 @@
                 data: objGM,
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     if (data.d === "Guardado") {
                         $('#ModalMaestria').modal('hide');
                         alertify.alert("Se guardo correctaente.")
@@ -66,7 +66,7 @@
             });
         },
         btnMaestriaClick: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             Funciones.TraerMaestrias();
             $('#ModalMaestria').modal('show');
         },
@@ -210,13 +210,13 @@
                 }
             }
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             //Adeudos();
 
             Funciones.Guardar();
         },
         tblAlumnosClicka: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $('#frmAlumnos').hide();
             var rowadd = tblAlumnos.fnGetData($(this).closest('tr'));
             AlumnoNum = rowadd.AlumnoId;
@@ -246,7 +246,7 @@
 
     var Funciones = {
         EsNumero: function (Alumno) {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 type: "POST",
                 url: "WS/Reinscripcion.asmx/AlumnoReinscripcion",
@@ -258,7 +258,7 @@
                         $('#lblNombre').text(data.d.Nombre);
                         objAlumnoC = data.d;
                         Funciones.llenarOfertas();
-                    } else { $('#Load').modal('hide'); }
+                    } else { IndexFn.Block(false); }
                 }
             });
         },
@@ -268,7 +268,7 @@
             optionP.text('--Seleccionar--');
             optionP.val('-1');
             $("#slcOfertas").append(optionP);
-            if (objAlumnoC.lstOfertas.length === 0) { $('#Load').modal('hide'); return false; }
+            if (objAlumnoC.lstOfertas.length === 0) { IndexFn.Block(false); return false; }
             if (objAlumnoC.lstOfertas.length > 1) {
                 $(objAlumnoC.lstOfertas).each(function () {
                     var option1 = $(document.createElement('option'));
@@ -320,7 +320,7 @@
 
             $("#slcPeriodos").change();
             $(window).scrollTop($('#slcPeriodos').offset().top);
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
 
         },
         llenarCuatrimestres: function (OfertaEducativaTipoId) {
@@ -352,7 +352,7 @@
                 data: obj,
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                     if (data.d === null) { return false; }
                     $("#txtMaestria").val(data.d.Descripcion);
@@ -360,7 +360,7 @@
 
                 },
                 error: function () {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             })
         },
@@ -409,7 +409,7 @@
                 success: function (data) {
                     if (data.d === "Debe") {
                         alertify.alert('Tiene adeudos, favor de pasar a La Coordinación Administrativa para resolver su situación financiera.');
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     } else {
                         Funciones.Guardar();
                     }
@@ -424,7 +424,7 @@
             op = op.split(" ");
             var anio = op[1];
             var periodo = op[0];
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             var nAse = $('#txtNAsesoria').val();
             var nMat = $('#txtNMateria').val();
             var completa = ($('#rdbSi')[0].checked);
@@ -433,7 +433,7 @@
             var Cuatrimestre = ($("#divCuatri").is(":visible") ? $("#slcCuatrimeste").val() : null);
 
             if (nAse === "0" && nMat === "0" && completa === false) {
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 alertify.alert("Favor de especificar el numero de adelanto de materia o asesoria especial.")
                 return false;
             }
@@ -454,12 +454,12 @@
                         alertify.alert("Datos Generados");
                         $('#txtAlumno').val(AlumnoNum);
                         Eventos.btnBuscarAlumnoClick();
-                    } else { alertify.alert("Error Al Guardar"); $('#Load').modal('hide'); }
+                    } else { alertify.alert("Error Al Guardar"); IndexFn.Block(false); }
                 }
             });
         },
         EsString: function (Alumno) {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $('#frmAlumnos').show();
             $.ajax({
                 url: 'WS/Alumno.asmx/BuscarAlumnoString',
@@ -506,7 +506,7 @@
                             "order": [[2, "desc"]]
                         });
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 }
             });

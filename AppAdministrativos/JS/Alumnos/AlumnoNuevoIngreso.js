@@ -13,7 +13,7 @@
         },
         objGuardar: { AlumnoId: -1 },
         TraerAlumnos() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             IndexFn.Api('Alumno/ConsultarAlumnosNuevos/', "GET", "")
                 .done(function (Respuesta) {
                     tblAlumnos = $('#tblAlumnos').dataTable({
@@ -48,7 +48,7 @@
                     });
                     var fil = $('#tblAlumnos_filter label input');
                     fil.removeClass('input-small').addClass('input-large');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (Respuesta) {
                     alertify.alert('Error al cargar datos');
@@ -64,23 +64,23 @@
                 success: function (data) {
                     if (data.d) {
                         $('#ModalDatos').modal('hide');
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Se guardo correctamente", function () {
                             NuevoIngreFn.TraerAlumnos();
                         });
                     } else {
                         alertify.alert("Ocurrio un error al guardar, intente nuevamente.");
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 },
                 error: function () {
                     alertify.alert("Ocurrio un error al guardar, intente nuevamente.");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },
         tblAlumnosClickA() {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             var fid = tblAlumnos.fnGetData(this.parentNode.parentNode, 0);
             
                 NuevoIngreFn.TraerDatosPersonales(fid);
@@ -104,7 +104,7 @@
                         $('#txtCURP').val(data.DTOAlumnoDetalle.CURP);
 
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 });
         },        
         btnCancelarClick() {
@@ -113,7 +113,7 @@
         btnGuardarDatosClick() {
             var $frm = $('#frmDatos');
             if ($frm[0].checkValidity()) {
-                $('#Load').modal('show');
+                IndexFn.Block(true);
                 var objGuardar = {
                     AlumnoId: NuevoIngreFn.objGuardar.AlumnoId,
                     Nombre: $('#txtNombre').val(),
@@ -122,7 +122,7 @@
                     Nacimiento: $('#txtFecha').val(),
                     GeneroId: $('#slcSexo').val(),
                     CURP: $('#txtCURP').val(),
-                    UsuarioId: $.cookie('userAdmin'),
+                    UsuarioId:  localStorage.getItem('userAdmin'),
                 };
                 NuevoIngreFn.Guardar(JSON.stringify(objGuardar));
             }

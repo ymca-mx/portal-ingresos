@@ -1,5 +1,5 @@
 $(function () {
-    
+
     var Usuario,
         esEmpresa,
         b_Valid = 0,
@@ -8,7 +8,7 @@ $(function () {
         dataAlumno = [],
         hayPromocion = false,
         MesP = [];
-
+    
     var FormWizard = function () {
         $('#divMaterial').hide();
         var form = $('#submit_form');
@@ -352,14 +352,6 @@ $(function () {
             'previousSelector': '.button-previous',
             onTabClick: function (tab, navigation, index, clickedIndex) {
                 return false;
-                /*
-                success.hide();
-                error.hide();
-                if (form.valid() == false) {
-                    return false;
-                }
-                handleTitle(tab, navigation, clickedIndex);
-                */
             },
             onNext: function (tab, navigation, index) {
                 if (b_Valid == 1) { b_Valid = 0; return false; } else {
@@ -373,7 +365,6 @@ $(function () {
                         width: $percent + '%'
                     });
                 }
-                //|| form.valid() == false
             },
             onPrevious: function (tab, navigation, index) {
                 if (b_Valid == 1) { b_Valid = 0; return false; } else {
@@ -398,7 +389,7 @@ $(function () {
             alertify.confirm("<p>¿Desea continuar guardando los descuentos?<br><br><hr>", function (e) {
                 if (e) {
                     $('#hCarga').text("Guardando...");
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     InscripcionFn.GuardarDescuentos();
                 } else { return false; }
             });
@@ -411,12 +402,7 @@ $(function () {
                 return false;
             }
         });
-        //$("#btnListado").on('click', function () {
-        //    $('#divDinamico').empty();
-        //    var url = $(this).attr("href");
-        //    $('#divDinamico').load(url);
-        //    return false;
-        //});
+
         $('#Guardar').keydown(function () {
             keydown = 1;
             $('#Guardar').mousedown();
@@ -607,14 +593,14 @@ $(function () {
             }
         },
         Invocar() {
-            Usuario = $.cookie('userAdmin');
+            Usuario =  localStorage.getItem('userAdmin');
             if (jQuery.type(Usuario) === "undefined") {
                 return false;
             }
 
             /// Insertar Block al momento de Guardar
             $('#hCarga').text("Guardando...");
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             
             var DTOalumno = {
                 Nombre: $('#txtnombre').val(),//0
@@ -622,7 +608,7 @@ $(function () {
                 Materno: $('#txtApMaterno').val(),//2
                 Anio: $('#slcPeriodo :selected').data("anio") ,
                 PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
                 DTOAlumnoDetalle: {
                     GeneroId: $('#slcSexo').val(),
                     EstadoCivilId: $('#slcEstadoCivil').val(),
@@ -676,7 +662,7 @@ $(function () {
                     Anio: $('#slcPeriodo :selected').data("anio"),
                     PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
                     EsEmpresa : $('#chkEsEmpresa')[0].checked,//50
-                    UsuarioId : $.cookie('userAdmin'),
+                    UsuarioId :  localStorage.getItem('userAdmin'),
                 }
             }
 
@@ -712,7 +698,7 @@ $(function () {
                             }
                             else {
                                 if (parseInt($('#slcTipoOferta').val()) === 4) {
-                                    $('#tab5').hide();
+                                    $('#tab4').hide();
                                     InscripcionFn.MandarMail(Alumno);
                                 } else {
                                     GlobalFn.GetSistemaPagoAlumno('slcSistemaPago', Alumno)
@@ -720,20 +706,20 @@ $(function () {
                                             InscripcionFn.CargarDescuentos(Alumno);
                                             $('#form_wizard_1').bootstrapWizard('next');
                                         });                                    
-                                    if (hayPromocion) { InscripcionFn.GuardarPromocion(Alumno); } else { $('#Load').modal('hide'); }
+                                    if (hayPromocion) { InscripcionFn.GuardarPromocion(Alumno); } else { IndexFn.Block(false); }
                                 }
                             }
                         }
-                        else { $('#Load').modal('hide'); return false; }
+                        else { IndexFn.Block(false); return false; }
                     }
                     else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         console.log(data.d);
                     }
                 })
                 .fail(function (data) {
                     IndexFn.clearAlert();
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("Error al guardar el alumno, intente nuevamente.");                    
                 });
         },
@@ -817,7 +803,7 @@ $(function () {
                 });
         },
         GuardarDescuentos() {
-            if (jQuery.type($.cookie('userAdmin')) === "undefined") {
+            if (jQuery.type( localStorage.getItem('userAdmin')) === "undefined") {
                 return false;
             }
 
@@ -828,7 +814,7 @@ $(function () {
                 PeriodoId: $('#slcPeriodo :selected').data("periodoid"),
                 OfertaEducativaId: $('#slcOfertaEducativa').val(),
                 Observaciones: $('#txtObservacion').val(),
-                UsuarioId: $.cookie('userAdmin'),
+                UsuarioId:  localStorage.getItem('userAdmin'),
                 Descuentos: [{
                     PagoConceptoId: 1,
                     TotalPagar: Number($('#txtPagarExa').text().replace(/[^0-9\.-]+/g, "")),
@@ -874,7 +860,7 @@ $(function () {
                         var Alumnos = [$('#txtFolio').val()];
                         IndexFn.Api("General/EnviarMail2", "Post", JSON.stringify(Alumnos))
                             .done(function (data) {
-                                $('#Load').modal('hide');
+                                IndexFn.Block(false);
                                 jQuery('li', $('#form_wizard_1')).removeClass("done");
                                 jQuery('li', $('#form_wizard_1')).addClass("done");
 
@@ -894,12 +880,12 @@ $(function () {
                             });
 
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("No se guardaron los cambios, intente de nuevo");
                     }
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     alertify.alert("No se guardaron los cambios, intente de nuevo");
                     console.log(data);
                 });
@@ -909,7 +895,7 @@ $(function () {
             var Alumnos = [AlumnoId];
             IndexFn.Api("General/EnviarMail2", "Post", JSON.stringify(Alumnos))
                 .done(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     jQuery('li', $('#form_wizard_1')).removeClass("done");
                     jQuery('li', $('#form_wizard_1')).addClass("done");
                     var extramail = "<p>" + "Se ha enviado un mail a " + $('#txtEmail').val() + " con el usuario y password del alumno."
@@ -930,7 +916,7 @@ $(function () {
             dataAlumno[0].AlumnoIdProspecto = AlumnoProspecto;
             dataAlumno[0].Anio = $('#slcPeriodo').val().substring(2);
             dataAlumno[0].PeriodoId = $('#slcPeriodo').val().substring(0, 1);
-            dataAlumno[0].UsuarioId = $.cookie('userAdmin');
+            dataAlumno[0].UsuarioId =  localStorage.getItem('userAdmin');
 
             var obj = {
                 "Promocion": dataAlumno[0]
@@ -1049,12 +1035,12 @@ $(function () {
                 tblAlumno2.fnClearTable();
             }
             $('#hCarga').text("Cargando...");
-            $('#Load').modal('show');
+            IndexFn.Block(true);
 
             IndexFn.Api("Alumno/ConsultarAlumnoPromocionCasa2/" + $('#txtClave1').val(), "GET", "")
                 .done(function (data) {
                     if (data === null) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         return false;
                     }
                     dataAlumno.length = 0;
@@ -1109,10 +1095,10 @@ $(function () {
                         }
                     });//$('#dtbecas').DataTable
 
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 })
                 .fail(function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 });
         },
@@ -1198,7 +1184,7 @@ $(function () {
             });
 
 
-            /* Workaround to restrict daterange past date select: http://stackoverflow.com/questions/11933173/how-to-restrict-the-selectable-date-ranges-in-bootstrap-datepicker */
+            
         },
         calcular_edad(fecha) {
             var fechaActual = new Date()
@@ -1294,5 +1280,5 @@ $(function () {
     };
 
     InscripcionFn.init();
-
+    
 });

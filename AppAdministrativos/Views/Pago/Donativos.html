@@ -1,182 +1,146 @@
-﻿<div class="page-content">
-    <!-- BEGIN PAGE HEAD -->
-    <div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Asignacion De Donativos</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Buscar por: </label>
+                    <select class="form-control" name="slcBuscar" id="slcBuscar">
+                        <option selected value="-1">--Seleccionar--</option>
+                        <option selected value="1">Referencia</option>
+                        <option selected value="2">Recibo</option>
+                    </select>
+                </div>
+                <div class="col-md-8">
+                    <div class="col-md-7">
+                        <br />
+                        <label class="control-label" id="lbBuscar">--Seleccionar--</label>
+                        <input type="number" id="txtDato" class="form-control-static font-md" tabindex="1" min="1" />
+                        &nbsp;<a class="btn blue" id="btnBuscar" tabindex="2">Buscar</a>
+                    </div>
+                    <div class="col-md-1" hidden id="divAgregar">
+                        <br />
+                        <button class="btn yellow" id="btnAgregar" tabindex="2">Agregar Alumno </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <form id="frmDonativo" onSubmit="return false;">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="portlet light">
-                    <div class="portlet-title">
+                    <div class="col-md-12">
+
+                        <div class="col-md-4">
+                            <br />
+                            <label class="bold">Referencia:&nbsp; </label><label id="lbReferencia"></label>
+                            <table class="table table-striped table-bordered table-advance table-hover" id="tblReferencia">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Fecha de Pago
+                                        </th>
+                                        <th>
+                                            Importe
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <br />
+                            <label class="bold">Alumno (s)</label>
+                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            AlumnoId
+                                        </th>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Monto
+                                        </th>
+                                        <th>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+
                         <div class="col-md-12">
-
-                            <div class="col-md-6">
-                                <h1 class="caption title font-blue-sharp"> Asignacion De Donativos </h1>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-7"> <label class="bold">Saldo Por Asignar: </label><label class="font-red-sunglo" id="lbSaldo">$0</label></div>
+                            <div class="col-md-1">
+                                <a class="btn green" id="btnGuardar" tabindex="2">Guardar</a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="portlet-body">
-                        <div class="row">
-                            <div class="col-md-12 ">
-
-                                <div class="col-md-12">
-                                    <div class="col-md-12">
-                                        <div class="col-md-4">
-                                            <label class="control-label">Buscar por: </label>
-                                            <select class="form-control" name="slcBuscar" id="slcBuscar">
-                                                <option selected value="-1">--Seleccionar--</option>
-                                                <option selected value="1">Referencia</option>
-                                                <option selected value="2">Recibo</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="col-md-7">
-                                                <br />
-                                                <label class="control-label" id="lbBuscar">--Seleccionar--</label>
-                                                <input type="number" id="txtDato" class="form-control-static font-md" tabindex="1" min="1" />
-                                                &nbsp;<a class="btn blue" id="btnBuscar" tabindex="2">Buscar</a>
-                                            </div>
-                                            <div class="col-md-1" hidden id="divAgregar">
-                                                <br />
-                                                <a class="btn yellow" id="btnAgregar" tabindex="2" >Agregar Alumno </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <form id="frmDonativo" onSubmit="return false;">
-
-                                    <div class="col-md-12">
-                                        
-                                        <div class="col-md-4">
-                                            <br />
-                                            <label class="bold" >Referencia:&nbsp; </label><label  id="lbReferencia"></label>
-                                            <table class="table table-striped table-bordered table-advance table-hover" id="tblReferencia">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Fecha de Pago
-                                                        </th>
-                                                        <th>
-                                                            Importe
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-
-                                        </div>
-
-                                        <div class="col-md-8">
-                                            <br />
-                                            <label class="bold">Alumno (s)</label>
-                                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                           AlumnoId
-                                                        </th>
-                                                        <th>
-                                                            Nombre
-                                                        </th>
-                                                        <th>
-                                                            Monto
-                                                        </th>
-                                                        <th>
-                                                        </th>
-
-                                                    </tr>
-                                                </thead>
-                                            </table>
-
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-7"> <label class="bold">Saldo Por Asignar: </label><label class="font-red-sunglo" id="lbSaldo">$0</label></div>
-                                            <div class="col-md-1">
-                                                <a class="btn green" id="btnGuardar" tabindex="2">Guardar</a>
-                                            </div>
-                                        </div>
-                                        
-
-                                    </div>
-
-
-                                </form>
-
-                            </div>
-
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<main>
+    <!--Popup de Agregar Alumno -->
+    <div class="modal fade" tabindex="-1" data-width="850" data-height="300" id="PopAlumno">
+        <div class="modal-dialog modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
+                    <h3 class="modal-title">Asignación de Alumno</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 ">
+                        <div class="col-md-12">
+                            <label class="control-label">Clave o Nombre del Alumno</label>
+                            <input type="text" id="txtClave" name="txtClave" class="form-control-static font-md" tabindex="1" />
+                            <a class="btn blue" id="btnBuscar1" tabindex="2">Buscar Alumno</a>
                         </div>
-
-                    </div>
-
-                    <!--Popup de Agregar Alumno -->
-                    <div class="modal fade" tabindex="-1" data-width="850" data-height="300" id="PopAlumno">
-                        <div class="modal-dialog modal-dialog" style="width:800px">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" id="btnClosedivCom" aria-hidden="true"></button>
-                                <h3 class="modal-title">Asignación de Alumno</h3>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-md-12 ">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Clave o Nombre del Alumno</label>
-                                        <input type="text" id="txtClave" name="txtClave" class="form-control-static font-md" tabindex="1" />
-                                        <a class="btn blue" id="btnBuscar1" tabindex="2">Buscar Alumno</a>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <hr />
-                                        <table id="tblAlumnos1" class="table table-striped table-bordered table-advance table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center">
-                                                        Clave | Nombre Alumno
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        Oferta Educativa
-                                                    </th>
-                                                    <th style="text-align:center">
-                                                        Acción
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Popup de Agregar Alumno -->
-
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="height: 90px;">
-                            <!--<div class="modal-content" style="width:auto">-->
-                            <div class="form-group">
-                                <h3 id="hCarga">Cargando</h3>
-                            </div>
-                            <div class="form-group">
-                                <div class="bar" style="width:auto" id="divBar">
-                                    <p id="txtBar"></p>
-                                </div>
-                                <!--</div>-->
-                            </div>
+                        <div class="col-md-12">
+                            <hr />
+                            <table id="tblAlumnos1" class="table table-striped table-bordered table-advance table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center">
+                                            Clave | Nombre Alumno
+                                        </th>
+                                        <th style="text-align:center">
+                                            Oferta Educativa
+                                        </th>
+                                        <th style="text-align:center">
+                                            Acción
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                 </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" aria-hidden="true" class="btn btn-default">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="JS/Pagos/Donativos.js"></script>
+    <!--Popup de Agregar Alumno -->
+</main>
+<script>
+    $.getScript("JS/Pagos/Donativos.js");
+</script>
 

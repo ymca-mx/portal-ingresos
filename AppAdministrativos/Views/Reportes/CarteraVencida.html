@@ -1,25 +1,12 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <title>Reporte de Cartera Vencida</title>
-</head>
-<body>
-    <div class="panel panel-default">
+﻿<main>
+    <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="panel-title">
-                <h2>Cartera Vencida</h2>
+                <span class="caption title">Reporte de Cartera Vencida</span>
             </div>
         </div>
         <div class="panel-body">
-            <!--<div class="table">
-                <div class="form-group col-md-4 col-md-offset-9">
-                    <label>¿Neceistas Ayuda?</label>
-                    <a target="_blank" href="Documentos/Manuales/ManualModificacionNuevoIngreso.pdf" class="btn btn-danger">Descargar Manual</a>
-                </div>
-            </div>-->
-            <div class="table">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label class="control-label" for="slcPeriodos"> Periodos: </label>
                     <select class="form-control" id="slcPeriodos"></select>
@@ -30,18 +17,18 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label class="control-label">Fecha Final:</label>
-                    <input  class="form-control form-control-inline input-medium date-picker" size="16" type="text" id="calFinal" />
+                    <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" id="calFinal" />
                 </div>
                 <div class="form-group col-md-2">
                     <label>&nbsp;</label>
                     <button id="btnBuscar" class="form-control btn bg-blue">Consultar</button>
                 </div>
             </div>
-            <div class="table">
+            <div class="row">
                 <div class="form-group col-md-3">
                     <!--[if gt IE 9]>-->
-                    <p id="xportxlsx" class="btn" >
-                    <input type="submit" class="btn btn-success" id="btnExportar" value="Exportar a Excel">
+                    <p id="xportxlsx" class="btn">
+                        <input type="submit" class="btn btn-success" id="btnExportar" value="Exportar a Excel">
                     </p>
                     <!--<![endif]-->
                     <p id="xlsxbtn" class="btn"></p>
@@ -49,79 +36,64 @@
                 <div class="form-group col-md-9">
                 </div>
             </div>
-            <div class="col-md-12"><hr /></div>
-            <div class="table">
-                
-                <table class="table table-striped table-bordered table-advance table-hover" id="tblDatos">
-                    <thead>
-                        <tr>
-                            <th>
-                                <i class="fa fa-user"></i>&nbsp; Alumno
-                            </th>
-                            <th>
-                                <i class="fa fa-calendar"></i>&nbsp; Fecha de Pago
-                            </th>
-                            <th>
-                                <i class="fa fa-comment"></i>&nbsp; Tipo de Pago
-                            </th>
-                            <th>
-                                <i class="fa fa-comment-o"></i>&nbsp; Concepto
-                            </th>
-                            <th>
-                                <i class="fa fa-money"></i>&nbsp; Pagado
-                            </th>
-                            <th>
-                                <i class="fa fa-money"></i>&nbsp; Por Pagar
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-                <table  hidden id="tblDatos2">
-                    <thead>
-                        <tr>
-                            <th>
-                                <i class="fa fa-user"></i>&nbsp; Alumno
-                            </th>
-                            <th>
-                                <i class="fa fa-calendar"></i>&nbsp; Fecha de Pago
-                            </th>
-                            <th>
-                                <i class="fa fa-comment"></i>&nbsp; Tipo de Pago
-                            </th>
-                            <th>
-                                <i class="fa fa-comment-o"></i>&nbsp; Concepto
-                            </th>
-                            <th>
-                                <i class="fa fa-money"></i>&nbsp; Pagado
-                            </th>
-                            <th>
-                                <i class="fa fa-money"></i>&nbsp; Por Pagar
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="row"><hr /></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-advance table-hover" id="tblDatos">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Alumno
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Fecha de Pago
+                                </th>
+                                <th>
+                                    <i class="fa fa-comment"></i>&nbsp; Tipo de Pago
+                                </th>
+                                <th>
+                                    <i class="fa fa-comment-o"></i>&nbsp; Concepto
+                                </th>
+                                <th>
+                                    <i class="fa fa-money"></i>&nbsp; Pagado
+                                </th>
+                                <th>
+                                    <i class="fa fa-money"></i>&nbsp; Por Pagar
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table hidden id="tblDatos2">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Alumno
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Fecha de Pago
+                                </th>
+                                <th>
+                                    <i class="fa fa-comment"></i>&nbsp; Tipo de Pago
+                                </th>
+                                <th>
+                                    <i class="fa fa-comment-o"></i>&nbsp; Concepto
+                                </th>
+                                <th>
+                                    <i class="fa fa-money"></i>&nbsp; Pagado
+                                </th>
+                                <th>
+                                    <i class="fa fa-money"></i>&nbsp; Por Pagar
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="panel-footer">
-
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-        <div class="modal-dialog modal-sm" style="height: 90px;">
-            <!--<div class="modal-content" style="width:auto">-->
-            <div class="form-group">
-                <h3 id="hCarga">Trabajando...</h3>
-            </div>
-            <div class="form-group">
-                <div class="bar" style="width: auto" id="divBar">
-                    <p id="txtBar"></p>
-                </div>
-                <!--</div>-->
-            </div>
-        </div>
-    </div>    
-    <script src="Scripts/js-xlsx/FileSaver.js"></script>
-    <script src="Scripts/js-xlsx/xlsx.full.min.js"></script>
-    <script src="JS/Reportes/CarteraVencida.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("Scripts/js-xlsx/FileSaver.js");
+    $.getScript("Scripts/js-xlsx/xlsx.full.min.js");
+    $.getScript("JS/Reportes/CarteraVencida.js");
+</script>

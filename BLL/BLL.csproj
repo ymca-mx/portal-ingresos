@@ -119,6 +119,7 @@
     <Compile Include="BLLReportePortal.cs" />
     <Compile Include="BLLSaldoAFavor.cs" />
     <Compile Include="BLLSede.cs" />
+    <Compile Include="BLLSEP.cs" />
     <Compile Include="BLLSistemaConfiguracion.cs" />
     <Compile Include="BLLSucursal.cs" />
     <Compile Include="BLLTurno.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recargo.cs" />
     <Compile Include="Tools\ProcesosMasivos.cs" />
+    <Compile Include="Tools\SEP.cs" />
     <Compile Include="Tools\Universidad.cs" />
   </ItemGroup>
   <ItemGroup>

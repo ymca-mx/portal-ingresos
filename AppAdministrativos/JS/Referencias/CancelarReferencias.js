@@ -40,7 +40,7 @@
             }
         },
         BtnGuardarClick: function () {
-            var usuario = $.cookie('userAdmin');
+            var usuario =  localStorage.getItem('userAdmin');
             var Texto = $('#txtComentario').val();
             Texto = $.trim(Texto);
             if (Texto.length > 5) {

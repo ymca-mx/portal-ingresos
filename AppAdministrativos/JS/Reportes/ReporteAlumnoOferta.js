@@ -3,7 +3,7 @@
     CargarReporteAlumnoOferta();
 
     function CargarReporteAlumnoOferta() {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         $.ajax({
             type: 'POST',
             url: "WS/Reporte.asmx/ObtenerReporteAlumnoOferta",
@@ -13,7 +13,7 @@
             success: function (data) {
 
                 if (data.d === null) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
 
@@ -52,7 +52,7 @@
                     }
 
                 });//$('#dtReporte').DataTable
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }//success
         });//$.ajax
        

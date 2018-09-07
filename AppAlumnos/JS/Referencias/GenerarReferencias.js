@@ -55,7 +55,7 @@
         },
         CargarConceptos(OfertaEducativa) {
             $("#slcConceptos").empty();
-            IndexFn.Api("General/Conceptos/" +  OfertaEducativa, "GET", "")
+            IndexFn.Api("General/Conceptos/" + OfertaEducativa + "/Alumno", "GET", "")
                 .done(function (data) {
                     var datos = data;
                     $(datos).each(function () {

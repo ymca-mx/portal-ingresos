@@ -10,7 +10,7 @@
             else { Funciones.BuscarNombre(); }
         },
         CargarAlumno: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             alertify.alert().destroy();
             Funciones.AlumnoDB = undefined;
             $('#slcOFertaEducativa').empty();
@@ -24,7 +24,7 @@
                 data: '{AlumnoId:"' + AlumnoId + '"}',
                 dataType: 'json',
                 success: function (data) {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     if (data.d !== null) {
                         Funciones.AlumnoDB = data.d;
                         $('#lblNombre').text(data.d.Nombre);
@@ -55,7 +55,7 @@
             Funciones.ClickBuscar();
         },
         BuscarNombre: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 url: 'WS/Alumno.asmx/BuscarAlumnoString',
                 type: 'POST',
@@ -102,7 +102,7 @@
                             "order": [[2, "desc"]]
                         });
                     }
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
 
                 }
             });
@@ -181,12 +181,12 @@
                 Anio: anio,
                 PeriodoId: periodo,
                 Comentario: $('#txtDetalle').val(),
-                UsuarioId: $.cookie('userAdmin')
+                UsuarioId:  localStorage.getItem('userAdmin')
             };
 
             objAlumno = JSON.stringify(objAlumno);
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 url: 'WS/Reinscripcion.asmx/SolicitarInscripcion',
                 type: 'POST',
@@ -196,20 +196,20 @@
                 success: function (data) {
                     if (data !== null) {
                         if (data.d) {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Se guardo Correctamente", function () { Funciones.ClickBuscar(); });
                         } else {
-                            $('#Load').modal('hide');
+                            IndexFn.Block(false);
                             alertify.alert("Ocurrio un error al solicitar la inscripción, favor de llamar a Sistemas.");
                         }
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Ocurrio un error al solicitar la inscripción, favor de llamar a Sistemas.");                     
                     }
                 },
                 error: function () {
                     alertify.alert("Ocurrio un error al solicitar la inscripción, favor de llamar a Sistemas.");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             });
         },

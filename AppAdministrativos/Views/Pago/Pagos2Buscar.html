@@ -1,11 +1,16 @@
 ﻿<main>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title">
-                <span class="caption title bold">REFERENCIAS BANCARIAS </span>
+    <div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="title bold">REFERENCIAS BANCARIAS </span>
+            </div>
+            <div class="tools">
+                <a href="javaScript:;" id="btnPrint" class="default" data-original-title>
+                    <i class="fa fa-print font-grey" style="font-size:20px"></i>
+                </a>
             </div>
         </div>
-        <div class="panel-body">
+        <div class="portlet-body">
             <div class="row form-group" id="divBuscar">
                 <div class="col-md-12">
                     <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
@@ -39,7 +44,7 @@
                             </table>
                         </div>
                     </div>
-                </div>               
+                </div>
             </div>
 
             <div class="row">
@@ -48,9 +53,24 @@
                         <br />
                         <label class="form-control black" style="font-weight:bold; height:auto!important" id="lblNombre"></label>
                     </div>
-                    <div class="row col-md-12">
+                    <div class="row col-md-8">
                         <label class="control-label ">Periodo:</label>
                         <select class="form-control font-md col-md-6" id="sclPeriodo"></select>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <br />
+                        <div class="md-checkbox-list">
+                            <div class="md-checkbox">
+                                <input type="checkbox" id="chkAdeudo" class="md-check">
+                                <label for="chkAdeudo">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                    Mostrar solo Adeudos
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -188,6 +208,7 @@
                         </thead>
                     </table>
                 </div>
+                <br />
                 <div class="col-md-12">
                     <p style="font-size:12px">
                         Para un mayor detalle de tus pagos, consulta tu estado de cuenta.
@@ -196,7 +217,7 @@
                 <div class="col-md-8" style="background-color:#F8CBAD; height:200px;width:400px" id="divAnticipado" hidden="hidden">
                     <h4 class="bold">Pago Anticipado:</h4>
                     <p style="font-size:12px" id="pdescription">
-                        Si vas hacer tu pago anticipado tienes hasta el 30 de abril para pagar los siguientes montos con
+                        Si vas hacer tu pago anticipado tienes hasta el 31 de agosto para pagar los siguientes montos con
                         las referencias indicadas:
                     </p>
                     <div id="divtablas">
@@ -204,7 +225,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-7  form-body">
+                <div class="col-md-7  form-body" id="divCuenta">
                     <div class="col-md-10" style="border-width: 1px; border-style: dashed; border-color: black;">
                         <div class="col-md-12">
                             <label class="control-label bold" style="font-size: 10px">Banco Scotiabank</label>
@@ -235,9 +256,9 @@
 
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
-    </main>
+</main>
 <script>
     $.getScript("JS/Pagos/ReferenciasBuscar.js");
 </script>

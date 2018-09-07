@@ -1,138 +1,93 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Pagos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-</head>
-<body style="font-size: 10px !important">
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">REFERENCIAS BANCARIAS</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row" id="divBuscar">
+                <div class="col-md-12">
+                    <div class="clearfix">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn green active" id="rdAlumno">
+                                <input type="radio" class="toggle"> Clave Alumno
+                            </label>
+                            <label class="btn green" id="rdReferencias">
+                                <input type="radio" class="toggle"> Referencia
+                            </label>
+                            <label class="btn green " id="rdImporte">
+                                <input type="radio" class="toggle"> Importe
+                            </label>
+                            <label class="btn green " id="rdFecha">
+                                <input type="radio" class="toggle"> Fecha De Pago
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-md-12">
+                    <div>&nbsp;</div>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <div class="col-md-1">
+                        <label class="control-label" id="lbBuscar">Clave Alumno</label>
+                    </div>
+                    <div class="col-md-2" id="divClave">
+                        <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1" />
+                    </div>
+
+                    <div class="col-md-4" id="dpbuscar" style="display:none">
+                        <div class="input-group col-md-12 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            <input id="txtFechaInicio" name="txtFechaInicio" type="text" class="form-control" />
+                            <span class="input-group-btn">
+                                <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <button class="btn blue" id="btnBuscar" " tabindex="2">Buscar</button>
+                    </div>
+
+                </div>
+
+
+            </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <img src="Imagenes/UYMCA-100px.png" width="70" />
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="caption title">REFERENCIAS BANCARIAS</h4>
-                                </div>
-                            </div>
-                        </div>
 
-                            <div class="portlet-body">
-                                <div class="col-md-12 form-group" id="divBuscar">
-                                    <div class="col-md-12">
-                                        <div class="clearfix">
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn green active" id="rdAlumno" >
-                                                    <input type="radio" class="toggle" > Clave Alumno
-                                                </label>
-                                                <label class="btn green" id="rdReferencias">
-                                                    <input type="radio" class="toggle" > Referencia
-                                                </label>
-                                                <label class="btn green " id="rdImporte">
-                                                    <input type="radio" class="toggle" > Importe
-                                                </label>
-                                                <label class="btn green " id="rdFecha">
-                                                    <input type="radio" class="toggle" > Fecha De Pago
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <table class="table table-hover table-bordered1 dataTables" id="tblReferencias3">
+                        <thead>
+                            <tr>
+                                <th class="Titulo-Tabla" style="text-align:left">
+                                    Alumno Id
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:left">
+                                    Nombre Alumno
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:right">
+                                    Referencia
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:center">
+                                    Fecha de pago
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:right">
+                                    Importe
+                                </th>
+                                <th class="Titulo-Tabla" style="text-align:right">Monto Pagado</th>
+                                <th class="Titulo-Tabla" style="text-align:right">Saldo por pagar</th>
 
-                                    <div class="col-md-12">
-                                        <div>&nbsp;</div>
-                                    </div>
+                            </tr>
+                        </thead>
+                    </table>
 
-                                    <div class="col-md-12 form-group">
-                                        <div class="col-md-1">
-                                            <label class="control-label" id="lbBuscar">Clave Alumno</label>
-                                        </div>
-                                        <div class="col-md-2" id="divClave">
-                                            <input type="text" id="txtClave" class="form-control-static font-md" tabindex="1"  />
-                                            </div>
-                                           
-                                            <div class="col-md-4" id="dpbuscar" style="display:none">
-                                                <div class="input-group col-md-12 date date-picker" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                    <input id="txtFechaInicio" name="txtFechaInicio" type="text" class="form-control" />
-                                                    <span class="input-group-btn">
-                                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                        <div class="col-md-1" >
-                                        <a class="btn blue" id="btnBuscar" href="javascript:return 0;" tabindex="2">Buscar</a>
-                                            </div>
-                                         
-                                        </div>
-
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                        <table class="table table-hover table-bordered1 dataTables" id="tblReferencias3">
-                                            <thead>
-                                                <tr>
-                                                    <th class="Titulo-Tabla" style="text-align:left">
-                                                        Alumno Id
-                                                    </th>
-                                                    <th class="Titulo-Tabla" style="text-align:left">
-                                                        Nombre Alumno
-                                                    </th>
-                                                    <th class="Titulo-Tabla" style="text-align:right">
-                                                        Referencia 
-                                                    </th>
-                                                    <th class="Titulo-Tabla" style="text-align:center">
-                                                        Fecha de pago
-                                                    </th>
-                                                    <th class="Titulo-Tabla" style="text-align:right">
-                                                        Importe
-                                                    </th>
-                                                    <th class="Titulo-Tabla" style="text-align:right">Monto Pagado</th>
-                                                    <th class="Titulo-Tabla" style="text-align:right">Saldo por pagar</th>
-
-                                                </tr>
-                                            </thead>
-                                        </table>
-
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                            <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                                <div class="modal-dialog modal-sm" style="height: 90px;">
-                                    <!--<div class="modal-content" style="width:auto">-->
-                                    <div class="form-group">
-                                        <h3 id="hCarga">Cargando</h3>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="bar" style="width:auto" id="divBar">
-                                            <p id="txtBar"></p>
-                                        </div>
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="JS/Pagos/ReferenciasConsulta.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("JS/Pagos/ReferenciasConsulta.js");
+</script>

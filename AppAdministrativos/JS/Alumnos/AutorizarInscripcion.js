@@ -42,10 +42,10 @@
             var fil = $('#tblAlumnos_filter label input');
             fil.removeClass('input-small').addClass('input-large');
 
-            $('#Load').modal('hide');
+            IndexFn.Block(false);
         },
         TraerAlumnos: function () {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 url: 'WS/Alumno.asmx/ListaPorAutorizar',
                 type: 'POST',
@@ -58,7 +58,7 @@
                         
                     } else {
                         alertify.alert("No hay registros que mostrar.")
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                     }
                 }
             });
@@ -218,12 +218,12 @@
             }
         },
         GenerarCargos: function (alumno) {
-            alumno.UsuarioId = $.cookie('userAdmin');
+            alumno.UsuarioId =  localStorage.getItem('userAdmin');
             alumno.FechaInscripcion = "";
             alumno = { objAlumno: alumno };
             alumno = JSON.stringify(alumno);
 
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $.ajax({
                 url: 'WS/Alumno.asmx/GenerarCargos',
                 type: 'POST',
@@ -232,13 +232,13 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.d === true) {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Se generaron los cargos correctamente, el alumno ya podra visualizarlos en su portal.",
                             function () {
                                 Funciones.TraerAlumnos();
                             });
                     } else {
-                        $('#Load').modal('hide');
+                        IndexFn.Block(false);
                         alertify.alert("Ocurrio un Error al momento de generar los cargos, favor de llamar a Sistemas.")                        
                     }
                 }

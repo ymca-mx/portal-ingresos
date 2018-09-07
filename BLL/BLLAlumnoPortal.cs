@@ -259,7 +259,7 @@ namespace BLL
                                 UsuarioId=Alumno.UsuarioId,
                                 TurnoId = Alumno.AlumnoInscrito.TurnoId,
                                 HoraInscripcion=DateTime.Now.TimeOfDay,
-                                EstatusId= OfertaEducativadb.OfertaEducativaTipoId == 4?1:8,
+                                EstatusId= Alumno.AlumnoInscrito.EsEmpresa|| OfertaEducativadb.OfertaEducativaTipoId == 4?1:8,
                                 PagoPlanId = pagoplan
                                 }
                             },
@@ -292,7 +292,9 @@ namespace BLL
                                 Colonia = Alumno.DTOAlumnoDetalle.Colonia,
                                 Calle = Alumno.DTOAlumnoDetalle.Calle,
                                 NoExterior = Alumno.DTOAlumnoDetalle.NoExterior,
-                                NoInterior = Alumno.DTOAlumnoDetalle.NoInterior,
+                                NoInterior = Alumno.DTOAlumnoDetalle.NoInterior != null
+                                        || Alumno.DTOAlumnoDetalle.NoInterior != "null"
+                                        || Alumno.DTOAlumnoDetalle.NoInterior.Length > 0 ? Alumno.DTOAlumnoDetalle.NoInterior : "",
                                 TelefonoCasa = Alumno.DTOAlumnoDetalle.TelefonoCasa,
                                 Celular = Alumno.DTOAlumnoDetalle.Celular,
                                 Email = Alumno.DTOAlumnoDetalle.Email,
@@ -388,7 +390,8 @@ namespace BLL
                     return new
                     {
                         ex.Message,
-                        Inner = ex.InnerException?.InnerException?.Message ?? ""
+                        Inner = ex.InnerException?.Message ?? "",
+                        Inner2 = ex.InnerException?.InnerException?.Message ?? ""
                     };
                 }
 
@@ -562,7 +565,8 @@ namespace BLL
 
                 int num = 0;
                 return Alumnobd.ofertaEducativa == null ? null : (Alumnobd.curp.Length > 2 || Alumnobd.curp.Length == 18) ?
-                     int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 2), out num) ? Alumnobd :
+                     (int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 2, 1), out num) 
+                     || int.TryParse(Alumnobd.curp.Substring(Alumnobd.curp.Length - 1, 1), out num)) ? Alumnobd :
                      (new
                      {
                          Alumnobd.alumnoId,
@@ -1442,7 +1446,7 @@ namespace BLL
             }
         }
 
-        public static List<DTOAlumnoPromocionCasa> ConsultarAlumnoPromocionCasa(int Anio, int PeriodoId)
+        public static object ConsultarAlumnoPromocionCasa(int Anio, int PeriodoId)
         {
             try
             {
@@ -1463,19 +1467,29 @@ namespace BLL
                                                      EstatusId = (int)s.EstatusId
                                                  }).ToList();
 
-                    return alumnos;
+                    return new
+                    {
+                        Alumnos = alumnos,
+                        Estatus = true
+                    };
                 }
 
 
             }
-            catch (Exception)
+            catch (Exception error)
             {
 
-                return null;
+                return new
+                {
+                    Estatus = false,
+                    error.Message,
+                    Inner = error?.InnerException?.Message ?? "",
+                    Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                };
             }
         }
 
-        public static List<DTOPeriodoPromocionCasa> PeriodosPromocionCasa()
+        public static object PeriodosPromocionCasa()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -1495,17 +1509,27 @@ namespace BLL
                                                                           MesId = d.SubperiodoId
                                                                       }).ToList()
                                              }).ToList();
-                    return periodos;
+                    return new
+                    {
+                        Periodos = periodos,
+                        Estatus = true
+                    };
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
 
-                    return null;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message
+                    };
                 }
             }
         }
 
-        public static string AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
+        public static object AplicarPromocionCasa(DTOAlumnoPromocionCasa Promocion)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -1698,7 +1722,11 @@ namespace BLL
 
                         db.SaveChanges();
 
-                        return "Aplicada";
+                        return new
+                        {
+                            Message = "Aplicada",
+                            Estatus = true
+                        };
                     }//if (pago != null )
                     else
                     {
@@ -1708,14 +1736,24 @@ namespace BLL
                         promo.UsuarioId = Promocion.UsuarioId;
                         promo.EstatusId = 8;
                         db.SaveChanges();
-                        return "Pendiente";
+                        return new
+                        {
+                            Message = "Pendiente",
+                            Estatus = true
+                        };
                     }
 
 
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-                    return "Error";
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ??"",
+                        Inner2 = error?.InnerException?.InnerException.Message ?? ""
+                    };
                 }
             }
         }
@@ -2808,7 +2846,7 @@ namespace BLL
             }
         }
 
-        public static DTOAlumnoPermitido1 ObtenerAlumno2(int AlumnoId)
+        public static object ObtenerAlumno2(int AlumnoId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -2830,8 +2868,9 @@ namespace BLL
                                             && A.PeriodoId == PeriodoActual.PeriodoId)
                                 .ToList().Count > 0)
                     {
-                        return new DTOAlumnoPermitido1
+                        return new 
                         {
+                            Estatus = true,
                             AlumnoId = 0,
                             Nombre = "El Alumno ya esta liberado",
                             lstBitacora = BLLAlumnoPermitido.RegistrosdeAlumno(AlumnoId)
@@ -2839,23 +2878,46 @@ namespace BLL
                     }
                     else
                     {
-                        DTOAlumnoPermitido1 Alumno = (from a in db.Alumno
-                                                      where a.AlumnoId == AlumnoId
-                                                      select new DTOAlumnoPermitido1
-                                                      {
-                                                          AlumnoId = a.AlumnoId,
-                                                          Nombre = a.Nombre,
-                                                          Paterno = a.Paterno,
-                                                          Materno = a.Materno
-                                                      }).AsNoTracking()
-                                                         .FirstOrDefault();
-                        Alumno.lstBitacora = BLLAlumnoPermitido.RegistrosdeAlumno(AlumnoId);
-                        return Alumno;
+                        return
+                        db.Alumno
+                            .Where(a => a.AlumnoId == AlumnoId)
+                            .ToList()                            
+                            .AsQueryable()
+                            .Select(a => new
+                            {
+                                Estatus = true,
+                                a.AlumnoId,
+                                a.Paterno,
+                                a.Materno,
+                                a.Nombre,
+                                lstBitacora = a.AlumnoPermitido
+                                            .ToList()
+                                            .AsQueryable()
+                                            .Select(b => new
+                                            {
+                                                Estatus = true,
+                                                b.AlumnoId,
+                                                b.UsuarioId,
+                                                b.Anio,
+                                                b.PeriodoId,
+                                                FechaRegistroS = b.FechaRegistro.ToString("dd/MM/yyyy", Cultura),
+                                                HoraRegistroS = b.HoraRegistro.ToString(),
+                                                b.Descripcion
+                                            })
+                                            .ToList()
+                            })
+                            .FirstOrDefault();
                     }
                 }
-                catch
+                catch (Exception error)
                 {
-                    return null;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message
+                    };
                 }
             }
         }
@@ -13325,7 +13387,7 @@ namespace BLL
         }
 
         //cambio de carera
-        public static DTOAlumnoCambioCarrera ConsultaCambioCarrera(int AlumnoId, int UsuarioId)
+        public static object ConsultaCambioCarrera(int AlumnoId, int UsuarioId)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -13339,7 +13401,7 @@ namespace BLL
 
                     int tipoUsuario = db.Usuario.Where(a => a.UsuarioId == UsuarioId).FirstOrDefault().UsuarioTipoId;
 
-                    if (tipoUsuario == 22)
+                   /* if (tipoUsuario == 22)
                     {
                         Alumno = db.AlumnoInscrito.Where(a => a.AlumnoId == AlumnoId
                                                          && a.OfertaEducativa.OfertaEducativaTipoId != 4
@@ -13365,7 +13427,7 @@ namespace BLL
                                                                    }).ToList();
                     }
                     else
-                    {
+                    {*/
                         bool alumnoMovimiento = db.AlumnoMovimiento.Count(a => a.AlumnoId == AlumnoId
                                                                                             && a.TipoMovimientoId == 4
                                                                                             && a.Anio == periodoActual.Anio
@@ -13415,20 +13477,30 @@ namespace BLL
                                                }).FirstOrDefault();
                             if (alumnoMovimiento == true) { Alumno.EstatusId = 7; }
                         }
-                    }
+                    //}
 
-                    return Alumno;
+                    return new
+                    {
+                        Estatus = true,
+                        Alumno
+                    };
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
 
-                    return null;
+                    return new
+                    {
+                        Estatus = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
                 }
 
             }
         }
 
-        public static bool AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
+        public static object AplicarCambioCarrera(DTOAlumnoCambioCarrera Cambio)
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
@@ -13635,12 +13707,23 @@ namespace BLL
 
                     db.SaveChanges();
 
-                    return true;
+                    return
+                    new
+                    {
+                        Estatus = true,
+                        Message="Se guardo Correctamente"
+                    };
                 }
                 catch (Exception e)
                 {
-                    var error = e.Message;
-                    return false;
+                    return
+                    new
+                    {
+                        Estatus = false,
+                        e.Message,
+                        Inner = e?.InnerException?.Message ?? "",
+                        Inner2 = e?.InnerException?.InnerException?.Message ?? ""
+                    };
                 }
             }
         }

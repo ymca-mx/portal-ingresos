@@ -91,6 +91,7 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="CambiarCarrera.cs" />
     <Compile Include="TestReportes.cs" />
+    <Compile Include="UsuarioTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

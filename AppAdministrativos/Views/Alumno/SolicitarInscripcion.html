@@ -1,11 +1,11 @@
-﻿<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
-            <h2>Solictar Inscripción</h2>
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Solictar Inscripción</span>
+            </div>
         </div>
-    </div>
-    <div class="panel-body">
-        <div class="table">
+        <div class="panel-body">
             <div class="row col-md-12">
                 <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
                 <input type="text" id="txtAlumno" class="form-control-static font-md" style="text-align:right" />&nbsp;
@@ -39,13 +39,13 @@
                     </div>
                 </div>
             </div>
-            <div class="row col-md-12">
-                <label class="control-label">Alumno</label>&nbsp;&nbsp;
-                <label class="bold" id="lblNombre"></label>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label">Alumno</label>&nbsp;&nbsp;
+                    <label class="bold" id="lblNombre"></label>
+                </div>
             </div>
-        </div>
-        <div class="table">
-            <div class="row col-md-12">
+            <div class="row">
                 <hr />
                 <div class="col-md-5">
                     <label class="control-label">OfertaEducativa</label>
@@ -59,34 +59,22 @@
                     <select id="slcPeriodo" class="form-control"></select>
                 </div>
             </div>
-            <div class="row col-md-12">
-                <div class="row col-md-12">
-
-                </div>
-                <div class="row col-md-12 form-group">
+            <div class="row">
+               <br />
+                <div class="col-md-12 form-group">
                     <label class="control-label">Comentario</label>
                     <textarea id="txtDetalle" class="form-control" readonly></textarea>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="panel-footer" id="divfooter">
-        <button id="btnGuardar" class="btn btn-success">Guardar</button>
-    </div>
-</div>
-<div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-    <div class="modal-dialog modal-sm" style="height: 90px;">
-        <!--<div class="modal-content" style="width:auto">-->
-        <div class="form-group">
-            <h3 id="hCarga">Trabajando...</h3>
-        </div>
-        <div class="form-group">
-            <div class="bar" style="width: auto" id="divBar">
-                <p id="txtBar"></p>
+            <div class="row" id="divfooter">
+                <br />
+                <div class="col-md-12">
+                    <button id="btnGuardar" class="btn btn-success">Guardar</button>
+                </div>
             </div>
-            <!--</div>-->
         </div>
     </div>
-</div>
-
-<script src="JS/Alumnos/SolicitarInscripcion.js"></script>
+</main>
+<script>
+    $.getScript("JS/Alumnos/SolicitarInscripcion.js");
+</script>

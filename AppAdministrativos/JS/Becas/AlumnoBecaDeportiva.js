@@ -19,9 +19,8 @@ $(document).ready(function () {
         }
         if (txtMonto > 0) {
 
-            var nombre = $('#hCarga');
-            nombre[0].innerText = "Guardando";
-            $('#Load').modal('show');
+
+            IndexFn.Block(true);
 
             var an = $('#slcPeriodo').find(':selected').data("anio");
             var per = $('#slcPeriodo').find(':selected').data("periodoid");
@@ -31,7 +30,7 @@ $(document).ready(function () {
             Datos += "Anio:'" + an + "',";
             Datos += "PeriodoId:'" + per + "',";
             Datos += "Porcentaje:'" + txtMonto + "',";
-            Datos += "UsuarioId:'" + $.cookie('userAdmin') + "'";
+            Datos += "UsuarioId:'" +  localStorage.getItem('userAdmin') + "'";
             Datos += "}";
             BecaDeportiva(Datos);
         }
@@ -54,7 +53,7 @@ $(document).ready(function () {
                     GuardarDocumentos(obj.AlumnoId, obj.OfertaEducativaId, obj.Anio, obj.PeriodoId, false, obj.UsuarioId);
                 } else {
                     alertify.alert('Error al cargar datos');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         });
@@ -83,7 +82,7 @@ $(document).ready(function () {
         if (alumno.length > 0 && alumno > 0) {
 
             $('#FileDeportiva a').click();
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $('#txtBecaMonto').val(0);
             if (tblBecas !== null) {
                 tblBecas.fnClearTable();
@@ -95,8 +94,7 @@ $(document).ready(function () {
     });
 
     function BuscarAlumno(AlumnoId) {
-        var nombre = $('#hCarga');
-        nombre[0].innerText = "Cargando";
+
         $("#btnGenerarCargos").attr("disabled", "disabled");
         $("#slcOfertas").empty();
         var optionP = $(document.createElement('option'));
@@ -135,10 +133,10 @@ $(document).ready(function () {
 
                     alertify.alert('El alumno no está inscrito a ninguna oferta educativa para el periodo actual.');
                     $("#btnGenerarCargos").attr("disabled", "disabled");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             }
         });
     }
@@ -325,7 +323,7 @@ $(document).ready(function () {
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
                 if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     $('#slcOfertas').empty();
                     $('#txtBecaMonto').val(0);
                     if (tblBecas !== null) {
@@ -337,7 +335,7 @@ $(document).ready(function () {
                     BuscarAlumno(Alumnoid);
                 } else {
                     alertify.alert('Error al cargar datos');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         }

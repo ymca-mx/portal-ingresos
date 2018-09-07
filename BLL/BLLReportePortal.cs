@@ -364,18 +364,30 @@ namespace BLL
                 var alumnos = alumnoSaldo0.Select(a => new { a.AlumnoId, a.Nombre }).Distinct().ToList();
 
 
-                List<DTOSaldoAlumno> SaldoAlumno = alumnos.Select(a => new DTOSaldoAlumno
-                {
-                    AlumnoId = a.AlumnoId,
-                    Nombre = a.Nombre,
-                    Detalle = periodos.Select(c => new DTOSaldosDetalle
+                var AlumnosDetalle =
+                    alumnos.Select(a => new
                     {
-                        AlumnoId = (int)a.AlumnoId,
-                        Periodo = c.Descripcion,
-                        Saldo = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId && e.Descripcion == c.Descripcion).FirstOrDefault()?.Saldo ?? 0)
-                    }).ToList(),
-                    SaldoTotal = String.Format("{0:C}", alumnoSaldo0.Where(e => e.AlumnoId == a.AlumnoId).Select(f => f.Saldo).ToList().Sum())
-                }).ToList();
+                        a.AlumnoId,
+                        a.Nombre,
+                        SaldoPeriodo = periodos
+                                        .Select(b => new
+                                        {
+                                            b.Anio,
+                                            b.PeriodoId,
+                                            b.Descripcion,
+                                            Ofertas = alumnoSaldo0
+                                                        .Where(c=> c.AlumnoId==a.AlumnoId
+                                                            && c.Descripcion.Contains(b.Descripcion))
+                                                        .Select(c=> new
+                                                        {
+                                                            c.OfertaEducativaId,
+                                                            c.Saldo,
+                                                            c.EsEmpresa
+                                                        })
+                                                        .ToList()
+                                        })
+                                        .ToList()
+                    }).ToList();
 
                 List<DTOSaldosOfertas> saldoOfertas = alumnoSaldo0.GroupBy(a => new { a.OfertaEducativaId })
                                       .Select(b => new DTOSaldosOfertas
@@ -454,7 +466,7 @@ namespace BLL
                 return new
                 {
                     Periodos = periodos,
-                    Alumnos = SaldoAlumno,
+                    Alumnos = AlumnosDetalle,
                     Ofertas = saldoOfertas,
                     TipoOfertas
                 };

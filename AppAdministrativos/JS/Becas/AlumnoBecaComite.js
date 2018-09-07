@@ -11,9 +11,8 @@
         }
         if (txtMonto > 0) {
 
-            var nombre = $('#hCarga');
-            nombre[0].innerText = "Guardando";
-            $('#Load').modal('show');
+
+            IndexFn.Block(true);
 
 
             var Datos = {
@@ -22,7 +21,7 @@
                 anio: $('#slcPeriodo').find(':selected').data("anio"),
                 periodoId: $('#slcPeriodo').find(':selected').data("periodoId"),
                 porcentajeBeca: txtMonto,
-                usuarioId: $.cookie('userAdmin'),
+                usuarioId:  localStorage.getItem('userAdmin'),
                 esComite: true,
                 esSEP: false,
                 esEmpresa: false,
@@ -68,16 +67,16 @@
                 }
                 else if (data === "No tiene") {
                     alertify.alert('El Alumno debe estar inscrito para poder aplicar una beca comité gracias');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
                 else {
                     alertify.alert('Error al cargar datos');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             })
             .fail(function (data) {
                 alertify.alert('Error al cargar datos');
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             });
     }
 
@@ -102,7 +101,7 @@
     $('#btnBuscarAlumno').click(function () {
         var alumno = $('#txtAlumno').val();
         if (alumno.length > 0) {
-            $('#Load').modal('show');
+            IndexFn.Block(true);
             $('#slcOfertas').empty();
             $('#txtBecaMonto').val(0);
             if (tblBecas !== null) {
@@ -120,8 +119,7 @@
     });
 
     function BuscarAlumno(AlumnoId) {
-        var nombre = $('#hCarga');
-        nombre[0].innerText = "Cargando";
+
 
         $("#slcOfertas").empty();
         var optionP = $(document.createElement('option'));
@@ -156,13 +154,13 @@
                     $("#slcOfertas").val(data.OfertasAlumnos[0].OfertaEducativaId);
                     $("#slcOfertas").change();
                 } else {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                     return false;
                 }
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
             })
             .fail(function (data) {
-                $('#Load').modal('hide');
+                IndexFn.Block(false);
                 console.log(data);
             });
     }
@@ -292,7 +290,7 @@
     });
 
     $("#tblBecas").on('click', 'a', function () {
-        $('#Load').modal('show');
+        IndexFn.Block(true);
         var a = this;
         a = $(a).data("file");
         CrearPDF(a);
@@ -309,9 +307,9 @@
             success: function (data) {
                 if (data !== null) {
                     window.open(data.d, "ArchivoPDF");
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 } else {
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         });
@@ -356,7 +354,7 @@
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
                 if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                    $('#Load').modal('show');
+                    IndexFn.Block(true);
                     $('#slcOfertas').empty();
                     $('#txtBecaMonto').val(0);
                     if (tblBecas !== null) {
@@ -370,7 +368,7 @@
                     BuscarAlumno(Alumnoid);
                 } else {
                     alertify.alert('Error al cargar datos');
-                    $('#Load').modal('hide');
+                    IndexFn.Block(false);
                 }
             }
         }

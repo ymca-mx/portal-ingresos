@@ -953,13 +953,20 @@ namespace BLL
                         PagosDetalles[0].esEspecial = alConf.Count > 0 ? true : false;
                     }
                     //PagosDetalles[0].BecaSEP = tpBeca == 3 ? "Beca Comite" : "Beca SEP";
-                   return 
-                        new PantallaPago
-                        {
-                            Pagos = PagosDetalles,
-                            Estatus = PagosDetalles.Where(l => (l?.OtroDescuento?.Length ?? 0) > 0).ToList().Count > 0 ? true : false,
-                            Periodos = PeriodosDTO
-                        };
+                    return
+                         new PantallaPago
+                         {
+                             Pagos = PagosDetalles,
+                             Estatus = PagosDetalles.Where(l => (l?.OtroDescuento?.Length ?? 0) > 0).ToList().Count > 0 ? true : false,
+                             Periodos = PeriodosDTO,
+                             Anticipado = db.Alumno.Where(a => a.AlumnoId == AlumnoId
+                              && a.AlumnoInscrito.Where(b => b.Anio == a.Anio && b.PeriodoId == a.PeriodoId
+                                                          && b.OfertaEducativa.OfertaEducativaTipoId != 4
+                                                          && !b.EsEmpresa)
+                                                          .ToList().Count > 0)
+                                                          .ToList()
+                                                          .Count > 0 ? false : true
+                         };
                 }
                 else
                 {
@@ -968,7 +975,8 @@ namespace BLL
                        {
                            Pagos = new List<DTOPagoDetallado>(),
                            Estatus = false,
-                           Periodos = new List<DTOPeriodoReferencias>()
+                           Periodos = new List<DTOPeriodoReferencias>(),
+                           Anticipado=false
                        };
                 }
             }
@@ -3026,7 +3034,7 @@ namespace BLL
                     {
                         if (lstAlumnoGrupoDesc.Count == 1)
                         {
-                            if (lstAlumnoGrupoDesc.FirstOrDefault().GrupoId != 0)
+                            if (lstAlumnoGrupoDesc.FirstOrDefault().GrupoId == 0)
                             {
                                 return new
                                 {

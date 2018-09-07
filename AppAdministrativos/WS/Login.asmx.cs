@@ -27,7 +27,7 @@ namespace AppAdministrativos.WS
         }
 
         [WebMethod, ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public DTOUsuarioImagen Datos(int username)
+        public object Datos(int username)
         {
             return Universidad.BLL.BLLUsuario.ImagenIndex(username);
         }

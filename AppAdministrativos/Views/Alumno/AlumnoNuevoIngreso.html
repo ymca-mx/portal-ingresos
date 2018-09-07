@@ -1,57 +1,55 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <title>Alumnos Nuevo Ingreso</title>
-</head>
-<body>
-    <div class="panel panel-default">
+﻿<main>
+    <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="panel-title">
-                <h2>Alumnos Nuevo Ingreso</h2>
+                <span class="caption title">Alumnos Nuevo Ingreso</span>
             </div>
         </div>
         <div class="panel-body">
-            <div class="table">
-                <div class="form-group col-md-4 col-md-offset-9">
-                    <label>¿Neceistas Ayuda?</label>
-                    <a target="_blank" href="Documentos/Manuales/ManualModificacionNuevoIngreso.pdf" class="btn btn-danger">Descargar Manual</a>
+            <div class="row">
+                <div class="col-md-9"></div>
+                <div class="col-md-3">
+                    <div class="col-md-2"></div>
+                    <div class="form-group col-md-10">
+                        <label>¿Neceistas Ayuda?</label>
+                        <a target="_blank" href="Documentos/Manuales/ManualModificacionNuevoIngreso.pdf" class="btn btn-danger">Descargar Manual</a>
+                    </div>
                 </div>
             </div>
-            <div class="table">
-                <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
-                    <thead>
-                        <tr>
-                            <th>
-                                <i class="fa fa-user"></i>&nbsp; Clave
-                            </th>
-                            <th>
-                                <i class="fa fa-user"></i>&nbsp; Nombre
-                            </th>
-                            <th>
-                                <i class="fa fa-calendar"></i>&nbsp; Registro
-                            </th>
-                            <th>
-                                <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
-                            </th>
-                            <th>
-                                <i class="fa fa-user-md"></i>&nbsp; Usuario
-                            </th>
-                            <th>
-                                <i class="fa fa-edit"></i>&nbsp; Personales
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Clave
+                                </th>
+                                <th>
+                                    <i class="fa fa-user"></i>&nbsp; Nombre
+                                </th>
+                                <th>
+                                    <i class="fa fa-calendar"></i>&nbsp; Registro
+                                </th>
+                                <th>
+                                    <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                </th>
+                                <th>
+                                    <i class="fa fa-user-md"></i>&nbsp; Usuario
+                                </th>
+                                <th>
+                                    <i class="fa fa-edit"></i>&nbsp; Personales
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="panel-footer">
-
-        </div>
     </div>
+</main>
+<main>
     <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalDatos" data-keyboard="false">
-        <div class="modal-absolute">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Datos del Alumno</h3>
@@ -97,174 +95,7 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" tabindex="-1" data-backdrop="static" id="ModalEducativa" data-keyboard="false" data-width="655">
-        <div class="modal-dialog modal-dialog" style="width:650px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#Academicos" aria-controls="Academicos" role="tab" data-toggle="tab">Datos Academicos</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#Cuotas" aria-controls="Cuotas" role="tab" data-toggle="tab">Cuotas</a>
-                        </li>
-                    </ul>
-                </div>
-                <form id="frmAcademicos" onSubmit="return false;">
-                    <div class="modal-body">
-                        <div class="tab-content">
-                            <div class="row tab-pane active" id="Academicos" role="tabpanel">
-                                <div class="col-md-12 text-center">
-                                    <h3 class="modal-title">Datos Academicos</h3>
-                                    <hr />
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Plantel</label>
-                                        <select class="form-control" id="slcPlantel"></select>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Tipo Oferta Educativa</label>
-                                        <select class="form-control" id="slcTipoOferta"></select>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Oferta Educativa</label>
-                                        <select class="form-control" id="slcOFertaEducativa"></select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Periodo</label>
-                                        <select class="form-control" id="slcPeriodo"></select>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Turno</label>
-                                        <select class="form-control" id="slcTurno"></select>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">
-                                            Es Empresa
-                                            <input type="checkbox" class="checkbox" id="chkEmpresa" />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row tab-pane" id="Cuotas" role="tabpanel">
-                                <div class="col-md-12 text-center">
-                                    <h3 class="modal-title">Cuotas</h3>
-                                    <hr />
-                                </div>
-                                <!--Colegiatura-->
-                                <div class="col-md-12">
-                                    <span class="h5">
-                                        Colegiatura
-                                    </span>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Cuota</label>
-                                        <label class="input-control" id="lblColegiatura">$000.000</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">A Pagar</label>
-                                        <input type="text" readonly id="txtColegPPagar" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">Beca</label>
-                                        <input type="number" id="txtColegBeca" class="form-control" min="0" max="100" maxlength="5" />
-                                    </div>
-                                </div>
-                                <!--Inscripcion-->
-                                <div class="col-md-12">
-                                    <hr />
-                                    <span class="h5">
-                                        Inscripción
-                                    </span>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Cuota</label>
-                                        <label class="input-control" id="lblInscripcion">$000.000</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">A Pagar</label>
-                                        <input type="text" readonly id="txtInscrPPagar" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">Beca</label>
-                                        <input type="number" id="txtInscrBeca" class="form-control" min="0" max="100" maxlength="5" />
-                                    </div>
-                                </div>
-                                <!--Examen-->
-                                <div class="col-md-12">
-                                    <hr />
-                                    <span class="h5">
-                                        Examen de Diagnóstico
-                                    </span>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Cuota</label>
-                                        <label class="input-control" id="lblExamen">$000.000</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">A Pagar</label>
-                                        <input type="text" readonly id="txtExamPPagar" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">Descuento</label>
-                                        <input type="number" id="txtExamenBeca" class="form-control" min="0" max="100" maxlength="5" />
-                                    </div>
-                                </div>
-                                <!--Colegiatura-->
-                                <div class="col-md-12">
-                                    <hr />
-                                    <span class="h5">
-                                        Credencial
-                                    </span>
-                                    <div class="col-md-12 form-group">
-                                        <label class="control-label">Cuota</label>
-                                        <label class="input-control" id="lblCredencial">$000.000</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">A Pagar</label>
-                                        <input type="text" readonly id="txtCredencialPPagar" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label">Descuento</label>
-                                        <input type="number" id="txtCredencialBeca" class="form-control" min="0" max="100" maxlength="5" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-default" data-dismiss="modal" id="btnCancelarEducativa">Cancelar</a>
-                        <button class="btn btn-primary" id="btnGuardarDatosEdu">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-        <div class="modal-dialog modal-sm" style="height: 90px;">
-            <!--<div class="modal-content" style="width:auto">-->
-            <div class="form-group">
-                <h3 id="hCarga">Trabajando...</h3>
-            </div>
-            <div class="form-group">
-                <div class="bar" style="width: auto" id="divBar">
-                    <p id="txtBar"></p>
-                </div>
-                <!--</div>-->
-            </div>
-        </div>
-    </div>
-    <script src="JS/Alumnos/AlumnoNuevoIngreso.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("JS/Alumnos/AlumnoNuevoIngreso.js");
+</script>

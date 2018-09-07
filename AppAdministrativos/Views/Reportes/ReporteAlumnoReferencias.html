@@ -1,144 +1,111 @@
-﻿
-<div class="container" id="divContenido">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light" id="dvCargos">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <h1 class="caption-subject font-blue bold uppercase">
-                            Reporte Alumno Referencias
-                        </h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <form class="recovery-form" id="form_recovery">
-
-                            <div class="col-md-4">
-                                <div class="form-group" id="divSlc">
-                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                    <label class="control-label">Periodos</label>
-
-                                    <div class="input-icon right">
-                                        <!--<i class="fa fa-lock"></i>-->
-                                        <select class="form-control" name="slcPeriodo" id="slcPeriodo"></select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="portlet-body" id="divReferencias">
-                                    <button id="btnReferencias"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
-                                    <div> &nbsp;</div>
-                                    <table id="dtReferencias" class="table table-striped table-bordered table-advance table-hover ">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align:center">
-                                                    Alumno <br /> id
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Nombre <br /> Alumno
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Oferta <br /> Educativa
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Inscripcion
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Colegiatura
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Materia<br /> Suelta
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Asesoria <br />Especial
-                                                </th>
-                                                <th style="text-align:center">
-                                                    # Materias
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Materias
-                                                </th>
-                                                <th style="text-align:center">
-                                                    # bajas
-                                                </th>
-                                                <th style="text-align:center">
-                                                    Bajas
-                                                </th>
-                                                <th style="text-align:center">
-                                                    
-                                                </th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </form>
-                        <div id="div-result">
-
-                        </div>
-
-
-                    </div>
-
-
-
-                </div>
-
-
-
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Reporte Alumno Referencias</span>
             </div>
+        </div>
+        <div class="panel-body">
             <div class="row">
-                <!--<a href="#Monto" data-toggle="modal" id="btnPopup"></a>-->
-                <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                    <div class="modal-dialog modal-sm" style="height: 90px;">
-                        <!--<div class="modal-content" style="width:auto">-->
-                        <div class="form-group">
-                            <h3 id="hCarga">Cargando</h3>
-                        </div>
-                        <div class="form-group">
-                            <div class="bar" style="width:auto" id="divBar">
-                                <p id="txtBar"></p>
+                <div class="col-md-12">
+
+                    <form class="recovery-form" id="form_recovery">
+
+                        <div class="col-md-4">
+                            <div class="form-group" id="divSlc">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <label class="control-label">Periodos</label>
+
+                                <div class="input-icon right">
+                                    <!--<i class="fa fa-lock"></i>-->
+                                    <select class="form-control" name="slcPeriodo" id="slcPeriodo"></select>
+                                </div>
                             </div>
-                            <!--</div>-->
                         </div>
+
+                        <div class="col-md-12">
+
+                            <div class="portlet-body" id="divReferencias">
+                                <button id="btnReferencias"> Exportar a Excel <img src="Imagenes/export-to-excel.png" style="height:20px;width:45px;" /></button>
+                                <div> &nbsp;</div>
+                                <table id="dtReferencias" class="table table-striped table-bordered table-advance table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">
+                                                Alumno <br /> id
+                                            </th>
+                                            <th style="text-align:center">
+                                                Nombre <br /> Alumno
+                                            </th>
+                                            <th style="text-align:center">
+                                                Oferta <br /> Educativa
+                                            </th>
+                                            <th style="text-align:center">
+                                                Inscripcion
+                                            </th>
+                                            <th style="text-align:center">
+                                                Colegiatura
+                                            </th>
+                                            <th style="text-align:center">
+                                                Materia<br /> Suelta
+                                            </th>
+                                            <th style="text-align:center">
+                                                Asesoria <br />Especial
+                                            </th>
+                                            <th style="text-align:center">
+                                                # Materias
+                                            </th>
+                                            <th style="text-align:center">
+                                                Materias
+                                            </th>
+                                            <th style="text-align:center">
+                                                # bajas
+                                            </th>
+                                            <th style="text-align:center">
+                                                Bajas
+                                            </th>
+                                            <th style="text-align:center">
+
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div id="div-result">
+
                     </div>
+
+
                 </div>
+
+
 
             </div>
         </div>
     </div>
-    <div id="divContainer">
-
-    </div>
-    <div id="displayPDF">
-
-    </div>
-</div>
-<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-
-<script src="Scripts/js-xlsx/FileSaver.js"></script>
-<script src="Scripts/js-xlsx/xlsx.full.min.js"></script>
-
-<script src="JS/Reportes/ReporteAlumnoReferencias.js"></script>
+</main>
+<script>
+    $.getScript("Scripts/js-xlsx/FileSaver.js");
+    $.getScript("Scripts/js-xlsx/xlsx.full.min.js");
+    $.getScript("JS/Reportes/ReporteAlumnoReferencias.js");
+</script>

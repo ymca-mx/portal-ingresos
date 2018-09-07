@@ -91,6 +91,7 @@ namespace DAL
         public virtual DbSet<CuentaMail> CuentaMail { get; set; }
         public virtual DbSet<Cuota> Cuota { get; set; }
         public virtual DbSet<CuotaIncremento> CuotaIncremento { get; set; }
+        public virtual DbSet<DatosClipper> DatosClipper { get; set; }
         public virtual DbSet<DatosFiscales> DatosFiscales { get; set; }
         public virtual DbSet<Defectos> Defectos { get; set; }
         public virtual DbSet<Descuento> Descuento { get; set; }
@@ -204,7 +205,6 @@ namespace DAL
         public virtual DbSet<SucursalAnuncio> SucursalAnuncio { get; set; }
         public virtual DbSet<SucursalCaja> SucursalCaja { get; set; }
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
-        public virtual DbSet<TempAdeudo> TempAdeudo { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimiento> TipoMovimiento { get; set; }
         public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
@@ -247,8 +247,19 @@ namespace DAL
         public virtual DbSet<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
         public virtual DbSet<VistoBuenoCurso> VistoBuenoCurso { get; set; }
         public virtual DbSet<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
+        public virtual DbSet<AlumnoAntecedente1> AlumnoAntecedente1 { get; set; }
+        public virtual DbSet<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
+        public virtual DbSet<AlumnoTitulo> AlumnoTitulo { get; set; }
+        public virtual DbSet<AutorizacionReconocimiento> AutorizacionReconocimiento { get; set; }
+        public virtual DbSet<Campus> Campus { get; set; }
+        public virtual DbSet<Cargo> Cargo { get; set; }
+        public virtual DbSet<FundamentoLegal> FundamentoLegal { get; set; }
+        public virtual DbSet<Institucion> Institucion { get; set; }
+        public virtual DbSet<InstitucionOfertaEducativa> InstitucionOfertaEducativa { get; set; }
+        public virtual DbSet<ModalidadTitulacion> ModalidadTitulacion { get; set; }
+        public virtual DbSet<TipoEstudioAntecedente> TipoEstudioAntecedente { get; set; }
+        public virtual DbSet<UsuarioResponsable> UsuarioResponsable { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
-        public virtual DbSet<AlumnoInscritoBitacoraBKSalome> AlumnoInscritoBitacoraBKSalome { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
         public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
@@ -258,7 +269,6 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
-        public virtual DbSet<UniversidadNewAdeudo> UniversidadNewAdeudo { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {

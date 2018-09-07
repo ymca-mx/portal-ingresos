@@ -1,121 +1,81 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Pagos</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <meta http-equiv="pragma" content="no-cache" />
-</head>
-<body style="font-size: 10px !important">
-    <div class="page-content">
-        <!-- BEGIN PAGE HEAD -->
-        <div class="container" id="divContenido">
+﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">ESTADO DE CUENTA</span>
+            </div>
+        </div>
+        <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <img src="Imagenes/UYMCA-100px.png" width="70" />
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="caption title">ESTADO DE CUENTA </h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="portlet-body">
-                            <div class="col-md-12 form-group" id="divBuscar">
-                                <div class="col-md-12">
-                                    <div class="col-md-4 ">
-                                        <label class="control-label">Clave del Alumno</label>
-                                        <div class="input-icon right">
-                                            <input type="text" id="txtClave" class="form-control font-md"  />                                           
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 ">
-                                        <label class="control-label">Seleccionar Fechas</label>
-                                        <div class="input-icon right">
-                                            <input type="text" name="daterange" id="txtPeriodo" class="form-control"  />
-                                            <i class="glyphicon glyphicon-calendar fa fa-calendar font-blue"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="control-label">&nbsp;</label>
-                                        <div class="input-icon right">
-                                            <a class="btn blue form-control" id="btnBuscar" href="javascript:return 0;">Buscar Alumno</a>
-                                            <i class="glyphicon glyphicon-search fa fa-search"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <br />
-                                    <label class="control-label black" style="font-weight:bold;" id="lblNombre"></label>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-striped table-bordered table-advance table-hover table-responsive" id="tblEstado">
-                                        <thead>
-                                            <tr class=".bg-primary">
-                                                <th style="text-align:center;" class=".bg-primary">
-                                                   Fecha &nbsp; <i class="fa fa-calendar"></i>
-                                                </th>
-                                                <th style="text-align:center;" class="bg-primary">
-                                                    Concepto &nbsp; <i class="fa fa-info"></i>
-                                                </th>
-                                                <th style="text-align:center;" class="bg-primary">
-                                                    Referencia &nbsp; <i class="fa fa-list"></i>
-                                                </th>
-                                                <th style="text-align:center;" class="bg-primary">
-                                                    Cargo &nbsp; <i class="fa fa-file-text-o"></i>
-                                                </th>
-                                                <th style="text-align:center;" class="bg-primary">
-                                                    Deposito &nbsp; <i class="fa fa-plus-circle"></i>
-                                                </th>
-                                                <th style="text-align:center;" class="bg-primary">
-                                                    Saldo &nbsp; <i class="fa fa-dollar"></i>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
+                    <div class="col-md-4 ">
+                        <label class="control-label">Clave del Alumno</label>
+                        <div class="input-icon right">
+                            <input type="text" id="txtClave" class="form-control font-md" />
                         </div>
                     </div>
-                    <div class="modal fade" tabindex="-1" data-backdrop="static" id="Load" data-keyboard="false">
-                        <div class="modal-dialog modal-sm" style="height: 90px;">
-                            <!--<div class="modal-content" style="width:auto">-->
-                            <div class="form-group">
-                                <h3 id="hCarga">Cargando</h3>
-                            </div>
-                            <div class="form-group">
-                                <div class="bar" style="width:auto" id="divBar">
-                                    <p id="txtBar"></p>
-                                </div>
-                                <!--</div>-->
-                            </div>
+                    <div class="col-md-4 ">
+                        <label class="control-label">Seleccionar Fechas</label>
+                        <div class="input-icon right">
+                            <input type="text" name="daterange" id="txtPeriodo" class="form-control" />
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar font-blue"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">&nbsp;</label>
+                        <div class="input-icon right">
+                            <button class="btn blue form-control" id="btnBuscar">Buscar Alumno</button>
+                            <i class="glyphicon glyphicon-search fa fa-search"></i>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <br />
+                    <label class="control-label black" style="font-weight:bold;" id="lblNombre"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-advance table-hover table-responsive" id="tblEstado">
+                        <thead>
+                            <tr class=".bg-primary">
+                                <th style="text-align:center;" class=".bg-primary">
+                                    Fecha &nbsp; <i class="fa fa-calendar"></i>
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    Concepto &nbsp; <i class="fa fa-info"></i>
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    Referencia &nbsp; <i class="fa fa-list"></i>
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    Cargo &nbsp; <i class="fa fa-file-text-o"></i>
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    Deposito &nbsp; <i class="fa fa-plus-circle"></i>
+                                </th>
+                                <th style="text-align:center;" class="bg-primary">
+                                    Saldo &nbsp; <i class="fa fa-dollar"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
-    <script src="JS/Pagos/EstadoCuentaBuscar.js"></script>
-</body>
-</html>
+</main>
+<script>
+    $.getScript("JS/Pagos/EstadoCuentaBuscar.js");
+</script>
