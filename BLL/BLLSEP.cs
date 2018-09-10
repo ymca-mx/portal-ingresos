@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BLL.Tools;
+using DAL;
 using DTO.SEP;
 using System;
 using System.Collections.Generic;
@@ -229,6 +230,7 @@ namespace BLL
             {
                 try
                 {
+                    dynamic result;
                     List<object> fallidos = new List<object>();
                     alumnos.ForEach(alumno =>
                     {
@@ -240,14 +242,33 @@ namespace BLL
                                     && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
                             .FirstOrDefault();
 
-                            AlumnoBD.EstatusId = alumno.Autorizado ? 3 : 1;
+                            AlumnoBD.EstatusId = (AlumnoBD.UsuarioResponsable.Where(a => a.Aprobo && a.UsuarioId != alumno.UsuarioId).Count()) == 1 ? 3 : 2;
 
                             var Responsable = AlumnoBD.UsuarioResponsable.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
 
                             Responsable.Aprobo = alumno.Autorizado;
-                            Responsable.Comentario = alumno.Comentario != null ? alumno.Comentario : "";
+                            Responsable.Comentario = alumno?.Comentario ?? "";
 
-                            db.SaveChanges();
+
+
+                            if (alumno.Autorizado)
+                            {
+                                result =
+                                SEP.CrearXMLTitulo(AlumnoBD);
+
+                                if (result != null)
+                                {
+                                    fallidos.Add(new
+                                    {
+                                        alumno,
+                                        result
+                                    });
+                                }
+                                else
+                                {
+                                    db.SaveChanges();
+                                }
+                            }
                         }
                         catch (Exception Error)
                         {
@@ -255,8 +276,8 @@ namespace BLL
                             {
                                 alumno,
                                 Error.Message,
-                                Inner = Error?.InnerException?.Message,
-                                Inner2 = Error?.InnerException?.InnerException?.Message
+                                Inner = Error?.InnerException?.Message??"",
+                                Inner2 = Error?.InnerException?.InnerException?.Message??""
                             });
                         }
                     });

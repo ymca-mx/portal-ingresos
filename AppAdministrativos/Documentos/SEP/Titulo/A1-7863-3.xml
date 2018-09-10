@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TituloElectronico xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" folioControl="A1-7863-3" xmlns="https://www.siged.sep.gob.mx/titulos/">
+  <FirmaResponsables>
+    <FirmaResponsable nombre="Ernesto" primerApellido="Gaona" segundoApellido="Sanchez" curp="" idCargo="6" cargo="SECRETARIO GENERAL" abrTitulo="" sello="" certificadoResponsable="" noCertificadoResponsable="" />
+    <FirmaResponsable nombre="Juan" primerApellido="Baque" segundoApellido="Gonzalez" curp="" idCargo="3" cargo="RECTOR" abrTitulo="" sello="" certificadoResponsable="" noCertificadoResponsable="" />
+  </FirmaResponsables>
+  <Institucion cveInstitucion="20547" nombreInstitucion="UNIVERSIDAD YMCA" />
+  <Carrera cveCarrera="244313" nombreCarrera="Licenciatura en Ciencias del Deporte" fechaTerminacion="2018-08-30T00:00:00" idAutorizacionReconocimiento="1" autorizacionReconocimiento="RVOE FEDERAL" numeroRvoe="20100446" />
+  <Profesionista curp="MAGA970129HDFRRL07" nombre="ALEXIS HUMBERTO" primerApellido="MARURE" segundoApellido="GARCIA" correoElectronico="j053_pepe@hotmail.com" />
+  <Expedicion fechaExpedicion="2018-09-10T13:56:06" idModalidadTitulacion="1" modalidadTitulacion="POR TESIS" cumplioServicioSocial="1" idFundamentoLegalServicioSocial="4" fundamentoLegalServicioSocial="ART. 10 REGLAMENTO PARA LA PRESTACIÓN DEL SERVICIO SOCIAL DE LOS ESTUDIANTES DE LAS INSTITUCIONES DE EDUCACIÓN SUPERIOR EN LA REPÚBLICA MEXICANA" idEntidadFederativa="09" entidadFederativa="Ciudad de México" />
+  <Antecedente institucionProcedencia="JOSE REVUELTAS 82" idTipoEstudioAntecedente="4" tipoEstudioAntecedente="EDUCACIÓN MEDIA SUPERIOR" idEntidadFederativa="9" entidadFederativa="Ciudad de México" fechaTerminacion="2015-06-30T00:00:00" />
+</TituloElectronico>

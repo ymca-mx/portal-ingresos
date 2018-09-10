@@ -180,7 +180,7 @@
     <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaConcepto.cs" />
     <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaTotal.cs" />
     <Compile Include="Reporte\CorteDeCaja\DTOFirmas.cs" />
-    <Compile Include="SEP\Titulo.cs" />
+    <Compile Include="SEP\SEP_TituloElectronico.cs" />
     <Compile Include="SEP\TituloGeneral.cs" />
     <Compile Include="Usuario\CorteDeCaja\DTOCajero.cs" />
     <Compile Include="Usuario\DTOLogin.cs" />
@@ -196,6 +196,10 @@
       <Name>DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="SEP\SEP_TituloElectronico.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
