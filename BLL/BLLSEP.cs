@@ -242,7 +242,7 @@ namespace BLL
                                     && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
                             .FirstOrDefault();
 
-                            AlumnoBD.EstatusId = (AlumnoBD.UsuarioResponsable.Where(a => a.Aprobo && a.UsuarioId != alumno.UsuarioId).Count()) == 1 ? 3 : 2;
+                            AlumnoBD.EstatusId = (AlumnoBD.UsuarioResponsable.Where(a => a.Aprobo && a.UsuarioId != alumno.UsuarioId).Count()) == 1 && alumno.Autorizado ? 3 : 2;
 
                             var Responsable = AlumnoBD.UsuarioResponsable.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
 

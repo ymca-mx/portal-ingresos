@@ -757,9 +757,6 @@
     <Compile Include="TipoMovimiento.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="TipoMovimientoCRUD.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="TipoUsuarioSubmenu.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

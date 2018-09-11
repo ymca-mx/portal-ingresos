@@ -2649,13 +2649,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="TipoMovimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="TipoMovimientoCRUD">
-          <Key>
-            <PropertyRef Name="TipoMovimientoId" />
-          </Key>
-          <Property Name="TipoMovimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="TipoUsuarioSubmenu">
           <Key>
             <PropertyRef Name="TipoUsuarioSubmenuId" />
@@ -2734,12 +2727,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
             <PropertyRef Name="UsuarioId" />
           </Key>
           <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="TituloCorto" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GeneroId" Type="int" Nullable="false" />
           <Property Name="Celular" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaNacimiento" Type="date" Nullable="false" />
           <Property Name="FechaRegistro" Type="date" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CURP" Type="nchar" MaxLength="18" Nullable="false" />
           <Property Name="Observaciones" Type="varchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="UsuarioImagen">
@@ -7926,7 +7921,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySet Name="SucursalDetalle" EntityType="Self.SucursalDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TipoMovimientoCRUD" EntityType="Self.TipoMovimientoCRUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="Self.TipoUsuarioSubmenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniversidadValidacion" EntityType="Self.UniversidadValidacion" Schema="dbo" store:Type="Tables" />
@@ -9810,7 +9804,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySet Name="SucursalDetalle" EntityType="UniversidadModel.SucursalDetalle" />
           <EntitySet Name="TipoDocumento" EntityType="UniversidadModel.TipoDocumento" />
           <EntitySet Name="TipoMovimiento" EntityType="UniversidadModel.TipoMovimiento" />
-          <EntitySet Name="TipoMovimientoCRUD" EntityType="UniversidadModel.TipoMovimientoCRUD" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="UniversidadModel.TipoUsuarioSubmenu" />
           <EntitySet Name="Turno" EntityType="UniversidadModel.Turno" />
           <EntitySet Name="UniversidadValidacion" EntityType="UniversidadModel.UniversidadValidacion" />
@@ -14406,13 +14399,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlumnoMovimiento" Relationship="UniversidadModel.FK_AlumnoMovimiento_TipoMovimiento" FromRole="TipoMovimiento" ToRole="AlumnoMovimiento" />
         </EntityType>
-        <EntityType Name="TipoMovimientoCRUD">
-          <Key>
-            <PropertyRef Name="TipoMovimientoId" />
-          </Key>
-          <Property Name="TipoMovimientoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="TipoUsuarioSubmenu">
           <Key>
             <PropertyRef Name="TipoUsuarioSubmenuId" />
@@ -14547,12 +14533,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
             <PropertyRef Name="UsuarioId" />
           </Key>
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="TituloCorto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="GeneroId" Type="Int32" Nullable="false" />
           <Property Name="Celular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CURP" Type="String" Nullable="false" MaxLength="18" FixedLength="true" Unicode="true" />
           <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Genero" Relationship="UniversidadModel.FK_UsuarioDetalle_Genero" FromRole="UsuarioDetalle" ToRole="Genero" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_UsuarioDetalle_Usuario" FromRole="UsuarioDetalle" ToRole="Usuario" />
@@ -22323,14 +22311,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TipoMovimientoCRUD">
-            <EntityTypeMapping TypeName="UniversidadModel.TipoMovimientoCRUD">
-              <MappingFragment StoreEntitySet="TipoMovimientoCRUD">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="TipoMovimientoId" ColumnName="TipoMovimientoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TipoUsuarioSubmenu">
             <EntityTypeMapping TypeName="UniversidadModel.TipoUsuarioSubmenu">
               <MappingFragment StoreEntitySet="TipoUsuarioSubmenu">
@@ -22402,12 +22382,14 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
             <EntityTypeMapping TypeName="UniversidadModel.UsuarioDetalle">
               <MappingFragment StoreEntitySet="UsuarioDetalle">
                 <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="CURP" ColumnName="CURP" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Celular" ColumnName="Celular" />
                 <ScalarProperty Name="GeneroId" ColumnName="GeneroId" />
+                <ScalarProperty Name="TituloCorto" ColumnName="TituloCorto" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
               </MappingFragment>
             </EntityTypeMapping>

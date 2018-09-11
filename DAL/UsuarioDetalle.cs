@@ -15,12 +15,14 @@ namespace DAL
     public partial class UsuarioDetalle
     {
         public int UsuarioId { get; set; }
+        public string TituloCorto { get; set; }
         public int GeneroId { get; set; }
         public string Celular { get; set; }
         public string Telefono { get; set; }
         public System.DateTime FechaNacimiento { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public string Email { get; set; }
+        public string CURP { get; set; }
         public string Observaciones { get; set; }
     
         public virtual Genero Genero { get; set; }

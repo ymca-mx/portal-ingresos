@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DTO.SEP;
+using System;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
-using DTO.SEP;
 
 namespace BLL.Tools
 {
@@ -76,10 +76,10 @@ namespace BLL.Tools
                         nombre=alumno.UsuarioResponsable.First().Usuario.Nombre,
                         primerApellido =alumno.UsuarioResponsable.First().Usuario.Paterno,
                         segundoApellido =alumno.UsuarioResponsable.First().Usuario.Materno,
-                        curp="", //curp =alumno.UsuarioResponsable.First().Usuario.UsuarioDetalle.curp,
+                        curp=alumno.UsuarioResponsable.First().Usuario.UsuarioDetalle.CURP, 
                         idCargo =alumno.UsuarioResponsable.First().Usuario.Cargo.First().CargoId.ToString(),
                         cargo =alumno.UsuarioResponsable.First().Usuario.Cargo.First().Descripcion,
-                       abrTitulo="", //abrTitulo =alumno.UsuarioResponsable.First().Usuario.Titulo
+                       abrTitulo=alumno.UsuarioResponsable.First().Usuario.UsuarioDetalle.TituloCorto,
                         sello ="",
                         certificadoResponsable="",//certificadoResponsable =GetCer(),
                         noCertificadoResponsable=""//noCertificadoResponsable ="00001000000400032474"
@@ -89,10 +89,10 @@ namespace BLL.Tools
                         nombre=alumno.UsuarioResponsable.Last().Usuario.Nombre,
                         primerApellido =alumno.UsuarioResponsable.Last().Usuario.Paterno,
                         segundoApellido =alumno.UsuarioResponsable.Last().Usuario.Materno,
-                        curp="",//curp =alumno.UsuarioResponsable.First().Usuario.UsuarioDetalle.curp,
+                        curp=alumno.UsuarioResponsable.Last().Usuario.UsuarioDetalle.CURP,
                         idCargo =alumno.UsuarioResponsable.Last().Usuario.Cargo.First().CargoId.ToString(),
                         cargo =alumno.UsuarioResponsable.Last().Usuario.Cargo.First().Descripcion,
-                        abrTitulo="",//abrTitulo =alumno.UsuarioResponsable.First().Usuario.Titulo
+                        abrTitulo=alumno.UsuarioResponsable.Last().Usuario.UsuarioDetalle.TituloCorto,
                         sello ="",
                         certificadoResponsable="",//certificadoResponsable =GetCer(),
                         noCertificadoResponsable=""//noCertificadoResponsable ="00001000000400032474"
@@ -129,21 +129,21 @@ namespace BLL.Tools
 
                     using (FileStream fileStream = new FileStream(Ruta, FileMode.Open))
                     {
-                         result = (TituloElectronico)serializer.Deserialize(fileStream);
+                        result = (TituloElectronico)serializer.Deserialize(fileStream);
                     }
 
                     File.Delete(Ruta);
 
-                    foreach(TituloElectronicoFirmaResponsable responsable in result.FirmaResponsables)
+                    foreach (TituloElectronicoFirmaResponsable responsable in result.FirmaResponsables)
                     {
                         if (responsable.sello.Length < 0)
                         {
-                         var   dbResponsable=
-                            alumno.UsuarioResponsable
-                                .Where(a => a.Usuario.Nombre == responsable.nombre
-                                                && a.Usuario.Paterno == responsable.primerApellido
-                                                && a.Usuario.Materno == responsable.segundoApellido)
-                                       .FirstOrDefault();
+                            var dbResponsable =
+                               alumno.UsuarioResponsable
+                                   .Where(a => a.Usuario.Nombre == responsable.nombre
+                                                   && a.Usuario.Paterno == responsable.primerApellido
+                                                   && a.Usuario.Materno == responsable.segundoApellido)
+                                          .FirstOrDefault();
 
                             responsable.sello = "";
                             responsable.certificadoResponsable = "";
