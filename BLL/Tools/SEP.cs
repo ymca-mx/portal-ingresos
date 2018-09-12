@@ -9,12 +9,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web;
 using System.Xml.Serialization;
+using System.IO.Compression;
 
 namespace BLL.Tools
 {
     public class SEP
     {
-        public static object CrearXMLTitulo(DAL.AlumnoTitulo alumno)
+        public static object CrearXMLTitulo(DAL.AlumnoTitulo alumno, DAL.Usuario userdb)
         {
             try
             {
@@ -127,12 +128,14 @@ namespace BLL.Tools
                 }
                     };
 
-                    var objResp = objTitulo.FirmaResponsables.Where(responsable => alumno.Usuario.Nombre == responsable.nombre
-                                                   && alumno.Usuario.Paterno == responsable.primerApellido
-                                                   && alumno.Usuario.Materno == responsable.segundoApellido)
+                    var objResp = objTitulo.FirmaResponsables.Where(responsable => userdb.Nombre == responsable.nombre
+                                                   && userdb.Paterno == responsable.primerApellido
+                                                   && userdb.Materno == responsable.segundoApellido)
                                           .FirstOrDefault();
 
-                    //objResp.sello=CreateSello(Fiel.Where(a => a.Contains(".key")).FirstOrDefault(),alumno.Usuario.UsuarioResponsable.First().Password,)
+                    objResp.sello = CreateSello(Fiel.Where(a => a.Contains(".key")).FirstOrDefault(),
+                        Utilities.Seguridad.Desencripta(27, userdb.UsuarioDetalle.PassSat),
+                        objTitulo);
 
                     var serialize = new XmlSerializer(typeof(TituloElectronico));
 
@@ -141,6 +144,8 @@ namespace BLL.Tools
                     {
                         serialize.Serialize(stream, objTitulo);
                     }
+
+                    Directory.Delete(HttpContext.Current.Server.MapPath("~") + "\\Documentos\\SEP\\FIEL\\" + alumno.UsuarioId, true);
 
                     return null;
                 }
@@ -158,7 +163,7 @@ namespace BLL.Tools
 
                     foreach (TituloElectronicoFirmaResponsable responsable in result.FirmaResponsables)
                     {
-                        if (responsable.sello.Length < 0)
+                        if (responsable.sello.Length == 0)
                         {
                             var dbResponsable =
                                alumno.UsuarioResponsable
@@ -167,9 +172,12 @@ namespace BLL.Tools
                                                    && a.Usuario.Materno == responsable.segundoApellido)
                                           .FirstOrDefault();
 
-                            responsable.sello = "";
-                            responsable.certificadoResponsable = "";
-                            responsable.noCertificadoResponsable = "";
+                            responsable.sello = CreateSello(Fiel.Where(a => a.Contains(".key")).FirstOrDefault(),
+                        Utilities.Seguridad.Desencripta(27, userdb.UsuarioDetalle.PassSat),
+                        result);
+
+                            responsable.certificadoResponsable = dbResponsable.UsuarioId == alumno.UsuarioId ? objCertificado.CertificadoBase64 : "";
+                            responsable.noCertificadoResponsable = dbResponsable.UsuarioId == alumno.UsuarioId ? objCertificado.NoCertificado : "";
 
                         }
                     }
@@ -179,11 +187,14 @@ namespace BLL.Tools
                         serializer.Serialize(stream, result);
                     }
 
+                    Directory.Delete(HttpContext.Current.Server.MapPath("~") + "\\Documentos\\SEP\\FIEL\\" + alumno.UsuarioId, true);
+
                     return null;
                 }
             }
             catch (Exception error)
             {
+                Directory.Delete(HttpContext.Current.Server.MapPath("~") + "\\Documentos\\SEP\\FIEL\\" + alumno.UsuarioId,true);
                 return new
                 {
                     error
@@ -256,22 +267,15 @@ namespace BLL.Tools
             try
             {
                 string Ruta = HttpContext.Current.Server.MapPath("~");
-                Ruta += "//Documentos//SEP//FIEL//" + UsuarioId + ".zip";
+                Ruta += "\\Documentos\\SEP\\FIEL\\" + UsuarioId + ".zip";
 
                 string UsuarioSalida = HttpContext.Current.Server.MapPath("~"); 
-                UsuarioSalida += "//Documentos//SEP//FIEL//" + UsuarioId + "//";
+                UsuarioSalida += "\\Documentos\\SEP\\FIEL\\" + UsuarioId + "\\";
 
                 if (!Directory.Exists(UsuarioSalida))
                     Directory.CreateDirectory(UsuarioSalida);
 
-                Shell32.Shell objShell = new Shell32.Shell();
-                Shell32.Folder destinationFolder = objShell.NameSpace(UsuarioSalida);
-                Shell32.Folder sourceFile = objShell.NameSpace(Ruta);
-
-                foreach (var file in sourceFile.Items())
-                {
-                    destinationFolder.CopyHere(file, 4 | 16);
-                }
+                ZipFile.ExtractToDirectory(Ruta, UsuarioSalida);
 
                 return Directory.GetFiles(UsuarioSalida).ToList();
             }

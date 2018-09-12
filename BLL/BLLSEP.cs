@@ -248,13 +248,14 @@ namespace BLL
 
                             Responsable.Aprobo = alumno.Autorizado;
                             Responsable.Comentario = alumno?.Comentario ?? "";
+                            AlumnoBD.UsuarioId = alumno.UsuarioId;
 
-
+                            var usuariodb = db.Usuario.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
 
                             if (alumno.Autorizado)
                             {
                                 result =
-                                SEP.CrearXMLTitulo(AlumnoBD);
+                                SEP.CrearXMLTitulo(AlumnoBD, usuariodb);
 
                                 if (result != null)
                                 {

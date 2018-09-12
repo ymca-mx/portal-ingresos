@@ -23,6 +23,7 @@ namespace DAL
         public System.DateTime FechaRegistro { get; set; }
         public string Email { get; set; }
         public string CURP { get; set; }
+        public string PassSat { get; set; }
         public string Observaciones { get; set; }
     
         public virtual Genero Genero { get; set; }
