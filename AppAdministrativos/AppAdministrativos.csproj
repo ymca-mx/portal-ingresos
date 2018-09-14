@@ -150,6 +150,7 @@
     <Content Include="JS\Becas\HistorialBecas.js" />
     <Content Include="JS\Biblioteca\Comunicado.js" />
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
+    <Content Include="JS\Clases\ClasesFn.js" />
     <Content Include="JS\Empresas\Empresa.js" />
     <Content Include="JS\EnvioReporteVistoBueno.js" />
     <Content Include="JS\EvaluacionDocente\ActualizacionDocente.js" />
@@ -173,6 +174,7 @@
     <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\CarteraVencida.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
+    <Content Include="JS\SEP\Titulo\Consultar.js" />
     <Content Include="JS\SEP\Titulo\Firmar.js" />
     <Content Include="JS\SEP\Titulo\Solicitar.js" />
     <Content Include="JS\Usuarios\Administracion.js" />
@@ -4823,6 +4825,7 @@
     <Content Include="Views\Reportes\EnvioReporteVistoBueno.html" />
     <Content Include="Views\Reportes\ReporteBecas.html" />
     <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
+    <Content Include="Views\SEP\Titulo\Consultar.html" />
     <Content Include="Views\SEP\Titulo\Firmar.html" />
     <Content Include="Views\SEP\Titulo\Solicitar.html" />
     <Content Include="Views\Usuarios\Administracion.html" />

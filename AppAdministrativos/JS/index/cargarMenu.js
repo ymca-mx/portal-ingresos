@@ -1,6 +1,68 @@
 ﻿var IndexFn;
 
 $(function () {
+
+    function CrearSubMenu(lstSubmen, objmenu) {
+        var Menu = "";
+        $(lstSubmen).each(function (ind, ele) {
+            var objSubmneu = {
+                SubMenuId: ele.SubmenuId,
+                Descripcion: ele.Descripcion,
+                Direccion: ele.Direccion
+            };
+
+            if (ele.SubMenu !== undefined) {
+                if (ele.SubMenu.length > 0) {
+                    Menu +=
+                        '<li class="">' +
+                        '<a href="javascript:;">' +
+                        '<i></i>' +
+                        '<span class="title"> ' + ele.Descripcion + '</span>' +
+                        '<span class="arrow "></span>' +
+                        '</a>';
+                } else {
+                    Menu +=
+                        '<li class="">' +
+                        '<a name="menu" href="#Views/' + ele.SubmenuId + '" class="contenido">' +
+                        '<i></i>'
+                        + ele.Descripcion +
+                        '</a>';
+                }
+            } else {
+                Menu +=
+                    '<li class="">' +
+                    '<a name="menu" href="#Views/' + ele.SubmenuId + '" class="contenido">' +
+                    '<i></i>'
+                    + ele.Descripcion +
+                    '</a>';
+            }
+
+           
+                
+            objmenu.SubMenu.push(objSubmneu);
+
+            if (ele.SubMenu !== undefined) {
+                if (ele.SubMenu.length > 0) {
+                    Menu += '<ul class="sub-menu">';
+
+                    var itemSub = CrearSubMenu(ele.SubMenu, objmenu);
+
+                    Menu += itemSub.Menu;
+                    Menu += '</ul>';
+
+                    objmenu = itemSub.objmenu;
+                }
+            }
+
+            Menu += '</li>';
+        });
+
+        return {
+            Menu,
+            objmenu
+        };
+    }
+
     //AppRouter = 
     var bandera = 0;
     // Initiate the router
@@ -93,22 +155,13 @@ $(function () {
                                 '<span class="arrow "></span>' +
                                 '</a>' +
                                 '<ul class="sub-menu">';
-                            $(this.SubMenu).each(function (ind, ele) {
-                                var objSubmneu = {
-                                    SubMenuId: ele.SubmenuId,
-                                    Descripcion: ele.Descripcion,
-                                    Direccion: ele.Direccion
-                                };
-                                Menu +=
-                                    '<li class="">' +
-                                    '<a name="menu" href="#Views/' + ele.SubmenuId + '" class="contenido">' +
-                                    '<i></i>'
-                                    + ele.Descripcion +
-                                    '</a>' +
-                                    '</li>';
-                                objmenu.SubMenu.push(objSubmneu);
-                            });
+
+                            var subItem = CrearSubMenu(this.SubMenu, objmenu);
+
+                            Menu += subItem.Menu;
                             Menu += '</ul>' + '</li>';
+
+                            objmenu = subItem.objmenu;
                             IndexFn.Menu.push(objmenu);
                         });
 

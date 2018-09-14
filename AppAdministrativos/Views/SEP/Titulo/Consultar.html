@@ -6,6 +6,18 @@
             </div>
         </div>
         <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline">
+                        <label class="control-label">Seleccione una Opcion: </label>
+                        <select id="slcOption" class="form-control">
+                            <option value="-1">Todos</option>
+                            <option value="1">Pentiendes</option>
+                            <option value="2">Titulados</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="table">
                 <div class="row">
                     <hr />
@@ -19,6 +31,7 @@
                                     <th>Titulo</th>
                                     <th>Antecedente</th>
                                     <th>Responsables</th>
+                                    <th>Archivo</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -159,7 +172,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha inicio</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFInicioOferta" readonly />
+                                    <input type="text" class="form-control" id="txtFInicioOferta" />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -170,7 +183,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha Fin</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFFinOferta" readonly/>
+                                    <input type="text" class="form-control" id="txtFFinOferta" />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -183,7 +196,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-
                 </div>
             </div>
         </div>
@@ -208,7 +220,7 @@
                             <div class="col-md-10 form-group" id="divExamen">
                                 <label class="control-label">Fecha examen profesional</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaExamen" readonly />
+                                    <input type="text" class="form-control" id="txtFechaExamen" />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -221,7 +233,7 @@
                             <div class="col-md-10 form-group" id="divExencion">
                                 <label class="control-label">Fecha exencion examen profesional</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaExencion" readonly/>
+                                    <input type="text" class="form-control" id="txtFechaExencion" />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -236,7 +248,7 @@
                         <div class="col-md-12">
                             <h4>Servicio Social</h4>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="col-md-12 form-group">
                                 <label class="control-label">Fundamento Legal</label>
                                 <select class="form-control" id="slcServicio"></select>
@@ -275,7 +287,7 @@
                         <div class="col-md-6">
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Institución de Procedencia</label>
-                                <input type="text" class="form-control" id="txtProcedencia" readonly />
+                                <input type="text" class="form-control" id="txtProcedencia" />
                             </div>
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Tipo Antecedente</label>
@@ -290,7 +302,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha Inicio</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaInicio" readonly/>
+                                    <input type="text" class="form-control" id="txtFechaInicio" />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -301,7 +313,7 @@
                             <div class="col-md-10 form-group">
                                 <label class="control-label">Fecha Termino</label>
                                 <div class="input-group date col-md-10">
-                                    <input type="text" class="form-control" id="txtFechaFin" readonly/>
+                                    <input type="text" class="form-control" id="txtFechaFin" />
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button" style="border-radius:0px">
                                             <i class="fa fa-calendar"></i>
@@ -386,34 +398,9 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade bs-modal-lg" id="modalComentario">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4>Comentario</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Comentario</label>
-                                <textarea class="form-control" id="txtComentario" maxlength="500" rows="5"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn blue" id="btnQuitar">Agregar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 
 <script>
     $.getScript("JS/Clases/ClasesFn.js");
-    $.getScript("JS/SEP/Titulo/Firmar.js");
+    $.getScript("JS/SEP/Titulo/Consultar.js");
 </script>

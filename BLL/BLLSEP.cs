@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL
 {
@@ -224,6 +225,142 @@ namespace BLL
             }
         }
 
+        public static object EnviarAlumnos(List<TituloGeneral> alumnos)
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    List<string> RutaFiles = new List<string>();
+                    alumnos.ForEach(alumno =>
+                    {
+
+                        var AlumnoBD = db
+                        .AlumnoTitulo
+                        .Where(A => A.AlumnoId == alumno.AlumnoId
+                                && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
+                        .FirstOrDefault();
+
+                        AlumnoBD.EstatusId = 4;
+                        AlumnoBD.UsuarioId = alumno.UsuarioId;
+
+
+                        string Folio = "A" + AlumnoBD.AlumnoTituloId + "-" + AlumnoBD.AlumnoId + "-" + AlumnoBD.AlumnoOfertaEducativaId + ".xml";
+
+                        RutaFiles.Add(Folio);                        
+
+                    });
+
+                   var result = SEP.SendArchivos(RutaFiles);
+
+                    if ((bool)result.GetType().GetProperty("Status").GetValue(result, null))
+                    {
+                        db.SaveChanges();
+                    }
+
+                    return result;
+                }
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        Status = false,
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
+                }
+            }
+        }
+
+        public static object AlumnosFirmados()
+        {
+            using(UniversidadEntities db= new UniversidadEntities())
+            {
+                try
+                {
+                    var Alumnos = db.AlumnoTitulo.Where(a => a.EstatusId == 3).ToList().AsQueryable().ToList();
+
+                    return
+                    Alumnos
+                        .Select(a => new
+                        {
+                            a.Alumno.AlumnoId,
+                            a.Alumno.Nombre,
+                            a.Alumno.Paterno,
+                            a.Alumno.Materno,
+                            a.Alumno.AlumnoDetalle.CURP,
+                            a.Alumno.AlumnoDetalle.Email,
+                            Autorizado = true,
+                            a.EstatusId,
+                            EstatusSEP ="Procesado",
+                            Archivo ="Documentos/SEP/Titulo/" +
+                             "A" + a.AlumnoTituloId + "-" + a.AlumnoId + "-" + a.AlumnoOfertaEducativaId + ".xml",
+                            Institucion = new
+                            {
+                                a.AlumnoOfertaEducativa.InstitucionId,
+                                a.AlumnoOfertaEducativa.Institucion.Nombre,
+                                a.AlumnoOfertaEducativa.Institucion.InstitucionOfertaEducativa.FirstOrDefault().Campus.Clave,
+                                a.AlumnoOfertaEducativa.Institucion.InstitucionOfertaEducativa.FirstOrDefault().CampusId
+                            },
+                            Titulo = new
+                            {
+                                MedioTitulacionId = a.ModalidadTitulacionId,
+                                MedioTitulacion = a.ModalidadTitulacion.TipoModalidad,
+                                FExamenProf = a.FechaExamenProfesional.ToString("dd/MM/yyyy"),
+                                FExencion = a.FechaExencionExamenProfecional.ToString("dd/MM/yyyy"),
+                                FundamentoLegalId = a.FundamentoLegalId,
+                                FundamentoLegal = a.FundamentoLegal.Descripcion,
+                                EntidadFederativaId = a.EntidadFederativaIdExpedicion,
+                                EntidadFederativa = a.EntidadFederativa.Descripcion
+                            },
+                            Carrera = new
+                            {
+                                a.AlumnoOfertaEducativa.OfertaEducativaId,
+                                OfertaEducativa = a.AlumnoOfertaEducativa.OfertaEducativa.Descripcion,
+                                Clave = a.AlumnoOfertaEducativa.OfertaEducativa.InstitucionOfertaEducativa.FirstOrDefault().ClaveOfertaEducativa,
+                                FInicio = a.AlumnoOfertaEducativa.FechaInicio.ToString("dd/MM/yyyy"),
+                                FFin = a.AlumnoOfertaEducativa.FechaTermino.ToString("dd/MM/yyyy"),
+                                AutReconocimientoId = a.AutorizacionReconocimientoId,
+                                AutReconocimiento = a.AutorizacionReconocimiento.Descripcion,
+                                RVOE = a.AlumnoOfertaEducativa.OfertaEducativa.Rvoe
+                            },
+                            Antecedente = new
+                            {
+                                a.AlumnoAntecedente1.EntidadFederativaId,
+                                EntidadFederativa = a.AlumnoAntecedente1.EntidadFederativa.Descripcion,
+                                TipoAntecedenteId = a.AlumnoAntecedente1.TipoEstudioAntecedenteId,
+                                TipoAntecedente = a.AlumnoAntecedente1.TipoEstudioAntecedente.Descripcion,
+                                Institucion = a.AlumnoAntecedente1.Nombre,
+                                FechaInicio = a.AlumnoAntecedente1.FechaInicio.ToString("dd/MM/yyyy"),
+                                FechaFin = a.AlumnoAntecedente1.FechaFin.ToString("dd/MM/yyyy"),
+                            },
+                            Responsables = a.UsuarioResponsable
+                                            .Select(b => new
+                                            {
+                                                b.UsuarioId,
+                                                b.Usuario.Nombre,
+                                                b.Usuario.Paterno,
+                                                b.Usuario.Materno,
+                                                b.Usuario.Cargo.FirstOrDefault().CargoId,
+                                                Cargo = b.Usuario.Cargo.FirstOrDefault().Descripcion
+                                            })
+                                            .ToList()
+                        })
+                        .ToList();
+                }
+                catch (Exception error)
+                {
+                    return new
+                    {
+                        error.Message,
+                        Inner = error?.InnerException?.Message ?? "",
+                        Inner2 = error?.InnerException?.InnerException?.Message ?? ""
+                    };
+                }
+            }
+        }
+
         public static object FirmarAlumnos(List<TituloGeneral> alumnos)
         {
             using (UniversidadEntities db = new UniversidadEntities())
@@ -352,11 +489,12 @@ namespace BLL
 
                                 alumno.Responsables.ForEach(a =>
                                 {
-                                    db.UsuarioResponsable.Add(new UsuarioResponsable
+                                    Alumnodb.UsuarioResponsable.Add(new UsuarioResponsable
                                     {
                                         UsuarioId = a.UsuarioId,
                                         AlumnoTituloId = Alumnodb.AlumnoTituloId,
-                                        Aprobo = false
+                                        Aprobo = false,
+                                        Comentario = ""
                                     });
                                 });
                             }

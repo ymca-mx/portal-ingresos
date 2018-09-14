@@ -1,18 +1,21 @@
 ﻿$(function () {
+
     var tblTitulos;
     
-    var FirmarFn = {
+    var TituloFn = {
         init() {
-            
+
             $('#tblTitulos').on('click', 'button', this.NameButton);
             $('#tblTitulos').on('click', 'input', this.NameButton);
             $('#btnGuardar').on('click', this.Enviar);
-            $('#btnComentario').on('click', this.Comentario);
-            $('#btnQuitar').on('click', this.SetComentario);
-            $('#slcMedioTitulacion').on('change', this.MedioChange); 
+            $('#slcMedioTitulacion').on('change', this.MedioChange);
+            $('#slcOption').on('change', this.OptionChange);
 
             this.GetAlumnos();
             tblTitulos = $('#tblTitulos').DataTable();
+        },
+        OptionChange() {
+
         },
         MedioChange() {
             if (parseInt($('#slcMedioTitulacion').val()) !== 6) {
@@ -25,11 +28,11 @@
         },
         GetAlumnos() {
             IndexFn.Block(true);
-            IndexFn.Api("SEP/Alumnos/" + localStorage.getItem('userAdmin'), "GET", "")
+            IndexFn.Api("SEP/Alumnos/Firmados", "GET", "")
                 .done(function (data) {
                     IndexFn.Block(false);
-                    FirmarFn.lstTitulos = data;
-                    FirmarFn.InitAlumnos();
+                    TituloFn.lstTitulos = data;
+                    TituloFn.InitAlumnos();
                 })
                 .fail(function (data) {
                     IndexFn.Block(false);
@@ -50,7 +53,7 @@
 
             tblTitulos = $('#tblTitulos')
                 .DataTable({
-                    "aaData": FirmarFn.lstTitulos,
+                    "aaData": TituloFn.lstTitulos,
                     "bSort": false,
                     "aoColumns": [
                         {
@@ -113,21 +116,28 @@
                         {
                             "mDataProp": "",
                             "mRender": function (a, b, c) {
+                                var Nombre = "<a href='" + c.Archivo + "'target='_blank' class='btn bg-blue'>Archivo</a>";
+                                return Nombre;
+                            }
+                        },
+                        {
+                            "mDataProp": "",
+                            "mRender": function (a, b, c) {
                                 //var elim = "<a href='javascript:;'><i class='fa fa-edit'/></a> ";
                                 //return elim;
-                                var input = c.Autorizado ? ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" checked name="Quitar">') :
-                                ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" name="Quitar">');
+                                var input =c.EstatusId===4?"<span>"+c.EstatusSEP+"</span>" : c.Autorizado ? ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" checked name="Quitar">') :
+                                    ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" name="Quitar">');
 
                                 var Nombre = '<div class="md-checkbox-list">' +
-                                                '<div class="md-checkbox">' +
-                                                    input +
-                                                    '<label for="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" >' +
-                                                        '<span></span>' +
-                                                        '<span class="check"></span>' +
-                                                        '<span class="box"></span>' +
-                                                        'Aturorizado' +
-                                                    '</label>' +
-                                                '</div>';
+                                    '<div class="md-checkbox">' +
+                                    input +
+                                    '<label for="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" >' +
+                                    '<span></span>' +
+                                    '<span class="check"></span>' +
+                                    '<span class="box"></span>' +
+                                    'Enviar' +
+                                    '</label>' +
+                                    '</div>';
                                 return Nombre;
                             }
                         }
@@ -155,100 +165,85 @@
         },
         NameButton(e) {
             e.preventDefault();
-            FirmarFn.RowSelect = {};
-            FirmarFn.RowSelect =this.name==="Quitar" ?
+            TituloFn.RowSelect = {};
+            TituloFn.RowSelect = this.name === "Quitar" ?
                 this.parentNode.parentNode.parentNode
-                :this.parentNode.parentNode;
+                : this.parentNode.parentNode;
 
-            FirmarFn.AlumnoSelect = new ClasesFn.AlumnoTitulo();
-            FirmarFn.AlumnoSelect = tblTitulos.row(FirmarFn.RowSelect).data();
+            TituloFn.AlumnoSelect = new ClasesFn.AlumnoTitulo();
+            TituloFn.AlumnoSelect = tblTitulos.row(TituloFn.RowSelect).data();
 
             switch (this.name) {
                 case 'Institucion':
-                    FirmarFn.ShowSedeOferta();
+                    TituloFn.ShowSedeOferta();
                     break;
                 case 'Titulo':
-                    FirmarFn.ShowTitulo();
+                    TituloFn.ShowTitulo();
                     break;
                 case 'Antecedente':
-                    FirmarFn.ShowAntecedente();
+                    TituloFn.ShowAntecedente();
                     break;
                 case 'Responsable':
-                    FirmarFn.ShowResponsable();
+                    TituloFn.ShowResponsable();
                     break;
                 case 'Datos':
-                    FirmarFn.ShowAlumno();
+                    TituloFn.ShowAlumno();
                     break;
                 case 'Quitar':
 
-                    FirmarFn.Borrar();
+                    TituloFn.Borrar();
                     break;
             }
         },
         AlumnoSelect: new ClasesFn.AlumnoTitulo(),
         RowSelect: {},
-        SetComentario(){
-            if ($('#txtComentario').val().length < 5) {
-                alertify.alert("Debe ingresar un comentario.");
-                return false;
-            }
-            FirmarFn.AlumnoSelect.Comentario = $('#txtComentario').val();
-            FirmarFn.AlumnoSelect.Autorizado = false;
-
-            tblTitulos
-               .row(FirmarFn.RowSelect)
-               .data(FirmarFn.AlumnoSelect)
-               .draw();
-
-            $('#modalComentario').modal("hide");
-        },
         ShowTitulo() {
-            FirmarFn.UpdateSelect({
-                Descripcion: FirmarFn.AlumnoSelect.Titulo.EntidadFederativa,
-                Id: FirmarFn.AlumnoSelect.Titulo.EntidadFederativaId
+            TituloFn.UpdateSelect({
+                Descripcion: TituloFn.AlumnoSelect.Titulo.EntidadFederativa,
+                Id: TituloFn.AlumnoSelect.Titulo.EntidadFederativaId
             }, 'slcEntidadFederativa');
 
-            FirmarFn.UpdateSelect({
-                Descripcion: FirmarFn.AlumnoSelect.Titulo.FundamentoLegal,
-                Id: FirmarFn.AlumnoSelect.Titulo.FundamentoLegalId
+            TituloFn.UpdateSelect({
+                Descripcion: TituloFn.AlumnoSelect.Titulo.FundamentoLegal,
+                Id: TituloFn.AlumnoSelect.Titulo.FundamentoLegalId
             }, 'slcServicio');
 
-            FirmarFn.UpdateSelect({
-                Descripcion: FirmarFn.AlumnoSelect.Titulo.MedioTitulacion,
-                Id: FirmarFn.AlumnoSelect.Titulo.MedioTitulacionId
+            TituloFn.UpdateSelect({
+                Descripcion: TituloFn.AlumnoSelect.Titulo.MedioTitulacion,
+                Id: TituloFn.AlumnoSelect.Titulo.MedioTitulacionId
             }, 'slcMedioTitulacion');
 
             $('#slcMedioTitulacion').change();
 
-            $('#txtFechaExencion').val(FirmarFn.AlumnoSelect.Titulo.FExencion);
-            $('#txtFechaExamen').val(FirmarFn.AlumnoSelect.Titulo.FExamenProf);
+            $('#txtFechaExencion').val(TituloFn.AlumnoSelect.Titulo.FExencion);
+            $('#txtFechaExamen').val(TituloFn.AlumnoSelect.Titulo.FExamenProf);
 
             $('#modalTitulo').modal('show');
         },
         ShowSedeOferta() {
             $('#modalSede input').val('');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Institucion.InstitucionId,
-                Descripcion: FirmarFn.AlumnoSelect.Institucion.Nombre
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Institucion.InstitucionId,
+                Descripcion: TituloFn.AlumnoSelect.Institucion.Nombre
             }, 'slcSede');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Carrera.OfertaEducativaId,
-                Descripcion: FirmarFn.AlumnoSelect.Carrera.OfertaEducativa
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Carrera.OfertaEducativaId,
+                Descripcion: TituloFn.AlumnoSelect.Carrera.OfertaEducativa
             }, 'slcOferta');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Carrera.AutReconocimientoId,
-                Descripcion: FirmarFn.AlumnoSelect.Carrera.AutReconocimiento
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Carrera.AutReconocimientoId,
+                Descripcion: TituloFn.AlumnoSelect.Carrera.AutReconocimiento
             }, 'slcAutRec');
 
-            $('#txtSedeClave').val(FirmarFn.AlumnoSelect.Institucion.Clave);
-            $('#txtClaveOferta').val(FirmarFn.AlumnoSelect.Carrera.Clave);
-            $('#txtRVOE').val(FirmarFn.AlumnoSelect.Carrera.RVOE);
+            $('#txtSedeClave').val(TituloFn.AlumnoSelect.Institucion.Clave);
+            $('#txtClaveOferta').val(TituloFn.AlumnoSelect.Carrera.Clave);
+            $('#txtRVOE').val(TituloFn.AlumnoSelect.Carrera.RVOE);
 
-            $('#txtFInicioOferta').val(FirmarFn.AlumnoSelect.Carrera.FInicio);
-            $('#txtFFinOferta').val(FirmarFn.AlumnoSelect.Carrera.FFin);
+            $('#txtFInicioOferta').val(TituloFn.AlumnoSelect.Carrera.FInicio);
+            $('#txtFFinOferta').val(TituloFn.AlumnoSelect.Carrera.FFin);
 
             $('#modalSede').modal('show');
         },
@@ -256,22 +251,22 @@
             $('#modalAlumno input').val('');
             $('#modalAlumno select').empty();
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Institucion.InstitucionId,
-                Descripcion: FirmarFn.AlumnoSelect.Institucion.Nombre
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Institucion.InstitucionId,
+                Descripcion: TituloFn.AlumnoSelect.Institucion.Nombre
             }, 'slcSedePrev');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Carrera.OfertaEducativaId,
-                Descripcion: FirmarFn.AlumnoSelect.Carrera.OfertaEducativa
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Carrera.OfertaEducativaId,
+                Descripcion: TituloFn.AlumnoSelect.Carrera.OfertaEducativa
             }, 'slcOfertaPrev');
 
-            $('#txtAlumnoId').val(FirmarFn.AlumnoSelect.AlumnoId);
-            $('#txtNombre').val(FirmarFn.AlumnoSelect.Nombre);
-            $('#txtPaterno').val(FirmarFn.AlumnoSelect.Paterno);
-            $('#txtMaterno').val(FirmarFn.AlumnoSelect.Materno);
-            $('#txtCURP').val(FirmarFn.AlumnoSelect.CURP);
-            $('#txtEmail').val(FirmarFn.AlumnoSelect.Email);
+            $('#txtAlumnoId').val(TituloFn.AlumnoSelect.AlumnoId);
+            $('#txtNombre').val(TituloFn.AlumnoSelect.Nombre);
+            $('#txtPaterno').val(TituloFn.AlumnoSelect.Paterno);
+            $('#txtMaterno').val(TituloFn.AlumnoSelect.Materno);
+            $('#txtCURP').val(TituloFn.AlumnoSelect.CURP);
+            $('#txtEmail').val(TituloFn.AlumnoSelect.Email);
 
             $('#btnAlumnoAdd').hide();
             $('#modalAlumno').modal('show');
@@ -279,124 +274,107 @@
         ShowAntecedente() {
             $('#modalAntecedente input').val('');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Antecedente.TipoAntecedenteId,
-                Descripcion: FirmarFn.AlumnoSelect.Antecedente.TipoAntecedente
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Antecedente.TipoAntecedenteId,
+                Descripcion: TituloFn.AlumnoSelect.Antecedente.TipoAntecedente
             }, 'slcTAntecedente');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Antecedente.EntidadFederativaId,
-                Descripcion: FirmarFn.AlumnoSelect.Antecedente.EntidadFederativa
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Antecedente.EntidadFederativaId,
+                Descripcion: TituloFn.AlumnoSelect.Antecedente.EntidadFederativa
             }, 'slcEntidadAntecedente');
 
-            $('#txtProcedencia').val(FirmarFn.AlumnoSelect.Antecedente.Institucion);
-            $('#txtFechaFin').val(FirmarFn.AlumnoSelect.Antecedente.FechaFin);
-            $('#txtFechaInicio').val(FirmarFn.AlumnoSelect.Antecedente.FechaInicio);
+            $('#txtProcedencia').val(TituloFn.AlumnoSelect.Antecedente.Institucion);
+            $('#txtFechaFin').val(TituloFn.AlumnoSelect.Antecedente.FechaFin);
+            $('#txtFechaInicio').val(TituloFn.AlumnoSelect.Antecedente.FechaInicio);
 
             $('#modalAntecedente').modal('show');
         },
         ShowResponsable() {
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Responsables[0].CargoId,
-                Descripcion: FirmarFn.AlumnoSelect.Responsables[0].Cargo
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Responsables[0].CargoId,
+                Descripcion: TituloFn.AlumnoSelect.Responsables[0].Cargo
             }, 'slcCargo1');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Responsables[0].UsuarioId,
-                Descripcion: FirmarFn.AlumnoSelect.Responsables[0].UsuarioId + " - " + FirmarFn.AlumnoSelect.Responsables[0].Nombre
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Responsables[0].UsuarioId,
+                Descripcion: TituloFn.AlumnoSelect.Responsables[0].UsuarioId + " - " + TituloFn.AlumnoSelect.Responsables[0].Nombre
             }, 'slcResponsable1');
 
-            $('#txtNombreR1').val(FirmarFn.AlumnoSelect.Responsables[0].Nombre);
-            $('#txtPaternoR1').val(FirmarFn.AlumnoSelect.Responsables[0].Paterno);
-            $('#txtMaternoR1').val(FirmarFn.AlumnoSelect.Responsables[0].Materno);
+            $('#txtNombreR1').val(TituloFn.AlumnoSelect.Responsables[0].Nombre);
+            $('#txtPaternoR1').val(TituloFn.AlumnoSelect.Responsables[0].Paterno);
+            $('#txtMaternoR1').val(TituloFn.AlumnoSelect.Responsables[0].Materno);
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Responsables[1].CargoId,
-                Descripcion: FirmarFn.AlumnoSelect.Responsables[1].Cargo
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Responsables[1].CargoId,
+                Descripcion: TituloFn.AlumnoSelect.Responsables[1].Cargo
             }, 'slcCargo2');
 
-            FirmarFn.UpdateSelect({
-                Id: FirmarFn.AlumnoSelect.Responsables[1].UsuarioId,
-                Descripcion: FirmarFn.AlumnoSelect.Responsables[1].UsuarioId + " - " + FirmarFn.AlumnoSelect.Responsables[1].Nombre
+            TituloFn.UpdateSelect({
+                Id: TituloFn.AlumnoSelect.Responsables[1].UsuarioId,
+                Descripcion: TituloFn.AlumnoSelect.Responsables[1].UsuarioId + " - " + TituloFn.AlumnoSelect.Responsables[1].Nombre
             }, 'slcResponsable2');
 
-            $('#txtNombreR2').val(FirmarFn.AlumnoSelect.Responsables[1].Nombre);
-            $('#txtPaternoR2').val(FirmarFn.AlumnoSelect.Responsables[1].Paterno);
-            $('#txtMaternoR2').val(FirmarFn.AlumnoSelect.Responsables[1].Materno);
+            $('#txtNombreR2').val(TituloFn.AlumnoSelect.Responsables[1].Nombre);
+            $('#txtPaternoR2').val(TituloFn.AlumnoSelect.Responsables[1].Paterno);
+            $('#txtMaternoR2').val(TituloFn.AlumnoSelect.Responsables[1].Materno);
 
             $('#modalResponsables').modal('show');
         },
         Borrar() {
-            if (!FirmarFn.AlumnoSelect.Autorizado) {
-                FirmarFn.AlumnoSelect.Autorizado = true;
-                FirmarFn.AlumnoSelect.Comentario = "";
+            if (!TituloFn.AlumnoSelect.Autorizado) {
+                TituloFn.AlumnoSelect.Autorizado = true;
 
                 tblTitulos
-               .row(FirmarFn.RowSelect)
-               .data(FirmarFn.AlumnoSelect)
-               .draw();
+                    .row(TituloFn.RowSelect)
+                    .data(TituloFn.AlumnoSelect)
+                    .draw();
             } else {
-                alertify.confirm(("El alumno quedara pendiente de su firma." + FirmarFn.AlumnoSelect.AlumnoId + "-" + FirmarFn.AlumnoSelect.Nombre),
+                alertify.confirm(("No se enviara el archivo del alumno a la SEP, ¿Desea continuar?" + TituloFn.AlumnoSelect.AlumnoId + "-" + TituloFn.AlumnoSelect.Nombre),
                     function (e) {
                         if (e) {
-                            $('#txtComentario').val('');
-                            $('#modalComentario').modal("show");
+                            TituloFn.AlumnoSelect.Autorizado = false;
+
+                            tblTitulos
+                                .row(TituloFn.RowSelect)
+                                .data(TituloFn.AlumnoSelect)
+                                .draw();
                         }
                     });
             }
         },
-        Comentario() {
-            if ($('#txtComentario').val().length < 10) {
-                alertify.alert("Universidad YMCA", "Minimo 10 letras.");
-                return false;
-            }
-            FirmarFn.AlumnoSelect.Comentario = $('#txtComentario').val();
-
-            tblTitulos
-                .row(FirmarFn.RowSelect)
-                .data(FirmarFn.AlumnoSelect)
-                .draw();
-
-            $('#modalComentario').modal("hide");
-        },
         Enviar() {
             var alumnosadd = [];
             $(tblTitulos.rows().data()).each(function () {
-                this.UsuarioId = localStorage.getItem('userAdmin');
-                alumnosadd.push(this);
+                if (this.EstatusId === 3 && this.Autorizado) {
+                    this.UsuarioId = localStorage.getItem('userAdmin');
+                    alumnosadd.push(this);
+                }
             });
 
             if (alumnosadd.length === 0) { return false; }
             IndexFn.Block(true);
 
-            IndexFn.Api("SEP/Firmar", 'PUT', JSON.stringify(alumnosadd))
+            IndexFn.Api("SEP/Enviar", 'PUT', JSON.stringify(alumnosadd))
                 .done(function (data) {
                     IndexFn.Block(false);
-                    FirmarFn.lstTitulos = [];
+                    TituloFn.lstTitulos = [];
 
                     if (data.fallidos.length === 0) {
                         alertify.alert("Universidad YMCA", "Alumnos enviados a los responsables.");
-
                         tblTitulos
                             .clear()
                             .draw();
 
-                        FirmarFn.GetAlumnos();
-
-                        
+                        TituloFn.GetAlumnos();
                     } else {
-                        alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
-
-                        FirmarFn.lstTitulos = [];
-
                         $(data.fallidos).each(function () {
-                            FirmarFn.lstTitulos.push(this.Alumno);
+                            TituloFn.lstTitulos.push(this.Alumno);
                         });
-
-                        FirmarFn.InitAlumnos();
+                        alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
                     }
 
-                    FirmarFn.InitAlumnos();
+                    TituloFn.InitAlumnos();
                 })
                 .fail(function (data) {
                     alertify.alert("Universidad YMCA", "Fallo al momento de guardar.");
@@ -407,5 +385,5 @@
         }
     };
 
-    FirmarFn.init();
+    TituloFn.init();
 });

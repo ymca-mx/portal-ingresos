@@ -207,7 +207,6 @@ namespace DAL
         public virtual DbSet<SucursalDetalle> SucursalDetalle { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoMovimiento> TipoMovimiento { get; set; }
-        public virtual DbSet<TipoMovimientoCRUD> TipoMovimientoCRUD { get; set; }
         public virtual DbSet<TipoUsuarioSubmenu> TipoUsuarioSubmenu { get; set; }
         public virtual DbSet<Turno> Turno { get; set; }
         public virtual DbSet<UniversidadValidacion> UniversidadValidacion { get; set; }

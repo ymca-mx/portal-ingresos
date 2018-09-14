@@ -10,12 +10,13 @@ using System.Text;
 using System.Web;
 using System.Xml.Serialization;
 using System.IO.Compression;
+using System.Threading.Tasks;
 
-namespace BLL.Tools
+namespace BLL.Tools 
 {
-    public class SEP
+    public class SEP 
     {
-        public static object CrearXMLTitulo(DAL.AlumnoTitulo alumno, DAL.Usuario userdb)
+        internal static object CrearXMLTitulo(DAL.AlumnoTitulo alumno, DAL.Usuario userdb)
         {
             try
             {
@@ -252,6 +253,78 @@ namespace BLL.Tools
             }
         }
 
+        internal static object SendArchivos(List<string> rutaFiles)
+        {
+
+
+            Titulos_SEP.cargaTituloElectronicoRequest objSEP = new Titulos_SEP.cargaTituloElectronicoRequest();
+
+            string Ruta = HttpContext.Current.Server.MapPath("~");
+            Ruta += "//Documentos//SEP//Titulo//";
+
+            if (rutaFiles.Count > 1)
+            {
+                DateTime FHoy = DateTime.Now;                
+                string NameZIP = FHoy.Day + "_" + FHoy.Month + "_" + FHoy.Year + "_" + FHoy.Hour + "_" + FHoy.Minute + ".Zip";
+
+                objSEP.archivoBase64 = ReadFile(Ruta + NameZIP);
+                objSEP.nombreArchivo = NameZIP;
+            }
+            else
+            {
+                objSEP.archivoBase64= ReadFile(Ruta+rutaFiles[0]);
+                objSEP.nombreArchivo = rutaFiles[0];
+            }
+
+            objSEP.autenticacion = new Titulos_SEP.autenticacionType
+            {
+                usuario = "YMCA",
+                password = "#1234@abc"
+            };
+            try
+            {
+                //cargaTituloElectronicoResponse1 Result = titulosPort.cargaTituloElectronico(new cargaTituloElectronicoRequest1(objSEP));
+
+                Titulos_SEP.TitulosPortTypeClient ClientSEP = new Titulos_SEP.TitulosPortTypeClient("TitulosPortTypeSoap11");
+                ClientSEP.Open();
+
+                var resul =
+                ClientSEP.cargaTituloElectronico(objSEP);
+
+                ClientSEP.Close();
+
+                return new
+                {
+                    Status=true,
+                    resul.mensaje,
+                    resul.numeroLote
+                };
+            }catch(Exception error)
+            {
+                return new
+                {
+                    Status = false,
+                    error.Message,
+                    Inner = error?.InnerException?.Message ?? "",
+                    Inner2 = error?.InnerException?.InnerException?.Message
+                };
+            }
+        }
+
+        private void ComprimirFiles(List<string> Files, string ruta, string Nombre)
+        {
+            using (FileStream zipToOpen = new FileStream(ruta + Nombre, FileMode.OpenOrCreate))
+            {
+                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
+                {
+                    Files.ForEach(archivo =>
+                    {
+                        archive.CreateEntryFromFile(ruta + archivo, archivo);
+                    });
+                }
+            }
+        }
+
         internal static byte[] ReadFile(string strArchivo)
         {
             FileStream f = new FileStream(strArchivo, FileMode.Open, FileAccess.Read);
@@ -377,5 +450,6 @@ namespace BLL.Tools
             }
 
         }
+        
     }
 }

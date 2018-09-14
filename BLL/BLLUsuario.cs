@@ -374,7 +374,9 @@ namespace Universidad.BLL
                                 b.SubMenu.Descripcion,
                                 b.SubMenu.Direccion,
                                 b.SubmenuId,
-                                b.SubMenu.MenuId
+                                b.SubMenu.MenuId,
+                                b.SubMenu.EsTitulo,
+                                b.SubMenu.SubMenuIdPadre
                             }).ToList()
                             ).FirstOrDefault();
 
@@ -397,13 +399,25 @@ namespace Universidad.BLL
                                 a.Descripcion,
                                 a.Icono,
                                 SubMenu = SubMenus
-                                        .Where(b => b.MenuId == a.MenuId)
+                                        .Where(b => b.MenuId == a.MenuId
+                                                    && b.EsTitulo)
                                         .Select(b => new
                                         {
                                             b.Descripcion,
                                             b.Direccion,
                                             b.MenuId,
-                                            b.SubmenuId
+                                            b.SubmenuId,
+                                            SubMenu = SubMenus.Where(c => c.MenuId == a.MenuId
+                                                                 && !c.EsTitulo
+                                                                 && c.SubMenuIdPadre==b.SubmenuId)
+                                                                .Select(c => new
+                                                                {
+                                                                    c.Descripcion,
+                                                                    c.Direccion,
+                                                                    c.MenuId,
+                                                                    c.SubmenuId
+                                                                })
+                                                                .ToList()
                                         })
                                         .ToList()
                             })

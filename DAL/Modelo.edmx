@@ -2551,7 +2551,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           <Property Name="MenuId" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Incono" Type="varchar" MaxLength="150" />
+          <Property Name="Icono" Type="varchar" MaxLength="150" />
+          <Property Name="SubMenuIdPadre" Type="int" Nullable="false" />
+          <Property Name="EsTitulo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Subperiodo">
           <Key>
@@ -2620,13 +2622,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.Saldos' no tiene definida ni
           </Key>
           <Property Name="TipoMovimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="TipoMovimientoCRUD">
-          <Key>
-            <PropertyRef Name="TipoMovimientoId" />
-          </Key>
-          <Property Name="TipoMovimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoUsuarioSubmenu">
           <Key>
@@ -7901,7 +7896,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySet Name="SucursalDetalle" EntityType="Self.SucursalDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TipoMovimientoCRUD" EntityType="Self.TipoMovimientoCRUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="Self.TipoUsuarioSubmenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniversidadValidacion" EntityType="Self.UniversidadValidacion" Schema="dbo" store:Type="Tables" />
@@ -9766,7 +9760,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySet Name="SucursalDetalle" EntityType="UniversidadModel.SucursalDetalle" />
           <EntitySet Name="TipoDocumento" EntityType="UniversidadModel.TipoDocumento" />
           <EntitySet Name="TipoMovimiento" EntityType="UniversidadModel.TipoMovimiento" />
-          <EntitySet Name="TipoMovimientoCRUD" EntityType="UniversidadModel.TipoMovimientoCRUD" />
           <EntitySet Name="TipoUsuarioSubmenu" EntityType="UniversidadModel.TipoUsuarioSubmenu" />
           <EntitySet Name="Turno" EntityType="UniversidadModel.Turno" />
           <EntitySet Name="UniversidadValidacion" EntityType="UniversidadModel.UniversidadValidacion" />
@@ -14272,7 +14265,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="MenuId" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Direccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Incono" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Icono" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SubMenuIdPadre" Type="Int32" Nullable="false" />
+          <Property Name="EsTitulo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Menu" Relationship="UniversidadModel.FK_SubMenu_Menu" FromRole="SubMenu" ToRole="Menu" />
           <NavigationProperty Name="TipoUsuarioSubmenu" Relationship="UniversidadModel.FK_TipoUsuarioSubmenu_SubMenu" FromRole="SubMenu" ToRole="TipoUsuarioSubmenu" />
         </EntityType>
@@ -14360,13 +14355,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="TipoMovimientoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlumnoMovimiento" Relationship="UniversidadModel.FK_AlumnoMovimiento_TipoMovimiento" FromRole="TipoMovimiento" ToRole="AlumnoMovimiento" />
-        </EntityType>
-        <EntityType Name="TipoMovimientoCRUD">
-          <Key>
-            <PropertyRef Name="TipoMovimientoId" />
-          </Key>
-          <Property Name="TipoMovimientoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipoUsuarioSubmenu">
           <Key>
@@ -22173,7 +22161,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySetMapping Name="SubMenu">
             <EntityTypeMapping TypeName="UniversidadModel.SubMenu">
               <MappingFragment StoreEntitySet="SubMenu">
-                <ScalarProperty Name="Incono" ColumnName="Incono" />
+                <ScalarProperty Name="EsTitulo" ColumnName="EsTitulo" />
+                <ScalarProperty Name="SubMenuIdPadre" ColumnName="SubMenuIdPadre" />
+                <ScalarProperty Name="Icono" ColumnName="Icono" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
@@ -22250,14 +22240,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySetMapping Name="TipoMovimiento">
             <EntityTypeMapping TypeName="UniversidadModel.TipoMovimiento">
               <MappingFragment StoreEntitySet="TipoMovimiento">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="TipoMovimientoId" ColumnName="TipoMovimientoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoMovimientoCRUD">
-            <EntityTypeMapping TypeName="UniversidadModel.TipoMovimientoCRUD">
-              <MappingFragment StoreEntitySet="TipoMovimientoCRUD">
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="TipoMovimientoId" ColumnName="TipoMovimientoId" />
               </MappingFragment>

@@ -231,5 +231,45 @@ namespace AppAdministrativos.Controllers
                 return BadRequest(message);
             }
         }
+
+        [Route("Enviar")]
+        [HttpPut]
+        public IHttpActionResult EnviarAlumnos(List<DTO.SEP.TituloGeneral> Alumnos)
+        {
+            object Result = BLLSEP.EnviarAlumnos(Alumnos);
+
+            if ((bool)Result.GetType().GetProperty("Status").GetValue(Result, null))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                        + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                        + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
+
+        [Route("Alumnos/Firmados")]
+        [HttpGet]
+        public IHttpActionResult AlumnosFirmados()
+        {
+            object Result = BLLSEP.AlumnosFirmados();
+
+            if (Result.ToString().Contains("System.Collections.Generic.List"))
+            {
+                return Ok(Result);
+            }
+            else
+            {
+                string message = "'Gral':'Fallo al momento de guardar, " + Result.GetType().GetProperty("Message").GetValue(Result, null)
+                        + "', 'Detalle': '" + Result.GetType().GetProperty("Inner").GetValue(Result, null)
+                        + "', 'Detalle Inner': '" + Result.GetType().GetProperty("Inner2").GetValue(Result, null).ToString().Replace("'", "\"") + "'";
+
+                return BadRequest(message);
+            }
+        }
     }
 }
