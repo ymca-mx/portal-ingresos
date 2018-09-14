@@ -242,8 +242,7 @@ namespace BLL
                         .FirstOrDefault();
 
                         AlumnoBD.EstatusId = 4;
-                        AlumnoBD.UsuarioId = alumno.UsuarioId;
-
+                        AlumnoBD.UsuarioId = alumno.UsuarioId;                        
 
                         string Folio = "A" + AlumnoBD.AlumnoTituloId + "-" + AlumnoBD.AlumnoId + "-" + AlumnoBD.AlumnoOfertaEducativaId + ".xml";
 
@@ -368,6 +367,7 @@ namespace BLL
                 try
                 {
                     dynamic result;
+                    DateTime Fpasada = new DateTime(1900, 1, 1, 23, 59, 59);
                     List<object> fallidos = new List<object>();
                     alumnos.ForEach(alumno =>
                     {
@@ -386,6 +386,8 @@ namespace BLL
                             Responsable.Aprobo = alumno.Autorizado;
                             Responsable.Comentario = alumno?.Comentario ?? "";
                             AlumnoBD.UsuarioId = alumno.UsuarioId;
+                            
+                            AlumnoBD.FechaExpedicion = AlumnoBD.FechaExpedicion <= Fpasada ? DateTime.Now : AlumnoBD.FechaExpedicion;
 
                             var usuariodb = db.Usuario.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
 
@@ -571,7 +573,7 @@ namespace BLL
                                 MedioTitulacion = a.ModalidadTitulacion.TipoModalidad,
                                 FExamenProf = a.FechaExamenProfesional.ToString("dd/MM/yyyy"),
                                 FExencion = a.FechaExencionExamenProfecional.ToString("dd/MM/yyyy"),
-                                FundamentoLegalId = a.FundamentoLegalId,
+                                a.FundamentoLegalId,
                                 FundamentoLegal = a.FundamentoLegal.Descripcion,
                                 EntidadFederativaId = a.EntidadFederativaIdExpedicion,
                                 EntidadFederativa = a.EntidadFederativa.Descripcion
