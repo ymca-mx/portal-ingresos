@@ -1,6 +1,7 @@
 ﻿$(function () {
 
-    var tblTitulos;
+    var tblTitulos,
+        tblDetalles;
     
     var TituloFn = {
         init() {
@@ -123,21 +124,25 @@
                         {
                             "mDataProp": "",
                             "mRender": function (a, b, c) {
-                                //var elim = "<a href='javascript:;'><i class='fa fa-edit'/></a> ";
-                                //return elim;
-                                var input =c.EstatusId===4?"<span>"+c.EstatusSEP+"</span>" : c.Autorizado ? ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" checked name="Quitar">') :
-                                    ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" name="Quitar">');
+                                var Nombre = "";
+                                if (c.EstatusId === 3) {
+                                    var input = c.Autorizado ? ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" checked name="Quitar">') :
+                                        ('<input type="checkbox" id="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" class="md-check" name="Quitar">');
 
-                                var Nombre = '<div class="md-checkbox-list">' +
-                                    '<div class="md-checkbox">' +
-                                    input +
-                                    '<label for="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" >' +
-                                    '<span></span>' +
-                                    '<span class="check"></span>' +
-                                    '<span class="box"></span>' +
-                                    'Enviar' +
-                                    '</label>' +
-                                    '</div>';
+                                    Nombre = '<div class="md-checkbox-list">' +
+                                        '<div class="md-checkbox">' +
+                                        input +
+                                        '<label for="' + c.AlumnoId + c.Carrera.OfertaEducativaId + '" >' +
+                                        '<span></span>' +
+                                        '<span class="check"></span>' +
+                                        '<span class="box"></span>' +
+                                        'Enviar' +
+                                        '</label>' +
+                                        '</div>';
+                                } else {
+                                    Nombre = "<a href='javascript:;' class='btn bg-green' name='Detalle'><span>" + c.EstatusSEP + "</span></a>";
+                                }
+
                                 return Nombre;
                             }
                         }
@@ -190,8 +195,10 @@
                     TituloFn.ShowAlumno();
                     break;
                 case 'Quitar':
-
                     TituloFn.Borrar();
+                    break;
+                case 'Nombre':
+                    TituloFn.ShowDetails();
                     break;
             }
         },
@@ -321,6 +328,50 @@
 
             $('#modalResponsables').modal('show');
         },
+        ShowDetails() {
+
+            tblDetalles = $('#tblDetalles')
+                .DataTable({
+                    "aaData": TituloFn.AlumnoSelect.AccioSEP,
+                    "bSort": false,
+                    "aoColumns": [
+                        {
+                            "mDataProp": "",
+                            "mRender": function (a, b, c) {
+                                var Nombre = c.UsuarioId + ' | ' + c.NombreUsuario;
+                                return Nombre;
+                            }
+                        },
+                        { "mDataProp": "NumeroLote" },
+                        { "mDataProp": "Descripcion" },
+                        { "mDataProp": "Mensaje" },
+                        { "mDataProp": "Fecha" },
+                        { "mDataProp": "Hora" },
+                    ],
+                    "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, 'Todos']],
+                    "searching": false,
+                    "ordering": false,
+                    "async": false,
+                    "bDestroy": true,
+                    "bPaginate": false,
+                    "bLengthChange": true,
+                    "bFilter": false,
+                    "bInfo": true,
+                    "bAutoWidth": false,
+                    "asStripClasses": null,
+                    "language": {
+                        "lengthMenu": "_MENU_  Registros",
+                        "paginate": {
+                            "previous": "<",
+                            "next": ">"
+                        },
+                        "search": "Buscar Alumno "
+                    }
+                });
+
+
+            $('#modalDetails').modal('show');
+        },
         Borrar() {
             if (!TituloFn.AlumnoSelect.Autorizado) {
                 TituloFn.AlumnoSelect.Autorizado = true;
@@ -360,21 +411,31 @@
                     IndexFn.Block(false);
                     TituloFn.lstTitulos = [];
 
-                    if (data.fallidos.length === 0) {
-                        alertify.alert("Universidad YMCA", "Alumnos enviados a los responsables.");
+                    if (data.fallidos !== undefined) {
+                        if (data.fallidos.length === 0) {
+                            alertify.alert("Universidad YMCA", "Se enviaron satisfactoriamente los archivos a la SEP.");
+                            tblTitulos
+                                .clear()
+                                .draw();
+
+                            TituloFn.GetAlumnos();
+                        } else {
+                            $(data.fallidos).each(function () {
+                                TituloFn.lstTitulos.push(this.Alumno);
+                            });
+                            alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
+                        }
+
+                        TituloFn.InitAlumnos();
+                    } else {
+                        alertify.alert("Universidad YMCA", "Ocurrio un error al enviar los archivos a la SEP.");
+
                         tblTitulos
                             .clear()
                             .draw();
 
                         TituloFn.GetAlumnos();
-                    } else {
-                        $(data.fallidos).each(function () {
-                            TituloFn.lstTitulos.push(this.Alumno);
-                        });
-                        alertify.alert("Universidad YMCA", "Los siguientes alumnos no se pudieron guardar.");
                     }
-
-                    TituloFn.InitAlumnos();
                 })
                 .fail(function (data) {
                     alertify.alert("Universidad YMCA", "Fallo al momento de guardar.");

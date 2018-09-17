@@ -17,6 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AlumnoTitulo()
         {
+            this.AlumnoTituloAccion = new HashSet<AlumnoTituloAccion>();
             this.UsuarioResponsable = new HashSet<UsuarioResponsable>();
         }
     
@@ -32,18 +33,22 @@ namespace DAL
         public int FundamentoLegalId { get; set; }
         public int EntidadFederativaIdExpedicion { get; set; }
         public int AlumnoAntecedenteId { get; set; }
+        public int Libro { get; set; }
+        public int Foja { get; set; }
         public int UsuarioId { get; set; }
-        public int EstatusId { get; set; }
+        public int MovimientoId { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual EntidadFederativa EntidadFederativa { get; set; }
-        public virtual Estatus Estatus { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual AlumnoAntecedente1 AlumnoAntecedente1 { get; set; }
         public virtual AlumnoOfertaEducativa AlumnoOfertaEducativa { get; set; }
         public virtual AutorizacionReconocimiento AutorizacionReconocimiento { get; set; }
         public virtual FundamentoLegal FundamentoLegal { get; set; }
         public virtual ModalidadTitulacion ModalidadTitulacion { get; set; }
+        public virtual MovimientoSEP MovimientoSEP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoTituloAccion> AlumnoTituloAccion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioResponsable> UsuarioResponsable { get; set; }
     }

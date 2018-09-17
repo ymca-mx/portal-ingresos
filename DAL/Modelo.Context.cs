@@ -246,9 +246,11 @@ namespace DAL
         public virtual DbSet<TipoUsuarioSubmenu1> TipoUsuarioSubmenu1 { get; set; }
         public virtual DbSet<VistoBuenoCurso> VistoBuenoCurso { get; set; }
         public virtual DbSet<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
+        public virtual DbSet<AccionSEP> AccionSEP { get; set; }
         public virtual DbSet<AlumnoAntecedente1> AlumnoAntecedente1 { get; set; }
         public virtual DbSet<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
         public virtual DbSet<AlumnoTitulo> AlumnoTitulo { get; set; }
+        public virtual DbSet<AlumnoTituloAccion> AlumnoTituloAccion { get; set; }
         public virtual DbSet<AutorizacionReconocimiento> AutorizacionReconocimiento { get; set; }
         public virtual DbSet<Campus> Campus { get; set; }
         public virtual DbSet<Cargo> Cargo { get; set; }
@@ -256,11 +258,13 @@ namespace DAL
         public virtual DbSet<Institucion> Institucion { get; set; }
         public virtual DbSet<InstitucionOfertaEducativa> InstitucionOfertaEducativa { get; set; }
         public virtual DbSet<ModalidadTitulacion> ModalidadTitulacion { get; set; }
+        public virtual DbSet<MovimientoSEP> MovimientoSEP { get; set; }
         public virtual DbSet<TipoEstudioAntecedente> TipoEstudioAntecedente { get; set; }
         public virtual DbSet<UsuarioResponsable> UsuarioResponsable { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }
         public virtual DbSet<AlumnoMatricula> AlumnoMatricula { get; set; }
         public virtual DbSet<BecaSEPBitacora> BecaSEPBitacora { get; set; }
+        public virtual DbSet<COLEGIATURA> COLEGIATURA { get; set; }
         public virtual DbSet<IdiomasInscrito> IdiomasInscrito { get; set; }
         public virtual DbSet<PagoDescuentoBitacora> PagoDescuentoBitacora { get; set; }
         public virtual DbSet<ReporteEstadoCuentaDescuento> ReporteEstadoCuentaDescuento { get; set; }

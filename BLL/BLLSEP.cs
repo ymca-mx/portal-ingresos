@@ -1,6 +1,7 @@
 ﻿using BLL.Tools;
 using DAL;
 using DTO.SEP;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -144,7 +145,7 @@ namespace BLL
             {
                 try
                 {
-                    var Alumnos = db.AlumnoTitulo.Where(a => a.EstatusId == 1 && a.AlumnoId == alumnoId).ToList().AsQueryable().ToList();
+                    var Alumnos = db.AlumnoTitulo.Where(a => a.MovimientoId == 1 && a.AlumnoId == alumnoId).ToList().AsQueryable().ToList();
 
 
 
@@ -159,7 +160,7 @@ namespace BLL
                             a.Alumno.AlumnoDetalle.CURP,
                             a.Alumno.AlumnoDetalle.Email,
                             Autorizado = true,
-                            a.EstatusId,
+                            EstatusId = a.MovimientoId,
                             Institucion = new
                             {
                                 a.AlumnoOfertaEducativa.InstitucionId,
@@ -173,7 +174,7 @@ namespace BLL
                                 MedioTitulacion = a.ModalidadTitulacion.TipoModalidad,
                                 FExamenProf = a.FechaExamenProfesional.ToString("dd/MM/yyyy"),
                                 FExencion = a.FechaExencionExamenProfecional.ToString("dd/MM/yyyy"),
-                                FundamentoLegalId = a.FundamentoLegalId,
+                                a.FundamentoLegalId,
                                 FundamentoLegal = a.FundamentoLegal.Descripcion,
                                 EntidadFederativaId = a.EntidadFederativaIdExpedicion,
                                 EntidadFederativa = a.EntidadFederativa.Descripcion
@@ -241,7 +242,6 @@ namespace BLL
                                 && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
                         .FirstOrDefault();
 
-                        AlumnoBD.EstatusId = 4;
                         AlumnoBD.UsuarioId = alumno.UsuarioId;                        
 
                         string Folio = "A" + AlumnoBD.AlumnoTituloId + "-" + AlumnoBD.AlumnoId + "-" + AlumnoBD.AlumnoOfertaEducativaId + ".xml";
@@ -254,6 +254,35 @@ namespace BLL
 
                     if ((bool)result.GetType().GetProperty("Status").GetValue(result, null))
                     {
+                        var resuljson = JObject.FromObject(result);
+
+                        db.AccionSEP.Add(new AccionSEP
+                        {
+                            NumeroLote = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault) ? int.Parse(resuljson["numeroLote"].ToString()) : -1,
+                            Mensaje = resuljson["mensaje"].ToString(),
+                            MovimientoId = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault2) ? 5 : 7
+                        });
+
+                        db.AlumnoTitulo
+                            .Local
+                            .Select(a =>
+                                {
+                                    a.MovimientoId = db.AccionSEP.Local.FirstOrDefault().NumeroLote == -1 ? 7 : 4;
+                                    return a.MovimientoId;
+                                })
+                            .ToList();
+                        
+
+                        db.SaveChanges();
+
+                        db.AlumnoTituloAccion.AddRange(
+                            db.AlumnoTitulo.Local.Select(a => new AlumnoTituloAccion
+                            {
+                                AccionSEPId = db.AccionSEP.Local.FirstOrDefault().AccionSEPId,
+                                AlumnoTituloId = a.AlumnoTituloId
+                            })
+                            .ToList());
+
                         db.SaveChanges();
                     }
 
@@ -274,11 +303,12 @@ namespace BLL
 
         public static object AlumnosFirmados()
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
-                    var Alumnos = db.AlumnoTitulo.Where(a => a.EstatusId == 3).ToList().AsQueryable().ToList();
+                    int[] MovimientoIds = { 3, 4, 5, 6, 7 };
+                    var Alumnos = db.AlumnoTitulo.Where(a => MovimientoIds.Contains(a.MovimientoId)).ToList().AsQueryable().ToList();
 
                     return
                     Alumnos
@@ -291,9 +321,23 @@ namespace BLL
                             a.Alumno.AlumnoDetalle.CURP,
                             a.Alumno.AlumnoDetalle.Email,
                             Autorizado = true,
-                            a.EstatusId,
-                            EstatusSEP ="Procesado",
-                            Archivo ="Documentos/SEP/Titulo/" +
+                            EstatusId = a.MovimientoId,
+                            EstatusSEP = a.MovimientoSEP.Descripcion,
+                            AccionSEP = a.AlumnoTituloAccion
+                                        .Select(b => new
+                                        {
+                                            b.AccionSEPId,
+                                            b.AccionSEP.NumeroLote,
+                                            b.AccionSEP.Mensaje,
+                                            b.AccionSEP.MovimientoId,
+                                            b.AccionSEP.MovimientoSEP.Descripcion,
+                                            UsuarioId = -1,
+                                            NombreUsuario = "Jose P",
+                                            Fecha = "01/01/2018",
+                                            Hora = "10:30"
+                                        })
+                                        .ToList(),
+                            Archivo = "Documentos/SEP/Titulo/" +
                              "A" + a.AlumnoTituloId + "-" + a.AlumnoId + "-" + a.AlumnoOfertaEducativaId + ".xml",
                             Institucion = new
                             {
@@ -308,7 +352,7 @@ namespace BLL
                                 MedioTitulacion = a.ModalidadTitulacion.TipoModalidad,
                                 FExamenProf = a.FechaExamenProfesional.ToString("dd/MM/yyyy"),
                                 FExencion = a.FechaExencionExamenProfecional.ToString("dd/MM/yyyy"),
-                                FundamentoLegalId = a.FundamentoLegalId,
+                                a.FundamentoLegalId,
                                 FundamentoLegal = a.FundamentoLegal.Descripcion,
                                 EntidadFederativaId = a.EntidadFederativaIdExpedicion,
                                 EntidadFederativa = a.EntidadFederativa.Descripcion
@@ -379,7 +423,7 @@ namespace BLL
                                     && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
                             .FirstOrDefault();
 
-                            AlumnoBD.EstatusId = (AlumnoBD.UsuarioResponsable.Where(a => a.Aprobo && a.UsuarioId != alumno.UsuarioId).Count()) == 1 && alumno.Autorizado ? 3 : 2;
+                            AlumnoBD.MovimientoId = (AlumnoBD.UsuarioResponsable.Where(a => a.Aprobo && a.UsuarioId != alumno.UsuarioId).Count()) == 1 && alumno.Autorizado ? 3 : 2;
 
                             var Responsable = AlumnoBD.UsuarioResponsable.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
 
@@ -467,7 +511,7 @@ namespace BLL
                             Alumnodb.FundamentoLegalId = alumno.Titulo.FundamentoLegalId;
                             Alumnodb.EntidadFederativaIdExpedicion = alumno.Titulo.EntidadFederativaId;
                             Alumnodb.UsuarioId = alumno.UsuarioId;
-                            Alumnodb.EstatusId = alumno.EstatusId;
+                            Alumnodb.MovimientoId = alumno.EstatusId;
 
 
                             //Sep.AlumnoAntecedente
@@ -544,7 +588,7 @@ namespace BLL
             {
                 try
                 {
-                    var Alumnos = db.AlumnoTitulo.Where(a => a.EstatusId == 1).ToList().AsQueryable().ToList();
+                    var Alumnos = db.AlumnoTitulo.Where(a => a.MovimientoId == 1).ToList().AsQueryable().ToList();
 
 
 
@@ -559,7 +603,7 @@ namespace BLL
                             a.Alumno.AlumnoDetalle.CURP,
                             a.Alumno.AlumnoDetalle.Email,
                             Autorizado = true,
-                            a.EstatusId,
+                            EstatusId = a.MovimientoId,
                             Institucion = new
                             {
                                 a.AlumnoOfertaEducativa.InstitucionId,
@@ -631,7 +675,7 @@ namespace BLL
             {
                 try
                 {
-                    var Alumnos = db.AlumnoTitulo.Where(a => a.EstatusId == 2).ToList().AsQueryable().ToList();
+                    var Alumnos = db.AlumnoTitulo.Where(a => a.MovimientoId == 2).ToList().AsQueryable().ToList();
 
 
 
@@ -754,7 +798,7 @@ namespace BLL
                         ModalidadTitulacionId = 1,
                         UsuarioId = AlumnoAdd.UsuarioId,
                         ServicioSocial = true,
-                        EstatusId = 1,
+                        MovimientoId = 1,
                     };
 
                     db.AlumnoTitulo.Add(alumnoadd);
