@@ -180,11 +180,14 @@
     <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaConcepto.cs" />
     <Compile Include="Reporte\CorteDeCaja\DTOCorteCajaTotal.cs" />
     <Compile Include="Reporte\CorteDeCaja\DTOFirmas.cs" />
-    <Compile Include="SEP\SEP_TituloElectronico.cs" />
-    <Compile Include="SEP\SEP_TituloElectronico_Autenticacion.cs">
+    <Compile Include="SEP\Certificado\CertificadoElectronico.cs">
+      <DependentUpon>CertificadoElectronico.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SEP\Titulo\SEP_TituloElectronico.cs" />
+    <Compile Include="SEP\Titulo\SEP_TituloElectronico_Autenticacion.cs">
       <DependentUpon>SEP_TituloElectronico_Autenticacion.xsd</DependentUpon>
     </Compile>
-    <Compile Include="SEP\TituloGeneral.cs" />
+    <Compile Include="SEP\Titulo\TituloGeneral.cs" />
     <Compile Include="Usuario\CorteDeCaja\DTOCajero.cs" />
     <Compile Include="Usuario\DTOLogin.cs" />
     <Compile Include="Usuario\DTOUsuarioImagen.cs" />
@@ -200,12 +203,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SEP\SEP_TituloElectronico.xsd">
+    <None Include="SEP\Certificado\CertificadoElectronico.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SEP\SEP_TituloElectronico_Autenticacion.xsd">
+    <None Include="SEP\Titulo\SEP_TituloElectronico.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SEP\Titulo\SEP_TituloElectronico_Autenticacion.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

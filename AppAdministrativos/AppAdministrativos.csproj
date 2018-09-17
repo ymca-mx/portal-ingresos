@@ -5532,6 +5532,7 @@
     <Compile Include="Controllers\AdministracionController.cs" />
     <Compile Include="Controllers\BecaController.cs" />
     <Compile Include="Controllers\BibliotecaController.cs" />
+    <Compile Include="Controllers\CertificadoController.cs" />
     <Compile Include="Controllers\CuotaController.cs" />
     <Compile Include="Controllers\DescuentosController.cs" />
     <Compile Include="Controllers\DocentesController.cs" />
