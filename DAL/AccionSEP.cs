@@ -24,7 +24,11 @@ namespace DAL
         public int NumeroLote { get; set; }
         public string Mensaje { get; set; }
         public int MovimientoId { get; set; }
+        public int UsuarioId { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public System.TimeSpan Hora { get; set; }
     
+        public virtual Usuario Usuario { get; set; }
         public virtual MovimientoSEP MovimientoSEP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoTituloAccion> AlumnoTituloAccion { get; set; }

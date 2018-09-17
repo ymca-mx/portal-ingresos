@@ -140,7 +140,7 @@
                                         '</label>' +
                                         '</div>';
                                 } else {
-                                    Nombre = "<a href='javascript:;' class='btn bg-green' name='Detalle'><span>" + c.EstatusSEP + "</span></a>";
+                                    Nombre = "<button class='btn bg-green' name='Detalle'>" + c.EstatusSEP + "</button>";
                                 }
 
                                 return Nombre;
@@ -197,7 +197,7 @@
                 case 'Quitar':
                     TituloFn.Borrar();
                     break;
-                case 'Nombre':
+                case 'Detalle':
                     TituloFn.ShowDetails();
                     break;
             }
@@ -332,7 +332,7 @@
 
             tblDetalles = $('#tblDetalles')
                 .DataTable({
-                    "aaData": TituloFn.AlumnoSelect.AccioSEP,
+                    "aaData": TituloFn.AlumnoSelect.AccionSEP,
                     "bSort": false,
                     "aoColumns": [
                         {
@@ -397,7 +397,7 @@
         Enviar() {
             var alumnosadd = [];
             $(tblTitulos.rows().data()).each(function () {
-                if (this.EstatusId === 3 && this.Autorizado) {
+                if (this.EstatusId !== 4 && this.Autorizado) {
                     this.UsuarioId = localStorage.getItem('userAdmin');
                     alumnosadd.push(this);
                 }

@@ -269,9 +269,6 @@
     <Compile Include="Cargo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="COLEGIATURA.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Comunicado.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace BLL
 {
@@ -228,7 +225,7 @@ namespace BLL
 
         public static object EnviarAlumnos(List<TituloGeneral> alumnos)
         {
-            using(UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
@@ -242,15 +239,15 @@ namespace BLL
                                 && A.AlumnoOfertaEducativa.OfertaEducativaId == alumno.Carrera.OfertaEducativaId)
                         .FirstOrDefault();
 
-                        AlumnoBD.UsuarioId = alumno.UsuarioId;                        
+                        AlumnoBD.UsuarioId = alumno.UsuarioId;
 
                         string Folio = "A" + AlumnoBD.AlumnoTituloId + "-" + AlumnoBD.AlumnoId + "-" + AlumnoBD.AlumnoOfertaEducativaId + ".xml";
 
-                        RutaFiles.Add(Folio);                        
+                        RutaFiles.Add(Folio);
 
                     });
 
-                   var result = SEP.SendArchivos(RutaFiles);
+                    var result = SEP.SendArchivos(RutaFiles);
 
                     if ((bool)result.GetType().GetProperty("Status").GetValue(result, null))
                     {
@@ -260,7 +257,10 @@ namespace BLL
                         {
                             NumeroLote = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault) ? int.Parse(resuljson["numeroLote"].ToString()) : -1,
                             Mensaje = resuljson["mensaje"].ToString(),
-                            MovimientoId = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault2) ? 5 : 7
+                            MovimientoId = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault2) ? 5 : 7,
+                            UsuarioId = alumnos.First().UsuarioId,
+                            Fecha = DateTime.Now,
+                            Hora = DateTime.Now.TimeOfDay
                         });
 
                         db.AlumnoTitulo
@@ -271,7 +271,7 @@ namespace BLL
                                     return a.MovimientoId;
                                 })
                             .ToList();
-                        
+
 
                         db.SaveChanges();
 
@@ -331,10 +331,10 @@ namespace BLL
                                             b.AccionSEP.Mensaje,
                                             b.AccionSEP.MovimientoId,
                                             b.AccionSEP.MovimientoSEP.Descripcion,
-                                            UsuarioId = -1,
-                                            NombreUsuario = "Jose P",
-                                            Fecha = "01/01/2018",
-                                            Hora = "10:30"
+                                            b.AccionSEP.Usuario.UsuarioId,
+                                            NombreUsuario = b.AccionSEP.Usuario.Nombre + " " + b.AccionSEP.Usuario.Paterno + " " + b.AccionSEP.Usuario.Materno,
+                                            Fecha = b.AccionSEP.Fecha.ToString("dd/MM/yyyy"),
+                                            Hora = b.AccionSEP.Hora.ToString(@"hh\:mm")
                                         })
                                         .ToList(),
                             Archivo = "Documentos/SEP/Titulo/" +
@@ -430,7 +430,7 @@ namespace BLL
                             Responsable.Aprobo = alumno.Autorizado;
                             Responsable.Comentario = alumno?.Comentario ?? "";
                             AlumnoBD.UsuarioId = alumno.UsuarioId;
-                            
+
                             AlumnoBD.FechaExpedicion = AlumnoBD.FechaExpedicion <= Fpasada ? DateTime.Now : AlumnoBD.FechaExpedicion;
 
                             var usuariodb = db.Usuario.Where(a => a.UsuarioId == alumno.UsuarioId).FirstOrDefault();
@@ -460,8 +460,8 @@ namespace BLL
                             {
                                 alumno,
                                 Error.Message,
-                                Inner = Error?.InnerException?.Message??"",
-                                Inner2 = Error?.InnerException?.InnerException?.Message??""
+                                Inner = Error?.InnerException?.Message ?? "",
+                                Inner2 = Error?.InnerException?.InnerException?.Message ?? ""
                             });
                         }
                     });
@@ -488,7 +488,7 @@ namespace BLL
 
         public static object UpdateAlumnos(List<TituloGeneral> alumnos)
         {
-            using (UniversidadEntities db= new UniversidadEntities())
+            using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {

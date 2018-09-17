@@ -942,34 +942,6 @@ advertencia 6013: La tabla o vista 'Universidad.dbo.BitacoraMatAdelanto' no tien
           <Property Name="NoBajas" Type="int" />
           <Property Name="BajaMaterias" Type="varchar" MaxLength="1000" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Universidad.dbo.COLEGIATURA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="COLEGIATURA">
-          <Key>
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="Anio" />
-            <PropertyRef Name="PeriodoId" />
-            <PropertyRef Name="OfertaEducativaID" />
-            <PropertyRef Name="DescOferta" />
-            <PropertyRef Name="PagoConceptoId" />
-            <PropertyRef Name="Descripcion" />
-          </Key>
-          <Property Name="AlumnoId" Type="int" Nullable="false" />
-          <Property Name="Anio" Type="int" Nullable="false" />
-          <Property Name="PeriodoId" Type="int" Nullable="false" />
-          <Property Name="OfertaEducativaID" Type="int" Nullable="false" />
-          <Property Name="DescOferta" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="PagoConceptoId" Type="int" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Total" Type="int" />
-          <Property Name="Materias" Type="int" />
-          <Property Name="TotalPagado" Type="numeric" Precision="12" Scale="2" />
-          <Property Name="InscripcionPagado" Type="numeric" Precision="12" Scale="2" />
-          <Property Name="TotalDeuda" Type="numeric" Precision="12" Scale="2" />
-          <Property Name="InscripcionDeuda" Type="numeric" Precision="12" Scale="2" />
-          <Property Name="Inscrito" Type="int" />
-          <Property Name="EsEmpresa" Type="int" />
-        </EntityType>
         <EntityType Name="Comunicado">
           <Key>
             <PropertyRef Name="ComunicadoId" />
@@ -3136,6 +3108,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="NumeroLote" Type="int" Nullable="false" />
           <Property Name="Mensaje" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="MovimientoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="AlumnoAntecedente1">
           <Key>
@@ -3286,6 +3261,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
             </Principal>
             <Dependent Role="AccionSEP">
               <PropertyRef Name="MovimientoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccionSEP_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="AccionSEP" Type="Self.AccionSEP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="AccionSEP">
+              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8083,25 +8070,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
     [BecaSEPBitacora].[UsuarioId] AS [UsuarioId]
     FROM [dbo].[BecaSEPBitacora] AS [BecaSEPBitacora]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="COLEGIATURA" EntityType="Self.COLEGIATURA" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [COLEGIATURA].[AlumnoId] AS [AlumnoId], 
-    [COLEGIATURA].[Anio] AS [Anio], 
-    [COLEGIATURA].[PeriodoId] AS [PeriodoId], 
-    [COLEGIATURA].[OfertaEducativaID] AS [OfertaEducativaID], 
-    [COLEGIATURA].[DescOferta] AS [DescOferta], 
-    [COLEGIATURA].[PagoConceptoId] AS [PagoConceptoId], 
-    [COLEGIATURA].[Descripcion] AS [Descripcion], 
-    [COLEGIATURA].[Total] AS [Total], 
-    [COLEGIATURA].[Materias] AS [Materias], 
-    [COLEGIATURA].[TotalPagado] AS [TotalPagado], 
-    [COLEGIATURA].[InscripcionPagado] AS [InscripcionPagado], 
-    [COLEGIATURA].[TotalDeuda] AS [TotalDeuda], 
-    [COLEGIATURA].[InscripcionDeuda] AS [InscripcionDeuda], 
-    [COLEGIATURA].[Inscrito] AS [Inscrito], 
-    [COLEGIATURA].[EsEmpresa] AS [EsEmpresa]
-    FROM [dbo].[COLEGIATURA] AS [COLEGIATURA]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="IdiomasInscrito" EntityType="Self.IdiomasInscrito" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [IdiomasInscrito].[AlumnoId] AS [AlumnoId], 
@@ -8185,6 +8153,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           </EntitySet>
           <AssociationSet Name="FK_AccionSEP_MovimientoSEP" Association="Self.FK_AccionSEP_MovimientoSEP">
             <End Role="MovimientoSEP" EntitySet="MovimientoSEP" />
+            <End Role="AccionSEP" EntitySet="AccionSEP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccionSEP_Usuario" Association="Self.FK_AccionSEP_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AccionSEP" EntitySet="AccionSEP" />
           </AssociationSet>
           <AssociationSet Name="FK_Adeudo_Alumno" Association="Self.FK_Adeudo_Alumno">
@@ -9941,7 +9913,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySet Name="AlumnoBeca" EntityType="UniversidadModel.AlumnoBeca" />
           <EntitySet Name="AlumnoMatricula" EntityType="UniversidadModel.AlumnoMatricula" />
           <EntitySet Name="BecaSEPBitacora" EntityType="UniversidadModel.BecaSEPBitacora" />
-          <EntitySet Name="COLEGIATURA" EntityType="UniversidadModel.COLEGIATURA" />
           <EntitySet Name="IdiomasInscrito" EntityType="UniversidadModel.IdiomasInscrito" />
           <EntitySet Name="PagoDescuentoBitacora" EntityType="UniversidadModel.PagoDescuentoBitacora" />
           <EntitySet Name="ReporteEstadoCuentaDescuento" EntityType="UniversidadModel.ReporteEstadoCuentaDescuento" />
@@ -11239,6 +11210,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <AssociationSet Name="FK_TipoUsuarioSubmenu_UsuarioTipo" Association="UniversidadModel.FK_TipoUsuarioSubmenu_UsuarioTipo">
             <End Role="UsuarioTipo" EntitySet="UsuarioTipo" />
             <End Role="TipoUsuarioSubmenu" EntitySet="TipoUsuarioSubmenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccionSEP_Usuario" Association="UniversidadModel.FK_AccionSEP_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AccionSEP" EntitySet="AccionSEP" />
           </AssociationSet>
           <AssociationSet Name="FK_AlumnoTitulo_Usuario2" Association="UniversidadModel.FK_AlumnoTitulo_Usuario2">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -14599,6 +14574,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <NavigationProperty Name="SistemaConfiguracion" Relationship="UniversidadModel.FK_SistemaConfiguracion_Usuario" FromRole="Usuario" ToRole="SistemaConfiguracion" />
           <NavigationProperty Name="SolicitudInscripcion" Relationship="UniversidadModel.FK_SolicitudInscripcion_Usuario" FromRole="Usuario" ToRole="SolicitudInscripcion" />
           <NavigationProperty Name="SolicitudInscripcion1" Relationship="UniversidadModel.FK_SolicitudInscripcion_Usuario1" FromRole="Usuario" ToRole="SolicitudInscripcion" />
+          <NavigationProperty Name="AccionSEP" Relationship="UniversidadModel.FK_AccionSEP_Usuario" FromRole="Usuario" ToRole="AccionSEP" />
           <NavigationProperty Name="AlumnoTitulo" Relationship="UniversidadModel.FK_AlumnoTitulo_Usuario2" FromRole="Usuario" ToRole="AlumnoTitulo" />
           <NavigationProperty Name="BecaSEPBitacora" Relationship="UniversidadModel.FK_BecaSEPBitacora_Usuario" FromRole="Usuario" ToRole="BecaSEPBitacora" />
           <NavigationProperty Name="UsuarioTipo" Relationship="UniversidadModel.FK_Usuario_UsuarioTipo" FromRole="Usuario" ToRole="UsuarioTipo" />
@@ -15076,6 +15052,10 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="NumeroLote" Type="Int32" Nullable="false" />
           <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="MovimientoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_AccionSEP_Usuario" FromRole="AccionSEP" ToRole="Usuario" />
           <NavigationProperty Name="MovimientoSEP" Relationship="UniversidadModel.FK_AccionSEP_MovimientoSEP" FromRole="AccionSEP" ToRole="MovimientoSEP" />
           <NavigationProperty Name="AlumnoTituloAccion" Relationship="UniversidadModel.FK_AlumnoTituloAccion_AccionSEP" FromRole="AccionSEP" ToRole="AlumnoTituloAccion" />
         </EntityType>
@@ -15297,32 +15277,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <Property Name="HoraBitacora" Type="Time" Nullable="false" Precision="0" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Usuario" Relationship="UniversidadModel.FK_BecaSEPBitacora_Usuario" FromRole="BecaSEPBitacora" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="COLEGIATURA">
-          <Key>
-            <PropertyRef Name="AlumnoId" />
-            <PropertyRef Name="Anio" />
-            <PropertyRef Name="PeriodoId" />
-            <PropertyRef Name="OfertaEducativaID" />
-            <PropertyRef Name="DescOferta" />
-            <PropertyRef Name="PagoConceptoId" />
-            <PropertyRef Name="Descripcion" />
-          </Key>
-          <Property Name="AlumnoId" Type="Int32" Nullable="false" />
-          <Property Name="Anio" Type="Int32" Nullable="false" />
-          <Property Name="PeriodoId" Type="Int32" Nullable="false" />
-          <Property Name="OfertaEducativaID" Type="Int32" Nullable="false" />
-          <Property Name="DescOferta" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PagoConceptoId" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Total" Type="Int32" />
-          <Property Name="Materias" Type="Int32" />
-          <Property Name="TotalPagado" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="InscripcionPagado" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="TotalDeuda" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="InscripcionDeuda" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="Inscrito" Type="Int32" />
-          <Property Name="EsEmpresa" Type="Int32" />
         </EntityType>
         <EntityType Name="IdiomasInscrito">
           <Key>
@@ -19396,6 +19350,18 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AccionSEP_Usuario">
+          <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="UniversidadModel.AccionSEP" Role="AccionSEP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="AccionSEP">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlumnoTitulo_Usuario2">
           <End Type="UniversidadModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="UniversidadModel.AlumnoTitulo" Role="AlumnoTitulo" Multiplicity="*" />
@@ -22969,6 +22935,9 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
           <EntitySetMapping Name="AccionSEP">
             <EntityTypeMapping TypeName="UniversidadModel.AccionSEP">
               <MappingFragment StoreEntitySet="AccionSEP">
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="MovimientoId" ColumnName="MovimientoId" />
                 <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
                 <ScalarProperty Name="NumeroLote" ColumnName="NumeroLote" />
@@ -23158,27 +23127,6 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.UniversidadAdeudo' no tiene 
                 <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="DescuentoId" ColumnName="DescuentoId" />
                 <ScalarProperty Name="PagoId" ColumnName="PagoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="COLEGIATURA">
-            <EntityTypeMapping TypeName="UniversidadModel.COLEGIATURA">
-              <MappingFragment StoreEntitySet="COLEGIATURA">
-                <ScalarProperty Name="EsEmpresa" ColumnName="EsEmpresa" />
-                <ScalarProperty Name="Inscrito" ColumnName="Inscrito" />
-                <ScalarProperty Name="InscripcionDeuda" ColumnName="InscripcionDeuda" />
-                <ScalarProperty Name="TotalDeuda" ColumnName="TotalDeuda" />
-                <ScalarProperty Name="InscripcionPagado" ColumnName="InscripcionPagado" />
-                <ScalarProperty Name="TotalPagado" ColumnName="TotalPagado" />
-                <ScalarProperty Name="Materias" ColumnName="Materias" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="PagoConceptoId" ColumnName="PagoConceptoId" />
-                <ScalarProperty Name="DescOferta" ColumnName="DescOferta" />
-                <ScalarProperty Name="OfertaEducativaID" ColumnName="OfertaEducativaID" />
-                <ScalarProperty Name="PeriodoId" ColumnName="PeriodoId" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

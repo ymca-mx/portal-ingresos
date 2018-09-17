@@ -57,6 +57,7 @@ namespace DAL
             this.SistemaConfiguracion = new HashSet<SistemaConfiguracion>();
             this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
             this.SolicitudInscripcion1 = new HashSet<SolicitudInscripcion>();
+            this.AccionSEP = new HashSet<AccionSEP>();
             this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
             this.BecaSEPBitacora = new HashSet<BecaSEPBitacora>();
             this.UsuarioBitacora = new HashSet<UsuarioBitacora>();
@@ -160,6 +161,8 @@ namespace DAL
         public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AccionSEP> AccionSEP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
