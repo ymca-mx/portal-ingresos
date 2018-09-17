@@ -174,6 +174,9 @@
     <Content Include="JS\Reportes\ReporteBecas.js" />
     <Content Include="JS\Reportes\CarteraVencida.js" />
     <Content Include="JS\Reportes\ReporteHistoricoInscritos.js" />
+    <Content Include="JS\SEP\Certificado\Consultar.js" />
+    <Content Include="JS\SEP\Certificado\Firmar.js" />
+    <Content Include="JS\SEP\Certificado\Solicitar.js" />
     <Content Include="JS\SEP\Titulo\Consultar.js" />
     <Content Include="JS\SEP\Titulo\Firmar.js" />
     <Content Include="JS\SEP\Titulo\Solicitar.js" />
@@ -4825,6 +4828,9 @@
     <Content Include="Views\Reportes\EnvioReporteVistoBueno.html" />
     <Content Include="Views\Reportes\ReporteBecas.html" />
     <Content Include="Views\Reportes\ReporteHistoricoInscritos.html" />
+    <Content Include="Views\SEP\Certificado\Consultar.html" />
+    <Content Include="Views\SEP\Certificado\Firmar.html" />
+    <Content Include="Views\SEP\Certificado\Solicitar.html" />
     <Content Include="Views\SEP\Titulo\Consultar.html" />
     <Content Include="Views\SEP\Titulo\Firmar.html" />
     <Content Include="Views\SEP\Titulo\Solicitar.html" />
@@ -5618,13 +5624,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Documentos\SEP\Certificado\" />
     <Folder Include="Documentos\SEP\Titulo\" />
-    <Folder Include="JS\SEP\Certificado\" />
     <Folder Include="JS\themes\Switch\" />
     <Folder Include="Scripts\typings\angularjs\" />
     <Folder Include="Scripts\typings\jquery\" />
     <Folder Include="Style\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Style\engato\login\imagenes\recovery\" />
-    <Folder Include="Views\SEP\Certificado\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
