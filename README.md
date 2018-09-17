@@ -14,3 +14,6 @@
 ###		*Inscritos 
 	
 ###		*Programacion de JS, WebServices, HTML y Codigo de Entity
+
+### Codigo para generar Clases desde un XSD
+##"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.7 Tools\xsd.exe" CertificadoElectronico.xsd /classes
