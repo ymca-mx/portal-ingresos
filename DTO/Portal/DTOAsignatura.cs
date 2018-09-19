@@ -9,7 +9,7 @@ namespace DTO
     public class DTOAsignatura
     {
         public int OfertaEducativaId { get; set; }
-        public string AsignaturaId { get; set; }
+        public int AsignaturaId { get; set; }
         public string Descripcion { get; set; }
         public int NivelAcademicoId { get; set; }
         public decimal Creditos { get; set; }

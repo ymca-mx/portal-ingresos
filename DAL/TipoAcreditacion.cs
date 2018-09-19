@@ -12,22 +12,18 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Asignatura
+    public partial class TipoAcreditacion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Asignatura()
+        public TipoAcreditacion()
         {
             this.AlumnoCalificacion = new HashSet<AlumnoCalificacion>();
         }
     
-        public int AsignaturaId { get; set; }
-        public int OfertaEducativaId { get; set; }
-        public string ClaveAsignatura { get; set; }
+        public int TipoAcreditacionId { get; set; }
         public string Descripcion { get; set; }
-        public int EstatusId { get; set; }
+        public byte[] DescripcionCorta { get; set; }
     
-        public virtual Estatus Estatus { get; set; }
-        public virtual OfertaEducativa OfertaEducativa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoCalificacion> AlumnoCalificacion { get; set; }
     }

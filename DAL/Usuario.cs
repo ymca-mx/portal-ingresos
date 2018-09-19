@@ -33,6 +33,7 @@ namespace DAL
             this.AlumnoRevision = new HashSet<AlumnoRevision>();
             this.BecaDeportiva = new HashSet<BecaDeportiva>();
             this.CalendarioEscolar = new HashSet<CalendarioEscolar>();
+            this.CertificadoResponsable = new HashSet<CertificadoResponsable>();
             this.Comunicado = new HashSet<Comunicado>();
             this.CuotaIncremento = new HashSet<CuotaIncremento>();
             this.Empresa = new HashSet<Empresa>();
@@ -58,6 +59,7 @@ namespace DAL
             this.SolicitudInscripcion = new HashSet<SolicitudInscripcion>();
             this.SolicitudInscripcion1 = new HashSet<SolicitudInscripcion>();
             this.AccionSEP = new HashSet<AccionSEP>();
+            this.AlumnoCertificado = new HashSet<AlumnoCertificado>();
             this.AlumnoTitulo = new HashSet<AlumnoTitulo>();
             this.BecaSEPBitacora = new HashSet<BecaSEPBitacora>();
             this.UsuarioBitacora = new HashSet<UsuarioBitacora>();
@@ -113,6 +115,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CalendarioEscolar> CalendarioEscolar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CertificadoResponsable> CertificadoResponsable { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comunicado> Comunicado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuotaIncremento> CuotaIncremento { get; set; }
@@ -163,6 +167,8 @@ namespace DAL
         public virtual ICollection<SolicitudInscripcion> SolicitudInscripcion1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccionSEP> AccionSEP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoCertificado> AlumnoCertificado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoTitulo> AlumnoTitulo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

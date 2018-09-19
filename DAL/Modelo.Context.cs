@@ -75,7 +75,6 @@ namespace DAL
         public virtual DbSet<AlumnosEmpresa> AlumnosEmpresa { get; set; }
         public virtual DbSet<AntecedenteTipo> AntecedenteTipo { get; set; }
         public virtual DbSet<AreaAcademica> AreaAcademica { get; set; }
-        public virtual DbSet<Asignatura> Asignatura { get; set; }
         public virtual DbSet<Asociacion> Asociacion { get; set; }
         public virtual DbSet<AsociacionDetalle> AsociacionDetalle { get; set; }
         public virtual DbSet<BajaMotivo> BajaMotivo { get; set; }
@@ -86,6 +85,7 @@ namespace DAL
         public virtual DbSet<CajaConfiguracion> CajaConfiguracion { get; set; }
         public virtual DbSet<CalendarioEscolar> CalendarioEscolar { get; set; }
         public virtual DbSet<CalificacionesAntecedente> CalificacionesAntecedente { get; set; }
+        public virtual DbSet<CertificadoResponsable> CertificadoResponsable { get; set; }
         public virtual DbSet<Comunicado> Comunicado { get; set; }
         public virtual DbSet<ComunicadoUsuario> ComunicadoUsuario { get; set; }
         public virtual DbSet<CuentaMail> CuentaMail { get; set; }
@@ -248,9 +248,12 @@ namespace DAL
         public virtual DbSet<VistoBuenoEstudio> VistoBuenoEstudio { get; set; }
         public virtual DbSet<AccionSEP> AccionSEP { get; set; }
         public virtual DbSet<AlumnoAntecedente1> AlumnoAntecedente1 { get; set; }
+        public virtual DbSet<AlumnoCalificacion> AlumnoCalificacion { get; set; }
+        public virtual DbSet<AlumnoCertificado> AlumnoCertificado { get; set; }
         public virtual DbSet<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
         public virtual DbSet<AlumnoTitulo> AlumnoTitulo { get; set; }
         public virtual DbSet<AlumnoTituloAccion> AlumnoTituloAccion { get; set; }
+        public virtual DbSet<Asignatura> Asignatura { get; set; }
         public virtual DbSet<AutorizacionReconocimiento> AutorizacionReconocimiento { get; set; }
         public virtual DbSet<Campus> Campus { get; set; }
         public virtual DbSet<Cargo> Cargo { get; set; }
@@ -259,6 +262,7 @@ namespace DAL
         public virtual DbSet<InstitucionOfertaEducativa> InstitucionOfertaEducativa { get; set; }
         public virtual DbSet<ModalidadTitulacion> ModalidadTitulacion { get; set; }
         public virtual DbSet<MovimientoSEP> MovimientoSEP { get; set; }
+        public virtual DbSet<TipoAcreditacion> TipoAcreditacion { get; set; }
         public virtual DbSet<TipoEstudioAntecedente> TipoEstudioAntecedente { get; set; }
         public virtual DbSet<UsuarioResponsable> UsuarioResponsable { get; set; }
         public virtual DbSet<AlumnoBeca> AlumnoBeca { get; set; }

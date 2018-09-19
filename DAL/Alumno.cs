@@ -20,6 +20,8 @@ namespace DAL
             this.AlumnoReferenciaBitacora = new HashSet<AlumnoReferenciaBitacora>();
             this.AlumnoAntecedente = new HashSet<AlumnoAntecedente>();
             this.AlumnoAutorizacion = new HashSet<AlumnoAutorizacion>();
+            this.AlumnoCalificacion = new HashSet<AlumnoCalificacion>();
+            this.AlumnoCertificado = new HashSet<AlumnoCertificado>();
             this.AlumnoCuatrimestre = new HashSet<AlumnoCuatrimestre>();
             this.AlumnoDescuento = new HashSet<AlumnoDescuento>();
             this.AlumnoDetalleBitacora = new HashSet<AlumnoDetalleBitacora>();
@@ -72,6 +74,10 @@ namespace DAL
         public virtual ICollection<AlumnoAntecedente> AlumnoAntecedente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoAutorizacion> AlumnoAutorizacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoCalificacion> AlumnoCalificacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoCertificado> AlumnoCertificado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoCuatrimestre> AlumnoCuatrimestre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

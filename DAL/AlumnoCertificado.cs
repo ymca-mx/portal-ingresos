@@ -12,22 +12,28 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Asignatura
+    public partial class AlumnoCertificado
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Asignatura()
+        public AlumnoCertificado()
         {
+            this.CertificadoResponsable = new HashSet<CertificadoResponsable>();
             this.AlumnoCalificacion = new HashSet<AlumnoCalificacion>();
         }
     
-        public int AsignaturaId { get; set; }
+        public int AlumnoCertificadoId { get; set; }
+        public int AlumnoId { get; set; }
         public int OfertaEducativaId { get; set; }
-        public string ClaveAsignatura { get; set; }
-        public string Descripcion { get; set; }
-        public int EstatusId { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public System.TimeSpan Hora { get; set; }
+        public int UsuarioId { get; set; }
+        public int MovimientoId { get; set; }
     
-        public virtual Estatus Estatus { get; set; }
+        public virtual Alumno Alumno { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CertificadoResponsable> CertificadoResponsable { get; set; }
         public virtual OfertaEducativa OfertaEducativa { get; set; }
+        public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoCalificacion> AlumnoCalificacion { get; set; }
     }

@@ -23,9 +23,9 @@ namespace DAL
             this.AlumnoInscrito = new HashSet<AlumnoInscrito>();
             this.AlumnoMovimiento = new HashSet<AlumnoMovimiento>();
             this.AlumnoPasswordRecovery = new HashSet<AlumnoPasswordRecovery>();
-            this.Asignatura = new HashSet<Asignatura>();
             this.BancoTerminal = new HashSet<BancoTerminal>();
             this.CalendarioEscolar = new HashSet<CalendarioEscolar>();
+            this.Asignatura = new HashSet<Asignatura>();
             this.Financiamiento = new HashSet<Financiamiento>();
             this.GrupoAlumnoConfiguracion = new HashSet<GrupoAlumnoConfiguracion>();
             this.NivelAcademico = new HashSet<NivelAcademico>();
@@ -64,11 +64,11 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoPasswordRecovery> AlumnoPasswordRecovery { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignatura> Asignatura { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BancoTerminal> BancoTerminal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CalendarioEscolar> CalendarioEscolar { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Asignatura> Asignatura { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Financiamiento> Financiamiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

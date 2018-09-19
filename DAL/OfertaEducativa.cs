@@ -25,7 +25,6 @@ namespace DAL
             this.AlumnoMovimiento = new HashSet<AlumnoMovimiento>();
             this.AlumnoReingresoBitacora = new HashSet<AlumnoReingresoBitacora>();
             this.AlumnoRevision = new HashSet<AlumnoRevision>();
-            this.Asignatura = new HashSet<Asignatura>();
             this.BecaDeportiva = new HashSet<BecaDeportiva>();
             this.Cuota = new HashSet<Cuota>();
             this.Descuento = new HashSet<Descuento>();
@@ -35,7 +34,10 @@ namespace DAL
             this.IdiomaGrupoAlumno = new HashSet<IdiomaGrupoAlumno>();
             this.Matricula = new HashSet<Matricula>();
             this.OfertaCalendario = new HashSet<OfertaCalendario>();
+            this.AlumnoCalificacion = new HashSet<AlumnoCalificacion>();
+            this.AlumnoCertificado = new HashSet<AlumnoCertificado>();
             this.AlumnoOfertaEducativa = new HashSet<AlumnoOfertaEducativa>();
+            this.Asignatura = new HashSet<Asignatura>();
             this.PagoConcepto = new HashSet<PagoConcepto>();
             this.InstitucionOfertaEducativa = new HashSet<InstitucionOfertaEducativa>();
             this.OfertaEducativaAntecedente = new HashSet<OfertaEducativaAntecedente>();
@@ -75,8 +77,6 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoRevision> AlumnoRevision { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignatura> Asignatura { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BecaDeportiva> BecaDeportiva { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cuota> Cuota { get; set; }
@@ -96,7 +96,13 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfertaCalendario> OfertaCalendario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoCalificacion> AlumnoCalificacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlumnoCertificado> AlumnoCertificado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlumnoOfertaEducativa> AlumnoOfertaEducativa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Asignatura> Asignatura { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagoConcepto> PagoConcepto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
