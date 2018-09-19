@@ -53,6 +53,24 @@
     <Compile Include="AccionSEP.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="ACJ\ACJModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ACJModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ACJ\ACJModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ACJModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ACJ\ACJModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ACJModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ACJ\SPS_CALIFICACIONES_Result.cs">
+      <DependentUpon>ACJModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Adeudo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -822,6 +840,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="ACJ\ACJModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ACJModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ACJ\ACJModel.edmx.diagram">
+      <DependentUpon>ACJModel.edmx</DependentUpon>
+    </None>
     <None Include="App.config" />
     <EntityDeploy Include="Modelo.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -833,6 +858,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ACJ\ACJModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ACJModel.edmx</DependentUpon>
+      <LastGenOutput>ACJModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ACJ\ACJModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ACJModel.edmx</DependentUpon>
+      <LastGenOutput>ACJModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Modelo.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Modelo.edmx</DependentUpon>

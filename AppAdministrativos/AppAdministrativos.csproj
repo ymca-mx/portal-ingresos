@@ -152,7 +152,7 @@
     <Content Include="JS\Calendario\ConfiguracionCalendario.js" />
     <Content Include="JS\Clases\ClasesFn.js" />
     <Content Include="JS\Empresas\Empresa.js" />
-    <Content Include="JS\EnvioReporteVistoBueno.js" />
+    <Content Include="JS\Reportes\EnvioReporteVistoBueno.js" />
     <Content Include="JS\EvaluacionDocente\ActualizacionDocente.js" />
     <Content Include="JS\EvaluacionDocente\VistoBuenoDocentes.js" />
     <Content Include="JS\index\bitacora.js" />
