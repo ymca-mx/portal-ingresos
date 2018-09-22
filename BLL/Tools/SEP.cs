@@ -42,31 +42,31 @@ namespace BLL.Tools
 
                     var Antecedente = new TituloElectronicoAntecedente
                     {
-                        fechaInicio = alumno.AlumnoAntecedente1.FechaInicio<=FechaPasada?"": alumno.AlumnoAntecedente1.FechaInicio.ToString("yyyy-MM-ddTHH:mm:ss"),
-                        fechaTerminacion = alumno.AlumnoAntecedente1.FechaFin.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        fechaInicio = alumno.AlumnoAntecedente1.FechaInicio<=FechaPasada?"": alumno.AlumnoAntecedente1.FechaInicio.ToString("yyyy-MM-dd"),
+                        fechaTerminacion = alumno.AlumnoAntecedente1.FechaFin.ToString("yyyy-MM-dd"),
                         idEntidadFederativa = alumno.AlumnoAntecedente1.EntidadFederativaId.ToString(),
                         entidadFederativa = alumno.AlumnoAntecedente1.EntidadFederativa.Descripcion,
                         idTipoEstudioAntecedente = alumno.AlumnoAntecedente1.TipoEstudioAntecedenteId.ToString(),
-                        tipoEstudioAntecedente = alumno.AlumnoAntecedente1.TipoEstudioAntecedente.Descripcion,
+                        tipoEstudioAntecedente = alumno.AlumnoAntecedente1.TipoEstudioAntecedente.TipoEstudio,
                         institucionProcedencia = alumno.AlumnoAntecedente1.Nombre,
                         noCedula=""
                     };
                     var Carrera = new TituloElectronicoCarrera
                     {
                         cveCarrera = alumno.AlumnoOfertaEducativa.OfertaEducativa.InstitucionOfertaEducativa.FirstOrDefault().ClaveOfertaEducativa,
-                        nombreCarrera = alumno.AlumnoOfertaEducativa.OfertaEducativa.Descripcion,
-                        fechaInicio = alumno.AlumnoOfertaEducativa.FechaInicio <= FechaPasada ? "" : alumno.AlumnoOfertaEducativa.FechaInicio.ToString("yyyy-MM-ddTHH"),
-                        fechaTerminacion = alumno.AlumnoOfertaEducativa.FechaTermino.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        nombreCarrera = alumno.AlumnoOfertaEducativa.OfertaEducativa.DescripcionSEP,
+                        fechaInicio = alumno.AlumnoOfertaEducativa.FechaInicio <= FechaPasada ? "" : alumno.AlumnoOfertaEducativa.FechaInicio.ToString("yyyy-MM-dd"),
+                        fechaTerminacion = alumno.AlumnoOfertaEducativa.FechaTermino.ToString("yyyy-MM-dd"),
                         idAutorizacionReconocimiento = alumno.AutorizacionReconocimientoId.ToString(),
                         autorizacionReconocimiento = alumno.AutorizacionReconocimiento.Descripcion,
                         numeroRvoe = alumno.AlumnoOfertaEducativa.RVOE
                     };
                     var Expedicion = new TituloElectronicoExpedicion
                     {
-                        fechaExpedicion = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        fechaExpedicion = DateTime.Now.ToString("yyyy-MM-dd"),
                         idModalidadTitulacion = alumno.ModalidadTitulacionId.ToString(),
                         modalidadTitulacion = alumno.ModalidadTitulacion.ModalidadTitulacion1,
-                        fechaExamenProfesional = alumno.FechaExamenProfesional <= FechaPasada ? "" : alumno.FechaExamenProfesional.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        fechaExamenProfesional = alumno.FechaExamenProfesional <= FechaPasada ? "" : alumno.FechaExamenProfesional.ToString("yyyy-MM-dd"),
                         cumplioServicioSocial = "1",
                         idFundamentoLegalServicioSocial = alumno.FundamentoLegalId.ToString(),
                         fundamentoLegalServicioSocial = alumno.FundamentoLegal.Descripcion,
@@ -243,7 +243,7 @@ namespace BLL.Tools
 
                 return new
                 {
-                    CertificadoBase64 = Convert.ToBase64String(certEmisor.GetRawCertData()),
+                    CertificadoBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(Encoding.UTF8.GetString(certEmisor.GetRawCertData()))),
                     NoCertificado = rNumero
                 };
             }
@@ -278,8 +278,8 @@ namespace BLL.Tools
 
             objSEP.autenticacion = new Titulos_SEP.autenticacionType
             {
-                usuario = "YMCA",
-                password = "#1234@abc"
+                usuario = "usuariomet.qa114",
+                password = "jVJmXxGC"
             };
             try
             {
@@ -323,6 +323,40 @@ namespace BLL.Tools
                     });
                 }
             }
+        }
+
+        internal static List<dynamic> RevisarLotes(List<dynamic> lstLotes)
+        {
+            Titulos_SEP.consultaProcesoTituloElectronicoRequest objSEP = new Titulos_SEP.consultaProcesoTituloElectronicoRequest();
+            Titulos_SEP.TitulosPortTypeClient ClientSEP = new Titulos_SEP.TitulosPortTypeClient("TitulosPortTypeSoap11");
+            List<dynamic> lstResult= new List<dynamic>();
+
+            ClientSEP.Open();
+            objSEP.autenticacion = new Titulos_SEP.autenticacionType
+            {
+                usuario = "usuariomet.qa114",
+                password = "jVJmXxGC"
+            };
+
+            lstLotes.ForEach(objlote =>
+            {
+                objSEP.numeroLote = objlote.NumeroLote;
+
+                var resul =
+                ClientSEP.consultaProcesoTituloElectronico(objSEP);
+
+                lstResult.Add(new
+                {
+                    objlote.AlumnoTituloId,
+                    objlote.NumeroLote,
+                    resul.mensaje,
+                    resul.estatusLote
+                });
+            });
+
+            ClientSEP.Close();
+
+            return lstResult;
         }
 
         internal static byte[] ReadFile(string strArchivo)

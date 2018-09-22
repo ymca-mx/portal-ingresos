@@ -1,5 +1,144 @@
 ﻿<main>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="caption title">Certificado Electrónico</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row form-group" id="divBuscar">
+                <div class="col-md-12">
+                    <label class="control-label">Clave o Nombre del Alumno</label>&nbsp;
+                    <input type="text" id="txtClave" class="form-control-static font-md" style="text-align:right" />&nbsp;
+                    <a class="btn blue" id="btnBuscar" tabindex="2">Buscar</a>
+                </div>
+                <div class="col-md-12">
+                    <div class="portlet-body form" id="frmVarios" hidden="hidden">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-advance table-hover" id="tblAlumnos">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; AlumnoId
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-user"></i>&nbsp; Nombre
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-calendar"></i>&nbsp; Registro
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-graduation-cap"></i>&nbsp; Oferta Educativa
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-edit"></i>&nbsp; Acción
+                                        </th>
 
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table">
+                <div class="row">
+                    <hr />
+                    <div class="col-md-12">
+                        <table class="table table-striped table-responsive" id="tblCertificados">
+                            <thead>
+                                <tr>
+                                    <th>AlumnoId | Nombre </th>
+                                    <th>Datos</th>
+                                    <th>Institución - Oferta</th>
+                                    <th>Calificaciones</th>
+                                    <th>Responsables</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="pager">
+                            <li class="previous">&nbsp;</li>
+                            <li class="next">
+                                <a href="javascript:;" class="btn blue" id="btnGuardar" style="border-radius:0px;padding: 7px 14px;">
+                                    Enviar
+                                    <i class="fa fa-save"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-heading">
+
+        </div>
+    </div>
+</main>
+<main>
+    <div class="modal fade bs-modal-lg" id="modalAlumno" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4>Alumno</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3 form-group">
+                                <label class="control-label">AlumnoId</label>
+                                <input type="text" readonly class="form-control" id="txtAlumnoId" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" readonly class="form-control" id="txtNombre" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Paterno</label>
+                                <input type="text" readonly class="form-control" id="txtPaterno" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Materno</label>
+                                <input type="text" readonly class="form-control" id="txtMaterno" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">CURP</label>
+                                <input type="text" readonly class="form-control" id="txtCURP" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Email</label>
+                                <input type="text" readonly class="form-control" id="txtEmail" />
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Sede</label>
+                                <select class="form-control" id="slcSedePrev"></select>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <label class="control-label">Ofertas</label>
+                                <select class="form-control" id="slcOfertaPrev"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn blue" id="btnAlumnoAdd">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <script>
     $.getScript("JS/SEP/Certificado/Solicitar.js");

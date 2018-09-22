@@ -267,7 +267,7 @@ namespace BLL
                             .Local
                             .Select(a =>
                                 {
-                                    a.MovimientoId = db.AccionSEP.Local.FirstOrDefault().NumeroLote == -1 ? 7 : 4;
+                                    a.MovimientoId = db.AccionSEP.Local.FirstOrDefault().NumeroLote == -1 ? 7 : 5;
                                     return a.MovimientoId;
                                 })
                             .ToList();
@@ -309,6 +309,43 @@ namespace BLL
                 {
                     int[] MovimientoIds = { 3, 4, 5, 6, 7 };
                     var Alumnos = db.AlumnoTitulo.Where(a => MovimientoIds.Contains(a.MovimientoId)).ToList().AsQueryable().ToList();
+
+                    List<dynamic> lstLotes = new List<dynamic>();
+
+                    lstLotes.AddRange(Alumnos
+                         .Where(a => (a.MovimientoId == 5 || a.MovimientoId == 4)
+                                 && a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote != -1)
+                         .Select(a => new
+                         {
+                             NumeroLote = a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote.ToString(),
+                             a.AlumnoTituloId
+                         })
+                         .ToList());
+
+                    if (lstLotes.Count > 0)
+                    {
+                        List<dynamic> lstResult = SEP.RevisarLotes(lstLotes);
+                        lstResult.ForEach(b =>
+                        {
+                            db.AccionSEP.Add(new AccionSEP
+                            {
+                                NumeroLote = (int)b.NumeroLote,
+                                Mensaje = b.mensaje,
+                                MovimientoId = 5,
+                                UsuarioId = 0,
+                                Fecha = DateTime.Now,
+                                Hora = DateTime.Now.TimeOfDay,
+                                AlumnoTituloAccion = new List<AlumnoTituloAccion>{
+                                    new AlumnoTituloAccion
+                                    {
+                                        AlumnoTituloId=b.AlumnoTituloId
+                                    }
+                                }
+                            });
+                        });
+
+                        db.SaveChanges();
+                    }
 
                     return
                     Alumnos

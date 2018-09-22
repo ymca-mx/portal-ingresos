@@ -1481,6 +1481,7 @@ advertencia 6002: La tabla o vista 'Universidad.dbo.IdiomasInscrito' no tiene de
           <Property Name="RequiereDeportivo" Type="bit" Nullable="false" />
           <Property Name="ClaveContable" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
+          <Property Name="DescripcionSEP" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="OfertaEducativaAntecedente">
           <Key>
@@ -10060,8 +10061,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <EntitySet Name="PersonaAutorizada" EntityType="UniversidadModel.PersonaAutorizada" />
           <EntitySet Name="PersonaAutorizadaBitacora" EntityType="UniversidadModel.PersonaAutorizadaBitacora" />
           <EntitySet Name="PolizaAjuste" EntityType="UniversidadModel.PolizaAjuste" />
-          <EntitySet Name="PolizaCabeceroLayout" EntityType="UniversidadModel.PolizaCabeceroLayout" />
-          <EntitySet Name="PolizaConfiguracion" EntityType="UniversidadModel.PolizaConfiguracion" />
           <EntitySet Name="PolizaConsecutivo" EntityType="UniversidadModel.PolizaConsecutivo" />
           <EntitySet Name="PolizaCuadre" EntityType="UniversidadModel.PolizaCuadre" />
           <EntitySet Name="PolizaDetalleLayout" EntityType="UniversidadModel.PolizaDetalleLayout" />
@@ -10628,10 +10627,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <AssociationSet Name="FK_AsociacionDetalle_Asociacion" Association="UniversidadModel.FK_AsociacionDetalle_Asociacion">
             <End Role="Asociacion" EntitySet="Asociacion" />
             <End Role="AsociacionDetalle" EntitySet="AsociacionDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PolizaConfiguracion_Asociacion" Association="UniversidadModel.FK_PolizaConfiguracion_Asociacion">
-            <End Role="Asociacion" EntitySet="Asociacion" />
-            <End Role="PolizaConfiguracion" EntitySet="PolizaConfiguracion" />
           </AssociationSet>
           <AssociationSet Name="FK_PolizaConsecutivo_Asociacion" Association="UniversidadModel.FK_PolizaConsecutivo_Asociacion">
             <End Role="Asociacion" EntitySet="Asociacion" />
@@ -11277,18 +11272,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
             <End Role="Periodo" EntitySet="Periodo" />
             <End Role="SolicitudInscripcion" EntitySet="SolicitudInscripcion" />
           </AssociationSet>
-          <AssociationSet Name="FK_PolizaCabeceroLayout_PolizaTipo" Association="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo">
-            <End Role="PolizaTipo" EntitySet="PolizaTipo" />
-            <End Role="PolizaCabeceroLayout" EntitySet="PolizaCabeceroLayout" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PolizaConfiguracion_PolizaSubtipo" Association="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo">
-            <End Role="PolizaSubtipo" EntitySet="PolizaSubtipo" />
-            <End Role="PolizaConfiguracion" EntitySet="PolizaConfiguracion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PolizaConfiguracion_PolizaTipo" Association="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo">
-            <End Role="PolizaTipo" EntitySet="PolizaTipo" />
-            <End Role="PolizaConfiguracion" EntitySet="PolizaConfiguracion" />
-          </AssociationSet>
           <AssociationSet Name="FK_PolizaConsecutivo_PolizaSubtipo" Association="UniversidadModel.FK_PolizaConsecutivo_PolizaSubtipo">
             <End Role="PolizaSubtipo" EntitySet="PolizaSubtipo" />
             <End Role="PolizaConsecutivo" EntitySet="PolizaConsecutivo" />
@@ -11688,6 +11671,24 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <AssociationSet Name="CertificadoAlumnoCalificacion" Association="UniversidadModel.CertificadoAlumnoCalificacion">
             <End Role="AlumnoCalificacion" EntitySet="AlumnoCalificacion" />
             <End Role="AlumnoCertificado" EntitySet="AlumnoCertificado" />
+          </AssociationSet>
+          <EntitySet Name="PolizaCabeceroLayout" EntityType="UniversidadModel.PolizaCabeceroLayout" />
+          <EntitySet Name="PolizaConfiguracion" EntityType="UniversidadModel.PolizaConfiguracion" />
+          <AssociationSet Name="FK_PolizaConfiguracion_Asociacion" Association="UniversidadModel.FK_PolizaConfiguracion_Asociacion">
+            <End Role="Asociacion" EntitySet="Asociacion" />
+            <End Role="PolizaConfiguracion" EntitySet="PolizaConfiguracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PolizaCabeceroLayout_PolizaTipo" Association="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo">
+            <End Role="PolizaTipo" EntitySet="PolizaTipo" />
+            <End Role="PolizaCabeceroLayout" EntitySet="PolizaCabeceroLayout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PolizaConfiguracion_PolizaSubtipo" Association="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo">
+            <End Role="PolizaSubtipo" EntitySet="PolizaSubtipo" />
+            <End Role="PolizaConfiguracion" EntitySet="PolizaConfiguracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PolizaConfiguracion_PolizaTipo" Association="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo">
+            <End Role="PolizaTipo" EntitySet="PolizaTipo" />
+            <End Role="PolizaConfiguracion" EntitySet="PolizaConfiguracion" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AlumnoInscritoCompleto">
@@ -12676,11 +12677,11 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <Property Name="Abreviacion" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Carpeta" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AsociacionDetalle" Relationship="UniversidadModel.FK_AsociacionDetalle_Asociacion" FromRole="Asociacion" ToRole="AsociacionDetalle" />
-          <NavigationProperty Name="PolizaConfiguracion" Relationship="UniversidadModel.FK_PolizaConfiguracion_Asociacion" FromRole="Asociacion" ToRole="PolizaConfiguracion" />
           <NavigationProperty Name="PolizaConsecutivo" Relationship="UniversidadModel.FK_PolizaConsecutivo_Asociacion" FromRole="Asociacion" ToRole="PolizaConsecutivo" />
           <NavigationProperty Name="PolizaCuadre" Relationship="UniversidadModel.FK_PolizaCuadre_Asociacion" FromRole="Asociacion" ToRole="PolizaCuadre" />
           <NavigationProperty Name="PolizaNumeracion" Relationship="UniversidadModel.FK_PolizaParametros_Asociacion" FromRole="Asociacion" ToRole="PolizaNumeracion" />
           <NavigationProperty Name="ReferenciadoArchivoBitacora" Relationship="UniversidadModel.FK_ReferenciadoArchivoBitacora_Asociacion" FromRole="Asociacion" ToRole="ReferenciadoArchivoBitacora" />
+          <NavigationProperty Name="PolizaConfiguracion" Relationship="UniversidadModel.FK_PolizaConfiguracion_Asociacion" FromRole="Asociacion" ToRole="PolizaConfiguracion" />
         </EntityType>
         <EntityType Name="AsociacionDetalle">
           <Key>
@@ -13454,6 +13455,7 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <Property Name="RequiereDeportivo" Type="Boolean" Nullable="false" />
           <Property Name="ClaveContable" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionSEP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Adeudo" Relationship="UniversidadModel.FK_Adeudo_OfertaEducativa" FromRole="OfertaEducativa" ToRole="Adeudo" />
           <NavigationProperty Name="AlumnoCuatrimestre" Relationship="UniversidadModel.FK_AlumnoCuatrimestre_OfertaEducativa" FromRole="OfertaEducativa" ToRole="AlumnoCuatrimestre" />
           <NavigationProperty Name="AlumnoDescuento" Relationship="UniversidadModel.FK_AlumnoDescuento_OfertaEducativa" FromRole="OfertaEducativa" ToRole="AlumnoDescuento" />
@@ -13990,35 +13992,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <NavigationProperty Name="Estatus" Relationship="UniversidadModel.FK_PolizaAjuste_Estatus" FromRole="PolizaAjuste" ToRole="Estatus" />
           <NavigationProperty Name="Pago" Relationship="UniversidadModel.FK_PolizaAjuste_Pago" FromRole="PolizaAjuste" ToRole="Pago" />
         </EntityType>
-        <EntityType Name="PolizaCabeceroLayout">
-          <Key>
-            <PropertyRef Name="PolizaTipoId" />
-            <PropertyRef Name="ConfiguracionId" />
-          </Key>
-          <Property Name="PolizaTipoId" Type="Int32" Nullable="false" />
-          <Property Name="ConfiguracionId" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ValorDefault" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Longitud" Type="Int32" Nullable="false" />
-          <Property Name="TieneEspacio" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="PolizaTipo" Relationship="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo" FromRole="PolizaCabeceroLayout" ToRole="PolizaTipo" />
-        </EntityType>
-        <EntityType Name="PolizaConfiguracion">
-          <Key>
-            <PropertyRef Name="AsociacionId" />
-            <PropertyRef Name="PolizaTipoId" />
-            <PropertyRef Name="PolizaSubtipoId" />
-          </Key>
-          <Property Name="AsociacionId" Type="Int32" Nullable="false" />
-          <Property Name="PolizaTipoId" Type="Int32" Nullable="false" />
-          <Property Name="PolizaSubtipoId" Type="Int32" Nullable="false" />
-          <Property Name="Directorio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ArchivoFormato" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ArchivoTipo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Asociacion" Relationship="UniversidadModel.FK_PolizaConfiguracion_Asociacion" FromRole="PolizaConfiguracion" ToRole="Asociacion" />
-          <NavigationProperty Name="PolizaSubtipo" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo" FromRole="PolizaConfiguracion" ToRole="PolizaSubtipo" />
-          <NavigationProperty Name="PolizaTipo" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo" FromRole="PolizaConfiguracion" ToRole="PolizaTipo" />
-        </EntityType>
         <EntityType Name="PolizaConsecutivo">
           <Key>
             <PropertyRef Name="AsociacionId" />
@@ -14098,11 +14071,11 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           </Key>
           <Property Name="PolizaSubtipoId" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PolizaConfiguracion" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo" FromRole="PolizaSubtipo" ToRole="PolizaConfiguracion" />
           <NavigationProperty Name="PolizaConsecutivo" Relationship="UniversidadModel.FK_PolizaConsecutivo_PolizaSubtipo" FromRole="PolizaSubtipo" ToRole="PolizaConsecutivo" />
           <NavigationProperty Name="PolizaCuadre" Relationship="UniversidadModel.FK_PolizaCuadre_PolizaSubtipo" FromRole="PolizaSubtipo" ToRole="PolizaCuadre" />
           <NavigationProperty Name="PolizaNumeracion" Relationship="UniversidadModel.FK_PolizaNumeracion_PolizaSubtipo" FromRole="PolizaSubtipo" ToRole="PolizaNumeracion" />
           <NavigationProperty Name="ReferenciadoArchivoBitacora" Relationship="UniversidadModel.FK_ReferenciadoArchivoBitacora_PolizaSubtipo" FromRole="PolizaSubtipo" ToRole="ReferenciadoArchivoBitacora" />
+          <NavigationProperty Name="PolizaConfiguracion" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo" FromRole="PolizaSubtipo" ToRole="PolizaConfiguracion" />
         </EntityType>
         <EntityType Name="PolizaTipo">
           <Key>
@@ -14110,13 +14083,13 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           </Key>
           <Property Name="PolizaTipoId" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PolizaCabeceroLayout" Relationship="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaCabeceroLayout" />
-          <NavigationProperty Name="PolizaConfiguracion" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaConfiguracion" />
           <NavigationProperty Name="PolizaConsecutivo" Relationship="UniversidadModel.FK_PolizaConsecutivo_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaConsecutivo" />
           <NavigationProperty Name="PolizaCuadre" Relationship="UniversidadModel.FK_PolizaCuadre_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaCuadre" />
           <NavigationProperty Name="PolizaDetalleLayout" Relationship="UniversidadModel.FK_PolizaDetalleLayout_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaDetalleLayout" />
           <NavigationProperty Name="PolizaNumeracion" Relationship="UniversidadModel.FK_PolizaNumeracion_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaNumeracion" />
           <NavigationProperty Name="ReferenciadoArchivoBitacora" Relationship="UniversidadModel.FK_ReferenciadoArchivoBitacora_PolizaTipo" FromRole="PolizaTipo" ToRole="ReferenciadoArchivoBitacora" />
+          <NavigationProperty Name="PolizaCabeceroLayout" Relationship="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaCabeceroLayout" />
+          <NavigationProperty Name="PolizaConfiguracion" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo" FromRole="PolizaTipo" ToRole="PolizaConfiguracion" />
         </EntityType>
         <EntityType Name="Pregunta">
           <Key>
@@ -17150,18 +17123,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PolizaConfiguracion_Asociacion">
-          <End Type="UniversidadModel.Asociacion" Role="Asociacion" Multiplicity="1" />
-          <End Type="UniversidadModel.PolizaConfiguracion" Role="PolizaConfiguracion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Asociacion">
-              <PropertyRef Name="AsociacionId" />
-            </Principal>
-            <Dependent Role="PolizaConfiguracion">
-              <PropertyRef Name="AsociacionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PolizaConsecutivo_Asociacion">
           <End Type="UniversidadModel.Asociacion" Role="Asociacion" Multiplicity="1" />
           <End Type="UniversidadModel.PolizaConsecutivo" Role="PolizaConsecutivo" Multiplicity="*" />
@@ -19134,42 +19095,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PolizaCabeceroLayout_PolizaTipo">
-          <End Type="UniversidadModel.PolizaTipo" Role="PolizaTipo" Multiplicity="1" />
-          <End Type="UniversidadModel.PolizaCabeceroLayout" Role="PolizaCabeceroLayout" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PolizaTipo">
-              <PropertyRef Name="PolizaTipoId" />
-            </Principal>
-            <Dependent Role="PolizaCabeceroLayout">
-              <PropertyRef Name="PolizaTipoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PolizaConfiguracion_PolizaSubtipo">
-          <End Type="UniversidadModel.PolizaSubtipo" Role="PolizaSubtipo" Multiplicity="1" />
-          <End Type="UniversidadModel.PolizaConfiguracion" Role="PolizaConfiguracion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PolizaSubtipo">
-              <PropertyRef Name="PolizaSubtipoId" />
-            </Principal>
-            <Dependent Role="PolizaConfiguracion">
-              <PropertyRef Name="PolizaSubtipoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PolizaConfiguracion_PolizaTipo">
-          <End Type="UniversidadModel.PolizaTipo" Role="PolizaTipo" Multiplicity="1" />
-          <End Type="UniversidadModel.PolizaConfiguracion" Role="PolizaConfiguracion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PolizaTipo">
-              <PropertyRef Name="PolizaTipoId" />
-            </Principal>
-            <Dependent Role="PolizaConfiguracion">
-              <PropertyRef Name="PolizaTipoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PolizaConsecutivo_PolizaSubtipo">
           <End Type="UniversidadModel.PolizaSubtipo" Role="PolizaSubtipo" Multiplicity="1" />
           <End Type="UniversidadModel.PolizaConsecutivo" Role="PolizaConsecutivo" Multiplicity="*" />
@@ -20351,6 +20276,83 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
         <Association Name="CertificadoAlumnoCalificacion">
           <End Type="UniversidadModel.AlumnoCalificacion" Role="AlumnoCalificacion" Multiplicity="*" />
           <End Type="UniversidadModel.AlumnoCertificado" Role="AlumnoCertificado" Multiplicity="*" />
+        </Association>
+        <EntityType Name="PolizaCabeceroLayout">
+          <Key>
+            <PropertyRef Name="PolizaTipoId" />
+            <PropertyRef Name="ConfiguracionId" />
+          </Key>
+          <Property Name="PolizaTipoId" Type="Int32" Nullable="false" />
+          <Property Name="ConfiguracionId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValorDefault" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Longitud" Type="Int32" Nullable="false" />
+          <Property Name="TieneEspacio" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PolizaTipo" Relationship="UniversidadModel.FK_PolizaCabeceroLayout_PolizaTipo" FromRole="PolizaCabeceroLayout" ToRole="PolizaTipo" />
+        </EntityType>
+        <EntityType Name="PolizaConfiguracion">
+          <Key>
+            <PropertyRef Name="AsociacionId" />
+            <PropertyRef Name="PolizaTipoId" />
+            <PropertyRef Name="PolizaSubtipoId" />
+          </Key>
+          <Property Name="AsociacionId" Type="Int32" Nullable="false" />
+          <Property Name="PolizaTipoId" Type="Int32" Nullable="false" />
+          <Property Name="PolizaSubtipoId" Type="Int32" Nullable="false" />
+          <Property Name="Directorio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ArchivoFormato" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ArchivoTipo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Asociacion" Relationship="UniversidadModel.FK_PolizaConfiguracion_Asociacion" FromRole="PolizaConfiguracion" ToRole="Asociacion" />
+          <NavigationProperty Name="PolizaSubtipo" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaSubtipo" FromRole="PolizaConfiguracion" ToRole="PolizaSubtipo" />
+          <NavigationProperty Name="PolizaTipo" Relationship="UniversidadModel.FK_PolizaConfiguracion_PolizaTipo" FromRole="PolizaConfiguracion" ToRole="PolizaTipo" />
+        </EntityType>
+        <Association Name="FK_PolizaConfiguracion_Asociacion">
+          <End Type="UniversidadModel.Asociacion" Role="Asociacion" Multiplicity="1" />
+          <End Type="UniversidadModel.PolizaConfiguracion" Role="PolizaConfiguracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asociacion">
+              <PropertyRef Name="AsociacionId" />
+            </Principal>
+            <Dependent Role="PolizaConfiguracion">
+              <PropertyRef Name="AsociacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PolizaCabeceroLayout_PolizaTipo">
+          <End Type="UniversidadModel.PolizaTipo" Role="PolizaTipo" Multiplicity="1" />
+          <End Type="UniversidadModel.PolizaCabeceroLayout" Role="PolizaCabeceroLayout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolizaTipo">
+              <PropertyRef Name="PolizaTipoId" />
+            </Principal>
+            <Dependent Role="PolizaCabeceroLayout">
+              <PropertyRef Name="PolizaTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PolizaConfiguracion_PolizaSubtipo">
+          <End Type="UniversidadModel.PolizaSubtipo" Role="PolizaSubtipo" Multiplicity="1" />
+          <End Type="UniversidadModel.PolizaConfiguracion" Role="PolizaConfiguracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolizaSubtipo">
+              <PropertyRef Name="PolizaSubtipoId" />
+            </Principal>
+            <Dependent Role="PolizaConfiguracion">
+              <PropertyRef Name="PolizaSubtipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PolizaConfiguracion_PolizaTipo">
+          <End Type="UniversidadModel.PolizaTipo" Role="PolizaTipo" Multiplicity="1" />
+          <End Type="UniversidadModel.PolizaConfiguracion" Role="PolizaConfiguracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolizaTipo">
+              <PropertyRef Name="PolizaTipoId" />
+            </Principal>
+            <Dependent Role="PolizaConfiguracion">
+              <PropertyRef Name="PolizaTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -21871,6 +21873,7 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
           <EntitySetMapping Name="OfertaEducativa">
             <EntityTypeMapping TypeName="UniversidadModel.OfertaEducativa">
               <MappingFragment StoreEntitySet="OfertaEducativa">
+                <ScalarProperty Name="DescripcionSEP" ColumnName="DescripcionSEP" />
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
                 <ScalarProperty Name="ClaveContable" ColumnName="ClaveContable" />
                 <ScalarProperty Name="RequiereDeportivo" ColumnName="RequiereDeportivo" />
@@ -22281,30 +22284,6 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
                 <ScalarProperty Name="Importe" ColumnName="Importe" />
                 <ScalarProperty Name="FechaAjuste" ColumnName="FechaAjuste" />
                 <ScalarProperty Name="PagoId" ColumnName="PagoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PolizaCabeceroLayout">
-            <EntityTypeMapping TypeName="UniversidadModel.PolizaCabeceroLayout">
-              <MappingFragment StoreEntitySet="PolizaCabeceroLayout">
-                <ScalarProperty Name="TieneEspacio" ColumnName="TieneEspacio" />
-                <ScalarProperty Name="Longitud" ColumnName="Longitud" />
-                <ScalarProperty Name="ValorDefault" ColumnName="ValorDefault" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="ConfiguracionId" ColumnName="ConfiguracionId" />
-                <ScalarProperty Name="PolizaTipoId" ColumnName="PolizaTipoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PolizaConfiguracion">
-            <EntityTypeMapping TypeName="UniversidadModel.PolizaConfiguracion">
-              <MappingFragment StoreEntitySet="PolizaConfiguracion">
-                <ScalarProperty Name="ArchivoTipo" ColumnName="ArchivoTipo" />
-                <ScalarProperty Name="ArchivoFormato" ColumnName="ArchivoFormato" />
-                <ScalarProperty Name="Directorio" ColumnName="Directorio" />
-                <ScalarProperty Name="PolizaSubtipoId" ColumnName="PolizaSubtipoId" />
-                <ScalarProperty Name="PolizaTipoId" ColumnName="PolizaTipoId" />
-                <ScalarProperty Name="AsociacionId" ColumnName="AsociacionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -23782,6 +23761,30 @@ advertencia 6002: La tabla o vista 'Universidad.SEP.CertificadoAlumnoCalificacio
               <ScalarProperty Name="AlumnoCalificacionId" ColumnName="AlumnoCalificacionId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="PolizaCabeceroLayout">
+            <EntityTypeMapping TypeName="UniversidadModel.PolizaCabeceroLayout">
+              <MappingFragment StoreEntitySet="PolizaCabeceroLayout">
+                <ScalarProperty Name="TieneEspacio" ColumnName="TieneEspacio" />
+                <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+                <ScalarProperty Name="ValorDefault" ColumnName="ValorDefault" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ConfiguracionId" ColumnName="ConfiguracionId" />
+                <ScalarProperty Name="PolizaTipoId" ColumnName="PolizaTipoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PolizaConfiguracion">
+            <EntityTypeMapping TypeName="UniversidadModel.PolizaConfiguracion">
+              <MappingFragment StoreEntitySet="PolizaConfiguracion">
+                <ScalarProperty Name="ArchivoTipo" ColumnName="ArchivoTipo" />
+                <ScalarProperty Name="ArchivoFormato" ColumnName="ArchivoFormato" />
+                <ScalarProperty Name="Directorio" ColumnName="Directorio" />
+                <ScalarProperty Name="PolizaSubtipoId" ColumnName="PolizaSubtipoId" />
+                <ScalarProperty Name="PolizaTipoId" ColumnName="PolizaTipoId" />
+                <ScalarProperty Name="AsociacionId" ColumnName="AsociacionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

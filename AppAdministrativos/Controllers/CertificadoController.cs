@@ -30,5 +30,26 @@ namespace AppAdministrativos.Controllers
                 return BadRequest(message);
             }
         }
+
+        [Route("Alumno/{AlumnoId:int}")]
+        [HttpGet]
+        public IHttpActionResult GetAlumno(int AlumnoId)
+        {
+            var Result = BLLCertificado.GetAlumno(AlumnoId);
+
+            if (Result != null)
+            {
+                if ((bool)Result.GetType().GetProperty("Status").GetValue(Result, null))
+                {
+                    return Ok(Result);
+                }
+                else
+                {
+                    return BadRequest("Fallo: " + Result.GetType().GetProperty("Message").GetValue(Result, null) + " \n"
+                        + "Detalle: " + Result.GetType().GetProperty("Inner").GetValue(Result, null));
+                }
+            }
+            else { return NotFound(); }
+        }
     }
 }

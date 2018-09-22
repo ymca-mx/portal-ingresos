@@ -59,6 +59,7 @@ namespace DAL
         public bool RequiereDeportivo { get; set; }
         public string ClaveContable { get; set; }
         public int EstatusId { get; set; }
+        public string DescripcionSEP { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adeudo> Adeudo { get; set; }

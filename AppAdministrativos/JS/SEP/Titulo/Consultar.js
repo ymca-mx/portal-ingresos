@@ -397,7 +397,7 @@
         Enviar() {
             var alumnosadd = [];
             $(tblTitulos.rows().data()).each(function () {
-                if (this.EstatusId !== 4 && this.Autorizado) {
+                if ((this.EstatusId !== 4 || this.EstatusId !== 5)  && this.Autorizado) {
                     this.UsuarioId = localStorage.getItem('userAdmin');
                     alumnosadd.push(this);
                 }
