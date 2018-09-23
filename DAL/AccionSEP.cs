@@ -21,7 +21,7 @@ namespace DAL
         }
     
         public int AccionSEPId { get; set; }
-        public int NumeroLote { get; set; }
+        public string NumeroLote { get; set; }
         public string Mensaje { get; set; }
         public int MovimientoId { get; set; }
         public int UsuarioId { get; set; }

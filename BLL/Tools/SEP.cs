@@ -42,9 +42,9 @@ namespace BLL.Tools
 
                     var Antecedente = new TituloElectronicoAntecedente
                     {
-                        fechaInicio = alumno.AlumnoAntecedente1.FechaInicio<=FechaPasada?"": alumno.AlumnoAntecedente1.FechaInicio.ToString("yyyy-MM-dd"),
+                        fechaInicio = alumno.AlumnoAntecedente1.FechaInicio <= FechaPasada ? "" : alumno.AlumnoAntecedente1.FechaInicio.ToString("yyyy-MM-dd"),
                         fechaTerminacion = alumno.AlumnoAntecedente1.FechaFin.ToString("yyyy-MM-dd"),
-                        idEntidadFederativa = alumno.AlumnoAntecedente1.EntidadFederativaId.ToString(),
+                        idEntidadFederativa = alumno.AlumnoAntecedente1.EntidadFederativa.Clave,
                         entidadFederativa = alumno.AlumnoAntecedente1.EntidadFederativa.Descripcion,
                         idTipoEstudioAntecedente = alumno.AlumnoAntecedente1.TipoEstudioAntecedenteId.ToString(),
                         tipoEstudioAntecedente = alumno.AlumnoAntecedente1.TipoEstudioAntecedente.TipoEstudio,
@@ -70,7 +70,7 @@ namespace BLL.Tools
                         cumplioServicioSocial = "1",
                         idFundamentoLegalServicioSocial = alumno.FundamentoLegalId.ToString(),
                         fundamentoLegalServicioSocial = alumno.FundamentoLegal.Descripcion,
-                        idEntidadFederativa = alumno.EntidadFederativaIdExpedicion < 10 ? "0" + alumno.EntidadFederativaIdExpedicion : alumno.EntidadFederativaIdExpedicion.ToString(),
+                        idEntidadFederativa = alumno.EntidadFederativa.Clave,
                         entidadFederativa = alumno.EntidadFederativa.Descripcion
                     };
                     var Institucion = new TituloElectronicoInstitucion
@@ -123,8 +123,8 @@ namespace BLL.Tools
                         cargo =alumno.UsuarioResponsable.Last().Usuario.Cargo.First().Descripcion,
                         abrTitulo=alumno.UsuarioResponsable.Last().Usuario.UsuarioDetalle.TituloCorto,
                         sello ="",
-                        certificadoResponsable=alumno.UsuarioResponsable.First().UsuarioId ==alumno.UsuarioId?objCertificado.CertificadoBase64 :"",
-                        noCertificadoResponsable= alumno.UsuarioResponsable.First().UsuarioId ==alumno.UsuarioId?objCertificado.NoCertificado :""
+                        certificadoResponsable=alumno.UsuarioResponsable.Last().UsuarioId ==alumno.UsuarioId?objCertificado.CertificadoBase64 :"",
+                        noCertificadoResponsable= alumno.UsuarioResponsable.Last().UsuarioId ==alumno.UsuarioId?objCertificado.NoCertificado :""
                     }
                 }
                     };
@@ -328,6 +328,7 @@ namespace BLL.Tools
         internal static List<dynamic> RevisarLotes(List<dynamic> lstLotes)
         {
             Titulos_SEP.consultaProcesoTituloElectronicoRequest objSEP = new Titulos_SEP.consultaProcesoTituloElectronicoRequest();
+            Titulos_SEP.descargaTituloElectronicoRequest objSEPDow = new Titulos_SEP.descargaTituloElectronicoRequest();
             Titulos_SEP.TitulosPortTypeClient ClientSEP = new Titulos_SEP.TitulosPortTypeClient("TitulosPortTypeSoap11");
             List<dynamic> lstResult= new List<dynamic>();
 
@@ -337,6 +338,7 @@ namespace BLL.Tools
                 usuario = "usuariomet.qa114",
                 password = "jVJmXxGC"
             };
+            objSEPDow.autenticacion = objSEP.autenticacion;
 
             lstLotes.ForEach(objlote =>
             {
@@ -352,6 +354,13 @@ namespace BLL.Tools
                     resul.mensaje,
                     resul.estatusLote
                 });
+            });
+
+            lstResult.ForEach(obj =>
+            {
+                objSEPDow.numeroLote = obj.NumeroLote;
+
+                var fileN = ClientSEP.descargaTituloElectronico(objSEPDow);
             });
 
             ClientSEP.Close();

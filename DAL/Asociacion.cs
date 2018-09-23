@@ -17,11 +17,11 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Asociacion()
         {
+            this.PolizaConfiguracion = new HashSet<PolizaConfiguracion>();
             this.PolizaConsecutivo = new HashSet<PolizaConsecutivo>();
             this.PolizaCuadre = new HashSet<PolizaCuadre>();
             this.PolizaNumeracion = new HashSet<PolizaNumeracion>();
             this.ReferenciadoArchivoBitacora = new HashSet<ReferenciadoArchivoBitacora>();
-            this.PolizaConfiguracion = new HashSet<PolizaConfiguracion>();
         }
     
         public int AsociacionId { get; set; }
@@ -31,6 +31,8 @@ namespace DAL
     
         public virtual AsociacionDetalle AsociacionDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PolizaConfiguracion> PolizaConfiguracion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PolizaConsecutivo> PolizaConsecutivo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PolizaCuadre> PolizaCuadre { get; set; }
@@ -38,7 +40,5 @@ namespace DAL
         public virtual ICollection<PolizaNumeracion> PolizaNumeracion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferenciadoArchivoBitacora> ReferenciadoArchivoBitacora { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PolizaConfiguracion> PolizaConfiguracion { get; set; }
     }
 }

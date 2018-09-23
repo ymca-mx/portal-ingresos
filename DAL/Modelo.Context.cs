@@ -157,6 +157,8 @@ namespace DAL
         public virtual DbSet<PersonaAutorizada> PersonaAutorizada { get; set; }
         public virtual DbSet<PersonaAutorizadaBitacora> PersonaAutorizadaBitacora { get; set; }
         public virtual DbSet<PolizaAjuste> PolizaAjuste { get; set; }
+        public virtual DbSet<PolizaCabeceroLayout> PolizaCabeceroLayout { get; set; }
+        public virtual DbSet<PolizaConfiguracion> PolizaConfiguracion { get; set; }
         public virtual DbSet<PolizaConsecutivo> PolizaConsecutivo { get; set; }
         public virtual DbSet<PolizaCuadre> PolizaCuadre { get; set; }
         public virtual DbSet<PolizaDetalleLayout> PolizaDetalleLayout { get; set; }
@@ -272,8 +274,6 @@ namespace DAL
         public virtual DbSet<ReporteEstadoCuentaPagosConcepto> ReporteEstadoCuentaPagosConcepto { get; set; }
         public virtual DbSet<Saldos> Saldos { get; set; }
         public virtual DbSet<UniversidadAdeudo> UniversidadAdeudo { get; set; }
-        public virtual DbSet<PolizaCabeceroLayout> PolizaCabeceroLayout { get; set; }
-        public virtual DbSet<PolizaConfiguracion> PolizaConfiguracion { get; set; }
     
         public virtual ObjectResult<AlumnoInscritoCompleto> spAlumnoInscritoCompleto(Nullable<int> anio, Nullable<int> periodo)
         {

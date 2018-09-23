@@ -247,17 +247,16 @@ namespace BLL
 
                     });
 
-                    var result = SEP.SendArchivos(RutaFiles);
+                    var result = SEP.SendArchivos(RutaFiles); int Lotedefault = 0;
 
                     if ((bool)result.GetType().GetProperty("Status").GetValue(result, null))
                     {
                         var resuljson = JObject.FromObject(result);
-
                         db.AccionSEP.Add(new AccionSEP
                         {
-                            NumeroLote = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault) ? int.Parse(resuljson["numeroLote"].ToString()) : -1,
+                            NumeroLote = resuljson["numeroLote"]?.ToString() ?? "",
                             Mensaje = resuljson["mensaje"].ToString(),
-                            MovimientoId = int.TryParse(resuljson["numeroLote"].ToString(), out int Lotedefault2) ? 5 : 7,
+                            MovimientoId = int.TryParse(resuljson["numeroLote"].ToString(), out Lotedefault) ? 5 : 7,
                             UsuarioId = alumnos.First().UsuarioId,
                             Fecha = DateTime.Now,
                             Hora = DateTime.Now.TimeOfDay
@@ -267,7 +266,7 @@ namespace BLL
                             .Local
                             .Select(a =>
                                 {
-                                    a.MovimientoId = db.AccionSEP.Local.FirstOrDefault().NumeroLote == -1 ? 7 : 5;
+                                    a.MovimientoId = db.AccionSEP.Local.FirstOrDefault().NumeroLote.Length==0 ? 7 : 5;
                                     return a.MovimientoId;
                                 })
                             .ToList();
@@ -314,10 +313,10 @@ namespace BLL
 
                     lstLotes.AddRange(Alumnos
                          .Where(a => (a.MovimientoId == 5 || a.MovimientoId == 4)
-                                 && a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote != -1)
+                                 && a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote.Length==0)
                          .Select(a => new
                          {
-                             NumeroLote = a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote.ToString(),
+                             NumeroLote = a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote,
                              a.AlumnoTituloId
                          })
                          .ToList());
@@ -329,7 +328,7 @@ namespace BLL
                         {
                             db.AccionSEP.Add(new AccionSEP
                             {
-                                NumeroLote = (int)b.NumeroLote,
+                                NumeroLote = b.NumeroLote,
                                 Mensaje = b.mensaje,
                                 MovimientoId = 5,
                                 UsuarioId = 0,
