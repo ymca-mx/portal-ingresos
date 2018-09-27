@@ -183,7 +183,9 @@
     <Compile Include="SEP\Certificado\CertificadoElectronico.cs">
       <DependentUpon>CertificadoElectronico.xsd</DependentUpon>
     </Compile>
-    <Compile Include="SEP\Titulo\SEP_TituloElectronico.cs" />
+    <Compile Include="SEP\Titulo\SEP_TituloElectronico.cs">
+      <DependentUpon>SEP_TituloElectronico.xsd</DependentUpon>
+    </Compile>
     <Compile Include="SEP\Titulo\SEP_TituloElectronico_Autenticacion.cs">
       <DependentUpon>SEP_TituloElectronico_Autenticacion.xsd</DependentUpon>
     </Compile>

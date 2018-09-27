@@ -26,6 +26,14 @@ namespace Pruebas
                                                     }).ToList();
             }            
         }
-        
+
+        [TestMethod]
+        public void PruebaAlumnosTitulo()
+        {
+                var list =
+                BLL.BLLSEP.AlumnosFirmados();
+
+            Console.Write(list);
+        }
     }
 }

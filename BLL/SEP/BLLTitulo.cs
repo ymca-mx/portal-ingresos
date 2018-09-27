@@ -3,6 +3,7 @@ using DAL;
 using DTO.SEP;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
@@ -241,7 +242,7 @@ namespace BLL
 
                         AlumnoBD.UsuarioId = alumno.UsuarioId;
 
-                        string Folio = "A" + AlumnoBD.AlumnoTituloId + "-" + AlumnoBD.AlumnoId + "-" + AlumnoBD.AlumnoOfertaEducativaId + ".xml";
+                        string Folio =  AlumnoBD.AlumnoTituloId + "A" + AlumnoBD.AlumnoId + "C" + AlumnoBD.AlumnoOfertaEducativaId + ".xml";
 
                         RutaFiles.Add(Folio);
 
@@ -300,51 +301,93 @@ namespace BLL
             }
         }
 
+        private static void UpdateEstatus(UniversidadEntities db)
+        {
+            try
+            {
+                int[] MovimientoIds = { 5, 7 };
+                List<dynamic> lstLotes = new List<dynamic>();
+                List<dynamic> lstLoteAlumno = new List<dynamic>();
+
+                lstLotes.AddRange(db.AlumnoTitulo.Where(a => MovimientoIds.Contains(a.MovimientoId))
+                                .ToList()
+                                .AsQueryable()
+                                .Select(a => new 
+                                {
+                                    a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote,
+                                    a.AlumnoTituloId,
+                                    a.AlumnoId,
+                                    a.AlumnoOfertaEducativa.OfertaEducativaId
+                                })
+                                .ToList());
+
+                var group = lstLotes
+                    .GroupBy(a => a.NumeroLote)
+                    .Select(a => a.Key)
+                    .ToList();
+
+                group
+                    .ForEach(lote =>
+                    {
+                        var Alumnos = lstLotes.Where(a => a.NumeroLote == lote)
+                                        .Select(a => new
+                                        {
+                                            a.AlumnoTituloId,
+                                            a.AlumnoId,
+                                            a.OfertaEducativaId
+                                        }).ToList();
+
+                        lstLoteAlumno.Add(new
+                        {
+                            NumeroLote = lote,
+                            Alumnos
+                        });
+                    });
+
+                
+                if (lstLoteAlumno.Count > 0)
+                {
+                    List<dynamic> lstResult = SEP.RevisarLotes(lstLoteAlumno);
+
+                    lstResult.ForEach(b =>
+                    {
+                        List<int> alumnos = (List<int>)b.Alumnos;
+
+                        db.AccionSEP.Add(new AccionSEP
+                        {
+                            NumeroLote = b.NumeroLote,
+                            Mensaje = b.mensaje,
+                            MovimientoId = b.MovimientoId,
+                            UsuarioId = 0,
+                            Fecha = DateTime.Now,
+                            Hora = DateTime.Now.TimeOfDay,
+                            AlumnoTituloAccion = alumnos
+                            .Select(A => new AlumnoTituloAccion
+                             {
+                                 AlumnoTituloId = A
+                             }).ToList()
+                        });
+                    });
+
+                    db.SaveChanges();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         public static object AlumnosFirmados()
         {
             using (UniversidadEntities db = new UniversidadEntities())
             {
                 try
                 {
+                    UpdateEstatus(db);
+
                     int[] MovimientoIds = { 3, 4, 5, 6, 7 };
                     var Alumnos = db.AlumnoTitulo.Where(a => MovimientoIds.Contains(a.MovimientoId)).ToList().AsQueryable().ToList();
-
-                    List<dynamic> lstLotes = new List<dynamic>();
-
-                    lstLotes.AddRange(Alumnos
-                         .Where(a => (a.MovimientoId == 5 || a.MovimientoId == 4)
-                                 && a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote.Length==0)
-                         .Select(a => new
-                         {
-                             NumeroLote = a.AlumnoTituloAccion.Last().AccionSEP.NumeroLote,
-                             a.AlumnoTituloId
-                         })
-                         .ToList());
-
-                    if (lstLotes.Count > 0)
-                    {
-                        List<dynamic> lstResult = SEP.RevisarLotes(lstLotes);
-                        lstResult.ForEach(b =>
-                        {
-                            db.AccionSEP.Add(new AccionSEP
-                            {
-                                NumeroLote = b.NumeroLote,
-                                Mensaje = b.mensaje,
-                                MovimientoId = 5,
-                                UsuarioId = 0,
-                                Fecha = DateTime.Now,
-                                Hora = DateTime.Now.TimeOfDay,
-                                AlumnoTituloAccion = new List<AlumnoTituloAccion>{
-                                    new AlumnoTituloAccion
-                                    {
-                                        AlumnoTituloId=b.AlumnoTituloId
-                                    }
-                                }
-                            });
-                        });
-
-                        db.SaveChanges();
-                    }
 
                     return
                     Alumnos
@@ -374,7 +417,7 @@ namespace BLL
                                         })
                                         .ToList(),
                             Archivo = "Documentos/SEP/Titulo/" +
-                             "A" + a.AlumnoTituloId + "-" + a.AlumnoId + "-" + a.AlumnoOfertaEducativaId + ".xml",
+                             a.AlumnoTituloId + "A" + a.AlumnoId + "C" + a.AlumnoOfertaEducativaId + ".xml",
                             Institucion = new
                             {
                                 a.AlumnoOfertaEducativa.InstitucionId,
@@ -474,7 +517,7 @@ namespace BLL
                             if (alumno.Autorizado)
                             {
                                 result =
-                                SEP.CrearXMLTitulo(AlumnoBD, usuariodb);
+                                SEP.CrearXMLTitulo(AlumnoBD, usuariodb, db.Campus.FirstOrDefault());
 
                                 if (result != null)
                                 {
